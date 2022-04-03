@@ -3,7 +3,7 @@ title: "05. 🎣 Заброс Hook'а в Apache Hive"
 date: 2021-08-30
 weight: 10
 description: >
-  Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.
+  Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
 tags:
   - BigData
   - Apache Atlas
@@ -27,7 +27,7 @@ DIR="apache-atlas-2.2.0_cdh6.3.2_j8.181_mvn3.8.1"
 ## Скачиваем сборку с Nexus'а
 mkdir -p ~/tmp
 cd ~/tmp
-curl -LO -u ${NXUSERPASS} http://10.15.61.1:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+curl -LO -u ${NXUSERPASS} http://nexus.example.org:8081/repository/dud_evolut_raw/atlas/${FILENAME}
 
 sudo tar xvf ${FILENAME} -C /opt
 cd /opt

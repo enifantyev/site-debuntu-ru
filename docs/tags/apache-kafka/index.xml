@@ -488,7 +488,7 @@ nginx-kafka-1.18.0-1.el7.ngx.x86_64.rpm
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На целевой машине добавляем описание репозитория (вариант без авторизации на нексусе):&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[nginx-kafka]
 name = Nginx kafka
-baseurl = http://10.15.61.1:8081/repository/nginx-kafka/
+baseurl = http://nexus.example.org:8081/repository/nginx-kafka/
 gpgcheck = 0
 enabled = 1
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На целевом сервере, после &lt;code&gt;yum update&lt;/code&gt;, добавляем &lt;code&gt;nginx-kafka&lt;/code&gt; и видим:&lt;/p&gt;

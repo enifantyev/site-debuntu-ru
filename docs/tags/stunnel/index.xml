@@ -150,7 +150,7 @@ pid = /tmp/stunnel.pid
 [ssh]
 client = yes
 accept = 127.0.0.1:2222
-connect = 10.15.61.28:2222
+connect = 10.1.61.28:2222
 
 CAfile = /home/user/.config/stunnel/ca.crt
 cert = /home/user/.config/stunnel/eugene_example.org.pub

@@ -962,7 +962,7 @@ pid = /tmp/stunnel.pid
 [ssh]
 client = yes
 accept = 127.0.0.1:2222
-connect = 10.15.61.28:2222
+connect = 10.1.61.28:2222
 
 CAfile = /home/user/.config/stunnel/ca.crt
 cert = /home/user/.config/stunnel/eugene_example.org.pub
@@ -2048,7 +2048,7 @@ systemctl enable --now nginx
 <p>Все операции выполняем на командной машине с помощью ансибла из ранее подготовленного каталога <code>hadoop</code>, где созданы все необходимые файлы.</p>
 <h2 id="2-выделение-машины-управления-кластером">2. Выделение машины управления кластером</h2>
 <p>Машина управления кластером имеет название, которое включает в себя буквы &lsquo;mgm&rsquo;. Определив ip-адрес этой машины, добавим новые строки в инвентори файл ансибла:</p>
-<pre tabindex="0"><code>printf &#39;\n[mgm]\n10.15.4.6\n&#39; &gt;&gt; cluster.inv
+<pre tabindex="0"><code>printf &#39;\n[mgm]\n10.1.4.6\n&#39; &gt;&gt; cluster.inv
 </code></pre><h2 id="3-добавление-файлов-repo-на-машину-управления">3. Добавление файлов repo на машину управления</h2>
 <p>При установке компонента Hue, потребуется пакет <code>libtidy</code>, который находится в EPEL-репозитории. Поэтому подготавливаем не только файлы репозиториев cloudera, но и epel. Файлы Cloudera-репо будут заброшены на машину управления кластером, тогда как epel-репо на все машины кластера:</p>
 <pre tabindex="0"><code>cd hadoop
@@ -2058,7 +2058,7 @@ cat &lt;&lt; EOF &gt; cloudera-manager.repo
 USERNAME=nx-pubrepo-reader
 PASSWORD=xxxxxxxxxxxxxxxxx
 name = Cloudera Manager, Version cloudera-cm-6.3.1-hosted
-baseurl = http://10.15.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
+baseurl = http://10.1.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
 gpgcheck = 0
 EOF
  
@@ -2067,7 +2067,7 @@ cat &lt;&lt; EOF &gt; cloudera-cdh.repo
 USERNAME=nx-pubrepo-reader
 PASSWORD=xxxxxxxxxxxxxxxxx
 name = Cloudera Manager, Version cloudera-cdh-6.3.2-hosted
-baseurl = http://10.15.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
+baseurl = http://10.1.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
 gpgcheck = 0
 EOF
  
@@ -2076,11 +2076,11 @@ cat &lt;&lt; EOF &gt; epel.repo
 USERNAME=nx-pubrepo-reader
 PASSWORD=xxxxxxxxxxxxxxxxx
 name=Extra Packages for Enterprise Linux \$releasever - \$basearch
-baseurl=http://10.15.1.1:8081/repository/all_epel/\$releasever/\$basearch
+baseurl=http://10.1.1.1:8081/repository/all_epel/\$releasever/\$basearch
 failovermethod=priority
 enabled=1
 gpgcheck=0
-gpgkey=http://10.15.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
+gpgkey=http://10.1.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
 EOF
 </code></pre><p>Копируем CM репо-файл на машину cloudera server и epel repo-файл на все машины:</p>
 <pre tabindex="0"><code>ansible mgm -i cluster.inv -m copy -a &#34;src=cloudera-manager.repo dest=&#39;/etc/yum.repos.d/&#39;&#34; --become
@@ -2131,15 +2131,15 @@ printf &#39;[defaults]\nhost_key_checking=false\n&#39; &gt; ansible.cfg
 printf &#39;[all:var]\nansible_user=jenkins\n#ansible_password=\n&#39; &gt; cluster.inv
 printf &#39;ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n&#39; &gt;&gt; cluster.inv
 cat &lt;&lt; EOF | tee -a cluster.inv &gt; cluster.ips
-10.15.4.1
-10.15.4.2
-10.15.4.3
-10.15.4.5
-10.15.4.6
-10.15.4.7
-10.15.4.8
-10.15.4.9
-10.15.4.10
+10.1.4.1
+10.1.4.2
+10.1.4.3
+10.1.4.5
+10.1.4.6
+10.1.4.7
+10.1.4.8
+10.1.4.9
+10.1.4.10
 EOF
 </code></pre><ul>
 <li><code>cluster.inv</code> — inventory-файл для ансибла;</li>
@@ -2168,8 +2168,8 @@ ONBOOT=yes
 USERCTL=no
 BOOTPROTO=static
 NETMASK=255.255.255.128
-IPADDR=10.15.4.1
-GATEWAY=10.15.4.254
+IPADDR=10.1.4.1
+GATEWAY=10.1.4.254
 PEERDNS=no
  
 check_link_down() {
@@ -2201,9 +2201,9 @@ ansible all -i cluster.inv -m shell -a &#34;&gt; /etc/sysconfig/network&#34; --b
 <details><p>
 <pre tabindex="0"><code>options rotate timeout:1 attempts:1
 search example.org
-nameserver 10.15.85.5
-nameserver 10.15.85.6
-nameserver 10.15.85.7
+nameserver 10.1.85.5
+nameserver 10.1.85.6
+nameserver 10.1.85.7
 </code></pre><ul>
 <li>опция <code>rotate</code> заставляет отправлять dns-запросы по очереди к каждому dns-серверу по кругу;</li>
 <li>опция <code>timeout:1</code> уменьшает ожидание ответа dns-сервера с дефолтных трёх секунд до одной секунды;</li>
@@ -2802,16 +2802,16 @@ $ sudo pip3 install --upgrade pip
 $ sudo pip3 install wheel
 
 $ sudo pip3 install apache-airflow==2.0.1 --use-deprecated legacy-resolver --constraint constraints-3.6.txt
-Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Looking in indexes: http://centos-main-reader:****@nexus.example.org:8081/repository/pypi/simple
 Collecting apache-airflow==2.0.1
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/apache-airflow/2.0.1/apache_airflow-2.0.1-py3-none-any.whl (4.5 MB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/apache-airflow/2.0.1/apache_airflow-2.0.1-py3-none-any.whl (4.5 MB)
      |████████████████████████████████| 4.5 MB 61.9 MB/s
 Collecting cached-property==1.5.2
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/cached-property/1.5.2/cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/cached-property/1.5.2/cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
 Collecting iso8601==0.1.14
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/iso8601/0.1.14/iso8601-0.1.14-py2.py3-none-any.whl (9.5 kB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/iso8601/0.1.14/iso8601-0.1.14-py2.py3-none-any.whl (9.5 kB)
 Collecting psutil==5.8.0
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/psutil/5.8.0/psutil-5.8.0-cp36-cp36m-manylinux2010_x86_64.whl (291 kB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/psutil/5.8.0/psutil-5.8.0-cp36-cp36m-manylinux2010_x86_64.whl (291 kB)
      |████████████████████████████████| 291 kB 75.9 MB/s
 Collecting pendulum==2.1.2
 ...
@@ -2834,7 +2834,7 @@ Requirement already satisfied: tenacity==6.2.0 in /usr/local/lib/python3.6/site-
 Successfully installed Flask-Bcrypt-0.7.1 JPype1-1.2.1 JayDeBeApi-1.2.3 PyHive-0.6.3 amqp-2.6.1 apache-airflow-providers-apache-hdfs-1.0.1 apache-airflow-providers-apache-hive-1.0.1 apache-airflow-providers-apache-spark-1.0.1 apache-airflow-providers-celery-1.0.1 apache-airflow-providers-jdbc-1.0.1 apache-airflow-providers-jenkins-1.0.1 apache-airflow-providers-postgres-1.0.1 apache-airflow-providers-vertica-1.0.1 argparse-1.4.0 bcrypt-3.2.0 billiard-3.6.3.0 celery-4.4.7 eventlet-0.30.1 flower-0.9.7 future-0.18.2 gevent-21.1.2 greenlet-1.0.0 hmsclient-0.1.1 humanize-3.2.0 kombu-4.6.11 ldap3-2.9 multi-key-dict-2.0.3 pbr-5.5.1 prometheus-client-0.8.0 protobuf-3.14.0 psycopg2-binary-2.8.6 py4j-0.10.9 pyasn1-0.4.8 pyasn1-modules-0.2.8 pyspark-3.0.1 python-jenkins-1.7.0 python-ldap-3.3.1 sasl-0.2.1 snakebite-py3-3.0.5 thrift-0.13.0 thrift-sasl-0.4.2 tornado-6.1 vertica-python-1.0.1 vine-1.3.0 zope.event-4.5.0 zope.interface-5.2.0
 </code></pre><p>Попробуем установить пакет &lsquo;apache-airflow[kerberos]&rsquo;:</p>
 <pre tabindex="0"><code>$ sudo pip install apache-airflow[kerberos] --use-deprecated legacy-resolver --constraint constraints-3.6.txt
-Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Looking in indexes: http://centos-main-reader:****@nexus.example.org:8081/repository/pypi/simple
 Requirement already satisfied: apache-airflow[kerberos] in /usr/local/lib/python3.6/site-packages (2.0.0)
 Requirement already satisfied: croniter==0.3.36 in /usr/local/lib/python3.6/site-packages (from -c constrain
 ts-3.6.txt (line 109)) (0.3.36)
@@ -3426,13 +3426,13 @@ sudo -u postgres psql -c &#39;CREATE DATABASE sqoop_test_import_db;&#39;
 password=$(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c15)
 sudo -u postgres psql -c &#34;CREATE USER sqoop_test_u WITH password &#39;$password&#39;;&#34;
 sudo -u postgres psql -c &#34;GRANT ALL PRIVILEGES ON DATABASE sqoop_test_import_db TO sqoop_test_u;&#34;
-echo &#34;10.15.112.99:5432:sqoop_test_import_db:sqoop_test_u:${password}&#34; &gt; ~/.pgpass;
+echo &#34;10.1.112.99:5432:sqoop_test_import_db:sqoop_test_u:${password}&#34; &gt; ~/.pgpass;
 chmod 600 ~/.pgpass
 </code></pre><p>Создаём таблицу &lsquo;sales&rsquo; и заполняем информацией:</p>
-<pre tabindex="0"><code>psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 \
+<pre tabindex="0"><code>psql -d sqoop_test_import_db -U sqoop_test_u -h 10.1.112.99 \
 -c &#39;CREATE TABLE sales (pkSales integer primary key, saleDate date, saleAmount money, orderID int, itemID int);&#39;
 
-psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 -c &#34;
+psql -d sqoop_test_import_db -U sqoop_test_u -h 10.1.112.99 -c &#34;
 insert into sales values (1, &#39;2016-09-27&#39;, 1.23, 1, 1);
 insert into sales values (2, &#39;2016-09-27&#39;, 2.34, 1, 2);
 insert into sales values (3, &#39;2016-09-27&#39;, 1.23, 2, 1);
@@ -3455,7 +3455,7 @@ insert into sales values (19, &#39;2016-09-29&#39;, 7.89, 8, 7);
 insert into sales values (20, &#39;2016-09-30&#39;, 1.23, 9, 1);
 &#34;
 </code></pre><p>Проверяем факт наличия новой таблицы:</p>
-<pre tabindex="0"><code>psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 -c &#39;table sales;&#39;
+<pre tabindex="0"><code>psql -d sqoop_test_import_db -U sqoop_test_u -h 10.1.112.99 -c &#39;table sales;&#39;
  pksales |  saledate  | saleamount | orderid | itemid
 ---------+------------+------------+---------+--------
        1 | 2016-09-27 |      $1.23 |       1 |      1
@@ -3488,7 +3488,7 @@ insert into sales values (20, &#39;2016-09-30&#39;, 1.23, 9, 1);
 <pre tabindex="0"><code>kinit
 
 sqoop import -Dmapreduce.job.queuename=&#34;root.yarn-queue-dev&#34; \
---connect &#39;jdbc:postgresql://10.15.112.99/sqoop_test_import_db&#39; \
+--connect &#39;jdbc:postgresql://10.1.112.99/sqoop_test_import_db&#39; \
 --username &#39;sqoop_test_u&#39; -P \
 --table &#39;sales&#39; \
 --target-dir &#39;SqoopTestSales&#39; \
@@ -3532,14 +3532,14 @@ $ hdfs dfs -cat SqoopTestSales/part-m-00003
 password=$(awk -F: &#39;{print $5}&#39; ~/.pgpass)
 sudo -u postgres psql -c &#39;CREATE DATABASE sqoop_test_export_db;&#39;
 sudo -u postgres psql -c &#34;GRANT ALL PRIVILEGES ON DATABASE sqoop_test_export_db TO sqoop_test_u;&#34;
-echo &#34;10.15.112.99:5432:sqoop_test_export_db:sqoop_test_u:${password}&#34; &gt;&gt; ~/.pgpass;
+echo &#34;10.1.112.99:5432:sqoop_test_export_db:sqoop_test_u:${password}&#34; &gt;&gt; ~/.pgpass;
 </code></pre><p>Создаём таблицу для экспорта данных из HDFS. Столбцу &lsquo;saleAmount&rsquo; задал тип numeric, так как с типом &lsquo;money&rsquo; экспорт прерывался ошибкой.</p>
-<pre tabindex="0"><code>psql -d sqoop_test_export_db -U sqoop_test_u -h 10.15.112.99 \
+<pre tabindex="0"><code>psql -d sqoop_test_export_db -U sqoop_test_u -h 10.1.112.99 \
 -c &#39;CREATE TABLE sales (pkSales int primary key, saleDate date, saleAmount numeric, orderID int, itemID int);&#39;
 </code></pre><h3 id="проверка">Проверка</h3>
 <p>Видит ли Sqoop базу данных:</p>
 <pre tabindex="0"><code>sqoop list-databases \
---connect &#39;jdbc:postgresql://10.15.112.99/sqoop_test_export_db&#39; \
+--connect &#39;jdbc:postgresql://10.1.112.99/sqoop_test_export_db&#39; \
 --username &#39;sqoop_test_u&#39; -P
 
 postgres
@@ -3549,18 +3549,18 @@ sqoop_test_import_db
 sqoop_test_export_db
 </code></pre><p>Видит ли Sqoop таблицы:</p>
 <pre tabindex="0"><code>sqoop list-tables \
---connect &#39;jdbc:postgresql://10.15.112.99/sqoop_test_export_db&#39; \
+--connect &#39;jdbc:postgresql://10.1.112.99/sqoop_test_export_db&#39; \
 --username &#39;sqoop_test_u&#39; -P
 
 sales
 </code></pre><h3 id="экспорт">Экспорт</h3>
 <pre tabindex="0"><code>sqoop export -Dmapreduce.job.queuename=&#34;root.yarn-queue-dev&#34; \
---connect &#39;jdbc:postgresql://10.15.112.99/sqoop_test_export_db&#39; \
+--connect &#39;jdbc:postgresql://10.1.112.99/sqoop_test_export_db&#39; \
 --username &#39;sqoop_test_u&#39; -P \
 --table &#39;sales&#39; \
 --export-dir &#39;SqoopTestSales&#39;
 </code></pre><h3 id="результат-экспорта-из-hdfs-в-postgresql">Результат экспорта из HDFS в PostgreSQL</h3>
-<pre tabindex="0"><code>psql -d sqoop_test_export_db -U sqoop_test_u -h 10.15.112.99 -c &#39;table sales order by pksales;&#39;
+<pre tabindex="0"><code>psql -d sqoop_test_export_db -U sqoop_test_u -h 10.1.112.99 -c &#39;table sales order by pksales;&#39;
  pksales |  saledate  | saleamount | orderid | itemid
 ---------+------------+------------+---------+--------
        1 | 2016-09-27 |       1.23 |       1 |      1
@@ -4185,7 +4185,7 @@ nginx-kafka-1.18.0-1.el7.ngx.x86_64.rpm
 </code></pre><p>На целевой машине добавляем описание репозитория (вариант без авторизации на нексусе):</p>
 <pre tabindex="0"><code>[nginx-kafka]
 name = Nginx kafka
-baseurl = http://10.15.61.1:8081/repository/nginx-kafka/
+baseurl = http://nexus.example.org:8081/repository/nginx-kafka/
 gpgcheck = 0
 enabled = 1
 </code></pre><p>На целевом сервере, после <code>yum update</code>, добавляем <code>nginx-kafka</code> и видим:</p>

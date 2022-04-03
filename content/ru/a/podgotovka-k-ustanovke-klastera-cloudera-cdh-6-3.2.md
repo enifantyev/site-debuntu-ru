@@ -33,15 +33,15 @@ printf '[defaults]\nhost_key_checking=false\n' > ansible.cfg
 printf '[all:var]\nansible_user=jenkins\n#ansible_password=\n' > cluster.inv
 printf 'ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n' >> cluster.inv
 cat << EOF | tee -a cluster.inv > cluster.ips
-10.15.4.1
-10.15.4.2
-10.15.4.3
-10.15.4.5
-10.15.4.6
-10.15.4.7
-10.15.4.8
-10.15.4.9
-10.15.4.10
+10.1.4.1
+10.1.4.2
+10.1.4.3
+10.1.4.5
+10.1.4.6
+10.1.4.7
+10.1.4.8
+10.1.4.9
+10.1.4.10
 EOF
 ```
 
@@ -78,8 +78,8 @@ ONBOOT=yes
 USERCTL=no
 BOOTPROTO=static
 NETMASK=255.255.255.128
-IPADDR=10.15.4.1
-GATEWAY=10.15.4.254
+IPADDR=10.1.4.1
+GATEWAY=10.1.4.254
 PEERDNS=no
  
 check_link_down() {
@@ -121,9 +121,9 @@ ansible all -i cluster.inv -m shell -a "> /etc/sysconfig/network" --become
 ```
 options rotate timeout:1 attempts:1
 search example.org
-nameserver 10.15.85.5
-nameserver 10.15.85.6
-nameserver 10.15.85.7
+nameserver 10.1.85.5
+nameserver 10.1.85.6
+nameserver 10.1.85.7
 ```
 - опция `rotate` заставляет отправлять dns-запросы по очереди к каждому dns-серверу по кругу;
 - опция `timeout:1` уменьшает ожидание ответа dns-сервера с дефолтных трёх секунд до одной секунды;

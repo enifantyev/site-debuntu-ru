@@ -33,16 +33,16 @@ sudo -u postgres psql -c 'CREATE DATABASE sqoop_test_import_db;'
 password=$(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c15)
 sudo -u postgres psql -c "CREATE USER sqoop_test_u WITH password '$password';"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE sqoop_test_import_db TO sqoop_test_u;"
-echo "10.15.112.99:5432:sqoop_test_import_db:sqoop_test_u:${password}" > ~/.pgpass;
+echo "10.1.112.99:5432:sqoop_test_import_db:sqoop_test_u:${password}" > ~/.pgpass;
 chmod 600 ~/.pgpass
 ```
 
 Создаём таблицу 'sales' и заполняем информацией:
 ```
-psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 \
+psql -d sqoop_test_import_db -U sqoop_test_u -h 10.1.112.99 \
 -c 'CREATE TABLE sales (pkSales integer primary key, saleDate date, saleAmount money, orderID int, itemID int);'
 
-psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 -c "
+psql -d sqoop_test_import_db -U sqoop_test_u -h 10.1.112.99 -c "
 insert into sales values (1, '2016-09-27', 1.23, 1, 1);
 insert into sales values (2, '2016-09-27', 2.34, 1, 2);
 insert into sales values (3, '2016-09-27', 1.23, 2, 1);
@@ -68,7 +68,7 @@ insert into sales values (20, '2016-09-30', 1.23, 9, 1);
 
 Проверяем факт наличия новой таблицы:
 ```
-psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 -c 'table sales;'
+psql -d sqoop_test_import_db -U sqoop_test_u -h 10.1.112.99 -c 'table sales;'
  pksales |  saledate  | saleamount | orderid | itemid
 ---------+------------+------------+---------+--------
        1 | 2016-09-27 |      $1.23 |       1 |      1
@@ -103,7 +103,7 @@ psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 -c 'table sales;'
 kinit
 
 sqoop import -Dmapreduce.job.queuename="root.yarn-queue-dev" \
---connect 'jdbc:postgresql://10.15.112.99/sqoop_test_import_db' \
+--connect 'jdbc:postgresql://10.1.112.99/sqoop_test_import_db' \
 --username 'sqoop_test_u' -P \
 --table 'sales' \
 --target-dir 'SqoopTestSales' \
@@ -153,12 +153,12 @@ cd ~
 password=$(awk -F: '{print $5}' ~/.pgpass)
 sudo -u postgres psql -c 'CREATE DATABASE sqoop_test_export_db;'
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE sqoop_test_export_db TO sqoop_test_u;"
-echo "10.15.112.99:5432:sqoop_test_export_db:sqoop_test_u:${password}" >> ~/.pgpass;
+echo "10.1.112.99:5432:sqoop_test_export_db:sqoop_test_u:${password}" >> ~/.pgpass;
 ```
 
 Создаём таблицу для экспорта данных из HDFS. Столбцу 'saleAmount' задал тип numeric, так как с типом 'money' экспорт прерывался ошибкой.
 ```
-psql -d sqoop_test_export_db -U sqoop_test_u -h 10.15.112.99 \
+psql -d sqoop_test_export_db -U sqoop_test_u -h 10.1.112.99 \
 -c 'CREATE TABLE sales (pkSales int primary key, saleDate date, saleAmount numeric, orderID int, itemID int);'
 ```
 
@@ -166,7 +166,7 @@ psql -d sqoop_test_export_db -U sqoop_test_u -h 10.15.112.99 \
 Видит ли Sqoop базу данных:
 ```
 sqoop list-databases \
---connect 'jdbc:postgresql://10.15.112.99/sqoop_test_export_db' \
+--connect 'jdbc:postgresql://10.1.112.99/sqoop_test_export_db' \
 --username 'sqoop_test_u' -P
 
 postgres
@@ -179,7 +179,7 @@ sqoop_test_export_db
 Видит ли Sqoop таблицы:
 ```
 sqoop list-tables \
---connect 'jdbc:postgresql://10.15.112.99/sqoop_test_export_db' \
+--connect 'jdbc:postgresql://10.1.112.99/sqoop_test_export_db' \
 --username 'sqoop_test_u' -P
 
 sales
@@ -188,7 +188,7 @@ sales
 ### Экспорт
 ```
 sqoop export -Dmapreduce.job.queuename="root.yarn-queue-dev" \
---connect 'jdbc:postgresql://10.15.112.99/sqoop_test_export_db' \
+--connect 'jdbc:postgresql://10.1.112.99/sqoop_test_export_db' \
 --username 'sqoop_test_u' -P \
 --table 'sales' \
 --export-dir 'SqoopTestSales'
@@ -196,7 +196,7 @@ sqoop export -Dmapreduce.job.queuename="root.yarn-queue-dev" \
 
 ### Результат экспорта из HDFS в PostgreSQL
 ```
-psql -d sqoop_test_export_db -U sqoop_test_u -h 10.15.112.99 -c 'table sales order by pksales;'
+psql -d sqoop_test_export_db -U sqoop_test_u -h 10.1.112.99 -c 'table sales order by pksales;'
  pksales |  saledate  | saleamount | orderid | itemid
 ---------+------------+------------+---------+--------
        1 | 2016-09-27 |       1.23 |       1 |      1

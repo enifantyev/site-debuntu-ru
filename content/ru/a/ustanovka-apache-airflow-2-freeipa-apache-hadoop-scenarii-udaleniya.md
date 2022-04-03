@@ -373,16 +373,16 @@ $ sudo pip3 install --upgrade pip
 $ sudo pip3 install wheel
 
 $ sudo pip3 install apache-airflow==2.0.1 --use-deprecated legacy-resolver --constraint constraints-3.6.txt
-Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Looking in indexes: http://centos-main-reader:****@nexus.example.org:8081/repository/pypi/simple
 Collecting apache-airflow==2.0.1
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/apache-airflow/2.0.1/apache_airflow-2.0.1-py3-none-any.whl (4.5 MB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/apache-airflow/2.0.1/apache_airflow-2.0.1-py3-none-any.whl (4.5 MB)
      |████████████████████████████████| 4.5 MB 61.9 MB/s
 Collecting cached-property==1.5.2
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/cached-property/1.5.2/cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/cached-property/1.5.2/cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
 Collecting iso8601==0.1.14
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/iso8601/0.1.14/iso8601-0.1.14-py2.py3-none-any.whl (9.5 kB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/iso8601/0.1.14/iso8601-0.1.14-py2.py3-none-any.whl (9.5 kB)
 Collecting psutil==5.8.0
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/psutil/5.8.0/psutil-5.8.0-cp36-cp36m-manylinux2010_x86_64.whl (291 kB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/psutil/5.8.0/psutil-5.8.0-cp36-cp36m-manylinux2010_x86_64.whl (291 kB)
      |████████████████████████████████| 291 kB 75.9 MB/s
 Collecting pendulum==2.1.2
 ...
@@ -411,7 +411,7 @@ Successfully installed Flask-Bcrypt-0.7.1 JPype1-1.2.1 JayDeBeApi-1.2.3 PyHive-0
 Попробуем установить пакет 'apache-airflow[kerberos]':
 ```
 $ sudo pip install apache-airflow[kerberos] --use-deprecated legacy-resolver --constraint constraints-3.6.txt
-Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Looking in indexes: http://centos-main-reader:****@nexus.example.org:8081/repository/pypi/simple
 Requirement already satisfied: apache-airflow[kerberos] in /usr/local/lib/python3.6/site-packages (2.0.0)
 Requirement already satisfied: croniter==0.3.36 in /usr/local/lib/python3.6/site-packages (from -c constrain
 ts-3.6.txt (line 109)) (0.3.36)

@@ -333,17 +333,17 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/apache-airflow/" data-taxonomy-term="apache-airflow"><span class="taxonomy-label">Apache Airflow</span><span class="taxonomy-count">2</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">8</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">12</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">2</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">5</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">6</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-kafka/" data-taxonomy-term="apache-kafka"><span class="taxonomy-label">Apache Kafka</span><span class="taxonomy-count">5</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">1</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">2</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-sqoop/" data-taxonomy-term="apache-sqoop"><span class="taxonomy-label">Apache Sqoop</span><span class="taxonomy-count">1</span></a></li>
         
@@ -373,7 +373,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/beeline/" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">24</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">29</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">8</span></a></li>
         
@@ -387,7 +387,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">15</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">20</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/cloudera-hadoop/" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span><span class="taxonomy-count">2</span></a></li>
         
@@ -704,7 +704,7 @@ if (!doNotTrack) {
 <p>Все операции выполняем на командной машине с помощью ансибла из ранее подготовленного каталога <code>hadoop</code>, где созданы все необходимые файлы.</p>
 <h2 id="2-выделение-машины-управления-кластером">2. Выделение машины управления кластером</h2>
 <p>Машина управления кластером имеет название, которое включает в себя буквы &lsquo;mgm&rsquo;. Определив ip-адрес этой машины, добавим новые строки в инвентори файл ансибла:</p>
-<pre tabindex="0"><code>printf &#39;\n[mgm]\n10.15.4.6\n&#39; &gt;&gt; cluster.inv
+<pre tabindex="0"><code>printf &#39;\n[mgm]\n10.1.4.6\n&#39; &gt;&gt; cluster.inv
 </code></pre><h2 id="3-добавление-файлов-repo-на-машину-управления">3. Добавление файлов repo на машину управления</h2>
 <p>При установке компонента Hue, потребуется пакет <code>libtidy</code>, который находится в EPEL-репозитории. Поэтому подготавливаем не только файлы репозиториев cloudera, но и epel. Файлы Cloudera-репо будут заброшены на машину управления кластером, тогда как epel-репо на все машины кластера:</p>
 <pre tabindex="0"><code>cd hadoop
@@ -714,7 +714,7 @@ cat &lt;&lt; EOF &gt; cloudera-manager.repo
 USERNAME=nx-pubrepo-reader
 PASSWORD=xxxxxxxxxxxxxxxxx
 name = Cloudera Manager, Version cloudera-cm-6.3.1-hosted
-baseurl = http://10.15.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
+baseurl = http://10.1.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
 gpgcheck = 0
 EOF
  
@@ -723,7 +723,7 @@ cat &lt;&lt; EOF &gt; cloudera-cdh.repo
 USERNAME=nx-pubrepo-reader
 PASSWORD=xxxxxxxxxxxxxxxxx
 name = Cloudera Manager, Version cloudera-cdh-6.3.2-hosted
-baseurl = http://10.15.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
+baseurl = http://10.1.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
 gpgcheck = 0
 EOF
  
@@ -732,11 +732,11 @@ cat &lt;&lt; EOF &gt; epel.repo
 USERNAME=nx-pubrepo-reader
 PASSWORD=xxxxxxxxxxxxxxxxx
 name=Extra Packages for Enterprise Linux \$releasever - \$basearch
-baseurl=http://10.15.1.1:8081/repository/all_epel/\$releasever/\$basearch
+baseurl=http://10.1.1.1:8081/repository/all_epel/\$releasever/\$basearch
 failovermethod=priority
 enabled=1
 gpgcheck=0
-gpgkey=http://10.15.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
+gpgkey=http://10.1.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
 EOF
 </code></pre><p>Копируем CM репо-файл на машину cloudera server и epel repo-файл на все машины:</p>
 <pre tabindex="0"><code>ansible mgm -i cluster.inv -m copy -a &#34;src=cloudera-manager.repo dest=&#39;/etc/yum.repos.d/&#39;&#34; --become

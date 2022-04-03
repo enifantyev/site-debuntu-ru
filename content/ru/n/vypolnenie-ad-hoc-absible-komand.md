@@ -27,13 +27,13 @@ tags:
 export ANSIBLE_HOST_KEY_CHECKING=False
  
 # важна запятая после указания одного ip-адреса или dns-имени
-ansible all -i 10.15.112.1, -m shell -a 'hostname'
+ansible all -i 10.1.112.1, -m shell -a 'hostname'
  
 # здесь доп запятая не нужна
-ansible all -i 10.15.112.1,prod-airf01p -m shell -a 'hostname'
+ansible all -i 10.1.112.1,prod-airf01p -m shell -a 'hostname'
  
 # выполняем команды с правами root
-ansible all -i 10.15.112.1,prod-airf01p -m shell -a 'cat /etc/shadow' --become
+ansible all -i 10.1.112.1,prod-airf01p -m shell -a 'cat /etc/shadow' --become
  
 # копируем локальный файл в удалённый каталог на все узлы из инвентори-файла
 ansible all -i list.hosts -m copy -a 'src=~/soft/nginx.rpm dest=/tmp/'
@@ -41,9 +41,9 @@ ansible all -i list.hosts -m copy -a 'src=~/soft/nginx.rpm dest=/tmp/'
 
 Я не нашёл способа указать подсеть, вместо одного или нескольких ip-адресов. Пришлось использовать inventory-файл. В простейшем случае собираем инвентори-файл:
 ```
-# Вся подсеть 10.15.112.0/25
-for i in {1..126}; do echo 10.15.112.$i >> hosts.txt; done
+# Вся подсеть 10.1.112.0/25
+for i in {1..126}; do echo 10.1.112.$i >> hosts.txt; done
  
-# Все узлы с открытым 22-ым портом в подсети 10.15.112.0/25
-for i in {1..126}; do nmap -Pn -p22 10.15.112.$i|grep open && echo "10.15.112.$i" >> hosts.txt; done
+# Все узлы с открытым 22-ым портом в подсети 10.1.112.0/25
+for i in {1..126}; do nmap -Pn -p22 10.1.112.$i|grep open && echo "10.1.112.$i" >> hosts.txt; done
 ```

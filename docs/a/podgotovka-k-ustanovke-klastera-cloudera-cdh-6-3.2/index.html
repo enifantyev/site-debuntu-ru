@@ -342,17 +342,17 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/apache-airflow/" data-taxonomy-term="apache-airflow"><span class="taxonomy-label">Apache Airflow</span><span class="taxonomy-count">2</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">8</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">12</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">2</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">5</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">6</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-kafka/" data-taxonomy-term="apache-kafka"><span class="taxonomy-label">Apache Kafka</span><span class="taxonomy-count">5</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">1</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">2</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-sqoop/" data-taxonomy-term="apache-sqoop"><span class="taxonomy-label">Apache Sqoop</span><span class="taxonomy-count">1</span></a></li>
         
@@ -382,7 +382,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/beeline/" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">24</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">29</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">8</span></a></li>
         
@@ -396,7 +396,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">15</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">20</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/cloudera-hadoop/" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span><span class="taxonomy-count">2</span></a></li>
         
@@ -724,15 +724,15 @@ printf &#39;[defaults]\nhost_key_checking=false\n&#39; &gt; ansible.cfg
 printf &#39;[all:var]\nansible_user=jenkins\n#ansible_password=\n&#39; &gt; cluster.inv
 printf &#39;ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n&#39; &gt;&gt; cluster.inv
 cat &lt;&lt; EOF | tee -a cluster.inv &gt; cluster.ips
-10.15.4.1
-10.15.4.2
-10.15.4.3
-10.15.4.5
-10.15.4.6
-10.15.4.7
-10.15.4.8
-10.15.4.9
-10.15.4.10
+10.1.4.1
+10.1.4.2
+10.1.4.3
+10.1.4.5
+10.1.4.6
+10.1.4.7
+10.1.4.8
+10.1.4.9
+10.1.4.10
 EOF
 </code></pre><ul>
 <li><code>cluster.inv</code> — inventory-файл для ансибла;</li>
@@ -761,8 +761,8 @@ ONBOOT=yes
 USERCTL=no
 BOOTPROTO=static
 NETMASK=255.255.255.128
-IPADDR=10.15.4.1
-GATEWAY=10.15.4.254
+IPADDR=10.1.4.1
+GATEWAY=10.1.4.254
 PEERDNS=no
  
 check_link_down() {
@@ -794,9 +794,9 @@ ansible all -i cluster.inv -m shell -a &#34;&gt; /etc/sysconfig/network&#34; --b
 <details><p>
 <pre tabindex="0"><code>options rotate timeout:1 attempts:1
 search example.org
-nameserver 10.15.85.5
-nameserver 10.15.85.6
-nameserver 10.15.85.7
+nameserver 10.1.85.5
+nameserver 10.1.85.6
+nameserver 10.1.85.7
 </code></pre><ul>
 <li>опция <code>rotate</code> заставляет отправлять dns-запросы по очереди к каждому dns-серверу по кругу;</li>
 <li>опция <code>timeout:1</code> уменьшает ожидание ответа dns-сервера с дефолтных трёх секунд до одной секунды;</li>

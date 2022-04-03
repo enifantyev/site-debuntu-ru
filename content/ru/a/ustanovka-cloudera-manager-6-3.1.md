@@ -24,7 +24,7 @@ tags:
 ## 2. Выделение машины управления кластером
 Машина управления кластером имеет название, которое включает в себя буквы 'mgm'. Определив ip-адрес этой машины, добавим новые строки в инвентори файл ансибла:
 ```
-printf '\n[mgm]\n10.15.4.6\n' >> cluster.inv
+printf '\n[mgm]\n10.1.4.6\n' >> cluster.inv
 ```
 
 ## 3. Добавление файлов repo на машину управления
@@ -37,7 +37,7 @@ cat << EOF > cloudera-manager.repo
 USERNAME=nx-pubrepo-reader
 PASSWORD=xxxxxxxxxxxxxxxxx
 name = Cloudera Manager, Version cloudera-cm-6.3.1-hosted
-baseurl = http://10.15.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
+baseurl = http://10.1.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
 gpgcheck = 0
 EOF
  
@@ -46,7 +46,7 @@ cat << EOF > cloudera-cdh.repo
 USERNAME=nx-pubrepo-reader
 PASSWORD=xxxxxxxxxxxxxxxxx
 name = Cloudera Manager, Version cloudera-cdh-6.3.2-hosted
-baseurl = http://10.15.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
+baseurl = http://10.1.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
 gpgcheck = 0
 EOF
  
@@ -55,11 +55,11 @@ cat << EOF > epel.repo
 USERNAME=nx-pubrepo-reader
 PASSWORD=xxxxxxxxxxxxxxxxx
 name=Extra Packages for Enterprise Linux \$releasever - \$basearch
-baseurl=http://10.15.1.1:8081/repository/all_epel/\$releasever/\$basearch
+baseurl=http://10.1.1.1:8081/repository/all_epel/\$releasever/\$basearch
 failovermethod=priority
 enabled=1
 gpgcheck=0
-gpgkey=http://10.15.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
+gpgkey=http://10.1.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
 EOF
 ```
 

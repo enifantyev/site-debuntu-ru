@@ -230,9 +230,9 @@ This configuration &lt;b&gt;overrides&lt;/b&gt; the value set for Hive Proxy Use
 &lt;p&gt;Сразу приведу пример такого HA и LB &amp;lsquo;resolv.conf&amp;rsquo;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;options rotate timeout:1 attempts:1
 search test.lan
-nameserver 10.15.120.146
-nameserver 10.15.120.147
-nameserver 10.15.120.148
+nameserver 10.1.120.146
+nameserver 10.1.120.147
+nameserver 10.1.120.148
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Замечу, что использование локальных кэширующих dns-прослоек, типа dnsmasq, умеющих обращаться сразу ко всем dns-серверами, может несколько увеличить HA и LB.&lt;/p&gt;
 &lt;h2 id=&#34;подготовка-к-тестированию&#34;&gt;Подготовка к тестированию&lt;/h2&gt;
 &lt;p&gt;Создадим следующий python-файл и сделаем его исполняемым:&lt;/p&gt;
@@ -248,38 +248,38 @@ $ chmod u+x test.py
 &lt;p&gt;Создадим стандартный &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/resolv.conf
 search test.lan
-nameserver 10.15.120.146
-nameserver 10.15.120.147
-nameserver 10.15.120.148
+nameserver 10.1.120.146
+nameserver 10.1.120.147
+nameserver 10.1.120.148
 EOF
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;первый-dns-сервер-в-онлайне&#34;&gt;Первый dns-сервер в онлайне&lt;/h3&gt;
 &lt;p&gt;Проверим работу настроек:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.146&amp;#34;)}, 16) = 0
 ...
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы идут только к первому dns-серверу.&lt;/p&gt;
 &lt;h3 id=&#34;все-dns-серверы-в-офлайне&#34;&gt;Все dns-серверы в офлайне&lt;/h3&gt;
 &lt;p&gt;Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo sed -i &amp;#39;s/nameserver 10.15.120.146/nameserver 10.15.120.140/&amp;#39; /etc/resolv.conf
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo sed -i &amp;#39;s/nameserver 10.1.120.146/nameserver 10.1.120.140/&amp;#39; /etc/resolv.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.147&amp;#34;)}, 16) = 0
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы идут только к первому и, после некоторой задержки, ко второму dns-серверу.&lt;/p&gt;
 &lt;h2 id=&#34;тестирование-с-отказоустойчивым-resolvconf&#34;&gt;Тестирование с отказоустойчивым resolv.conf&lt;/h2&gt;
 &lt;p&gt;Создадим отказоустойчивый &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/resolv.conf
 options rotate timeout:1 attempts:1
 search test.lan
-nameserver 10.15.120.146
-nameserver 10.15.120.147
-nameserver 10.15.120.148
+nameserver 10.1.120.146
+nameserver 10.1.120.147
+nameserver 10.1.120.148
 EOF
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь добавлены опции:&lt;/p&gt;
 &lt;ul&gt;
@@ -291,27 +291,27 @@ EOF
 &lt;p&gt;Проверим работу настроек:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.146&amp;#34;)}, 16) = 0
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы идут к каждому dns-серверу по кругу.&lt;/p&gt;
 &lt;h3 id=&#34;первый-dns-сервер-в-офлайне&#34;&gt;Первый dns-сервер в офлайне&lt;/h3&gt;
 &lt;p&gt;Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo sed -i &amp;#39;s/nameserver 10.15.120.146/nameserver 10.15.120.140/&amp;#39; /etc/resolv.conf
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo sed -i &amp;#39;s/nameserver 10.1.120.146/nameserver 10.1.120.140/&amp;#39; /etc/resolv.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.1.120.148&amp;#34;)}, 16) = 0
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы так и продолжают выполняться к каждому dns-серверу по кругу, но с одним малозначимым отличием. После попытки резольвинга от неотвечающего dns-сервера, к следующему работающему dns-серверу производится два запроса. На данный момент я не знаю причин такого поведения, тем более, что не вижу здесь проблемы. Чтение исходников могло бы пролить свет.&lt;/p&gt;
 
       </description>
@@ -459,7 +459,7 @@ psycopg2==2.5.1
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаю последнюю версию пакета psycopg в бинарной версии, чтобы не устанавливать пакеты для сборки:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pip2 install psycopg2-binary
 Collecting psycopg2-binary
-  Downloading http://10.15.61.1:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
+  Downloading http://nexus.example.org:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
     100% |████████████████████████████████| 2.9MB 96.1MB/s 
 Installing collected packages: psycopg2-binary
 Successfully installed psycopg2-binary-2.8.6
@@ -884,22 +884,22 @@ text: Anonymous access is not allowed.
 export ANSIBLE_HOST_KEY_CHECKING=False
  
 # важна запятая после указания одного ip-адреса или dns-имени
-ansible all -i 10.15.112.1, -m shell -a &amp;#39;hostname&amp;#39;
+ansible all -i 10.1.112.1, -m shell -a &amp;#39;hostname&amp;#39;
  
 # здесь доп запятая не нужна
-ansible all -i 10.15.112.1,prod-airf01p -m shell -a &amp;#39;hostname&amp;#39;
+ansible all -i 10.1.112.1,prod-airf01p -m shell -a &amp;#39;hostname&amp;#39;
  
 # выполняем команды с правами root
-ansible all -i 10.15.112.1,prod-airf01p -m shell -a &amp;#39;cat /etc/shadow&amp;#39; --become
+ansible all -i 10.1.112.1,prod-airf01p -m shell -a &amp;#39;cat /etc/shadow&amp;#39; --become
  
 # копируем локальный файл в удалённый каталог на все узлы из инвентори-файла
 ansible all -i list.hosts -m copy -a &amp;#39;src=~/soft/nginx.rpm dest=/tmp/&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Я не нашёл способа указать подсеть, вместо одного или нескольких ip-адресов. Пришлось использовать inventory-файл. В простейшем случае собираем инвентори-файл:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Вся подсеть 10.15.112.0/25
-for i in {1..126}; do echo 10.15.112.$i &amp;gt;&amp;gt; hosts.txt; done
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Вся подсеть 10.1.112.0/25
+for i in {1..126}; do echo 10.1.112.$i &amp;gt;&amp;gt; hosts.txt; done
  
-# Все узлы с открытым 22-ым портом в подсети 10.15.112.0/25
-for i in {1..126}; do nmap -Pn -p22 10.15.112.$i|grep open &amp;amp;&amp;amp; echo &amp;#34;10.15.112.$i&amp;#34; &amp;gt;&amp;gt; hosts.txt; done
+# Все узлы с открытым 22-ым портом в подсети 10.1.112.0/25
+for i in {1..126}; do nmap -Pn -p22 10.1.112.$i|grep open &amp;amp;&amp;amp; echo &amp;#34;10.1.112.$i&amp;#34; &amp;gt;&amp;gt; hosts.txt; done
 &lt;/code&gt;&lt;/pre&gt;
       </description>
     </item>
@@ -1018,11 +1018,11 @@ Valid starting       Expires              Service principal
         &lt;p&gt;2021-01-25&lt;/p&gt;
 &lt;p&gt;Образец файла со списком узлов в формате hosts:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cat ip.hosts
-10.15.195.1 is01-airf01p.example.org
-10.15.195.3 is01-app01p.example.org
-10.15.195.4 is01-app02p.example.org
-10.15.112.52 is02-app208p.example.org
-10.15.112.53 is02-app209p.example.org
+10.1.195.1 is01-airf01p.example.org
+10.1.195.3 is01-app01p.example.org
+10.1.195.4 is01-app02p.example.org
+10.1.112.52 is02-app208p.example.org
+10.1.112.53 is02-app209p.example.org
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скрипт для добавления PTR-записей в соответствующие обратные зоны:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;add_dns_record.sh
 #!/bin/bash
@@ -1030,9 +1030,9 @@ LIST=&amp;#34;ip.hosts&amp;#34;
  
 while read line; do
   echo &amp;#34;&amp;#34;
-  echo $line     # &amp;#34;10.15.195.1 is01-airf01p.example.org&amp;#34;
+  echo $line     # &amp;#34;10.1.195.1 is01-airf01p.example.org&amp;#34;
   arr1=($line)   # конвертируем переменную в массив из двух элементов
-  ip1=${arr1[0]} # &amp;#34;10.15.195.1&amp;#34;
+  ip1=${arr1[0]} # &amp;#34;10.1.195.1&amp;#34;
   IFS=&amp;#34;.&amp;#34;        # разделитель пробел меняем на точку для bash substring
   arr2=($ip1)    # конвертируем ip-адрес в массив &amp;#34;10 15 195 1&amp;#34;
   IFS=&amp;#34; &amp;#34;        # возвращаем разделить

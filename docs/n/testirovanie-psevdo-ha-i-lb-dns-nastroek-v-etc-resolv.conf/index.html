@@ -347,17 +347,17 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/apache-airflow/" data-taxonomy-term="apache-airflow"><span class="taxonomy-label">Apache Airflow</span><span class="taxonomy-count">2</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">8</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">12</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">2</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">5</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">6</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-kafka/" data-taxonomy-term="apache-kafka"><span class="taxonomy-label">Apache Kafka</span><span class="taxonomy-count">5</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">1</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">2</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-sqoop/" data-taxonomy-term="apache-sqoop"><span class="taxonomy-label">Apache Sqoop</span><span class="taxonomy-count">1</span></a></li>
         
@@ -387,7 +387,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/beeline/" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">24</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">29</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">8</span></a></li>
         
@@ -401,7 +401,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">15</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">20</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/cloudera-hadoop/" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span><span class="taxonomy-count">2</span></a></li>
         
@@ -711,9 +711,9 @@ if (!doNotTrack) {
 <p>Сразу приведу пример такого HA и LB &lsquo;resolv.conf&rsquo;:</p>
 <pre tabindex="0"><code>options rotate timeout:1 attempts:1
 search test.lan
-nameserver 10.15.120.146
-nameserver 10.15.120.147
-nameserver 10.15.120.148
+nameserver 10.1.120.146
+nameserver 10.1.120.147
+nameserver 10.1.120.148
 </code></pre><p>Замечу, что использование локальных кэширующих dns-прослоек, типа dnsmasq, умеющих обращаться сразу ко всем dns-серверами, может несколько увеличить HA и LB.</p>
 <h2 id="подготовка-к-тестированию">Подготовка к тестированию</h2>
 <p>Создадим следующий python-файл и сделаем его исполняемым:</p>
@@ -729,38 +729,38 @@ $ chmod u+x test.py
 <p>Создадим стандартный <code>/etc/resolv.conf</code>:</p>
 <pre tabindex="0"><code>$ cat &lt;&lt; EOF | sudo tee /etc/resolv.conf
 search test.lan
-nameserver 10.15.120.146
-nameserver 10.15.120.147
-nameserver 10.15.120.148
+nameserver 10.1.120.146
+nameserver 10.1.120.147
+nameserver 10.1.120.148
 EOF
 </code></pre><h3 id="первый-dns-сервер-в-онлайне">Первый dns-сервер в онлайне</h3>
 <p>Проверим работу настроек:</p>
 <pre tabindex="0"><code>$ strace -e connect ./test.py 2&gt;&amp;1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.146&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.146&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.146&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.146&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.146&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.146&#34;)}, 16) = 0
 ...
 </code></pre><p>Здесь мы видим, что запросы идут только к первому dns-серверу.</p>
 <h3 id="все-dns-серверы-в-офлайне">Все dns-серверы в офлайне</h3>
 <p>Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в <code>/etc/resolv.conf</code>:</p>
-<pre tabindex="0"><code>$ sudo sed -i &#39;s/nameserver 10.15.120.146/nameserver 10.15.120.140/&#39; /etc/resolv.conf
+<pre tabindex="0"><code>$ sudo sed -i &#39;s/nameserver 10.1.120.146/nameserver 10.1.120.140/&#39; /etc/resolv.conf
 </code></pre><p>Проверим работу настроек:</p>
 <pre tabindex="0"><code>$ strace -e connect ./test.py 2&gt;&amp;1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.140&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.147&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.140&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.147&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.140&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.147&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.140&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.147&#34;)}, 16) = 0
 </code></pre><p>Здесь мы видим, что запросы идут только к первому и, после некоторой задержки, ко второму dns-серверу.</p>
 <h2 id="тестирование-с-отказоустойчивым-resolvconf">Тестирование с отказоустойчивым resolv.conf</h2>
 <p>Создадим отказоустойчивый <code>/etc/resolv.conf</code>:</p>
 <pre tabindex="0"><code>$ cat &lt;&lt; EOF | sudo tee /etc/resolv.conf
 options rotate timeout:1 attempts:1
 search test.lan
-nameserver 10.15.120.146
-nameserver 10.15.120.147
-nameserver 10.15.120.148
+nameserver 10.1.120.146
+nameserver 10.1.120.147
+nameserver 10.1.120.148
 EOF
 </code></pre><p>Здесь добавлены опции:</p>
 <ul>
@@ -772,27 +772,27 @@ EOF
 <p>Проверим работу настроек:</p>
 <pre tabindex="0"><code>$ strace -e connect ./test.py 2&gt;&amp;1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.147&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.148&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.146&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.147&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.148&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.146&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.147&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.148&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.146&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.147&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.148&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.146&#34;)}, 16) = 0
 </code></pre><p>Здесь мы видим, что запросы идут к каждому dns-серверу по кругу.</p>
 <h3 id="первый-dns-сервер-в-офлайне">Первый dns-сервер в офлайне</h3>
 <p>Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в <code>/etc/resolv.conf</code>:</p>
-<pre tabindex="0"><code>$ sudo sed -i &#39;s/nameserver 10.15.120.146/nameserver 10.15.120.140/&#39; /etc/resolv.conf
+<pre tabindex="0"><code>$ sudo sed -i &#39;s/nameserver 10.1.120.146/nameserver 10.1.120.140/&#39; /etc/resolv.conf
 </code></pre><p>Проверим работу настроек:</p>
 <pre tabindex="0"><code>$ strace -e connect ./test.py 2&gt;&amp;1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.140&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.147&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.147&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.148&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.140&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.147&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.147&#34;)}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.15.120.148&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.140&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.147&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.147&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.148&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.140&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.147&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.147&#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&#34;10.1.120.148&#34;)}, 16) = 0
 </code></pre><p>Здесь мы видим, что запросы так и продолжают выполняться к каждому dns-серверу по кругу, но с одним малозначимым отличием. После попытки резольвинга от неотвечающего dns-сервера, к следующему работающему dns-серверу производится два запроса. На данный момент я не знаю причин такого поведения, тем более, что не вижу здесь проблемы. Чтение исходников могло бы пролить свет.</p>
 
 	

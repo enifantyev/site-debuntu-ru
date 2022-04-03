@@ -1310,16 +1310,16 @@ $ sudo pip3 install --upgrade pip
 $ sudo pip3 install wheel
 
 $ sudo pip3 install apache-airflow==2.0.1 --use-deprecated legacy-resolver --constraint constraints-3.6.txt
-Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Looking in indexes: http://centos-main-reader:****@nexus.example.org:8081/repository/pypi/simple
 Collecting apache-airflow==2.0.1
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/apache-airflow/2.0.1/apache_airflow-2.0.1-py3-none-any.whl (4.5 MB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/apache-airflow/2.0.1/apache_airflow-2.0.1-py3-none-any.whl (4.5 MB)
      |████████████████████████████████| 4.5 MB 61.9 MB/s
 Collecting cached-property==1.5.2
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/cached-property/1.5.2/cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/cached-property/1.5.2/cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
 Collecting iso8601==0.1.14
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/iso8601/0.1.14/iso8601-0.1.14-py2.py3-none-any.whl (9.5 kB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/iso8601/0.1.14/iso8601-0.1.14-py2.py3-none-any.whl (9.5 kB)
 Collecting psutil==5.8.0
-  Downloading http://10.15.61.1:8081/repository/pypi/packages/psutil/5.8.0/psutil-5.8.0-cp36-cp36m-manylinux2010_x86_64.whl (291 kB)
+  Downloading http://nexus.example.org:8081/repository/pypi/packages/psutil/5.8.0/psutil-5.8.0-cp36-cp36m-manylinux2010_x86_64.whl (291 kB)
      |████████████████████████████████| 291 kB 75.9 MB/s
 Collecting pendulum==2.1.2
 ...
@@ -1342,7 +1342,7 @@ Requirement already satisfied: tenacity==6.2.0 in /usr/local/lib/python3.6/site-
 Successfully installed Flask-Bcrypt-0.7.1 JPype1-1.2.1 JayDeBeApi-1.2.3 PyHive-0.6.3 amqp-2.6.1 apache-airflow-providers-apache-hdfs-1.0.1 apache-airflow-providers-apache-hive-1.0.1 apache-airflow-providers-apache-spark-1.0.1 apache-airflow-providers-celery-1.0.1 apache-airflow-providers-jdbc-1.0.1 apache-airflow-providers-jenkins-1.0.1 apache-airflow-providers-postgres-1.0.1 apache-airflow-providers-vertica-1.0.1 argparse-1.4.0 bcrypt-3.2.0 billiard-3.6.3.0 celery-4.4.7 eventlet-0.30.1 flower-0.9.7 future-0.18.2 gevent-21.1.2 greenlet-1.0.0 hmsclient-0.1.1 humanize-3.2.0 kombu-4.6.11 ldap3-2.9 multi-key-dict-2.0.3 pbr-5.5.1 prometheus-client-0.8.0 protobuf-3.14.0 psycopg2-binary-2.8.6 py4j-0.10.9 pyasn1-0.4.8 pyasn1-modules-0.2.8 pyspark-3.0.1 python-jenkins-1.7.0 python-ldap-3.3.1 sasl-0.2.1 snakebite-py3-3.0.5 thrift-0.13.0 thrift-sasl-0.4.2 tornado-6.1 vertica-python-1.0.1 vine-1.3.0 zope.event-4.5.0 zope.interface-5.2.0
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Попробуем установить пакет &amp;lsquo;apache-airflow[kerberos]&amp;rsquo;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip install apache-airflow[kerberos] --use-deprecated legacy-resolver --constraint constraints-3.6.txt
-Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Looking in indexes: http://centos-main-reader:****@nexus.example.org:8081/repository/pypi/simple
 Requirement already satisfied: apache-airflow[kerberos] in /usr/local/lib/python3.6/site-packages (2.0.0)
 Requirement already satisfied: croniter==0.3.36 in /usr/local/lib/python3.6/site-packages (from -c constrain
 ts-3.6.txt (line 109)) (0.3.36)
@@ -1726,11 +1726,11 @@ Valid starting       Expires              Service principal
         &lt;p&gt;2021-01-25&lt;/p&gt;
 &lt;p&gt;Образец файла со списком узлов в формате hosts:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cat ip.hosts
-10.15.195.1 is01-airf01p.example.org
-10.15.195.3 is01-app01p.example.org
-10.15.195.4 is01-app02p.example.org
-10.15.112.52 is02-app208p.example.org
-10.15.112.53 is02-app209p.example.org
+10.1.195.1 is01-airf01p.example.org
+10.1.195.3 is01-app01p.example.org
+10.1.195.4 is01-app02p.example.org
+10.1.112.52 is02-app208p.example.org
+10.1.112.53 is02-app209p.example.org
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скрипт для добавления PTR-записей в соответствующие обратные зоны:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;add_dns_record.sh
 #!/bin/bash
@@ -1738,9 +1738,9 @@ LIST=&amp;#34;ip.hosts&amp;#34;
  
 while read line; do
   echo &amp;#34;&amp;#34;
-  echo $line     # &amp;#34;10.15.195.1 is01-airf01p.example.org&amp;#34;
+  echo $line     # &amp;#34;10.1.195.1 is01-airf01p.example.org&amp;#34;
   arr1=($line)   # конвертируем переменную в массив из двух элементов
-  ip1=${arr1[0]} # &amp;#34;10.15.195.1&amp;#34;
+  ip1=${arr1[0]} # &amp;#34;10.1.195.1&amp;#34;
   IFS=&amp;#34;.&amp;#34;        # разделитель пробел меняем на точку для bash substring
   arr2=($ip1)    # конвертируем ip-адрес в массив &amp;#34;10 15 195 1&amp;#34;
   IFS=&amp;#34; &amp;#34;        # возвращаем разделить

@@ -91,15 +91,15 @@ printf &amp;#39;[defaults]\nhost_key_checking=false\n&amp;#39; &amp;gt; ansible.
 printf &amp;#39;[all:var]\nansible_user=jenkins\n#ansible_password=\n&amp;#39; &amp;gt; cluster.inv
 printf &amp;#39;ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n&amp;#39; &amp;gt;&amp;gt; cluster.inv
 cat &amp;lt;&amp;lt; EOF | tee -a cluster.inv &amp;gt; cluster.ips
-10.15.4.1
-10.15.4.2
-10.15.4.3
-10.15.4.5
-10.15.4.6
-10.15.4.7
-10.15.4.8
-10.15.4.9
-10.15.4.10
+10.1.4.1
+10.1.4.2
+10.1.4.3
+10.1.4.5
+10.1.4.6
+10.1.4.7
+10.1.4.8
+10.1.4.9
+10.1.4.10
 EOF
 &lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
 &lt;li&gt;&lt;code&gt;cluster.inv&lt;/code&gt; — inventory-файл для ансибла;&lt;/li&gt;
@@ -128,8 +128,8 @@ ONBOOT=yes
 USERCTL=no
 BOOTPROTO=static
 NETMASK=255.255.255.128
-IPADDR=10.15.4.1
-GATEWAY=10.15.4.254
+IPADDR=10.1.4.1
+GATEWAY=10.1.4.254
 PEERDNS=no
  
 check_link_down() {
@@ -161,9 +161,9 @@ ansible all -i cluster.inv -m shell -a &amp;#34;&amp;gt; /etc/sysconfig/network&
 &lt;details&gt;&lt;p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;options rotate timeout:1 attempts:1
 search example.org
-nameserver 10.15.85.5
-nameserver 10.15.85.6
-nameserver 10.15.85.7
+nameserver 10.1.85.5
+nameserver 10.1.85.6
+nameserver 10.1.85.7
 &lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
 &lt;li&gt;опция &lt;code&gt;rotate&lt;/code&gt; заставляет отправлять dns-запросы по очереди к каждому dns-серверу по кругу;&lt;/li&gt;
 &lt;li&gt;опция &lt;code&gt;timeout:1&lt;/code&gt; уменьшает ожидание ответа dns-сервера с дефолтных трёх секунд до одной секунды;&lt;/li&gt;

@@ -18,9 +18,9 @@ tags:
 ```
 options rotate timeout:1 attempts:1
 search test.lan
-nameserver 10.15.120.146
-nameserver 10.15.120.147
-nameserver 10.15.120.148
+nameserver 10.1.120.146
+nameserver 10.1.120.147
+nameserver 10.1.120.148
 ```
 
 Замечу, что использование локальных кэширующих dns-прослоек, типа dnsmasq, умеющих обращаться сразу ко всем dns-серверами, может несколько увеличить HA и LB.
@@ -43,9 +43,9 @@ $ chmod u+x test.py
 ```
 $ cat << EOF | sudo tee /etc/resolv.conf
 search test.lan
-nameserver 10.15.120.146
-nameserver 10.15.120.147
-nameserver 10.15.120.148
+nameserver 10.1.120.146
+nameserver 10.1.120.147
+nameserver 10.1.120.148
 EOF
 ```
 
@@ -54,9 +54,9 @@ EOF
 ```
 $ strace -e connect ./test.py 2>&1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.146")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.146")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.146")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.146")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.146")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.146")}, 16) = 0
 ...
 ```
 
@@ -65,17 +65,17 @@ connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120
 ### Все dns-серверы в офлайне
 Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в `/etc/resolv.conf`:
 ```
-$ sudo sed -i 's/nameserver 10.15.120.146/nameserver 10.15.120.140/' /etc/resolv.conf
+$ sudo sed -i 's/nameserver 10.1.120.146/nameserver 10.1.120.140/' /etc/resolv.conf
 ```
 
 Проверим работу настроек:
 ```
 $ strace -e connect ./test.py 2>&1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.140")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.147")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.140")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.147")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.140")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.147")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.140")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.147")}, 16) = 0
 ```
 
 Здесь мы видим, что запросы идут только к первому и, после некоторой задержки, ко второму dns-серверу.
@@ -86,9 +86,9 @@ connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120
 $ cat << EOF | sudo tee /etc/resolv.conf
 options rotate timeout:1 attempts:1
 search test.lan
-nameserver 10.15.120.146
-nameserver 10.15.120.147
-nameserver 10.15.120.148
+nameserver 10.1.120.146
+nameserver 10.1.120.147
+nameserver 10.1.120.148
 EOF
 ```
 
@@ -102,12 +102,12 @@ EOF
 ```
 $ strace -e connect ./test.py 2>&1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.147")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.148")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.146")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.147")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.148")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.146")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.147")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.148")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.146")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.147")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.148")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.146")}, 16) = 0
 ```
 
 Здесь мы видим, что запросы идут к каждому dns-серверу по кругу.
@@ -115,21 +115,21 @@ connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120
 ### Первый dns-сервер в офлайне
 Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в `/etc/resolv.conf`:
 ```
-$ sudo sed -i 's/nameserver 10.15.120.146/nameserver 10.15.120.140/' /etc/resolv.conf
+$ sudo sed -i 's/nameserver 10.1.120.146/nameserver 10.1.120.140/' /etc/resolv.conf
 ```
 
 Проверим работу настроек:
 ```
 $ strace -e connect ./test.py 2>&1 | grep 53
 
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.140")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.147")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.147")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.148")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.140")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.147")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.147")}, 16) = 0
-connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.15.120.148")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.140")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.147")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.147")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.148")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.140")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.147")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.147")}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr("10.1.120.148")}, 16) = 0
 ```
 
 Здесь мы видим, что запросы так и продолжают выполняться к каждому dns-серверу по кругу, но с одним малозначимым отличием. После попытки резольвинга от неотвечающего dns-сервера, к следующему работающему dns-серверу производится два запроса. На данный момент я не знаю причин такого поведения, тем более, что не вижу здесь проблемы. Чтение исходников могло бы пролить свет.

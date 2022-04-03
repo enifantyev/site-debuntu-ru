@@ -258,5 +258,51 @@ These arguments will be passed as part of the Java command line. Commonly, garba
       </description>
     </item>
     
+    <item>
+      <title>Manuals: 11. Первоначальный импорт содержимого HBase</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</link>
+      <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-29&lt;/p&gt;
+&lt;p&gt;Первоначальный импорт содержимого HBase в Atlas производится только один раз, сразу после настройки Atlas Hook&amp;rsquo;а для HBase. Apache Atlas должен быть запущен и слушать &amp;lsquo;atlas.rest.address=https://dev-app111p.test2.lan:21443&amp;rsquo;. После одноразового импорта, дальнейшее соответствие информации между Atlas и HBase производится только на основании сообщений из Kafka.&lt;/p&gt;
+&lt;p&gt;Повторное использование ручного импорта не приведёт Атласовскую информацию о содержимом HBase&amp;rsquo;е в их полное соответствие. Те объекты, которые есть в Atlas&amp;rsquo;е, но отсутствуют в HBase&amp;rsquo;е, не будут удалены из Atals&amp;rsquo;а. Такие объекты могут быть удалены повторным созданием объекта в HBase&amp;rsquo;е с их последующим удалением. В этом случае, такие объекты в Atlas&amp;rsquo;е будут помечены, как удалённые.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Получаем Kerberos-билет для УЗ с администраторскими правами в Atlas&amp;rsquo;е, переходим в рабочий каталог Atlas&amp;rsquo;а, устанавливаем необходимые переменные, и запускаем импорт:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#kinit eugene
+
+cd /opt/atlas
+
+export JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera
+export HBASE_HOME=/usr/lib/hbase
+export HBASE_CONF_DIR=/etc/hbase/conf
+export ATLAS_CONF_DIR=/opt/atlas/conf
+export ATLAS_LOG_DIR=/opt/atlas/logs
+
+hook-bin/import-hbase.sh -Dsun.security.jgss.debug=true
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; hook-bin/import-hbase.sh
+&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; /opt/atlas
+Using HBase configuration directory [/etc/hbase/conf]
+/etc/hadoop/conf:/usr/lib/hadoop/lib/*:/usr/lib/hadoop/.//*:/usr/lib/hadoop-hdfs/./:/usr/lib/hadoop-hdfs/lib/*:/usr/lib/hadoop-hdfs/.//*:/usr/lib/hadoop-mapreduce/.//*:/usr/lib/hadoop-yarn/lib/*:/usr/lib/hadoop-yarn/.//*
+Log file for import is /opt/atlas/logs/import-hbase.log
+Search Subject for Kerberos V5 INIT cred (&amp;lt;&amp;lt;DEF&amp;gt;&amp;gt;, sun.security.jgss.krb5.Krb5InitCredential)
+Search Subject for Kerberos V5 INIT cred (&amp;lt;&amp;lt;DEF&amp;gt;&amp;gt;, sun.security.jgss.krb5.Krb5InitCredential)
+Search Subject for SPNEGO INIT cred (&amp;lt;&amp;lt;DEF&amp;gt;&amp;gt;, sun.security.jgss.spnego.SpNegoCredElement)
+Search Subject for Kerberos V5 INIT cred (&amp;lt;&amp;lt;DEF&amp;gt;&amp;gt;, sun.security.jgss.krb5.Krb5InitCredential)
+HBase Data Model imported successfully!!!
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Для безопасности удаляем свой kerberos-билет:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kdestroy
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Все дальнейшие изменения в HBase&amp;rsquo;е будут автоматически транслироваться в Apache Atlas через Apache Kafka.&lt;/p&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>

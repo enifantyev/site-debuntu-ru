@@ -43,7 +43,7 @@ psycopg2==2.5.1
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаю последнюю версию пакета psycopg в бинарной версии, чтобы не устанавливать пакеты для сборки:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pip2 install psycopg2-binary
 Collecting psycopg2-binary
-  Downloading http://10.15.61.1:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
+  Downloading http://nexus.example.org:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
     100% |████████████████████████████████| 2.9MB 96.1MB/s 
 Installing collected packages: psycopg2-binary
 Successfully installed psycopg2-binary-2.8.6

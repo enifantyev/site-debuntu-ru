@@ -378,6 +378,21 @@
     <loc>/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</loc>
+    <lastmod>2021-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</loc>
+    <lastmod>2021-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</loc>
+    <lastmod>2021-08-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</loc>
+    <lastmod>2021-08-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</loc>
     <lastmod>2022-03-16T00:00:00+00:00</lastmod>
   </url><url>
@@ -396,20 +411,20 @@
     <loc>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</loc>
     <lastmod>2021-12-27T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/manuals/bigdata/apacheatlas/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/manuals/bigdata/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/n/</loc>
     <lastmod>2021-11-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/a/</loc>
     <lastmod>2021-11-25T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/manuals/bigdata/apacheatlas/</loc>
-    <lastmod>2021-11-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/manuals/bigdata/</loc>
-    <lastmod>2021-11-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/</loc>
-    <lastmod>2021-11-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/refbooks/python/</loc>
     <lastmod>1970-01-01T03:00:02+03:00</lastmod>
@@ -477,6 +492,15 @@
     <loc>/tags/freeipa-4.9.6/</loc>
     <lastmod>2021-12-27T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/tags/apache-atlas/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/bigdata/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tags/cloudera-cdh-6.3.2/</loc>
+    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/tags/centos-7/</loc>
     <lastmod>2021-11-26T00:00:00+00:00</lastmod>
   </url><url>
@@ -495,14 +519,8 @@
     <loc>/tags/obfuscation/</loc>
     <lastmod>2021-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tags/apache-atlas/</loc>
-    <lastmod>2021-11-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/bigdata/</loc>
-    <lastmod>2021-11-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/cloudera-cdh-6.3.2/</loc>
-    <lastmod>2021-11-03T00:00:00+00:00</lastmod>
+    <loc>/tags/apache-spark/</loc>
+    <lastmod>2021-11-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/apache-hbase/</loc>
     <lastmod>2021-10-22T00:00:00+00:00</lastmod>
@@ -560,9 +578,6 @@
   </url><url>
     <loc>/tags/apache-tomcat/</loc>
     <lastmod>2021-05-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/apache-spark/</loc>
-    <lastmod>2021-04-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tags/ide/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>

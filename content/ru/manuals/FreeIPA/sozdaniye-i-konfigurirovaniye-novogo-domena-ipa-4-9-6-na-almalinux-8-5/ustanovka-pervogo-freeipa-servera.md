@@ -116,7 +116,7 @@ ADMIN_PASSWORD=$(pwgen 14 1)
 sudo mv /root/freeipa_passwords.txt /root/freeipa_passwords.txt.$(date +%y%m%d-%H%M%S)
 echo -e "${DM_PASSWORD}\n${ADMIN_PASSWORD}" | sudo tee /root/freeipa_passwords.txt
 
-IP_ADDRESS="10.15.160.23"
+IP_ADDRESS="10.1.160.23"
 REALM_NAME="TEST3.LAN"
 NTP_SERVER1="10.0.0.5"
 NTP_SERVER2="10.0.0.6"
@@ -166,7 +166,7 @@ Trust is configured but no NetBIOS domain name found, setting it now.
 
 The IPA Master Server will be configured with:
 Hostname:       dev-ipa04.test3.lan
-IP address(es): 10.15.160.23
+IP address(es): 10.1.160.23
 Domain name:    test3.lan  
 Realm name:     TEST3.LAN  
 
@@ -184,7 +184,7 @@ Reverse zone(s):  160.15.10.in-addr.arpa.
 NTP server:     10.0.0.5
 NTP server:     10.0.0.6
 NTP server:     10.0.0.7
-Adding [10.15.160.23 dev-ipa04.test3.lan] to your /etc/hosts file
+Adding [10.1.160.23 dev-ipa04.test3.lan] to your /etc/hosts file
 Disabled p11-kit-proxy
 Synchronizing time
 Configuration of chrony was changed by installer.
@@ -434,7 +434,7 @@ The ipa-server-install command was successful
 ### 1.4. Вход в Web UI FreeIPA
 Пока отсутствует DNS resolving для нового домена test3.lan, добавляем на свою рабочую машину в файл `/etc/hosts` запись для FreeIPA-сервера:
 ```
-echo "10.15.160.23 dev-ipa04.test3.lan" | sudo tee -a /etc/hosts
+echo "10.1.160.23 dev-ipa04.test3.lan" | sudo tee -a /etc/hosts
 ```
 
 Теперь можно открыть WEB UI страницу FreeIPA-сервера по адресу 'https://dev-ipa04.test3.lan' и зайти в консоль управления под учётными данными аккаунта 'admin':

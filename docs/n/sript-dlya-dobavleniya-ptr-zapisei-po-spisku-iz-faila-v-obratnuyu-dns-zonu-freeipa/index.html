@@ -328,17 +328,17 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/apache-airflow/" data-taxonomy-term="apache-airflow"><span class="taxonomy-label">Apache Airflow</span><span class="taxonomy-count">2</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">8</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">12</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">2</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">5</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">6</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-kafka/" data-taxonomy-term="apache-kafka"><span class="taxonomy-label">Apache Kafka</span><span class="taxonomy-count">5</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">1</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">2</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-sqoop/" data-taxonomy-term="apache-sqoop"><span class="taxonomy-label">Apache Sqoop</span><span class="taxonomy-count">1</span></a></li>
         
@@ -368,7 +368,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/beeline/" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">24</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">29</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">8</span></a></li>
         
@@ -382,7 +382,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">15</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">20</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/cloudera-hadoop/" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span><span class="taxonomy-count">2</span></a></li>
         
@@ -691,11 +691,11 @@ if (!doNotTrack) {
 	<p>2021-01-25</p>
 <p>Образец файла со списком узлов в формате hosts:</p>
 <pre tabindex="0"><code># cat ip.hosts
-10.15.195.1 is01-airf01p.example.org
-10.15.195.3 is01-app01p.example.org
-10.15.195.4 is01-app02p.example.org
-10.15.112.52 is02-app208p.example.org
-10.15.112.53 is02-app209p.example.org
+10.1.195.1 is01-airf01p.example.org
+10.1.195.3 is01-app01p.example.org
+10.1.195.4 is01-app02p.example.org
+10.1.112.52 is02-app208p.example.org
+10.1.112.53 is02-app209p.example.org
 </code></pre><p>Скрипт для добавления PTR-записей в соответствующие обратные зоны:</p>
 <pre tabindex="0"><code>add_dns_record.sh
 #!/bin/bash
@@ -703,9 +703,9 @@ LIST=&#34;ip.hosts&#34;
  
 while read line; do
   echo &#34;&#34;
-  echo $line     # &#34;10.15.195.1 is01-airf01p.example.org&#34;
+  echo $line     # &#34;10.1.195.1 is01-airf01p.example.org&#34;
   arr1=($line)   # конвертируем переменную в массив из двух элементов
-  ip1=${arr1[0]} # &#34;10.15.195.1&#34;
+  ip1=${arr1[0]} # &#34;10.1.195.1&#34;
   IFS=&#34;.&#34;        # разделитель пробел меняем на точку для bash substring
   arr2=($ip1)    # конвертируем ip-адрес в массив &#34;10 15 195 1&#34;
   IFS=&#34; &#34;        # возвращаем разделить

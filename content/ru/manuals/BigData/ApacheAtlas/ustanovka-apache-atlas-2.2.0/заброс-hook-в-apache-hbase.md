@@ -3,7 +3,7 @@ title: "06. 🎣 Заброс Hook'а в Apache HBase"
 date: 2021-10-22
 weight: 11
 description: >
-  Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.
+  Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
 tags:
   - BigData
   - Apache Atlas

@@ -4,7 +4,7 @@
     <link>/tags/apache-spark/</link>
     <description>Recent content in Apache Spark on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 30 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Nov 2021 00:00:00 +0000</lastBuildDate>
     
 	  <atom:link href="/tags/apache-spark/index.xml" rel="self" type="application/rss+xml" />
     
@@ -66,6 +66,23 @@
 &lt;p&gt;После включения первого параметра и с пустой строкой во втором параметре, анонимный доступ к Spark History прекращается. Страница доступна только при наличии в веб-браузере действующего Kerberos-билета. В случае отсутствия валидного Kerberos-тикета, страница возвращает сообщение &amp;ldquo;HTTP ERROR 401. Authentication required&amp;rdquo;.&lt;/p&gt;
 &lt;p&gt;После заполнения второго параметра, например &amp;lsquo;admin&amp;rsquo; или любое другое случайное значение, остаётся возможность просмотра страницы из-под любого пользователя с валидным Kerberos-тикетом, но нельзя пройти по ссылкам к логам приложений, присутствующих на главной странице.&lt;/p&gt;
 &lt;p&gt;После заполнения второго параметра действующими логинами IPA-аккаунтов (пользовательские группы не работают), этим пользователям предоставляется доступ к логами приложений.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</link>
+      <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Почитать:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.microsoft.com/ru-ru/azure/purview/how-to-lineage-spark-atlas-connector&#34;&gt;Как использовать соединитель Apache Atlas для сбора сведений о происхождении данных Spark&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
       </description>
     </item>

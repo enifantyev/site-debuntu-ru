@@ -263,6 +263,46 @@ This is the multi-page printable view of this section.
 
     
   
+    
+    
+	
+<li>1.2.7: <a href="#pg-45f54155f27c098dfaa94b0e16d6448c">07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</a></li>
+
+
+    
+  
+    
+    
+	
+<li>1.2.8: <a href="#pg-9aae9f99cc8712df1af1ed4fab4d6faa">08. Первый запуск Apache Atlas и его отладка при необходимости</a></li>
+
+
+    
+  
+    
+    
+	
+<li>1.2.9: <a href="#pg-a8fc9809ef1065fe06df0f86ba787c55">10. Первоначальный импорт содержимого Hive</a></li>
+
+
+    
+  
+    
+    
+	
+<li>1.2.10: <a href="#pg-74837e69f24937a69895621788d8a9d1">11. Первоначальный импорт содержимого HBase</a></li>
+
+
+    
+  
+    
+    
+	
+<li>1.2.11: <a href="#pg-2de0ea75231dfee6e746be891d0e08a0">20. 🔬 Тестирование работоспособности Apache Atlas</a></li>
+
+
+    
+  
 
     </ul>
     
@@ -1116,7 +1156,7 @@ HOST=*-&gt;CONSUMERGROUP=*-&gt;action=read
 <div class="td-content" style="page-break-before: always">
     
 	<h1 id="pg-2beb6f9a544cc44f1021d6049553d94b">1.2.3 - 03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</h1>
-    <div class="lead">Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.</div>
+    <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-08-10 – 2021-11-03</p>
 <h2 id="1-выбор-поискового-движка-apache-solr-or-elasticsearch">1. Выбор поискового движка: Apache Solr or Elasticsearch</h2>
 <p>1.1. Стандартно используется Apache Solr.</p>
@@ -1326,7 +1366,7 @@ EOF
 path.logs: /data/log/elasticsearch
 
 # По умолчанию, Elasticsearch привязывается только в 127.0.0.1
-network.host: 10.15.137.11
+network.host: 10.1.137.11
 </code></pre><h3 id="34-запуск">3.4. Запуск</h3>
 <p>3.4.1. Запускаем Elasticsearch:</p>
 <pre tabindex="0"><code>systemctl start elasticsearch
@@ -1994,7 +2034,7 @@ atlas.authentication.method.kerberos.token.validity = 3600
 <div class="td-content" style="page-break-before: always">
     
 	<h1 id="pg-14bbf724d253fe72e3808efadc631071">1.2.5 - 05. 🎣 Заброс Hook&#39;а в Apache Hive</h1>
-    <div class="lead">Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.</div>
+    <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-08-30</p>
 <h2 id="1введение">1.Введение</h2>
 <p>Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.</p>
@@ -2008,7 +2048,7 @@ DIR=&#34;apache-atlas-2.2.0_cdh6.3.2_j8.181_mvn3.8.1&#34;
 ## Скачиваем сборку с Nexus&#39;а
 mkdir -p ~/tmp
 cd ~/tmp
-curl -LO -u ${NXUSERPASS} http://10.15.61.1:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+curl -LO -u ${NXUSERPASS} http://nexus.example.org:8081/repository/dud_evolut_raw/atlas/${FILENAME}
 
 sudo tar xvf ${FILENAME} -C /opt
 cd /opt
@@ -2131,7 +2171,7 @@ unset OPTION
 <div class="td-content" style="page-break-before: always">
     
 	<h1 id="pg-62382d30159c1341b14d8b387c38ce19">1.2.6 - 06. 🎣 Заброс Hook&#39;а в Apache HBase</h1>
-    <div class="lead">Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.</div>
+    <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-08-30 / 2021-10-22</p>
 <h2 id="1введение">1.Введение</h2>
 <p>Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.</p>
@@ -2251,6 +2291,289 @@ These arguments will be passed as part of the Java command line. Commonly, garba
 <p>3.3. <img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</p>
 <h2 id="4-использованные-материалы">4. Использованные материалы</h2>
 <p><a href="https://atlas.apache.org/#/HookHBase">Apache Atlas Hook &amp; Bridge for Apache HBase</a></p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-45f54155f27c098dfaa94b0e16d6448c">1.2.7 - 07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</h1>
+    <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
+	<p>Почитать:</p>
+<ul>
+<li><a href="https://docs.microsoft.com/ru-ru/azure/purview/how-to-lineage-spark-atlas-connector">Как использовать соединитель Apache Atlas для сбора сведений о происхождении данных Spark</a></li>
+</ul>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-9aae9f99cc8712df1af1ed4fab4d6faa">1.2.8 - 08. Первый запуск Apache Atlas и его отладка при необходимости</h1>
+    <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
+	<p>2021-11-02</p>
+<h2 id="1-первый-запуск">1. Первый запуск</h2>
+<p>1.1. Для надёжности выполняем изменение владельца для всего каталога <code>/opt/atlas</code>:</p>
+<pre tabindex="0"><code>sudo chown atlas.atlas /opt/atlas/* -R
+</code></pre><p>1.2. Перед первым запуском поменяем уровень логгирования с INFO на DEBUG. Так удобней отслеживать процесс первоначального запуска. В файле <code>/opt/atlas/conf/atlas-log4j.xml</code> приводим соответствующую строку к следующему виду:</p>
+<pre tabindex="0"><code>    &lt;logger name=&#34;org.apache.atlas&#34; additivity=&#34;false&#34;&gt;
+        &lt;level value=&#34;debug&#34;/&gt;
+        &lt;appender-ref ref=&#34;FILE&#34;/&gt;
+    &lt;/logger&gt;
+</code></pre><p>1.3. Первый запуск Apache Atlas производится командой:</p>
+<pre tabindex="0"><code>sudo systemctl enable --now atlas
+</code></pre><p>1.4. Наблюдаем процесс запуска в лог-файле /opt/atlas/logs/application.log. Если процесс останавливается на продолжительное время (примерно больше 10 минут) и Web UI не появляется, то просматриваем предыдущие строки в поисках ошибок. При необходимости, останавливаем Atlas и, после увеличения уровня логов до TRACE, вновь запускаем Atlas.</p>
+<p>1.5. <strong>Ожидание появления Web UI, при первом запуске Atlas&rsquo;а на тестовом кластере, занимало от 20 минут до двух часов</strong>. Пока неизвестны причины такого поведения.
+Повторные запуски не были такими долгими и по времени занимали, в общей сложности, не более минуты.</p>
+<h2 id="2-web-ui-apache-atlas">2. Web UI Apache Atlas</h2>
+<p>2.1. После долгого ожидания, на порту 21443 Atlas-хоста появится авторизационная форма Atlas&rsquo;а:
+<img src="/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlaslogin.png" alt="Apache Atlas Login Windows"></p>
+<p>2.2. После входа в Atlas, в главном окне можно наблюдать пустоту с надписью, что сущностей HBase нет, или, в другом случае, информацию только о двух Atlas&rsquo;овских таблицах и столбцах из них, даже если в HBase и Hive уже существуют другие базы и таблицы:
+<img src="/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlasmainwindow.png" alt="Apache Atlas Main Windows"></p>
+<p>2.3. Для приведения базы данных Atlas&rsquo;а в актуальное состояние, необходимо выполнить первоначальный импорт сведений о содержимом в HBase и Hive, как описано в одних их следующих главах этой инструкции.</p>
+<h2 id="3-отладка">3. Отладка</h2>
+<h3 id="31-установка-уровня-логгирования-для-отладки">3.1. Установка уровня логгирования для отладки</h3>
+<p>3.3.1. При необходимости отладки меняем уровень логгирования в файле <code>/opt/atlas/conf/atlas-log4j.xml</code>. В большинстве случаев достаточно отрегулировать первый логгер &ldquo;org.apache.atlas&rdquo;:</p>
+<pre tabindex="0"><code>    &lt;logger name=&#34;org.apache.atlas&#34; additivity=&#34;false&#34;&gt;
+        &lt;level value=&#34;debug&#34;/&gt;
+        &lt;appender-ref ref=&#34;FILE&#34;/&gt;
+    &lt;/logger&gt;
+
+    &lt;logger name=&#34;org.janusgraph&#34; additivity=&#34;false&#34;&gt;
+        &lt;level value=&#34;warn&#34;/&gt;
+        &lt;appender-ref ref=&#34;FILE&#34;/&gt;
+    &lt;/logger&gt;
+</code></pre><p>3.3.2. Уровень по умолчанию &lsquo;info&rsquo; или &lsquo;warn&rsquo; увеличиваем до достаточного в большинстве случаев уровня &lsquo;debug&rsquo;, или до максимально многословного &rsquo;trace&rsquo;.</p>
+<p>3.3.3. Файлы логов находятся в каталоге <code>/opt/atlas/logs</code>.
+При достижении лог-файла размера 100MB, производится автоматический rotate.</p>
+<h3 id="32-ручной-запуск-и-остановка-atlasа">3.2. Ручной запуск и остановка Atlas&rsquo;а</h3>
+<p>3.2.1 Убедившись, что в оперативной памяти нет активных Atlas-процессов, выполняем ручной запуск:</p>
+<pre tabindex="0"><code>sudo -u atlas /opt/atlas/bin/atlas-start.py
+</code></pre><p>3.2.2 Ручная остановка Atlas&rsquo;а выполняется командой:</p>
+<pre tabindex="0"><code>sudo -u atlas /opt/atlas/bin/atlas-stop.py
+</code></pre><h3 id="33-проверка-принадлежности-аккаунта-к-группам">3.3. Проверка принадлежности аккаунта к группам</h3>
+<p>3.3.1. Просмотр UGI — User Group Information для текущего пользователя и для аккаунта &lsquo;atlas&rsquo;:</p>
+<pre tabindex="0"><code>$ kinit
+
+$ hdfs groups
+eugene@TEST2.LAN : eugene dud_admins test2_sentry_admins test2_hive_admins test2_solr_admins test2_yarn_admins test2_hue_admins test2_hbase_su test2_hdfs_su test2_airflow_airf1 test2_hue test2_atlas_admins
+
+$ hdfs groups atlas
+atlas : atlas hadoop
+</code></pre><p>3.3.2. Обновление user and group mappings:</p>
+<pre tabindex="0"><code>$ dfs dfsadmin -refreshUserToGroupsMappings
+Refresh user to groups mapping successful for dev-nn110p.test2.lan/10.1.137.5:8020
+Refresh user to groups mapping successful for dev-nn111p.test2.lan/10.1.137.4:8020
+
+$yarn rmadmin -refreshUserToGroupsMappings
+</code></pre>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-a8fc9809ef1065fe06df0f86ba787c55">1.2.9 - 10. Первоначальный импорт содержимого Hive</h1>
+    <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
+	<p>2021-08-29</p>
+<p>Первоначальный импорт содержимого Hive в Atlas производится только один раз, сразу после настройки Atlas Hook&rsquo;а для Hive. Apache Atlas должен быть запущен и слушать &lsquo;atlas.rest.address=https://dev-app111p.test2.lan:21443&rsquo;. После одноразового импорта, дальнейшее соответствие информации между Atlas и Hive производится только на основании сообщений из Kafka.</p>
+<p>Повторное использование ручного импорта не приведёт Атласовскую информацию о содержимом Hive&rsquo;е в их полное соответствие. Те таблицы, которые есть в Atlas&rsquo;е, но отсутствуют в Hive&rsquo;е, не будут удалены из Atals&rsquo;а. Такие таблицы могут быть удалены повторным созданием таблицы в Hive&rsquo;е с их последующим удалением. В этом случае, такие таблицы в Atlas&rsquo;е будут помечены, как удалённые.</p>
+<p>На машине с установленным Atlas&rsquo;ом и ролью &lsquo;Hive Gateway&rsquo; получаем Kerberos-билет для УЗ с администраторскими правами в Atlas&rsquo;е, переходим в рабочий каталог Atlas&rsquo;а, устанавливаем необходимые переменные и запускаем импорт:</p>
+<pre tabindex="0"><code>kinit eugene
+export JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera
+export HIVE_HOME=/usr/lib/hive
+export HIVE_CONF_DIR=/etc/hive/conf
+export ATLAS_CONF_DIR=/opt/atlas/conf
+export ATLAS_LOG_DIR=/opt/atlas/logs
+bin/import-hive.sh -Dsun.security.jgss.debug=true
+</code></pre><p>Stdout:</p>
+<pre tabindex="0"><code>Using Hive configuration directory [/etc/hive/conf]
+Log file for import is /opt/atlas/logs/import-hive.log
+log4j:WARN No such property [maxFileSize] in org.apache.log4j.PatternLayout.
+log4j:WARN No such property [maxBackupIndex] in org.apache.log4j.PatternLayout.
+Search Subject for Kerberos V5 INIT cred (&lt;&lt;DEF&gt;&gt;, sun.security.jgss.krb5.Krb5InitCredential)
+Search Subject for SPNEGO INIT cred (&lt;&lt;DEF&gt;&gt;, sun.security.jgss.spnego.SpNegoCredElement)
+Search Subject for Kerberos V5 INIT cred (&lt;&lt;DEF&gt;&gt;, sun.security.jgss.krb5.Krb5InitCredential)
+Hive Meta Data imported successfully!!!
+</code></pre><p>Все дальнейшие изменения в Hive&rsquo;е автоматически транслируются в Apache Atlas через Apache Kafka.</p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-74837e69f24937a69895621788d8a9d1">1.2.10 - 11. Первоначальный импорт содержимого HBase</h1>
+    <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
+	<p>2021-08-29</p>
+<p>Первоначальный импорт содержимого HBase в Atlas производится только один раз, сразу после настройки Atlas Hook&rsquo;а для HBase. Apache Atlas должен быть запущен и слушать &lsquo;atlas.rest.address=https://dev-app111p.test2.lan:21443&rsquo;. После одноразового импорта, дальнейшее соответствие информации между Atlas и HBase производится только на основании сообщений из Kafka.</p>
+<p>Повторное использование ручного импорта не приведёт Атласовскую информацию о содержимом HBase&rsquo;е в их полное соответствие. Те объекты, которые есть в Atlas&rsquo;е, но отсутствуют в HBase&rsquo;е, не будут удалены из Atals&rsquo;а. Такие объекты могут быть удалены повторным созданием объекта в HBase&rsquo;е с их последующим удалением. В этом случае, такие объекты в Atlas&rsquo;е будут помечены, как удалённые.</p>
+<ol>
+<li>Получаем Kerberos-билет для УЗ с администраторскими правами в Atlas&rsquo;е, переходим в рабочий каталог Atlas&rsquo;а, устанавливаем необходимые переменные, и запускаем импорт:</li>
+</ol>
+<pre tabindex="0"><code>#kinit eugene
+
+cd /opt/atlas
+
+export JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera
+export HBASE_HOME=/usr/lib/hbase
+export HBASE_CONF_DIR=/etc/hbase/conf
+export ATLAS_CONF_DIR=/opt/atlas/conf
+export ATLAS_LOG_DIR=/opt/atlas/logs
+
+hook-bin/import-hbase.sh -Dsun.security.jgss.debug=true
+</code></pre><p>stdout:</p>
+<pre tabindex="0"><code>&gt;&gt;&gt;&gt;&gt; hook-bin/import-hbase.sh
+&gt;&gt;&gt;&gt;&gt; /opt/atlas
+Using HBase configuration directory [/etc/hbase/conf]
+/etc/hadoop/conf:/usr/lib/hadoop/lib/*:/usr/lib/hadoop/.//*:/usr/lib/hadoop-hdfs/./:/usr/lib/hadoop-hdfs/lib/*:/usr/lib/hadoop-hdfs/.//*:/usr/lib/hadoop-mapreduce/.//*:/usr/lib/hadoop-yarn/lib/*:/usr/lib/hadoop-yarn/.//*
+Log file for import is /opt/atlas/logs/import-hbase.log
+Search Subject for Kerberos V5 INIT cred (&lt;&lt;DEF&gt;&gt;, sun.security.jgss.krb5.Krb5InitCredential)
+Search Subject for Kerberos V5 INIT cred (&lt;&lt;DEF&gt;&gt;, sun.security.jgss.krb5.Krb5InitCredential)
+Search Subject for SPNEGO INIT cred (&lt;&lt;DEF&gt;&gt;, sun.security.jgss.spnego.SpNegoCredElement)
+Search Subject for Kerberos V5 INIT cred (&lt;&lt;DEF&gt;&gt;, sun.security.jgss.krb5.Krb5InitCredential)
+HBase Data Model imported successfully!!!
+</code></pre><ol start="2">
+<li>Для безопасности удаляем свой kerberos-билет:</li>
+</ol>
+<pre tabindex="0"><code>$ kdestroy
+</code></pre><p>Все дальнейшие изменения в HBase&rsquo;е будут автоматически транслироваться в Apache Atlas через Apache Kafka.</p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-2de0ea75231dfee6e746be891d0e08a0">1.2.11 - 20. 🔬 Тестирование работоспособности Apache Atlas</h1>
+    <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
+	<p>2021-12-06</p>
+<p>После подключения Apache Atlas&rsquo;а к Hadoop&rsquo;у мы должны удостовериться в работоспособности приложения.</p>
+<h2 id="1-проверка-получения-информации-из-hive">1. Проверка получения информации из Hive</h2>
+<p>1.1. На машине с ролью HDFS Gateway, в своём домашнем каталоге создаём csv-файл и загружаем в HDFS:</p>
+<pre tabindex="0"><code>TESTFILENAME=&#34;atlas25.csv&#34;
+
+cat &lt;&lt; EOF &gt; ${TESTFILENAME}
+1,Hive Hook
+2,HBase Hook
+3,Spark Hook
+EOF
+
+hdfs dfs -put ${TESTFILENAME}
+</code></pre><p>1.2. Есть вероятность что аккаунт hive, которого чуть позже заставим импортировать данные из файла в таблицу, не имеет прав на домашний каталог + созданный файл, поэтому выдаём права:</p>
+<pre tabindex="0"><code>HDFSHOMEDIR=&#34;/user/eugene&#34;
+
+hdfs dfs -setfacl -m user:hive:rwx ${HDFSHOMEDIR}
+hdfs dfs -setfacl -m user:hive:rw ${TESTFILENAME}
+</code></pre><p>1.3. На машине с ролью &lsquo;Hive Gateway&rsquo; подключаемся к Apache Hive с помощью утилиты <code>beeline</code> :</p>
+<pre tabindex="0"><code>$ beeline
+
+beeline&gt; !connect jdbc:hive2://dev-aux110p.test2.lan:10000/;ssl=true;sslTrustStore=/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts
+Enter username for jdbc:hive2://dev-aux110p.test2.lan:10000/: eugene
+Enter password for jdbc:hive2://dev-aux110p.test2.lan:10000/: ******************
+
+0: jdbc:hive2://dev-aux110p.test2.lan:100&gt; show databases;
++-------------------+
+|   database_name   |
++-------------------+
+| bashkatovda_test  |
+| default           |
+| eugenetest    |
++-------------------+
+</code></pre><p>1.4. Выполняем создание новой базы данных:</p>
+<pre tabindex="0"><code>0: jdbc:hive2://dev-aux110p.test2.lan:100&gt; create database atlas25;
+</code></pre><p>1.5. Выполняем создание Hive-таблицы:</p>
+<pre tabindex="0"><code>0: jdbc:hive2://dev-aux110p.test2.lan:100&gt; CREATE TABLE IF NOT EXISTS atlas25.atlas25 (Num int, HookName String)
+COMMENT &#39;Atlas function check&#39;
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY &#39;,&#39;
+STORED AS TEXTFILE;
+</code></pre><p>1.6. Выполняем импорт данных из файла в созданную ранее таблицу:</p>
+<pre tabindex="0"><code>0: jdbc:hive2://dev-aux110p.test2.lan:100&gt; LOAD DATA INPATH &#39;atlas25.csv&#39; OVERWRITE INTO TABLE atlas25.atlas25;
+</code></pre><p>1.7. В Apache Atlas&rsquo;е выполняем поиск сущностей по ключевому слову atlas25 и наблюдаем результат:
+<img src="/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasmainwindow.png" alt="Apache Atlas Search"></p>
+<p>1.8. Щёлкнув по ссылке на &lsquo;atlas25&rsquo; с типом &lsquo;hive_table&rsquo;, на открышейся странице, во вкладке Lineage, наблюдаем &ldquo;линейку&rdquo;:
+<img src="/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasline.png" alt="Apache Atlas Search"></p>
+<p>1.9. После успешного выполнения вышеуказанных упражнений можно сказать, что информация из Hive в Atlas поступает.</p>
+<h2 id="2-проверка-получения-информации-из-hbase">2. Проверка получения информации из HBase</h2>
+<p>2.1. На машине с ролью HDFS Gateway, в своём домашнем каталоге создаём csv-файл и загружаем в HDFS:</p>
+<pre tabindex="0"><code>TESTFILENAME=&#34;atlas26.csv&#34;
+
+cat &lt;&lt; EOF &gt; ${TESTFILENAME}
+1,Hive Hook
+2,HBase Hook
+3,Spark Hook
+EOF
+
+hdfs dfs -put ${TESTFILENAME}
+</code></pre><p>2.2. На машине с ролью &lsquo;HBase Gateway&rsquo; получаем kerberos-тикет и создаём HBase-таблицу &lsquo;atlas26&rsquo;:</p>
+<pre tabindex="0"><code>kinit eugene
+echo &#34;create &#39;atlas26&#39;, &#39;n&#39;, &#39;hook&#39;&#34; | hbase shell
+</code></pre><p>2.3. Импортируем данные из файла <code>atlas26.csv</code> в созданную HBase-таблицу:</p>
+<pre tabindex="0"><code>$ hbase org.apache.hadoop.hbase.mapreduce.ImportTsv \
+-Dimporttsv.separator=&#39;,&#39; \
+-Dimporttsv.columns=HBASE_ROW_KEY,n,hook atlas26 /user/eugene/atlas26.csv
+</code></pre><p>2.4. Проверяем содержимое таблицы (впрочем это не обязательно):</p>
+<pre tabindex="0"><code>$ echo &#34;scan &#39;atlas26&#39;&#34; | hbase shell
+...
+scan &#39;atlas26&#39;
+ROW                             COLUMN+CELL                                                                             
+ 1                              column=n:, timestamp=1638889043225, value=Hive Hook                                     
+ 2                              column=n:, timestamp=1638889043225, value=HBase Hook                                    
+ 3                              column=n:, timestamp=1638889043225, value=Spark Hook                                    
+3 row(s)
+Took 0.7221 seconds
+</code></pre><p>2.5. В Apache Atlas&rsquo;е выполняем поиск сущностей по ключевому слову atlas26 и наблюдаем результат:
+<img src="/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlassearch.png" alt="Apache Atlas Search"></p>
+<p>2.6. В отличии от данных из Hive, HBase не может предоставить Атласу файл-источник данных, поэтому &ldquo;Линейка&rdquo; останется пуста:
+<img src="/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasempty.png" alt="Apache Atlas Empty"></p>
+<p>2.7. В любом случае, в случае успешного прохождения этого теста, можно утверждать, что данные из HBase в Apache Atlas поступают.</p>
+<h2 id="3-проверка-получения-информации-из-spark">3. Проверка получения информации из Spark</h2>
+<p>При случае дописать.</p>
+<h2 id="4-возможно-полезные-ссылки">4. Возможно полезные ссылки</h2>
+<p>4.1. <a href="https://community.cloudera.com/t5/Community-Articles/Using-Apache-Atlas-to-view-Data-Lineage/ta-p/246305">https://community.cloudera.com/t5/Community-Articles/Using-Apache-Atlas-to-view-Data-Lineage/ta-p/246305</a></p>
 
 </div>
 

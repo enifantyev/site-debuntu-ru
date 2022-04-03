@@ -191,7 +191,7 @@ nginx-kafka-1.18.0-1.el7.ngx.x86_64.rpm
 ```
 [nginx-kafka]
 name = Nginx kafka
-baseurl = http://10.15.61.1:8081/repository/nginx-kafka/
+baseurl = http://nexus.example.org:8081/repository/nginx-kafka/
 gpgcheck = 0
 enabled = 1
 ```

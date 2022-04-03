@@ -348,17 +348,17 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/apache-airflow/" data-taxonomy-term="apache-airflow"><span class="taxonomy-label">Apache Airflow</span><span class="taxonomy-count">2</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">8</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">12</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">2</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">5</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">6</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-kafka/" data-taxonomy-term="apache-kafka"><span class="taxonomy-label">Apache Kafka</span><span class="taxonomy-count">5</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">1</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">2</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/apache-sqoop/" data-taxonomy-term="apache-sqoop"><span class="taxonomy-label">Apache Sqoop</span><span class="taxonomy-count">1</span></a></li>
         
@@ -388,7 +388,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/beeline/" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">24</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">29</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">8</span></a></li>
         
@@ -402,7 +402,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">15</span></a></li>
+          <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">20</span></a></li>
         
           <li><a class="taxonomy-term" href="/tags/cloudera-hadoop/" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span><span class="taxonomy-count">2</span></a></li>
         
@@ -729,13 +729,13 @@ sudo -u postgres psql -c &#39;CREATE DATABASE sqoop_test_import_db;&#39;
 password=$(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c15)
 sudo -u postgres psql -c &#34;CREATE USER sqoop_test_u WITH password &#39;$password&#39;;&#34;
 sudo -u postgres psql -c &#34;GRANT ALL PRIVILEGES ON DATABASE sqoop_test_import_db TO sqoop_test_u;&#34;
-echo &#34;10.15.112.99:5432:sqoop_test_import_db:sqoop_test_u:${password}&#34; &gt; ~/.pgpass;
+echo &#34;10.1.112.99:5432:sqoop_test_import_db:sqoop_test_u:${password}&#34; &gt; ~/.pgpass;
 chmod 600 ~/.pgpass
 </code></pre><p>Создаём таблицу &lsquo;sales&rsquo; и заполняем информацией:</p>
-<pre tabindex="0"><code>psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 \
+<pre tabindex="0"><code>psql -d sqoop_test_import_db -U sqoop_test_u -h 10.1.112.99 \
 -c &#39;CREATE TABLE sales (pkSales integer primary key, saleDate date, saleAmount money, orderID int, itemID int);&#39;
 
-psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 -c &#34;
+psql -d sqoop_test_import_db -U sqoop_test_u -h 10.1.112.99 -c &#34;
 insert into sales values (1, &#39;2016-09-27&#39;, 1.23, 1, 1);
 insert into sales values (2, &#39;2016-09-27&#39;, 2.34, 1, 2);
 insert into sales values (3, &#39;2016-09-27&#39;, 1.23, 2, 1);
@@ -758,7 +758,7 @@ insert into sales values (19, &#39;2016-09-29&#39;, 7.89, 8, 7);
 insert into sales values (20, &#39;2016-09-30&#39;, 1.23, 9, 1);
 &#34;
 </code></pre><p>Проверяем факт наличия новой таблицы:</p>
-<pre tabindex="0"><code>psql -d sqoop_test_import_db -U sqoop_test_u -h 10.15.112.99 -c &#39;table sales;&#39;
+<pre tabindex="0"><code>psql -d sqoop_test_import_db -U sqoop_test_u -h 10.1.112.99 -c &#39;table sales;&#39;
  pksales |  saledate  | saleamount | orderid | itemid
 ---------+------------+------------+---------+--------
        1 | 2016-09-27 |      $1.23 |       1 |      1
@@ -791,7 +791,7 @@ insert into sales values (20, &#39;2016-09-30&#39;, 1.23, 9, 1);
 <pre tabindex="0"><code>kinit
 
 sqoop import -Dmapreduce.job.queuename=&#34;root.yarn-queue-dev&#34; \
---connect &#39;jdbc:postgresql://10.15.112.99/sqoop_test_import_db&#39; \
+--connect &#39;jdbc:postgresql://10.1.112.99/sqoop_test_import_db&#39; \
 --username &#39;sqoop_test_u&#39; -P \
 --table &#39;sales&#39; \
 --target-dir &#39;SqoopTestSales&#39; \
@@ -835,14 +835,14 @@ $ hdfs dfs -cat SqoopTestSales/part-m-00003
 password=$(awk -F: &#39;{print $5}&#39; ~/.pgpass)
 sudo -u postgres psql -c &#39;CREATE DATABASE sqoop_test_export_db;&#39;
 sudo -u postgres psql -c &#34;GRANT ALL PRIVILEGES ON DATABASE sqoop_test_export_db TO sqoop_test_u;&#34;
-echo &#34;10.15.112.99:5432:sqoop_test_export_db:sqoop_test_u:${password}&#34; &gt;&gt; ~/.pgpass;
+echo &#34;10.1.112.99:5432:sqoop_test_export_db:sqoop_test_u:${password}&#34; &gt;&gt; ~/.pgpass;
 </code></pre><p>Создаём таблицу для экспорта данных из HDFS. Столбцу &lsquo;saleAmount&rsquo; задал тип numeric, так как с типом &lsquo;money&rsquo; экспорт прерывался ошибкой.</p>
-<pre tabindex="0"><code>psql -d sqoop_test_export_db -U sqoop_test_u -h 10.15.112.99 \
+<pre tabindex="0"><code>psql -d sqoop_test_export_db -U sqoop_test_u -h 10.1.112.99 \
 -c &#39;CREATE TABLE sales (pkSales int primary key, saleDate date, saleAmount numeric, orderID int, itemID int);&#39;
 </code></pre><h3 id="проверка">Проверка</h3>
 <p>Видит ли Sqoop базу данных:</p>
 <pre tabindex="0"><code>sqoop list-databases \
---connect &#39;jdbc:postgresql://10.15.112.99/sqoop_test_export_db&#39; \
+--connect &#39;jdbc:postgresql://10.1.112.99/sqoop_test_export_db&#39; \
 --username &#39;sqoop_test_u&#39; -P
 
 postgres
@@ -852,18 +852,18 @@ sqoop_test_import_db
 sqoop_test_export_db
 </code></pre><p>Видит ли Sqoop таблицы:</p>
 <pre tabindex="0"><code>sqoop list-tables \
---connect &#39;jdbc:postgresql://10.15.112.99/sqoop_test_export_db&#39; \
+--connect &#39;jdbc:postgresql://10.1.112.99/sqoop_test_export_db&#39; \
 --username &#39;sqoop_test_u&#39; -P
 
 sales
 </code></pre><h3 id="экспорт">Экспорт</h3>
 <pre tabindex="0"><code>sqoop export -Dmapreduce.job.queuename=&#34;root.yarn-queue-dev&#34; \
---connect &#39;jdbc:postgresql://10.15.112.99/sqoop_test_export_db&#39; \
+--connect &#39;jdbc:postgresql://10.1.112.99/sqoop_test_export_db&#39; \
 --username &#39;sqoop_test_u&#39; -P \
 --table &#39;sales&#39; \
 --export-dir &#39;SqoopTestSales&#39;
 </code></pre><h3 id="результат-экспорта-из-hdfs-в-postgresql">Результат экспорта из HDFS в PostgreSQL</h3>
-<pre tabindex="0"><code>psql -d sqoop_test_export_db -U sqoop_test_u -h 10.15.112.99 -c &#39;table sales order by pksales;&#39;
+<pre tabindex="0"><code>psql -d sqoop_test_export_db -U sqoop_test_u -h 10.1.112.99 -c &#39;table sales order by pksales;&#39;
  pksales |  saledate  | saleamount | orderid | itemid
 ---------+------------+------------+---------+--------
        1 | 2016-09-27 |       1.23 |       1 |      1

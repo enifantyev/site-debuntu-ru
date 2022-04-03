@@ -26,11 +26,11 @@
         &lt;p&gt;2021-01-25&lt;/p&gt;
 &lt;p&gt;Образец файла со списком узлов в формате hosts:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cat ip.hosts
-10.15.195.1 is01-airf01p.example.org
-10.15.195.3 is01-app01p.example.org
-10.15.195.4 is01-app02p.example.org
-10.15.112.52 is02-app208p.example.org
-10.15.112.53 is02-app209p.example.org
+10.1.195.1 is01-airf01p.example.org
+10.1.195.3 is01-app01p.example.org
+10.1.195.4 is01-app02p.example.org
+10.1.112.52 is02-app208p.example.org
+10.1.112.53 is02-app209p.example.org
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скрипт для добавления PTR-записей в соответствующие обратные зоны:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;add_dns_record.sh
 #!/bin/bash
@@ -38,9 +38,9 @@ LIST=&amp;#34;ip.hosts&amp;#34;
  
 while read line; do
   echo &amp;#34;&amp;#34;
-  echo $line     # &amp;#34;10.15.195.1 is01-airf01p.example.org&amp;#34;
+  echo $line     # &amp;#34;10.1.195.1 is01-airf01p.example.org&amp;#34;
   arr1=($line)   # конвертируем переменную в массив из двух элементов
-  ip1=${arr1[0]} # &amp;#34;10.15.195.1&amp;#34;
+  ip1=${arr1[0]} # &amp;#34;10.1.195.1&amp;#34;
   IFS=&amp;#34;.&amp;#34;        # разделитель пробел меняем на точку для bash substring
   arr2=($ip1)    # конвертируем ip-адрес в массив &amp;#34;10 15 195 1&amp;#34;
   IFS=&amp;#34; &amp;#34;        # возвращаем разделить

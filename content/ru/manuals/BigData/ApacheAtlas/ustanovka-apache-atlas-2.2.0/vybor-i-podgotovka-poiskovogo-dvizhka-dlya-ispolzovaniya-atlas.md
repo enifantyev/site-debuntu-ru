@@ -3,7 +3,7 @@ title: "03. Выбор и подготовка поискового движка
 date: 2021-11-03
 weight: 10
 description: >
-  Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.
+  Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
 tags:
   - BigData
   - Apache Atlas
@@ -280,7 +280,7 @@ path.data: /data/elasticsearch
 path.logs: /data/log/elasticsearch
 
 # По умолчанию, Elasticsearch привязывается только в 127.0.0.1
-network.host: 10.15.137.11
+network.host: 10.1.137.11
 ```
 
 ### 3.4. Запуск
