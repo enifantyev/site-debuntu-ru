@@ -128,10 +128,10 @@ echo &amp;#34;enable &amp;#39;MyTableName&amp;#39;&amp;#34; | hbase shell
     
     <item>
       <title>Manuals: 06. 🎣 Заброс Hook&#39;а в Apache HBase</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D1%81-hook-%D0%B2-apache-hbase/</link>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</link>
       <pubDate>Fri, 22 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D1%81-hook-%D0%B2-apache-hbase/</guid>
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</guid>
       <description>
         
         

@@ -18,25 +18,25 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2 | Debuntarium</title>
-<meta name="description" content="Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.
+<title>06. 🎣 Заброс Hook&#39;а в Apache HBase | Debuntarium</title>
+<meta name="description" content="Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
 ">
-<meta property="og:title" content="Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2" />
-<meta property="og:description" content="Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.
+<meta property="og:title" content="06. 🎣 Заброс Hook&#39;а в Apache HBase" />
+<meta property="og:description" content="Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/" /><meta property="article:section" content="manuals" />
-<meta property="article:published_time" content="2021-09-28T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-09-28T00:00:00+00:00" /><meta property="og:site_name" content="Debuntarium" />
+<meta property="og:url" content="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/" /><meta property="article:section" content="manuals" />
+<meta property="article:published_time" content="2021-10-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-10-22T00:00:00+00:00" /><meta property="og:site_name" content="Debuntarium" />
 
-<meta itemprop="name" content="Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2">
-<meta itemprop="description" content="Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.
-"><meta itemprop="datePublished" content="2021-09-28T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2021-09-28T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2586">
-<meta itemprop="keywords" content="BigData,Apache Atlas,Cloudera CDH 6.3.2," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2"/>
-<meta name="twitter:description" content="Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.
+<meta itemprop="name" content="06. 🎣 Заброс Hook&#39;а в Apache HBase">
+<meta itemprop="description" content="Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
+"><meta itemprop="datePublished" content="2021-10-22T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-10-22T00:00:00+00:00" />
+<meta itemprop="wordCount" content="478">
+<meta itemprop="keywords" content="BigData,Apache Atlas,Apache HBase,Cloudera CDH 6.3.2," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="06. 🎣 Заброс Hook&#39;а в Apache HBase"/>
+<meta name="twitter:description" content="Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
 "/>
 
 
@@ -207,9 +207,9 @@ if (!doNotTrack) {
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manualsbigdataapacheatlas-li">
   <a href="/manuals/bigdata/apacheatlas/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataapacheatlas"><span class="">Apache Atlas</span></a>
   <ul class="ul-3 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsbigdataapacheatlassborka-apache-atlas-220-dlya-cloudera-cdh-632-li">
-  <a href="/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlassborka-apache-atlas-220-dlya-cloudera-cdh-632"><span class="td-sidebar-nav-active-item">Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlassborka-apache-atlas-220-dlya-cloudera-cdh-632-li">
+  <a href="/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlassborka-apache-atlas-220-dlya-cloudera-cdh-632"><span class="">Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220-li">
   <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220"><span class="">Установка Apache Atlas 2.2.0</span></a>
   <ul class="ul-4 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220podgotovitelnyye-raboty-dlya-ustanovki-atlas-li">
@@ -222,8 +222,8 @@ if (!doNotTrack) {
   <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220raspakovka-i-nastroyka-apache-atlas"><span class="">04. Распаковка и настройка Apache Atlas</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hive-li">
   <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hive"><span class="">05. 🎣 Заброс Hook&#39;а в Apache Hive</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hbase-li">
-  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hbase"><span class="">06. 🎣 Заброс Hook&#39;а в Apache HBase</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hbase-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hbase"><span class="td-sidebar-nav-active-item">06. 🎣 Заброс Hook&#39;а в Apache HBase</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-spark-li">
   <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-spark"><span class="">07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervyy-zapusk-apache-atlas-i-yego-otladka-li">
@@ -251,12 +251,12 @@ if (!doNotTrack) {
           <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
             
 <div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
-<a href="https://github.com/google/docsy-example/tree/main/content/ru/manuals/BigData/ApacheAtlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa fa-file-alt fa-fw"></i> [i18n] post_view_this</a>
-  <a href="https://github.com/google/docsy-example/edit/main/content/ru/manuals/BigData/ApacheAtlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Отредактировать страницу</a>
-  <a href="https://github.com/google/docsy-example/new/main/content/ru/manuals/BigData/ApacheAtlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Create child page</a>
-  <a href="https://github.com/google/docsy-example/issues/new?title=%d0%a1%d0%b1%d0%be%d1%80%d0%ba%d0%b0%20Apache%20Atlas%202.2.0%20%d0%b4%d0%bb%d1%8f%20Cloudera%20CDH%206.3.2" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Предложить изменения документации</a>
+<a href="https://github.com/google/docsy-example/tree/main/content/ru/manuals/BigData/ApacheAtlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa fa-file-alt fa-fw"></i> [i18n] post_view_this</a>
+  <a href="https://github.com/google/docsy-example/edit/main/content/ru/manuals/BigData/ApacheAtlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Отредактировать страницу</a>
+  <a href="https://github.com/google/docsy-example/new/main/content/ru/manuals/BigData/ApacheAtlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Create child page</a>
+  <a href="https://github.com/google/docsy-example/issues/new?title=06.%20%f0%9f%8e%a3%20%d0%97%d0%b0%d0%b1%d1%80%d0%be%d1%81%20Hook%27%d0%b0%20%d0%b2%20Apache%20HBase" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Предложить изменения документации</a>
   <a href="https://github.com/google/docsy/issues/new" class="td-page-meta--project-issue" target="_blank" rel="noopener"><i class="fas fa-tasks fa-fw"></i> Предложить доработки по проекту</a>
-  <a id="print" href="/manuals/bigdata/apacheatlas/_print/"><i class="fa fa-print fa-fw"></i> Print entire section</a>
+  <a id="print" href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/_print/"><i class="fa fa-print fa-fw"></i> Print entire section</a>
 
 </div>
 
@@ -265,20 +265,9 @@ if (!doNotTrack) {
 
 <div class="td-toc"><nav id="TableOfContents">
   <ul>
-    <li><a href="#1-подготовка-хоста">1. Подготовка хоста</a>
-      <ul>
-        <li><a href="#11-установка-maven">1.1. Установка Maven</a></li>
-        <li><a href="#12-установка-nodejs">1.2. Установка NodeJS</a></li>
-      </ul>
-    </li>
-    <li><a href="#2-подготовка-к-сборке">2. Подготовка к сборке</a>
-      <ul>
-        <li><a href="#21-скачивание-и-распаковка-исходников">2.1. Скачивание и распаковка исходников</a></li>
-        <li><a href="#22-изменения-в-файле-pomxml">2.2. Изменения в файле <code>pom.xml</code></a></li>
-        <li><a href="#23-изменения-в-других-файлах">2.3. Изменения в других файлах</a></li>
-      </ul>
-    </li>
-    <li><a href="#3-сборка-apache-atlas">3. Сборка Apache Atlas</a></li>
+    <li><a href="#1введение">1.Введение</a></li>
+    <li><a href="#2-создание-atlas-папки-на-хостах-с-ролью-hbase-master">2. Создание Atlas-папки на хостах с ролью &lsquo;HBase Master&rsquo;</a></li>
+    <li><a href="#4-использованные-материалы">4. Использованные материалы</a></li>
   </ul>
 </nav></div>
 
@@ -648,15 +637,18 @@ if (!doNotTrack) {
   <li class="breadcrumb-item">
     <a href="/manuals/bigdata/apacheatlas/">Apache Atlas</a>
   </li>
+  <li class="breadcrumb-item">
+    <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/">Установка Apache Atlas 2.2.0</a>
+  </li>
   <li class="breadcrumb-item active" aria-current="page">
-    <a href="/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/">Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</a>
+    <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/">06. 🎣 Заброс Hook&#39;а в Apache HBase</a>
   </li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</h1>
-	<div class="lead">Описание процесса сборки Apache Atlas 2.2.0 для Cloudera CDH 6.3.2.</div>
+	<h1>06. 🎣 Заброс Hook&#39;а в Apache HBase</h1>
+	<div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<header class="article-meta">
 		
 
@@ -673,6 +665,8 @@ if (!doNotTrack) {
     
       <li><a class="taxonomy-term" href="/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span></a></li>
     
+      <li><a class="taxonomy-term" href="/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span></a></li>
+    
       <li><a class="taxonomy-term" href="/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span></a></li>
     
   </ul>
@@ -687,565 +681,125 @@ if (!doNotTrack) {
 
 		
 	</header>    
-	<blockquote>
-<p>⚠ Важное сообщение. Сборка проходит успешно только после комментирования строк с константами MATERIALIZED_VIEW. В исходниках предыдущей версии Apache Atlas 2.1.0 такие константы не применялись. MATERIALIZED_VIEW относится к таблицам Hive 3.x версии, тогда как в CDH 6.3.2 используется Hive 2.1.1.</p>
-</blockquote>
-<blockquote>
-<p>⚠ В этой сборке предусмотривается возможность работы Apache Atlas с Elasticsearch 6.8.20, в расчёте на дальнейшее внедрение Amundsen. В мануале по Amundsen указано, что поддерживается работа только с Elasticsearch 6.x.</p>
-</blockquote>
-<h2 id="1-подготовка-хоста">1. Подготовка хоста</h2>
-<p>Если запуск Apache Atlas&rsquo;а будем производить на этой же машине, то:</p>
-<ul>
-<li>Хост добавляем в Cloudera-кластер, чтобы при установке Cloudera CDH были корректно добавлены локальные аккаунты и группы.</li>
-<li>В процессе добавления в кластер, перед включением TLS-аутентификации для Cloudera Agent, добавляем хост в домен.</li>
-<li>На хост устанавливаем шлюзы для YARN, HBase, Hive, Kafka, Solr.</li>
-<li>Лучше смотреть соответствующую инструкцию опубликованную здесь же.</li>
-</ul>
-<h3 id="11-установка-maven">1.1. Установка Maven</h3>
-<p>Сначала устанавливаем maven 3.0.5-17.el7 из стандартных репо для CentOS7:</p>
-<pre tabindex="0"><code>sudo yum install maven
-</code></pre><details>
-<summary>Click here to expand...</summary>
-<pre tabindex="0"><code>...
-Dependencies Resolved
+	<p>2021-08-30 / 2021-10-22</p>
+<h2 id="1введение">1.Введение</h2>
+<p>Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.</p>
+<h2 id="2-создание-atlas-папки-на-хостах-с-ролью-hbase-master">2. Создание Atlas-папки на хостах с ролью &lsquo;HBase Master&rsquo;</h2>
+<p>2.1. На хостах с ролью &lsquo;HBase Master&rsquo; создаём atlas-каталоги и скачиваем с Nexus&rsquo;а необходимый файл:</p>
+<pre tabindex="0"><code>FILENAME=&#34;?????????????????????????&#34;
+set +o history
+NXUSERPASS=&#34;eugene:xxxxxxxxxxxxx&#34;
+set -o history
+DIR=&#34;apache-atlas-2.2.0_cdh6.3.2_j8.181_mvn3.8.1&#34;
 
-=====================================================================================================================
- Package                                   Arch            Version                           Repository        Size
-=====================================================================================================================
-Installing:
- maven                                     noarch          3.0.5-17.el7                      bases             1.3 M
-Installing for dependencies:
- aether-api                                noarch          1.13.1-13.el7                     bases              89 k
- aether-connector-wagon                    noarch          1.13.1-13.el7                     bases              34 k
- aether-impl                               noarch          1.13.1-13.el7                     bases             124 k
- aether-spi                                noarch          1.13.1-13.el7                     bases              19 k
- aether-util                               noarch          1.13.1-13.el7                     bases             119 k
- aopalliance                               noarch          1.0-8.el7                         bases              11 k
- apache-commons-cli                        noarch          1.2-13.el7                        bases              50 k
- apache-commons-codec                      noarch          1.8-7.el7                         bases             223 k
- apache-commons-io                         noarch          1:2.4-12.el7                      bases             189 k
- apache-commons-lang                       noarch          2.6-15.el7                        bases             276 k
- apache-commons-logging                    noarch          1.1.2-7.el7                       bases              78 k
- apache-commons-net                        noarch          3.2-8.el7.centos                  bases             261 k
- atinject                                  noarch          1-13.20100611svn86.el7            bases              13 k
- atk                                       x86_64          2.28.1-2.el7                      bases             263 k
- avalon-framework                          noarch          4.3-10.el7                        bases              88 k
- avalon-logkit                             noarch          2.1-14.el7                        bases              87 k
- bcel                                      noarch          5.2-18.el7                        bases             469 k
- cairo                                     x86_64          1.15.12-4.el7                     bases             741 k
- cal10n                                    noarch          0.7.7-4.el7                       bases              36 k
- cdi-api                                   noarch          1.0-11.SP4.el7                    bases              41 k
- cglib                                     noarch          2.2-18.el7                        bases             255 k
- copy-jdk-configs                          noarch          3.3-10.el7_5                      bases              21 k
- dejavu-fonts-common                       noarch          2.33-6.el7                        bases              64 k
- dejavu-sans-fonts                         noarch          2.33-6.el7                        bases             1.4 M
- easymock2                                 noarch          2.5.2-12.el7                      bases              92 k
- felix-framework                           noarch          4.2.1-5.el7                       bases             481 k
- fontconfig                                x86_64          2.13.0-4.3.el7                    bases             254 k
- fontpackages-filesystem                   noarch          1.44-8.el7                        bases             9.9 k
- fribidi                                   x86_64          1.0.2-1.el7_7.1                   bases              79 k
- gdk-pixbuf2                               x86_64          2.36.12-3.el7                     bases             570 k
- geronimo-annotation                       noarch          1.0-15.el7                        bases              23 k
- geronimo-jms                              noarch          1.1.1-19.el7                      bases              31 k
- giflib                                    x86_64          4.1.6-9.el7                       bases              40 k
- google-guice                              noarch          3.1.3-9.el7                       bases             385 k
- graphite2                                 x86_64          1.3.10-1.el7_3                    bases             115 k
- gtk-update-icon-cache                     x86_64          3.22.30-6.el7                     updates           27 k
- gtk2                                      x86_64          2.24.31-1.el7                     bases             3.4 M
- guava                                     noarch          13.0-6.el7                        bases             1.6 M
- hamcrest                                  noarch          1.3-6.el7                         bases             124 k
- harfbuzz                                  x86_64          1.7.5-2.el7                       bases             267 k
- hicolor-icon-theme                        noarch          0.12-7.el7                        bases              42 k
- httpcomponents-client                     noarch          4.2.5-5.el7_0                     bases             425 k
- httpcomponents-core                       noarch          4.2.4-6.el7                       bases             466 k
- jakarta-commons-httpclient                noarch          1:3.1-16.el7_0                    bases             241 k
- jasper-libs                               x86_64          1.900.1-33.el7                    bases             150 k
- java-1.8.0-openjdk                        x86_64          1:1.8.0.292.b10-1.el7_9           updates          310 k
- java-1.8.0-openjdk-devel                  x86_64          1:1.8.0.292.b10-1.el7_9           updates          9.8 M
- java-1.8.0-openjdk-headless               x86_64          1:1.8.0.292.b10-1.el7_9           updates           33 M
- javamail                                  noarch          1.4.6-8.el7                       bases             758 k
- javapackages-tools                        noarch          3.4.1-11.el7                      bases              73 k
- javassist                                 noarch          3.16.1-10.el7                     bases             627 k
- jbigkit-libs                              x86_64          2.0-11.el7                        bases              46 k
- jboss-ejb-3.1-api                         noarch          1.0.2-10.el7                      bases              54 k
- jboss-el-2.2-api                          noarch          1.0.1-0.7.20120212git2fabd8.el7   bases              44 k
- jboss-interceptors-1.1-api                noarch          1.0.2-0.9.20120319git49a904.el7   bases              27 k
- jboss-jaxrpc-1.1-api                      noarch          1.0.1-7.el7                       bases              44 k
- jboss-servlet-3.0-api                     noarch          1.0.1-9.el7                       bases              82 k
- jboss-transaction-1.1-api                 noarch          1.0.1-8.el7                       bases              40 k
- jline                                     noarch          1.0-8.el7                         bases              69 k
- jsch                                      noarch          0.1.50-5.el7                      bases             239 k
- jsoup                                     noarch          1.6.1-10.el7                      bases             263 k
- junit                                     noarch          4.11-8.el7                        bases             261 k
- jzlib                                     noarch          1.1.1-6.el7                       bases              72 k
- libICE                                    x86_64          1.0.9-9.el7                       bases              66 k
- libSM                                     x86_64          1.2.2-2.el7                       bases              39 k
- libX11                                    x86_64          1.6.7-3.el7_9                     updates          607 k
- libX11-common                             noarch          1.6.7-3.el7_9                     updates          164 k
- libXau                                    x86_64          1.0.8-2.1.el7                     bases              29 k
- libXcomposite                             x86_64          0.4.4-4.1.el7                     bases              22 k
- libXcursor                                x86_64          1.1.15-1.el7                      bases              30 k
- libXdamage                                x86_64          1.1.4-4.1.el7                     bases              20 k
- libXext                                   x86_64          1.3.3-3.el7                       bases              39 k
- libXfixes                                 x86_64          5.0.3-1.el7                       bases              18 k
- libXft                                    x86_64          2.3.2-2.el7                       bases              58 k
- libXi                                     x86_64          1.7.9-1.el7                       bases              40 k
- libXinerama                               x86_64          1.1.3-2.1.el7                     bases              14 k
- libXrandr                                 x86_64          1.5.1-2.el7                       bases              27 k
- libXrender                                x86_64          0.9.10-1.el7                      bases              26 k
- libXtst                                   x86_64          1.2.3-1.el7                       bases              20 k
- libXxf86vm                                x86_64          1.1.4-1.el7                       bases              18 k
- libfontenc                                x86_64          1.1.3-3.el7                       bases              31 k
- libglvnd                                  x86_64          1:1.0.1-0.8.git5baa1e5.el7        bases              89 k
- libglvnd-egl                              x86_64          1:1.0.1-0.8.git5baa1e5.el7        bases              44 k
- libglvnd-glx                              x86_64          1:1.0.1-0.8.git5baa1e5.el7        bases             125 k
- libjpeg-turbo                             x86_64          1.2.90-8.el7                      bases             135 k
- libthai                                   x86_64          0.1.14-9.el7                      bases             187 k
- libtiff                                   x86_64          4.0.3-35.el7                      bases             172 k
- libwayland-client                         x86_64          1.15.0-1.el7                      bases              33 k
- libwayland-server                         x86_64          1.15.0-1.el7                      bases              39 k
- libxcb                                    x86_64          1.13-1.el7                        bases             214 k
- libxshmfence                              x86_64          1.2-1.el7                         bases             7.2 k
- libxslt                                   x86_64          1.1.28-6.el7                      bases             242 k
- lksctp-tools                              x86_64          1.0.17-2.el7                      bases              88 k
- log4j                                     noarch          1.2.17-16.el7_4                   bases             444 k
- maven-wagon                               noarch          2.4-3.el7                         bases             187 k
- mesa-libEGL                               x86_64          18.3.4-12.el7_9                   updates          110 k
- mesa-libGL                                x86_64          18.3.4-12.el7_9                   updates          166 k
- mesa-libgbm                               x86_64          18.3.4-12.el7_9                   updates           39 k
- mesa-libglapi                             x86_64          18.3.4-12.el7_9                   updates           46 k
- nekohtml                                  noarch          1.9.14-13.el7                     bases             152 k
- objectweb-asm                             noarch          3.3.1-9.el7                       bases             197 k
- pango                                     x86_64          1.42.4-4.el7_7                    bases             280 k
- pcsc-lite-libs                            x86_64          1.8.8-8.el7                       bases              34 k
- pixman                                    x86_64          0.34.0-1.el7                      bases             248 k
- plexus-cipher                             noarch          1.7-5.el7                         bases              22 k
- plexus-classworlds                        noarch          2.4.2-8.el7                       bases              54 k
- plexus-component-api                      noarch          1.0-0.16.alpha15.el7              bases              27 k
- plexus-containers-component-annotations   noarch          1.5.5-14.el7                      bases              11 k
- plexus-containers-container-default       noarch          1.5.5-14.el7                      bases             183 k
- plexus-interactivity                      noarch          1.0-0.14.alpha6.el7               bases              17 k
- plexus-interpolation                      noarch          1.15-8.el7                        bases              57 k
- plexus-sec-dispatcher                     noarch          1.4-13.el7                        bases              29 k
- plexus-utils                              noarch          3.0.9-9.el7                       bases             225 k
- python-javapackages                       noarch          3.4.1-11.el7                      bases              31 k
- python-lxml                               x86_64          3.2.1-4.el7                       bases             758 k
- qdox                                      noarch          1.12.1-10.el7                     bases             170 k
- regexp                                    noarch          1.5-13.el7                        bases              47 k
- sisu-inject-bean                          noarch          2.3.0-11.el7                      bases             181 k
- sisu-inject-plexus                        noarch          2.3.0-11.el7                      bases             179 k
- slf4j                                     noarch          1.7.4-4.el7_4                     bases             170 k
- tomcat-servlet-3.0-api                    noarch          7.0.76-16.el7_9                   updates          214 k
- ttmkfdir                                  x86_64          3.0.9-42.el7                      bases              48 k
- tzdata-java                               noarch          2021a-1.el7                       updates          191 k
- xalan-j2                                  noarch          2.7.1-23.el7                      bases             1.9 M
- xbean                                     noarch          3.13-6.el7                        bases             376 k
- xerces-j2                                 noarch          2.11.0-17.el7_0                   bases             1.1 M
- xml-commons-apis                          noarch          1.4.01-16.el7                     bases             227 k
- xml-commons-resolver                      noarch          1.2-15.el7                        bases             108 k
- xorg-x11-font-utils                       x86_64          1:7.5-21.el7                      bases             104 k
- xorg-x11-fonts-Type1                      noarch          7.5-9.el7                         bases             521 k
+## Скачиваем сборку с Nexus&#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://nexus.example.org:8081/repository/dud_evolut_raw/atlas/${FILENAME}
 
-Transaction Summary
-====================================================================================================================
-Install  1 Package (+130 Dependent packages)
+sudo tar xvf ${FILENAME} -C /opt
+cd /opt
+sudo ln -s ${DIR} atlas
 
-Total download size: 72 M
-Installed size: 214 M
-Is this ok [y/d/N]: y
-...
-Complete!
-</code></pre></details>
-<br>
-<p>На данный момент последняя версия maven равна 3.8.1, но с этой версией сборка Atlas&rsquo;а 2.1.0 прерывалась ошибками, тогда как Atlas 2.2.0 собирался без ошибок. Поэтому для сборки Atlas&rsquo;а 2.1.0 выбираем Maven 3.6.3, а для Atlas 2.2.0 выбираем версию Maven 3.8.1.</p>
-<p>Скачиваем и устанавливаем переменные:</p>
-<pre tabindex="0"><code>MVNVER=&#34;3.8.1&#34;
-curl -LO https://archive.apache.org/dist/maven/maven-3/${MVNVER}/binaries/apache-maven-${MVNVER}-bin.tar.gz
-sudo tar -xvf apache-maven-${MVNVER}-bin.tar.gz -C /opt
+sudo chown -R root.root ${DIR}
+sudo chmod -R u=rwX,go=rX ${DIR}
+</code></pre><p>2.2. Залинковываем jar-библиотеки Atlas&rsquo;а в каталог <code>/usr/lib/hbase/lib</code>:</p>
+<pre tabindex="0"><code>sudo ln -s /opt/atlas/hook/hbase/* /usr/lib/hbase/lib/
+</code></pre><p>2.3. Создаём файл &lsquo;atlas-application.properties&rsquo;:</p>
+<pre tabindex="0"><code>ZOOKEEPERSERVERS=&#34;dev-zk110p.test2.lan:2181,dev-zk111p.test2.lan:2181,dev-zk112p.test2.lan:2181&#34;
+KAFKASERVERS=&#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&#34;
+REALMNAME=&#34;TEST2.LAN&#34;
 
-sudo ln -s /opt/apache-maven-${MVNVER} /opt/maven
+sudo mkdir -p /opt/atlas/conf
+cat &lt;&lt; EOF | sudo tee /opt/atlas/conf/atlas-application.properties
+#########  Notification Configs  #########
 
-cat &lt;&lt; EOF | sudo tee /etc/profile.d/maven.sh
-# Apache Maven Environmental Variables
-# MAVEN_HOME for Maven 1 - M2_HOME for Maven 2
+atlas.kafka.zookeeper.connect=${ZOOKEEPERSERVERS}
+atlas.kafka.bootstrap.servers=${KAFKASERVERS}
+atlas.kafka.zookeeper.session.timeout.ms=60000
+atlas.kafka.zookeeper.connection.timeout.ms=60000
+atlas.kafka.zookeeper.sync.time.ms=20
+atlas.kafka.auto.commit.interval.ms=1000
+atlas.kafka.hook.group.id=atlas
 
-#export JAVA_HOME=/usr/lib/jvm/jre-openjdk
-export JAVA_HOME=usr/java/jdk1.8.0_181-cloudera
+atlas.kafka.enable.auto.commit=true
+atlas.kafka.auto.offset.reset=earliest
+atlas.kafka.session.timeout.ms=30000
+atlas.kafka.offsets.topic.replication.factor=1
+atlas.kafka.poll.timeout.ms=1000
 
-export M2_HOME=/opt/maven
-export MAVEN_HOME=/opt/maven
-export PATH=\${M2_HOME}/bin:\${PATH}
+atlas.kafka.security.protocol=SASL_PLAINTEXT
+atlas.kafka.sasl.mechanism=GSSAPI
+atlas.kafka.sasl.kerberos.service.name=kafka
+
+#########  JAAS Configuration ########
+
+atlas.jaas.KafkaClient.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.KafkaClient.loginModuleControlFlag=required
+atlas.jaas.KafkaClient.option.useKeyTab=true
+atlas.jaas.KafkaClient.option.storeKey=true
+atlas.jaas.KafkaClient.option.serviceName=kafka
+atlas.jaas.KafkaClient.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.KafkaClient.option.principal=atlas/_HOST@${REALMNAME}
 EOF
+</code></pre><p>2.4. Создаём, если таковой ещё не был сгененирован, и получаем новый keytab. Напомню, что <span style="color:red">последующие получения keytab&rsquo;а необходимо выполнять с опцией &lsquo;-r&rsquo;, иначе вместо получения существующего keytab&rsquo;а будет создан новый keytab</span>, вследствие чего уже работающие сервисы Atlas&rsquo;а перестанут аутентифицировать и потребуется повторить для них получение keytab&rsquo;ов и перезапустить сервисы:</p>
+<pre tabindex="0"><code>REALMNAME=&#34;$(hostname -d | tr [:lower:] [:upper:])&#34;
+IPAADMIN=&#34;eugene&#34;
+# Закомментировать след строку, если генерируем новый ключ для keytab&#39;а.
+OPTION=&#34;-r&#34;
 
-sudo chmod +x /etc/profile.d/maven.sh
+# kinit ${IPAADMIN}
+ipa service-add atlas/$(hostname)
 
-source /etc/profile.d/maven.sh
-</code></pre><p>Проверяем версию Maven&rsquo;а и используемую версию Java:</p>
-<pre tabindex="0"><code>$ mvn --version
+ipa service-allow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-allow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
 
-Apache Maven 3.8.1 (05c21c65bdfed0f71a2f2ada8b84da59348c4c5d)
-Maven home: /opt/maven
-Java version: 1.8.0_181, vendor: Oracle Corporation, runtime: /usr/java/jdk1.8.0_181-cloudera/jre
-Default locale: en_US, platform encoding: UTF-8
-OS name: &#34;linux&#34;, version: &#34;3.10.0-1160.36.2.el7.x86_64&#34;, arch: &#34;amd64&#34;, family: &#34;unix&#34;
-</code></pre><h3 id="12-установка-nodejs">1.2. Установка NodeJS</h3>
-<p>Добавляем репо:</p>
-<pre tabindex="0"><code>USERNAME=nx-pubrepo-r
-PASSWORD=xSAR1zZi7dQzs3QBx2vthdyk2qQrXv
+ipa-getkeytab -p atlas/$(hostname) -k ~/atlas.keytab ${OPTION}
+ipa service-disallow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-disallow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
 
-cat &lt;&lt; EOF | sudo tee /etc/yum.repos.d/nodejs-el7.repo
-[nodejs16]
-username=$USERNAME
-password=$PASSWORD
-name=Node.js Packages for Enterprise Linux 7 - \$basearch
-baseurl=http://nexus.example.org:8081/repository/all_nodejs_yum/pub_16.x/el/7/\$basearch
-failovermethod=priority
-enabled=0
-gpgcheck=0
-EOF
-</code></pre><p>Устанавливаем NodeJS:</p>
-<pre tabindex="0"><code>sudo yum install -y --enablerepo=nodejs16 nodejs
-</code></pre><h2 id="2-подготовка-к-сборке">2. Подготовка к сборке</h2>
-<h3 id="21-скачивание-и-распаковка-исходников">2.1. Скачивание и распаковка исходников</h3>
-<p>Сайт проекта находится здесь <a href="https://atlas.apache.org/">https://atlas.apache.org/</a>. Находим и скачиваем исходники Apache Atlas:</p>
-<pre tabindex="0"><code>mkdir ~/src &amp;&amp; cd ~/src
-curl -LO https://mirror.linux-ia64.org/apache/atlas/2.2.0/apache-atlas-2.2.0-sources.tar.gz
-tar -xvf apache-atlas-2.2.0-sources.tar.gz
-cd ~/src/apache-atlas-sources-2.2.0
-</code></pre><h3 id="22-изменения-в-файле-pomxml">2.2. Изменения в файле <code>pom.xml</code></h3>
-<p>В файл &lsquo;pom.xml&rsquo;, в раздел <repository>, добавляем клаудеровский репозиторий с maven-артефактами:</p>
-<pre tabindex="0"><code>&lt;repository&gt;
-    &lt;id&gt;cloudera&lt;/id&gt;
-    &lt;url&gt;https://repository.cloudera.com/artifactory/cloudera-repos&lt;/url&gt;
-    &lt;releases&gt;
-        &lt;enabled&gt;true&lt;/enabled&gt;
-    &lt;/releases&gt;
-    &lt;snapshots&gt;
-        &lt;enabled&gt;false&lt;/enabled&gt;
-    &lt;/snapshots&gt;
-&lt;/repository&gt;
-</code></pre><p>В этом же файле находим и меняем версии продуктов на следующие:</p>
-<pre tabindex="0"><code>&lt;elasticsearch.version&gt;6.8.20&lt;/elasticsearch.version&gt;
-&lt;hadoop.version&gt;3.0.0-cdh6.3.2&lt;/hadoop.version&gt;
-&lt;hbase.version&gt;2.1.0-cdh6.3.2&lt;/hbase.version&gt;
-&lt;hive.version&gt;2.1.1-cdh6.3.2&lt;/hive.version&gt;
-&lt;kafka.scala.binary.version&gt;2.11&lt;/kafka.scala.binary.version&gt;
-&lt;kafka.version&gt;2.2.1-cdh6.3.2&lt;/kafka.version&gt;
-&lt;lucene-solr.version&gt;7.4.0&lt;/lucene-solr.version&gt;
-&lt;solr.version&gt;7.4.0-cdh6.3.2&lt;/solr.version&gt;
-&lt;sqoop.version&gt;1.4.7-cdh6.3.2&lt;/sqoop.version&gt;
-&lt;zookeeper.version&gt;3.4.5-cdh6.3.2&lt;/zookeeper.version&gt;
-</code></pre><p>В этом же файле меняем версию артефакта &lsquo;atlas-buildtools&rsquo; cо значения &lsquo;1.0&rsquo; на значение &lsquo;0.8.1&rsquo;, так как артефакт &lsquo;atlas-buildtools-1.0&rsquo; не может быть найден. Но можно попробовать версию  &lsquo;1.0.0-alpha&rsquo;:</p>
-<pre tabindex="0"><code>&lt;artifactId&gt;maven-checkstyle-plugin&lt;/artifactId&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.atlas&lt;/groupId&gt;
-            &lt;artifactId&gt;atlas-buildtools&lt;/artifactId&gt;
-            &lt;version&gt;1.0.0-alpha&lt;/version&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-</code></pre><h3 id="23-изменения-в-других-файлах">2.3. Изменения в других файлах</h3>
-<p>В файле &lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/bridge/HiveMetaStoreBridge.java&rsquo; переходим на 577 строку, комментируем &ldquo;String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;&rdquo; и добавляем &ldquo;String catalogName = null;&rdquo;:</p>
-<pre tabindex="0"><code>public static String getDatabaseName(Database hiveDB) {
-    String dbName      = hiveDB.getName().toLowerCase();
-    //String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;
-    String catalogName = null;
+sudo mv ~/atlas.keytab /opt/atlas/conf/
+sudo chown root.root /opt/atlas/conf/atlas.keytab
+sudo setfacl -m u:hbase:r /opt/atlas/conf/atlas.keytab
 
-    if (StringUtils.isNotEmpty(catalogName) &amp;&amp; !StringUtils.equals(catalogName, DEFAULT_METASTORE_CATALOG)) {
-        dbName = catalogName + SEP + dbName;
-    }
-
-    return dbName;
-}
-</code></pre><p>В файле &lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/AtlasHiveHookContext.java&rsquo; переходим на 81 строку &ldquo;this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;&rdquo;, комментируем её и добавляем &ldquo;this.metastoreHandler = null;&rdquo;:</p>
-<pre tabindex="0"><code>public AtlasHiveHookContext(HiveHook hook, HiveOperation hiveOperation, HookContext hiveContext, HiveHookObjectNamesCache knownObjects,
-                            HiveMetastoreHook metastoreHook, ListenerEvent listenerEvent) throws Exception {
-    this.hook             = hook;
-    this.hiveOperation    = hiveOperation;
-    this.hiveContext      = hiveContext;
-    this.hive             = hiveContext != null ? Hive.get(hiveContext.getConf()) : null;
-    this.knownObjects     = knownObjects;
-    this.metastoreHook    = metastoreHook;
-    this.metastoreEvent   = listenerEvent;
-    //this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;
-    this.metastoreHandler = null;
-
-
-    init();
-}
-</code></pre><p>В файле <code>~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/events/CreateHiveProcess.java</code> комментируем строку 263 с упоминанием &lsquo;MATERIALIZED_VIEW&rsquo;:</p>
-<pre tabindex="0"><code>private boolean isDdlOperation(AtlasEntity entity) {
-    return entity != null &amp;&amp; !context.isMetastoreHook()
-        &amp;&amp; (context.getHiveOperation().equals(HiveOperation.CREATETABLE_AS_SELECT)
-         || context.getHiveOperation().equals(HiveOperation.CREATEVIEW)
-         || context.getHiveOperation().equals(HiveOperation.ALTERVIEW_AS));
-         //|| context.getHiveOperation().equals(HiveOperation.CREATE_MATERIALIZED_VIEW));
-}
-</code></pre><p>В файле <code>~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/HiveHook.java</code> комментируем строки 212 и 217  с упоминанием &lsquo;MATERIALIZED_VIEW&rsquo;:</p>
-<pre tabindex="0"><code>case DROPTABLE:
-case DROPVIEW:
-//case DROP_MATERIALIZED_VIEW:
-    event = new DropTable(context);
-break;
-
-case CREATETABLE_AS_SELECT:
-//case CREATE_MATERIALIZED_VIEW:
-case CREATEVIEW:
-case ALTERVIEW_AS:
-case LOAD:
-case EXPORT:
-case IMPORT:
-case QUERY:
-    event = new CreateHiveProcess(context);
-break;
-</code></pre><p>Заготовка bash-скрипта для автоматизации изменений в файлах:</p>
-<pre tabindex="0"><code>sed &#39;s|&lt;elasticsearch.version&gt;6.8.15|&lt;elasticsearch.version&gt;6.8.20|&#39;  pom.xml
-sed &#39;s|&lt;hadoop.version&gt;3.3.0|&lt;hadoop.version&gt;3.0.0-cdh6.3.2|&#39; pom.xml
-sed &#39;s|&lt;hbase.version&gt;2.3.3|&lt;hbase.version&gt;2.1.0-cdh6.3.2|&#39; pom.xml
-sed &#39;s|&lt;hive.version&gt;3.1.0|&lt;hive.version&gt;2.1.1-cdh6.3.2|&#39; pom.xml
-sed &#39;s|&lt;kafka.scala.binary.version&gt;2.12|&lt;kafka.scala.binary.version&gt;2.11|&#39; pom.xml
-sed &#39;s|&lt;kafka.version&gt;2.5.0|&lt;kafka.version&gt;2.2.1-cdh6.3.2|&#39; pom.xml
-sed &#39;s|&lt;lucene-solr.version&gt;8.6.3|&lt;lucene-solr.version&gt;7.4.0|&#39; pom.xml
-sed &#39;|&lt;solr.version&gt;8.6.3|&lt;solr.version&gt;7.4.0-cdh6.3.2|&#39; pom.xml
-sed &#39;|&lt;sqoop.version&gt;1.4.6.2.3.99.0-195|&lt;sqoop.version&gt;1.4.7-cdh6.3.2|&#39; pom.xml
-sed &#39;|&lt;zookeeper.version&gt;3.5.7|&lt;zookeeper.version&gt;3.4.5-cdh6.3.2|&#39; pom.xml
-sed -i &#39;/&lt;artifactId&gt;atlas-buildtools|{n;s/&lt;version&gt;1.0/&lt;version&gt;1.0.0-alpha/}&#39; pom.xml
-</code></pre><h2 id="3-сборка-apache-atlas">3. Сборка Apache Atlas</h2>
-<p>Переходим в каталог с исходниками и собираем пакеты с сохранением цветного stderr и stdout в файл <code>install.log</code> (X — debug, T — количество потоков):</p>
-<pre tabindex="0"><code>cd ~/src/apache-atlas-sources-2.2.0
-unbuffer mvn clean -DskipTests package -Pdist -X -T 4 2&gt;&amp;1 | tee install.log
-
-# Посмотреть лог-файл в цвете.
-less -r install.log
-</code></pre><details>
-<summary>Click here to expand...</summary>
-<pre tabindex="0"><code>[DEBUG] Adding file-set in: /data/src/apache-atlas-sources-2.2.0_elastic-6.8.20/distro/../addons/hbase-bridge/target/dependency/hook
-to archive location: apache-atlas-hbase-hook-2.2.0/hook/
-[DEBUG] Cannot find ArtifactResolver with hint: project-cache-aware
-org.codehaus.plexus.component.repository.exception.ComponentLookupException: java.util.NoSuchElementException
-      role: org.apache.maven.artifact.resolver.ArtifactResolver
-  roleHint: project-cache-aware
-    at org.codehaus.plexus.DefaultPlexusContainer.lookup (DefaultPlexusContainer.java:267)
-    at org.codehaus.plexus.DefaultPlexusContainer.lookup (DefaultPlexusContainer.java:243)
-    at org.apache.maven.shared.repository.DefaultRepositoryAssembler.contextualize (DefaultRepositoryAssembler.java:721)
-    at org.eclipse.sisu.plexus.PlexusLifecycleManager.contextualize (PlexusLifecycleManager.java:282)
-    at org.eclipse.sisu.plexus.PlexusLifecycleManager.activate (PlexusLifecycleManager.java:203)
-    at org.eclipse.sisu.bean.BeanScheduler.schedule (BeanScheduler.java:151)
-    at org.eclipse.sisu.plexus.PlexusLifecycleManager.manage (PlexusLifecycleManager.java:147)
-    at org.eclipse.sisu.plexus.PlexusBeanBinder.afterInjection (PlexusBeanBinder.java:72)
-    at com.google.inject.internal.MembersInjectorImpl.notifyListeners (MembersInjectorImpl.java:131)
-    at com.google.inject.internal.ConstructorInjector.provision (ConstructorInjector.java:125)
-    at com.google.inject.internal.ConstructorInjector.access$000 (ConstructorInjector.java:32)
-    at com.google.inject.internal.ConstructorInjector$1.call (ConstructorInjector.java:98)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
-    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
-    at com.google.inject.internal.ConstructorInjector.construct (ConstructorInjector.java:93)
-    at com.google.inject.internal.ConstructorBindingImpl$Factory.get (ConstructorBindingImpl.java:306)
-    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
-    at com.google.inject.internal.InjectorImpl.getInstance (InjectorImpl.java:1086)
-    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:48)
-    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:85)
-    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
-    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:66)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
-    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
-    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:61)
-    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
-    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
-    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:168)
-    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:39)
-    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
-    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:81)
-    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:51)
-    at org.eclipse.sisu.plexus.PlexusRequirements$RequirementProvider.get (PlexusRequirements.java:250)
-    at org.eclipse.sisu.plexus.ProvidedPropertyBinding.injectProperty (ProvidedPropertyBinding.java:48)
-    at org.eclipse.sisu.bean.BeanInjector.injectMembers (BeanInjector.java:52)
-    at com.google.inject.internal.MembersInjectorImpl.injectMembers (MembersInjectorImpl.java:160)
-    at com.google.inject.internal.ConstructorInjector.provision (ConstructorInjector.java:124)
-    at com.google.inject.internal.ConstructorInjector.access$000 (ConstructorInjector.java:32)
-    at com.google.inject.internal.ConstructorInjector$1.call (ConstructorInjector.java:98)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
-    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
-    at com.google.inject.internal.ConstructorInjector.construct (ConstructorInjector.java:93)
-    at com.google.inject.internal.ConstructorBindingImpl$Factory.get (ConstructorBindingImpl.java:306)
-    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
-    at com.google.inject.internal.InjectorImpl.getInstance (InjectorImpl.java:1086)
-    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:48)
-    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:85)
-    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
-    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:66)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
-    at org.eclipse.sisu.bean.BeanScheduler$CycleActivator.onProvision (BeanScheduler.java:230)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:120)
-    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
-    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:61)
-    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
-    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
-    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:168)
-    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:39)
-    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
-    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:81)
-    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:51)
-    at org.eclipse.sisu.wire.EntryListAdapter$ValueIterator.next (EntryListAdapter.java:111)
-    at org.apache.maven.plugin.assembly.archive.DefaultAssemblyArchiver.createArchive (DefaultAssemblyArchiver.java:179)
-    at org.apache.maven.plugin.assembly.mojos.AbstractAssemblyMojo.execute (AbstractAssemblyMojo.java:429)
-    at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:137)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:210)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:156)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:148)
-    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:117)
-    at org.apache.maven.lifecycle.internal.builder.multithreaded.MultiThreadedBuilder$1.call (MultiThreadedBuilder.java:190)
-    at org.apache.maven.lifecycle.internal.builder.multithreaded.MultiThreadedBuilder$1.call (MultiThreadedBuilder.java:186)
-    at java.util.concurrent.FutureTask.run (FutureTask.java:266)
-    at java.util.concurrent.Executors$RunnableAdapter.call (Executors.java:511)
-    at java.util.concurrent.FutureTask.run (FutureTask.java:266)
-    at java.util.concurrent.ThreadPoolExecutor.runWorker (ThreadPoolExecutor.java:1149)
-    at java.util.concurrent.ThreadPoolExecutor$Worker.run (ThreadPoolExecutor.java:624)
-    at java.lang.Thread.run (Thread.java:748)
-Caused by: java.util.NoSuchElementException
-    at java.util.Collections$EmptyIterator.next (Collections.java:4191)
-    at org.codehaus.plexus.DefaultPlexusContainer.lookup (DefaultPlexusContainer.java:263)
-    at org.codehaus.plexus.DefaultPlexusContainer.lookup (DefaultPlexusContainer.java:243)
-    at org.apache.maven.shared.repository.DefaultRepositoryAssembler.contextualize (DefaultRepositoryAssembler.java:721)
-    at org.eclipse.sisu.plexus.PlexusLifecycleManager.contextualize (PlexusLifecycleManager.java:282)
-    at org.eclipse.sisu.plexus.PlexusLifecycleManager.activate (PlexusLifecycleManager.java:203)
-    at org.eclipse.sisu.bean.BeanScheduler.schedule (BeanScheduler.java:151)
-    at org.eclipse.sisu.plexus.PlexusLifecycleManager.manage (PlexusLifecycleManager.java:147)
-    at org.eclipse.sisu.plexus.PlexusBeanBinder.afterInjection (PlexusBeanBinder.java:72)
-    at com.google.inject.internal.MembersInjectorImpl.notifyListeners (MembersInjectorImpl.java:131)
-    at com.google.inject.internal.ConstructorInjector.provision (ConstructorInjector.java:125)
-    at com.google.inject.internal.ConstructorInjector.access$000 (ConstructorInjector.java:32)
-    at com.google.inject.internal.ConstructorInjector$1.call (ConstructorInjector.java:98)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
-    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
-    at com.google.inject.internal.ConstructorInjector.construct (ConstructorInjector.java:93)
-    at com.google.inject.internal.ConstructorBindingImpl$Factory.get (ConstructorBindingImpl.java:306)
-    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
-    at com.google.inject.internal.InjectorImpl.getInstance (InjectorImpl.java:1086)
-    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:48)
-    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:85)
-    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
-    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:66)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
-    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
-    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:61)
-    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
-    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
-    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:168)
-    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:39)
-    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
-    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:81)
-    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:51)
-    at org.eclipse.sisu.plexus.PlexusRequirements$RequirementProvider.get (PlexusRequirements.java:250)
-    at org.eclipse.sisu.plexus.ProvidedPropertyBinding.injectProperty (ProvidedPropertyBinding.java:48)
-    at org.eclipse.sisu.bean.BeanInjector.injectMembers (BeanInjector.java:52)
-    at com.google.inject.internal.MembersInjectorImpl.injectMembers (MembersInjectorImpl.java:160)
-    at com.google.inject.internal.ConstructorInjector.provision (ConstructorInjector.java:124)
-    at com.google.inject.internal.ConstructorInjector.access$000 (ConstructorInjector.java:32)
-    at com.google.inject.internal.ConstructorInjector$1.call (ConstructorInjector.java:98)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
-    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
-    at com.google.inject.internal.ConstructorInjector.construct (ConstructorInjector.java:93)
-    at com.google.inject.internal.ConstructorBindingImpl$Factory.get (ConstructorBindingImpl.java:306)
-    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
-    at com.google.inject.internal.InjectorImpl.getInstance (InjectorImpl.java:1086)
-    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:48)
-    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:85)
-    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
-    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:66)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
-    at org.eclipse.sisu.bean.BeanScheduler$CycleActivator.onProvision (BeanScheduler.java:230)
-    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:120)
-    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
-    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:61)
-    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
-    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
-    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:168)
-    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:39)
-    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
-    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:81)
-    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:51)
-    at org.eclipse.sisu.wire.EntryListAdapter$ValueIterator.next (EntryListAdapter.java:111)
-    at org.apache.maven.plugin.assembly.archive.DefaultAssemblyArchiver.createArchive (DefaultAssemblyArchiver.java:179)
-    at org.apache.maven.plugin.assembly.mojos.AbstractAssemblyMojo.execute (AbstractAssemblyMojo.java:429)
-    at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:137)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:210)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:156)
-    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:148)
-    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:117)
-    at org.apache.maven.lifecycle.internal.builder.multithreaded.MultiThreadedBuilder$1.call (MultiThreadedBuilder.java:190)
-    at org.apache.maven.lifecycle.internal.builder.multithreaded.MultiThreadedBuilder$1.call (MultiThreadedBuilder.java:186)
-    at java.util.concurrent.FutureTask.run (FutureTask.java:266)
-    at java.util.concurrent.Executors$RunnableAdapter.call (Executors.java:511)
-    at java.util.concurrent.FutureTask.run (FutureTask.java:266)
-    at java.util.concurrent.ThreadPoolExecutor.runWorker (ThreadPoolExecutor.java:1149)
-    at java.util.concurrent.ThreadPoolExecutor$Worker.run (ThreadPoolExecutor.java:624)
-    at java.lang.Thread.run (Thread.java:748)
-[DEBUG] No dependency sets specified.
-[INFO] Building tar: /data/src/apache-atlas-sources-2.2.0_elastic-6.8.20/distro/target/apache-atlas-2.2.0-hbase-hook.tar.gz
-...
-[INFO] ------------------------------------------------------------------------
-[INFO] Reactor Summary for apache-atlas 2.2.0:
-[INFO]
-[INFO] Apache Atlas Server Build Tools .................... SUCCESS [  1.431 s]
-[INFO] apache-atlas ....................................... SUCCESS [  9.142 s]
-[INFO] Apache Atlas Integration ........................... SUCCESS [ 12.408 s]
-[INFO] Apache Atlas Test Utility Tools .................... SUCCESS [  5.650 s]
-[INFO] Apache Atlas Common ................................ SUCCESS [  4.045 s]
-[INFO] Apache Atlas Client ................................ SUCCESS [  0.938 s]
-[INFO] atlas-client-common ................................ SUCCESS [  1.985 s]
-[INFO] atlas-client-v1 .................................... SUCCESS [  2.526 s]
-[INFO] Apache Atlas Server API ............................ SUCCESS [  2.291 s]
-[INFO] Apache Atlas Notification .......................... SUCCESS [  5.322 s]
-[INFO] atlas-client-v2 .................................... SUCCESS [  2.052 s]
-[INFO] Apache Atlas Graph Database Projects ............... SUCCESS [  0.913 s]
-[INFO] Apache Atlas Graph Database API .................... SUCCESS [  2.444 s]
-[INFO] Graph Database Common Code ......................... SUCCESS [  2.190 s]
-[INFO] Apache Atlas JanusGraph-HBase2 Module .............. SUCCESS [  2.468 s]
-[INFO] Apache Atlas JanusGraph DB Impl .................... SUCCESS [ 14.401 s]
-[INFO] Apache Atlas Graph DB Dependencies ................. SUCCESS [  2.486 s]
-[INFO] Apache Atlas Authorization ......................... SUCCESS [  2.550 s]
-[INFO] Apache Atlas Repository ............................ SUCCESS [  9.921 s]
-[INFO] Apache Atlas UI .................................... SUCCESS [01:02 min]
-[INFO] Apache Atlas New UI ................................ SUCCESS [01:01 min]
-[INFO] Apache Atlas Web Application ....................... SUCCESS [01:03 min]
-[INFO] Apache Atlas Documentation ......................... SUCCESS [  4.470 s]
-[INFO] Apache Atlas FileSystem Model ...................... SUCCESS [  3.347 s]
-[INFO] Apache Atlas Plugin Classloader .................... SUCCESS [  2.106 s]
-[INFO] Apache Atlas Hive Bridge Shim ...................... SUCCESS [  4.490 s]
-[INFO] Apache Atlas Hive Bridge ........................... SUCCESS [  8.053 s]
-[INFO] Apache Atlas Falcon Bridge Shim .................... SUCCESS [  3.415 s]
-[INFO] Apache Atlas Falcon Bridge ......................... SUCCESS [  4.600 s]
-[INFO] Apache Atlas Sqoop Bridge Shim ..................... SUCCESS [  8.715 s]
-[INFO] Apache Atlas Sqoop Bridge .......................... SUCCESS [  9.089 s]
-[INFO] Apache Atlas Storm Bridge Shim ..................... SUCCESS [  6.424 s]
-[INFO] Apache Atlas Storm Bridge .......................... SUCCESS [  5.730 s]
-[INFO] Apache Atlas Hbase Bridge Shim ..................... SUCCESS [  4.726 s]
-[INFO] Apache Atlas Hbase Bridge .......................... SUCCESS [  7.642 s]
-[INFO] Apache HBase - Testing Util ........................ SUCCESS [ 22.674 s]
-[INFO] Apache Atlas Kafka Bridge .......................... SUCCESS [  3.511 s]
-[INFO] Apache Atlas classification updater ................ SUCCESS [  2.244 s]
-[INFO] Apache Atlas index repair tool ..................... SUCCESS [  4.034 s]
-[INFO] Apache Atlas Impala Hook API ....................... SUCCESS [  0.872 s]
-[INFO] Apache Atlas Impala Bridge Shim .................... SUCCESS [  0.498 s]
-[INFO] Apache Atlas Impala Bridge ......................... SUCCESS [  7.789 s]
-[INFO] Apache Atlas Distribution .......................... SUCCESS [ 52.828 s]
-[INFO] atlas-examples ..................................... SUCCESS [  0.456 s]
-[INFO] sample-app ......................................... SUCCESS [  2.279 s]
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD SUCCESS
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  03:36 min (Wall Clock)
-[INFO] Finished at: 2021-10-18T18:22:49+03:00
-[INFO] ------------------------------------------------------------------------
-</code></pre></details>
-<p>Собранные пакеты находятся в каталоге <code>~/src/apache-atlas-sources-2.2.0/distro/target</code>. В файле <code>apache-atlas-2.2.0-bin.tar.gz</code> можно найти всё необходимое для дальнейшей работы по развёртыванию Atlas&rsquo;а.</p>
+unset OPTION
+</code></pre><ol start="3">
+<li>Подключение Hook&rsquo;а к Apache HBase</li>
+</ol>
+<p>3.1. В настройках службы Hue изменяем следующие параметры:</p>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td>
+<b>HBase Coprocessor Master Classes</b><br>
+hbase.coprocessor.master.classes
+</td>
+<td>
+- <span style="color:blue">org.apache.hadoop.hbase.security.access.AccessController</span><br>
+- <span style="color:blue">org.apache.atlas.hbase.hook.HBaseAtlasCoprocessor</span>
+<br><br>
+При следующих установках Atlas'а попытаться определить момент, когда происходит ошибка <span style="color:salmon">HBase. Ошибка при выполнении 'user_permission'. ERROR: DISABLED: Security features are not available.</span> Именно для её решения понадобилось добавить 'org.apache.hadoop.hbase.security.access.AccessController'.
+</td>
+<td>
+List of org.apache.hadoop.hbase.coprocessor.MasterObserver coprocessors that are loaded by default on the active HMaster process. For any implemented coprocessor methods, the listed classes will be called in order. After implementing your own MasterObserver, just put it in HBase's classpath and add the fully qualified class name here.
+</td>
+</tr>
+<tr>
+<td>Java Configuration Options for HBase Master</td>
+<td>
+{{JAVA_GC_ARGS}} -XX:ReservedCodeCacheSize=256m <span style="color:blue">-Datlas.conf=/opt/atlas/conf/</span>
+</td>
+<td>
+These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.
+</td>
+</tr>
+</table>
+<p>3.2. Нажимаем Save Changes.</p>
+<p>3.3. <img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</p>
+<h2 id="4-использованные-материалы">4. Использованные материалы</h2>
+<p><a href="https://atlas.apache.org/#/HookHBase">Apache Atlas Hook &amp; Bridge for Apache HBase</a></p>
 
 	
 	
