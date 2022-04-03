@@ -1,0 +1,489 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – LVM</title>
+    <link>/tags/lvm/</link>
+    <description>Recent content in LVM on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/lvm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
+      <link>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-12-26&lt;/p&gt;
+&lt;p&gt;Я произвёл несколько опытов по сжатию LVM тома с Btrfs на борту и сделал для себя следующие выводы.&lt;/p&gt;
+&lt;h3 id=&#34;описание-безопасного-способа&#34;&gt;Описание безопасного способа&lt;/h3&gt;
+&lt;p&gt;Самый безопасный способ заключается в следующем: с LVM2 использовать ext4 с возможностью уменьшения и увеличения тома. Или использовать надёжную xfs с возможностью только увеличения тома. Или всё-таки использовать btrfs, но без попыток уменьшать том, то есть, как и в случае с xfs, только увеличивать том.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Сейчас могу дополнить, что при попытках уменьшить btrfs-том на LV, который занимает несколько PV, то от потери данных нас отделяет один шаг. Будет логичнее, если занимать несколько PV (и при необходимости освобождать PV), используя средства btrfs. То есть добавлять/удалять в/из существующего btrfs-тома дополнительные PV или даже разделы блочных устройств (не учавствующие в LVM2), без использования прослойки LV.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Так как LVM2 не может отследить границы занятого Btrfs пространства на томе, то безопасней произвести сокращение Btrfs до меньших значений, чем задуманный уменьшенный размер тома. Не забыть сделать сброс кэша командой &lt;code&gt;sync&lt;/code&gt; и подождать какое-то время для физического завершения этого процесса. Потом, после последующего сокращения тома командой &lt;code&gt;lvresize&lt;/code&gt;, произвести расширение Btrfs с опцией &lt;code&gt;max&lt;/code&gt; для заполнения всего выделенного пространства.&lt;/p&gt;
+&lt;h3 id=&#34;пример-уменьшения-размера-тома-с-btrfs&#34;&gt;Пример уменьшения размера тома с Btrfs.&lt;/h3&gt;
+&lt;p&gt;В данном примере том &lt;code&gt;/dev/vg/btrfs-tmp&lt;/code&gt; примонтирован к директории &lt;code&gt;/mnt/tmp&lt;/code&gt;. Сначала уменьшим Btrfs на 1100MiB. Затем уменьшим том LVM на 1GiB. И в конце увеличим Btrfs на ~100Mib, чтобы занять всё доступное дисковое пространство.&lt;/p&gt;
+&lt;p&gt;Для операции уменьшения размера Btrfs необходимо, чтобы ФС была примонтирована, то есть все операции делаются онлайн. При задании размеров дискового пространства параметром &lt;code&gt;m&lt;/code&gt; или &lt;code&gt;M&lt;/code&gt;, независимо от регистра оба символа  указывают на МебиБайт.&lt;/p&gt;
+&lt;p&gt;Команда &lt;code&gt;lvresize ...&lt;/code&gt; выдаёт предупреждение, что возможно нарушение целостности данных. Не обращаем внимания на это сообщение, так как, предположительно, понимаем что делаем и контролируем ситуацию.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# btrfs filesystem resize -1100m /mnt/tmp
+# sync 
+# lvresize -L -1000m /dev/vg/btrfs-tmp
+# btrfs filesystem resize max /mnt/tmp
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Команда уменьшения размера &lt;code&gt;btrfs&lt;/code&gt; может закончиться неудачей &lt;code&gt;ERROR: unable to resize &#39;/mnt/tmp&#39;: No space left on device&lt;/code&gt;. Это происходит из-за недостатка свободного места на Btrfs, даже если команда &lt;code&gt;btrfs filesystem usage&lt;/code&gt; показывает достаточно свободного места. После прочтения &lt;a href=&#34;https://btrfs.wiki.kernel.org/index.php/FAQ#Help.21_Btrfs_claims_I.27m_out_of_space.2C_but_it_looks_like_I_should_have_lots_left.21&#34;&gt;FAQ Btrfs&lt;/a&gt; приходит понимание, что с &lt;em&gt;free space&lt;/em&gt; на томах Btrfs всё сложнее, чем кажется.&lt;/p&gt;
+&lt;h3 id=&#34;как-я-это-проверял&#34;&gt;Как я это проверял&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Создавался том размером один GiB.&lt;/li&gt;
+&lt;li&gt;Том форматировался &lt;code&gt;mkfs.btrfs&lt;/code&gt; с опцией &lt;code&gt;--mixed&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;На отформатированном томе для его полного заполнения создавалось два файла.&lt;/li&gt;
+&lt;li&gt;Вычислялись хэши файлов с помощью &lt;code&gt;sha256sum&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Удалялся первый файл.&lt;/li&gt;
+&lt;li&gt;Производилась операция уменьшения Btrfs.&lt;/li&gt;
+&lt;li&gt;Давалась команда &lt;code&gt;sync&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Производилась операция уменьшения &lt;em&gt;LV&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Вычислялись хэши файлов с помощью &lt;code&gt;sha256sum&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Пару раз я намеренно установил размер тома на один экстент (&lt;em&gt;PE&lt;/em&gt;) меньше, чем выделил под Btrfs. Последующая проверка &lt;code&gt;sha256sum&lt;/code&gt; завершилась ошибкой чтения файла. Вновь отодвинув границу тома на один экстент больше, то есть вернув файловой системе доступ к отнятым ранее 4Mib, я повторил вычисление хэша файла, которое на это раз завершилось успешно с верным результатом.&lt;/p&gt;
+&lt;h3 id=&#34;bear-in-mind&#34;&gt;Bear in mind&lt;/h3&gt;
+&lt;p&gt;Если помнить, что LVM выделяет дисковое пространство блоками по умолчанию, &lt;em&gt;Physical Extent (PE)&lt;/em&gt;, по 4MiB, то можно вычислить точные значения новых границ Btrfs и тома с точностью до одного &lt;em&gt;PE&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Минимальный размер файловой ситемы Btrfs составляет 109MiB. Из-за размера PE в 4MiB, попытка уменьшить размер тома до 109MiB командой &lt;code&gt;lvresize&lt;/code&gt; приведёт к уменьшению тома до 112MiB, о чём будет указано в выводе команды.&lt;/p&gt;
+&lt;p&gt;Есть вероятность, что администратор при добавлении &lt;em&gt;Физического Тома (PV)&lt;/em&gt; в &lt;em&gt;Группу Томов (VG)&lt;/em&gt; указал другой размер &lt;em&gt;PE&lt;/em&gt;. То есть для точного вычисления новых границ Btrfs и &lt;em&gt;LV&lt;/em&gt; необходимо сначала получить информацию о размере &lt;em&gt;PE&lt;/em&gt; командой &lt;code&gt;pvdisplay&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Отсюда следует, что безопасней следовать совету из первого абзаца.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;code&gt;mkfs.btrfs&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&lt;code&gt;-M|--mixed&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Normally the data and metadata block groups are isolated. The mixed mode will remove the isolation and store both types in the same block group type. This helps to utilize the free space regardless of the purpose and is suitable for small devices. The separate allocation of block groups leads to a situation where the space is reserved for the other block group type, is not available for allocation and can lead to ENOSPC state.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;The recommended size for the mixed mode is for filesystems less than 1GiB. The soft recommendation is to use it for filesystems smaller than 5GiB. The mixed mode may lead to degraded performance on larger filesystems, but is otherwise usable, even on multiple devices.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: LVM2 — создание, перемещение и удаление логических томов</title>
+      <link>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
+      <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2018-09-03&lt;/p&gt;
+&lt;h3 id=&#34;создание-группы-томов-volume-group&#34;&gt;Создание Группы Томов (Volume Group)&lt;/h3&gt;
+&lt;p&gt;Для имени Группы Томов (VG) на одиночном сервере я обычно выбираю значение &amp;ldquo;vg&amp;rdquo;. Потом, при желании, его легко можно переименовать в любой момент. В Группу Томов можно добавить любое блочное устройство.&lt;/p&gt;
+&lt;p&gt;После добавления устройства в VG:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# vgcreate /dev/vg /dev/sde /dev/sdd1 /dev/sdd2 /dev/md10 /dev/mapper/pv5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;можно получить информацию о VG:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# vgdisplay /dev/vg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;переименовать VG:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# vgrename /dev/vg /dev/vg0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;получить информацию о конкретном PV:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvdisplay /dev/md10
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-логического-тома-logical-volume&#34;&gt;Создание Логического Тома (Logical Volume)&lt;/h3&gt;
+&lt;p&gt;Создать LV с именем /dev/vg/dock в любом свободном месте:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -ndock -L20G /dev/vg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создать LV, заняв всё свободное место (100% свободных экстентов) на группе томов /dev/vg:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -ndock -l100%FREE /dev/vg
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;сбор-информации-о-физическом-размещении-lv-на-физических-томах-pv&#34;&gt;Сбор информации о физическом размещении LV на физических томах (PV)&lt;/h3&gt;
+&lt;p&gt;Размещение логических томов (LV) на физических томах (PV) выдаёт команда:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# lvs -a -o +devices
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;LV             VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert Devices
+  allegrograph0  vg        -wi-ao----    5,00g                                                     /dev/mapper/pv10(117096)
+  arangodb0      vg        -wi-ao----    5,00g                                                     /dev/mapper/pv10(114536)
+  orientdb0      vg        -wi-ao----    5,00g                                                     /dev/mapper/pv10(115816)
+  tmp            vg        -wi-ao----  100,00g                                                     /dev/mapper/pv10(68728)
+  vol            vg        -wi-ao----  500,00g                                                     /dev/mapper/pv10(59999)
+  dock           vg        -wi-ao----   10,00g                                                     /dev/mapper/pv2(28160)
+  mariadb0       vg        -wi-ao----    5,00g                                                     /dev/mapper/pv2(25600)
+  mongodb0       vg        -wi-ao----    5,00g                                                     /dev/mapper/pv12(85601)
+  nextcloud-data vg        -wi-ao----  100,00g                                                     /dev/mapper/pv2(0)
+  nextcloud-www  vg        -wi-ao----    5,00g                                                     /dev/mapper/pv2(26880)
+  vol            vg        -wi-ao----  500,00g                                                     /dev/mapper/pv5(0)
+  vol            vg        -wi-ao----  500,00g                                                     /dev/mapper/pv12(93281)
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;h3 id=&#34;перетаскивание-части-или-всего-lv&#34;&gt;Перетаскивание части или всего LV&lt;/h3&gt;
+&lt;p&gt;Перенос экстентов указанного LV на другой PV:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvmove -n docker /dev/mapper/pv13 /dev/mapper/pv11
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если экстенты LV находятся в разных местах, то посмотреть карту размещения можно с помощью команды:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# lvdisplay -m /dev/vg/vol
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;File descriptor 7 (pipe:[274631]) leaked on lvdisplay invocation. Parent PID 22239: bash
+  --- Logical volume ---
+  LV Path                /dev/vg/vol
+  LV Name                vol
+  VG Name                vg
+  LV UUID                99e01850-fd35-11e8-b1b6-13207852fa16
+  LV Write Access        read/write
+  LV Creation host, time srv0, 2016-06-10 13:13:07 +0000
+  LV Status              available
+  # open                 1
+  LV Size                500,00 GiB
+  Current LE             128000
+  Segments               3
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           253:11
+
+  --- Segments ---
+  Logical extents 0 to 113175:              # Номера экстентов внутри логического тома
+    Type                linear
+    Physical volume     /dev/mapper/pv11    # Физический том
+    Physical extents    0 to 113175         # Номера физических экстентов занимаемых внутри физического тома
+
+  Logical extents 113176 to 119270:
+    Type                linear
+    Physical volume     /dev/mapper/pv4
+    Physical extents    0 to 6094
+
+  Logical extents 119271 to 127999:
+    Type                linear
+    Physical volume     /dev/mapper/pv10
+    Physical extents    59999 to 68727
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;Карту физического тома можно посмотреть через команду:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvdisplay -m /dev/mapper/pv2
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;File descriptor 7 (pipe:[274631]) leaked on pvdisplay invocation. Parent PID 22239: bash
+  --- Physical volume ---
+  PV Name               /dev/mapper/pv2
+  VG Name               vg
+  PV Size               &amp;lt;442,10 GiB / not usable 2,00 MiB
+  Allocatable           yes
+  PE Size               4,00 MiB
+  Total PE              113176          # Общее количество экстентов на физическом томе
+  Free PE               77336           # Количество свободных экстентов
+  Allocated PE          35840           # Количество занятых экстентов
+  PV UUID               L27diY-MiUX-AXcZ-3gKu-PIO5-Xqbq-fsjxku
+
+  --- Physical Segments ---
+  Physical extent 0 to 25599:                   # Физические экстенты с 0 по 25599
+    Logical volume      /dev/vg/nextcloud-data  # заняты этим томом
+    Logical extents     0 to 25599              # его логическими экстентами с 0 по 25599
+  Physical extent 25600 to 26879:
+    Logical volume      /dev/vg/mariadb0
+    Logical extents     0 to 1279
+  Physical extent 26880 to 28159:
+    Logical volume      /dev/vg/nextcloud-www
+    Logical extents     0 to 1279
+  Physical extent 28160 to 30719:
+    Logical volume      /dev/vg/dock
+    Logical extents     0 to 2559               # 2560 экстентов*(4*1024)MiB = 10485760/1048576=10GiB
+  Physical extent 30720 to 31999:
+    Logical volume      /dev/vg/mongodb0
+    Logical extents     0 to 1279
+  Physical extent 32000 to 33279:
+    Logical volume      /dev/vg/allegrograph0
+    Logical extents     0 to 1279               # 1280 экстентов*(4*1024)MiB = 5242880/1048576=5GiB
+  Physical extent 33280 to 34559:
+    Logical volume      /dev/vg/arangodb0
+    Logical extents     0 to 1279
+  Physical extent 34560 to 35839:
+    Logical volume      /dev/vg/orientdb0
+    Logical extents     0 to 1279
+  Physical extent 35840 to 113175:
+    FREE
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;h3 id=&#34;перемещение-extentов-с-помощью-pvmove&#34;&gt;Перемещение extent&amp;rsquo;ов с помощью pvmove&lt;/h3&gt;
+&lt;p&gt;Перенос определённых PE между разными томами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvmove -nstorj /dev/mapper/pv3:0-66312  /dev/mapper/pv13:35243-119200
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Однажды я ошибся и указал диапазон источника переноса через двоеточие, вместо дефис: &lt;code&gt;/dev/mapper/pv3:0:66312&lt;/code&gt;. В результате были перемещены два PE с адресами 0 и 66312.&lt;/p&gt;
+&lt;p&gt;Перенос определённых PE в пределах одного тома:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvmove --alloc anywhere /dev/mapper/pv13:35242-52862 /dev/mapper/pv13:17621-35241
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В процессе моего изучения LVM2 пару дней посвятил команде pvmove. Мне было необходимо подвинуть большой фрагмент LV внутри PV на два экстента (PE), чтобы в начало PV влезли два экстента. Попробовал так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# for (( i=101575; i&amp;gt;=0; i-- )); do pvmove --alloc anywhere /dev/mapper/pv12:$i /dev/mapper/pv12:$(($i+2)); done
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Сработало (оптимальней было двигать сразу по два PE), но на одну подвижку тратилось секунд по 15, так как судя по ману, для каждого сеанса переноса, создаётся временный LV с именем pvmove, занимающий целевые PExtents. А после успешного подтверждения переноса, временный LV исчезает и занятые PE меняют принадлежность исходному LV. Видимо поэтому время выполнения этого скрипта на моём домашнем сервере вылилось бы в неделю или даже больше дней. Нажал Ctrl+c и перемещение прервалось. Один из PE остался в подвешенном состоянии во временном LV с именем &amp;ldquo;pvmove0&amp;rdquo;, поэтому дал команду &lt;code&gt;pvmove --abort&lt;/code&gt;, чтобы процесс корректно завершился. Вероятно, надёжней использовать опцию &lt;code&gt;--atomic&lt;/code&gt;? (или что-то подобное, уточнить в мане), чтобы каждый сеанс переноса полностью завершился. Завершил задачу перемещением всего пакета на другой PV и обратным переносом со сдвигом на два PE. Всё заняло несколько часов.&lt;/p&gt;
+&lt;h3 id=&#34;удаление-pv-из-vg&#34;&gt;Удаление PV из VG&lt;/h3&gt;
+&lt;p&gt;Шаг первый. Переместить все PE на другие PV:
+&lt;code&gt;# pvmove /dev/mapper/pv11&lt;/code&gt;
+Шаг второй. Уменьшить VG, выкинув этот том из группы томов VG:
+&lt;code&gt;# vgreduce /dev/vg /dev/mapper/pv11&lt;/code&gt;
+Шаг третий. Зачистить заголовок диска с информацией о PV командой:
+&lt;code&gt;# pvremove /dev/mapper/pv11&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.systutorials.com/docs/linux/man/8-pvmove/&#34;&gt;pvmove (8) - Linux Man Pages&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 20. Создание бэкапа всей системы с помощью BorgBackup</title>
+      <link>/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
+      <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-03-11&lt;/p&gt;
+&lt;h2 id=&#34;подготовительные-мероприятия&#34;&gt;Подготовительные мероприятия&lt;/h2&gt;
+&lt;p&gt;Для создания LVM-снэпшотов требуется некоторое незанятое место на тех VG, для LV которых будут создаваться снэпшоты. В том случае, если на машине остановлены все сервисы, могущие создавать большой объём записываемых данных, то для создания снэпшотов много места не потребуется и достаточно, например, временно отключить swap и удалить соответствующий LV для освобождения пары Гигабайт под создание снэпшотов.&lt;/p&gt;
+&lt;p&gt;Возможно, будет правильней добавить к машине дополнительный диск достаточного объёма на постоянной основе, который будет использоваться не только для создания бэкапов, но и восстановления всей системы.&lt;/p&gt;
+&lt;h3 id=&#34;описание-бэкапируемой-системы&#34;&gt;Описание бэкапируемой системы&lt;/h3&gt;
+&lt;p&gt;Дисковая подсистема стандартной бэкапируемой системы состоит из следующего:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Два диска
+&lt;ul&gt;
+&lt;li&gt;Первый диск системный, где расположены отдельные разделы для:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/dev/sda1&lt;/code&gt; - &lt;code&gt;/boot&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/vg/root&lt;/code&gt; - &lt;code&gt;/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev/vg/var&lt;/code&gt; - &lt;code&gt;/var&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Второй диск дополнительный. Возможно, что он:
+&lt;ul&gt;
+&lt;li&gt;диск не разбит или разбит на один раздел. Пространство подключёно к LVM2 и именовано и подключено так &lt;code&gt;/dev/vg/data&lt;/code&gt; - &lt;code&gt;/data&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;диск не разбит или разбит на один раздел. Пространство подключёно к LVM2 и именовано и подключено так &lt;code&gt;/dev/vgdata/data&lt;/code&gt; - &lt;code&gt;/data&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;может быть организован по другому.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# parted /dev/sda unit mib print free
+Model: VMware Virtual disk (scsi)
+Disk /dev/sda: 51200MiB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start    End       Size      Type     File system  Flags
+ 1      1,00MiB  1025MiB   1024MiB   primary  xfs          boot
+ 2      1025MiB  51200MiB  50175MiB  primary               lvm
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;добавление-пространства-в-volume-group&#34;&gt;Добавление пространства в Volume Group&lt;/h3&gt;
+&lt;p&gt;Если требуется бэкап LV-томов на одном VG, то разбивать дополнительный диск на разделы не требуется. Достаточно будет добавить в VG весь новый диск командой &lt;code&gt;vgextend /dev/vg /dev/sdb&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;В противном случае, когда восстанавливаемые тома находятся на разных VG, потребуется разбивка дополнительного диска на отдельные разделы и добавление этих новых PV в свои VG.&lt;/p&gt;
+&lt;h2 id=&#34;процесс-резервного-копирования&#34;&gt;Процесс резервного копирования&lt;/h2&gt;
+&lt;h3 id=&#34;отключение-работающих-демонов&#34;&gt;Отключение работающих демонов&lt;/h3&gt;
+&lt;p&gt;Останавливаем и выключаем главные сервисы, работающие на хосте, чтобы предотвратить автоматический запуск демонов после восстановления системы. Например:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipactl stop
+systemctl disable --now dirsrv@TEST4.LAN.service
+systemctl disable --now pki-tomcatd
+systemctl disable --now named
+systemctl disable --now httpd
+systemctl disable --now ipa-otpd
+systemctl disable --now ipa-dnskeysyncd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl stop postfix
+systemctl stop rsyslog
+service auditd stop
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-временных-lvm-snapshotов&#34;&gt;Создание временных LVM snapshot&amp;rsquo;ов&lt;/h3&gt;
+&lt;p&gt;Помним, что в Volume Group должно быть достаточно свободного места для размещения снэпшотов.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -L 500M -s -n snap_root /dev/vg/root
+lvcreate -L 500M -s -n snap_var /dev/vg/var
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;При монтировании xfs используем опцию &lt;code&gt;nouuid&lt;/code&gt;, поэтому проверяем тип файловой системы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Mounting root on /mnt
+LV=&amp;#39;/dev/vg/snap_root&amp;#39;
+FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
+if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
+  mount -o nouuid,ro ${LV} /mnt
+elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
+  mount -o ro ${LV} /mnt
+fi
+
+# Mounting /var on /mnt/var
+LV=&amp;#39;/dev/vg/snap_var&amp;#39;
+FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
+if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
+  mount -o nouuid,ro ${LV} /mnt/var
+elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
+  mount -o ro ${LV} /mnt/var
+fi
+
+# Mounting /boot on /mnt/boot
+mount -o bind,ro /boot /mnt/boot
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;резервное-копирование&#34;&gt;Резервное копирование&lt;/h3&gt;
+&lt;p&gt;Устанавливаем переменные, чтобы не вводить параметры дважды:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORG_RSH=&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;
+export BORG_REPO=&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Выполняем бэкап со сжатием передовым компрессором &lt;a href=&#34;https://ru.wikipedia.org/wiki/Zstandard&#34;&gt;Zstandard&lt;/a&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg create -C zstd --stats --progress ::full_{hostname}_{now} /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-временных-снэпшотов&#34;&gt;Удаление временных снэпшотов&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;umount -R /mnt
+lvremove -y /dev/vg/snap_var
+lvremove -y /dev/vg/snap_root
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;запуск-остановленных-демонов&#34;&gt;Запуск остановленных демонов&lt;/h3&gt;
+&lt;p&gt;Запускаем ранее остановленные локальные демоны:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl start postfix
+systemctl start rsyslog
+service auditd start
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 30. Восстановление всей системы из бэкапа с помощью BorgBackup</title>
+      <link>/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
+      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-03-11
+2022-03-18&lt;/p&gt;
+&lt;h2 id=&#34;подготовительные-мероприятия&#34;&gt;Подготовительные мероприятия&lt;/h2&gt;
+&lt;p&gt;В минимальной комплектации необходимо восстановить системные разделы &lt;code&gt;/&lt;/code&gt;, &lt;code&gt;/boot&lt;/code&gt;, &lt;code&gt;/var&lt;/code&gt;. В максимальной комплектации потребуется восстановить ранее забэкапированные &lt;code&gt;/data&lt;/code&gt; и прочее.&lt;/p&gt;
+&lt;p&gt;В любом случае, &lt;strong&gt;для распаковки этих данных потребуется достаточное незанятое место на Volume Group&amp;rsquo;ах&lt;/strong&gt;, несущих восстанавливаемые Logical Volume&amp;rsquo;ы. В простейшем случае для этого необходимо добавить к машине дополнительный диск вместимостью перекрывающим объём восстанавливаемых данных.&lt;/p&gt;
+&lt;h3 id=&#34;добавление-пространства-в-volume-group&#34;&gt;Добавление пространства в Volume Group&lt;/h3&gt;
+&lt;p&gt;Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется. Достаточно будет добавить в VG весь новый диск командой &lt;code&gt;vgextend /dev/vg /dev/sdb&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;В противном случае, когда восстанавливаемые тома находятся на разных VG, потребуется разбивка дополнительного диска на отдельные разделы и добавление этих новых PV в свои VG.&lt;/p&gt;
+&lt;h2 id=&#34;процесс-восстановления&#34;&gt;Процесс восстановления&lt;/h2&gt;
+&lt;h3 id=&#34;отключение-работающих-демонов&#34;&gt;Отключение работающих демонов&lt;/h3&gt;
+&lt;p&gt;В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl stop postfix
+systemctl stop rsyslog
+service auditd stop
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-lvm-snapshot&#34;&gt;Создание LVM snapshot&lt;/h3&gt;
+&lt;p&gt;Помним, что в Volume Group должно быть достаточно свободного места для размещения данных из бэкапов. В отличие от процесса создания бэкапа, в этом случае нужно много места, чтобы уместить сюда весь бэкап.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -L 4G -s -n snap_root /dev/vg/root
+lvcreate -L 4G -s -n snap_var /dev/vg/var
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;При монтировании xfs используем опцию &lt;code&gt;nouuid&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Mounting root on /mnt
+LV=&amp;#39;/dev/vg/snap_root&amp;#39;
+FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
+if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
+  mount ${LV} /mnt
+elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
+  mount ${LV} /mnt
+fi
+
+# Mounting /var on /mnt/var
+LV=&amp;#39;/dev/vg/snap_var&amp;#39;
+FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
+if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
+  mount ${LV} /mnt/var
+elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
+  mount ${LV} /mnt/var
+fi
+
+# Mounting /boot on /mnt/boot
+mount -o bind /boot /mnt/boot
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;проверка-монтирования&#34;&gt;Проверка монтирования&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount | grep &amp;#39;/mnt&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пример вывода:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
+/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-содержимого-снэпшотов-и-boot&#34;&gt;Удаление содержимого снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Удаляем всё содержимое снэпшотов и каталога &lt;code&gt;/boot&lt;/code&gt; с проверкой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf /mnt/*
+du /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Результат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;0	/mnt/boot
+0	/mnt/var
+0	/mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;восстановление-бэкапа-в-пространство-снэпшотов-и-boot&#34;&gt;Восстановление бэкапа в пространство снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Устанавливаем переменные, чтобы не вводить параметры дважды:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORG_RSH=&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;
+export BORG_REPO=&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Выбираем нужный архив из списка. Пример списка:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg list
+...
+full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 [f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Переходим в корень и восстанавливаем архив &lt;code&gt;full_img211202_2022-03-11T10:54:32&lt;/code&gt;, который заполнит файлами готовый для приёма каталог &lt;code&gt;/mnt&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd /
+borg extract --list --progress --numeric-owner \
+  ::full_img211202_2022-03-11T12:53:10
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;исправление-загрузки&#34;&gt;Исправление загрузки&lt;/h2&gt;
+&lt;h3 id=&#34;chroot-для-исправления-загрузки&#34;&gt;chroot для исправления загрузки&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount -t proc /proc /mnt/proc/
+mount -t sysfs /sys /mnt/sys/
+mount --bind /dev /mnt/dev/
+mount --bind /run /mnt/run
+chroot /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;обновление-grub&#34;&gt;Обновление GRUB&lt;/h3&gt;
+&lt;p&gt;В некоторых случаях, например при восстановлении снимка с другой операционной системой, потребуется обновить GRUB.&lt;/p&gt;
+&lt;p&gt;Общая схема обновления GRUB такая:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Генерируем новый &lt;code&gt;/boot/grub/grub.cfg&lt;/code&gt;. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&amp;rsquo;ы разделов на диске.&lt;br&gt;
+&lt;code&gt;grub-mkconfig -o /boot/grub/grub.cfg&lt;/code&gt; или &lt;code&gt;grub2-mkconfig -o /boot/grub2/grub.cfg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Так как песочница, в которой производилась генерация &lt;code&gt;grub.cfg&lt;/code&gt;, находится на LV с именами &lt;code&gt;snap_root&lt;/code&gt; и &lt;code&gt;snap_var&lt;/code&gt;, то исправляем в сгенерированном &lt;code&gt;/boot/grub/grub.cfg&lt;/code&gt; названия разделов:&lt;br&gt;
+&lt;code&gt;sed -i &#39;s/vg-snap_root/vg-root/g&#39; /boot/grub/grub.cfg&lt;/code&gt; или &lt;code&gt; sed -i &#39;s/vg-snap_root/vg-root/g&#39; /boot/grub2/grub.cfg&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):&lt;br&gt;
+&lt;code&gt;grub-install /dev/sda&lt;/code&gt; или &lt;code&gt;grub2-install /dev/sda&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;исправляем-etcfstab&#34;&gt;Исправляем &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Приводим &lt;code&gt;/etc/fstab&lt;/code&gt; в актуальное состояние, так как в нём указаны устаревшие сведения, оставшиеся от машины донора.&lt;/p&gt;
+&lt;p&gt;Необходимо помнить, что в &lt;code&gt;/etc/fstab&lt;/code&gt; могут быть просто не указаны некоторые разделы. Например, восстанавливаемый снимок машины, на которой отсутствовал LV-том &lt;code&gt;/dev/vg/var&lt;/code&gt; (то есть каталог &lt;code&gt;/var&lt;/code&gt; находится в LV-томе &lt;code&gt;/dev/vg/root&lt;/code&gt;), не будет иметь соответствующей строки в &lt;code&gt;/etc/fstab&lt;/code&gt;. Если такой снимок будет развёрнут с песочнице с подключённым &lt;code&gt;/dev/vg/var&lt;/code&gt; к &lt;code&gt;/var&lt;/code&gt;, то потребуется вручную добавить в &lt;code&gt;/etc/fstab&lt;/code&gt; строку &lt;code&gt;/dev/vg/var /var defaults 1 2&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Естественно, если восстанавливаемый снимок создавался на этой же машине, то этот пункт можно пропустить.&lt;/p&gt;
+&lt;h3 id=&#34;обновление-initramfs-и-выход-из-песочницы&#34;&gt;Обновление initramfs и выход из песочницы&lt;/h3&gt;
+&lt;p&gt;При восстановлении снимка с другой операционной системой или при различии в версиях Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.&lt;/p&gt;
+&lt;p&gt;Версию текущего ядра можно узнать через команду &lt;code&gt;uname -r&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Версии Linux-ядер в восстанавливаемом снимке видны в каталоге &lt;code&gt;/boot&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;centos-7-redos-72&#34;&gt;CentOS 7, RedOS 7.2&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dracut -f -v
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dracut -f -v /boot/initramfs-4.19.204-2.el7.x86_64.img 4.19.204-2.el7.x86_64
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;altlinux-10&#34;&gt;AltLinux 10&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;make-initrd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или при необходимости указания версии ядра:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;make-initrd --kernel=&amp;#39;5.10.82-std-def-alt1&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;исправляем-сетевые-настройки&#34;&gt;Исправляем сетевые настройки&lt;/h3&gt;
+&lt;p&gt;Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.&lt;/p&gt;
+&lt;h3 id=&#34;выход-из-песочницы&#34;&gt;Выход из песочницы&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;exit
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;заключительные-операции&#34;&gt;Заключительные операции&lt;/h2&gt;
+&lt;h3 id=&#34;объединение-снэпшотов&#34;&gt;Объединение снэпшотов&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;umount -R /mnt
+lvconvert --merge /dev/vg/snap_var
+lvconvert --merge /dev/vg/snap_root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout пример:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  Delaying merge since origin is open.
+  Merging of snapshot vg/snap_var will occur on next activation of vg/var.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Stdout последних команд говорит о том, что объединение произойдёт на следующей активации lv-томов, то есть, в нашем случае, после перезагрузки сервера.&lt;/p&gt;
+&lt;h3 id=&#34;reboot&#34;&gt;reboot&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sync
+sleep 10
+reboot -f
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;после-перезагрузки&#34;&gt;После перезагрузки&lt;/h2&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</title>
+      <link>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
+      <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;a href=&#34;https://help.72to.ru/projects/alt-linux/wiki/%D0%9E%D1%82%D0%BA%D0%B0%D1%82_%D0%BD%D0%B0_%D1%81%D1%82%D0%B0%D1%80%D1%83%D1%8E_%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8E_%D1%8F%D0%B4%D1%80%D0%B0&#34;&gt;https://help.72to.ru/projects/alt-linux/wiki/Откат_на_старую_версию_ядра&lt;/a&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ uname -r
+5.10.82-std-def-alt1
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ x86_64 classic
+
+apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ noarch classic
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo apt-cache show kernel-image-std-def
+
+Package kernel-image-std-def is a virtual package provided by:
+  kernel-image-std-def#2:5.10.82-alt1:p10+290646.100.3.1@1638544255 2:5.10.82-alt1:p10+290646.100.3.1@1638544255
+  kernel-image-std-def#2:5.10.102-alt1:p10+295939.100.1.1@1645810219 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
+You should explicitly select one to show.
+E: Package kernel-image-std-def is a virtual package with multiple providers.
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;update-kernel -t std-def -r 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ uname -r
+5.10.102-std-def-alt1
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;remove-old-kernels
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

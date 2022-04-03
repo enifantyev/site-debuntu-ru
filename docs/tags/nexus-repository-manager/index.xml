@@ -1,0 +1,434 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Nexus Repository Manager</title>
+    <link>/tags/nexus-repository-manager/</link>
+    <description>Recent content in Nexus Repository Manager on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 05 Mar 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/nexus-repository-manager/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Организация беспарольного зеркала registry-1.docker.io</title>
+      <link>/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</link>
+      <pubDate>Fri, 05 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-03-05&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.docker.com/registry/deploying/&#34;&gt;https://docs.docker.com/registry/deploying/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Машине, где установлен Nexus Repository Manager, для его работы предоставлен выход в инет. Использовать сам NXRM для организации зеркала docker.io не слишком удобно из-за обязательного применения &amp;lsquo;docker login&amp;rsquo; перед использованием такого репозитория, поэтому запускаем зеркало:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker run -d -p 6000:5000 \
+-e REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io \
+ --restart always \
+ --name registry registry:2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На целевой машине добавляем в /etc/docker/daemon.json запись:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;{
+  &amp;#34;registry-mirrors&amp;#34;: [&amp;#34;http://nexus.example.org:6000&amp;#34;]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После перезапуска docker, стало возможным, без дополнительных &amp;lsquo;docker login&amp;rsquo;, сразу выполнять:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker pull alpine
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Добавление в NXRM единого репозитория для всех версий PostgreSQL</title>
+      <link>/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
+      <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-10-18&lt;/p&gt;
+&lt;p&gt;Добавляем отдельный блоб для хранения пакетов PostgreSQL.&lt;/p&gt;
+&lt;p&gt;Добавляем репозиторий
+Remote storage: &lt;a href=&#34;https://download.postgresql.org/pub/repos/yum/&#34;&gt;https://download.postgresql.org/pub/repos/yum/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Содержимое файла pgdg-redhat-all.repo для деплоя на машины:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#######################################################
+# PGDG Red Hat Enterprise Linux / CentOS repositories #
+#######################################################
+
+# PGDG Red Hat Enterprise Linux / CentOS stable common repository for all PostgreSQL versions
+
+[pgdg-common]
+name=PostgreSQL common RPMs for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/common/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG Red Hat Enterprise Linux / CentOS stable repositories:
+
+[pgdg13]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/13/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/12/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/11/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg10]
+name=PostgreSQL 10 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/10/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg96]
+name=PostgreSQL 9.6 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/9.6/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg95]
+name=PostgreSQL 9.5 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/9.5/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg94]
+name=PostgreSQL 9.4 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/9.4/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG RHEL/CentOS Updates Testing common repositories.
+
+[pgdg-common-testing]
+name=PostgreSQL common testing RPMs for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/common/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG RHEL/CentOS Updates Testing repositories. (These packages should not be used in production)
+# Available for 9.6 and above.
+
+[pgdg13-updates-testing]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch - Updates testing
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/13/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-updates-testing]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Updates testing
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-updates-testing]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Updates testing
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG Red Hat Enterprise Linux / CentOS SRPM testing common repository
+
+[pgdg-source-common]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Source
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/common/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG RHEL / CentOS testing common SRPM repository for all PostgreSQL versions
+
+[pgdg-common-srpm-testing]
+name=PostgreSQL common testing SRPMs for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/testing/common/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG Source RPMs (SRPM), and their testing repositories:
+
+[pgdg13-source-updates-testing]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch - Source updates testing
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/testing/13/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-source]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-source-updates-testing]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Source update testing
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/testing/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-source]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-source-updates-testing]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Source update testing
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/testing/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg10-source]
+name=PostgreSQL 10 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/10/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg96-source]
+name=PostgreSQL 9.6 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/9.6/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg95-source]
+name=PostgreSQL 9.5 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/9.5/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg94-source]
+name=PostgreSQL 9.4 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/9.4/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# Debuginfo/debugsource packages for stable repos
+
+[pgdg13-updates-debuginfo]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/13/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-updates-debuginfo]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-updates-debuginfo]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg10-updates-debuginfo]
+name=PostgreSQL 10 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/10/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg96-updates-debuginfo]
+name=PostgreSQL 9.6 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/9.6/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg95-updates-debuginfo]
+name=PostgreSQL 9.5 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/9.5/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# Debuginfo/debugsource packages for testing repos
+# Available for 9.6 and above.
+
+[pgdg13-updates-testing-debuginfo]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/debug/13/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-updates-testing-debuginfo]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/debug/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-updates-testing-debuginfo]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/debug/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Настройка LDAP-аутентификации в Nexus Repository Manager</title>
+      <link>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
+      <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;факты&#34;&gt;Факты&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Исполняемое Java-ядро лежит в &lt;code&gt;/data/Nexus/nexus&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Изменяемая часть, включая репозитории, лежат в &lt;code&gt;/data/Nexus/sonatype-work&lt;/code&gt;. Примерный размер каталога ~265GB. Для бэкапа достаточно сделать копию этого каталога.&lt;/li&gt;
+&lt;li&gt;Автозапуск организован ручным созданием простой ссылкой &lt;code&gt;/etc.init.d/nexus → /data/Nexus/nexus/bin/nexus&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Настройка аккаунтов локальных пользователей и подключение по LDAP разнесены в меню.&lt;/li&gt;
+&lt;li&gt;Нет необходимости делать бэкап Nexus&amp;rsquo;а, так как локальная база пользователей и получение пользователей из LDAP мирно сосуществуют рядом, не мешая друг другу.&lt;/li&gt;
+&lt;li&gt;Пользователи подключающиеся через LDAP не заносятся в локальную базу, в отличии от GrayLog, например.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;настройка-аутентификации-security--ldap&#34;&gt;Настройка аутентификации (Security – LDAP)&lt;/h2&gt;
+&lt;h3 id=&#34;вкладка-connection&#34;&gt;Вкладка Connection&lt;/h3&gt;
+&lt;p&gt;Самоподписанный сертификат контроллера домена добавляется в NXRM через кнопку &amp;ldquo;View certificate&amp;rdquo;, где доступна операция &amp;ldquo;Add certificate to truststore&amp;rdquo;. После чего, добавленный сертификат можно наблюдать в разделе Security – SSL Certificates.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;вкладка-user-and-group&#34;&gt;Вкладка User and group&lt;/h3&gt;
+&lt;p&gt;Select template: Generic Ldap Server (делаем это в первый и единственный раз при настройке подключения).&lt;/p&gt;
+&lt;p&gt;User relative DN: cn=users&lt;/p&gt;
+&lt;p&gt;User subtree: не активируем, так как все пользователи во FreeIPA находятся в cn=users,cn=accounts,dc=example,dc=org, и нет нужды искать их во вложенных контейнерах.&lt;/p&gt;
+&lt;p&gt;Object class: inetOrgPerson&lt;/p&gt;
+&lt;p&gt;User filter: memberOf=cn=_nxrm,cn=groups,cn=accounts,dc=example,dc=org (проверяем наличие доступа к NXRM у  пользователя, через его наследуемое членство в центральной группе _nxrm, в каковую группу вложены подгруппы для авторизации – _nxrm_admins, _nxrm_ubic-users, etc.)&lt;/p&gt;
+&lt;p&gt;User ID attribute: uid&lt;/p&gt;
+&lt;p&gt;Real name attribute: cn&lt;/p&gt;
+&lt;p&gt;Email attribute: mail&lt;/p&gt;
+&lt;p&gt;Password attribute: оставляем пустым.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Ниже настраиваем отображение групп пользователей из IPA в соответствующие роли NXRM.&lt;/p&gt;
+&lt;p&gt;Map LDAP groups as roles: устанавливаем галку.&lt;/p&gt;
+&lt;p&gt;Group type: Static Groups&lt;/p&gt;
+&lt;p&gt;Group relative DN: cn=groups&lt;/p&gt;
+&lt;p&gt;Group subtree: оставляем без активации, так как все необходимые группы в IPA хранятся в cn=groups,cn=accounts,dc=example,dc=org.&lt;/p&gt;
+&lt;p&gt;Group object class: groupOfNames&lt;/p&gt;
+&lt;p&gt;Group ID attribute: cn&lt;/p&gt;
+&lt;p&gt;Group member attribute: member&lt;/p&gt;
+&lt;p&gt;Group member format: uid=${username},cn=users,cn=accounts,dc=example,dc=org&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;После чего появляется возможность добавить внешнюю роль, имя которой берётся из LDAP.&lt;/p&gt;
+&lt;h2 id=&#34;настройка-авторизации&#34;&gt;Настройка авторизации&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;включение-ldap&#34;&gt;Включение LDAP&lt;/h2&gt;
+&lt;p&gt;Добавляем в активные LDAP realms.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Предположим, что в локальной базе есть пользователь с совпадающим логином, как в IPA, но с разными паролями. Логика работы аутентификации будет следующей:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Сначала nxrm найдёт пользователя в локальной базе, но так как пароль не подойдёт, то будет просмотрены и другие Realms.&lt;/li&gt;
+&lt;li&gt;Наконец в LDAP Realms совпадут и логин и пароль. И пользователь будет аутентифицирован.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Обновление Nexus Repository Manager</title>
+      <link>/n/obnovlenie-nexus-repository-manager/</link>
+      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/obnovlenie-nexus-repository-manager/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-05-07&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://support.sonatype.com/hc/en-us/articles/115000350007&#34;&gt;Upgrading Nexus Repository Manager 3&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;краткое-описание&#34;&gt;Краткое описание&lt;/h3&gt;
+&lt;p&gt;Nexus работает на java и почти не зависит от хоста.&lt;/p&gt;
+&lt;p&gt;Nexus состоит из двух каталогов:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The application directory &lt;code&gt;nexus-3.16.1-02&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The data directory &lt;code&gt;sonatype-work&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;├── nexus-3.16.1-02
+├── sonatype-work
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;И не забываем о запуске вместе с ОС. На данный момент видно, что загрузка организована через ссылку &lt;code&gt;/etc/init.d/nexus&lt;/code&gt;, которая указывает на &lt;code&gt;/data/nexus-3.16.1-02/bin/nexus&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;подготовка-к-обновлению&#34;&gt;Подготовка к обновлению&lt;/h3&gt;
+&lt;p&gt;Скачиваем, проверяем хэш-сумму, и распаковываем новый nexus:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cd tmp
+$ wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+$ wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz.sha1
+$ sha1sum latest-unix.tar.gz
+8298bd6db3b0f4d083942343a89f47cae7d791de latest-unix.tar.gz
+$ cat latest-unix.tar.gz.sha1
+8298bd6db3b0f4d083942343a89f47cae7d791de
+$ tar -xvf latest-unix.tar.gz
+$ sudo chown nexus:nexus nexus-3.23.0-03 -R
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Переносим новый экземпляр Nexus в тот же каталог, где находится работающий экземпляр старого Nexus, чтобы было так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;.
+├── nexus-3.16.1-02
+├── nexus-3.23.0-03
+├── sonatype-work
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Останавливаем работающий Nexus.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo /etc/init.d/nexus stop
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для быстрого восстановления в случае неудачи, делаем копию &amp;ldquo;The data directory &lt;code&gt;sonatype-work&lt;/code&gt;&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ rsync -av sonatype-work tmp/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Изменяем ссылку &lt;code&gt;/etc/init.d/nexus&lt;/code&gt;, чтобы она указывала на &lt;code&gt;/data/nexus-3.23.0-03/bin/nexus&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rm /etc/init.d/nexus
+# ln -s /data/nexus-3.23.0-03/bin/nexus /etc/init.d/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;/data/nexus-3.23.0-03/bin/nexus.rc&lt;/code&gt; указываем пользователя под которым будет работать Nexus:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;run_as_user=&amp;#34;nexus&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Сравнил &lt;code&gt;nexus-3.16.1-02/bin/nexus.vmoptions&lt;/code&gt; и &lt;code&gt;nexus-3.23.0-03/bin/nexus.vmoptions&lt;/code&gt;. Убедившись, что на машине не так много оперативной памяти, изменил параметры в новом &lt;code&gt;nexus.vmoptions&lt;/code&gt; в соответствии с параметрами из старого &lt;code&gt;nexus.vmoptions&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;обновление&#34;&gt;Обновление&lt;/h3&gt;
+&lt;p&gt;Запускаем новую версию Nexus.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# /etc/init.d/nexus start
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На этом процесс обновления закончен. Необходимо зайти в GUI и проверить статус и чего-нибудь ещё.&lt;/p&gt;
+&lt;h3 id=&#34;отладка&#34;&gt;Отладка&lt;/h3&gt;
+&lt;p&gt;Для отладки запуска приложения, я запускал Nexus из командной строки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ./nexus run
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,181 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Nginx</title>
+    <link>/tags/nginx/</link>
+    <description>Recent content in Nginx on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 26 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Сборка rpm-пакета nginx c модулями для kafka</title>
+      <link>/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
+      <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-05-26&lt;/p&gt;
+&lt;p&gt;Сборку производил в свежеустановленной виртуальной машине CentOS 7 (минимальный дистр), из-под обычного пользователя имеющего беспарольное sudo.&lt;/p&gt;
+&lt;h2 id=&#34;сборка-пакета-librdkafka&#34;&gt;Сборка пакета librdkafka&lt;/h2&gt;
+&lt;p&gt;Сначала надо собрать свежий &lt;code&gt;https://github.com/edenhill/librdkafka&lt;/code&gt;, так как в репо CentOS&amp;rsquo;а librdkafka имеет версию 0.11.5, тогда как на странице разработчиков — 1.5.0.&lt;/p&gt;
+&lt;p&gt;Сборка этого пакета заняла по времени чуть больше часа, но не из-за сложности. К счастью, разработчики всё продумали и собирать этот пакет проще простого.&lt;/p&gt;
+&lt;p&gt;Сборка пакета будет производиться в песочнице, с помощью &lt;code&gt;mock&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src; cd ~/src
+git clone https://github.com/edenhill/librdkafka
+sudo yum install mock
+sudo usermod -aG mock $USER
+exit
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После повторного входа под своей учётной записью, но уже с членством в группе &lt;code&gt;mock&lt;/code&gt;, запускаем сборку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cd ~/src/librdkafka/packaging/rpm
+$ make
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd ../../ &amp;amp;&amp;amp; \
+git archive --prefix=librdkafka-1.5.0/ \
+        -o packaging/rpm/SOURCES/librdkafka-1.5.0.tar.gz HEAD
+mkdir -p pkgs-1.5.0-1-default
+rm -f pkgs-1.5.0-1-default/librdkafka*.rpm
+/usr/bin/mock \
+        -r default \
+         \
+        --define &amp;#34;__version 1.5.0&amp;#34; \
+        --define &amp;#34;__release 1&amp;#34; \
+        --enable-network \
+        --resultdir=pkgs-1.5.0-1-default \
+        --no-clean --no-cleanup-after \
+        --install epel-release \
+        --buildsrpm \
+        --spec=librdkafka.spec \
+        --sources=SOURCES || \
+(tail -n 100 pkgs-1.5.0*/*log ; false)
+INFO: mock.py version 2.2 starting (python version = 3.6.8)...
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;В песочницу будут установлены необходимые пакеты (в моём случае около трёх сотен) и произведена сборка пакета.&lt;/p&gt;
+&lt;p&gt;После окончания работ, в каталоге  &lt;code&gt;~/src/librdkafka/packaging/rpm/pkgs-1.5.0-1-default&lt;/code&gt; можно обнаружить полный набор пакетов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-rw-r--r--. 1 u mock  931281 May 20 16:16 librdkafka1-1.5.0-1.el7.x86_64.rpm
+-rw-r--r--. 1 u mock 2752290 May 20 16:06 librdkafka-1.5.0-1.el7.src.rpm
+-rw-r--r--. 1 u mock 4090554 May 20 16:16 librdkafka-debuginfo-1.5.0-1.el7.x86_64.rpm
+-rw-r--r--. 1 u mock  953416 May 20 16:16 librdkafka-devel-1.5.0-1.el7.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Позже будет необходимо установить два пакета из этих четырёх.&lt;/p&gt;
+&lt;h2 id=&#34;сборка-пакета-nginx-kafka&#34;&gt;Сборка пакета nginx-kafka&lt;/h2&gt;
+&lt;h3 id=&#34;подключение-nginx-репозитория&#34;&gt;Подключение nginx-репозитория&lt;/h3&gt;
+&lt;p&gt;Добавляем в &lt;code&gt;/etc/yum.repos.d&lt;/code&gt; файл &lt;code&gt;nginx.repo&lt;/code&gt; со следующим содержимым:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[nginx-stable]
+name=nginx stable repo
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
+
+[nginx-source]
+name=nginx source repo
+baseurl=http://nginx.org/packages/centos/7/SRPMS/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-необходимых-для-сборки-пакетов&#34;&gt;Установка необходимых для сборки пакетов&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum update
+sudo yum install yum-utils wget git rpmdevtools
+sudo yum install jansson jansson-devel
+cd ~/src/librdkafka/packaging/rpm/pkgs-1.5.0-1-default
+sudo yum install librdkafka1-1.5.0-1.el7.x86_64.rpm librdkafka-devel-1.5.0-1.el7.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;включение-себя-в-группу-builder&#34;&gt;Включение себя в группу builder&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo usermod -aG builder $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-структуры-каталогов-rpmbuild&#34;&gt;Создание структуры каталогов ~/rpmbuild&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rpmdev-setuptree
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;размещение-исходников-nginx-в-rpmbuild&#34;&gt;Размещение исходников nginx в ~/rpmbuild&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd ~
+yumdownloader --source nginx
+rpm -Uvh nginx-1.18.0-1.el7.ngx.src.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-зависимостей&#34;&gt;Установка зависимостей&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum-builddep nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;скачивание-модулей-для-kafka&#34;&gt;Скачивание модулей для kafka&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src; cd ~/src
+git clone https://github.com/brg-liuwei/ngx_kafka_module.git
+git clone https://github.com/kaltura/nginx-kafka-log-module
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;изменения-в-rpmbuild&#34;&gt;Изменения в ~/rpmbuild&lt;/h3&gt;
+&lt;h4 id=&#34;rpmbuildspecsnginxspec&#34;&gt;~/rpmbuild/SPECS/nginx.spec&lt;/h4&gt;
+&lt;p&gt;В файле &lt;code&gt;~/rpmbuild/SPECS/nginx.spec&lt;/code&gt;, в конец строки с передаваемыми параметрами &lt;code&gt;%define BASE_CONFIGURE_ARGS ... --with-stream_ssl_preread_module)&amp;quot;&lt;/code&gt;, добавляем два модуля, указывая абсолютные пути, и три параметра:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;--add-module=/home/user/src/ngx_kafka_module --add-module=/home/user/src/nginx-kafka-log-module --with-http_perl_module --with-http_degradation_module --with-pcre
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Без опции &lt;code&gt;Conflicts&lt;/code&gt;, наш новый пакет &amp;ldquo;nginx-kafka&amp;rdquo; может быть замещен пакетом &amp;ldquo;nginx&amp;rdquo;. А для использования последней &lt;code&gt;librdkafka-1.5.0&lt;/code&gt;, а не старой из &lt;code&gt;epel&lt;/code&gt;, используем опцию &lt;code&gt;Requires&lt;/code&gt;. Итого, изменяем две существующие строки Summary и Name и добавляем две строки Requires и Conflicts:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Summary: High performance web server with kafka modules
+Name: nginx-kafka
+Requires: librdkafka1 &amp;gt;= 1.5.0
+Conflicts: nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавляем пять путей к perl-модулю, и один путь к ману, под существующими строками &lt;code&gt;%files&lt;/code&gt; и &lt;code&gt;%defattr(-,root,root)&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;%files
+%defattr(-,root,root)
+
+%{_libdir}/perl5/perllocal.pod
+%{_libdir}/perl5/vendor_perl/auto/nginx/.packlist
+%{_libdir}/perl5/vendor_perl/auto/nginx/nginx.bs
+%{_libdir}/perl5/vendor_perl/auto/nginx/nginx.so
+%{_libdir}/perl5/vendor_perl/nginx.pm
+%{_mandir}/man3/nginx.3pm.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;rpmbuildsourcesnginx-kafka-1180targz&#34;&gt;~/rpmbuild/SOURCES/nginx-kafka-1.18.0.tar.gz&lt;/h4&gt;
+&lt;p&gt;Перепаковываем архив с исходниками, чтобы в процессе сборки, при распаковке архива c  исходниками, был создан каталог &lt;code&gt;nginx-kafka-1.18&lt;/code&gt;, а не просто &lt;code&gt;nginx-1.18&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/tmp
+mv ~/rpmbuild/SOURCES/nginx-1.18.0.tar.gz ~/tmp/
+cd ~/tmp
+tar xvf nginx-1.18.0.tar.gz
+mv nginx-1.18.0 nginx-kafka-1.18.0
+tar -zcvf nginx-kafka-1.18.0.tar.gz nginx-kafka-1.18.0
+mv nginx-kafka-1.18.0.tar.gz ~/rpmbuild/SOURCES/
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;сборка&#34;&gt;Сборка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rpmbuild -ba ~/rpmbuild/SPECS/nginx.spec
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;результат&#34;&gt;Результат&lt;/h3&gt;
+&lt;p&gt;В &lt;code&gt;~/rpmbuild/RPMS&lt;/code&gt; и &lt;code&gt;~/rpmbuild/SRPMS&lt;/code&gt; наблюдаем только что созданные пакеты.&lt;/p&gt;
+&lt;h2 id=&#34;добавление-пакетов-в-nexus-repository&#34;&gt;Добавление пакетов в Nexus Repository&lt;/h2&gt;
+&lt;p&gt;В нексусе создаём репозиторий &amp;ldquo;nginx-kafka&amp;rdquo; и загружаем в него пакеты (пакет &lt;code&gt;cyrus-sasl&lt;/code&gt;, потребовавшийся в процессе экзерсисов, предварительно скачиваем с помощью &lt;code&gt;yumdownloader&lt;/code&gt;). Итого должно получиться:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cyrus-sasl-2.1.26-23.el7.x86_64.rpm
+librdkafka1-1.5.0-1.el7.x86_64.rpm
+librdkafka-1.5.0-1.el7.src.rpm
+librdkafka-devel-1.5.0-1.el7.x86_64.rpm
+nginx-kafka-1.18.0-1.el7.ngx.src.rpm
+nginx-kafka-1.18.0-1.el7.ngx.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На целевой машине добавляем описание репозитория (вариант без авторизации на нексусе):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[nginx-kafka]
+name = Nginx kafka
+baseurl = http://10.15.61.1:8081/repository/nginx-kafka/
+gpgcheck = 0
+enabled = 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На целевом сервере, после &lt;code&gt;yum update&lt;/code&gt;, добавляем &lt;code&gt;nginx-kafka&lt;/code&gt; и видим:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Dependencies Resolved
+
+=================================================================================================
+ Package               Arch             Version                      Repository             Size
+=================================================================================================
+Installing:
+ nginx-kafka           x86_64           1:1.18.0-1.el7.ngx           nginx-kafka           778 k
+Installing for dependencies:
+ cyrus-sasl            x86_64           2.1.26-23.el7                nginx-kafka            88 k
+ librdkafka1           x86_64           1.5.0-1.el7                  nginx-kafka           909 k
+
+Transaction Summary
+=================================================================================================
+Install  1 Package (+2 Dependent packages)
+
+Total download size: 1.7 M
+Installed size: 5.2 M
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Модули:
+&lt;a href=&#34;https://github.com/edenhill/librdkafka&#34;&gt;https://github.com/edenhill/librdkafka&lt;/a&gt;
+&lt;a href=&#34;https://github.com/brg-liuwei/ngx_kafka_module&#34;&gt;https://github.com/brg-liuwei/ngx_kafka_module&lt;/a&gt;
+&lt;a href=&#34;https://github.com/kaltura/nginx-kafka-log-module&#34;&gt;https://github.com/kaltura/nginx-kafka-log-module&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Использованные материалы:
+&lt;a href=&#34;https://www.fatalerrors.org/a/nginx-integrates-kafka.html&#34;&gt;https://www.fatalerrors.org/a/nginx-integrates-kafka.html&lt;/a&gt;
+&lt;a href=&#34;https://nginx.org/ru/linux_packages.html#RHEL-CentOS&#34;&gt;https://nginx.org/ru/linux_packages.html#RHEL-CentOS&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

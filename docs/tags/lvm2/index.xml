@@ -1,0 +1,165 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – LVM2</title>
+    <link>/tags/lvm2/</link>
+    <description>Recent content in LVM2 on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 03 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/lvm2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: LVM2 — создание, перемещение и удаление логических томов</title>
+      <link>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
+      <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2018-09-03&lt;/p&gt;
+&lt;h3 id=&#34;создание-группы-томов-volume-group&#34;&gt;Создание Группы Томов (Volume Group)&lt;/h3&gt;
+&lt;p&gt;Для имени Группы Томов (VG) на одиночном сервере я обычно выбираю значение &amp;ldquo;vg&amp;rdquo;. Потом, при желании, его легко можно переименовать в любой момент. В Группу Томов можно добавить любое блочное устройство.&lt;/p&gt;
+&lt;p&gt;После добавления устройства в VG:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# vgcreate /dev/vg /dev/sde /dev/sdd1 /dev/sdd2 /dev/md10 /dev/mapper/pv5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;можно получить информацию о VG:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# vgdisplay /dev/vg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;переименовать VG:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# vgrename /dev/vg /dev/vg0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;получить информацию о конкретном PV:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvdisplay /dev/md10
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-логического-тома-logical-volume&#34;&gt;Создание Логического Тома (Logical Volume)&lt;/h3&gt;
+&lt;p&gt;Создать LV с именем /dev/vg/dock в любом свободном месте:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -ndock -L20G /dev/vg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создать LV, заняв всё свободное место (100% свободных экстентов) на группе томов /dev/vg:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -ndock -l100%FREE /dev/vg
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;сбор-информации-о-физическом-размещении-lv-на-физических-томах-pv&#34;&gt;Сбор информации о физическом размещении LV на физических томах (PV)&lt;/h3&gt;
+&lt;p&gt;Размещение логических томов (LV) на физических томах (PV) выдаёт команда:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# lvs -a -o +devices
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;LV             VG        Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert Devices
+  allegrograph0  vg        -wi-ao----    5,00g                                                     /dev/mapper/pv10(117096)
+  arangodb0      vg        -wi-ao----    5,00g                                                     /dev/mapper/pv10(114536)
+  orientdb0      vg        -wi-ao----    5,00g                                                     /dev/mapper/pv10(115816)
+  tmp            vg        -wi-ao----  100,00g                                                     /dev/mapper/pv10(68728)
+  vol            vg        -wi-ao----  500,00g                                                     /dev/mapper/pv10(59999)
+  dock           vg        -wi-ao----   10,00g                                                     /dev/mapper/pv2(28160)
+  mariadb0       vg        -wi-ao----    5,00g                                                     /dev/mapper/pv2(25600)
+  mongodb0       vg        -wi-ao----    5,00g                                                     /dev/mapper/pv12(85601)
+  nextcloud-data vg        -wi-ao----  100,00g                                                     /dev/mapper/pv2(0)
+  nextcloud-www  vg        -wi-ao----    5,00g                                                     /dev/mapper/pv2(26880)
+  vol            vg        -wi-ao----  500,00g                                                     /dev/mapper/pv5(0)
+  vol            vg        -wi-ao----  500,00g                                                     /dev/mapper/pv12(93281)
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;h3 id=&#34;перетаскивание-части-или-всего-lv&#34;&gt;Перетаскивание части или всего LV&lt;/h3&gt;
+&lt;p&gt;Перенос экстентов указанного LV на другой PV:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvmove -n docker /dev/mapper/pv13 /dev/mapper/pv11
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если экстенты LV находятся в разных местах, то посмотреть карту размещения можно с помощью команды:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# lvdisplay -m /dev/vg/vol
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;File descriptor 7 (pipe:[274631]) leaked on lvdisplay invocation. Parent PID 22239: bash
+  --- Logical volume ---
+  LV Path                /dev/vg/vol
+  LV Name                vol
+  VG Name                vg
+  LV UUID                99e01850-fd35-11e8-b1b6-13207852fa16
+  LV Write Access        read/write
+  LV Creation host, time srv0, 2016-06-10 13:13:07 +0000
+  LV Status              available
+  # open                 1
+  LV Size                500,00 GiB
+  Current LE             128000
+  Segments               3
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           253:11
+
+  --- Segments ---
+  Logical extents 0 to 113175:              # Номера экстентов внутри логического тома
+    Type                linear
+    Physical volume     /dev/mapper/pv11    # Физический том
+    Physical extents    0 to 113175         # Номера физических экстентов занимаемых внутри физического тома
+
+  Logical extents 113176 to 119270:
+    Type                linear
+    Physical volume     /dev/mapper/pv4
+    Physical extents    0 to 6094
+
+  Logical extents 119271 to 127999:
+    Type                linear
+    Physical volume     /dev/mapper/pv10
+    Physical extents    59999 to 68727
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;Карту физического тома можно посмотреть через команду:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvdisplay -m /dev/mapper/pv2
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;File descriptor 7 (pipe:[274631]) leaked on pvdisplay invocation. Parent PID 22239: bash
+  --- Physical volume ---
+  PV Name               /dev/mapper/pv2
+  VG Name               vg
+  PV Size               &amp;lt;442,10 GiB / not usable 2,00 MiB
+  Allocatable           yes
+  PE Size               4,00 MiB
+  Total PE              113176          # Общее количество экстентов на физическом томе
+  Free PE               77336           # Количество свободных экстентов
+  Allocated PE          35840           # Количество занятых экстентов
+  PV UUID               L27diY-MiUX-AXcZ-3gKu-PIO5-Xqbq-fsjxku
+
+  --- Physical Segments ---
+  Physical extent 0 to 25599:                   # Физические экстенты с 0 по 25599
+    Logical volume      /dev/vg/nextcloud-data  # заняты этим томом
+    Logical extents     0 to 25599              # его логическими экстентами с 0 по 25599
+  Physical extent 25600 to 26879:
+    Logical volume      /dev/vg/mariadb0
+    Logical extents     0 to 1279
+  Physical extent 26880 to 28159:
+    Logical volume      /dev/vg/nextcloud-www
+    Logical extents     0 to 1279
+  Physical extent 28160 to 30719:
+    Logical volume      /dev/vg/dock
+    Logical extents     0 to 2559               # 2560 экстентов*(4*1024)MiB = 10485760/1048576=10GiB
+  Physical extent 30720 to 31999:
+    Logical volume      /dev/vg/mongodb0
+    Logical extents     0 to 1279
+  Physical extent 32000 to 33279:
+    Logical volume      /dev/vg/allegrograph0
+    Logical extents     0 to 1279               # 1280 экстентов*(4*1024)MiB = 5242880/1048576=5GiB
+  Physical extent 33280 to 34559:
+    Logical volume      /dev/vg/arangodb0
+    Logical extents     0 to 1279
+  Physical extent 34560 to 35839:
+    Logical volume      /dev/vg/orientdb0
+    Logical extents     0 to 1279
+  Physical extent 35840 to 113175:
+    FREE
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;h3 id=&#34;перемещение-extentов-с-помощью-pvmove&#34;&gt;Перемещение extent&amp;rsquo;ов с помощью pvmove&lt;/h3&gt;
+&lt;p&gt;Перенос определённых PE между разными томами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvmove -nstorj /dev/mapper/pv3:0-66312  /dev/mapper/pv13:35243-119200
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Однажды я ошибся и указал диапазон источника переноса через двоеточие, вместо дефис: &lt;code&gt;/dev/mapper/pv3:0:66312&lt;/code&gt;. В результате были перемещены два PE с адресами 0 и 66312.&lt;/p&gt;
+&lt;p&gt;Перенос определённых PE в пределах одного тома:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pvmove --alloc anywhere /dev/mapper/pv13:35242-52862 /dev/mapper/pv13:17621-35241
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В процессе моего изучения LVM2 пару дней посвятил команде pvmove. Мне было необходимо подвинуть большой фрагмент LV внутри PV на два экстента (PE), чтобы в начало PV влезли два экстента. Попробовал так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# for (( i=101575; i&amp;gt;=0; i-- )); do pvmove --alloc anywhere /dev/mapper/pv12:$i /dev/mapper/pv12:$(($i+2)); done
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Сработало (оптимальней было двигать сразу по два PE), но на одну подвижку тратилось секунд по 15, так как судя по ману, для каждого сеанса переноса, создаётся временный LV с именем pvmove, занимающий целевые PExtents. А после успешного подтверждения переноса, временный LV исчезает и занятые PE меняют принадлежность исходному LV. Видимо поэтому время выполнения этого скрипта на моём домашнем сервере вылилось бы в неделю или даже больше дней. Нажал Ctrl+c и перемещение прервалось. Один из PE остался в подвешенном состоянии во временном LV с именем &amp;ldquo;pvmove0&amp;rdquo;, поэтому дал команду &lt;code&gt;pvmove --abort&lt;/code&gt;, чтобы процесс корректно завершился. Вероятно, надёжней использовать опцию &lt;code&gt;--atomic&lt;/code&gt;? (или что-то подобное, уточнить в мане), чтобы каждый сеанс переноса полностью завершился. Завершил задачу перемещением всего пакета на другой PV и обратным переносом со сдвигом на два PE. Всё заняло несколько часов.&lt;/p&gt;
+&lt;h3 id=&#34;удаление-pv-из-vg&#34;&gt;Удаление PV из VG&lt;/h3&gt;
+&lt;p&gt;Шаг первый. Переместить все PE на другие PV:
+&lt;code&gt;# pvmove /dev/mapper/pv11&lt;/code&gt;
+Шаг второй. Уменьшить VG, выкинув этот том из группы томов VG:
+&lt;code&gt;# vgreduce /dev/vg /dev/mapper/pv11&lt;/code&gt;
+Шаг третий. Зачистить заголовок диска с информацией о PV командой:
+&lt;code&gt;# pvremove /dev/mapper/pv11&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.systutorials.com/docs/linux/man/8-pvmove/&#34;&gt;pvmove (8) - Linux Man Pages&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

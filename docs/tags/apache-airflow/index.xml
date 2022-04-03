@@ -1,0 +1,959 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Apache Airflow</title>
+    <link>/tags/apache-airflow/</link>
+    <description>Recent content in Apache Airflow on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 23 Feb 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/apache-airflow/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
+      <link>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://airflow.apache.org/docs/apache-airflow/stable/&#34;&gt;Apache Airflow Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://airflow.apache.org/docs/apache-airflow/stable/start/index.html&#34;&gt;Quick Start&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Предыдущий опыт настройки Airflow прошлых версий.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;заметки&#34;&gt;Заметки&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;В шагах инструкции пока отсутствует. Важно опроовать.
+После скачивания свежего файла с зависимостями дл apache-airflow, необходимо изменить в этом файле строку &amp;lsquo;Flask-AppBuilder==3.1.1&amp;rsquo; на &amp;lsquo;Flask-AppBuilder==3.2.0&amp;rsquo;, чтобы заработал мэппинг между пользовательскими группами в IPA и ролями в Airflow.
+Для уже установленных экземпляров Airflow, можно изменить соответствующую строку в файле &amp;lsquo;/usr/local/lib/python3.6/site-packages/apache_airflow-2.0.1.dist-info/METADATA&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;Если пользовательские DAG&amp;rsquo;и запускаются через &amp;lsquo;run_as_user&amp;rsquo;, то необходимо обеспечить чтение файла &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; этими пользователями, иначе DAG&amp;rsquo;и не будут выполнены с ошибкой &amp;lsquo;airflow.exceptions.AirflowConfigException: error: cannot use sqlite version &amp;lt; 3.15.0&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;Если в DAG&amp;rsquo;е указать &amp;lsquo;run_as_user&amp;rsquo;: &amp;rsquo;eugene&amp;rsquo;, то Airflow запускает процесс от имени пользователя командой &lt;code&gt;sudo -E -H -u eugene&lt;/code&gt;, в результате которой процесс пользователя наследует переменные родительского процесса, а переменная HOME меняется на пользовательскую директорию в /home.&lt;/li&gt;
+&lt;li&gt;Надо дать права на подпапки в рабочей папке airflow для группы пользователей prod_airflow_airf1, так как запускаемый дочерний run_as процесс от имени пользователя, должен иметь право на запись в рабочую папку Airflow.&lt;/li&gt;
+&lt;li&gt;Установку python-пакетов производить под учётной записью пользователя. Лишь пакеты airflow должны быть установлены под системной учётной записью.&lt;/li&gt;
+&lt;li&gt;Разграничение DAG&amp;rsquo;ов между пользователями задаётся внутри DAG&amp;rsquo;а строкой: &amp;lsquo;owner&amp;rsquo;: &amp;rsquo;eugene&amp;rsquo;. Это не работает во второй версии Airflow?&lt;/li&gt;
+&lt;li&gt;В /etc/pip.conf необходимо добавить python-репо в Nexus&amp;rsquo;е с пользовательскими библиотеками, чтобы пользователь мог вызвать pip install прямо из своего кода, без дополнительных операций?&lt;/li&gt;
+&lt;li&gt;Для сборки некоторых python-пакетов (найти где я это делал), pydoop, и ещё один пакет, &amp;hellip;., требуется установить компилятор gcc-c++, полный пакет явы с инструментами разработчика.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;создание-необходимых-групп-во-freeipa-для-аутентификации-в-airflow&#34;&gt;Создание необходимых групп во FreeIPA для аутентификации в Airflow&lt;/h2&gt;
+&lt;p&gt;Во второй версии Airflow изменился способ аутентификации и авторизации пользователей. Теперь из коробки активирован режим RBAC, то есть аутентификация и авторизация выполняется силами Flask App Builder (FAB).&lt;/p&gt;
+&lt;p&gt;Для аутентификации создаём одну POSIX-группу &amp;lsquo;prod_airflow_airf1&amp;rsquo;, участники которой, будут иметь доступ к Web UI интерфейсу Airflow, а также эта группа будет особым образом назначена на каталог /data/airflow для того, чтобы участники имели доступ к своим DAGам и логам в подпапках этого каталога, но не имели доступа к конфигурационным файлам Airflow.&lt;/p&gt;
+&lt;p&gt;Управление авторизацией будет происходить через роли в Airflow отображённые во вложенные группы IPA. По умолчанию, новому пользователю назначается роль &amp;lsquo;Viewer&amp;rsquo; в дополнение к роли, полученной из соответствующей группы IPA.&lt;/p&gt;
+&lt;h2 id=&#34;установка-по&#34;&gt;Установка ПО&lt;/h2&gt;
+&lt;p&gt;Предполагается, что на машине уже установлены пакеты &amp;lsquo;python3&amp;rsquo; и &amp;lsquo;python3-pip&amp;rsquo;.&lt;/p&gt;
+&lt;h3 id=&#34;установка-postgresql&#34;&gt;Установка PostgreSQL&lt;/h3&gt;
+&lt;p&gt;Для работы Airflow в prod-режиме рекомендуется использовать PostgreSQL, вместо используемого по умолчанию SQLite. Ничего сложного в этом этапе нет.&lt;/p&gt;
+&lt;p&gt;Добавляем в /etc/yum.repos.d/ подготовленный файл из статьи по Nexus&amp;rsquo;у pub_postgresql_yum:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;USERNAME=&amp;#34;nx-pubrepo-reader&amp;#34;
+PASSWORD=&amp;#34;xxxxxxxxxxx&amp;#34;
+
+cat &amp;lt;&amp;lt; EOF | tee -a /etc/yum.repos.d/pgdg-redhat-all.repo
+#######################################################
+# PGDG Red Hat Enterprise Linux / CentOS repositories #
+#######################################################
+
+# PGDG Red Hat Enterprise Linux / CentOS stable common repository for all PostgreSQL versions
+
+[pgdg-common]
+username=$USERNAME
+password=$PASSWORD
+name=PostgreSQL common RPMs for RHEL/CentOS \$releasever - \$basearch
+baseurl=http://nexus.example.org:8081/repository/all_postgresql_yum/common/redhat/rhel-\$releasever-\$basearch
+enabled=1
+gpgcheck=0
+gpgkey=http://nexus.example.org:8081/repository/all_postgresql_yum/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG Red Hat Enterprise Linux / CentOS stable repositories:
+
+[pgdg13]
+username=$USERNAME
+password=$PASSWORD
+name=PostgreSQL 13 for RHEL/CentOS \$releasever - \$basearch
+baseurl=http://nexus.example.org:8081/repository/all_postgresql_yum/13/redhat/rhel-\$releasever-\$basearch
+enabled=1
+gpgcheck=0
+gpgkey=http://nexus.example.org:8081/repository/all_postgresql_yum/RPM-GPG-KEY-PGDG-AARCH64
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем актуальную версию PosgreSQL:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum update
+
+# Install PostgreSQL:
+sudo yum -y install postgresql13-server
+
+# Optionally initialize the database and enable automatic start:
+sudo /usr/pgsql-13/bin/postgresql-13-setup initdb
+sudo systemctl enable --now postgresql-13
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-дополнительных-пакетов&#34;&gt;Установка дополнительных пакетов&lt;/h3&gt;
+&lt;p&gt;Устанавливаем пакеты для разработки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y groupinstall &amp;#34;Development Tools&amp;#34;
+sudo yum -y install python3-devel cyrus-sasl cyrus-sasl-devel libffi-devel krb5-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для работы LDAP-аутентификации в FAB требуется установка пакета python-ldap, который не соберётся, если не установить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y install openldap-devel python-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;создание-системного-локального-пользователя-airflow&#34;&gt;Создание системного локального пользователя airflow&lt;/h2&gt;
+&lt;p&gt;Создаём системного пользователя airflow и разрешаем ему беспарольное sudo для имперсонации, то есть запуска скриптов от имени владельца:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo useradd -r airflow -s /sbin/nologin
+echo &amp;#34;airflow ALL=(ALL) NOPASSWD: ALL&amp;#34; | sudo tee /etc/sudoers.d/airflow
+sudo chmod 440 /etc/sudoers.d/airflow
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;подготовка-к-запуску-airflow&#34;&gt;Подготовка к запуску Airflow&lt;/h2&gt;
+&lt;p&gt;Необходимо ввести машину в Cloudera-кластер, иначе каталог &amp;lsquo;/etc/hadoop&amp;rsquo; и важные переменные будут отсутствовать на машине.&lt;/p&gt;
+&lt;h3 id=&#34;создание-каталогов-и-конфигурационных-файлов-для-работы-airflow&#34;&gt;Создание каталогов и конфигурационных файлов для работы Airflow&lt;/h3&gt;
+&lt;p&gt;Создаём в IPA POSIX-группу для аутентификации в Airflow и, одновременно, для доступа пользователей к каталогам dags,logs,plugins. И сразу создадим вложенные Non-POSIX группы для авторизации в Airflow. Чуть позже настроим их отображение на локальные Airflow-роли. Важно поменять переменные перед использованием этого скрипта:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Если требуется kerberos-тикет, то  не забываем:
+# kinit
+
+# Номер Jira-задачи
+JIRA=&amp;#34;SDK-2198&amp;#34;
+
+# Название ИС
+IS=&amp;#34;prod&amp;#34;
+#IS=&amp;#34;dev&amp;#34;
+#IS=&amp;#34;devdmz&amp;#34;
+
+# Название сервиса:
+SERVICE=&amp;#34;airflow&amp;#34;
+
+# Псевдоним экземпляра Airflow
+ALIAS=&amp;#34;airf1&amp;#34;
+
+# Группа администраторов в IPA
+ADMINSGROUP=&amp;#34;admins&amp;#34;
+
+# Составляем название группы:
+GROUPNAME=&amp;#34;${IS}_${SERVICE}_${ALIAS}&amp;#34;
+
+ipa group-add ${GROUPNAME} --desc=&amp;#34;Пользователи имеющие право для аутентификации в ${ALIAS}. Авторизация настраивается через вложенные группы. Это POSIX-группа, потому что она же назначена на каталоги {dags,logs,plugins} для доступа юзеров к их дагам и логам. ${JIRA}.&amp;#34;
+ipa group-add ${GROUPNAME}_admins --desc=&amp;#34;Группа отображается в роль Admin сервиса $SERVICE на ${ALIAS}. ${JIRA}.&amp;#34; --nonposix
+ipa group-add ${GROUPNAME}_ops --desc=&amp;#34;Группа отображается в роль Op сервиса $SERVICE на ${ALIAS}. ${JIRA}.&amp;#34; --nonposix
+ipa group-add ${GROUPNAME}_users --desc=&amp;#34;Группа отображается в роль User сервиса $SERVICE на ${ALIAS}. ${JIRA}.&amp;#34; --nonposix
+ipa group-add ${GROUPNAME}_viewers --desc=&amp;#34;Группа отображается в роль Viewer сервиса $SERVICE на ${ALIAS}. ${JIRA}.&amp;#34; --nonposix
+
+ipa group-add-member ${GROUPNAME} --groups=${GROUPNAME}_admins --groups=${GROUPNAME}_ops --groups=${GROUPNAME}_users --groups=${GROUPNAME}_viewers
+
+ipa group-add-member ${GROUPNAME}_admins --groups=${ADMINSGROUP}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Сейчас же создаём каталог для работы Apache Airflow и назначаем права:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# POSIX-группа предназачена для доступа пользователей к нужным папкам.
+export POSIXGROUP=${GROUPNAME}
+
+export DIR=&amp;#34;/data/airflow&amp;#34;
+
+sudo mkdir -p $DIR/{dags,logs,plugins}
+sudo chmod -R 750 $DIR
+sudo chmod 2750 $DIR/{dags,plugins}
+sudo chown -R airflow.airflow $DIR
+sudo setfacl -m d:g:${POSIXGROUP}:rwx $DIR/{dags,logs,plugins}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;В последней команде мы назначаем default-права на каталог общей POSIX-группе prod_airflow_airf1 из FreeIPA, чтобы все наследуемые пользователи из вложенных групп имели доступ к папкам dags, logs и plugins. Эти права будут наследоваться с режимом 770 для поддиректорий и 660 для файлов.&lt;/li&gt;
+&lt;li&gt;Заметка: POSIX ACL не работает с MemberOf-группами из FreeIPA, но работает с  POSIX-группами.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Создаём файл &lt;code&gt;/etc/sysconfig/airflow&lt;/code&gt; с переменными, использующимися airflow при запуске из systemd-юнитов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILE=&amp;#34;/etc/sysconfig/airflow&amp;#34;
+echo &amp;#34;AIRFLOW_HOME=/data/airflow&amp;#34; | sudo tee $FILE
+echo &amp;#34;AIRFLOW_CONFIG=/etc/airflow/airflow.cfg&amp;#34; | sudo tee -a $FILE
+echo &amp;#34;HADOOP_CONF_DIR=/etc/hadoop/conf&amp;#34; | sudo tee -a $FILE
+echo &amp;#34;HIVE_CONF_DIR=/etc/hive/conf&amp;#34; | sudo tee -a $FILE
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Без переменных &amp;lsquo;HADOOP_CONF_DIR&amp;rsquo; и &amp;lsquo;HIVE_CONF_DIR&amp;rsquo;, в Airflow не будет работать SparkSubmitOperator, так как он использует файлы &lt;code&gt;hive_site.xml&lt;/code&gt; и &lt;code&gt;yarn-site.xml&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Создаём каталог &lt;code&gt;/etc/airflow&lt;/code&gt; для хранения &lt;code&gt;airflow.cfg&lt;/code&gt;, сертификатов, keytab&amp;rsquo;ов и прочих подобных файлов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;DIR=&amp;#34;/etc/airflow&amp;#34;
+sudo mkdir $DIR
+sudo chmod 2770 $DIR
+sudo chown airflow.airflow $DIR
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-systemd-юнитов&#34;&gt;Создание systemd-юнитов&lt;/h3&gt;
+&lt;p&gt;Взято из &lt;a href=&#34;https://github.com/apache/airflow/tree/master/scripts/systemd&#34;&gt;https://github.com/apache/airflow/tree/master/scripts/systemd&lt;/a&gt;. При появлении других зависимостей для запуска сервисов Airflow, добавляем их в строки After и Wants. Примеры можно посмотреть в &lt;a href=&#34;https://github.com/apache/airflow/tree/master/scripts/systemd&#34;&gt;https://github.com/apache/airflow/tree/master/scripts/systemd&lt;/a&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/airflow-scheduler.service
+[Unit]
+Description=Airflow scheduler daemon
+After=network.target postgresql-13.service
+Wants=postgresql-13.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/usr/local/bin/airflow scheduler
+Restart=always
+RestartSec=5s
+SyslogIdentifier=airf-sched
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/airflow-webserver.service
+[Unit]
+Description=Airflow webserver daemon
+After=network.target postgresql-13.service
+Wants=postgresql-13.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+RuntimeDirectory=airflow
+RuntimeDirectoryMode=0775
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/usr/local/bin/airflow webserver -p 8080 --pid /run/airflow/airflow-webserver.pid
+Restart=on-failure
+RestartSec=5s
+PrivateTmp=true
+SyslogIdentifier=airf-web
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-логгирования&#34;&gt;Настройка логгирования&lt;/h3&gt;
+&lt;p&gt;Настраиваем сразу с заделом на включение Kerberos (airf-krb), каковое включение описано ниже и производится по желанию, потому что пока не понятно работоспособен ли Kerberos с Airflow на Python 3:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mkdir /var/log/airflow
+sudo chmod 750 /var/log/airflow
+
+echo &amp;#39;if $programname == &amp;#34;airf-sched&amp;#34; then /var/log/airflow/airf-sched.log
+&amp;amp; stop&amp;#39; | sudo tee /etc/rsyslog.d/airf-sched.conf
+echo &amp;#39;if $programname == &amp;#34;airf-web&amp;#34; then /var/log/airflow/airf-web.log
+&amp;amp; stop&amp;#39; | sudo tee /etc/rsyslog.d/airf-web.conf
+echo &amp;#39;if $programname == &amp;#34;airf-krb&amp;#34; then /var/log/airflow/airf-krb.log
+&amp;amp; stop&amp;#39; | sudo tee /etc/rsyslog.d/airf-krb.conf
+sudo systemctl restart rsyslog
+
+sudo sed -i &amp;#39;1i /var/log/airflow/airf-sched.log\n/var/log/airflow/airf-web.log\n/var/log/airflow/airf-krb.log&amp;#39; /etc/logrotate.d/syslog
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-базы-данных-airflow-в-postgresql&#34;&gt;Создание базы данных airflow в PostgreSQL&lt;/h3&gt;
+&lt;p&gt;Далее приведены команды в psql для создания базы данных:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;DBNAME=&amp;#34;airf_metadata&amp;#34;
+DBUSER=&amp;#34;airf_user&amp;#34;
+AIRFPASS=$(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c15)
+
+sudo -u postgres psql -c &amp;#34;CREATE DATABASE ${DBNAME};&amp;#34;
+sudo -u postgres psql -c &amp;#34;CREATE USER ${DBUSER} WITH password &amp;#39;${AIRFPASS}&amp;#39;;&amp;#34;
+sudo -u postgres psql -c &amp;#34;GRANT ALL PRIVILEGES ON DATABASE ${DBNAME} TO ${DBUSER};&amp;#34;
+echo &amp;#34;${DBUSER}:${AIRFPASS}&amp;#34; | sudo tee /etc/airflow/psql-pass.txt
+echo &amp;#34;${DBNAME}&amp;#34; | sudo tee /etc/airflow/psql-db.txt
+sudo chmod 400 /etc/airflow/psql-pass.txt /etc/airflow/psql-db.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;создание-сертификата-для-работы-https&#34;&gt;Создание сертификата для работы HTTPS&lt;/h2&gt;
+&lt;p&gt;Подготавливаем ключ и сертификат для Web UI Airflow. Чтобы было удобней, выбираем короткое имя для URL: &amp;lsquo;prod-airf1.example.org&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Если требуется, то сначала получаем kerberos-билет:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего получаем сертификат, который будет действителен для двух dns-имени, prod-airf01p.example.org и airf1.example.org. Важно поменять переменные перед использованием этого скрипта:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Меняем на требуемое короткий псевдоним:
+export ALIAS=&amp;#34;prod-airf1&amp;#34;
+#export ALIAS=&amp;#34;dev-airf1&amp;#34;
+#export ALIAS=&amp;#34;devdmz-airf1&amp;#34;
+
+export SHORTHOSTNAME=$(hostname -s)
+export DOMAIN=$(hostname -d)
+export ALIASHOSTNAME=&amp;#34;${ALIAS}.${DOMAIN}&amp;#34;
+export DOMAINCAPS=$(echo $(hostname -d)|tr [:lower:] [:upper:])
+
+# Добавляем CNAME-запись для текущей машины в DNS-зону...
+ipa dnsrecord-add $DOMAIN $ALIAS --cname-rec=&amp;#34;${HOSTNAME}.&amp;#34;
+
+# Добавляем сервис-принципал для текущей машины...
+ipa service-add HTTP/${HOSTNAME}@${DOMAINCAPS}
+
+# Добавляем alias для созданного ранее сервис-принципала...
+ipa service-add-principal HTTP/${HOSTNAME} HTTP/${ALIASHOSTNAME}
+
+# С помощью локального certmonger&amp;#39;а генерируруем приватный ключ и
+# сертификат к нему, чтобы airflow web ui смог работать через https.
+# Certmonger будет следить за сертификатом и за 28 дней до окончания срока действия,
+# автоматически подаст запрос к FreeIPA на новый сертификат.
+# Заметим, что сертификат во FreeIPA прикреплен к сервис-принципалу, а не к хосту.
+sudo ipa-getcert request -K HTTP/${HOSTNAME} \
+-f /etc/airflow/${ALIAS}_${SHORTHOSTNAME}.crt \
+-k /etc/airflow/${ALIAS}_${SHORTHOSTNAME}.key \
+-D ${ALIASHOSTNAME} \
+-C &amp;#34;/bin/bash -c &amp;#39;/usr/bin/systemctl restart airflow-webserver &amp;amp;&amp;amp; /bin/chmod 640 /etc/airflow/${ALIAS}_${SHORTHOSTNAME}.{crt,key}&amp;#39;&amp;#34;
+
+# Выставляем права на файлы ключа и сертификата...
+# sudo chmod 640 /etc/airflow/${ALIAS}_${SHORTHOSTNAME}.{crt,key}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если понадобится, то отслеживаемые сертификаты выводим командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Выводим список отслеживаемых сертификатов...
+$ sudo getcert list
+  Number of certificates and requests being tracked: 1.
+  Request ID &amp;#39;20210129140146&amp;#39;:
+        status: MONITORING
+        stuck: no
+        key pair storage: type=FILE,location=&amp;#39;/etc/airflow/airf1_prod-airf01p.key&amp;#39;
+        certificate: type=FILE,location=&amp;#39;/etc/airflow/airf1_prod-airf01p.crt&amp;#39;
+        CA: IPA
+        issuer: CN=Certificate Authority,O=example.org
+        subject: CN=prod-airf01p.example.org,O=example.org
+        expires: 2023-01-30 14:01:46 UTC
+        dns: prod-airf1.example.org,prod-airf01p.example.org
+        principal name: HTTP/prod-airf01p.example.org@example.org
+        key usage: digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment
+        eku: id-kp-serverAuth,id-kp-clientAuth
+        pre-save command:
+        post-save command:
+        track: yes
+        auto-renew: yes
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если понадобится снять сертификат с отслеживания, то выполняем &amp;lsquo;getcert list&amp;rsquo;, выбираем сертификат и даём команду снятия с отслеживания:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ipa-getcert stop-tracking -i 20210129140146
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если нужно вновь поставить сертификат на автообновление, то выполняем, например:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ipa-getcert start-tracking -f /etc/airflow/prod-airf1_prod-airf01p.crt -k /etc/airflow/prod-airf1_prod-airf01p.key
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;установка-airflow-пакетов&#34;&gt;Установка Airflow-пакетов&lt;/h2&gt;
+&lt;h3 id=&#34;как-правильно-удалить-все-установленные-пакеты&#34;&gt;Как правильно удалить все установленные пакеты&lt;/h3&gt;
+&lt;p&gt;Установку Airflow производим под root для, что сделает airflow доступным под любым аккаунтом, так как исполняемые файлы Airflow будут устанавливаться в &lt;code&gt;/usr/local/bin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;На свежей машине установлены только два python-пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip list
+Package    Version
+---------- -------
+pip        21.0
+setuptools 39.2.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если необходимо удалить все python-пакеты, то сначала создаём файл со списком установленных пакетов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip freeze &amp;gt; requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего удаляем все пакеты, используя их список из ранее созданного файла:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip uninstall -y -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;установка&#34;&gt;Установка&lt;/h2&gt;
+&lt;p&gt;Так как на целевой машине используется python 3.6, то перед установкой airflow скачиваем свежий ограничительный файл, это &lt;a href=&#34;https://raw.githubusercontent.com/apache/airflow/constraints-2.0.1/constraints-3.6.txt&#34;&gt;constraints-3.6.txt для Airflow 2.0.1&lt;/a&gt;, и переносим на машину.&lt;/p&gt;
+&lt;p&gt;Так как версия установленного pip &amp;gt; 20.2.4, то устанавливаем Airflow указывая опцию &lt;code&gt;--use-deprecated legacy-resolver&lt;/code&gt; и актуальный файл &lt;code&gt;constraints.txt&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Обновляем pip
+$ sudo pip3 install --upgrade pip
+
+# Устанавливаем wheel
+$ sudo pip3 install wheel
+
+$ sudo pip3 install apache-airflow==2.0.1 --use-deprecated legacy-resolver --constraint constraints-3.6.txt
+Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Collecting apache-airflow==2.0.1
+  Downloading http://10.15.61.1:8081/repository/pypi/packages/apache-airflow/2.0.1/apache_airflow-2.0.1-py3-none-any.whl (4.5 MB)
+     |████████████████████████████████| 4.5 MB 61.9 MB/s
+Collecting cached-property==1.5.2
+  Downloading http://10.15.61.1:8081/repository/pypi/packages/cached-property/1.5.2/cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
+Collecting iso8601==0.1.14
+  Downloading http://10.15.61.1:8081/repository/pypi/packages/iso8601/0.1.14/iso8601-0.1.14-py2.py3-none-any.whl (9.5 kB)
+Collecting psutil==5.8.0
+  Downloading http://10.15.61.1:8081/repository/pypi/packages/psutil/5.8.0/psutil-5.8.0-cp36-cp36m-manylinux2010_x86_64.whl (291 kB)
+     |████████████████████████████████| 291 kB 75.9 MB/s
+Collecting pendulum==2.1.2
+...
+Successfully installed Babel-2.9.0 Flask-1.1.2 Flask-AppBuilder-3.1.1 Flask-Babel-1.0.0 Flask-Caching-1.9.0 Flask-JWT-Extended-3.25.1 Flask-Login-0.4.1 Flask-OpenID-1.2.5 Flask-SQLAlchemy-2.4.4 Flask-WTF-0.14.3 Jinja2-2.11.3 Mako-1.1.4 Markdown-3.3.3 MarkupSafe-1.1.1 PyJWT-1.7.1 PyYAML-5.4.1 Pygments-2.8.0 SQLAlchemy-1.3.23 SQLAlchemy-JSONField-1.0.0 SQLAlchemy-Utils-0.36.8 WTForms-2.3.3 Werkzeug-1.0.1 alembic-1.5.4 apache-airflow-2.0.1 apache-airflow-providers-ftp-1.0.1 apache-airflow-providers-http-1.1.0 apache-airflow-providers-imap-1.0.1 apache-airflow-providers-sqlite-1.0.1 apispec-3.3.2 argcomplete-1.12.2 attrs-20.3.0 cached-property-1.5.2 cattrs-1.0.0 certifi-2020.12.5 cffi-1.14.5 chardet-3.0.4 click-7.1.2 clickclick-20.10.2 colorama-0.4.4 colorlog-4.7.2 commonmark-0.9.1 connexion-2.7.0 croniter-0.3.37 cryptography-3.4.5 dataclasses-0.7 defusedxml-0.6.0 dill-0.3.3 dnspython-1.16.0 docutils-0.16 email-validator-1.1.2 graphviz-0.16 gunicorn-19.10.0 idna-2.10 importlib-metadata-1.7.0 importlib-resources-1.5.0 inflection-0.5.1 iso8601-0.1.14 itsdangerous-1.1.0 jsonschema-3.2.0 lazy-object-proxy-1.4.3 lockfile-0.12.2 marshmallow-3.10.0 marshmallow-enum-1.5.1 marshmallow-oneofschema-2.1.0 marshmallow-sqlalchemy-0.23.1 natsort-7.1.1 numpy-1.19.5 openapi-spec-validator-0.2.9 pandas-1.1.5 pendulum-2.1.2 pep562-1.0 prison-0.1.3 psutil-5.8.0 pycparser-2.20 pyrsistent-0.17.3 python-daemon-2.2.4 python-dateutil-2.8.1 python-editor-1.0.4 python-nvd3-0.15.0 python-slugify-4.0.1 python3-openid-3.2.0 pytz-2020.5 pytzdata-2020.1 requests-2.25.1 rich-9.2.0 setproctitle-1.2.2 six-1.15.0 swagger-ui-bundle-0.0.8 tabulate-0.8.7 tenacity-6.2.0 termcolor-1.1.0 text-unidecode-1.3 typing-3.7.4.3 typing-extensions-3.7.4.3 unicodecsv-0.14.1 urllib3-1.25.11 zipp-3.4.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем дополнительные airflow-пакеты для работы с Hadoop:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip3 install apache-airflow[async,celery,crypto,jdbc,jenkins,hdfs,hive,ldap,password,postgres,rabbitmq,vertica] --use-deprecated legacy-resolver --constraint constraints-3.6.txt
+Looking in indexes: http://nx-pubrepo-reader:****@nexus.example.org:8081/repository/pypi/simple
+Requirement already satisfied: apache-airflow[async,celery,crypto,hdfs,hive,jdbc,jenkins,ldap,password,pig,p
+ostgres,rabbitmq,spark,sqoop,vertica] in /usr/local/lib/python3.6/site-packages (2.0.1)
+Requirement already satisfied: requests==2.25.1 in /usr/local/lib/python3.6/site-packages (from -c constrain
+ts-3.6.txt (line 409)) (2.25.1)  
+Requirement already satisfied: Flask-Caching==1.9.0 in /usr/local/lib/python3.6/site-packages (from -c const
+raints-3.6.txt (line 7)) (1.9.0)
+Requirement already satisfied: termcolor==1.1.0 in /usr/local/lib/python3.6/site-packages (from -c constrain
+ts-3.6.txt (line 458)) (1.1.0)
+Requirement already satisfied: apache-airflow-providers-sqlite==1.0.1 in /usr/local/lib/python3.6/site-packa
+ges (from -c constraints-3.6.txt (line 98)) (1.0.1)
+Requirement already satisfied: Flask==1.1.2 in /usr/local/lib/python3.6/site-packages (from -c constraints-3.6.txt (line 14)) (1.1.2)
+Requirement already satisfied: tenacity==6.2.0 in /usr/local/lib/python3.6/site-packages (from -c constraints-3.6.txt (line 457)) (6.2.0)...
+Successfully installed Flask-Bcrypt-0.7.1 JPype1-1.2.1 JayDeBeApi-1.2.3 PyHive-0.6.3 amqp-2.6.1 apache-airflow-providers-apache-hdfs-1.0.1 apache-airflow-providers-apache-hive-1.0.1 apache-airflow-providers-apache-spark-1.0.1 apache-airflow-providers-celery-1.0.1 apache-airflow-providers-jdbc-1.0.1 apache-airflow-providers-jenkins-1.0.1 apache-airflow-providers-postgres-1.0.1 apache-airflow-providers-vertica-1.0.1 argparse-1.4.0 bcrypt-3.2.0 billiard-3.6.3.0 celery-4.4.7 eventlet-0.30.1 flower-0.9.7 future-0.18.2 gevent-21.1.2 greenlet-1.0.0 hmsclient-0.1.1 humanize-3.2.0 kombu-4.6.11 ldap3-2.9 multi-key-dict-2.0.3 pbr-5.5.1 prometheus-client-0.8.0 protobuf-3.14.0 psycopg2-binary-2.8.6 py4j-0.10.9 pyasn1-0.4.8 pyasn1-modules-0.2.8 pyspark-3.0.1 python-jenkins-1.7.0 python-ldap-3.3.1 sasl-0.2.1 snakebite-py3-3.0.5 thrift-0.13.0 thrift-sasl-0.4.2 tornado-6.1 vertica-python-1.0.1 vine-1.3.0 zope.event-4.5.0 zope.interface-5.2.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Попробуем установить пакет &amp;lsquo;apache-airflow[kerberos]&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip install apache-airflow[kerberos] --use-deprecated legacy-resolver --constraint constraints-3.6.txt
+Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Requirement already satisfied: apache-airflow[kerberos] in /usr/local/lib/python3.6/site-packages (2.0.0)
+Requirement already satisfied: croniter==0.3.36 in /usr/local/lib/python3.6/site-packages (from -c constrain
+ts-3.6.txt (line 109)) (0.3.36)
+Requirement already satisfied: cryptography==3.2.1 in /usr/local/lib64/python3.6/site-packages (from -c cons
+traints-3.6.txt (line 110)) (3.2.1)
+Requirement already satisfied: iso8601==0.1.13 in /usr/local/lib/python3.6/site-packages (from -c constraints-3.6.txt (line 211)) (0.1.13)
+...
+Building wheels for collected packages: pykerberos
+  Building wheel for pykerberos (setup.py) ... done
+  Created wheel for pykerberos: filename=pykerberos-1.2.1-cp36-cp36m-linux_x86_64.whl size=58013 sha256=54044550e3499adf6034c02788de75da7513b0d3f267c4088345e20062a79c57
+  Stored in directory: /root/.cache/pip/wheels/3f/67/bb/d23671c8719076ca13dd216b491ed5cea1b0494891aa9e7dba
+Successfully built pykerberos
+Installing collected packages: pykerberos, requests-kerberos
+Successfully installed pykerberos-1.2.1 requests-kerberos-0.12.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем пакет &amp;lsquo;python-ldap&amp;rsquo; для возможности LDAP-аутентификации в FAB:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip install python-ldap
+Installing collected packages: python-ldap
+    Running setup.py install for python-ldap ... done
+Successfully installed python-ldap-3.3.1
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;2021-02-18 при установке очередного экземпляра Airflow, выяснилось, что &amp;lsquo;python-ldap&amp;rsquo; устанавливается на одном из предыдущих этапах. Видимо разработчики внесли этот пакет в зависимости. Но пока установку этого пакета не убираю.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Для организации мэппинга между группами в IPA и ролями в Airflow устанавливаем свежий модуль &amp;lsquo;Flask-AppBuilder 3.2.0&amp;rsquo;, в котором это реализовано. Не обращаем внимания на предупреждения о нарушении зависимостей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip install Flask-AppBuilder==3.2.0
+...
+Installing collected packages: Flask-AppBuilder
+  Attempting uninstall: Flask-AppBuilder
+    Found existing installation: Flask-AppBuilder 3.1.1
+    Uninstalling Flask-AppBuilder-3.1.1:
+      Successfully uninstalled Flask-AppBuilder-3.1.1
+ERROR: pip&amp;#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+apache-airflow 2.0.1 requires flask-appbuilder~=3.1.1, but you have flask-appbuilder 3.2.0 which is incompatible.
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка-airflow&#34;&gt;Настройка Airflow&lt;/h2&gt;
+&lt;h3 id=&#34;создание-типового-файла-airflowcfg&#34;&gt;Создание типового файла &lt;code&gt;airflow.cfg&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Одноразово запускаем airflow для создания типового файла &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export AIRFLOW_HOME=/data/airflow
+export AIRFLOW_CONFIG=/etc/airflow/airflow.cfg
+sudo -E -u airflow /usr/local/bin/airflow webserver -p 8080
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Первый запуск Apache Airflow должен закончиться какой-нибудь ошибкой, например:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[2021-01-28 18:39:48,191] {cli_action_loggers.py:105} WARNING - Failed to log action with (sqlite3.Operation
+alError) no such table: log
+[SQL: INSERT INTO log (dttm, dag_id, task_id, event, execution_date, owner, extra) VALUES (?, ?, ?, ?, ?, ?,
+ ?)]
+[parameters: (&amp;#39;2021-01-28 15:39:48.187080&amp;#39;, None, None, &amp;#39;cli_webserver&amp;#39;, None, &amp;#39;airflow&amp;#39;, &amp;#39;{&amp;#34;host_name&amp;#34;: &amp;#34;ud
+rvs-airf01p.example.org&amp;#34;, &amp;#34;full_command&amp;#34;: &amp;#34;[\&amp;#39;/usr/local/bin/airflow\&amp;#39;, \&amp;#39;webserver\&amp;#39;, \&amp;#39;-p\&amp;#39;, \&amp;#39;********\&amp;#39;]&amp;#34;}
+&amp;#39;)]
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+  ____________       _____________
+ ____    |__( )_________  __/__  /________      __
+____  /| |_  /__  ___/_  /_ __  /_  __ \_ | /| / /
+___  ___ |  / _  /   _  __/ _  / / /_/ /_ |/ |/ /
+ _/_/  |_/_/  /_/    /_/    /_/  \____/____/|__/
+[2021-01-28 18:39:48,223] {dagbag.py:440} INFO - Filling up the DagBag from /dev/null
+[2021-01-28 18:39:48,309] {manager.py:727} WARNING - No user yet created, use flask fab command to do it.
+Traceback (most recent call last):
+...
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: dag
+[SQL: SELECT dag.dag_id AS dag_dag_id, dag.root_dag_id AS dag_root_dag_id, dag.is_paused AS dag_is_paused, dag.is_subdag AS dag_is_subdag, dag.is_active AS dag_is_active, dag.last_scheduler_run AS dag_last_scheduler_run, dag.last_pickled AS dag_last_pickled, dag.last_expired AS dag_last_expired, dag.scheduler_lock AS dag_scheduler_lock, dag.pickle_id AS dag_pickle_id, dag.fileloc AS dag_fileloc, dag.owners AS dag_owners, dag.description AS dag_description, dag.default_view AS dag_default_view, dag.schedule_interval AS dag_schedule_interval, dag.concurrency AS dag_concurrency, dag.has_task_concurrency_limits AS dag_has_task_concurrency_limits, dag.next_dagrun AS dag_next_dagrun, dag.next_dagrun_create_after AS dag_next_dagrun_create_after
+FROM dag
+WHERE dag.is_active = 1 OR dag.is_paused = 1]
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Но в каталоге &amp;lsquo;/etc/airflow&amp;rsquo; должен появиться типовой файл &amp;lsquo;airflow.cfg&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ls -al /etc/airflow
+total 112
+drwxr-s---    2 airflow airflow   185 Feb 18 13:17 .
+drwxr-xr-x. 122 root    root     8192 Feb 18 11:37 ..
+-rw-r-----    1 airflow airflow 38914 Feb 18 13:17 airflow.cfg
+-rw-r-----    1 root    airflow  1720 Feb 18 12:06 prod-airf1_prod-airf01p.crt
+-rw-r-----    1 root    airflow  1708 Feb 18 12:06 prod-airf1_prod-airf01p.key
+-r--------    1 root    airflow    15 Jan 28 22:51 psql-db.txt
+-r--------    1 root    airflow    27 Jan 28 22:51 psql-pass.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В каталоге &lt;code&gt;/data/airflow&lt;/code&gt; должен появиться типовой файл &lt;code&gt;webserver_config.py&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ls -al /data/airflow
+total 12
+drwxr-x---  5 airflow airflow   93 Feb 18 13:06 .
+drwxr-xr-x. 3 root    root      21 Feb 18 11:54 ..
+drwxr-s---+ 2 airflow airflow    6 Feb 18 11:54 dags
+drwxr-x---+ 3 airflow airflow   23 Feb 18 13:09 logs
+drwxr-s---+ 2 airflow airflow    6 Feb 18 11:54 plugins
+-rw-r--r--  1 airflow airflow 2564 Feb 18 13:03 unittests.cfg
+-rw-r--r--  1 airflow airflow 4700 Feb 18 13:03 webserver_config.py
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;переключение-airflow-на-использование-postgresql&#34;&gt;Переключение Airflow на использование PostgreSQL&lt;/h3&gt;
+&lt;p&gt;Делаем бэкап &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt;, исправляем права на эти файлы, и исправляем/добавляем строки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo cp /etc/airflow/airflow.cfg /etc/airflow/airflow.cfg.origin
+sudo chmod 640 /etc/airflow/airflow.cfg /etc/airflow/airflow.cfg.origin
+
+sudo sed -i &amp;#39;s/^executor.*/executor = LocalExecutor/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^sql_alchemy_conn.*/sql_alchemy_conn = postgres+psycopg2:\/\/$(sudo cat /etc/airflow/psql-pass.txt)@127.0.0.1\/$(sudo cat /etc/airflow/psql-db.txt)/&amp;#34; /etc/airflow/airflow.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате приведённой выше команды, в файле &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; будут исправлены две строки. Вторая строка, отвечающая за подключение к PostgreSQL, будет содержать пароль взятый из ранее созданного файла, и не похожий на тот, что можно наблюдать в следующем примере:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[core]
+executor = LocalExecutor
+
+sql_alchemy_conn = postgres+psycopg2://airf-user:xxxxxxxxx@127.0.0.1/airf_metadata
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Отключение загрузки example DAGs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo sed -i &amp;#39;s/^load_examples = True/load_examples = False/&amp;#39; /etc/airflow/airflow.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Однократная инициализация базы данных Airflow:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export AIRFLOW_HOME=/data/airflow
+export AIRFLOW_CONFIG=/etc/airflow/airflow.cfg
+sudo -E -u airflow airflow db init
+
+DB: postgres+psycopg2://airf_user:***@127.0.0.1/airf_metadata
+[2021-01-28 19:11:07,021] {db.py:678} INFO - Creating tables
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -&amp;gt; e3a246e0dc1, current schema
+INFO  [alembic.runtime.migration] Running upgrade e3a246e0dc1 -&amp;gt; 1507a7289a2f, create is_encrypted
+INFO  [alembic.runtime.migration] Running upgrade 1507a7289a2f -&amp;gt; 13eb55f81627, maintain history for compati
+bility with earlier migrations
+INFO  [alembic.runtime.migration] Running upgrade 13eb55f81627 -&amp;gt; 338e90f54d61, More logging into task_instance
+...
+[2021-01-28 19:11:09,165] {manager.py:727} WARNING - No user yet created, use flask fab command to do it.
+[2021-01-28 19:11:12,349] {migration.py:517} INFO - Running upgrade 2c6edca13270 -&amp;gt; 61ec73d9401f, Add description field to connection
+[2021-01-28 19:11:12,351] {migration.py:517} INFO - Running upgrade 61ec73d9401f -&amp;gt; 64a7d6477aae, fix description field in connection to be text
+[2021-01-28 19:11:12,353] {migration.py:517} INFO - Running upgrade 64a7d6477aae -&amp;gt; e959f08ac86c, Change field in DagCode to MEDIUMTEXT for MySql
+[2021-01-28 19:11:12,524] {dagbag.py:440} INFO - Filling up the DagBag from /data/airflow/dags
+[2021-01-28 19:11:12,554] {example_kubernetes_executor_config.py:174} WARNING - Could not import DAGs in example_kubernetes_executor_config.py: No module named &amp;#39;kubernetes&amp;#39;
+[2021-01-28 19:11:12,554] {example_kubernetes_executor_config.py:175} WARNING - Install kubernetes dependencies with: pip install apache-airflow[&amp;#39;cncf.kubernetes&amp;#39;]
+...
+[2021-01-28 19:11:12,706] {dag.py:2266} INFO - Setting next_dagrun for example_subdag_operator.section-1 to None
+[2021-01-28 19:11:12,707] {dag.py:2266} INFO - Setting next_dagrun for example_subdag_operator.section-2 to None
+Initialization done
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-https-для-web-ui&#34;&gt;Настройка HTTPS для Web UI&lt;/h3&gt;
+&lt;p&gt;В &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; добавляем строки, указывающие использовать https и ранее созданные ключ и сертификат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[webserver]
+base_url = https://prod-airf1.example.org:8080
+web_server_port = 8080
+web_server_ssl_cert = /etc/airflow/prod-airf1_prod-airf01p.crt
+web_server_ssl_key = /etc/airflow/prod-airf1_prod-airf01p.key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для этого выполняем следующий скрипт, но &lt;strong&gt;важно помнить, что переменную URL мы берём из переменной ALIASHOSTNAME, которая была определена на этапе добавления сервисов в IPA&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;URL=${ALIASHOSTNAME}
+
+CRT=$(ls *.crt)
+KEY=$(ls *.key)
+sudo sed -i &amp;#34;s/^base_url.*/base_url=https:\/\/${URL}\:8080/&amp;#34; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^web_server_ssl_cert.*/web_server_ssl_cert = \/etc\/airflow\/${CRT}/&amp;#34; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^web_server_ssl_key.*/web_server_ssl_key = \/etc\/airflow\/${KEY}/&amp;#34; /etc/airflow/airflow.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-ldap-аутентификации&#34;&gt;Настройка LDAP-аутентификации&lt;/h3&gt;
+&lt;p&gt;После создания в Каталоге отдельного системного пользователя для подключения к LDAP и всех необходимых групп пользователей, заполняем в &lt;code&gt;/data/airflow/webserver_config.py&lt;/code&gt; следующей информацией. &lt;strong&gt;Важно помнить, что некоторые переменные в этом скрипте берутся из ранее проделанных этапов этой инструкции, а некоторые необходимо переопределить&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Сохраняем оригинальный конфиг.
+mv /data/airflow/webserver_config.py /data/airflow/webserver_config.py.origin
+
+# Эта переменная берётся из переменной GROUPNAME, которую
+# определили на этапе создания групп в IPA:
+IPA_AIRFLOW_GROUP=${GROUPNAME}
+
+# Переменные определяющие системную УЗ для подключения к LDAP.
+BIND_USER=&amp;#34;uid=binddn_airflow,cn=sysaccounts,cn=etc,dc=example,dc=org&amp;#34;
+BIND_PASSWORD=&amp;#34;xxxxxxxxxxxxxxxx&amp;#34;
+
+# Заполняем новый конфиг данными.
+cat &amp;lt;&amp;lt; EOF &amp;gt; /data/airflow/webserver_config.py
+
+import os
+
+from flask_appbuilder.security.manager import AUTH_LDAP
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+WTF_CSRF_ENABLED = True
+
+AUTH_TYPE = AUTH_LDAP
+
+# Uncomment to setup Full admin role name
+AUTH_ROLE_ADMIN = &amp;#39;Admin&amp;#39;
+
+# Uncomment to setup Public role name, no authentication needed
+#AUTH_ROLE_PUBLIC = &amp;#39;Public&amp;#39;
+
+# Will allow user self registration
+AUTH_USER_REGISTRATION = True
+
+# The default user self registration role
+AUTH_USER_REGISTRATION_ROLE = &amp;#34;Viewer&amp;#34;
+
+AUTH_LDAP_SERVER = &amp;#39;ldaps://prod-ipa01.example.org ldaps://prod-ipa02.example.org ldaps://prod-ipa03.example.org&amp;#39;
+AUTH_LDAP_SEARCH = &amp;#39;cn=users,cn=accounts,dc=example,dc=org&amp;#39;
+AUTH_LDAP_GROUP_FIELD = &amp;#39;memberOf&amp;#39;
+AUTH_LDAP_SEARCH_FILTER = &amp;#39;(memberOf=cn=${IPA_AIRFLOW_GROUP},cn=groups,cn=accounts,dc=example,dc=org)&amp;#39;
+AUTH_LDAP_BIND_USER = &amp;#39;$BIND_USER&amp;#39;
+AUTH_LDAP_BIND_PASSWORD = &amp;#39;$BIND_PASSWORD&amp;#39;
+AUTH_LDAP_UID_FIELD = &amp;#39;uid&amp;#39;
+#AUTH_LDAP_USE_TLS = True
+AUTH_LDAP_ALLOW_SELF_SIGNED = True
+AUTH_LDAP_TLS_CACERTFILE = &amp;#39;/etc/ipa/ca.crt&amp;#39;
+
+AUTH_ROLES_SYNC_AT_LOGIN = True
+AUTH_ROLES_MAPPING = {
+  &amp;#34;cn=${IPA_AIRFLOW_GROUP}_viewers,cn=groups,cn=accounts,dc=example,dc=org&amp;#34;: [&amp;#34;Viewer&amp;#34;],
+  &amp;#34;cn=${IPA_AIRFLOW_GROUP}_users,cn=groups,cn=accounts,dc=example,dc=org&amp;#34;: [&amp;#34;User&amp;#34;],
+  &amp;#34;cn=${IPA_AIRFLOW_GROUP}_ops,cn=groups,cn=accounts,dc=example,dc=org&amp;#34;: [&amp;#34;Op&amp;#34;],
+  &amp;#34;cn=${IPA_AIRFLOW_GROUP}_admin,cn=groups,cn=accounts,dc=example,dc=org&amp;#34;: [&amp;#34;Admin&amp;#34;],
+}
+PERMANENT_SESSION_LIFETIME = 1800
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Логгирование работы LDAP во Flask&amp;rsquo;е можно включить через изменение опции &amp;lsquo;fab_logging_level = WARN&amp;rsquo; в /etc/airflow/airflow.cfg. Включение уровня DEBUG поможет отладке.&lt;/p&gt;
+&lt;p&gt;Некоторые моменты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Попытавшись использовать для одной УЗ роль &amp;lsquo;Public&amp;rsquo; я столкнулся с тем, что пользователь с этой ролью не может войти в Airflow. Web-браузер показывает ошибку перенаправления на самого себя (или как там правильно). Именно поэтому &amp;lsquo;AUTH_USER_REGISTRATION_ROLE = &amp;ldquo;Viewer&amp;rdquo;&amp;rsquo;, а не &amp;ldquo;Public&amp;rdquo;, чтобы свежезарегистрировавшийся пользователь смог войти в Airflow.&lt;/li&gt;
+&lt;li&gt;С другой стороны, возможно, вообще выключить эту опцию, так как роли берутся из IPA.&lt;/li&gt;
+&lt;li&gt;Попробовал отключить эту опцию и новым пользователям, кроме роли из IPA, стала назначаться роль &amp;lsquo;Public&amp;rsquo;, что в общем не критично. В общем, нет особой разницы между включением и отключением этой опции при подключённой LDAP-авторизации.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;попытка-настройки-kerberos&#34;&gt;Попытка настройки Kerberos&lt;/h3&gt;
+&lt;p&gt;Добавляем systemd unit:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/airflow-kerberos.service
+[Unit]
+Description=Airflow kerberos ticket renewer
+After=network.target airflow-webserver.service
+#Wants=postgresql-13.service mysql.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/usr/local/bin/airflow kerberos
+Restart=on-failure
+RestartSec=5s
+SyslogIdentifier=airf-krb
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Не забываем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl daemon-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Получаем Kerberos keytab-файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# При необходимости получаем kerbros-билет:
+#kinit
+
+ipa service-add airflow/$(hostname)
+sudo ipa-getkeytab -s prod-ipa01p.example.org -p airflow/$(hostname) -k /etc/airflow/airflow_$(hostname -s).keytab
+sudo chmod 660 /etc/airflow/airflow_$(hostname -s).keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Забыл проверить, надо ли получать для себя в IPA разрешения для только что созданного сервиса: &amp;ldquo;Разрешено создавать таблицу ключей&amp;rdquo; и &amp;ldquo;Разрешено получать таблицу ключей&amp;rdquo;. Или я, как админ, смог получить keytab без таковых.&lt;/p&gt;
+&lt;p&gt;В файле &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; добавляем/изменяем строки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo sed -i &amp;#39;s/^security.*/security = kerberos/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#39;s/^ccache.*/ccache = \/tmp\/airflow_krb5_ccache/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^principal.*/principal = airflow\/$(hostname)/&amp;#34; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#39;s/^reinit_frequency.*/reinit_frequency = 3600/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#39;s/^kinit_path.*/kinit_path = kinit/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^keytab.*/keytab = \/etc\/airflow\/airflow_$(hostname -s).keytab/&amp;#34; /etc/airflow/airflow.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Перезапускаем и проверяем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl start airflow-kerberos
+sudo klist -c /tmp/airflow_krb5_ccache
+  Ticket cache: FILE:/tmp/airflow_krb5_ccache
+  Default principal: airflow/prod-airf01p.example.org@example.org
+
+  Valid starting       Expires              Service principal
+  02/16/2021 13:37:08  02/17/2021 13:37:08  krbtgt/example.org@example.org
+          renew until 02/19/2021 01:37:06
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Из-за установленного в &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; параметра &amp;lsquo;reinit_frequency = 3600&amp;rsquo;, через один час тикет будет обновлён.&lt;/p&gt;
+&lt;p&gt;Далее надо разобраться с добавлением строк в &amp;lsquo;core-site.xml&amp;rsquo;, как описано в &lt;a href=&#34;https://airflow.apache.org/docs/apache-airflow/stable/security/kerberos.html#hadoop&#34;&gt;https://airflow.apache.org/docs/apache-airflow/stable/security/kerberos.html#hadoop&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;завершение&#34;&gt;Завершение&lt;/h2&gt;
+&lt;p&gt;Запуск Airflow:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl daemon-reload # На всякий случай
+systemctl enable --now airflow-{webserver,scheduler,kerberos}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В течении пары минут должен подняться Web-интерфейс по ранее определённому адресу &lt;a href=&#34;https://prod-airf1.example.org:8080&#34;&gt;https://prod-airf1.example.org:8080&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Закидываем один тестовый DAG:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo cp /usr/local/lib/python3.6/site-packages/airflow/example_dags/example_bash_operator.py /data/airflow/dags/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;По умолчанию, сканирование каталога с DAG&amp;rsquo;ами выполняется каждые пять минут, поэтому придётся немного подождать момента появления нового DAG&amp;rsquo;а в списке DAG&amp;rsquo;ов, или переопределить этот параметр &amp;lsquo;dag_dir_list_interval&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;После появления тестового DAG&amp;rsquo;а, его необходимо включить, а потом запустить. Успешное выполнение выглядит так:
+&lt;img src=&#34;airflowexampletask.png&#34; alt=&#34;AirfowExampleTask&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Можно считать, что Airflow установлен.&lt;/p&gt;
+&lt;h2 id=&#34;почти-полное-удаление-если-потребуется&#34;&gt;Почти полное удаление, если потребуется&lt;/h2&gt;
+&lt;p&gt;Выполняем под &lt;code&gt;sudo su&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl disable --now airflow-{webserver,scheduler,kerberos}
+rm -f /etc/systemd/system/airflow-*.service
+systemctl daemon-reload
+
+ID=$(getcert list|grep -3 &amp;#39;/etc/airflow&amp;#39; | grep ID | grep -o &amp;#39;[[:digit:]]*&amp;#39;)
+ipa-getcert stop-tracking -i ${ID}
+
+rm -rf /etc/airflow /data/airflow /var/log/airflow
+rm -f /etc/sysconfig/airflow /etc/rsyslog.d/airf-*.conf /etc/sudoers.d/airflow
+sed -i &amp;#39;/airflow/d&amp;#39; /etc/logrotate.d/syslog
+
+pip freeze &amp;gt; requirements.txt
+pip uninstall -y -r requirements.txt
+rm -f requirements.txt
+rsync -av /usr/local/lib/python3.6/site-packages/pip* /root/tmp/
+rm -rf /usr/local/lib/python3.6/site-packages/*
+rsync -av /root/tmp/pip* /usr/local/lib/python3.6/site-packages/
+rm -rf /root/tmp/pip*
+rm -rf /root/.cache/pip
+
+userdel -r airflow
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаление PostgreSQL базы и пользователя:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;DBNAME=&amp;#34;airf_metadata&amp;#34;
+DBUSER=&amp;#34;airf_user&amp;#34;
+sudo -u postgres psql -c &amp;#34;DROP DATABASE ${DBNAME};&amp;#34;
+sudo -u postgres psql -c &amp;#34;DROP USER ${DBUSER};&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаление объектов из FreeIPA из-под обычного пользователя. &lt;strong&gt;Важно помнить, что необходимо поменять некоторые переменные перед использованием этого скрипта&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# При необходимости получаем kerberos-тикет:
+#kinit
+
+# Меняем значение переменных:
+ALIAS=&amp;#34;airf1&amp;#34;
+IPAGROUP=&amp;#34;prod_airflow_airf1&amp;#34;
+
+ALIASHOSTNAME=&amp;#34;${ALIAS}.${DOMAIN}&amp;#34;
+SHORTHOSTNAME=$(hostname -s)
+DOMAIN=$(hostname -d)
+DOMAINCAPS=$(echo $(hostname -d)|tr [:lower:] [:upper:])
+
+ipa dnsrecord-del $DOMAIN $ALIAS --cname-rec=&amp;#34;${HOSTNAME}.&amp;#34;
+
+ipa service-del HTTP/${HOSTNAME}@${DOMAINCAPS}
+
+ipa service-del airflow/${HOSTNAME}@${DOMAINCAPS}
+
+# Удаляем группы из IPA:
+ipa group-del ${IPAGROUP}_admins
+ipa group-del ${IPAGROUP}_ops
+ipa group-del ${IPAGROUP}_users
+ipa group-del ${IPAGROUP}_viewers
+ipa group-del ${IPAGROUP}
+
+# Вручную отозвать во FreeIPA сертификат из host-объекта.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Остались не удалены:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;TLS-сертификат из host-объекта IPA.&lt;/li&gt;
+&lt;li&gt;Установленный PostgreSQL.&lt;/li&gt;
+&lt;li&gt;Некоторое количество yum-пакетов установленных через:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sudo yum -y groupinstall &amp;quot;Development Tools&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sudo yum -y install python3-devel cyrus-sasl cyrus-sasl-devel libffi-devel krb5-devel&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Установка Apache Airflow и настройка его для работы с Apache Hadoop</title>
+      <link>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
+      <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-10-23&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Эта версия Airflow устарела. Установка актуальной, второй версии, &lt;a href=&#34;/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya&#34;&gt;описана здесь&lt;/a&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://airflow.apache.org/docs/stable/&#34;&gt;Apache Airflow Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;заметки&#34;&gt;Заметки&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Если в DAG&amp;rsquo;е указать &amp;lsquo;run_as_user&amp;rsquo;: &amp;rsquo;eugene&amp;rsquo;, то Airflow запускает процесс от имени пользователя командой &lt;code&gt;sudo -E -H&lt;/code&gt;, в результате которой процесс пользователя наследует переменные родительского процесса, а переменная HOME меняется на пользовательскую директорию в &lt;code&gt;/home&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Надо дать права на рабочую папку airflow для группы пользователей &lt;code&gt;_airflow-dev&lt;/code&gt;, так как запускаемый дочерний run_as процесс от имени пользователя, должен иметь право на запись в рабочую папку Airflow.&lt;/li&gt;
+&lt;li&gt;Установку python-пакетов следует производить под учётной записью пользователя. Лишь пакеты airflow должны быть установлены под системной учётной записью.&lt;/li&gt;
+&lt;li&gt;Разграничение DAG&amp;rsquo;ов между пользователями задаётся внутри DAG&amp;rsquo;а строкой: &amp;lsquo;owner&amp;rsquo;: &amp;rsquo;eugene&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;В &lt;code&gt;/etc/pip.conf&lt;/code&gt; необходимо добавить python-репо в Nexus&amp;rsquo;е с пользовательскими библиотеками, чтобы пользователь мог вызвать &lt;code&gt;pip install&lt;/code&gt; прямо из своего кода, без дополнительных операций.&lt;/li&gt;
+&lt;li&gt;Для сборки некоторых python-пакетов (найти где я это делал), pydoop, и ещё один пакет, &amp;hellip;., требуется установить компилятор gcc-c++, полный пакет явы с инструментами разработчика.&lt;/li&gt;
+&lt;li&gt;Kerberos-аутентификация, как для входа пользователей в Web UI, так и для подлключения к службам в hadoop-кластере, не работает в Apache Airflow из-за использования древнего python-пакета &lt;code&gt;python-krbV&lt;/code&gt;, написанного под python2.7 много лет назад. Неизвестно, когда будет решена эта проблема.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;установка-по&#34;&gt;Установка ПО&lt;/h2&gt;
+&lt;h3 id=&#34;установка-postgresql&#34;&gt;Установка PostgreSQL&lt;/h3&gt;
+&lt;p&gt;Для работы Airflow в prod-режиме рекомендуется использовать PostgreSQL, вместо используемого по умолчанию SQLite. Ничего сложного в этом этапе нет.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Добавляем в &lt;code&gt;/etc/yum.repos.d/&lt;/code&gt; &lt;a href=&#34;https://www.postgresql.org/download/linux/redhat/&#34;&gt;репо-файл для PostgreSQL 13&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Устанавливаем актуальную версию PosgreSQL:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum update
+
+# Install PostgreSQL:
+sudo yum install -y postgresql13-server libpq5-devel python3 python3-pip
+
+# Optionally initialize the database and enable automatic start:
+sudo /usr/pgsql-13/bin/postgresql-13-setup initdb
+sudo systemctl enable --now postgresql-13
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Для сборки пакета &amp;lsquo;psycopg2&amp;rsquo; понадобилось установить через yum пакет &lt;code&gt;libpq5-devel&lt;/code&gt;. Обходной способ: установка бинарника &lt;code&gt;psycopg2-binary&lt;/code&gt;, вместо пакета &lt;code&gt;psycopg2&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;установка-дополнительных-пакетов&#34;&gt;Установка дополнительных пакетов&lt;/h3&gt;
+&lt;p&gt;Устанавливаем пакеты для разработки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y groupinstall &amp;#34;Development Tools&amp;#34;
+sudo yum -y install python3-devel cyrus-sasl cyrus-sasl-devel libffi-devel krb5-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем python-пакет для работы с PostgreSQL:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo pip3 install wheel psycopg2 cryptography
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Без пакета &amp;lsquo;cryptography&amp;rsquo; операция &lt;code&gt;airflow initdb&lt;/code&gt; отработает, но пожалуется на невозможность шифрования значений.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;установка-airflow-пакетов&#34;&gt;Установка Airflow-пакетов&lt;/h3&gt;
+&lt;p&gt;Перед установкой Airflow скачиваем свежий ограничительный файл &lt;code&gt;constraints.txt&lt;/code&gt; и переносим на целевую машину или, в случае доступа машины к интернету, используем URL.&lt;/p&gt;
+&lt;p&gt;Устанавливаем Airflow с помощью &lt;code&gt;pip&lt;/code&gt; и актуального файла &lt;code&gt;constraints.txt&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo pip3 install pytest-runner
+sudo pip3 install apache-airflow==1.10.12 --constraint https://raw.githubusercontent.com/apache/airflow/constraints-1.10.12/constraints-3.7.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем дополнительные airflow-пакеты для работы с &amp;ldquo;Hadoop&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo pip3 install apache-airflow[async,celery,crypto,druid,jdbc,hdfs,hive,ldap,password,rabbitmq,vertica]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пакет &amp;lsquo;apache-airflow[kerberos]&amp;rsquo; не установится из-за зависимостей на древний пакет &amp;lsquo;krbV&amp;rsquo;, версии для python3 которого не существует.&lt;/p&gt;
+&lt;h2 id=&#34;подготовка-к-запуску-airflow&#34;&gt;Подготовка к запуску Airflow&lt;/h2&gt;
+&lt;h3 id=&#34;создание-системного-пользователя-airflow&#34;&gt;Создание системного пользователя airflow&lt;/h3&gt;
+&lt;p&gt;Создаём системного пользователя &amp;lsquo;airflow&amp;rsquo; и разрешаем ему беспарольное &amp;lsquo;sudo&amp;rsquo; для имперсонации, то есть запуска скриптов от имени владельца:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo useradd -r airflow -s /sbin/nologin
+sudo echo &amp;#34;airflow ALL=(ALL) NOPASSWD: ALL&amp;#34; &amp;gt; /etc/sudoers.d/airflow
+sudo chmod 440 /etc/sudoers.d/airflow
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-каталогов-и-конфигурационных-файлов-для-работы-airflow&#34;&gt;Создание каталогов и конфигурационных файлов для работы Airflow&lt;/h3&gt;
+&lt;p&gt;Создаём каталог для работы Apache Airflow и назначаем права:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;DIR=&amp;#34;/data/airflow&amp;#34;
+sudo mkdir $DIR
+sudo chmod 750 $DIR
+sudo chown airflow.airflow $DIR
+sudo setfacl -m d:g:_airflow_workfolder_access:rwx $DIR
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;В последней команде мы назначаем default-права на каталог &amp;lsquo;POSIX&amp;rsquo;-группе &lt;code&gt;_airflow_workfolder_access&lt;/code&gt; из FreeIPA. Эти права будут наследоваться с режимом 770 для поддиректорий и 660 для файлов.&lt;/li&gt;
+&lt;li&gt;Заметка: &amp;lsquo;POSIX ACL&amp;rsquo; не работает с &amp;lsquo;MemberOf&amp;rsquo;-группами из FreeIPA, но работает с  &amp;lsquo;POSIX&amp;rsquo;-группами.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Создаём файл &lt;code&gt;/etc/sysconfig/airflow&lt;/code&gt; с переменными, использующимися Airflow при запуске из systemd-юнитов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/etc/sysconfig/airflow
+FILE=&amp;#34;/etc/sysconfig/airflow&amp;#34;
+echo &amp;#34;AIRFLOW_HOME=/data/airflow&amp;#34; | sudo tee $FILE
+echo &amp;#34;AIRFLOW_CONFIG=/etc/airflow/airflow.cfg&amp;#34; | sudo tee -a $FILE
+echo &amp;#34;HADOOP_CONF_DIR=/etc/hadoop/conf&amp;#34; | sudo tee -a $FILE
+echo &amp;#34;HIVE_CONF_DIR=/etc/hive/conf&amp;#34; | sudo tee -a $FILE
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Без переменных &lt;code&gt;HADOOP_CONF_DIR&lt;/code&gt; и &lt;code&gt;HIVE_CONF_DIR&lt;/code&gt;, в Airflow не будет работать &amp;lsquo;SparkSubmitOperator&amp;rsquo;, так как он использует файлы &lt;code&gt;hive_site.xml&lt;/code&gt; и &lt;code&gt;yarn-site.xml&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Каталог &lt;code&gt;/etc/hadoop/&lt;/code&gt;, в случае его отсутствия из-за, например, недавнего добавления этого узла в кластер, может быть скопирован с любого кластерного узла. Или выполняем перезагрузку кластера и этот каталог, как и прочие кластерные папки, автоматически появятся на своих местах.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Создаём каталог &lt;code&gt;/etc/airflow&lt;/code&gt; для хранения &lt;code&gt;airflow.cfg&lt;/code&gt;, сертификатов, keytab&amp;rsquo;ов и прочих подобных файлов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;DIR=&amp;#34;/etc/airflow&amp;#34;
+sudo mkdir $DIR
+sudo chmod 750 $DIR
+sudo chown airflow.airflow $DIR
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-systemd-юнитов&#34;&gt;Создание systemd-юнитов&lt;/h3&gt;
+&lt;p&gt;Взято из &lt;a href=&#34;https://github.com/apache/airflow/tree/master/scripts/systemd&#34;&gt;https://github.com/apache/airflow/tree/master/scripts/systemd&lt;/a&gt;. При появлении других зависимостей для запуска сервисов Airflow, добавляем их в строки &amp;lsquo;After&amp;rsquo; и &amp;lsquo;Wants&amp;rsquo;. Примеры можно посмотреть в &lt;a href=&#34;https://github.com/apache/airflow/tree/master/scripts/systemd&#34;&gt;https://github.com/apache/airflow/tree/master/scripts/systemd&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/systemd/system/airflow-scheduler.service&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[Unit]
+Description=Airflow scheduler daemon
+After=network.target postgresql-13.service
+Wants=postgresql-13.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/usr/local/bin/airflow scheduler
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;/etc/systemd/system/airflow-webserver.service&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[Unit]
+Description=Airflow webserver daemon
+After=network.target postgresql-13.service
+Wants=postgresql-13.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+RuntimeDirectory=airflow
+RuntimeDirectoryMode=0775
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/usr/local/bin/airflow webserver -p 8080 --pid /run/airflow/airflow-webserver.pid
+Restart=on-failure
+RestartSec=5s
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Kerberos в Apache Airflow не работает, но приведу здесь этот &amp;lsquo;unit&amp;rsquo; в надежде на светлое будущее:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;/etc/systemd/system/airflow-kerberos.service&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[Unit]
+Description=Airflow kerberos ticket renewer
+After=network.target postgresql-13.service
+Wants=postgresql-13.service mysql.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/usr/local/bin/airflow kerberos
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Не забываем выполнить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl daemon-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Одноразовый запуск Airflow для создания типового файла &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt;, с последующей зачисткой каталога &amp;lsquo;/data/airflow&amp;rsquo;, в которой появятся ненужные в дальнейшем файлы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export AIRFLOW_HOME=/data/airflow
+export AIRFLOW_CONFIG=/etc/airflow/airflow.cfg
+airflow webserver -p 8080
+cd /data/airflow &amp;amp;&amp;amp; sudo rm -rf *
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Первый запуск Apache Airflow должен закончиться ошибкой, а в каталоге &lt;code&gt;/etc/airflow&lt;/code&gt; должен появиться типовой файл &lt;code&gt;airflow.cfg&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;создание-базы-данных-airflow-в-postgresql&#34;&gt;Создание базы данных airflow в PostgreSQL&lt;/h3&gt;
+&lt;p&gt;Далее приведены команды &lt;code&gt;psql&lt;/code&gt; для создания базы данных:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export airflowpassword=$(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c15)
+sudo -u postgres psql -c &amp;#34;CREATE DATABASE airflow_metadata;&amp;#34;
+sudo -u postgres psql -c &amp;#34;CREATE USER airflow WITH password &amp;#39;$airflowpassword&amp;#39;;&amp;#34;
+sudo -u postgres psql -c &amp;#34;GRANT ALL PRIVILEGES ON DATABASE airflow_metadata TO airflow;&amp;#34;
+echo $airflowpassword | sudo tee /etc/airflow/psql-pass.txt
+sudo chmod 400 /etc/airflow/psql-pass.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;создание-сертификата-для-работы-https-в-web-ui-airflow&#34;&gt;Создание сертификата для работы HTTPS в Web UI Airflow&lt;/h2&gt;
+&lt;p&gt;Так как машина находится в домене FreeIPA, то создаём ключ и сертификаты встроенными средствами FreeIPA.&lt;/p&gt;
+&lt;p&gt;Подготавливаем ключ и сертификат для Web UI Airflow. Чтобы было удобней, выбираем короткое имя для URL: &amp;lsquo;airf1.example.org&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Выполняем работу из-под root&amp;rsquo;а.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Сначала получаем kerberos-билет.&lt;/li&gt;
+&lt;li&gt;Добавляем &amp;lsquo;alias&amp;rsquo; для существующего принципала, соответствующего хосту.&lt;/li&gt;
+&lt;li&gt;Создаём ключ и запрашиваем сертификат к нему одной командой.&lt;/li&gt;
+&lt;li&gt;Проверяем, что сертификат добавлен и будет обновляться в срок (auto-renew: yes).&lt;/li&gt;
+&lt;li&gt;Добавляем CNAME-запись в DNS-зону.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# kinit eugene
+# ipa service-add-principal HTTP/srv-app100.example.org HTTP/airf1.example.org
+-------------------------------------------------------------------------------------
+Added new aliases to the service principal &amp;#34;HTTP/srv-app100.example.org@EXAMPLE.ORG&amp;#34;
+-------------------------------------------------------------------------------------
+  Principal name: HTTP/srv-app100.example.org@EXAMPLE.ORG
+  Principal alias: HTTP/srv-app100.example.org@EXAMPLE.ORG, HTTP/airf1.example.org@EXAMPLE.ORG,
+                   HTTP/airf1.example.org@EXAMPLE.ORG
+
+# ipa-getcert request -f /etc/airflow/airf1_srv-app100.crt -k /etc/airflow/airf1_srv-app100.key
+New signing request &amp;#34;20201105144139&amp;#34; added.
+
+# getcert list
+Request ID &amp;#39;20201105144139&amp;#39;:
+        status: MONITORING
+        stuck: no
+        key pair storage: type=FILE,location=&amp;#39;/etc/airflow/airf1_srv-app100.key&amp;#39;
+        certificate: type=FILE,location=&amp;#39;/etc/airflow/airf1_srv-app100.crt&amp;#39;
+        CA: IPA
+        issuer: CN=Certificate Authority,O=EXAMPLE.ORG
+        subject: CN=srv-app100.example.org,O=EXAMPLE.ORG
+        expires: 2022-11-06 14:41:39 UTC
+        dns: srv-app100.example.org
+        principal name: host/srv-app100.example.org@EXAMPLE.ORG
+        key usage: digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment
+        eku: id-kp-serverAuth,id-kp-clientAuth
+        pre-save command:
+        post-save command:
+        track: yes
+        auto-renew: yes
+
+# ipa dnsrecord-add example.org airf1 --cname-rec=&amp;#39;srv-app100.example.org.&amp;#39;
+  Record name: airf1
+  CNAME record: srv-app100.example.org
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если понадобится снять сертификат с отслеживания, то выполняем &lt;code&gt;getcert list&lt;/code&gt;, выбираем сертификат и даём команду снятия с отслеживания:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa-getcert stop-tracking -i 20201105144139
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если нужно поставить сертификат на автообновление, то выполняем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa-getcert start-tracking -f /etc/airflow/airf1_srv-app100.crt -k /etc/airflow/airf1_srv-app100.key
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка-airflow&#34;&gt;Настройка Airflow&lt;/h2&gt;
+&lt;h3 id=&#34;переключение-airflow-на-использование-postgresql&#34;&gt;Переключение Airflow на использование PostgreSQL&lt;/h3&gt;
+&lt;p&gt;Исправляем/добавляем строки в &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i &amp;#39;s/^executor.*/executor = LocalExecutor/&amp;#39; /etc/airflow/airflow.cfg
+sed -i &amp;#34;s/^sql_alchemy_conn.*/sql_alchemy_conn = postgres+psycopg2:\/\/airflow:$(sudo cat /etc/airflow/psql-pass.txt)@127.0.0.1\/airflow_metadata/&amp;#34; /etc/airflow/airflow.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате приведённой выше команды, в файле &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; будут исправлены две строки. Вторая строка, отвечающая за подключение к PostgreSQL, будет содержать пароль взятый из ранее созданного файла &lt;code&gt;psql-pass.txt&lt;/code&gt;. Пример результата в файле &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[core]
+executor = LocalExecutor
+
+sql_alchemy_conn = postgres+psycopg2://airflow:airflow-password@127.0.0.1/airflow_metadata
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Однократная инициализация базы данных Airflow:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export AIRFLOW_CONFIG=/etc/airflow/airflow.cfg
+airflow initdb
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-https-для-web-ui&#34;&gt;Настройка HTTPS для Web UI&lt;/h3&gt;
+&lt;p&gt;В &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; добавляем строки, указывающие использовать https и ранее созданные ключ и сертификат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[webserver]
+base_url = https://airf1.example.org:8080
+web_server_port = 8080
+web_server_ssl_cert = /etc/airflow/airf1_srv-app100.crt
+web_server_ssl_key = /etc/airflow/airf1_srv-app100.key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Перезапускаем Web UI:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart airflow-webserver
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-ldap-аутентификации&#34;&gt;Настройка LDAP-аутентификации&lt;/h3&gt;
+&lt;p&gt;После создания в FreeIPA отдельного системного пользователя для подключения к LDAP и всех необходимых групп пользователей, заполняем в &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; следующий блок:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[webserver]
+authenticate = True
+auth_backend = airflow.contrib.auth.backends.ldap_auth
+filter_by_owner = True
+
+# Note that the ldap server needs the &amp;#34;memberOf&amp;#34; overlay to be set up
+# in order to user the ldapgroup mode
+owner_mode = user
+
+[ldap]
+uri = ldaps://ldap.example.org:636
+
+user_filter = memberOf=cn=_airflow-dev,cn=groups,cn=accounts,dc=example,dc=org
+user_name_attr = uid
+group_member_attr = memberOf
+superuser_filter = memberOf=cn=_airflow-dev_super-users,cn=groups,cn=accounts,dc=example,dc=org
+data_profiler_filter = memberOf=cn=_airflow-dev_data-profilers,cn=groups,cn=accounts,dc=example,dc=org
+
+bind_user = uid=binddn_airflow-dev,cn=sysaccounts,cn=etc,dc=example,dc=org
+bind_password = (bind_password)
+basedn = cn=users,cn=accounts,dc=example,dc=org
+
+cacert = /etc/ipa/ca.crt
+search_scope = LEVEL
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;запуск-airflow&#34;&gt;Запуск Airflow&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl enable --now airflow-webserver
+systemctl enable --now airflow-scheduler
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

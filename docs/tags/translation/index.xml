@@ -1,0 +1,787 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – translation</title>
+    <link>/tags/translation/</link>
+    <description>Recent content in translation on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 18 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/translation/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Описание VFS Виртуальной Файловой Системы Linux</title>
+      <link>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Мой неполный перевод &lt;a href=&#34;https://www.kernel.org/doc/html/latest/filesystems/vfs.html&#34;&gt;Overview of the Linux Virtual File System&lt;/a&gt;. Некоторые моменты, по различным причинам, я пока не понимаю, поэтому кое-что привожу в оригинале, как повод для дальнейших размышлений. Другие же моменты, как мне кажется, я понимаю, поэтому дополнил их некоторой информацией.&lt;/p&gt;
+&lt;p&gt;2020-01-18&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Виртуальная Файловая Система (называемая также Коммутатором Виртуальной Файловой Системы) является программным слоем, который предоставляет программам, выполняющимся в &lt;em&gt;пользовательском пространстве&lt;/em&gt;, интерфейс взаимодействия с файловой системой. VFS-коммутатор также реализует в ядре Linux уровень абстракции для унификации подключения к нему разнообразных файловых систем.&lt;/p&gt;
+&lt;p&gt;Системные вызовы VFS &lt;code&gt;open(2)&lt;/code&gt;, &lt;code&gt;stat(2)&lt;/code&gt;, &lt;code&gt;read(2)&lt;/code&gt;, &lt;code&gt;write(2)&lt;/code&gt;, &lt;code&gt;chmod(2)&lt;/code&gt; и так далее, вызываются из контекста работающего процесса. &lt;em&gt;Filesystem locking&lt;/em&gt; описана в &lt;code&gt;Documentation/filesystems/locking.rst&lt;/code&gt;. (&lt;em&gt;VFS system calls open(2), stat(2), read(2), write(2), chmod(2) and so on are called from a process context. Filesystem locking is described in the document Documentation/filesystems/locking.rst.&lt;/em&gt;)&lt;/p&gt;
+&lt;h3 id=&#34;кэш-записей-каталога--directory-entry-cache-dcache&#34;&gt;Кэш записей каталога / Directory Entry Cache (dcache)&lt;/h3&gt;
+&lt;p&gt;VFS обеспечивает системные вызовы &lt;code&gt;open(2)&lt;/code&gt;, &lt;code&gt;stat(2)&lt;/code&gt;, &lt;code&gt;chmod(2)&lt;/code&gt; и другие похожие. Аргумент &lt;code&gt;pathname&lt;/code&gt;, который передаётся на вход этим системным вызовам, используется VFS-системой для поиска вхождений в &lt;em&gt;кэше записей каталога&lt;/em&gt; (называемым также &lt;em&gt;dentry cache&lt;/em&gt;, или ещё короче &lt;em&gt;dcache&lt;/em&gt;). Это обеспечивает сверхбыстрый механизм трансляции &lt;code&gt;pathname&lt;/code&gt; (filename) в определённый &lt;code&gt;dentry&lt;/code&gt;. &lt;em&gt;Кэш записей каталога&lt;/em&gt; необходим только для увеличения производительности, поэтому он хранится в оперативной памяти и никогда не записывается на диск.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Dentry-кэш&lt;/em&gt; предназначен для обзора всего файлового пространства. А так как большинство компьютеров не могут вместить все записи dentry в оперативную память, то некоторое количество записей в &lt;em&gt;dentry-кэше&lt;/em&gt; может отсутствовать. Поэтому, иногда в процессе сопоставления частей &lt;em&gt;pathname&lt;/em&gt; с соответствующими dentry, VFS-коммутатору, возможно, придётся заодно создать некоторое количество dentry, и только после этого загрузить требуемый inode.&lt;/p&gt;
+&lt;h3 id=&#34;объект-inode--the-inode-object&#34;&gt;Объект Inode / The Inode Object&lt;/h3&gt;
+&lt;p&gt;Отдельный dentry обычно указывает на &lt;strong&gt;inode&lt;/strong&gt;, который является специальной структурой файловой системы, описывающей её файлы-объекты. Объект inode предоставляет различные сведения о файле (&lt;code&gt;man 2 stat&lt;/code&gt;). В частности:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;st_dev&lt;/code&gt; – &lt;em&gt;id&lt;/em&gt; устройства, содержащего файл;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;st_ino&lt;/code&gt; – номер этой inode в таблице inodes;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;st_mode&lt;/code&gt; – тип объекта (&lt;code&gt;man 7 inode&lt;/code&gt;):
+&lt;ul&gt;
+&lt;li&gt;обычный файл с данными;&lt;/li&gt;
+&lt;li&gt;directory;&lt;/li&gt;
+&lt;li&gt;block device;&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;st_nlink&lt;/code&gt; – количество жёстких ссылок (имён файлов) на этот &lt;em&gt;inode&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Объект &lt;code&gt;inode&lt;/code&gt; не содержит имени файла! Так как в пределах одной файловой системы (POSIX) на один файл может ссылаться больше одной именованной &lt;em&gt;жёсткой ссылки&lt;/em&gt;, то имя файла не сохраняется в &lt;code&gt;inode&lt;/code&gt;. Вместо этого, в файлах-каталогах (тип directory), в списке содержимого данного каталога, создаётся запись: &lt;strong&gt;имя файла&lt;/strong&gt; (то есть имя жёсткой ссылки) — &lt;strong&gt;номер inode&lt;/strong&gt;. Отсюда следует, что при обнулении поля &lt;code&gt;st_nlink&lt;/code&gt; в структуре какого-либо &lt;code&gt;inode&lt;/code&gt;, соответствующие блоки файловой системы будут помечены свободными и файл можно считать удалённым.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;Inodes&lt;/em&gt; могут находиться на дисках (на файловых системах блочных устройств), либо в оперативной памяти (на псевдо-файловых системах). &lt;em&gt;Inodes&lt;/em&gt;, находящиеся на дисках, при необходимости копируются в оперативную память, а при каких-либо в них изменениях, обновлённая копия записывается обратно на диск. Несколько &lt;em&gt;dentry&lt;/em&gt; могут указывать на один &lt;em&gt;inode&lt;/em&gt; (в случае жёстких ссылок и тому подобное).&lt;/p&gt;
+&lt;p&gt;Для поиска какого-либо &lt;em&gt;inode&lt;/em&gt; необходимо, чтобы для его родительского inode-каталога, VFS вызвала метод &lt;code&gt;lookup()&lt;/code&gt;. Этот метод установлен конкретной реализацией ФС, к которой относится требуемый &lt;em&gt;inode&lt;/em&gt;. (&lt;em&gt;This method is installed by the specific filesystem implementation that the inode lives in.&lt;/em&gt;) С момента получения VFS-коммутатором &lt;em&gt;dentry&lt;/em&gt; (а следовательно и соответствующего &lt;em&gt;inode&lt;/em&gt;), мы можем делать с ним всякие скучные вещи, типа открыть файл посредством системного вызова &lt;code&gt;open(2)&lt;/code&gt;, или получить данные inode через &lt;code&gt;stat(2)&lt;/code&gt;. Из пользовательского пространства системный вызов &lt;code&gt;stat(2)&lt;/code&gt; работает довольно просто: как только VFS заимел соответствующий &lt;em&gt;dentry&lt;/em&gt;, он передаёт данные из &lt;em&gt;inode&lt;/em&gt; обратно в &lt;em&gt;userspace&lt;/em&gt; (&lt;em&gt;The stat(2) operation is fairly simple: once the VFS has the dentry, it peeks at the inode data and passes some of it back to userspace.&lt;/em&gt;).&lt;/p&gt;
+&lt;h3 id=&#34;объект-file--the-file-object&#34;&gt;Объект File / The File Object&lt;/h3&gt;
+&lt;p&gt;Открытие какого-либо файла требует ещё одной операции: выделение &lt;em&gt;файловой структуры&lt;/em&gt; (это реализация &lt;em&gt;файловых дескрипторов&lt;/em&gt; на стороне ядра). Свеже выделенная &lt;em&gt;файловая структура&lt;/em&gt; инициализируется с указателем на соответствующий dentry и на набор файловых операций функций-членов. (&lt;em&gt;The freshly allocated file structure is initialized with a pointer to the dentry and a set of file operation member functions.&lt;/em&gt;) Они берутся из сведений, содержащихся в соответствующей inode. Применяемый к файлу метод &lt;code&gt;open()&lt;/code&gt; вызывается тогда, как только конкретная реализация файловой системы сможет сделать это. Вы можете видеть, что это ещё одна функция выполняемая VFS-коммутатором. &lt;em&gt;Файловая структура&lt;/em&gt; помещается в &lt;em&gt;таблицу дескрипторов файлов&lt;/em&gt; для вызывающего процесса.&lt;/p&gt;
+&lt;p&gt;Чтение, запись и закрытие файла (и другие подобные операции VFS) осуществляются с помощью соответствующих методов, перечисленных в подходящей к требуемому файлу &lt;em&gt;файловой структуре&lt;/em&gt;, каковая структура становится доступной из &lt;em&gt;пространства пользователя&lt;/em&gt; через использование конкретного &lt;em&gt;файлового дескриптора&lt;/em&gt;. &lt;em&gt;Dentry&lt;/em&gt; остаётся в использовании, пока файл открыт, что, в свою очередь, означает, что VFS inode остаётся в использовании.&lt;/p&gt;
+&lt;h2 id=&#34;регистрация-и-монтирование-файловой-системы&#34;&gt;Регистрация и монтирование файловой системы&lt;/h2&gt;
+&lt;p&gt;Процедура регистрации типа файловой системы в ядре Linux, и процедура отмены регистрации, используют следующие функции API:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#include &amp;lt;linux/fs.h&amp;gt;
+
+extern int register_filesystem(struct file_system_type *);
+extern int unregister_filesystem(struct file_system_type *);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Передающийся &lt;code&gt;struct file_system_type&lt;/code&gt; описывает вашу ФС. Когда запрашивается монтирование тома какой-либо ФС к каталогу в вашем &lt;em&gt;пространстве имён&lt;/em&gt;, то VFS вызывет подходящий метод монтирования для конкретной ФС. Новый vfsmount, ссылающийся на дерево, возвращаемое -&amp;gt;mount(), будет подсоединён к точке монтирования, так что когда в процессе разбора &lt;em&gt;pathname&lt;/em&gt; будет достигнута точка монтирования, то будет совершён переход внутрь vfsmount, на его корень.&lt;/p&gt;
+&lt;p&gt;Вы можете узнать о всех зарегистрированных в ядре типах файловых систем в файле &lt;code&gt;/proc/filesystems&lt;/code&gt;/&lt;/p&gt;
+&lt;h3 id=&#34;struct-file_system_type&#34;&gt;struct file_system_type&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает файловую систему. Начиная с kernel 2.6.39, определены следующие элементы &lt;code&gt;struct&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct file_system_operations {
+        const char *name;
+        int fs_flags;
+        struct dentry *(*mount) (struct file_system_type *, int,
+                                 const char *, void *);
+        void (*kill_sb) (struct super_block *);
+        struct module *owner;
+        struct file_system_type * next;
+        struct list_head fs_supers;
+        struct lock_class_key s_lock_key;
+        struct lock_class_key s_umount_key;
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;name&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;наименование типа файловой системы, например как &amp;ldquo;ext2&amp;rdquo;, &amp;ldquo;iso9660&amp;rdquo;, &amp;ldquo;msdos&amp;rdquo; и прочее.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;fs_flags&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;различные флаги (то есть, FS_REQUIRES_DEV, FS_NO_DCACHE, и т.д.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;mount&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;метод, вызов которого производится при монтировании нового экземпляра файловой системы&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;kill_sb&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;метод, вызов которого производится при размонтировании экземпляра файловой системы&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;owner&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;для внутреннего использования VFS: в большинстве случаев вы должны инициализировать это через THIS_MODULE&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;next&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;для внутреннего использования VFS: вы должны инициализировать это в NULL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;  s_lock_key, s_umount_key: lockdep-specific&lt;/p&gt;
+&lt;p&gt;Метод &lt;code&gt;mount()&lt;/code&gt; имеет следующие аргументы:
+&lt;strong&gt;struct file_system_type *fs_type&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;описывает файловую систему, частично инициализируется определённым кодом файловой системы&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;int flags&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;флаги монтирования&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;const char *dev_name&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;монтируемое имя устройства&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;void *data&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;различные опции в виде ASCII-строки, указываемые при монтировании (смотри раздел “Mount Options”)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;При вызове, метод mount() должен возвращать корневой dentry запрошенного дерева каталогов. Вызывающий процесс должен захватить ссылку на &lt;em&gt;суперблок&lt;/em&gt; ФС, и &lt;em&gt;суперблок&lt;/em&gt; должен быть заблокирован. При ошибке, метод возвращает указатель ERR_PTR (ошибка).&lt;/p&gt;
+&lt;p&gt;Аргументы соответствуют таковым из mount(2) и их интерпретация зависит от типа ФС. Например, для блочной файловой системы, &lt;code&gt;dev_name&lt;/code&gt; интерпретируется как имя блочного устройства, и устойство это открыто, и оно содержит подходящую файловую систему, для которой метод &lt;code&gt;mount()&lt;/code&gt; создаёт и инициализирует соответствующий &lt;code&gt;struct super_block&lt;/code&gt;, и возвращает корневой dentry вызывающему процессу.&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-super_block&#34;&gt;Объект super_block&lt;/h2&gt;
+&lt;p&gt;Объект superblock представляет монтированную файловую систему.&lt;/p&gt;
+&lt;h3 id=&#34;struct-super_operations&#34;&gt;struct super_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает как VFS может манипулировать суперблоком вашей файловой системы. Начиная с kernel 2.6.22, определены следующие элементы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct inode *(*alloc_inode)(struct super_block *sb);
+void (*destroy_inode)(struct inode *);
+
+void (*dirty_inode) (struct inode *, int flags);
+int (*write_inode) (struct inode *, int);
+void (*drop_inode) (struct inode *);
+void (*delete_inode) (struct inode *);
+void (*put_super) (struct super_block *);
+int (*sync_fs)(struct super_block *sb, int wait);
+int (*freeze_fs) (struct super_block *);
+int (*unfreeze_fs) (struct super_block *);
+int (*statfs) (struct dentry *, struct kstatfs *);
+int (*remount_fs) (struct super_block *, int *, char *);
+void (*clear_inode) (struct inode *);
+void (*umount_begin) (struct super_block *);
+
+int (*show_options)(struct seq_file *, struct dentry *);
+
+ssize_t (*quota_read)(struct super_block *, int, char *, size_t, loff_t);
+ssize_t (*quota_write)(struct super_block *, int, const char *, size_t, loff_t);
+int (*nr_cached_objects)(struct super_block *);
+void (*free_cached_objects)(struct super_block *, int);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Все методы вызываются без каких-либо удерживаемых? (being held) блокировок, если не указано иное. Это означает, что большинство методов можно безопасно блокировать. Все методы вызываются только из контекста процесса (то есть не из обработчика прерываний или ниже (bottom half)).&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-inode&#34;&gt;Объект Inode&lt;/h2&gt;
+&lt;p&gt;Объект inode представляет объект внутри файловой системы.&lt;/p&gt;
+&lt;h3 id=&#34;struct-inode_operations&#34;&gt;struct inode_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как VFS может манипулировать inode&amp;rsquo;ом в вашей файловой системе. Начиная с kernel 2.6.22, определены следующие элементы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int (*create) (struct inode *,struct dentry *, umode_t, bool);
+struct dentry * (*lookup) (struct inode *,struct dentry *, unsigned int);
+int (*link) (struct dentry *,struct inode *,struct dentry *);
+int (*unlink) (struct inode *,struct dentry *);
+int (*symlink) (struct inode *,struct dentry *,const char *);
+int (*mkdir) (struct inode *,struct dentry *,umode_t);
+int (*rmdir) (struct inode *,struct dentry *);
+int (*mknod) (struct inode *,struct dentry *,umode_t,dev_t);
+int (*rename) (struct inode *, struct dentry *,
+               struct inode *, struct dentry *, unsigned int);
+int (*readlink) (struct dentry *, char __user *,int);
+const char *(*get_link) (struct dentry *, struct inode *,
+                         struct delayed_call *);
+int (*permission) (struct inode *, int);
+int (*get_acl)(struct inode *, int);
+int (*setattr) (struct dentry *, struct iattr *);
+int (*getattr) (const struct path *, struct kstat *, u32, unsigned int);
+ssize_t (*listxattr) (struct dentry *, char *, size_t);
+void (*update_time)(struct inode *, struct timespec *, int);
+int (*atomic_open)(struct inode *, struct dentry *, struct file *,
+                   unsigned open_flag, umode_t create_mode);
+int (*tmpfile) (struct inode *, struct dentry *, umode_t);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;И опять, все методы вызываются без каких-либо блокировок, если не указано иное.&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-адресное-пространство&#34;&gt;Объект Адресное Пространство&lt;/h2&gt;
+&lt;p&gt;Объект &lt;em&gt;адресное пространство&lt;/em&gt; используется для группирования и управления страницами в страничном кэше (page cache). Он может быть использован для отслеживания страниц в файле и отслеживания отображения секция файла в адресное пространство процесса.&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;обработка-ошибок-в-течении-writeback&#34;&gt;Обработка ошибок в течении writeback&lt;/h3&gt;
+&lt;p&gt;Большинство приложений, которые буферизуют операции чтения/записи, периодически синхронизируют файл вызовом (fsync, fdatasync, msync or sync_file_range), чтобы быть уверенным, что данные в буфере сброшены обратно на устройство хранения. &amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;struct-address_space_operations&#34;&gt;struct address_space_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как VFS может манипулировать отображением файла в &lt;em&gt;страничном кэше&lt;/em&gt; в вашей файловой системе. Определены следующие элементы структуры:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int (*writepage)(struct page *page, struct writeback_control *wbc);
+int (*readpage)(struct file *, struct page *);
+int (*writepages)(struct address_space *, struct writeback_control *);
+int (*set_page_dirty)(struct page *page);
+int (*readpages)(struct file *filp, struct address_space *mapping,
+                 struct list_head *pages, unsigned nr_pages);
+int (*write_begin)(struct file *, struct address_space *mapping,
+                   loff_t pos, unsigned len, unsigned flags,
+                struct page **pagep, void **fsdata);
+int (*write_end)(struct file *, struct address_space *mapping,
+                 loff_t pos, unsigned len, unsigned copied,
+                 struct page *page, void *fsdata);
+sector_t (*bmap)(struct address_space *, sector_t);
+void (*invalidatepage) (struct page *, unsigned int, unsigned int);
+int (*releasepage) (struct page *, int);
+void (*freepage)(struct page *);
+ssize_t (*direct_IO)(struct kiocb *, struct iov_iter *iter);
+/* isolate a page for migration */
+bool (*isolate_page) (struct page *, isolate_mode_t);
+/* migrate the contents of a page to the specified target */
+int (*migratepage) (struct page *, struct page *);
+/* put migration-failed page back to right list */
+void (*putback_page) (struct page *);
+int (*launder_page) (struct page *);
+
+int (*is_partially_uptodate) (struct page *, unsigned long,
+                              unsigned long);
+void (*is_dirty_writeback) (struct page *, bool *, bool *);
+int (*error_remove_page) (struct mapping *mapping, struct page *page);
+int (*swap_activate)(struct file *);
+int (*swap_deactivate)(struct file *);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;writepage&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается &lt;em&gt;Виртуальной Машиной&lt;/em&gt; для сброса черновых страниц обратно в хранилище. Это может случаться для сохранения целостности данных (&lt;code&gt;sync&lt;/code&gt;), или для освобождения памяти (flush)&amp;hellip;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;readpage&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается &lt;em&gt;Виртуальной Машиной&lt;/em&gt; при чтении страницы из хранилища. Эта страница будет заблокирована во время вызова &lt;code&gt;readpage&lt;/code&gt;, и должна быть разблокирована и промаркирована, как &lt;em&gt;uptodate&lt;/em&gt;, с момента завершения чтения. Если &lt;code&gt;-&amp;gt;readpage&lt;/code&gt; обнаруживает, что требуется разблокировка страницы по какой-либо причине, то он может сделать это, но вернув AOP_TRUNCATED_PAGE. В этом случае страница будет relocated, relocked и, если всё успешно будет выполнено, то вызов &lt;code&gt;-&amp;gt;readpage&lt;/code&gt; будет повторён.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;writepages&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается &lt;em&gt;Виртуальной Машиной&lt;/em&gt; для сброса на диск всех страниц, ассоциированных с &lt;em&gt;адресным пространством&lt;/em&gt; объекта.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-файл&#34;&gt;Объект Файл&lt;/h2&gt;
+&lt;p&gt;Файловый объект представляет файл, открытый процессом. Он также известен, как &lt;em&gt;файловый дескриптор&lt;/em&gt; (open file description) в POSIX-диалекте.&lt;/p&gt;
+&lt;h3 id=&#34;struct-file_operations&#34;&gt;struct file_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как VFS может манипулировать открытым файлом. Начиная с kernel 4.18, определены следующие элементы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct file_operations {
+        struct module *owner;
+        loff_t (*llseek) (struct file *, loff_t, int);
+        ssize_t (*read) (struct file *, char __user *, size_t, loff_t *);
+        ssize_t (*write) (struct file *, const char __user *, size_t, loff_t *);
+        ssize_t (*read_iter) (struct kiocb *, struct iov_iter *);
+        ssize_t (*write_iter) (struct kiocb *, struct iov_iter *);
+        int (*iopoll)(struct kiocb *kiocb, bool spin);
+        int (*iterate) (struct file *, struct dir_context *);
+        int (*iterate_shared) (struct file *, struct dir_context *);
+        __poll_t (*poll) (struct file *, struct poll_table_struct *);
+        long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long);
+        long (*compat_ioctl) (struct file *, unsigned int, unsigned long);
+        int (*mmap) (struct file *, struct vm_area_struct *);
+        int (*open) (struct inode *, struct file *);
+        int (*flush) (struct file *, fl_owner_t id);
+        int (*release) (struct inode *, struct file *);
+        int (*fsync) (struct file *, loff_t, loff_t, int datasync);
+        int (*fasync) (int, struct file *, int);
+        int (*lock) (struct file *, int, struct file_lock *);
+        ssize_t (*sendpage) (struct file *, struct page *, int, size_t, loff_t *, int);
+        unsigned long (*get_unmapped_area)(struct file *, unsigned long, unsigned long, unsigned long, unsigned long);
+        int (*check_flags)(int);
+        int (*flock) (struct file *, int, struct file_lock *);
+        ssize_t (*splice_write)(struct pipe_inode_info *, struct file *, loff_t *, size_t, unsigned int);
+        ssize_t (*splice_read)(struct file *, loff_t *, struct pipe_inode_info *, size_t, unsigned int);
+        int (*setlease)(struct file *, long, struct file_lock **, void **);
+        long (*fallocate)(struct file *file, int mode, loff_t offset,
+                          loff_t len);
+        void (*show_fdinfo)(struct seq_file *m, struct file *f);
+#ifndef CONFIG_MMU
+        unsigned (*mmap_capabilities)(struct file *);
+#endif
+        ssize_t (*copy_file_range)(struct file *, loff_t, struct file *, loff_t, size_t, unsigned int);
+        loff_t (*remap_file_range)(struct file *file_in, loff_t pos_in,
+                                   struct file *file_out, loff_t pos_out,
+                                   loff_t len, unsigned int remap_flags);
+        int (*fadvise)(struct file *, loff_t, loff_t, int);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Again, all methods are called without any locks being held, unless otherwise noted.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;llseek&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается, когда VFS нуждается в перемещении file position index&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;read&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;называется &lt;code&gt;read(2)&lt;/code&gt; и относится к системным вызовам
+&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;directory-entry-cache-dcache&#34;&gt;Directory Entry Cache (dcache)&lt;/h2&gt;
+&lt;h3 id=&#34;struct-dentry_operations&#34;&gt;struct dentry_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как файловая система может перегружать стандартные &lt;em&gt;dentry&lt;/em&gt; операции.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct dentry_operations {
+        int (*d_revalidate)(struct dentry *, unsigned int);
+        int (*d_weak_revalidate)(struct dentry *, unsigned int);
+        int (*d_hash)(const struct dentry *, struct qstr *);
+        int (*d_compare)(const struct dentry *,
+                         unsigned int, const char *, const struct qstr *);
+        int (*d_delete)(const struct dentry *);
+        int (*d_init)(struct dentry *);
+        void (*d_release)(struct dentry *);
+        void (*d_iput)(struct dentry *, struct inode *);
+        char *(*d_dname)(struct dentry *, char *, int);
+        struct vfsmount *(*d_automount)(struct path *);
+        int (*d_manage)(const struct path *, bool);
+        struct dentry *(*d_real)(struct dentry *, const struct inode *);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;directory-entry-cache-api&#34;&gt;Directory Entry Cache API&lt;/h3&gt;
+&lt;p&gt;There are a number of functions defined which permit a filesystem to manipulate dentries:&lt;/p&gt;
+&lt;h2 id=&#34;mount-options&#34;&gt;Mount Options&lt;/h2&gt;
+&lt;h3 id=&#34;parsing-options&#34;&gt;Parsing options&lt;/h3&gt;
+&lt;p&gt;При монтировании или размонтировании файловой системы, передаётся строка, содержащая список опций монтирования, разделённых запятыми. Эти опции могут иметь любую из этих форм:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;option option=value
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The &amp;lt;linux/parser.h&amp;gt; header defines an API that helps parse these options. There are plenty of examples on how to use it in existing filesystems.&lt;/p&gt;
+&lt;h3 id=&#34;showing-options&#34;&gt;Showing options&lt;/h3&gt;
+&lt;p&gt;Если файловая система приняла опции, то она должна определить show_options(), для показа всех актуальных текущих опций. Правила показа:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;обязаны быть показаны тех опции, значения которых отличаются от принимаемых по умолчанию;&lt;/li&gt;
+&lt;li&gt;могут быть показаны те опции, которые включены (по умолчанию) или имеют значения по умолчанию.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Опции, внутренее используемые между маунт хэлпером и ядром (такие как дескриптор файла), или которые значимы только во время монтирования (такие, как управляющие созданием журнала), исключены от вышеоуказанных правил.&lt;/p&gt;
+&lt;p&gt;The underlying reason for the above rules is to make sure, that a mount can be accurately replicated (e.g. umounting and mounting again) based on the information found in /proc/mounts.&lt;/p&gt;
+&lt;p&gt;Resources
+(Note some of these resources are not up-to-date with the latest kernel
+version.)
+Creating Linux virtual filesystems. 2002
+&lt;a href=&#34;http://lwn.net/Articles/13325/&#34;&gt;http://lwn.net/Articles/13325/&lt;/a&gt;
+The Linux Virtual File-system Layer by Neil Brown. 1999
+&lt;a href=&#34;http://www.cse.unsw.edu.au/~neilb/oss/linux-commentary/vfs.html&#34;&gt;http://www.cse.unsw.edu.au/~neilb/oss/linux-commentary/vfs.html&lt;/a&gt;
+A tour of the Linux VFS by Michael K. Johnson. 1996
+&lt;a href=&#34;http://www.tldp.org/LDP/khg/HyperNews/get/fs/vfstour.html&#34;&gt;http://www.tldp.org/LDP/khg/HyperNews/get/fs/vfstour.html&lt;/a&gt;
+A small trail through the Linux kernel by Andries Brouwer. 2001
+&lt;a href=&#34;http://www.win.tue.nl/~aeb/linux/vfs/trail.html&#34;&gt;http://www.win.tue.nl/~aeb/linux/vfs/trail.html&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: apt vs apt-get/apt-cache vs aptitude</title>
+      <link>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</link>
+      <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;a href=&#34;https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_literal_apt_literal_vs_literal_apt_get_literal_literal_apt_cache_literal_vs_literal_aptitude_literal&#34;&gt;Debian Reference&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2.2.1. apt vs. apt-get / apt-cache vs. aptitude
+Хотя &lt;code&gt;aptitude&lt;/code&gt; чрезвычайно удобный интерактивный инструмент, которым автор Debian Reference преимущественно пользуется, вам надо знать некоторые предупреждающие моменты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Команда &lt;code&gt;aptitude&lt;/code&gt; не рекомендуется для обновления работающего Debian stable релиза  до нового выпущенного stable релиза.
+&lt;ul&gt;
+&lt;li&gt;Рекомендуется для этого случая использовать &lt;code&gt;apt full-upgrade&lt;/code&gt; или &lt;code&gt;apt-get dist-upgrade&lt;/code&gt;. Смотри &lt;a href=&#34;https://bugs.debian.org/411280&#34;&gt;Bug #411280&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Команда &lt;code&gt;aptitude&lt;/code&gt; иногда предлагает удалить большое количество пакетов, что случается при апгрейде системы на работающих Debian testing или unstable системах.
+&lt;ul&gt;
+&lt;li&gt;Этой ситуации опасаются множество системных администраторов. Без паники.&lt;/li&gt;
+&lt;li&gt;Похоже, что в большинстве случае причиной этому является перекос версий в пакетах, зависящих или рекомендованных мета-пакетами, такими как gnome-core.&lt;/li&gt;
+&lt;li&gt;Эту ситуацию можно разрулить через запуск &lt;code&gt;aptitude&lt;/code&gt; и выбор в меню пункта &amp;ldquo;Cancel pending actions&amp;rdquo;, выхода из &lt;code&gt;aptitude&lt;/code&gt; и использования команды &lt;code&gt;apt full-upgrade&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Основными инструментами являются &lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt;.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt; предоставляют только интерфейс командной строки.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; наиболее подходит для обновления системы до другого релиза.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; предлагает надёжный способ разрешения зависимостей пакетов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; наименее требователен к ресурсам железа, то есть жрёт мало памяти и быстро работает.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-cache&lt;/code&gt; предлагает стандартный, основанный на регулярных выражениях, поиск по именам и описаниям пакетов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt; может управлять множеством версий пакетов используя &lt;code&gt;/etc/apt/preferences&lt;/code&gt;, но это довольно громоздко.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Команда &lt;code&gt;apt&lt;/code&gt; предлагает высокоуровневой интерфейс командной строки для управления пакетами. По большому счёту это обёртка для &lt;code&gt;apt-get&lt;/code&gt;, &lt;code&gt;apt-cache&lt;/code&gt; и других подходящих программ, изначально задумывавшийся, как &amp;ldquo;end-user&amp;rdquo; интерфейс и включает некоторые опции, по умолчанию наиболее подходящие для интерактивного использования.
+- &lt;code&gt;apt&lt;/code&gt; показывает дружественную &amp;ldquo;строку прогресса&amp;rdquo;, когда устанавливаются пакеты командой &lt;code&gt;apt install&lt;/code&gt;.
+- &lt;code&gt;apt&lt;/code&gt; по умолчанию удаляет кэшированные &lt;code&gt;.deb&lt;/code&gt; пакеты после успешной установки загруженных пакетов.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Tip
+Пользователям рекомендуется использовать новую &lt;code&gt;apt&lt;/code&gt; команду для интерактивного использования. Для использования же в скриптах предлагается применять &lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Команда &lt;code&gt;aptitude&lt;/code&gt; – наиболее универсальный инструмент управления пакетами.
+- &lt;code&gt;aptitude&lt;/code&gt; предоставляет полноэкранный интерактивный пользовательский интерфейс.
+- &lt;code&gt;aptitude&lt;/code&gt; также предоставляет и обычный интерфейс командной строки.
+- &lt;code&gt;aptitude&lt;/code&gt; наиболее подходит для ежедневного интерактивного управления пакетами, такого как инспектирования установленных пакетов и поиск свободных пакетов.
+- &lt;code&gt;aptitude&lt;/code&gt; наиболее требователен к ресурсам железа, то есть жрёт много памяти и медленно работает.
+- &lt;code&gt;aptitude&lt;/code&gt; предлагает расширенный &amp;ldquo;регэксп&amp;rdquo; поиск по всем метаданным, указанным для пакетов.
+- &lt;code&gt;aptitude&lt;/code&gt; может управлять множеством версий пакетов без использования &lt;code&gt;/etc/apt/preferences&lt;/code&gt; и интуитивно понятно.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Перевод Easy-RSA 3 Quickstart README</title>
+      <link>/a/perevod-easy-rsa-3-quickstart-readme/</link>
+      <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-10-22&lt;/p&gt;
+&lt;h3 id=&#34;предисловие-от-меня&#34;&gt;Предисловие от меня&lt;/h3&gt;
+&lt;p&gt;В статье задействован &lt;em&gt;правильный&lt;/em&gt; способ использования &lt;em&gt;PKI&lt;/em&gt; для OpenVPN, когда операция создания &lt;em&gt;приватных ключей&lt;/em&gt; с последующим &lt;em&gt;запросом на сертификацию&lt;/em&gt; и операция выпуска &lt;em&gt;сертификата ключа&lt;/em&gt; на основе &lt;em&gt;запроса&lt;/em&gt;, выполняются на разных системах.&lt;/p&gt;
+&lt;h2 id=&#34;easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA 3 Quickstart README&lt;/h2&gt;
+&lt;p&gt;Это инструкция как быстро начать использовать Easy-RSA версии 3. Детальный хэлп по использованию и описанию команд может быть найден по команде &lt;code&gt;./easyrsa -h&lt;/code&gt;. Дополнительная документация может быть найдена в директории &lt;code&gt;doc/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Если вы сделали апгрейд с версии Easy-RSA 2.x, то в той же папке &lt;code&gt;doc/&lt;/code&gt; лежат заметки по апгрейду.&lt;/p&gt;
+&lt;h3 id=&#34;установка-и-процедура-подписи-первого-запроса&#34;&gt;Установка и процедура подписи первого запроса&lt;/h3&gt;
+&lt;p&gt;Здесь в быстром темпе описано, что нужно сделать, чтобы развернуть новую &lt;strong&gt;PKI&lt;/strong&gt; (&lt;em&gt;Инфраструктура Открытых Ключей&lt;/em&gt;) и выпустить свой первый &lt;em&gt;подписанный сертификат&lt;/em&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Выберите систему, которая будет вашим &lt;strong&gt;Центром Сертификации&lt;/strong&gt; (&lt;em&gt;CA&lt;/em&gt;), где создайте структуру каталогов для новой &lt;em&gt;PKI&lt;/em&gt; и сгенерируйте ключи для этого &lt;strong&gt;CA&lt;/strong&gt; следующими командами:
+&lt;code&gt;./easyrsa init-pki&lt;/code&gt;
+&lt;code&gt;./easyrsa build-ca&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;На другой системе нуждающейся в &lt;em&gt;сертификате&lt;/em&gt;, будущем сервере или клиенте, инициализируйте собственный &lt;em&gt;PKI&lt;/em&gt; для генерации &lt;em&gt;ключевой пары&lt;/em&gt; и &lt;em&gt;запроса на сертификацию&lt;/em&gt;. Заметьте, что &lt;em&gt;&lt;strong&gt;рекомендованной процедурой&lt;/strong&gt;&lt;/em&gt; является инициализация этого PKI (&lt;code&gt;init-pki&lt;/code&gt;) на &lt;em&gt;&lt;strong&gt;отдельной системе&lt;/strong&gt;&lt;/em&gt; от первой (или хотя бы в отдельном каталоге). Если вы не придерживаетесь рекомендованной процедуры и используете один и тот же каталог для выпуска и подписания сертификатов, то пропустите этот &lt;code&gt;init-pki&lt;/code&gt;, а так же следующий шаг с описанием &lt;em&gt;импорта запроса&lt;/em&gt; &lt;code&gt;import-req&lt;/code&gt;.&lt;br&gt;
+&lt;code&gt;./easyrsa init-pki&lt;/code&gt;
+&lt;code&gt;./easyrsa gen-req EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Скопируйте &lt;em&gt;файл запроса&lt;/em&gt; (&lt;code&gt;.req&lt;/code&gt;) , например, на флэшку для передачи его на систему с &lt;em&gt;CA&lt;/em&gt; и там его &lt;em&gt;импортируйте&lt;/em&gt;. &lt;em&gt;Имя EntityName&lt;/em&gt;, заданное здесь, является произвольным и используется только для именования файла запроса.&lt;br&gt;
+&lt;code&gt;./easyrsa import-req /tmp/path/to/import.req EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Подпишите запрос с заданием правильного типа, &lt;code&gt;server&lt;/code&gt; или &lt;code&gt;client&lt;/code&gt;. Здесь пример для типа &lt;em&gt;client&lt;/em&gt;:
+&lt;code&gt;./easyrsa sign-req client EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Совершите обратный перенос нового &lt;em&gt;подписанного сертификата&lt;/em&gt; на систему, нуждавшейся в сертификате. Так же может понадобится перенести сертификат &lt;em&gt;Центра Сертификации&lt;/em&gt; (&lt;code&gt;ca.crt&lt;/code&gt;), если конечно, ранее уже не было произведено его копирование.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Теперь нуждавшаяся система имеет свою &lt;em&gt;ключевую пару&lt;/em&gt;, &lt;em&gt;подписанный сертификат&lt;/em&gt;, и &lt;em&gt;сертификат CA&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;подписание-следующих-запросов&#34;&gt;Подписание следующих запросов&lt;/h3&gt;
+&lt;p&gt;Выполняйте пункты со второго до шестого, чтобы генерировать &lt;em&gt;ключевые пары&lt;/em&gt; и получать &lt;em&gt;подписанные сертификаты&lt;/em&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;отзыв-сертификатов-и-создание-crl&#34;&gt;Отзыв сертификатов и создание CRL&lt;/h3&gt;
+&lt;p&gt;Эта задача производится только на &lt;em&gt;CA&lt;/em&gt;-системе.&lt;/p&gt;
+&lt;p&gt;Для отзыва ранее выданного сертификата используйте имя сертификата, использованное в процессе импорта:
+&lt;code&gt;./easyrsa revoke EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Для создания обновлённого &lt;em&gt;Списка Отозванных Сертификатов&lt;/em&gt; (&lt;em&gt;CRL&lt;/em&gt;), который содержит все отозванные сертификаты, выполните:
+&lt;code&gt;./easyrsa gen-crl&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;После процедуры генерации, обновлённый &lt;em&gt;CRL&lt;/em&gt; необходимо разослать всем заинтересованным лицам.&lt;/p&gt;
+&lt;h3 id=&#34;генерация-diffie-hellman-dh-params&#34;&gt;Генерация Diffie-Hellman (DH) params&lt;/h3&gt;
+&lt;p&gt;Операция генерации &lt;em&gt;DH-параметра&lt;/em&gt;, используемого, кстати, только на стороне сервера в режиме TLS, очень ресурсоёмкая и на неё может быть затрачено несколько минут или даже десятков минут. Поэтому разумнее генерировать &lt;em&gt;DH-param&lt;/em&gt; прямо на целевых серверах, дабы избежать бессмысленной траты ресурсов &lt;em&gt;CA&lt;/em&gt;-системы. Выполните на целевом сервере &lt;code&gt;openssl dhparam -out dh.pem 2048&lt;/code&gt;. В противном случае можете использовать Easy-RSA, где DH-параметр генерируется командой:
+&lt;code&gt;./easyrsa gen-dh&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;просмотр-информации-о-запросе-или-сертификате&#34;&gt;Просмотр информации о запросе или сертификате&lt;/h3&gt;
+&lt;p&gt;Просмотр детальной информации о &lt;em&gt;запросе&lt;/em&gt; или &lt;em&gt;сертификате&lt;/em&gt; производится нижеследующими командами, которым на вход подаём короткие имена объектов. Очевидно, что без наличия соответствующих файлов запрос информации вызовет ошибку.
+&lt;code&gt;./easyrsa show-req EntityName&lt;/code&gt;
+&lt;code&gt;./easyrsa show-cert EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;изменение-пароля-приватного-ключа&#34;&gt;Изменение пароля приватного ключа&lt;/h3&gt;
+&lt;p&gt;RSA и EC приватные ключи могут быть повторно зашифрованы с новым паролем с помощью одной из следующих команд в зависимости от типа ключа:
+&lt;code&gt;./easyrsa set-rsa-pass EntityName&lt;/code&gt;
+&lt;code&gt;./easyrsa set-ec-pass EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;По выбору, пароль может быть вообще убран из ключа с помощью опции &lt;code&gt;nopass&lt;/code&gt;. Смотрите документацию по команде.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Резервное копирование Plone</title>
+      <link>/a/rezervnoe-kopirovanie-plone/</link>
+      <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/rezervnoe-kopirovanie-plone/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-15&lt;/p&gt;
+&lt;h2 id=&#34;backing-up-your-plone-deployment&#34;&gt;Backing up your Plone deployment&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Стратегии резервного копирования действующих Plone установок.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Эта инструкция расскажет что копировать, как копировать и как безопасно восстановить.&lt;/p&gt;
+&lt;h3 id=&#34;введение&#34;&gt;Введение&lt;/h3&gt;
+&lt;p&gt;Ключевые правила резервного копирования работающей системы возможно следующие:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Бэкапируй всё&lt;/li&gt;
+&lt;li&gt;Делай несколько версий бэкапа&lt;/li&gt;
+&lt;li&gt;Тестируй бэкапы на предмет восстановления&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;dialog-warning.png&#34; alt=&#34;&#34;&gt; Эта инструкция допускает, что вы уже делаете это для всей вашей системы, и будет рассматривать только те вещи, которые касаются Plone. Когда мы говорим, что мы предполагаем, что вы уже делаете это для всей системы, мы имеем в виду, что механизмы резервного копирования вашей системы — rsync, bacula и т.д. — уже выполняют резервное копирование директории, в которую вы установили Plone.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ваш buildout и его кэши уже забэкапированы, и вы протестировали процесс восстановления.&lt;/p&gt;
+&lt;p&gt;Вам осталось поразмышлять об адекватном бэкапе и восстановлении базы данных Plone.&lt;/p&gt;
+&lt;h3 id=&#34;объекты-в-движении&#34;&gt;Объекты в движении&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Здесь витиевато описывается сложность создания бэкап-копии открытого на запись файла, в который постоянно происходит дозапись информации. Другими словами, невозможно создать бэкап, например, работающей базы данных простым копированием её директории.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Объекты в движении имеют тенденцию оставаться в движении. Объекты, которые движутся, сложно или невозможно аккуратно бэкапить.&lt;/p&gt;
+&lt;p&gt;Расшифровка: Plone является долгоживущим процессом, который постоянно изменяет содержимое базы данных. Наибольший из этих файлов, это Data.fs, который содержит всё, кроме &amp;ldquo;Двоичных Больших Объектов&amp;rdquo; Binary Large OBjects (BLOBs), и этот файл постоянно открыт для записи. Хранилище BLOB&amp;rsquo;ов — это директория с множеством вложенных папок и со сложной файловая иерархией, которая постоянно изменяется и должна быть синхронизирована с Filestorage.&lt;/p&gt;
+&lt;p&gt;Это означает, что большинство схем резервного копирования всей системы — rsync, bacula и т.д. — не могут создавать пригодные бэкапы работающей базы данных. Мы предполагаем, что вы не хотите останавливать свой сайт Plone для бэкапа, поэтому вам необходимо добавить процедуры для создания пригодных резервных копий Plone. (Мы предполагаем, что вы знаете, что то же самое относится и к хранилищу вашей реляционной базы данных, типа mysql.)&lt;/p&gt;
+&lt;h3 id=&#34;где-мои-данные&#34;&gt;Где мои данные&lt;/h3&gt;
+&lt;p&gt;Директория с вашим экземпляром Plone будет содержать папку &lt;code&gt;./var&lt;/code&gt; (это в той же папке, где лежит и buildout.cfg), которая содержит часто меняющиеся файлы данных для Plone. Тем не менее, многое из того, что есть в &lt;code&gt;./var&lt;/code&gt;, не является вашей реальной базой данных контента. Скорее, это журнал, идентификатор процесса и файлы сокетов.(?)&lt;/p&gt;
+&lt;p&gt;Директории, которые на самом деле содержат данные контента:&lt;/p&gt;
+&lt;h4 id=&#34;filestorage&#34;&gt;Filestorage&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;./var/filestorage&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Здесь содержится файловое хранилище Zope Object Database. Если у вас нет нескольких хранилищ или если вы не меняли имя, то ключевой файл — &lt;code&gt;Data.fs&lt;/code&gt;. Обычно это большой файл, содержащий всё, кроме BLOB&amp;rsquo;ов.&lt;/p&gt;
+&lt;p&gt;Другие файлы в Filestorage с такими расширениями, как &lt;code&gt;.index&lt;/code&gt;, &lt;code&gt;.lock&lt;/code&gt;, &lt;code&gt;.old&lt;/code&gt;, &lt;code&gt;.tmp&lt;/code&gt; являются эфемерными и будут воссозданы Zope в случае их отсутствия.&lt;/p&gt;
+&lt;h4 id=&#34;blobstorage&#34;&gt;Blobstorage&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;./var/blobstorage&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Этот каталог содержит глубоко вложенную иерархию папок, которые, в свою очередь, содержат большие двоичные объекты (BLOB&amp;rsquo;ы) вашей базы данных: PDF-файлы, файлы изображений, файлы автоматизации делопроизводства и тому подобное.&lt;/p&gt;
+&lt;p&gt;Главное, что нужно знать о Filestorage и Blobstorage, это то, что они поддерживаются синхронно. В Filestorage есть ссылки на BLOB-объекты в Blobstorage. Если два хранилища не синхронизированы, вы получите ошибки.&lt;/p&gt;
+&lt;h3 id=&#34;collectiverecipebackup&#34;&gt;collective.recipe.backup&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://pypi.python.org/pypi/collective.recipe.backup&#34;&gt;collective.recipe.backup&lt;/a&gt; — это отлично обслуживаемый с отличной поддержкой &amp;ldquo;recipe&amp;rdquo;, решающий проблему &amp;ldquo;объекта в движении&amp;rdquo; для базы данных Plone. Он делает лёгким и копирование и восстановление базы данных. &amp;ldquo;Recipe&amp;rdquo; представляет собой сложную оболочку вокруг &lt;code&gt;repozo&lt;/code&gt; — инструмента бэкапа базы данных Zope, и &lt;code&gt;rsync&lt;/code&gt; — обычного инструмента для синхронизации файлов.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Большое спасибо Reinout van Rees, Maurits van Rees и всем помощникам сообщества за создание и поддержку community.recipe.backup.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Если вы используете любой из установочных комплектов Plone, в вашем варианте установки уже входит &amp;ldquo;collective.recipe.backup&amp;rdquo;. Если нет, вы всегда можете включить его в сборку, добавив &amp;lsquo;backup&amp;rsquo; часть:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[buildout]
+parts =
+    ...
+    backup
+    ...
+
+[backup]
+recipe = collective.recipe.backup
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Есть несколько полезных опций настройки этого &amp;ldquo;recipe&amp;rdquo;. Все они описаны на странице &lt;a href=&#34;https://pypi.python.org/pypi/collective.recipe.backup&#34;&gt;PyPI&lt;/a&gt;. Возможно, наиболее полезным является опция &amp;rsquo;location&amp;rsquo;, которая указывает место хранения файлов резервных копий:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[backup]
+recipe = collective.recipe.backup
+location = /path/to/reliably/attached/storage/filestorage
+blobbackuplocation =  /path/to/reliably/attached/storage/blobstorage
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если опция не указана, то местом назначения резервной копии является каталог &lt;code&gt;var&lt;/code&gt;. И тем не менее, местом назначения бэкапов может быть любое надежно подключенное место, включая другой раздел, диск или сетевое хранилище.&lt;/p&gt;
+&lt;h3 id=&#34;работа&#34;&gt;Работа&lt;/h3&gt;
+&lt;p&gt;После того, как вы запустите &lt;code&gt;buildout&lt;/code&gt;, в вашей сборке Plone появятся скрипты &lt;code&gt;bin/backup&lt;/code&gt; и &lt;code&gt;bin/restore&lt;/code&gt;. Поскольку все параметры задаются через buildout, с помощью малого количества опций, то работа, как правило, заключается в простом запуске этих скриптов. Для &lt;code&gt;bin/restore&lt;/code&gt;, в случае наличия нескольких резервных копий, может указываться дата и время любого из сохранённых бэкапов. Смотрите документацию для дополнительной информации.&lt;/p&gt;
+&lt;p&gt;Бэкап может выполняться без остановки Plone. Но операция восстановления требует остановки Plone, а после завершения восстановления повторного запуска Plone.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bin/backup&lt;/code&gt; обычно добавляется в cron для регулярного выполнения бэкапов. Убедитесь, что вы протестировали бэкап и восстановление из бэкапа, прежде чем полагаться на него.&lt;/p&gt;
+&lt;h3 id=&#34;инкрементные-бэкапы&#34;&gt;Инкрементные бэкапы&lt;/h3&gt;
+&lt;p&gt;collective.recipe.backup предлагает как инкрементное, так и полное резервное копирование и будет поддерживать несколько поколений резервных копий. Настройте их в соответствии с вашими потребностями.&lt;/p&gt;
+&lt;p&gt;Если включено инкрементное резервное копирование, выполнение операции упаковки базы данных автоматически приведёт к тому, что следующая резервная копия будет полной резервной копией.&lt;/p&gt;
+&lt;p&gt;Если ваши требования к непрерывности резервного копирования крайне велики, то добавочное резервное копирование может быть в равной степени экстремальным. Существуют установки Plone, в которых инкрементные бэкап-процедуры запускаются каждые несколько минут.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Создание копии сайта Plone</title>
+      <link>/a/ozdanie-kopii-saita-plone/</link>
+      <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ozdanie-kopii-saita-plone/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-10&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Краткая инструкция о том, как создать копию Plone-инсталляции.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;введение&#34;&gt;Введение&lt;/h3&gt;
+&lt;p&gt;Эта инструкция расскажет вам основы создания дубля Plone-сайта для тестирования или бэкапа.&lt;/p&gt;
+&lt;h3 id=&#34;необходимые-условия&#34;&gt;Необходимые условия&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Возможность копирования файлов из/в удалённый сервер&lt;/li&gt;
+&lt;li&gt;Возможность использования командной строки&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;содержимое-plone-сайта&#34;&gt;Содержимое Plone-сайта&lt;/h3&gt;
+&lt;p&gt;Что должно быть скопировано:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;buildout.cfg&lt;/code&gt; - определяет конфигурацию вашего сайта&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src folder&lt;/code&gt; - содержит аддоны разработанные вами&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var/filestorage/Data.fs&lt;/code&gt; - ZODB база данных вашего сайта&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var/blobstorage folder&lt;/code&gt; - содержит объекты типа &amp;ldquo;файл&amp;rdquo; базы данных ZODB (BLOBы)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Другие папки (eggs, downloads, parts и т.д.) генерируются утилитой buildout и могут оставаться пустыми.&lt;/p&gt;
+&lt;h3 id=&#34;копирование-и-подготовка-к-первому-старту-plone-сайта&#34;&gt;Копирование и подготовка к первому старту Plone-сайта&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Создайте новый сайт в новом месте с помощью &lt;em&gt;Унифицированного Plone Установщика&lt;/em&gt; и убедитесь, что можете войти в admin-аккаунт с его временным паролем.&lt;/li&gt;
+&lt;li&gt;Удалите содержимое папки &lt;code&gt;var/filestorage/&lt;/code&gt; на новой системе.&lt;/li&gt;
+&lt;li&gt;Скопируйте файл &lt;code&gt;var/filestorage/Data.fs&lt;/code&gt; из старой системы в новую систему и заметьте, что пароль админа сохраняется в этом копируемом файле, поэтому временный пароль, полученный во время установки нового сайта более недействителен.&lt;/li&gt;
+&lt;li&gt;Удалите содержимое папки &lt;code&gt;var/blobstorage&lt;/code&gt; на новой системе.&lt;/li&gt;
+&lt;li&gt;Скопируйте папку &lt;code&gt;var/blobstorage&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Скопируйте папку &lt;code&gt;src&lt;/code&gt;, если у вас есть свои разработки для сайта.&lt;/li&gt;
+&lt;li&gt;Скопируйте &lt;code&gt;buildout.cfg&lt;/code&gt; и другие &lt;code&gt;.cfg&lt;/code&gt; файлы.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Перезапустите &lt;code&gt;sudo -u plone_buildout bin/buildout&lt;/code&gt; для автоматической загрузки и настройки всех Python-пакетов необходимых для запуска нового сайта&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Теперь можно запустить сайт &lt;code&gt;sudo -u plone_daemon /srv/plone/zinstance/bin/plonectl fg&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;По какой-то причине я не смог увидеть содержимое моего скопированного сайта по адресу &lt;code&gt;http://127.0.0.1:8080/id1&lt;/code&gt;. Отображалась пустая страница, хотя в HTML-код содержал полную страницу скопированного сайта.  Рабочим адресом является &lt;code&gt;http://localhost:8080/id1&lt;/code&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Добавление reCAPTCHA в Plone</title>
+      <link>/a/dobavlenie-recaptcha-v-plone/</link>
+      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/dobavlenie-recaptcha-v-plone/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-09&lt;/p&gt;
+&lt;p&gt;Частичный перевод и компиляция информации из статей:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.plone.org/working-with-content/managing-content/ploneformgen/captcha.html&#34;&gt;Adding CAPTCHA Support&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.plone.org/develop/plone/forms/ploneformgen.html&#34;&gt;PloneFormGen&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.plone.org/develop/plone/content/archetypes/index.html&#34;&gt;Archetypes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.plone.org/develop/plone/content/dexterity.html&#34;&gt;Dexterity&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PloneFormGen имеет встроенную поддержку Re-Captcha. Здесь рассказано как включить её.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;ploneformgen-и-поля-captcha&#34;&gt;PloneFormGen и поля Captcha&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;PloneFormGen&lt;/strong&gt; — аддон, добавляющий в Plone генератор форм с полями, виджетами и &lt;em&gt;валидаторами&lt;/em&gt; из Archetypes. Используется при создании простых однородных вебформ для сохранения вводимых данных или форм для отправки электронной почты.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Archetypes&lt;/strong&gt; — это подсистема (фреймворк) для создания &lt;em&gt;типов контента&lt;/em&gt; в Plone версий 2.x, 3.x и 4.x. &lt;em&gt;&lt;strong&gt;Dexterity&lt;/strong&gt;&lt;/em&gt; заменяет её с версии 4.1+ и становится подсистемой по умолчанию в Plone 5. &lt;em&gt;&lt;strong&gt;Archetypes&lt;/strong&gt;&lt;/em&gt; остаётся доступной в пятой версии Plone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dexterity&lt;/strong&gt; — стандратная контент-подсистема для Plone 5 и последующих версий.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validator&lt;/strong&gt; — описывает тип поля из &lt;em&gt;Archetypes&lt;/em&gt;. Возвращает &amp;ldquo;True&amp;rdquo;, если проверка пройдена, или возвращает строку с описанием ошибки, если проверка провалена.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Когда PFG установлен в Plone через &amp;ldquo;добавление/удаление продуктов&amp;rdquo; (&lt;em&gt;видимо через &lt;a href=&#34;https://example.com/prefs_install_products_form&#34;&gt;https://example.com/prefs_install_products_form&lt;/a&gt;&lt;/em&gt;), он будет искать наличие аддона &lt;em&gt;collective.captcha&lt;/em&gt; или &lt;em&gt;collective.recaptcha&lt;/em&gt;. Если они найдены, то в список доступных полей будет добавлено поле &amp;ldquo;CAPTCHA&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Если вы используете &lt;em&gt;collective.recaptcha&lt;/em&gt;, то вам будет необходимо добавить свою &lt;em&gt;ключевую пару&lt;/em&gt;, полученную в вами созданном бесплатном аккаунте сервиса &lt;a href=&#34;https://www.google.com/recaptcha&#34;&gt;reCAPTCHA&lt;/a&gt;. Добавление ключевой пары происходит в PFG-конфиглете в настройках сайта Plone.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Если вы добавили аддон &lt;em&gt;captcha&lt;/em&gt; после установки PFG, то необходимо переустановить PFG (через &amp;ldquo;добавление/удаление продуктов&amp;rdquo;) для включения поддержки captcha.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;установка-collectiverecaptcha&#34;&gt;Установка collective.recaptcha&lt;/h3&gt;
+&lt;p&gt;Добавьте нижеследующий код в ваш buildout.cfg для установки двух аддонов &lt;em&gt;collective.recaptcha&lt;/em&gt; и &lt;em&gt;Products.PloneformGen&lt;/em&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[buildout]
+...
+eggs =
+    Plone
+    ...
+    collective.recaptcha
+    Products.PloneFormGen
+    ...
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Стандартно выполните &lt;code&gt;bin/buildout&lt;/code&gt; и перезапустите ваш экземпляр Plone.&lt;/li&gt;
+&lt;li&gt;Откройте &lt;em&gt;PortalQuickinstaller&lt;/em&gt; или контрольную панель Plone и установите (или переустановите при необходимости) PloneFormGen.&lt;/li&gt;
+&lt;li&gt;Откройте PFG-конфиглет в настройках сайта Plone и заполните необходимые поля для ввода полученных из &lt;a href=&#34;https://www.google.com/recaptcha&#34;&gt;reCAPTCHA&lt;/a&gt; &lt;em&gt;публичного и приватного ключа&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Осталось понять как прикрутить проверку CAPTCHA к формам входа на сайт и страницы обратной связи&amp;hellip;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Простой Центр Сертификации для strongSwan IPsec</title>
+      <link>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-04-22&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Начиная с версии strongswan 5.1.1 использование префикса &lt;em&gt;ipsec&lt;/em&gt; перед &lt;code&gt;pki&lt;/code&gt; является опциональным.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://wiki.strongswan.org/projects/strongswan/wiki/SimpleCA&#34;&gt;Setting-up a Simple CA Using the strongSwan PKI Tool&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Для работы PKI необходимо установить пакеты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;strongswan-starter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;strongswan-pki&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;libcharon-extra-plugins&lt;/code&gt; # для поддержки &lt;em&gt;ed25519&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Используемые сокращения и термины:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CA&lt;/strong&gt;, &lt;strong&gt;Certification Authority&lt;/strong&gt;, &lt;strong&gt;Центр Сертификации&lt;/strong&gt;. Здесь оформлен в виде директории, в которой лежат два файла: &lt;em&gt;приватный ключ Центра Сертификации&lt;/em&gt; и &lt;em&gt;самоподписанный сертификат Центра Сертификации&lt;/em&gt;. В этой же папке создаются пары (&lt;em&gt;приватный ключ&lt;/em&gt; и соответствующий ему &lt;em&gt;сертификат открытого ключа&lt;/em&gt;) файлов-ключей для удостоверения каждого члена IPsec-сети организации.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CRL&lt;/strong&gt;, &lt;strong&gt;Certificate Revocation List&lt;/strong&gt;, &lt;strong&gt;Список Отозванных Сертификатов&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;private key&lt;/strong&gt;, &lt;strong&gt;приватный ключ&lt;/strong&gt;, &lt;strong&gt;закрытый ключ&lt;/strong&gt;. Здесь оформлен в виде файла с уникальной последовательностью бит. Из &lt;em&gt;приватного ключа&lt;/em&gt; всегда можно вычислить парный ему уникальный &lt;em&gt;публичный ключ&lt;/em&gt;, тогда как обратная операция математически невозможна.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;public key&lt;/strong&gt;, &lt;strong&gt;публичный ключ&lt;/strong&gt;, &lt;strong&gt;открытый ключ&lt;/strong&gt;. Всегда может быть вычислен из &lt;em&gt;приватного ключа&lt;/em&gt; и записан в отдельный файл, но в таком виде не используется. Вместо этого используется &lt;em&gt;сертификат открытого ключа&lt;/em&gt;. Часто под понятием &lt;em&gt;публичный ключ&lt;/em&gt; имеется ввиду &lt;em&gt;сертификат открытого ключа&lt;/em&gt; выданный каким-либо &lt;em&gt;Центром Сертификации&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;сертификат открытого ключа&lt;/strong&gt;. Здесь оформлен в виде файла, содержащего &lt;em&gt;публичный ключ&lt;/em&gt; и &lt;em&gt;подпись Центра Сертификации&lt;/em&gt;. Только &lt;em&gt;подписанный публичный ключ&lt;/em&gt; может использоваться в IPsec-сети организации, так как при подключении узла к IPsec-сети проверяется наличие &lt;em&gt;подписи Центра Сертификации&lt;/em&gt; организации.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;выпуск-ключевой-пары-центра-сертификации&#34;&gt;Выпуск ключевой пары Центра Сертификации&lt;/h3&gt;
+&lt;p&gt;В отдельной директории, которая выделена для работы &lt;strong&gt;CA&lt;/strong&gt; выполняется генерация &lt;strong&gt;приватного ключа Центра Сертификации&lt;/strong&gt;:
+для ключа Ed25519 (длина всегда 256 бит)&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --gen --type ed25519 &amp;gt; caKey.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;для RSA используется длина 4096 бит&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --gen --type rsa --size 4096 &amp;gt; caKey.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При малой заполненности &lt;code&gt;/dev/random&lt;/code&gt; неизбежно долгое ожидание завершения генерирования RSA-ключа. В этом случае рекомендуется использовать &lt;code&gt;openssl&lt;/code&gt;, который при пустом &lt;code&gt;/dev/random&lt;/code&gt; использует информацию из &lt;code&gt;/dev/urandom&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# openssl genrsa -out caKey.pem 4096
+# openssl rsa -inform pem -outform der -in caKey.pem -out caKey.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Из этого &lt;em&gt;приватного ключа&lt;/em&gt; вычисляется парный ему уникальный &lt;em&gt;публичный ключ&lt;/em&gt; и к нему выпускается &lt;strong&gt;самоподписанный сертификат публичного ключа Центра Сертификации&lt;/strong&gt; действительный три года начиная с момента выпуска:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --self --in caKey.der --dn &amp;#34;C=RU, O=ExampleOrg, CN=ExampleOrg CA&amp;#34; --ca &amp;gt; caCert.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате этих действий в директории &lt;em&gt;CA&lt;/em&gt; находятся два файла:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;caKey.der&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;caCert.der&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;С помощью первого файла производится &lt;em&gt;подписание&lt;/em&gt;, с последующим выпуском &lt;em&gt;сертификатов открытых ключей&lt;/em&gt; для узлов IPsec-сети организации. Вследствие очевидной важности файла, он обязан храниться в секретном месте.&lt;/p&gt;
+&lt;h3 id=&#34;создание-ключевой-пары-для-каждого-узла-в-ipsec-сети&#34;&gt;Создание ключевой пары для каждого узла в IPsec-сети&lt;/h3&gt;
+&lt;p&gt;Для каждого узла генерируетс &lt;strong&gt;приватный ключ&lt;/strong&gt; Ed25519 или RSA:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --gen --type rsa --size 4096 &amp;gt; srv0Key.der
+# ipsec pki --gen --type rsa --size 4096 &amp;gt; srv1Key.der
+# ipsec pki --gen --type rsa --size 4096 &amp;gt; usr0Key.der
+# ipsec pki --gen --type rsa --size 4096 &amp;gt; usr1Key.der
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;если не хватает энтропии из &lt;code&gt;/dev/random&lt;/code&gt; для создания RSA-ключа, то вновь применяем &lt;code&gt;openssl&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;На основе каждого &lt;em&gt;приватного ключа&lt;/em&gt; необходимо сгенерировать &lt;strong&gt;запрос на сертификацию публичного ключа&lt;/strong&gt; и направить в &lt;em&gt;CA&lt;/em&gt; организации, где на основе &lt;em&gt;запроса&lt;/em&gt; выпускается &lt;strong&gt;сертификат публичного ключа&lt;/strong&gt; подписанный &lt;em&gt;CA&lt;/em&gt;, то есть утверждённый к работе в IPsec-сети организации.&lt;/p&gt;
+&lt;p&gt;Так как работа &lt;em&gt;CA&lt;/em&gt; и выпуск &lt;em&gt;приватных ключей&lt;/em&gt; находится под нашим полным контролем, то всё вышесказанное можно организовать единственной командой для каждого ключа:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --issue --in sv0Key.der --type priv --cacert caCert.der --cakey caKey.der \
+--dn &amp;#34;C=RU, O=ExampleOrg, CN=srv0&amp;#34; --san srv0 &amp;gt; srv0Cert.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;и так далее для каждого ключа.&lt;/p&gt;
+&lt;h3 id=&#34;список-отозванных-сертификатов&#34;&gt;Список Отозванных сертификатов&lt;/h3&gt;
+&lt;p&gt;Для отзыва сертификата &lt;code&gt;usr1Cert.der&lt;/code&gt; выполняется:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --signcrl --cacert caCert.der --cakey caKey.der --reason superseded --cert usr1Cert.der &amp;gt; crl.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Файл &lt;code&gt;crl.der&lt;/code&gt; распространяется на все узлы IPsec-сети организации.&lt;/p&gt;
+&lt;h3 id=&#34;размещение-ключей-и-сертификатов-на-узлах-ipsec-сети&#34;&gt;Размещение ключей и сертификатов на узлах IPsec-сети&lt;/h3&gt;
+&lt;p&gt;Ключи и сертификаты сохраняются в директории &lt;code&gt;/etc/ipsec.d/&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/private/srv0Key.der&lt;/code&gt; содержит &lt;em&gt;приватный ключ&lt;/em&gt; узла. Необходимо прописать его загрузку в &lt;code&gt;ipsec.secrets&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/certs/srv0Cert.der&lt;/code&gt; содержит &lt;em&gt;сертификат открытого ключа&lt;/em&gt; узла. Для его использования необходимо прописать его в &lt;code&gt;ipsec.conf&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/cacerts/caCert.der&lt;/code&gt; подгружается автоматически и используется для проверки всех подключающихся узлов.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Опционально размещается &lt;em&gt;CRL&lt;/em&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/crls/crl.der&lt;/code&gt; содержит &lt;em&gt;список отозванных сертификатов&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Краткое описание Monitorix</title>
+      <link>/n/kratkoe-opisanie-monitorix/</link>
+      <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
+      
+      <guid>/n/kratkoe-opisanie-monitorix/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-02-22&lt;/p&gt;
+&lt;p&gt;Перевод пары страниц из &lt;a href=&#34;https://www.monitorix.org/&#34;&gt;Monitorix :: a free, open source, lightweight system monitoring tool&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;monitorix&#34;&gt;Monitorix&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Monitorix — это свободный, легковесный, и с открытыми исходниками, инструмент наблюдения за системой&lt;/strong&gt;, спроектированный для слежки за стольким количеством служб и системных ресурсов, насколько это возможно. Он создан для использования &lt;strong&gt;в Linux/UNIX серверах&lt;/strong&gt;, но из-за своей простоты и малого размера также хорош и &lt;strong&gt;для встраиваемых устройств&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Он состоит из двух программ: коллектора, называемого &lt;code&gt;monitorix&lt;/code&gt;, являющегося Perl-демоном, который автоматически запускается, как любая другая служба системы; и CGI-скрипт &lt;code&gt;monitorix.cgi&lt;/code&gt;. Начиная с третьей версии, Monitorix включает в себя встроенный HTTP-сервер, так что нет нужды устанавливать какой-либо иной WEB-сервер.&lt;/p&gt;
+&lt;p&gt;Изначально инструмент создавался для мониторинга Red Hat, Fedora and CentOS систем, поэтому разработка происходила с оглядкой на эти типы дистрибутивов. Сегодня он работает на различных GNU/Linux дистрибутивах и даже на некоторых Unix системах, типа FreeBSD, OpenBSD и NetBSD.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;Мы просто торчим от Monitix, из-за его дружелюбности и легковесности. Его в обязательном порядке должны попробовать те, кто ищет свободный и лёгкий в использовании инструмент мониторига.&amp;quot; — &lt;a href=&#34;https://www.webhostingsecretrevealed.net/&#34;&gt;Jerry, Web Hosting Secret Revealed (WHSR)&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;На данный момент Monitorix находится в активной разработке, добавляются новые фичи, новые графики, исправляются ошибки, в попытке предложить системным администраторам великолепный инструмент на каждый день.&lt;/p&gt;
+&lt;p&gt;Monitorix - это проект с открытым исходным кодом, и, как и любой другой проект с открытым исходным кодом, каждый может учавствовать в его разработке.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.monitorix.org/imgs/mail.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;релиз-версии-3120-2020-02-21&#34;&gt;Релиз версии 3.12.0 (2020-02-21)&lt;/h2&gt;
+&lt;p&gt;В этой версии представлены два новых модуля: &lt;code&gt;phpfpm.pm&lt;/code&gt; и &lt;code&gt;unbound.pm&lt;/code&gt;. Первый из них позволяет собирать PHPFPM-статистику и отслеживать неограниченное число сайтов. Второй модуль &lt;code&gt;unbound.pm&lt;/code&gt; собирает множество данных о DNS-службе Unbound, запущенном на локальном сервере. Нет возможности собирать статистику о Unbound на удалённых серверах. Оба модуля поставляются с довольно полным комплектом графиков статистики.&lt;/p&gt;
+&lt;p&gt;Далее примеры этих двух новых графиков:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.monitorix.org/imgs/phpfpm.png&#34; alt=&#34;&#34;&gt;
+&lt;img src=&#34;https://www.monitorix.org/imgs/unbound.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Кроме этих двух новых модулей, в эту версию включены некоторые новые интересные функции. Это наконец пофиксенный модуль &lt;code&gt;bind.pm&lt;/code&gt; для поддержки новых версий BIND. Теперь этот модуль использует Perl XML::LibXML для разбора вывода BIND (вместо использования Perl XML::Simple). Также, модуль &lt;code&gt;gensens.pm&lt;/code&gt; теперь включает третий сенсор &lt;em&gt;Battery&lt;/em&gt;. Плюс есть некоторые улучшения в NFS-графиках для FreeBSD.&lt;/p&gt;
+&lt;p&gt;Модуль &lt;code&gt;fail2ban.pm&lt;/code&gt; имеет изменения в способах представления значений. С этой версии вы можете выбирать между &lt;code&gt;absolute&lt;/code&gt; и &lt;code&gt;rate&lt;/code&gt; значениями, первое из них является значением по умолчанию.&lt;/p&gt;
+&lt;p&gt;Далее примеры графиков для &lt;code&gt;rate&lt;/code&gt; и &lt;code&gt;absolute&lt;/code&gt; режимов:
+&lt;img src=&#34;https://www.monitorix.org/imgs/new_fail2ban.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;График ZFS также имеет изменения в способах предоставления в Operations and Bandwidth graphs.&lt;/p&gt;
+&lt;p&gt;Смотрим отличия:
+&lt;img src=&#34;https://www.monitorix.org/imgs/new_zfs.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Остальные новые функции, исправленные ошибки и исправления, как всегда, отражены в файле &lt;code&gt;changes&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Пожалуйста, гляньте в ман о &lt;code&gt;monitorix.conf(5)&lt;/code&gt; для всех подробностей.&lt;/p&gt;
+&lt;p&gt;ВАЖНО: Файл конфы &lt;code&gt;monitorix.conf&lt;/code&gt; был расширен из-за важных изменений.&lt;/p&gt;
+&lt;p&gt;Всем пользователям, все еще использующим более старые версии, рекомендуется выполнить обновление до этой версии.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Выпуск Monitorix версии 3.12.0 (2020-02-21)</title>
+      <link>/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-02-22&lt;/p&gt;
+&lt;p&gt;Перевод &lt;a href=&#34;https://www.monitorix.org/news.html#N20200221&#34;&gt;3.12.0 version released&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;В этой версии представлены два новых модуля: &lt;code&gt;phpfpm.pm&lt;/code&gt; и &lt;code&gt;unbound.pm&lt;/code&gt;. Первый из них позволяет собирать PHPFPM-статистику и отслеживать неограниченное число сайтов. Второй модуль &lt;code&gt;unbound.pm&lt;/code&gt; собирает множество данных о DNS-службе Unbound, запущенном на локальном сервере. Нет возможности собирать статистику о Unbound на удалённых серверах. Оба модуля поставляются с довольно полным комплектом графиков статистики.&lt;/p&gt;
+&lt;p&gt;Далее примеры этих двух новых графиков:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.monitorix.org/imgs/phpfpm.png&#34; alt=&#34;&#34;&gt;
+&lt;img src=&#34;https://www.monitorix.org/imgs/unbound.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Кроме этих двух новых модулей, в эту версию включены некоторые новые интересные функции. Это наконец пофиксенный модуль &lt;code&gt;bind.pm&lt;/code&gt; для поддержки новых версий BIND. Теперь этот модуль использует Perl XML::LibXML для разбора вывода BIND (вместо использования Perl XML::Simple). Также, модуль &lt;code&gt;gensens.pm&lt;/code&gt; теперь включает третий сенсор &lt;em&gt;Battery&lt;/em&gt;. Плюс есть некоторые улучшения в NFS-графиках для FreeBSD.&lt;/p&gt;
+&lt;p&gt;Модуль &lt;code&gt;fail2ban.pm&lt;/code&gt; имеет изменения в способах представления значений. С этой версии вы можете выбирать между &lt;code&gt;absolute&lt;/code&gt; и &lt;code&gt;rate&lt;/code&gt; значениями, первое из них является значением по умолчанию.&lt;/p&gt;
+&lt;p&gt;Далее примеры графиков для &lt;code&gt;rate&lt;/code&gt; и &lt;code&gt;absolute&lt;/code&gt; режимов:
+&lt;img src=&#34;https://www.monitorix.org/imgs/new_fail2ban.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;График ZFS также имеет изменения в способах предоставления в Operations and Bandwidth graphs.&lt;/p&gt;
+&lt;p&gt;Смотрим отличия:
+&lt;img src=&#34;https://www.monitorix.org/imgs/new_zfs.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Остальные новые функции, исправленные ошибки и исправления, как всегда, отражены в файле &lt;code&gt;changes&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Пожалуйста, гляньте в ман о &lt;code&gt;monitorix.conf(5)&lt;/code&gt; для всех подробностей.&lt;/p&gt;
+&lt;p&gt;ВАЖНО: Файл конфы &lt;code&gt;monitorix.conf&lt;/code&gt; был расширен из-за важных изменений.&lt;/p&gt;
+&lt;p&gt;Всем пользователям, все еще использующим более старые версии, рекомендуется выполнить обновление до этой версии.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

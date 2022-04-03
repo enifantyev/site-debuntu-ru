@@ -1,0 +1,337 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – VFS</title>
+    <link>/tags/vfs/</link>
+    <description>Recent content in VFS on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 18 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/vfs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Описание VFS Виртуальной Файловой Системы Linux</title>
+      <link>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Мой неполный перевод &lt;a href=&#34;https://www.kernel.org/doc/html/latest/filesystems/vfs.html&#34;&gt;Overview of the Linux Virtual File System&lt;/a&gt;. Некоторые моменты, по различным причинам, я пока не понимаю, поэтому кое-что привожу в оригинале, как повод для дальнейших размышлений. Другие же моменты, как мне кажется, я понимаю, поэтому дополнил их некоторой информацией.&lt;/p&gt;
+&lt;p&gt;2020-01-18&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Виртуальная Файловая Система (называемая также Коммутатором Виртуальной Файловой Системы) является программным слоем, который предоставляет программам, выполняющимся в &lt;em&gt;пользовательском пространстве&lt;/em&gt;, интерфейс взаимодействия с файловой системой. VFS-коммутатор также реализует в ядре Linux уровень абстракции для унификации подключения к нему разнообразных файловых систем.&lt;/p&gt;
+&lt;p&gt;Системные вызовы VFS &lt;code&gt;open(2)&lt;/code&gt;, &lt;code&gt;stat(2)&lt;/code&gt;, &lt;code&gt;read(2)&lt;/code&gt;, &lt;code&gt;write(2)&lt;/code&gt;, &lt;code&gt;chmod(2)&lt;/code&gt; и так далее, вызываются из контекста работающего процесса. &lt;em&gt;Filesystem locking&lt;/em&gt; описана в &lt;code&gt;Documentation/filesystems/locking.rst&lt;/code&gt;. (&lt;em&gt;VFS system calls open(2), stat(2), read(2), write(2), chmod(2) and so on are called from a process context. Filesystem locking is described in the document Documentation/filesystems/locking.rst.&lt;/em&gt;)&lt;/p&gt;
+&lt;h3 id=&#34;кэш-записей-каталога--directory-entry-cache-dcache&#34;&gt;Кэш записей каталога / Directory Entry Cache (dcache)&lt;/h3&gt;
+&lt;p&gt;VFS обеспечивает системные вызовы &lt;code&gt;open(2)&lt;/code&gt;, &lt;code&gt;stat(2)&lt;/code&gt;, &lt;code&gt;chmod(2)&lt;/code&gt; и другие похожие. Аргумент &lt;code&gt;pathname&lt;/code&gt;, который передаётся на вход этим системным вызовам, используется VFS-системой для поиска вхождений в &lt;em&gt;кэше записей каталога&lt;/em&gt; (называемым также &lt;em&gt;dentry cache&lt;/em&gt;, или ещё короче &lt;em&gt;dcache&lt;/em&gt;). Это обеспечивает сверхбыстрый механизм трансляции &lt;code&gt;pathname&lt;/code&gt; (filename) в определённый &lt;code&gt;dentry&lt;/code&gt;. &lt;em&gt;Кэш записей каталога&lt;/em&gt; необходим только для увеличения производительности, поэтому он хранится в оперативной памяти и никогда не записывается на диск.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Dentry-кэш&lt;/em&gt; предназначен для обзора всего файлового пространства. А так как большинство компьютеров не могут вместить все записи dentry в оперативную память, то некоторое количество записей в &lt;em&gt;dentry-кэше&lt;/em&gt; может отсутствовать. Поэтому, иногда в процессе сопоставления частей &lt;em&gt;pathname&lt;/em&gt; с соответствующими dentry, VFS-коммутатору, возможно, придётся заодно создать некоторое количество dentry, и только после этого загрузить требуемый inode.&lt;/p&gt;
+&lt;h3 id=&#34;объект-inode--the-inode-object&#34;&gt;Объект Inode / The Inode Object&lt;/h3&gt;
+&lt;p&gt;Отдельный dentry обычно указывает на &lt;strong&gt;inode&lt;/strong&gt;, который является специальной структурой файловой системы, описывающей её файлы-объекты. Объект inode предоставляет различные сведения о файле (&lt;code&gt;man 2 stat&lt;/code&gt;). В частности:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;st_dev&lt;/code&gt; – &lt;em&gt;id&lt;/em&gt; устройства, содержащего файл;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;st_ino&lt;/code&gt; – номер этой inode в таблице inodes;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;st_mode&lt;/code&gt; – тип объекта (&lt;code&gt;man 7 inode&lt;/code&gt;):
+&lt;ul&gt;
+&lt;li&gt;обычный файл с данными;&lt;/li&gt;
+&lt;li&gt;directory;&lt;/li&gt;
+&lt;li&gt;block device;&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;st_nlink&lt;/code&gt; – количество жёстких ссылок (имён файлов) на этот &lt;em&gt;inode&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Объект &lt;code&gt;inode&lt;/code&gt; не содержит имени файла! Так как в пределах одной файловой системы (POSIX) на один файл может ссылаться больше одной именованной &lt;em&gt;жёсткой ссылки&lt;/em&gt;, то имя файла не сохраняется в &lt;code&gt;inode&lt;/code&gt;. Вместо этого, в файлах-каталогах (тип directory), в списке содержимого данного каталога, создаётся запись: &lt;strong&gt;имя файла&lt;/strong&gt; (то есть имя жёсткой ссылки) — &lt;strong&gt;номер inode&lt;/strong&gt;. Отсюда следует, что при обнулении поля &lt;code&gt;st_nlink&lt;/code&gt; в структуре какого-либо &lt;code&gt;inode&lt;/code&gt;, соответствующие блоки файловой системы будут помечены свободными и файл можно считать удалённым.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;Inodes&lt;/em&gt; могут находиться на дисках (на файловых системах блочных устройств), либо в оперативной памяти (на псевдо-файловых системах). &lt;em&gt;Inodes&lt;/em&gt;, находящиеся на дисках, при необходимости копируются в оперативную память, а при каких-либо в них изменениях, обновлённая копия записывается обратно на диск. Несколько &lt;em&gt;dentry&lt;/em&gt; могут указывать на один &lt;em&gt;inode&lt;/em&gt; (в случае жёстких ссылок и тому подобное).&lt;/p&gt;
+&lt;p&gt;Для поиска какого-либо &lt;em&gt;inode&lt;/em&gt; необходимо, чтобы для его родительского inode-каталога, VFS вызвала метод &lt;code&gt;lookup()&lt;/code&gt;. Этот метод установлен конкретной реализацией ФС, к которой относится требуемый &lt;em&gt;inode&lt;/em&gt;. (&lt;em&gt;This method is installed by the specific filesystem implementation that the inode lives in.&lt;/em&gt;) С момента получения VFS-коммутатором &lt;em&gt;dentry&lt;/em&gt; (а следовательно и соответствующего &lt;em&gt;inode&lt;/em&gt;), мы можем делать с ним всякие скучные вещи, типа открыть файл посредством системного вызова &lt;code&gt;open(2)&lt;/code&gt;, или получить данные inode через &lt;code&gt;stat(2)&lt;/code&gt;. Из пользовательского пространства системный вызов &lt;code&gt;stat(2)&lt;/code&gt; работает довольно просто: как только VFS заимел соответствующий &lt;em&gt;dentry&lt;/em&gt;, он передаёт данные из &lt;em&gt;inode&lt;/em&gt; обратно в &lt;em&gt;userspace&lt;/em&gt; (&lt;em&gt;The stat(2) operation is fairly simple: once the VFS has the dentry, it peeks at the inode data and passes some of it back to userspace.&lt;/em&gt;).&lt;/p&gt;
+&lt;h3 id=&#34;объект-file--the-file-object&#34;&gt;Объект File / The File Object&lt;/h3&gt;
+&lt;p&gt;Открытие какого-либо файла требует ещё одной операции: выделение &lt;em&gt;файловой структуры&lt;/em&gt; (это реализация &lt;em&gt;файловых дескрипторов&lt;/em&gt; на стороне ядра). Свеже выделенная &lt;em&gt;файловая структура&lt;/em&gt; инициализируется с указателем на соответствующий dentry и на набор файловых операций функций-членов. (&lt;em&gt;The freshly allocated file structure is initialized with a pointer to the dentry and a set of file operation member functions.&lt;/em&gt;) Они берутся из сведений, содержащихся в соответствующей inode. Применяемый к файлу метод &lt;code&gt;open()&lt;/code&gt; вызывается тогда, как только конкретная реализация файловой системы сможет сделать это. Вы можете видеть, что это ещё одна функция выполняемая VFS-коммутатором. &lt;em&gt;Файловая структура&lt;/em&gt; помещается в &lt;em&gt;таблицу дескрипторов файлов&lt;/em&gt; для вызывающего процесса.&lt;/p&gt;
+&lt;p&gt;Чтение, запись и закрытие файла (и другие подобные операции VFS) осуществляются с помощью соответствующих методов, перечисленных в подходящей к требуемому файлу &lt;em&gt;файловой структуре&lt;/em&gt;, каковая структура становится доступной из &lt;em&gt;пространства пользователя&lt;/em&gt; через использование конкретного &lt;em&gt;файлового дескриптора&lt;/em&gt;. &lt;em&gt;Dentry&lt;/em&gt; остаётся в использовании, пока файл открыт, что, в свою очередь, означает, что VFS inode остаётся в использовании.&lt;/p&gt;
+&lt;h2 id=&#34;регистрация-и-монтирование-файловой-системы&#34;&gt;Регистрация и монтирование файловой системы&lt;/h2&gt;
+&lt;p&gt;Процедура регистрации типа файловой системы в ядре Linux, и процедура отмены регистрации, используют следующие функции API:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#include &amp;lt;linux/fs.h&amp;gt;
+
+extern int register_filesystem(struct file_system_type *);
+extern int unregister_filesystem(struct file_system_type *);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Передающийся &lt;code&gt;struct file_system_type&lt;/code&gt; описывает вашу ФС. Когда запрашивается монтирование тома какой-либо ФС к каталогу в вашем &lt;em&gt;пространстве имён&lt;/em&gt;, то VFS вызывет подходящий метод монтирования для конкретной ФС. Новый vfsmount, ссылающийся на дерево, возвращаемое -&amp;gt;mount(), будет подсоединён к точке монтирования, так что когда в процессе разбора &lt;em&gt;pathname&lt;/em&gt; будет достигнута точка монтирования, то будет совершён переход внутрь vfsmount, на его корень.&lt;/p&gt;
+&lt;p&gt;Вы можете узнать о всех зарегистрированных в ядре типах файловых систем в файле &lt;code&gt;/proc/filesystems&lt;/code&gt;/&lt;/p&gt;
+&lt;h3 id=&#34;struct-file_system_type&#34;&gt;struct file_system_type&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает файловую систему. Начиная с kernel 2.6.39, определены следующие элементы &lt;code&gt;struct&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct file_system_operations {
+        const char *name;
+        int fs_flags;
+        struct dentry *(*mount) (struct file_system_type *, int,
+                                 const char *, void *);
+        void (*kill_sb) (struct super_block *);
+        struct module *owner;
+        struct file_system_type * next;
+        struct list_head fs_supers;
+        struct lock_class_key s_lock_key;
+        struct lock_class_key s_umount_key;
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;name&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;наименование типа файловой системы, например как &amp;ldquo;ext2&amp;rdquo;, &amp;ldquo;iso9660&amp;rdquo;, &amp;ldquo;msdos&amp;rdquo; и прочее.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;fs_flags&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;различные флаги (то есть, FS_REQUIRES_DEV, FS_NO_DCACHE, и т.д.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;mount&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;метод, вызов которого производится при монтировании нового экземпляра файловой системы&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;kill_sb&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;метод, вызов которого производится при размонтировании экземпляра файловой системы&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;owner&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;для внутреннего использования VFS: в большинстве случаев вы должны инициализировать это через THIS_MODULE&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;next&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;для внутреннего использования VFS: вы должны инициализировать это в NULL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;  s_lock_key, s_umount_key: lockdep-specific&lt;/p&gt;
+&lt;p&gt;Метод &lt;code&gt;mount()&lt;/code&gt; имеет следующие аргументы:
+&lt;strong&gt;struct file_system_type *fs_type&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;описывает файловую систему, частично инициализируется определённым кодом файловой системы&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;int flags&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;флаги монтирования&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;const char *dev_name&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;монтируемое имя устройства&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;void *data&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;различные опции в виде ASCII-строки, указываемые при монтировании (смотри раздел “Mount Options”)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;При вызове, метод mount() должен возвращать корневой dentry запрошенного дерева каталогов. Вызывающий процесс должен захватить ссылку на &lt;em&gt;суперблок&lt;/em&gt; ФС, и &lt;em&gt;суперблок&lt;/em&gt; должен быть заблокирован. При ошибке, метод возвращает указатель ERR_PTR (ошибка).&lt;/p&gt;
+&lt;p&gt;Аргументы соответствуют таковым из mount(2) и их интерпретация зависит от типа ФС. Например, для блочной файловой системы, &lt;code&gt;dev_name&lt;/code&gt; интерпретируется как имя блочного устройства, и устойство это открыто, и оно содержит подходящую файловую систему, для которой метод &lt;code&gt;mount()&lt;/code&gt; создаёт и инициализирует соответствующий &lt;code&gt;struct super_block&lt;/code&gt;, и возвращает корневой dentry вызывающему процессу.&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-super_block&#34;&gt;Объект super_block&lt;/h2&gt;
+&lt;p&gt;Объект superblock представляет монтированную файловую систему.&lt;/p&gt;
+&lt;h3 id=&#34;struct-super_operations&#34;&gt;struct super_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает как VFS может манипулировать суперблоком вашей файловой системы. Начиная с kernel 2.6.22, определены следующие элементы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct inode *(*alloc_inode)(struct super_block *sb);
+void (*destroy_inode)(struct inode *);
+
+void (*dirty_inode) (struct inode *, int flags);
+int (*write_inode) (struct inode *, int);
+void (*drop_inode) (struct inode *);
+void (*delete_inode) (struct inode *);
+void (*put_super) (struct super_block *);
+int (*sync_fs)(struct super_block *sb, int wait);
+int (*freeze_fs) (struct super_block *);
+int (*unfreeze_fs) (struct super_block *);
+int (*statfs) (struct dentry *, struct kstatfs *);
+int (*remount_fs) (struct super_block *, int *, char *);
+void (*clear_inode) (struct inode *);
+void (*umount_begin) (struct super_block *);
+
+int (*show_options)(struct seq_file *, struct dentry *);
+
+ssize_t (*quota_read)(struct super_block *, int, char *, size_t, loff_t);
+ssize_t (*quota_write)(struct super_block *, int, const char *, size_t, loff_t);
+int (*nr_cached_objects)(struct super_block *);
+void (*free_cached_objects)(struct super_block *, int);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Все методы вызываются без каких-либо удерживаемых? (being held) блокировок, если не указано иное. Это означает, что большинство методов можно безопасно блокировать. Все методы вызываются только из контекста процесса (то есть не из обработчика прерываний или ниже (bottom half)).&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-inode&#34;&gt;Объект Inode&lt;/h2&gt;
+&lt;p&gt;Объект inode представляет объект внутри файловой системы.&lt;/p&gt;
+&lt;h3 id=&#34;struct-inode_operations&#34;&gt;struct inode_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как VFS может манипулировать inode&amp;rsquo;ом в вашей файловой системе. Начиная с kernel 2.6.22, определены следующие элементы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int (*create) (struct inode *,struct dentry *, umode_t, bool);
+struct dentry * (*lookup) (struct inode *,struct dentry *, unsigned int);
+int (*link) (struct dentry *,struct inode *,struct dentry *);
+int (*unlink) (struct inode *,struct dentry *);
+int (*symlink) (struct inode *,struct dentry *,const char *);
+int (*mkdir) (struct inode *,struct dentry *,umode_t);
+int (*rmdir) (struct inode *,struct dentry *);
+int (*mknod) (struct inode *,struct dentry *,umode_t,dev_t);
+int (*rename) (struct inode *, struct dentry *,
+               struct inode *, struct dentry *, unsigned int);
+int (*readlink) (struct dentry *, char __user *,int);
+const char *(*get_link) (struct dentry *, struct inode *,
+                         struct delayed_call *);
+int (*permission) (struct inode *, int);
+int (*get_acl)(struct inode *, int);
+int (*setattr) (struct dentry *, struct iattr *);
+int (*getattr) (const struct path *, struct kstat *, u32, unsigned int);
+ssize_t (*listxattr) (struct dentry *, char *, size_t);
+void (*update_time)(struct inode *, struct timespec *, int);
+int (*atomic_open)(struct inode *, struct dentry *, struct file *,
+                   unsigned open_flag, umode_t create_mode);
+int (*tmpfile) (struct inode *, struct dentry *, umode_t);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;И опять, все методы вызываются без каких-либо блокировок, если не указано иное.&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-адресное-пространство&#34;&gt;Объект Адресное Пространство&lt;/h2&gt;
+&lt;p&gt;Объект &lt;em&gt;адресное пространство&lt;/em&gt; используется для группирования и управления страницами в страничном кэше (page cache). Он может быть использован для отслеживания страниц в файле и отслеживания отображения секция файла в адресное пространство процесса.&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;обработка-ошибок-в-течении-writeback&#34;&gt;Обработка ошибок в течении writeback&lt;/h3&gt;
+&lt;p&gt;Большинство приложений, которые буферизуют операции чтения/записи, периодически синхронизируют файл вызовом (fsync, fdatasync, msync or sync_file_range), чтобы быть уверенным, что данные в буфере сброшены обратно на устройство хранения. &amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;struct-address_space_operations&#34;&gt;struct address_space_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как VFS может манипулировать отображением файла в &lt;em&gt;страничном кэше&lt;/em&gt; в вашей файловой системе. Определены следующие элементы структуры:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int (*writepage)(struct page *page, struct writeback_control *wbc);
+int (*readpage)(struct file *, struct page *);
+int (*writepages)(struct address_space *, struct writeback_control *);
+int (*set_page_dirty)(struct page *page);
+int (*readpages)(struct file *filp, struct address_space *mapping,
+                 struct list_head *pages, unsigned nr_pages);
+int (*write_begin)(struct file *, struct address_space *mapping,
+                   loff_t pos, unsigned len, unsigned flags,
+                struct page **pagep, void **fsdata);
+int (*write_end)(struct file *, struct address_space *mapping,
+                 loff_t pos, unsigned len, unsigned copied,
+                 struct page *page, void *fsdata);
+sector_t (*bmap)(struct address_space *, sector_t);
+void (*invalidatepage) (struct page *, unsigned int, unsigned int);
+int (*releasepage) (struct page *, int);
+void (*freepage)(struct page *);
+ssize_t (*direct_IO)(struct kiocb *, struct iov_iter *iter);
+/* isolate a page for migration */
+bool (*isolate_page) (struct page *, isolate_mode_t);
+/* migrate the contents of a page to the specified target */
+int (*migratepage) (struct page *, struct page *);
+/* put migration-failed page back to right list */
+void (*putback_page) (struct page *);
+int (*launder_page) (struct page *);
+
+int (*is_partially_uptodate) (struct page *, unsigned long,
+                              unsigned long);
+void (*is_dirty_writeback) (struct page *, bool *, bool *);
+int (*error_remove_page) (struct mapping *mapping, struct page *page);
+int (*swap_activate)(struct file *);
+int (*swap_deactivate)(struct file *);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;writepage&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается &lt;em&gt;Виртуальной Машиной&lt;/em&gt; для сброса черновых страниц обратно в хранилище. Это может случаться для сохранения целостности данных (&lt;code&gt;sync&lt;/code&gt;), или для освобождения памяти (flush)&amp;hellip;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;readpage&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается &lt;em&gt;Виртуальной Машиной&lt;/em&gt; при чтении страницы из хранилища. Эта страница будет заблокирована во время вызова &lt;code&gt;readpage&lt;/code&gt;, и должна быть разблокирована и промаркирована, как &lt;em&gt;uptodate&lt;/em&gt;, с момента завершения чтения. Если &lt;code&gt;-&amp;gt;readpage&lt;/code&gt; обнаруживает, что требуется разблокировка страницы по какой-либо причине, то он может сделать это, но вернув AOP_TRUNCATED_PAGE. В этом случае страница будет relocated, relocked и, если всё успешно будет выполнено, то вызов &lt;code&gt;-&amp;gt;readpage&lt;/code&gt; будет повторён.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;writepages&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается &lt;em&gt;Виртуальной Машиной&lt;/em&gt; для сброса на диск всех страниц, ассоциированных с &lt;em&gt;адресным пространством&lt;/em&gt; объекта.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-файл&#34;&gt;Объект Файл&lt;/h2&gt;
+&lt;p&gt;Файловый объект представляет файл, открытый процессом. Он также известен, как &lt;em&gt;файловый дескриптор&lt;/em&gt; (open file description) в POSIX-диалекте.&lt;/p&gt;
+&lt;h3 id=&#34;struct-file_operations&#34;&gt;struct file_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как VFS может манипулировать открытым файлом. Начиная с kernel 4.18, определены следующие элементы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct file_operations {
+        struct module *owner;
+        loff_t (*llseek) (struct file *, loff_t, int);
+        ssize_t (*read) (struct file *, char __user *, size_t, loff_t *);
+        ssize_t (*write) (struct file *, const char __user *, size_t, loff_t *);
+        ssize_t (*read_iter) (struct kiocb *, struct iov_iter *);
+        ssize_t (*write_iter) (struct kiocb *, struct iov_iter *);
+        int (*iopoll)(struct kiocb *kiocb, bool spin);
+        int (*iterate) (struct file *, struct dir_context *);
+        int (*iterate_shared) (struct file *, struct dir_context *);
+        __poll_t (*poll) (struct file *, struct poll_table_struct *);
+        long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long);
+        long (*compat_ioctl) (struct file *, unsigned int, unsigned long);
+        int (*mmap) (struct file *, struct vm_area_struct *);
+        int (*open) (struct inode *, struct file *);
+        int (*flush) (struct file *, fl_owner_t id);
+        int (*release) (struct inode *, struct file *);
+        int (*fsync) (struct file *, loff_t, loff_t, int datasync);
+        int (*fasync) (int, struct file *, int);
+        int (*lock) (struct file *, int, struct file_lock *);
+        ssize_t (*sendpage) (struct file *, struct page *, int, size_t, loff_t *, int);
+        unsigned long (*get_unmapped_area)(struct file *, unsigned long, unsigned long, unsigned long, unsigned long);
+        int (*check_flags)(int);
+        int (*flock) (struct file *, int, struct file_lock *);
+        ssize_t (*splice_write)(struct pipe_inode_info *, struct file *, loff_t *, size_t, unsigned int);
+        ssize_t (*splice_read)(struct file *, loff_t *, struct pipe_inode_info *, size_t, unsigned int);
+        int (*setlease)(struct file *, long, struct file_lock **, void **);
+        long (*fallocate)(struct file *file, int mode, loff_t offset,
+                          loff_t len);
+        void (*show_fdinfo)(struct seq_file *m, struct file *f);
+#ifndef CONFIG_MMU
+        unsigned (*mmap_capabilities)(struct file *);
+#endif
+        ssize_t (*copy_file_range)(struct file *, loff_t, struct file *, loff_t, size_t, unsigned int);
+        loff_t (*remap_file_range)(struct file *file_in, loff_t pos_in,
+                                   struct file *file_out, loff_t pos_out,
+                                   loff_t len, unsigned int remap_flags);
+        int (*fadvise)(struct file *, loff_t, loff_t, int);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Again, all methods are called without any locks being held, unless otherwise noted.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;llseek&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается, когда VFS нуждается в перемещении file position index&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;read&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;называется &lt;code&gt;read(2)&lt;/code&gt; и относится к системным вызовам
+&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;directory-entry-cache-dcache&#34;&gt;Directory Entry Cache (dcache)&lt;/h2&gt;
+&lt;h3 id=&#34;struct-dentry_operations&#34;&gt;struct dentry_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как файловая система может перегружать стандартные &lt;em&gt;dentry&lt;/em&gt; операции.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct dentry_operations {
+        int (*d_revalidate)(struct dentry *, unsigned int);
+        int (*d_weak_revalidate)(struct dentry *, unsigned int);
+        int (*d_hash)(const struct dentry *, struct qstr *);
+        int (*d_compare)(const struct dentry *,
+                         unsigned int, const char *, const struct qstr *);
+        int (*d_delete)(const struct dentry *);
+        int (*d_init)(struct dentry *);
+        void (*d_release)(struct dentry *);
+        void (*d_iput)(struct dentry *, struct inode *);
+        char *(*d_dname)(struct dentry *, char *, int);
+        struct vfsmount *(*d_automount)(struct path *);
+        int (*d_manage)(const struct path *, bool);
+        struct dentry *(*d_real)(struct dentry *, const struct inode *);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;directory-entry-cache-api&#34;&gt;Directory Entry Cache API&lt;/h3&gt;
+&lt;p&gt;There are a number of functions defined which permit a filesystem to manipulate dentries:&lt;/p&gt;
+&lt;h2 id=&#34;mount-options&#34;&gt;Mount Options&lt;/h2&gt;
+&lt;h3 id=&#34;parsing-options&#34;&gt;Parsing options&lt;/h3&gt;
+&lt;p&gt;При монтировании или размонтировании файловой системы, передаётся строка, содержащая список опций монтирования, разделённых запятыми. Эти опции могут иметь любую из этих форм:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;option option=value
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The &amp;lt;linux/parser.h&amp;gt; header defines an API that helps parse these options. There are plenty of examples on how to use it in existing filesystems.&lt;/p&gt;
+&lt;h3 id=&#34;showing-options&#34;&gt;Showing options&lt;/h3&gt;
+&lt;p&gt;Если файловая система приняла опции, то она должна определить show_options(), для показа всех актуальных текущих опций. Правила показа:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;обязаны быть показаны тех опции, значения которых отличаются от принимаемых по умолчанию;&lt;/li&gt;
+&lt;li&gt;могут быть показаны те опции, которые включены (по умолчанию) или имеют значения по умолчанию.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Опции, внутренее используемые между маунт хэлпером и ядром (такие как дескриптор файла), или которые значимы только во время монтирования (такие, как управляющие созданием журнала), исключены от вышеоуказанных правил.&lt;/p&gt;
+&lt;p&gt;The underlying reason for the above rules is to make sure, that a mount can be accurately replicated (e.g. umounting and mounting again) based on the information found in /proc/mounts.&lt;/p&gt;
+&lt;p&gt;Resources
+(Note some of these resources are not up-to-date with the latest kernel
+version.)
+Creating Linux virtual filesystems. 2002
+&lt;a href=&#34;http://lwn.net/Articles/13325/&#34;&gt;http://lwn.net/Articles/13325/&lt;/a&gt;
+The Linux Virtual File-system Layer by Neil Brown. 1999
+&lt;a href=&#34;http://www.cse.unsw.edu.au/~neilb/oss/linux-commentary/vfs.html&#34;&gt;http://www.cse.unsw.edu.au/~neilb/oss/linux-commentary/vfs.html&lt;/a&gt;
+A tour of the Linux VFS by Michael K. Johnson. 1996
+&lt;a href=&#34;http://www.tldp.org/LDP/khg/HyperNews/get/fs/vfstour.html&#34;&gt;http://www.tldp.org/LDP/khg/HyperNews/get/fs/vfstour.html&lt;/a&gt;
+A small trail through the Linux kernel by Andries Brouwer. 2001
+&lt;a href=&#34;http://www.win.tue.nl/~aeb/linux/vfs/trail.html&#34;&gt;http://www.win.tue.nl/~aeb/linux/vfs/trail.html&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

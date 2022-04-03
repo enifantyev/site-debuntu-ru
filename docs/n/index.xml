@@ -1,0 +1,2896 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Заметки</title>
+    <link>/n/</link>
+    <description>Recent content in Заметки on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 26 Nov 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/n/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Компиляция свежего stunnel 5.60 из исходников на CentOS7</title>
+      <link>/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
+      <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-11-26&lt;/p&gt;
+&lt;h2 id=&#34;подготовка-с-сборке&#34;&gt;Подготовка с сборке&lt;/h2&gt;
+&lt;p&gt;Устанавливаем набор инструментов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo yum groupinstall &amp;#34;Development Tools&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;сборка&#34;&gt;Сборка&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src &amp;amp;&amp;amp; cd ~/src
+curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz
+curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz.sha256
+sha256sum -c stunnel-5.60.tar.gz.sha256
+tar xvf stunnel-5.60.tar.gz
+cd stunnel-5.60
+./configure
+make
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
+&lt;p&gt;Скомпилированный stunnel можно найти здесь &lt;code&gt;~/src/stunnel-5.60/src/stunnel&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Переименуем файл для удобства дальнейшего использования по инструкции &lt;a href=&#34;/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel&#34;&gt;Обфускация ssh-трафика с помощью stunnel&lt;/a&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mv ~/src/stunnel-5.60/src/stunnel ~/src/stunnel-5.60/src/stunnel-5.60
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Как сохранить расцвеченный выхлоп stdout в файл</title>
+      <link>/n/kak-sohranit-rascvechennyi-stdout-v-fail/</link>
+      <pubDate>Tue, 19 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/kak-sohranit-rascvechennyi-stdout-v-fail/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-10-19&lt;/p&gt;
+&lt;p&gt;Использованные ссылки:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://superuser.com/questions/352697/preserve-colors-while-piping-to-tee&#34;&gt;https://superuser.com/questions/352697/preserve-colors-while-piping-to-tee&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Установка необходимого пакета, который содержим &lt;code&gt;unbuffer&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt install expect-dev
+# or
+yum install expect-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запускам, например, сборку maven-приложения через &lt;code&gt;unbuffer&lt;/code&gt; и сохраняем расцвеченный вывод &lt;code&gt;mvn&lt;/code&gt; в файл &lt;code&gt;install_1.log&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;unbuffer mvn clean -DskipTests package -Pdist -X -T 4 2&amp;gt;&amp;amp;1 | tee install_1.log
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Смотрим ранее сохраннёный лог-файл с ESC-кодами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;less -r install_1.log
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</title>
+      <link>/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
+      <pubDate>Wed, 11 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-11&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;При удалении ноды &lt;code&gt;/solr&lt;/code&gt; через &lt;code&gt;zookeeper-client&lt;/code&gt; выводилась ошибка:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[zk: localhost:2181(CONNECTED) 0] rmr /solr
+The command &amp;#39;rmr&amp;#39; has been deprecated. Please use &amp;#39;deleteall&amp;#39; instead.
+Authentication is not valid : /solr/security
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Решение этой проблемы нашёл здесь: &lt;a href=&#34;https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421&#34;&gt;https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;алгоритм-получения-прав-superuserа&#34;&gt;Алгоритм получения прав superuser&amp;rsquo;а&lt;/h2&gt;
+&lt;p&gt;Переходим в домашний каталог Zookeeper&amp;rsquo;а и запускаем генерацию дайджеста пароля для только что придуманного логина, под которым возобладаем superuser-правами в Zookeeper&amp;rsquo;е, например &amp;lsquo;zoosu:TsKlydBdycdq&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /usr/lib/zookeeper &amp;amp;&amp;amp; \
+  /usr/java/jdk1.8.0_181-cloudera/bin/java -cp &amp;#34;./zookeeper.jar:lib/slf4j-api-1.7.25.jar&amp;#34; org.apache.zookeeper.server.auth.DigestAuthenticationProvider zoosu:TsKlydBdycdq
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В выводе команды видим дайджест &amp;lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SLF4J: Failed to load class &amp;#34;org.slf4j.impl.StaticLoggerBinder&amp;#34;.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+zoosu:TsKlydBdycdq-&amp;gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Вставляем эти учётные данные (&amp;lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&amp;rsquo;) в строку параметров для java-машины ZooKeeper&amp;rsquo;а (&amp;rsquo;&lt;span style=&#34;color:blue&#34;&gt;-Dzookeeper.DigestAuthenticationProvider.superDigest=zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&lt;/span&gt;&amp;rsquo;), которую размещаем в настройках ZooKeeper&amp;rsquo;а в Cloudera Manager.&lt;/p&gt;
+&lt;p&gt;В настройках ZooKeeper, используя фильтр &amp;lsquo;Java Configuration Options for Zookeeper Server&amp;rsquo;, изменяем следующие параметры:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+&lt;tr valign=top&gt;
+&lt;td&gt;&lt;b&gt;Java Configuration Options for Zookeeper Server&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color:blue&#34;&gt;-Dzookeeper.DigestAuthenticationProvider.superDigest=&lt;br&gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;p&gt;Или останавливаем кластер и запускаем только сервис ZooKeeper&amp;rsquo;а, если, конечно, хотим удалить вышеуказанную строку из настроек, после выполнения удаления ноды. После чего останавливаем ZooKeeper и запускаем весь кластер.&lt;/p&gt;
+&lt;h2 id=&#34;удаление-ноды&#34;&gt;Удаление ноды&lt;/h2&gt;
+&lt;p&gt;На ZooKeeper-узле запускаем &lt;code&gt;zookeeper-client&lt;/code&gt;, авторизуемся с помощью команды &lt;code&gt;addauth digest zoosu:TsKlydBdycdq&lt;/code&gt;, и выполняем удаление ноды &lt;code&gt;/solr&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[zk: localhost:2181(CONNECTED) 0] ls /solr
+[configs, overseer, security.json, solr.xml, autoscaling.json, security, aliases.json, live_nodes, collections, overseer_elect, clusterstate.json, autoscaling, clusterprops.json]
+[zk: localhost:2181(CONNECTED) 1] addauth digest zoosu:TsKlydBdycdq
+[zk: localhost:2181(CONNECTED) 2] deleteall /solr
+[zk: localhost:2181(CONNECTED) 3] ls /
+[zookeeper, hadoop-ha, kafka, hive_zookeeper_namespace_hive, hbase]
+[zk: localhost:2181(CONNECTED) 4]
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</title>
+      <link>/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
+      <pubDate>Wed, 04 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-04&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/peterpakos/checkipaconsistency&#34;&gt;https://github.com/peterpakos/checkipaconsistency&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;установка-checkipaconsistency&#34;&gt;Установка checkipaconsistency&lt;/h2&gt;
+&lt;p&gt;Предыдущую версию 2.7.10 можно установить через pip &lt;code&gt;pip install --user checkipaconsistency&lt;/code&gt;, тогда как последнюю версию придётся собирать:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ git clone https://github.com/peterpakos/checkipaconsistency.git
+$ cd checkipaconsistency
+$ pip install --user -r requirements.txt
+$ ./cipa
+Initial config saved to ~/.config/checkipaconsistency - PLEASE EDIT IT!
+IPA domain not set
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка&#34;&gt;Настройка&lt;/h2&gt;
+&lt;p&gt;Настройки находятся в файле &lt;code&gt;~/.config/checkipaconsistency&lt;/code&gt;, где укажем пароль от &amp;lsquo;cn=Directory Manager&amp;rsquo;, что не безопасно. Напомню, что этот специальный аккаунт критически важен для безопасности домена FreeIPA.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; ~/.config/checkipaconsistency
+[IPA]
+domain = test.lan
+hosts = dev-ipa01p, dev-ipa02p, dev-ipa03p
+binddn = cn=Directory Manager
+bindpw = DirectoryManagerPassWord
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;использование&#34;&gt;Использование&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ./cipa
++--------------------+--------------+--------------+--------------+-------+
+| FreeIPA servers:   | dev-ipa01p   | dev-ipa02p   | dev-ipa03p   | STATE |
++--------------------+--------------+--------------+--------------+-------+
+| Active Users       | 19           | 19           | 19           | OK    |
+| Stage Users        | 0            | 0            | 0            | OK    |
+| Preserved Users    | 1            | 1            | 1            | OK    |
+| Hosts              | 16           | 16           | 16           | OK    |
+| Services           | 65           | 65           | 65           | OK    |
+| User Groups        | 33           | 33           | 33           | OK    |
+| Host Groups        | 1            | 1            | 1            | OK    |
+| Netgroups          | 0            | 0            | 0            | OK    |
+| HBAC Rules         | 1            | 1            | 1            | OK    |
+| SUDO Rules         | 0            | 0            | 0            | OK    |
+| DNS Zones          | 2            | 2            | 2            | OK    |
+| Certificates       | 108          | 108          | 108          | OK    |
+| LDAP Conflicts     | 0            | 0            | 0            | OK    |
+| Ghost Replicas     | 0            | 0            | 0            | OK    |
+| Anonymous BIND     | ON           | ON           | ON           | OK    |
+| Microsoft ADTrust  | False        | False        | False        | OK    |
+| Replication Status | dev-ipa03p 0 | dev-ipa03p 0 | dev-ipa02p 0 | OK    |
+|                    | dev-ipa02p 0 | dev-ipa01p 0 | dev-ipa01p 0 |       |
++--------------------+--------------+--------------+--------------+-------+
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Блокирование доступа внешних программ к Hive metastore</title>
+      <link>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
+      <pubDate>Mon, 19 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-19&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/sg_sentry_service_config.html#concept_z5b_42s_p4__section_lvc_4g4_rp&#34;&gt;Before Enabling the Sentry Service&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Hive, используя фильтр &#39;Hive Metastore Access Control and Proxy User Groups Override&#39;, изменяем следующие параметры:&lt;/li&gt;
+&lt;table&gt;
+&lt;thead style=&#34;background: lightgray&#34;&gt;&lt;tr&gt;
+&lt;td&gt;Property&lt;/td&gt;
+&lt;td&gt;Value&lt;/td&gt;
+&lt;td&gt;Description&lt;/td&gt;
+&lt;/tr&gt;&lt;/thead&gt;
+&lt;tr&gt;&lt;td&gt;&lt;b&gt;Hive Metastore Access Control and Proxy User Groups Override&lt;/b&gt;
+&lt;i&gt;hadoop.proxyuser.hive.groups&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;span style=&#34;color:blue&#34;&gt;&lt;ul&gt;&lt;li&gt;hive&lt;/li&gt;
+&lt;li&gt;hue&lt;/li&gt;
+&lt;li&gt;sentry&lt;/li&gt;
+&lt;/ul&gt;&lt;/span&gt;
+&lt;p&gt;Могут быть указаны дополнительные пользовательские группы.&lt;/p&gt;
+&lt;/td&gt;
+&lt;td&gt;
+This configuration &lt;b&gt;overrides&lt;/b&gt; the value set for Hive Proxy User Groups configuration in HDFS service for use by Hive Metastore Server. Specify a comma-delimited list of groups that you want to &lt;b&gt;allow access to Hive Metastore metadata&lt;/b&gt; and allow the Hive user to impersonate. A value of &#39;*&#39; allows all groups. The default value of empty inherits the value set for Hive Proxy User Groups configuration in the HDFS service.
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;li&gt;Нажимаем &lt;b&gt;Save Changes&lt;/b&gt;.&lt;/li&gt;
+&lt;li&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Тестирование псевдо HA и LB dns-настроек в /etc/resolv.conf</title>
+      <link>/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
+      <pubDate>Wed, 14 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-14&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Псевдо High Availability и Load Balancing достигается поочерёдным опросом всех указанных в файле &lt;code&gt;/etc/resolv.conf&lt;/code&gt; dns-серверов, даже в том случае, если какой-нибудь из dns-серверов находится в офлайне.&lt;/p&gt;
+&lt;p&gt;Сразу приведу пример такого HA и LB &amp;lsquo;resolv.conf&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;options rotate timeout:1 attempts:1
+search test.lan
+nameserver 10.15.120.146
+nameserver 10.15.120.147
+nameserver 10.15.120.148
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Замечу, что использование локальных кэширующих dns-прослоек, типа dnsmasq, умеющих обращаться сразу ко всем dns-серверами, может несколько увеличить HA и LB.&lt;/p&gt;
+&lt;h2 id=&#34;подготовка-к-тестированию&#34;&gt;Подготовка к тестированию&lt;/h2&gt;
+&lt;p&gt;Создадим следующий python-файл и сделаем его исполняемым:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt; EOF &amp;gt; test.py
+#!/usr/bin/python3
+import socket
+for x in range(6):
+   print(socket.getaddrinfo(&amp;#39;dev-ipa01p.test.lan&amp;#39;, 80));
+EOF
+
+$ chmod u+x test.py
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;тестирование-со-стандартным-resolvconf&#34;&gt;Тестирование со стандартным resolv.conf&lt;/h2&gt;
+&lt;p&gt;Создадим стандартный &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/resolv.conf
+search test.lan
+nameserver 10.15.120.146
+nameserver 10.15.120.147
+nameserver 10.15.120.148
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;первый-dns-сервер-в-онлайне&#34;&gt;Первый dns-сервер в онлайне&lt;/h3&gt;
+&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
+
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы идут только к первому dns-серверу.&lt;/p&gt;
+&lt;h3 id=&#34;все-dns-серверы-в-офлайне&#34;&gt;Все dns-серверы в офлайне&lt;/h3&gt;
+&lt;p&gt;Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo sed -i &amp;#39;s/nameserver 10.15.120.146/nameserver 10.15.120.140/&amp;#39; /etc/resolv.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
+
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы идут только к первому и, после некоторой задержки, ко второму dns-серверу.&lt;/p&gt;
+&lt;h2 id=&#34;тестирование-с-отказоустойчивым-resolvconf&#34;&gt;Тестирование с отказоустойчивым resolv.conf&lt;/h2&gt;
+&lt;p&gt;Создадим отказоустойчивый &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/resolv.conf
+options rotate timeout:1 attempts:1
+search test.lan
+nameserver 10.15.120.146
+nameserver 10.15.120.147
+nameserver 10.15.120.148
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь добавлены опции:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;опция &amp;lsquo;rotate&amp;rsquo; заставляет отправлять dns-запросы по очереди к каждому dns-серверу по кругу;&lt;/li&gt;
+&lt;li&gt;опция &amp;rsquo;timeout:1&amp;rsquo; уменьшает ожидание ответа dns-сервера с дефолтных трёх секунд до одной секунды;&lt;/li&gt;
+&lt;li&gt;опция &amp;lsquo;attempts:1&amp;rsquo; разрешает только один запрос к каждому DNS-серверу;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;все-dns-серверы-в-онлайне&#34;&gt;Все dns-серверы в онлайне&lt;/h3&gt;
+&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
+
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы идут к каждому dns-серверу по кругу.&lt;/p&gt;
+&lt;h3 id=&#34;первый-dns-сервер-в-офлайне&#34;&gt;Первый dns-сервер в офлайне&lt;/h3&gt;
+&lt;p&gt;Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo sed -i &amp;#39;s/nameserver 10.15.120.146/nameserver 10.15.120.140/&amp;#39; /etc/resolv.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
+
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы так и продолжают выполняться к каждому dns-серверу по кругу, но с одним малозначимым отличием. После попытки резольвинга от неотвечающего dns-сервера, к следующему работающему dns-серверу производится два запроса. На данный момент я не знаю причин такого поведения, тем более, что не вижу здесь проблемы. Чтение исходников могло бы пролить свет.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Ручное удаление реплики FreeIPA из RedOS7.2</title>
+      <link>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
+      <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-13&lt;/p&gt;
+&lt;p&gt;После неудачных опытов приходится выковыривать останки FreeIPA.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum autoremove bind bind-dyndb-ldap ipa-server*
+pip freeze | xargs pip uninstall -y
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаление большинства python-пакетов производим через поочерёдное &lt;code&gt;yum autoremove&lt;/code&gt;, &lt;code&gt;pip freeze &amp;gt; list.txt&lt;/code&gt; и &lt;code&gt;pip uninstall -y -r list.txt&lt;/code&gt;. В файле &lt;code&gt;list.txt&lt;/code&gt;, при необходимости, удаляем названия пакетов, неудаляемых через pip.&lt;/p&gt;
+&lt;p&gt;При необходимости можно выполнить полное удаление python3:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum -y autoremove python3
+rm -rf /usr/lib/python3.6 /usr/local/lib/python3.6
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf /var/log/{dirsrv,httpd,ipa}
+rm -f /var/log/{ipa*.log}
+rm -rf /var/lib/{dirsrv,certmonger,gssproxy,ipa,ipa-client}
+rm -rf /var/lib/pki/pki-tomcat
+rm -rf /var/kerberos
+rm -rf /etc/{dirsrv,httpd,gssproxy,ipa}
+rm -rf /etc/pki/pki-tomcat
+rm -f /etc/sysconfig/{dirsrv*,ipa-*,pki-tomcat,tomcat}
+rm -rf /etc/sysconfig/pki/tomcat
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub</title>
+      <link>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
+      <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-07&lt;/p&gt;
+&lt;p&gt;После установки JupyterHub наблюдается недачный запуск systemd-юнита &amp;lsquo;jupyterhub.service&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Здесь приведён фрагмент из syslog&amp;rsquo;а с ошибками после запуска jupyterhub.service:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;jupyterhub: [I 2021-07-07 15:05:40.359 JupyterHub proxy:703] Starting proxy @ http://0.0.0.0:8000/
+jupyterhub: /usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/lib/registry.js:25
+jupyterhub: async getMetricAsPrometheusString(metric) {
+jupyterhub: ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jupyterhub: SyntaxError: Unexpected identifier
+jupyterhub: at createScript (vm.js:56:10)
+jupyterhub: at Object.runInThisContext (vm.js:97:10)
+jupyterhub: at Module._compile (module.js:549:28)
+jupyterhub: at Object.Module._extensions..js (module.js:586:10)
+jupyterhub: at Module.load (module.js:494:32)
+jupyterhub: at tryModuleLoad (module.js:453:12)
+jupyterhub: at Function.Module._load (module.js:445:3)
+jupyterhub: at Module.require (module.js:504:17)
+jupyterhub: at require (internal/module.js:20:19)
+jupyterhub: at Object.&amp;lt;anonymous&amp;gt; (/usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/index.js:8:20)
+jupyterhub: [C 2021-07-07 15:05:41.436 JupyterHub app:2739] Failed to start proxy
+jupyterhub: Traceback (most recent call last):
+jupyterhub: File &amp;#34;/opt/jupyterhub/lib64/python3.6/site-packages/jupyterhub/app.py&amp;#34;, line 2737, in start
+jupyterhub: await self.proxy.start()
+jupyterhub: File &amp;#34;/opt/jupyterhub/lib64/python3.6/site-packages/jupyterhub/proxy.py&amp;#34;, line 730, in start
+jupyterhub: _check_process()
+jupyterhub: File &amp;#34;/opt/jupyterhub/lib64/python3.6/site-packages/jupyterhub/proxy.py&amp;#34;, line 726, in _check_process
+jupyterhub: raise e from None
+jupyterhub: RuntimeError: Proxy failed to start with exit code 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Повторяем ошибку ручным запуском &lt;code&gt;configurable-http-proxy&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ configurable-http-proxy
+/usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/lib/registry.js:25
+        async getMetricAsPrometheusString(metric) {
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at createScript (vm.js:56:10)
+    at Object.runInThisContext (vm.js:97:10)
+    at Module._compile (module.js:549:28)
+    at Object.Module._extensions..js (module.js:586:10)
+    at Module.load (module.js:494:32)
+    at tryModuleLoad (module.js:453:12)
+    at Function.Module._load (module.js:445:3)
+    at Module.require (module.js:504:17)
+    at require (internal/module.js:20:19)
+    at Object.&amp;lt;anonymous&amp;gt; (/usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/index.js:8:20)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Узнал версию установленного пакета &lt;code&gt;configurable-http-proxy&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ configurable-http-proxy -V
+4.4.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В &lt;a href=&#34;https://github.com/jupyterhub/configurable-http-proxy/releases&#34;&gt;репозитории домашнего сайта пакета&lt;/a&gt; определил предыдущую версию пакета: 4.3.2 и попробовал установить её:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ npm install -g configurable-http-proxy@4.3.2
+/usr/bin/configurable-http-proxy -&amp;gt; /usr/lib/node_modules/configurable-http-proxy/bin/configurable-http-proxy
+- bintrees@1.0.1 node_modules/configurable-http-proxy/node_modules/bintrees
+- tdigest@0.1.1 node_modules/configurable-http-proxy/node_modules/tdigest
+- prom-client@13.1.0 node_modules/configurable-http-proxy/node_modules/prom-client
+/usr/lib
+└─┬ configurable-http-proxy@4.3.2
+  └─┬ lynx@0.2.0
+    ├── mersenne@0.0.4
+    └── statsd-parser@0.0.4
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для проверки запустил &lt;code&gt;configurable-http-proxy&lt;/code&gt; и убедился в отсутствии ошибок:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;15:49:41.655 [ConfigProxy] warn: REST API is not authenticated.
+15:49:41.668 [ConfigProxy] info: Proxying http://*:8000 to (no default)
+15:49:41.669 [ConfigProxy] info: Proxy API at http://localhost:8001/api/routes
+^C15:49:46.740 [ConfigProxy] warn: Interrupted
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Повторил запуск &amp;lsquo;jupyterhub.service&amp;rsquo;, на этот раз успешный:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ sudo systemctl start jupyterhub.service
+[eugene@localhost ~]$ sudo systemctl status jupyterhub.service
+● jupyterhub.service - JupyterHub
+   Loaded: loaded (/opt/jupyterhub/etc/systemd/jupyterhub.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2021-07-07 16:08:58 MSK;
+...
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Проблема с пакетом psycopg2 при создании нового суперюзера для Cloudera Hue</title>
+      <link>/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</link>
+      <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-06-09&lt;/p&gt;
+&lt;p&gt;Манипуляции производятся в Cloudera CDH 6.3.2. На машине с установленной ролью Hue выполняю команду и получаю ошибку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# /usr/lib/hue/build/env/bin/hue createsuperuser --cm-managed
+LD_LIBRARY_PATH can&amp;#39;t be found, if you are using ORACLE for your Hue database
+then it must be set, if not, you can ignore
+  export LD_LIBRARY_PATH=/path/to/instantclient
+Traceback (most recent call last):
+  File &amp;#34;/usr/lib/hue/build/env/bin/hue&amp;#34;, line 14, in &amp;lt;module&amp;gt;
+    load_entry_point(&amp;#39;desktop&amp;#39;, &amp;#39;console_scripts&amp;#39;, &amp;#39;hue&amp;#39;)()
+  File &amp;#34;/usr/lib/hue/desktop/core/src/desktop/manage_entry.py&amp;#34;, line 225, in entry
+    raise e
+django.core.exceptions.ImproperlyConfigured: psycopg2_version 2.5.4 or newer is required; you have 2.5.1 (dt dec pq3 ext)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяю версию установленной библиотеки и убеждаюсь, что версия 2.5.1:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pip2 freeze|grep psycopg
+You are using pip version 8.1.2, however version 21.1.2 is available.
+You should consider upgrading via the &amp;#39;pip install --upgrade pip&amp;#39; command.
+psycopg2==2.5.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаю последнюю версию пакета psycopg в бинарной версии, чтобы не устанавливать пакеты для сборки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pip2 install psycopg2-binary
+Collecting psycopg2-binary
+  Downloading http://10.15.61.1:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
+    100% |████████████████████████████████| 2.9MB 96.1MB/s 
+Installing collected packages: psycopg2-binary
+Successfully installed psycopg2-binary-2.8.6
+You are using pip version 8.1.2, however version 21.1.2 is available.
+You should consider upgrading via the &amp;#39;pip install --upgrade pip&amp;#39; command.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Вновь пытаюсь создать суперюзера и на этот раз успешно:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# /usr/lib/hue/build/env/bin/hue createsuperuser --cm-managed
+LD_LIBRARY_PATH can&amp;#39;t be found, if you are using ORACLE for your Hue database
+then it must be set, if not, you can ignore
+  export LD_LIBRARY_PATH=/path/to/instantclient
+Username (leave blank to use &amp;#39;root&amp;#39;): admhue
+Email address: admhue@example.org
+Password: 
+Password (again): 
+Superuser created successfully.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Убеждаюсь, что текущая настройка Hue — &amp;lsquo;Authentication Backend&amp;rsquo; — содержит параметр &lt;code&gt;desktop.auth.backend.AllowFirstUserDjangoBackend&lt;/code&gt;:
+&lt;img src=&#34;cloudera_hue_param_authentication_backend.png&#34; alt=&#34;cloudera hue param authentication backend&#34;&gt;&lt;/p&gt;
+&lt;p&gt;После чего я вхожу в Hue под новым суперюзером и выполняю необходимые настройки.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</title>
+      <link>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
+      <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-06-09&lt;/p&gt;
+&lt;p&gt;Использованные ссылки:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/latest/topics/cdh_ig_hiveserver2_start_stop.html#topic_18_8_1&#34;&gt;Using the Beeline CLI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/sg_hive_sql.html&#34;&gt;Hive SQL Syntax for Use with Sentry&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Запрашиваем kerberos-билет на машине с установленной ролью Hive, запускаем &lt;code&gt;beeline&lt;/code&gt; и подключаемся к Hive:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit /run/cloudera-scm-agent/process/.../hive.keytab hive/prod-aux02p.example.org
+$ beeline
+beeline&amp;gt; !connect jdbc:hive2://prod-aux02p.example.org:10000/;principal=hive/prod-aux02p.example.org@EXAMPLE.ORG;ssl=true;sslTrustStore=/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts
+0: jdbc:hive2://prod-aux02p.example.org:1000&amp;gt; _
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Без указания ssl-настроек в строке подключения, в логах HiveServer2 будут видны ошибки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;TThreadPoolServer	
+[HiveServer2-Handler-Pool: Thread-47]: Error occurred during processing of message.
+java.lang.RuntimeException: org.apache.thrift.transport.TTransportException: javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавление роли для администрирования Hive (server1) и назначение этой роли на группу администраторов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;CREATE ROLE admin_role;
+GRANT ALL ON SERVER server1 TO ROLE admin_role WITH GRANT OPTION;
+GRANT ROLE admin_role TO GROUP prod_hue_admins;
+GRANT ROLE admin_role TO GROUP prod_sentry_admins;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На всякий случай, привожу различные операции. Кстати, команды можно набирать буквами в нижнем регистре.&lt;/p&gt;
+&lt;p&gt;Список существующих ролей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;show roles;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаление ошибочно созданного назначения роли на группу:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;GRANT ROLE admin_role TO GROUP admin_group;
+REVOKE ROLE admin_role FROM GROUP admin_group;
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</title>
+      <link>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-06-05&lt;/p&gt;
+&lt;h2 id=&#34;анамнез&#34;&gt;Анамнез&lt;/h2&gt;
+&lt;p&gt;После перезапуска Hue в логе видны предупреждения &amp;ldquo;Couldn&amp;rsquo;t import snappy. Support for snappy compression disabled.&amp;rdquo;:
+&lt;img src=&#34;hue_couldnt_import_snappy.png&#34; alt=&#34;Couldn&amp;amp;rsquo;t import snappy. Support for snappy compression disabled.&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
+&lt;p&gt;На всех машинах кластера выполнил из-под root:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip2 install python-snappy
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Предупреждение исчезло.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</title>
+      <link>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
+      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-05-12&lt;/p&gt;
+&lt;h2 id=&#34;симптомы&#34;&gt;Симптомы&lt;/h2&gt;
+&lt;p&gt;Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы &amp;ldquo;Сертификаты&amp;rdquo;, после долгого ожидания в виде вывески &amp;ldquo;В процессе&amp;rdquo;:
+&lt;img src=&#34;freeipa-certificates-wait.png&#34; alt=&#34;FreeIPA Certificates Wait&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Далее появляется баннер с ошибкой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;IPA Error 4301: CertificateOperationError
+Certificate operation cannot be completed: Unable to communicate with CMS (500)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;ipa_error_4301.png&#34; alt=&#34;IPA Error 4301&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Невозможно выполнение:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
+ipa: ERROR: Certificate operation cannot be completed: Unable to communicate with CMS (500)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;диагноз&#34;&gt;Диагноз&lt;/h2&gt;
+&lt;p&gt;Строки из &amp;lsquo;journalctl -u pki-tomcatd@pki-tomcat&amp;rsquo; указывают причину такого поведения:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SEVERE: Failed to start component [Connector[AJP/1.3-8009]]
+Caused by: java.lang.IllegalArgumentException: The AJP Connector is configured with secretRequired=&amp;#34;true&amp;#34; but the secret attribute is either null or &amp;#34;&amp;#34;. This combination is not valid.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Полный листинг:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# journalctl -u pki-tomcatd@pki-tomcat
+May 11 20:05:28 dev-ipa01.test.lan systemd[1]: Starting PKI Tomcat Server pki-tomcat...
+May 11 20:05:30 dev-ipa01.test.lan pki-server[1894]: ----------------------------
+May 11 20:05:30 dev-ipa01.test.lan pki-server[1894]: pki-tomcat instance migrated
+May 11 20:05:30 dev-ipa01.test.lan pki-server[1894]: ----------------------------
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: -----------------------
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: Banner is not installed
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: -----------------------
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: ----------------------
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: Enabled all subsystems
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: ----------------------
+May 11 20:05:32 dev-ipa01.test.lan systemd[1]: Started PKI Tomcat Server pki-tomcat.
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: Java virtual machine used: /usr/lib/jvm/jre-1.8.0-openjdk/bin/java
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: classpath used: /usr/share/tomcat/bin/bootstrap.jar:/usr/share/tomcat/bin
+/tomcat-juli.jar:/usr/lib/java/commons-daemon.jar
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: main class used: org.apache.catalina.startup.Bootstrap
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: flags used: -DRESTEASY_LIB=/usr/share/java/resteasy
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: options used: -Dcatalina.base=/var/lib/pki/pki-tomcat -Dcatalina.home=/us
+r/share/tomcat -Djava.endorsed.dirs= -Djava.io.tmpdir=/var/lib/pki/pki-tomcat/temp -Djava.util.logging.config.file=/var/lib/pki
+/pki-tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager     -Djava.security.manag
+er     -Djava.security.policy==/var/lib/pki/pki-tomcat/conf/catalina.policy
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: arguments used: start
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: SEVERE: Failed to start component [Connector[AJP/1.3-8009]]
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: org.apache.catalina.LifecycleException: Protocol handler start failed
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.connector.Connector.startInternal(Connector.java:1
+075)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.core.StandardService.startInternal(StandardService
+.java:451)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.core.StandardServer.startInternal(StandardServer.j
+ava:930)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.startup.Catalina.start(Catalina.java:772)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.jMay 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.connector.Connector.startInternal(Connector.java:1
+075)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.core.StandardService.startInternal(StandardService
+.java:451)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.core.StandardServer.startInternal(StandardServer.j
+ava:930)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.startup.Catalina.start(Catalina.java:772)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.j
+ava:62)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at java.lang.reflect.Method.invoke(Method.java:498)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: Caused by: java.lang.IllegalArgumentException: The AJP Connector is configured with secretRequired=&amp;#34;true&amp;#34; but the secret attribute is either null or &amp;#34;&amp;#34;. This combination is not valid.
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.coyote.ajp.AbstractAjpProtocol.start(AbstractAjpProtocol.java:270)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.connector.Connector.startInternal(Connector.java:1072)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: ... 12 more
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверим версию установленных в систему Apache и Tomcat:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rpm -qa httpd
+httpd-2.4.29-9.el7.x86_64
+
+# rpm -qa tomcat
+tomcat-9.0.44-1.el7.noarch
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В Tomcat&amp;rsquo;е, в предыдущей установленной в системе версии 9.0.13, присутствовала потенциальная уязвимость CVE-2020-1938. Для её решения ввели передачу secret&amp;rsquo;а при использовании протокола AJP, через который в FreeIPA общаются Apache и DogTag. В результате обновления Tomcat обновился до версии 9.0.44, где предлагается использовать secret, но Apache, и его настройки, остался прежним.&lt;/p&gt;
+&lt;p&gt;Пока не будет обновлён Apache до версии 2.5, то применяем обходной маневр. Так как установленный в системе Apache имеет версию 2.4, модуль &lt;code&gt;mod_proxy_ajp&lt;/code&gt; которой не умеет передавать параметр &amp;lsquo;secret&amp;rsquo;, то необходимо в соответствующем месте Tomcat&amp;rsquo;а указать аттрибут, отключающий проверку секрета.&lt;/p&gt;
+&lt;h2 id=&#34;лечение&#34;&gt;Лечение&lt;/h2&gt;
+&lt;p&gt;Добавить в &lt;code&gt;/etc/pki/pki-tomcat/server.xml&lt;/code&gt; в строку коннектора аттрибут &amp;lsquo;secretRequired=&amp;ldquo;false&amp;rdquo;&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;    &amp;lt;!-- Define an AJP 1.3 Connector on port 8009 --&amp;gt;
+    &amp;lt;Connector port=&amp;#34;8009&amp;#34; protocol=&amp;#34;AJP/1.3&amp;#34; redirectPort=&amp;#34;8443&amp;#34; address=&amp;#34;localhost&amp;#34; secretRequired=&amp;#34;false&amp;#34;/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего перезапускаем сервис &amp;lsquo;pki-tomcatd@pki-tomcat&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart pki-tomcatd@pki-tomcat
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;freeipa_authentication_success.png&#34; alt=&#34;FreeIPA Certificates&#34;&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
+  Issuing CA: ipa
+  Certificate: MIIDgjCCAmqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAzMREwDwYDVQQKDAhURVNULkxBTjEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTIxMDUwNDE4MzYwNFoXDTQxMDUwNDE4MzYwNFowMzERMA8GA1UECgwIVEVTVC5MQU4xHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANwBn6gEBu73KL4OT/yuZNMNaL7esYVhQclx4d3lVVAFS7lXk/7Hh91MY39IL/N0teNvTnZn3I9E7VtkgATBvxXzzaLR+iMvDH1OWLIIcLuh4RfR8mVH5PRs1374aXrRRHlrQXElqm7kRt4yWQXb2ibagdnnQxdf2CvstA0HQCDg5DlNprVXu82RWomiacayyadnaZ/KKJmJAHhV4fY0I8tLn6uyVdOspfgA2ZQUaAXOuRtrbGuowegEbCurRO5egDl7GpSR6fOkxiFcnI/jEufatNe3ZQllF3ywT8rfT+oa+52BPCl9J25XrJYw0g71npocVkRi4gY86h0C2LEHeGMCAwEAAaOBoDCBnTAfBgNVHSMEGDAWgBSSy/ljEEs9wsV19d9s4SzwgaQnqjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBxjAdBgNVHQ4EFgQUksv5YxBLPcLFdfXfbOEs8IGkJ6owOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vaXBhLWNhLnRlc3QubGFuL2NhL29jc3AwDQYJKoZIhvcNAQELBQADggEBAJ5t2ZOsPPl121dmCChndCD2aPAWjDZR5FYlEZZN8pk7ApoZ1yDDqPcX/NS+h3Lsj2SqDR1YjljkU6yLdaZy9RJ6NqfDnqt6EIvX5TM6KEuU8ga78tzP0/gJESeFr4oAh1wy/YwQrl2qhaI23SrRQEQXsxdi1s9fBBpAMlszcu5YYgvMimPAoKTdfAvm/nAfH6tcP6Hfvj5aNwQLPqc+S0xrJanAs97mktp84z1rtY5hjnrYKAYGQIE51h/v+f7grnmShiM55qu+A+qxYBqUozf0pNQ/Mo5zB8WongizCYyqjnhBHhdh/E9ca9kmkz7xEdgwxxTqe958WZ/9K+PgtWs=
+  Subject: CN=Certificate Authority,O=TEST.LAN
+  Issuer: CN=Certificate Authority,O=TEST.LAN
+  Not Before: Tue May 04 18:36:04 2021 UTC
+  Not After: Sat May 04 18:36:04 2041 UTC
+  Serial number: 1
+  Serial number (hex): 0x1
+  Revoked: False
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# journalctl -u pki-tomcatd@pki-tomcat
+May 11 20:40:20 dev-ipa01.test.lan systemd[1]: Starting PKI Tomcat Server pki-tomcat...
+May 11 20:40:20 dev-ipa01.test.lan pki-server[3130]: ----------------------------
+May 11 20:40:20 dev-ipa01.test.lan pki-server[3130]: pki-tomcat instance migrated
+May 11 20:40:20 dev-ipa01.test.lan pki-server[3130]: ----------------------------
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: -----------------------
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: Banner is not installed
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: -----------------------
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: ----------------------
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: Enabled all subsystems
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: ----------------------
+May 11 20:40:20 dev-ipa01.test.lan systemd[1]: Started PKI Tomcat Server pki-tomcat.
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: Java virtual machine used: /usr/lib/jvm/jre-1.8.0-openjdk/bin/java
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: classpath used: /usr/share/tomcat/bin/bootstrap.jar:/usr/share/tomcat/bin
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: main class used: org.apache.catalina.startup.Bootstrap
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: flags used: -DRESTEASY_LIB=/usr/share/java/resteasy
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: options used: -Dcatalina.base=/var/lib/pki/pki-tomcat -Dcatalina.home=/us
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: arguments used: start
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Включение во FreeIPA отслеживания последней успешной аутентификации пользовательских аккаунтов</title>
+      <link>/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</link>
+      <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-05-07&lt;/p&gt;
+&lt;p&gt;Использованные источники:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/linux_domain_identity_authentication_and_policy_guide/enabling-tracking-of-last-successful-kerberos-authentication&#34;&gt;Enabling Tracking of Last Successful Kerberos Authentication&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;отключение-плагина-через-gui&#34;&gt;Отключение плагина через GUI&lt;/h2&gt;
+&lt;p&gt;IPA Server — Configuration — Password plugin features:&lt;br&gt;
+☑ KDC:Disable Last Success&lt;/p&gt;
+&lt;h2 id=&#34;отключение-плагина-через-cli&#34;&gt;Отключение плагина через CLI&lt;/h2&gt;
+&lt;p&gt;На каждом сервере FreeIPA смотрим текущие применяемые password-плагины:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa config-show | grep &amp;#34;Password plugin features&amp;#34;
+  Password plugin features: AllowNThash, KDC:Disable Last Success
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Отключаем плагин блокирующий трэкинг последней успешной аутентификации, оставляя прочие плагины включёнными:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa config-mod --ipaconfigstring=&amp;#39;AllowNThash&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если нагрузка на сервер превысила его ресурсы, то вновь отключаем трэкинг последней успешной аутентификации:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa config-mod --ipaconfigstring=&amp;#39;AllowNThash&amp;#39; --ipaconfigstring=&amp;#39;KDC:Disable Last Success&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверю при первой возможности, обязательно ли надо перезапускать одну или все реплики, так как после выполнения команд &lt;code&gt;ipa config-mod&lt;/code&gt; изменения немедленно реплицируются на все реплики. Но, сейчас, следуя инструкциям, выполняем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipactl restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Посмотреть дата/время последней успешной аутентификации:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa user-status admin
+----------------------
+Account disabled: False
+----------------------
+  Server: prod-ipa01.example.org
+  Failed logins: 1
+  Last successful authentication: 20210505154121Z
+  Last failed authentication: 20210506113029Z
+  Time now: 2021-05-07T07:03:56Z
+
+  Server: prod-ipa03.example.org
+  Failed logins: 4
+  Last successful authentication: N/A
+  Last failed authentication: 20210210175128Z
+  Time now: 2021-05-07T07:03:56Z
+
+  Server: prod-ipa02.example.org
+  Failed logins: 1
+  Last successful authentication: N/A
+  Last failed authentication: 20210329132149Z
+  Time now: 2021-05-07T07:03:56Z
+----------------------------
+Number of entries returned 3
+----------------------------
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Отключение анонимного доступа к LDAP-каталогу FreeIPA</title>
+      <link>/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</link>
+      <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-05-07&lt;/p&gt;
+&lt;p&gt;Использованные ссылки:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://abbra.fedorapeople.org/.todo/freeipa-docs/#disabling-anon-binds&#34;&gt;Disabling Anonymous Binds&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;По умолчанию, FreeIPA позволяет просматривать LDAP-каталог анонимным пользователям:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@prod-ipa02 /]# ldapsearch -x -h localhost -p 389 -b uid=ipara,ou=People,o=ipaca description
+# extended LDIF
+#
+# LDAPv3
+# base &amp;lt;uid=ipara,ou=People,o=ipaca&amp;gt; with scope subtree
+# filter: (objectclass=*)
+# requesting: description 
+#
+
+# ipara, people, ipaca
+dn: uid=ipara,ou=people,o=ipaca
+description: 2;7;CN=Certificate Authority,O=EXAMPLE.ORG;CN=IPA RA,O=EXAMPLE.ORG
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 2
+# numEntries: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Мне неизвестна причина такого решения разработчиков. К счастью, это нежелательное явление можно пресечь добавлением, на каждой реплике FreeIPA, в нереплицируемую часть каталога, аттрибута &amp;rsquo;nsslapd-allow-anonymous-access: rootdse&amp;rsquo; (после ввода блока с командами нажимаем стандартное &amp;lsquo;Ctrl+d&amp;rsquo;):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ldapmodify -x -D &amp;#34;cn=Directory Manager&amp;#34; -W -h localhost -p 389
+
+dn: cn=config
+changetype: modify
+replace: nsslapd-allow-anonymous-access
+nsslapd-allow-anonymous-access: rootdse
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В инструкции указано, что необходимо перезапустить службу &amp;lsquo;dirsrv&amp;rsquo;, но в моём случае изменения применились немедленно:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@prod-ipa02 /]# ldapsearch -x -h localhost -p 389 -b uid=ipara,ou=People,o=ipaca description 
+# extended LDIF
+#
+# LDAPv3
+# base &amp;lt;uid=ipara,ou=People,o=ipaca&amp;gt; with scope subtree
+# filter: (objectclass=*)
+# requesting: description 
+#
+
+# search result
+search: 2
+result: 48 Inappropriate authentication
+text: Anonymous access is not allowed.
+
+# numResponses: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Применяемый аттрибут можно найти (или не найти) на каждом сервере в &lt;code&gt;/etc/dirsrv/slapd-EXAMPLE-ORG/dse.ldif&lt;/code&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Исправление проблемы с переключением раскладки клавиатуры в Visual Studio Code</title>
+      <link>/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</link>
+      <pubDate>Thu, 15 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Причина кроется в обработке нажатия клавиши &amp;lsquo;Alt&amp;rsquo;, даже в составе комбинации, что приводит к вызову меню.&lt;/p&gt;
+&lt;p&gt;Решение найдено здесь: &lt;a href=&#34;https://github.com/microsoft/vscode/issues/85405#issuecomment-656659452&#34;&gt;https://github.com/microsoft/vscode/issues/85405#issuecomment-656659452&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;В настройках Visual Studio Code ищем опцию &amp;lsquo;window.titleBarStyle&amp;rsquo;, которая по умолчанию установлена в &amp;rsquo;native&amp;rsquo;. После смены значения на &amp;lsquo;custom&amp;rsquo;, нажатие клавиши &amp;lsquo;Alt&amp;rsquo; перестаёт вызывать меню.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Отдельная hidden replicas для безопасного full backup FreeIPA</title>
+      <link>/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</link>
+      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-04-01&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://freeipa.readthedocs.io/en/latest/designs/hidden-replicas.html&#34;&gt;Hidden replicas&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Hidden replica&lt;/em&gt; доступна с версии FreeIPA 4.9?&lt;/p&gt;
+&lt;p&gt;Создание скрытой реплики выполняется командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipa-replica-install --hidden-replica
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего необходимо назначить ей все имеющиеся в домене роли, чтобы full backup имел в себе всю информацию.&lt;/p&gt;
+&lt;p&gt;При установке скрытой реплили, в DNS отсутствуют её srv-записи, а значит клиенты ничего не знают о её присутствии. Что позволяет выполнять full backup, когда реплика временно переводится в offline-режим, без перерыва в обслуживании клиентов.&lt;/p&gt;
+&lt;p&gt;При восстановлении из такого бэкапа восстановится обычная реплика, то есть не скрытая.&lt;/p&gt;
+&lt;p&gt;Есть команда для перевода обычной реплики в скрытую и обратно. Реплика не должна нести роли &amp;ldquo;CA renewal master&amp;rdquo; or &amp;ldquo;DNSSEC key master&amp;rdquo;, иначе, перед понижением её до hidden состояния, необходимо перенестить эти роли на другие реплики.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Получение keytab-файла для сервисного принципала</title>
+      <link>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-04-01&lt;/p&gt;
+&lt;p&gt;Ссылки:
+&lt;a href=&#34;https://www.freeipa.org/page/V4/Keytab_Retrieval_Management&#34;&gt;https://www.freeipa.org/page/V4/Keytab_Retrieval_Management&lt;/a&gt;
+&lt;a href=&#34;https://www.freeipa.org/page/V4/Keytab_Retrieval&#34;&gt;https://www.freeipa.org/page/V4/Keytab_Retrieval&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Например, находясь на узле со службой, для которой нам необходимо получить keytab, сначала, если ещё не получили, то получаем тикет:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Назначаем себе право получения таблицу ключей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa service-allow-retrieve-keytab hbase/$(hostname) --users=$USER
+  Имя учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG
+  Псевдоним учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG
+  Managed by: prod-hbr01p.example.org
+  Пользователи, которым разрешено получать таблицу ключей: eugene
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Получаем таблицу ключей и сохраняем её в файле:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa-getkeytab -r -p hbase/$(hostname) -k ~/keytabs/hbase_$(hostname -s).keytab
+  Keytab successfully retrieved and stored in: /home/eugene/keytabs/hbase_prod-hbr01p.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Всё ещё имея свой персональный kerberos-билет, отнимаем у себя право получения таблицы ключей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipa service-disallow-retrieve-keytab hbase/$(hostname) --users=$USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Используем полученный keytab для выпуска билета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit -kt ~/keytabs/hbase_prod-hbr01p.keytab hbase/$(hostname)
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Выполнение ad-hoc absible команд</title>
+      <link>/n/vypolnenie-ad-hoc-absible-komand/</link>
+      <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/vypolnenie-ad-hoc-absible-komand/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-03-12&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Для предотвращения предупреждения о несоответствии ssh-ключей, можно установить переменную:
+&lt;code&gt;export ANSIBLE_HOST_KEY_CHECKING=False&lt;/code&gt;
+или, если не работает, то:
+&lt;code&gt;export ANSIBLE_SSH_ARGS=&amp;quot;-o UserKnownHostsFile=/dev/null&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Для дебаггинга:
+&lt;code&gt;export ANSIBLE_DEBUG=1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Простейший inventory-файл представляет собой текстовый файл со списком из ip-адресов и/или dns-имён хостов.&lt;/li&gt;
+&lt;li&gt;Вместо указания инвентори-файла, можно указать ip-адрес.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Далее примеры:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Для предотвращения предупреждения о несоответствии ssh-ключей
+export ANSIBLE_HOST_KEY_CHECKING=False
+ 
+# важна запятая после указания одного ip-адреса или dns-имени
+ansible all -i 10.15.112.1, -m shell -a &amp;#39;hostname&amp;#39;
+ 
+# здесь доп запятая не нужна
+ansible all -i 10.15.112.1,prod-airf01p -m shell -a &amp;#39;hostname&amp;#39;
+ 
+# выполняем команды с правами root
+ansible all -i 10.15.112.1,prod-airf01p -m shell -a &amp;#39;cat /etc/shadow&amp;#39; --become
+ 
+# копируем локальный файл в удалённый каталог на все узлы из инвентори-файла
+ansible all -i list.hosts -m copy -a &amp;#39;src=~/soft/nginx.rpm dest=/tmp/&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Я не нашёл способа указать подсеть, вместо одного или нескольких ip-адресов. Пришлось использовать inventory-файл. В простейшем случае собираем инвентори-файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Вся подсеть 10.15.112.0/25
+for i in {1..126}; do echo 10.15.112.$i &amp;gt;&amp;gt; hosts.txt; done
+ 
+# Все узлы с открытым 22-ым портом в подсети 10.15.112.0/25
+for i in {1..126}; do nmap -Pn -p22 10.15.112.$i|grep open &amp;amp;&amp;amp; echo &amp;#34;10.15.112.$i&amp;#34; &amp;gt;&amp;gt; hosts.txt; done
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Организация беспарольного зеркала registry-1.docker.io</title>
+      <link>/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</link>
+      <pubDate>Fri, 05 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-03-05&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.docker.com/registry/deploying/&#34;&gt;https://docs.docker.com/registry/deploying/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Машине, где установлен Nexus Repository Manager, для его работы предоставлен выход в инет. Использовать сам NXRM для организации зеркала docker.io не слишком удобно из-за обязательного применения &amp;lsquo;docker login&amp;rsquo; перед использованием такого репозитория, поэтому запускаем зеркало:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker run -d -p 6000:5000 \
+-e REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io \
+ --restart always \
+ --name registry registry:2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На целевой машине добавляем в /etc/docker/daemon.json запись:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;{
+  &amp;#34;registry-mirrors&amp;#34;: [&amp;#34;http://nexus.example.org:6000&amp;#34;]
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После перезапуска docker, стало возможным, без дополнительных &amp;lsquo;docker login&amp;rsquo;, сразу выполнять:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;docker pull alpine
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62</title>
+      <link>/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-03-01&lt;/p&gt;
+&lt;h2 id=&#34;анамнез&#34;&gt;Анамнез&lt;/h2&gt;
+&lt;p&gt;Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62&amp;hellip; бла-бла&lt;/p&gt;
+&lt;h2 id=&#34;диагноз&#34;&gt;Диагноз&lt;/h2&gt;
+&lt;p&gt;Файл &lt;code&gt;sudo.rpm&lt;/code&gt;, скачиваемый с sudo.ws, подписан цифровой подписью. Пакетный менеджер, устанавливаемый с RedOS7.2, не может обработать rpm-пакет подписанный gpg-подписью.&lt;/p&gt;
+&lt;h2 id=&#34;лечение&#34;&gt;Лечение&lt;/h2&gt;
+&lt;p&gt;Решил перепаковать rpm-файл sudo. В этом случае подпись будет утеряна, после чего установка на RedOS7.2 становится возможной.&lt;/p&gt;
+&lt;p&gt;Перепаковка выполняется под root&amp;rsquo;ом:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# В CentOS 7 я установил:
+yum install rpmrebuild
+ 
+# Скачал свежий sudo:
+curl -LO https://github.com/sudo-project/sudo/releases/download/SUDO_1_9_5p2/sudo-1.9.5-3.el7.x86_64.rpm
+ 
+# Запустил пересборку:
+rpmrebuild -enp sudo-1.9.5-3.el7.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запустился &lt;code&gt;vi&lt;/code&gt; со списком изменяемых опций. В числе прочих опций, увидел опцию &amp;lsquo;Release: 3.el7&amp;rsquo;, которую изменил на:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Release:       3.el7.nogpg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего, стандартным способом, записал изменения и вышел из &lt;code&gt;vi&lt;/code&gt;. Согласился на продолжение и получил результат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;result: /root/rpmbuild/RPMS/x86_64/sudo-1.9.5-3.el7.nogpg.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Этот пакет закинул на RedOS7.2 и установил стандартным:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum install sudo-1.9.5-3.el7.nogpg.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Создание keytab-файла для пользовательского принципала</title>
+      <link>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
+      <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-01-30&lt;/p&gt;
+&lt;p&gt;При получении keytab&amp;rsquo;а из FreeIPA, для пользователя потребуется сменить пароль.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В домашнем каталоге пользователя запускаем утилиту &amp;lsquo;ipa-getkeytab&amp;rsquo; для генерации keytab-файла для пользователя;&lt;/li&gt;
+&lt;li&gt;на запрос пароля, дважды вводим НОВЫЙ пароль, который с этого момента станет актуальным для пользовательского УЗ;&lt;/li&gt;
+&lt;li&gt;одновременно, все прочие keytab&amp;rsquo;ы, сгенерированные ранее, станут недействительными.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa-getkeytab -p username -k username.keytab -P
+New Principal Password:
+Verify Principal Password:
+Keytab successfully retrieved and stored in: username.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяем, что в созданном keytab-файле присутствует информация:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ klist -kte username.keytab
+Keytab name: FILE:username.keytab
+KVNO Timestamp           Principal
+---- ------------------- ------------------------------------------------------
+  33 01/16/2021 11:52:00 username@EXAMPLE.ORG (aes256-cts-hmac-sha1-96)
+  33 01/16/2021 11:52:00 username@EXAMPLE.ORG (aes128-cts-hmac-sha1-96)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Получение kerberos-билета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit -kt username.keytab username
+$ klist
+Ticket cache: FILE:/tmp/krb5cc_192800004_g8LRFe
+Default principal: username@EXAMPLE.ORG
+ 
+Valid starting       Expires              Service principal
+01/16/2021 12:00:20  01/17/2021 12:00:20  krbtgt/EXAMPLE.ORG@EXAMPLE.ORG
+        renew until 01/23/2021 12:00:20
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если полученная информация напоминает вышеприведённую, то можно считать, что keytab-файл успешно создан.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Срипт для добавления PTR-записей по списку из файла в обратную DNS-зону FreeIPA</title>
+      <link>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
+      <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-01-25&lt;/p&gt;
+&lt;p&gt;Образец файла со списком узлов в формате hosts:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cat ip.hosts
+10.15.195.1 is01-airf01p.example.org
+10.15.195.3 is01-app01p.example.org
+10.15.195.4 is01-app02p.example.org
+10.15.112.52 is02-app208p.example.org
+10.15.112.53 is02-app209p.example.org
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скрипт для добавления PTR-записей в соответствующие обратные зоны:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;add_dns_record.sh
+#!/bin/bash
+LIST=&amp;#34;ip.hosts&amp;#34;
+ 
+while read line; do
+  echo &amp;#34;&amp;#34;
+  echo $line     # &amp;#34;10.15.195.1 is01-airf01p.example.org&amp;#34;
+  arr1=($line)   # конвертируем переменную в массив из двух элементов
+  ip1=${arr1[0]} # &amp;#34;10.15.195.1&amp;#34;
+  IFS=&amp;#34;.&amp;#34;        # разделитель пробел меняем на точку для bash substring
+  arr2=($ip1)    # конвертируем ip-адрес в массив &amp;#34;10 15 195 1&amp;#34;
+  IFS=&amp;#34; &amp;#34;        # возвращаем разделить
+ 
+  ZONE=&amp;#34;${arr2[2]}.${arr2[1]}.${arr2[0]}.in-addr.arpa&amp;#34;
+  IPN=${arr2[3]}
+  NAME=${arr1[1]}&amp;#34;.&amp;#34;
+  echo &amp;#34;$IPN $NAME&amp;#34;
+  echo &amp;#34;ipa dnsrecord-add $ZONE $IPN --ptr-rec $NAME&amp;#34;
+  ipa dnsrecord-add $ZONE $IP --ptr-rec $NAME
+done &amp;lt; $LIST
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: LDAP binding во FreeIPA</title>
+      <link>/n/ldap-binding-vo-freeipa/</link>
+      <pubDate>Sun, 15 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ldap-binding-vo-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-11-15&lt;/p&gt;
+&lt;p&gt;Во FreeIPA существует специальный тип учётных записей, называемый &amp;ldquo;system account&amp;rdquo;. Прямое предназначение &amp;lsquo;system account&amp;rsquo;, это организация безопасного подключения различных сервисов к LDAP, то есть LDAP binding.&lt;/p&gt;
+&lt;p&gt;Аккаунт этого типа создаётся в отдельном специальном LDAP-контейнере вручную или с помощью утилит, облегчающих эту задачу. &amp;lsquo;System account&amp;rsquo; не имеет права записи в LDAP и полностью ограничен в возможности входа куда-либо и владении чем-либо, но имеет право чтения некоторой информации из LDAP. Политики паролей не применяются к &amp;ldquo;системным аккаунтам&amp;rdquo; и назначенный им пароль не имеет срока действия. Информация о &amp;ldquo;системных аккаунтах&amp;rdquo; скрыта от пользователей.&lt;/p&gt;
+&lt;p&gt;Проведённые на скорую руку испытания видимого горизонта для &amp;ldquo;системного аккаунта&amp;rdquo; показали, что, по умолчанию, для &amp;lsquo;system account&amp;rsquo; доступно чтение не только содержимого контейнера &amp;lsquo;accounts&amp;rsquo; с пользователями, группами, хостами, и т.д., но и содержимое некоторых других контейнеров. Конечно, такая ситуация не может беспокоить любого здравомыслящего ипат-внедренца и, к счастью, во FreeIPA присутствует возможность сужения видимого пространства LDAP-каталога до минимально необходимого диапазона, с помощью написания для &amp;lsquo;system account&amp;rsquo; правил ACI.&lt;/p&gt;
+&lt;p&gt;Утилиты для создания &amp;lsquo;system account&amp;rsquo;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/noahbliss/freeipa-sam&#34;&gt;freeipa-sam&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Использованные ссылки:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.freeipa.org/page/HowTo/LDAP#System_Accounts&#34;&gt;FreeIPA HowTo/LDAP System Account&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2</title>
+      <link>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;ссылки&#34;&gt;Ссылки&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/latest/topics/cdh_sg_hiveserver2_security.html&#34;&gt;HiveServer2 Security Configuration&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;настройка-ldap-аутентификации&#34;&gt;Настройка LDAP-аутентификации&lt;/h2&gt;
+&lt;p&gt;На странице Configurations для Hive, используем фильтр ldap, и:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Включаем LDAP
+&lt;strong&gt;Enable LDAP Authentication  Hive (Service-Wide)&lt;/strong&gt;: ☑&lt;/li&gt;
+&lt;li&gt;Указываем адрес LDAP-сервера
+&lt;strong&gt;LDAP URL&lt;/strong&gt;
+hive.server2.authentication.ldap.url: &lt;code&gt;ldaps://ldap.example.org:636&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Указываем контейнер поиска пользователей
+&lt;strong&gt;LDAP BaseDN&lt;/strong&gt;
+hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=example,dc=org&lt;/code&gt;
+&lt;img src=&#34;cloudera_hive_ldap.png&#34; alt=&#34;Cloudera Hive LDAP&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Неудачный запуск &#39;Inspect Network Performance&#39;: Failed running performance inspector on cluster</title>
+      <link>/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</link>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;проблема&#34;&gt;Проблема&lt;/h2&gt;
+&lt;p&gt;В результате запуска на кластере проверки &amp;ldquo;Inspect Network Performance&amp;rdquo; мы можем наблюдать картину:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Failed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+&lt;p&gt;В логах &lt;code&gt;/var/log/cloudera-scm-agent/cloudera-scm-agent.log&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Thread-17 supervisor WARNING Failed while getting process info. Retrying. (&amp;lt;Fault
+10: &amp;#39;BAD_NAME: 3050-host-perf-inspector&amp;#39;&amp;gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В &lt;code&gt;/var/run/cloudera-scm-agent/process/3050-host-perf-inspector/logs&lt;/code&gt; присутствует пустой файл &lt;code&gt;stdout.log&lt;/code&gt;, а в файле &lt;code&gt;stderr.log&lt;/code&gt; видна ошибка &amp;ldquo;SyntaxError: invalid syntax&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[21/Oct/2020 14:56:56 +0000] 105531 MainThread redactor     INFO     Started launcher: /opt/cloudera/cm-agent/service/perf/host_perf_diag.py input.json logs/result.json
+[21/Oct/2020 14:56:56 +0000] 105531 MainThread redactor     ERROR    Redaction rules file doesn&amp;#39;t exist, not redacting logs. file: redaction-rules.json, directory: /run/cloudera-scm-agent/process/3050-host-perf-inspector
+[21/Oct/2020 14:56:56 +0000] 105531 MainThread redactor     INFO     Re-exec watcher: /opt/cloudera/cm-agent/bin/cm proc_watcher 105541
+  File &amp;#34;/opt/cloudera/cm-agent/service/perf/host_perf_diag.py&amp;#34;, line 156
+    except RuntimeError, rte:
+                       ^
+SyntaxError: invalid syntax
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
+&lt;p&gt;На наших машинах с CentOS7 на борту по умолчанию запускается &amp;lsquo;python3&amp;rsquo;. Поэтому для того, чтобы в кластере заработал &amp;ldquo;network-inspector&amp;rdquo; необходимо поменять шебанг у файла &lt;code&gt;/opt/cloudera/cm-agent/service/perf/host_perf_diag.py&lt;/code&gt;. Добавить цифру &amp;lsquo;2&amp;rsquo; к &amp;lsquo;#!/usr/bin/python&amp;rsquo;, чтобы было так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/usr/bin/python2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После применения решения можем наблюдать успешное выполнения теста:
+&lt;img src=&#34;/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Successfully completed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Перенос кластера Cloudera CDH 6.3.2 в другой vlan</title>
+      <link>/n/perenos-klastera-cloudera-cdh-6-3-2-v-drugoi-vlan/</link>
+      <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/perenos-klastera-cloudera-cdh-6-3-2-v-drugoi-vlan/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-10-21&lt;/p&gt;
+&lt;p&gt;Работа производилась на Cloudera CDH 6.3.2. Используется встроенный PostgreSQL.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Остановить кластер.&lt;/li&gt;
+&lt;li&gt;Остановить Cloudera Service Management.&lt;/li&gt;
+&lt;li&gt;На всех хостах остановить агенты:&lt;br&gt;
+&lt;code&gt;systemctl stop cloudera-scm-agent&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl disable cloudera-scm-agent&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;На управляющем хосте остановить службы Cloudera Server и встроенный PostgreSQL:&lt;br&gt;
+&lt;code&gt;systemctl stop cloudera-scm-server&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl disable cloudera-scm-server&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl stop cloudera-scm-server-db&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl disable cloudera-scm-server-db&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;br&gt;
+После переезда кластера в новый vlan и назначении на сетевые интерфейсы новых ip-адресов проделать:
+&lt;ol&gt;
+&lt;li&gt;На всех узлах привести записи в /etc/hosts к актуальному состоянию.&lt;/li&gt;
+&lt;li&gt;Если кластер в домене IPA, а автоматическое обновление DNS-записей не произошло, то добавить в файл /etc/sssd/sssd.conf опцию &lt;code&gt;ipa_dyndns_update = True&lt;/code&gt; и перезапустить демон &lt;code&gt;systemctl restart sssd&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;На всех хостах в файле /etc/cloudera-scm-agent/config.ini указать новый адрес CM-сервера, пример: &lt;code&gt;server_host=10.0.0.1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Включить на всех хостах агенты:&lt;br&gt;
+&lt;code&gt; systemctl enable --now cloudera-scm-agent&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Включить на mgm-хосте встроенный PostgreSQL и Cloudera Server:&lt;br&gt;
+&lt;code&gt;systemctl enable cloudera-scm-server-db&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl start cloudera-scm-server-db&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl enable --now cloudera-scm-server&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;br&gt;
+Переходим к WEB-интерфейсу, где:
+&lt;ol&gt;
+&lt;li&gt;запустить &amp;ldquo;Cloudera Management Service&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;применить изменения в конфигурациях сервисов;&lt;/li&gt;
+&lt;li&gt;запустить тесты &amp;ldquo;Inspect All Hosts&amp;rdquo; и &amp;ldquo;Inspect Network Performance&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;запустить кластер.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Добавление в NXRM единого репозитория для всех версий PostgreSQL</title>
+      <link>/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
+      <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-10-18&lt;/p&gt;
+&lt;p&gt;Добавляем отдельный блоб для хранения пакетов PostgreSQL.&lt;/p&gt;
+&lt;p&gt;Добавляем репозиторий
+Remote storage: &lt;a href=&#34;https://download.postgresql.org/pub/repos/yum/&#34;&gt;https://download.postgresql.org/pub/repos/yum/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Содержимое файла pgdg-redhat-all.repo для деплоя на машины:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#######################################################
+# PGDG Red Hat Enterprise Linux / CentOS repositories #
+#######################################################
+
+# PGDG Red Hat Enterprise Linux / CentOS stable common repository for all PostgreSQL versions
+
+[pgdg-common]
+name=PostgreSQL common RPMs for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/common/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG Red Hat Enterprise Linux / CentOS stable repositories:
+
+[pgdg13]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/13/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/12/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/11/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg10]
+name=PostgreSQL 10 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/10/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg96]
+name=PostgreSQL 9.6 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/9.6/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg95]
+name=PostgreSQL 9.5 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/9.5/redhat/rhel-$releasever-$basearch
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg94]
+name=PostgreSQL 9.4 for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/9.4/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG RHEL/CentOS Updates Testing common repositories.
+
+[pgdg-common-testing]
+name=PostgreSQL common testing RPMs for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/common/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG RHEL/CentOS Updates Testing repositories. (These packages should not be used in production)
+# Available for 9.6 and above.
+
+[pgdg13-updates-testing]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch - Updates testing
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/13/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-updates-testing]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Updates testing
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-updates-testing]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Updates testing
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG Red Hat Enterprise Linux / CentOS SRPM testing common repository
+
+[pgdg-source-common]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Source
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/common/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG RHEL / CentOS testing common SRPM repository for all PostgreSQL versions
+
+[pgdg-common-srpm-testing]
+name=PostgreSQL common testing SRPMs for RHEL/CentOS $releasever - $basearch
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/testing/common/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG Source RPMs (SRPM), and their testing repositories:
+
+[pgdg13-source-updates-testing]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch - Source updates testing
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/testing/13/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-source]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-source-updates-testing]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Source update testing
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/testing/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-source]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-source-updates-testing]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Source update testing
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/testing/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg10-source]
+name=PostgreSQL 10 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/10/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg96-source]
+name=PostgreSQL 9.6 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/9.6/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg95-source]
+name=PostgreSQL 9.5 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/9.5/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg94-source]
+name=PostgreSQL 9.4 for RHEL/CentOS $releasever - $basearch - Source
+failovermethod=priority
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/srpms/9.4/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# Debuginfo/debugsource packages for stable repos
+
+[pgdg13-updates-debuginfo]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/13/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-updates-debuginfo]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-updates-debuginfo]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg10-updates-debuginfo]
+name=PostgreSQL 10 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/10/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg96-updates-debuginfo]
+name=PostgreSQL 9.6 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/9.6/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg95-updates-debuginfo]
+name=PostgreSQL 9.5 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/debug/9.5/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+# Debuginfo/debugsource packages for testing repos
+# Available for 9.6 and above.
+
+[pgdg13-updates-testing-debuginfo]
+name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/debug/13/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg12-updates-testing-debuginfo]
+name=PostgreSQL 12 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/debug/12/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+
+[pgdg11-updates-testing-debuginfo]
+name=PostgreSQL 11 for RHEL/CentOS $releasever - $basearch - Debuginfo
+baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/testing/debug/11/redhat/rhel-$releasever-$basearch
+enabled=0
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Disabling Hive CLI</title>
+      <link>/n/disabling-hive-cli/</link>
+      <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/disabling-hive-cli/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Перед выполнением этой инструкции, необходимо ознакомиться с &lt;a href=&#34;/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore&#34;&gt;Блокирование доступа внешних программ к Hive metastore&lt;/a&gt;, где описано более централизованный способ блокирования доступа к Metastore Hive.&lt;/p&gt;
+&lt;p&gt;После активации Cloudera Sentry, необходимо предотвратить возможность использования консольной утилиты &lt;code&gt;hive&lt;/code&gt; пользователями. Вместо &lt;code&gt;hive&lt;/code&gt;, пользователи должны использовать утилиту &lt;code&gt;beeline&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Каталог HIVE_HOME можно найти из-под root командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME
+HIVE_HOME=/usr/lib/hive
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Таким образом, отключение Hive CLI производим следующими командами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HIVE_HOME=$(hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME|awk -F&amp;#39;=&amp;#39; &amp;#39;{print $2}&amp;#39;)
+setfacl -m u:hive:rx $HIVE_HOME/bin/hive
+chmod 754 $HIVE_HOME/bin/hive
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Разъяснение: Hive не будет стартовать, если не оставить ему доступ к этому файлу.&lt;/p&gt;
+&lt;p&gt;При необходимости, снимаем запрет командами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HIVE_HOME=$(hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME|awk -F&amp;#39;=&amp;#39; &amp;#39;{print $2}&amp;#39;)
+setfacl -b $HIVE_HOME/bin/hive
+chmod 755 $HIVE_HOME/bin/hive
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Исправление застрявшего статуса у роли в Cloudera CDH</title>
+      <link>/n/ispravlenie-zastryavshego-statusa-u-roli-v-cloudera-hadoop/</link>
+      <pubDate>Sat, 26 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ispravlenie-zastryavshego-statusa-u-roli-v-cloudera-hadoop/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-09-26&lt;/p&gt;
+&lt;p&gt;Из-за поспешной перезагрузки агентов или management service, статус роли, которую перегружали, может застрять в RUNNING или STOPPING. В результате, с ролью ничего нельзя сделать.&lt;/p&gt;
+&lt;h2 id=&#34;исправление&#34;&gt;Исправление&lt;/h2&gt;
+&lt;p&gt;Заходим в клаудеровскую базу данных PostgreSQL.&lt;/p&gt;
+&lt;p&gt;В случае использования встроенной БД, находим автоматический созданный пароль так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat /var/lib/cloudera-scm-server-db/data/generated_password.txt
+
+MnPwGeWaip
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заходим в CLI:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;psql -U cloudera-scm -p 7432 -h localhost -d postgres
+Password for user cloudera-scm: MnPwGeWaip
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Переходим в базу scm и выполняем поиск застрявшего статуса, например STOPPING, и его замену:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# \c scm
+
+# select role_id, name, configured_status from ROLES where configured_status = &amp;#39;STOPPING&amp;#39;;
+ role_id |                               name                               | configured_status
+---------+------------------------------------------------------------------+-------------------
+      25 | mgmt-SERVICEMONITOR-edbf339a77d8be878f36462f131bc862             | RUNNING
+      58 | hbase-HBASETHRIFTSERVER-cd4fc95f13f38837f08699095a260ef7         | STOPPING
+      33 | hdfs-DATANODE-b7b6861c2160c74fd2362f9919c9331b                   | RUNNING
+
+# update roles set configured_status = &amp;#39;STOPPED&amp;#39; where role_id = 58;
+UPDATE 1
+
+# select role_id, name, configured_status from ROLES where configured_status = &amp;#39;STOPPED&amp;#39;;
+ role_id |                           name                           | configured_status
+---------+----------------------------------------------------------+-------------------
+      58 | hbase-HBASETHRIFTSERVER-cd4fc95f13f38837f08699095a260ef7 | STOPPED
+(1 строка)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для обновления статуса, необходимо перезапустить cloudera-scm-server.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://community.cloudera.com/t5/Support-Questions/Custom-add-on-service-stuck-in-starting-state-and-now-cannot/m-p/83958&#34;&gt;Custom add on service stuck in starting state, and now cannot start,stop,delete this service.&lt;/a&gt;
+&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/latest/topics/cm_ig_embed_pstgrs.html&#34;&gt;Managing the Embedded PostgreSQL Database&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Запуск kafka-mirror-maker из systemd</title>
+      <link>/n/zapusk-kafka-mirror-maker-iz-systemd/</link>
+      <pubDate>Sun, 06 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/zapusk-kafka-mirror-maker-iz-systemd/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Каталог размещения: /opt/hadoop. Сюда скачиваем и распаковываем kafka_2.13-2.6.0.tgz и создаём ссылку kafka на каталог kafka_2.13-2.6.0, куда был раскапован архив:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir /opt/hadoop
+cd /opt/hadoop
+tar xvf kafka_2.13-2.6.0.tgz
+ln -s kafka_2.13-2.6.0 kafka
+mkdir kafka/logs
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём два файла для запуска и остановки kafka-mirror.
+&lt;code&gt;kafka-mirror-maker-start.sh&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/bin/bash
+echo &amp;#34;mirror maker restarted $(date)&amp;#34;&amp;gt;&amp;gt;/opt/hadoop/kafka/logs/mirrormaker.log
+cd /opt/hadoop/kafka/bin/
+./kafka-mirror-maker.sh \
+--consumer.config ../config/consumer.properties \
+--producer.config ../config/producer.properties \
+--whitelist &amp;#39;adfox_created|adfox_deleted|adfox_updated|mymoscow_created|mymoscow_deleted|mymoscow_updated&amp;#39; \
+--num.streams 3 \
+--offset.commit.interval.ms 30000 \
+--abort.on.send.failure false
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;kafka-mirror-maker-stop.sh&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/bin/sh
+SIGNAL=${SIGNAL:-TERM}
+PIDS=$(ps ax | grep -i &amp;#39;kafka.tools.Mirrormaker&amp;#39; | grep java | grep -v grep | awk &amp;#39;{print $1}&amp;#39;)if [ -z &amp;#34;$PIDS&amp;#34; ]; then
+ echo &amp;#34;No mirrormaker service to stop&amp;#34;
+ echo &amp;#34;No mirrormaker service to stop&amp;#34; &amp;gt;&amp;gt; /opt/hadoop/kafka/logs/mirrormaker.log
+ exit 1
+else
+ kill -s $SIGNAL $PIDS
+ echo &amp;#34;stopped mirrormaker service&amp;#34;
+ echo &amp;#34;stopped mirrormaker service $date&amp;#34; &amp;gt;&amp;gt; /opt/hadoop/kafka/logs/mirrormaker.log
+fi
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём системного пользователя kafka, если такового не существует:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;useradd --system --no-create-home kafka
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Задаём права и владельцев для созданных файлов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;chown -R kafka.kafka kafka_2.13-2.6.0
+chown kafka.kafka kafka-mirror-st*.sh
+chmod u+x kafka-mirror-st*.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём unit для kafka-mirror в каталоге /etc/systemd/system/&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[Unit]
+Description=KafkaMirror Daemon
+Documentation=https://kafka.apache.org/documentation/
+Requires=network.target
+After=network.target
+
+[Service]
+User=kafka
+Group=kafka
+ExecStart=/opt/hadoop/kafka-mirror-start.sh
+ExecStop=/opt/hadoop/kafka-mirror-stop.sh
+TimeoutSec=60
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запускаем юнит и смотрим результаты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl daemon-reload
+systemctl enable kafka-mirror
+systemctl start kafka-mirror
+journalctl -f
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Обновление Nexus Repository Manager</title>
+      <link>/n/obnovlenie-nexus-repository-manager/</link>
+      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/obnovlenie-nexus-repository-manager/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-05-07&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://support.sonatype.com/hc/en-us/articles/115000350007&#34;&gt;Upgrading Nexus Repository Manager 3&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;краткое-описание&#34;&gt;Краткое описание&lt;/h3&gt;
+&lt;p&gt;Nexus работает на java и почти не зависит от хоста.&lt;/p&gt;
+&lt;p&gt;Nexus состоит из двух каталогов:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The application directory &lt;code&gt;nexus-3.16.1-02&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;The data directory &lt;code&gt;sonatype-work&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;├── nexus-3.16.1-02
+├── sonatype-work
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;И не забываем о запуске вместе с ОС. На данный момент видно, что загрузка организована через ссылку &lt;code&gt;/etc/init.d/nexus&lt;/code&gt;, которая указывает на &lt;code&gt;/data/nexus-3.16.1-02/bin/nexus&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;подготовка-к-обновлению&#34;&gt;Подготовка к обновлению&lt;/h3&gt;
+&lt;p&gt;Скачиваем, проверяем хэш-сумму, и распаковываем новый nexus:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cd tmp
+$ wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+$ wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz.sha1
+$ sha1sum latest-unix.tar.gz
+8298bd6db3b0f4d083942343a89f47cae7d791de latest-unix.tar.gz
+$ cat latest-unix.tar.gz.sha1
+8298bd6db3b0f4d083942343a89f47cae7d791de
+$ tar -xvf latest-unix.tar.gz
+$ sudo chown nexus:nexus nexus-3.23.0-03 -R
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Переносим новый экземпляр Nexus в тот же каталог, где находится работающий экземпляр старого Nexus, чтобы было так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;.
+├── nexus-3.16.1-02
+├── nexus-3.23.0-03
+├── sonatype-work
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Останавливаем работающий Nexus.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo /etc/init.d/nexus stop
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для быстрого восстановления в случае неудачи, делаем копию &amp;ldquo;The data directory &lt;code&gt;sonatype-work&lt;/code&gt;&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ rsync -av sonatype-work tmp/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Изменяем ссылку &lt;code&gt;/etc/init.d/nexus&lt;/code&gt;, чтобы она указывала на &lt;code&gt;/data/nexus-3.23.0-03/bin/nexus&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rm /etc/init.d/nexus
+# ln -s /data/nexus-3.23.0-03/bin/nexus /etc/init.d/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;/data/nexus-3.23.0-03/bin/nexus.rc&lt;/code&gt; указываем пользователя под которым будет работать Nexus:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;run_as_user=&amp;#34;nexus&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Сравнил &lt;code&gt;nexus-3.16.1-02/bin/nexus.vmoptions&lt;/code&gt; и &lt;code&gt;nexus-3.23.0-03/bin/nexus.vmoptions&lt;/code&gt;. Убедившись, что на машине не так много оперативной памяти, изменил параметры в новом &lt;code&gt;nexus.vmoptions&lt;/code&gt; в соответствии с параметрами из старого &lt;code&gt;nexus.vmoptions&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;обновление&#34;&gt;Обновление&lt;/h3&gt;
+&lt;p&gt;Запускаем новую версию Nexus.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# /etc/init.d/nexus start
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На этом процесс обновления закончен. Необходимо зайти в GUI и проверить статус и чего-нибудь ещё.&lt;/p&gt;
+&lt;h3 id=&#34;отладка&#34;&gt;Отладка&lt;/h3&gt;
+&lt;p&gt;Для отладки запуска приложения, я запускал Nexus из командной строки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ./nexus run
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Установка Monitorix в Alpine Linux</title>
+      <link>/n/ustanovka-monitorix-v-alpine-linux/</link>
+      <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ustanovka-monitorix-v-alpine-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-04-14&lt;/p&gt;
+&lt;h2 id=&#34;подготовка&#34;&gt;Подготовка&lt;/h2&gt;
+&lt;p&gt;Скачиваем, и распаковываем куда-нибудь, актуальную версию monitorix:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ wget https://www.monitorix.org/monitorix-3.12.0.tar.gz
+$ tar xvf monitorix-3.12.0.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Содержимое распакованного каталога раскидываем по папкам. Схема размещения приведена ниже:&lt;/p&gt;
+&lt;details&gt;&lt;p&gt;
+```
+$ tree monitorix-3.12.0
+monitorix-3.12.0
+├── Changes
+├── COPYING
+├── docs
+│   ├── debian.conf
+│   ├── htpasswd.pl
+│   ├── monitorix-alert.sh
+│   ├── monitorix-apache.conf
+│   ├── monitorix-deb.init
+│   ├── monitorix.init
+│   ├── monitorix-lighttpd.conf
+│   ├── monitorix.logrotate     --&gt; /etc/logrotate.d/monitorix
+│   ├── monitorix.nanorc
+│   ├── monitorix.service
+│   ├── monitorix.spec
+│   ├── monitorix.sysconfig     --&gt; /etc/conf.d/monitorix
+│   └── monitorix.upstart
+├── lib                         --&gt; /usr/lib/monitorix/
+│   ├── ambsens.pm              --&gt; /usr/lib/monitorix/ambsens.pm
+│   ├── apache.pm               --&gt; /usr/lib/monitorix/apache.pm
+│   ├── apcupsd.pm              --&gt; ...
+│   ├── bind.pm                 ...
+│   ├── chrony.pm
+│   ├── disk.pm
+│   ├── du.pm
+│   ├── emailreports.pm
+│   ├── fail2ban.pm
+│   ├── fs.pm
+│   ├── ftp.pm
+│   ├── gensens.pm
+│   ├── hptemp.pm
+│   ├── HTTPServer.pm
+│   ├── icecast.pm
+│   ├── int.pm
+│   ├── ipmi.pm
+│   ├── kern.pm
+│   ├── libvirt.pm
+│   ├── lighttpd.pm
+│   ├── lmsens.pm
+│   ├── mail.pm
+│   ├── memcached.pm
+│   ├── mongodb.pm
+│   ├── Monitorix.pm
+│   ├── mysql.pm
+│   ├── net.pm
+│   ├── netstat.pm
+│   ├── nfsc.pm
+│   ├── nfss.pm
+│   ├── nginx.pm
+│   ├── ntp.pm
+│   ├── nut.pm
+│   ├── nvidia.pm
+│   ├── pagespeed.pm
+│   ├── phpapc.pm
+│   ├── phpfpm.pm
+│   ├── port.pm
+│   ├── process.pm
+│   ├── proc.pm
+│   ├── raspberrypi.pm
+│   ├── serv.pm
+│   ├── squid.pm
+│   ├── system.pm
+│   ├── tc.pm
+│   ├── traffacct.pm
+│   ├── unbound.pm
+│   ├── user.pm
+│   ├── varnish.pm
+│   ├── verlihub.pm
+│   ├── wowza.pm
+│   └── zfs.pm
+├── logo_bot.png        --&gt; /var/lib/monitorix/www/
+├── logo_top.png        --&gt; /var/lib/monitorix/www/
+├── Makefile
+├── man
+│   ├── man5
+│   │   └── monitorix.conf.5
+│   └── man8
+│       └── monitorix.8
+├── monitorix           --&gt; /usr/bin/
+├── monitorix.cgi       --&gt; /var/lib/monitorix/www/cgi/
+├── monitorix.conf      --&gt; /etc/monitorix/
+├── monitorixico.png    --&gt; /var/lib/monitorix/www/
+├── README
+├── README.FreeBSD
+├── README.md
+├── README.NetBSD
+├── README.nginx
+├── README.OpenBSD
+└── reports             --&gt; /var/lib/monitorix/www/
+    ├── ca.html         --&gt; /var/lib/monitorix/www/reports/
+    ├── de.html         --&gt; /var/lib/monitorix/www/reports/
+    ├── en.html         --&gt; ...
+    ├── fr.html         ...
+    ├── it.html
+    ├── nl_NL.html
+    ├── pl.html
+    ├── sk.html
+    └── zh_CN.html
+```
+&lt;/p&gt;&lt;/details&gt;&lt;br&gt;
+&lt;p&gt;Перед раскидыванием файлов мониторикса по соответствующим каталогам, зададим им правильного владельца:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd monitorix-3.12.0 &amp;amp;&amp;amp; chown root:root * -R
+&lt;/code&gt;&lt;/pre&gt;&lt;!-- Перепроверить при случае.
+Создание каталогов и копирование файлов. Не забыть выставить правильные права:
+```
+mkdir -p /etc/monitorix/conf.d /var/lib/monitorix/www/cgi /var/lib/monitorix/www/imgs
+
+cp monitorix /usr/bin/
+cp monitorix.conf /etc/monitorix/
+cp monitorix.cgi /var/lib/monitorix/www/cgi/
+cp logo_bot.png /var/lib/monitorix/www/
+cp logo_top.png /var/lib/monitorix/www/
+cp monitorixico.png /var/lib/monitorix/www/
+cp lib/* /usr/lib/monitorix/
+cp -r reports /var/lib/monitorix/www/
+```
+--&gt;
+&lt;h2 id=&#34;добавление-в-систему-необходимых-пакетов&#34;&gt;Добавление в систему необходимых пакетов&lt;/h2&gt;
+&lt;p&gt;Установка perl-пакетов, необходимых для работы monitorix:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apk add perl perl-cgi perl-libwww perl-mailtools perl-mime-lite perl-dbi perl-xml-simple perl-xml-libxml perl-http-server-simple perl-io-socket-ssl rrdtool perl-rrd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пакет perl-config-general отсутствует в репозиториях Alpine Linux, поэтому скачал General.pm из metacpan.org в каталог &lt;code&gt;/usr/share/perl5/vendor_perl/Config&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir -p /usr/share/perl5/vendor_perl/Config/
+# wget -O /usr/share/perl5/vendor_perl/Config/General.pm https://metacpan.org/release/Bundle-PBib/source/lib/Config/General.pm?raw=1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Необходимо установит шрифт ttf-dejavu, ttf-freefont или font-noto, иначе вместо символов, на графиках будут видны квадраты.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apk add ttf-dejavu
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;включение-автозапуска&#34;&gt;Включение автозапуска&lt;/h2&gt;
+&lt;p&gt;Готовый скрипт для openrc взял из генту &lt;code&gt;https://gitweb.gentoo.org/repo/gentoo.git/tree/www-misc/monitorix/files/monitorix&lt;/code&gt; слегка подредактировав строку &lt;code&gt;command=/usr/sbin/monitorix&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/sbin/openrc-run
+# Copyright 1999-2019 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name=&amp;#34;Monitorix&amp;#34;
+description=&amp;#34;Monitorix is a lightweight system monitoring tool&amp;#34;
+command=/usr/bin/monitorix
+command_args=&amp;#34;-c /etc/monitorix/monitorix.conf -p /var/run/$name.pid&amp;#34;
+pidfile=/var/run/monitorix.pid
+
+checkconfig() {
+    if [[ ! -e /etc/monitorix/monitorix.conf ]]; then
+        eerror &amp;#34;Please check that the configuration file exists.&amp;#34;
+        return 1
+    fi
+}
+
+start() {
+    checkconfig || return 1
+    ebegin &amp;#34;Starting $name&amp;#34;
+    start-stop-daemon --start --name $name --pidfile /var/run/$name.pid --exec $command -- $command_args
+    eend $?
+}
+
+stop() {
+    ebegin &amp;#34;Stopping $name&amp;#34;
+    start-stop-daemon --stop --pidfile /var/run/$name.pid
+    eend $?
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавляем в автозагрузку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rc-update add monitorix default
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;замечено&#34;&gt;Замечено&lt;/h2&gt;
+&lt;h3 id=&#34;users-using-the-system-userpm&#34;&gt;Users using the system (user.pm)&lt;/h3&gt;
+&lt;p&gt;В musl нет реализации wtmp, utmp, lastlog. По этой причине модуль &lt;code&gt;user.pm&lt;/code&gt; не работает.&lt;/p&gt;
+&lt;h3 id=&#34;process-statistics-processpm&#34;&gt;Process statistics (process.pm)&lt;/h3&gt;
+&lt;p&gt;Для правильно отображения &lt;em&gt;Process statistics&lt;/em&gt;, добавляем полноценную версию утилиты &lt;code&gt;ps&lt;/code&gt;, вместо встроенной в busybox:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apk add procps
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;netstat-statistics-netstatpm&#34;&gt;Netstat statistics (netstat.pm)&lt;/h3&gt;
+&lt;p&gt;Требует установки утилиты &lt;code&gt;ss&lt;/code&gt; или некастрированной &lt;code&gt;netstat&lt;/code&gt; (вместо кастрированной из busybox, которая присутствует в Alpine Linux по умолчанию):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk add net-tools
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Void Linux Установка QEMU/KVM</title>
+      <link>/n/void-linux-ustanovka-kvm/</link>
+      <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/void-linux-ustanovka-kvm/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-03-17&lt;/p&gt;
+&lt;p&gt;QEMU/KVM не требует DKMS-модуля для своей работы, в отличии от VirtualBox. Бла-бла-бла.&lt;/p&gt;
+&lt;h2 id=&#34;установка-необходимых-пакетов&#34;&gt;Установка необходимых пакетов&lt;/h2&gt;
+&lt;p&gt;Для эмуляции на основе &lt;code&gt;qemu/kvm&lt;/code&gt; необходимы следующие компоненты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;virt-manager&lt;/code&gt; — GUI для работы с &lt;code&gt;libvirt&lt;/code&gt; и &lt;code&gt;qemu&lt;/code&gt;. Позволяет подключаться к локальному и/или удалённому экземпляру &lt;code&gt;qemu/kvm&lt;/code&gt;. Поключение к удалённому экземпляру &lt;code&gt;libvirt&lt;/code&gt; и просмотр консоли удалённой эмулируемой машины обеспечивает ssh-туннель.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;qemu&lt;/code&gt; — программа, умеющая эмулировать различные процессоры и другое оборудование.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;libvirt&lt;/code&gt; — библиотека для работы с &lt;code&gt;kvm&lt;/code&gt; из &lt;em&gt;пространства пользователя&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kvm&lt;/code&gt; — гипервизор, модуль находящийся в ядре системы, значительно ускоряющий выполнение эмулируемой машины в &lt;code&gt;qemu&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo xbps-install -Su virt-manager libvirt qemu
+Name               Action    Version           New version            Download size
+gnome-ssh-askpass  install   -                 8.1p1_1                9060B
+libbsd             install   -                 0.10.0_1               41KB
+openbsd-netcat     install   -                 1.206_1                21KB
+yajl               install   -                 2.1.0_4                21KB
+libvirt-glib       install   -                 2.0.0_3                141KB
+gtk-vnc            install   -                 0.9.0_3                97KB
+osinfo-db          install   -                 20191125_1             112KB
+libosinfo          install   -                 1.7.1_1                569KB
+libvirt-python3    install   -                 6.0.0_1                130KB
+libxml2-python3    install   -                 2.9.10_2               122KB
+virt-manager-tools install   -                 2.2.1_1                164KB
+virt-manager       install   -                 2.2.1_1                846KB
+dnsmasq            install   -                 2.80_7                 194KB
+libnuma            install   -                 2.0.13_1               17KB
+libapparmor        install   -                 2.13.3_4               90KB
+libvirt            install   -                 6.0.0_1                5175KB
+libvde2            install   -                 2.3.2_21               25KB
+libbluetooth       install   -                 5.52_1                 45KB
+spice              install   -                 0.14.2_2               318KB
+virglrenderer      install   -                 0.8.1_1                176KB
+libpcsclite        install   -                 1.8.26_1               22KB
+libcacard          install   -                 2.7.0_1                30KB
+qemu               install   -                 4.2.0_2                100MB
+========================================================================
+To enable KVM your user must be added to the &amp;#39;kvm&amp;#39; group:
+
+        $ usermod -aG kvm &amp;lt;username&amp;gt;
+
+Don&amp;#39;t forget to load the appropiate KVM module for your CPU (x86 only):
+
+        $ modprobe kvm-amd # for AMD CPUs
+        $ modprobe kvm-intel # for Intel CPUs
+========================================================================
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;дополнительные-телодвижения&#34;&gt;Дополнительные телодвижения&lt;/h2&gt;
+&lt;p&gt;Добавляем себя к группам пользователей-эмуляторов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo usermod -aG kvm $USER
+$ sudo usermod -aG libvirt $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Загружаем подходящий модуль (здесь для процессора Intel) и запускаем демоны:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;modprobe kvm-intel
+ln -s /etc/sv/libvirtd /var/service
+ln -s /etc/sv/virtlockd /var/service
+ln -s /etc/sv/virtlogd /var/service
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После выхода из своего сеанса и повторного входа, или перезагрузки компьютера, появляется возможность запустить &lt;code&gt;virt-manager&lt;/code&gt; и создать/добавить первую виртуальную машину.&lt;/p&gt;
+&lt;h2 id=&#34;инструменты-настройки&#34;&gt;Инструменты настройки&lt;/h2&gt;
+&lt;p&gt;Настройка производится с помощью:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;virsh&lt;/code&gt; — консольная утилита;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;virt-manager&lt;/code&gt; — относительно удобная GUI-утилита.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;настройка-хранилищ-pool&#34;&gt;Настройка хранилищ (pool)&lt;/h2&gt;
+&lt;p&gt;Хранилища — это места хранения образов винчестеров виртуальных машин, образов DVD-дисков. Хранилищем может стать каталог файловой системы, или выделенный раздел на LVM2. Перед работой с ними их необходимо добавить в систему.&lt;/p&gt;
+&lt;p&gt;По умолчанию доступно одно хранилище &lt;code&gt;/var/lib/libvirt/images&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;настройка-сети-для-qemukvm&#34;&gt;Настройка сети для QEMU/KVM&lt;/h2&gt;
+&lt;h3 id=&#34;virtual-network-default--nat&#34;&gt;Virtual network &amp;lsquo;default&amp;rsquo; : NAT&lt;/h3&gt;
+&lt;p&gt;При запуске демона &lt;code&gt;libvirtd&lt;/code&gt; в систему автоматически добавляется виртуальный сетевой интерфейс &lt;code&gt;virbr0&lt;/code&gt; с отдельной подсеткой &lt;code&gt;192.168.122.0/24&lt;/code&gt;, а в netfilter дописываются правила, с помощью которых, через NAT, виртуальные машины смогут иметь доступ к инету:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;*mangle
+-N LIBVIRT_PRT
+-A POSTROUTING -j LIBVIRT_PRT
+-A LIBVIRT_PRT -o virbr0 -p udp -m udp --dport 68 -j CHECKSUM --checksum-fill
+
+*nat
+-N LIBVIRT_PRT
+-A POSTROUTING -j LIBVIRT_PRT
+-A LIBVIRT_PRT -s 192.168.122.0/24 -d 224.0.0.0/24 -j RETURN
+-A LIBVIRT_PRT -s 192.168.122.0/24 -d 255.255.255.255/32 -j RETURN
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p tcp -j MASQUERADE --to-ports 1024-65535
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -j MASQUERADE
+
+*filter
+-N LIBVIRT_FWI
+-N LIBVIRT_FWO
+-N LIBVIRT_FWX
+-N LIBVIRT_INP
+-N LIBVIRT_OUT
+-A INPUT -j LIBVIRT_INP
+-A LIBVIRT_FWI -d 192.168.122.0/24 -o virbr0 -j ACCEPT
+-A LIBVIRT_FWI -o virbr0 -j REJECT --reject-with icmp-port-unreachable
+-A LIBVIRT_FWO -s 192.168.122.0/24 -i virbr0 -j ACCEPT
+-A LIBVIRT_FWO -i virbr0 -j REJECT --reject-with icmp-port-unreachable
+-A LIBVIRT_FWX -i virbr0 -o virbr0 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p udp -m udp --dport 53 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p tcp -m tcp --dport 53 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p udp -m udp --dport 67 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p tcp -m tcp --dport 67 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p udp -m udp --dport 53 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p tcp -m tcp --dport 53 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p udp -m udp --dport 68 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p tcp -m tcp --dport 68 -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Также запускается &lt;code&gt;dnsmasq&lt;/code&gt; для раздачи ip-адресов из назначенной подсети.&lt;/p&gt;
+&lt;p&gt;Описание сети &lt;code&gt;default&lt;/code&gt; находится в &lt;code&gt;/etc/libvirt/qemu/networks/default.xml&lt;/code&gt;. Вручную изменять этот файл не рекомендуется, и хорошей практикой будет использование команды &lt;code&gt;virsh net-edit default&lt;/code&gt;, которая запустит редактор &lt;code&gt;vi&lt;/code&gt;, а после завершения редактирования, проверит файл на соответствие правилам.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;network&amp;gt;
+  &amp;lt;name&amp;gt;default&amp;lt;/name&amp;gt;
+  &amp;lt;bridge name=&amp;#34;virbr0&amp;#34;/&amp;gt;
+  &amp;lt;forward mode=&amp;#34;nat&amp;#34;/&amp;gt;
+  &amp;lt;ip address=&amp;#34;192.168.122.1&amp;#34; netmask=&amp;#34;255.255.255.0&amp;#34;&amp;gt;
+    &amp;lt;dhcp&amp;gt;
+      &amp;lt;range start=&amp;#34;192.168.122.2&amp;#34; end=&amp;#34;192.168.122.254&amp;#34;/&amp;gt;
+    &amp;lt;/dhcp&amp;gt;
+  &amp;lt;/ip&amp;gt;
+&amp;lt;/network&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Естественно, если демоны &lt;code&gt;iptables&lt;/code&gt; и &lt;code&gt;ip6tables&lt;/code&gt; запускаются после &lt;code&gt;libvirtd&lt;/code&gt;, то iptables-правила для виртуальной сетки будут затёрты. Для решения этой проблемы дописываем в самое начало runit-скрипта &lt;code&gt;/etc/sv/libvirtd/run&lt;/code&gt; две строки, чтобы &lt;code&gt;runit&lt;/code&gt; сам расставил зависимости:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sv start iptables || exit 1
+sv start ip6tables || exit 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Конечно, будет лучше взять правила для файрвола под свой контроль, так как автоматически добавляемые правила не слишком эффективны и не всегда применяются должным образом.&lt;/p&gt;
+&lt;p&gt;Отменяем автоматическое создание сети командой &lt;code&gt;virsh net-autostart default --disable&lt;/code&gt;, в результате чего будет удалена ссылка &lt;code&gt;/etc/libvirt/qemu/networks/autostart/@default.xml&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;shared-device&#34;&gt;Shared device&lt;/h3&gt;
+&lt;p&gt;Чтобы выставить новую виртуальную машину в текущую локальную сеть создаём мост, в составе которого будут работать текущий физический сетевой интерфейс и сетевые интерфейсы виртуальных машин.&lt;/p&gt;
+&lt;p&gt;Выключаем демон &lt;code&gt;dhcpcd&lt;/code&gt;, чтобы не мешал работе &lt;code&gt;NetworkManager&lt;/code&gt;. В моём случае &lt;code&gt;dhcpcd&lt;/code&gt; был включен, несмотря на используемый &lt;code&gt;NetworkManager&lt;/code&gt;, и настойчиво назначал ip-адрес физическому интерфейсу, тогда как &lt;code&gt;NetworkManager&lt;/code&gt; назначал эти же данные на мост &lt;code&gt;br0&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sv stop dhcpcd
+rm /var/service/dhcpcd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Определяем текущее сетевое подключение. В выводе информации о текущих подключениях видим  &amp;ldquo;Wired connection 1&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# nmcli d
+DEVICE      TYPE      STATE           CONNECTION         
+enp3s0      ethernet  подключено      Wired connection 1
+virbr0      bridge    подключено      virbr0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После выяснения текущего сетевого соединения выполняем:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Выключаем текущее сетевое подключение &amp;ldquo;Wired connection 1&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Отключаем автоподнятие интерфейса &amp;ldquo;Wired connection 1&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Создаём мост &lt;code&gt;br0&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Добавляем текущий физический сетевой интерфейс в этот мост.&lt;/li&gt;
+&lt;li&gt;Отключаем stp, так как вероятность петли на интерфейсе &lt;code&gt;br0&lt;/code&gt;, по понятным причинам, стремится к нулю.&lt;/li&gt;
+&lt;li&gt;Поднимаем мост &lt;code&gt;br0&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nmcli con down &amp;#34;Wired connection 1&amp;#34;
+nmcli con mod &amp;#39;Wired connection 1&amp;#39; connection.autoconnect off
+nmcli con add type bridge ifname br0 con-name br0
+nmcli con add type bridge-slave ifname enp3s0 master br0 con-name enp3s0s
+nmcli con mod br0 bridge.stp no
+nmcli con up br0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если в локальной сети присутствует dhcp-сервер, то на &lt;code&gt;br0&lt;/code&gt; назначится ip-адрес, иначе назначение проводим вручную.&lt;/p&gt;
+&lt;p&gt;В заключении, указываем новой виртуальной машине &lt;code&gt;br0&lt;/code&gt; в качестве &amp;ldquo;Shared physical device&amp;rdquo;.&lt;/p&gt;
+&lt;h3 id=&#34;host-device-eth0-macvtap&#34;&gt;Host device eth0: macvtap&lt;/h3&gt;
+&lt;p&gt;Вспомнить. Несколько лет назад. ovh.com. Дополнительный failover ip для которого OVH назначает свой MAC (по моему запросу)? В этом случае я использовал macvtap (с указанием MAC от OVH) для виртуального сервера.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Void Linux Установка Docker</title>
+      <link>/n/void-linux-ustanovka-docker/</link>
+      <pubDate>Sat, 22 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/void-linux-ustanovka-docker/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-02-22&lt;/p&gt;
+&lt;h3 id=&#34;установка-требуемых-пакетов&#34;&gt;Установка требуемых пакетов&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xbps-install -Su docker
+Name       Action    Version           New version            Download size
+runc       install   -                 1.0.0_12               4084KB
+containerd install   -                 1.3.2_1                30MB
+docker     install   -                 19.03.6_2              37MB
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ln -s /etc/sv/containerd /var/service
+ln -s /etc/sv/docker /var/service
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После запуска служб:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;создаётся известный каталог и в нём файл &lt;code&gt;/etc/docker/key.json&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;в систему добавляется виртуальный сетевой интерфейс &lt;code&gt;docker0&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;в &lt;code&gt;netfilter&lt;/code&gt; добавляются правила, обеспечивающие будущие docker-контейнеры доступом к физической сети через NAT.&lt;/li&gt;
+&lt;li&gt;в систему добавляется группа &lt;code&gt;docker&lt;/code&gt;, обеспечивающая своим участникам запуск контейнеров, что может быть ими использовано для получения root-привилегий на хосте. Смотри &lt;a href=&#34;https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface&#34;&gt;Docker Daemon Attack Surface&lt;/a&gt; для подробностей.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Написано:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Adding a user to the “docker” group grants them the ability to run containers which can be used to obtain root privileges on the Docker host. Refer to &lt;a href=&#34;https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface&#34;&gt;Docker Daemon Attack Surface&lt;/a&gt; for more information.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ещё заметка:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;To install Docker without root privileges, see &lt;a href=&#34;https://docs.docker.com/engine/security/rootless/&#34;&gt;Run the Docker daemon as a non-root user (Rootless mode)&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Rootless mode is currently available as an experimental feature.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Избавляемся от root&#39;а в Alpine Linux</title>
+      <link>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-12-23&lt;/p&gt;
+&lt;h3 id=&#34;добавляем-нового-пользователя&#34;&gt;Добавляем нового пользователя&lt;/h3&gt;
+&lt;p&gt;Устанавливаем &lt;code&gt;sudo&lt;/code&gt; в систему и добавляем нового пользователя &lt;code&gt;newuser&lt;/code&gt;. Назначаем его участником группы &lt;code&gt;wheel&lt;/code&gt;. Пользователям из этой группы позволяется &lt;em&gt;рулить&lt;/em&gt; системой через &lt;code&gt;sudo&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk update
+apk add sudo bash
+adduser -s /bin/bash newuser
+addgroup newuser wheel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Раскомментируем строку в файле &lt;code&gt;/etc/sudoers&lt;/code&gt;, которая позволит группе &lt;code&gt;wheel&lt;/code&gt; использовать &lt;code&gt;sudo&lt;/code&gt;. Одной командой с помощью замечательного &lt;code&gt;sed&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^#.%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/&amp;#34; /etc/sudoers
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Или вручную с помощью команды &lt;code&gt;visudo&lt;/code&gt; раскомментируем строку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;%wheel ALL=(ALL) ALL
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;после-входа-под-новым-пользователем&#34;&gt;После входа под новым пользователем&lt;/h3&gt;
+&lt;p&gt;Блокируем root&amp;rsquo;а:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;passwd -l root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запрещаем вход для root по ssh с помощью &lt;code&gt;sed&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^PermitRootLogin.*$/PermitRootLogin no/&amp;#34; /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Или вручную меняем соответствующую строку в файле &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;PermitRootLogin no
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Рестарт &lt;code&gt;sshd&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/etc/init.d/sshd restart
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Установка Alpine Linux в подтом btrfs</title>
+      <link>/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
+      <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-12-22&lt;/p&gt;
+&lt;h3 id=&#34;установка-alpine-linux&#34;&gt;Установка Alpine Linux&lt;/h3&gt;
+&lt;p&gt;Устанавливаем Alpine Linux 3.11 обычным порядком, но с указанием &lt;code&gt;lvmsys&lt;/code&gt; для размещения системного раздела в lvm-томе.&lt;/p&gt;
+&lt;p&gt;После завершения процедуры &lt;code&gt;setup-alpine&lt;/code&gt;, но до перезагрузки, будет удобно дать себе возможность войти в этот работающий экземпляр установки через ssh:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^#PermitRootLogin.*$/PermitRootLogin yes/&amp;#34; /etc/ssh/sshd_config
+/etc/init.d/sshd restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заходим в работающий экземпляр установки alpine linux через ssh под root&amp;rsquo;ом и продолжаем работать.&lt;/p&gt;
+&lt;h3 id=&#34;работаем-с-экземпляром-через-ssh&#34;&gt;Работаем с экземпляром через ssh&lt;/h3&gt;
+&lt;p&gt;Устанавливаем необходимые пакеты, уменьшаем системный раздел и конвертируем его из &lt;code&gt;ext4&lt;/code&gt; в &lt;code&gt;btrfs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk update &amp;amp;&amp;amp; apk add btrfs-progs btrfs-progs-extra lvm2 lvm2-extra device-mapper e2fsprogs e2fsprogs-extra util-linux
+lvchange -ay /dev/vg0/lv_root
+lvresize -r -L50G /dev/vg0/lv_root
+btrfs-convert /dev/vg0/lv_root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём снимок системного раздела в подтом &lt;code&gt;@&lt;/code&gt; с целью использовать его в дальнейшем как системный. Удаляем корневую систему и монтируем подтом &lt;code&gt;@&lt;/code&gt;, как актуальный системный раздел, в каталог &lt;code&gt;/mnt/&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount -t btrfs /dev/vg0/lv_root /mnt
+btrfs subvolume delete /mnt/ext2_saved
+btrfs subvolume snapshot /mnt /mnt/@
+cd /mnt
+find -maxdepth 1 ! -name @ -exec rm -rf {} \;
+cd /
+umount /mnt
+mount -t btrfs -o subvol=@ /dev/vg0/lv_root /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Подготавливаем песочницу и входим в неё через &lt;code&gt;chroot&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount /dev/sda1 /mnt/boot
+mount --bind /proc /mnt/proc
+mount --bind /dev /mnt/dev
+mount --bind /sys /mnt/sys
+mount --bind /run /mnt/run
+chroot /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;работа-в-песочнице&#34;&gt;Работа в песочнице&lt;/h3&gt;
+&lt;p&gt;Добавляем в будущую систему пакеты btrfs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk update
+apk add btrfs-progs btrfs-progs-extra
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Оказалось, что новая система загрузится и без корректировки этого файла, но для порядка изменяем строку в файле &lt;code&gt;/etc/fstab&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-/dev/vg0/lv_root        /       ext4    rw,relatime 0 1
++/dev/vg0/lv_root        /       btrfs    subvol=@,rw,relatime 0 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файл &lt;code&gt;/etc/mkinitfs/mkinitfs.conf&lt;/code&gt; добавляем запись о модуле &lt;code&gt;btrfs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-features=&amp;#34;ata base ide scsi usb virtio ext4 lvm&amp;#34;
++features=&amp;#34;ata base ide scsi usb virtio ext4 lvm btrfs&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;и пересоздаём initrd командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkinitfs
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Изменяем строки в файле &lt;code&gt;/etc/update-extlinux.conf&lt;/code&gt;, для подгрузки модуля btrfs и монтирования &lt;code&gt;/dev/vg0/lv_root&lt;/code&gt; в &lt;code&gt;/sysroot&lt;/code&gt; во время запуска initramfs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-modules=sd-mod,usb-storage,ext4
++modules=sd-mod,usb-storage,ext4,btrfs
+-default_kernel_opts=&amp;#34;nomodeset quiet rootfstype=ext4&amp;#34;
++default_kernel_opts=&amp;#34;nomodeset rootflags=subvol=@&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пересоздаём &lt;code&gt;/boot/extlinux.cfg&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;update-extlinux
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;С настройкой загрузки системы в подтом &lt;code&gt;@&lt;/code&gt; btrfs-раздела закончено. Сейчас можно настроить sshd, чтобы после перезагрузки была возможность сразу войти в новую систему через сеть, не дотрагиваясь до консоли. Минимально мы вновь можем изменить &lt;code&gt;PermitRootLogin&lt;/code&gt;, но уже для будущей системы, пока работающей в песочнице:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^#PermitRootLogin.*$/PermitRootLogin yes/&amp;#34; /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;выход-из-песочницы-и-перезагрузка&#34;&gt;Выход из песочницы и перезагрузка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;exit
+sync
+reboot
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: apt vs apt-get/apt-cache vs aptitude</title>
+      <link>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</link>
+      <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;a href=&#34;https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_literal_apt_literal_vs_literal_apt_get_literal_literal_apt_cache_literal_vs_literal_aptitude_literal&#34;&gt;Debian Reference&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2.2.1. apt vs. apt-get / apt-cache vs. aptitude
+Хотя &lt;code&gt;aptitude&lt;/code&gt; чрезвычайно удобный интерактивный инструмент, которым автор Debian Reference преимущественно пользуется, вам надо знать некоторые предупреждающие моменты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Команда &lt;code&gt;aptitude&lt;/code&gt; не рекомендуется для обновления работающего Debian stable релиза  до нового выпущенного stable релиза.
+&lt;ul&gt;
+&lt;li&gt;Рекомендуется для этого случая использовать &lt;code&gt;apt full-upgrade&lt;/code&gt; или &lt;code&gt;apt-get dist-upgrade&lt;/code&gt;. Смотри &lt;a href=&#34;https://bugs.debian.org/411280&#34;&gt;Bug #411280&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Команда &lt;code&gt;aptitude&lt;/code&gt; иногда предлагает удалить большое количество пакетов, что случается при апгрейде системы на работающих Debian testing или unstable системах.
+&lt;ul&gt;
+&lt;li&gt;Этой ситуации опасаются множество системных администраторов. Без паники.&lt;/li&gt;
+&lt;li&gt;Похоже, что в большинстве случае причиной этому является перекос версий в пакетах, зависящих или рекомендованных мета-пакетами, такими как gnome-core.&lt;/li&gt;
+&lt;li&gt;Эту ситуацию можно разрулить через запуск &lt;code&gt;aptitude&lt;/code&gt; и выбор в меню пункта &amp;ldquo;Cancel pending actions&amp;rdquo;, выхода из &lt;code&gt;aptitude&lt;/code&gt; и использования команды &lt;code&gt;apt full-upgrade&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Основными инструментами являются &lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt;.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt; предоставляют только интерфейс командной строки.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; наиболее подходит для обновления системы до другого релиза.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; предлагает надёжный способ разрешения зависимостей пакетов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; наименее требователен к ресурсам железа, то есть жрёт мало памяти и быстро работает.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-cache&lt;/code&gt; предлагает стандартный, основанный на регулярных выражениях, поиск по именам и описаниям пакетов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt; может управлять множеством версий пакетов используя &lt;code&gt;/etc/apt/preferences&lt;/code&gt;, но это довольно громоздко.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Команда &lt;code&gt;apt&lt;/code&gt; предлагает высокоуровневой интерфейс командной строки для управления пакетами. По большому счёту это обёртка для &lt;code&gt;apt-get&lt;/code&gt;, &lt;code&gt;apt-cache&lt;/code&gt; и других подходящих программ, изначально задумывавшийся, как &amp;ldquo;end-user&amp;rdquo; интерфейс и включает некоторые опции, по умолчанию наиболее подходящие для интерактивного использования.
+- &lt;code&gt;apt&lt;/code&gt; показывает дружественную &amp;ldquo;строку прогресса&amp;rdquo;, когда устанавливаются пакеты командой &lt;code&gt;apt install&lt;/code&gt;.
+- &lt;code&gt;apt&lt;/code&gt; по умолчанию удаляет кэшированные &lt;code&gt;.deb&lt;/code&gt; пакеты после успешной установки загруженных пакетов.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Tip
+Пользователям рекомендуется использовать новую &lt;code&gt;apt&lt;/code&gt; команду для интерактивного использования. Для использования же в скриптах предлагается применять &lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Команда &lt;code&gt;aptitude&lt;/code&gt; – наиболее универсальный инструмент управления пакетами.
+- &lt;code&gt;aptitude&lt;/code&gt; предоставляет полноэкранный интерактивный пользовательский интерфейс.
+- &lt;code&gt;aptitude&lt;/code&gt; также предоставляет и обычный интерфейс командной строки.
+- &lt;code&gt;aptitude&lt;/code&gt; наиболее подходит для ежедневного интерактивного управления пакетами, такого как инспектирования установленных пакетов и поиск свободных пакетов.
+- &lt;code&gt;aptitude&lt;/code&gt; наиболее требователен к ресурсам железа, то есть жрёт много памяти и медленно работает.
+- &lt;code&gt;aptitude&lt;/code&gt; предлагает расширенный &amp;ldquo;регэксп&amp;rdquo; поиск по всем метаданным, указанным для пакетов.
+- &lt;code&gt;aptitude&lt;/code&gt; может управлять множеством версий пакетов без использования &lt;code&gt;/etc/apt/preferences&lt;/code&gt; и интуитивно понятно.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Первое впечатление от Void Linux</title>
+      <link>/n/pervye-vpechatleniya-o-void-linux/</link>
+      <pubDate>Tue, 29 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/pervye-vpechatleniya-o-void-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-10-29&lt;/p&gt;
+&lt;p&gt;Наслышанный ранее про Void Linux, недавно я решил попробовать его на своём стареньком нетбуке. И, признаюсь, я впечатлён номерами версий пакетов из репо. Всё самое свежее! &lt;code&gt;Keepassxc&lt;/code&gt; за три дня обновился два раза! Более нет нужды искать непонятно кем обновляемые &lt;code&gt;ppa&lt;/code&gt;, или самому отслеживать и собирать последние версии софта!&lt;/p&gt;
+&lt;p&gt;Как говорят в культурной столице, я продолжу его &amp;ldquo;колыхать и телебонить&amp;rdquo;.&lt;/p&gt;
+&lt;h3 id=&#34;информация-с-главной-страницы-сайтаhttpsvoidlinuxorg&#34;&gt;Информация с главной страницы &lt;a href=&#34;https://voidlinux.org/&#34;&gt;сайта&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Void Linux – это &lt;strong&gt;независимый дистрибутив&lt;/strong&gt;, полностью разрабатываемый волонтёрами. В отличии от триллионов других, Void не является модификацией какого-либо существующего дистрибутива Linux. Его менеджер пакетов и система сборки была написана с нуля.&lt;/li&gt;
+&lt;li&gt;Однажды установив, обновляйся ежедневно, и твоя система будет всегда свежей. Благодаря &lt;a href=&#34;http://build.voidlinux.org/&#34;&gt;&lt;strong&gt;системе непрерывной сборки&lt;/strong&gt;&lt;/a&gt;, новый софт собирается в бинарные пакеты тот час, как только новые версии публикуются в репозиториях Void.&lt;/li&gt;
+&lt;li&gt;Для подсистем &lt;em&gt;init&lt;/em&gt; и &lt;em&gt;сервис супервайзер&lt;/em&gt;, Void использует &lt;strong&gt;runit&lt;/strong&gt;. Это простой и эффективный подход к инициализации системы и надёжного управления службами.&lt;/li&gt;
+&lt;li&gt;Void Linux – первый дистрибутив, который перешёл на использование новой библиотеки &lt;strong&gt;LibreSSL&lt;/strong&gt;. Мы верим, что известные своей высочайшей квалификацией разработчики из проекта &lt;a href=&#34;http://www.openbsd.org/&#34;&gt;OpenBSD&lt;/a&gt; в состоянии обеспечить более безопасную альтернативу старой &lt;em&gt;OpenSSL&lt;/em&gt;, известную по мега багу &lt;a href=&#34;https://ru.wikipedia.org/wiki/Heartbleed&#34;&gt;Heartbleed&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Родным менеджером пакетов, написанным с нуля, является &lt;strong&gt;xbps&lt;/strong&gt;. Он обеспечивает быструю установку/обновление/удаление программы в вашей системе, а также определяет несовместимые разделяемые библиотеки и зависимости обновляемых или удаляемых пакетов.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;xbps&lt;/em&gt;-пакеты создаются с помощью &lt;strong&gt;xbps-src&lt;/strong&gt;, написанного с нуля сборщика пакетов, который не требует root-привилегий. Сборка софта осуществляется в изолированном контейнере, используя &lt;em&gt;Linux namespaces&lt;/em&gt;. Дополнительно, &lt;em&gt;xbps-src&lt;/em&gt; обеспечивает как нативную, так и кросс-компиляцию под требуемую машину, а также поддерживает несколько C-библиотек (в настоящий момент &lt;code&gt;glibc&lt;/code&gt; и &lt;code&gt;musl&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Сборка deb-пакета свежего EncFS</title>
+      <link>/n/sborka-deb-paketa-svezhego-encfs/</link>
+      <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sborka-deb-paketa-svezhego-encfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-10-13&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apt-get install checkinstall
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скачал свежий EncFS 1.9.5&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo screen
+# cd /usr/src
+# wget https://github.com/vgough/encfs/releases/download/v1.9.5/encfs-1.9.5.tar.gz
+# tar -xvf encfs-1.9.5.tar.gz
+# cd encfs-1.9.5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Установил галку &amp;ldquo;Source code repositories&amp;rdquo; в &amp;ldquo;Update manager&amp;rdquo;-&amp;ldquo;Software Sources&amp;rdquo; для включения &lt;code&gt;deb-src&lt;/code&gt; и установил зависимости пакета encfs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apt-get update
+# apt-get build-dep encfs
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  autoconf automake autopoint autotools-dev cmake cmake-data debhelper dh-autoreconf dh-strip-nondeterminism dwz
+  libfile-stripnondeterminism-perl libfuse-dev libjsoncpp1 librhash0 libselinux1-dev libsepol1-dev libtinyxml2-6 libtinyxml2-dev libtool
+  libuv1 po-debconf
+0 upgraded, 21 newly installed, 0 to remove and 1 not upgraded.
+Need to get 8 024 kB/8 052 kB of archives.
+After this operation, 35,9 MB of additional disk space will be used.
+Do you want to continue? [Y/n]
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;Запустил для сборки пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ./create-dev-pkg.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-- The C compiler identification is GNU 7.4.0
+-- The CXX compiler identification is GNU 7.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found FUSE: /usr/include/fuse
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version &amp;#34;1.1.1&amp;#34;)
+...
+
+...
+======================== Installation successful ==========================
+
+Some of the files created by the installation are inside the build
+directory: /usr/src/encfs-1.9.5/build
+
+You probably don&amp;#39;t want them to be included in the package,
+especially if they are inside your home directory.
+Do you want me to list them?  [n]:
+Should I exclude them from the package? (Saying yes is a good idea)  [y]:
+Copying files to the temporary directory...OK
+Stripping ELF binaries and libraries...OK
+Compressing man pages...OK
+Building file list...OK
+Building Debian package...OK
+NOTE: The package will not be installed
+Erasing temporary files...OK
+Writing backup package...OK
+OK
+Deleting temp dir...OK
+
+**********************************************************************
+
+ Done. The new package has been saved to
+
+ /usr/src/encfs-1.9.5/build/encfs_20191011-1_amd64.deb
+ You can install it in your system anytime using:
+
+      dpkg -i encfs_20191011-1_amd64.deb
+
+**********************************************************************
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;В папке build нашёл deb-пакет и установил его:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# dpkg -i encfs_20191011-1_amd64.deb
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Настройка OAuth2-авторизации Google-аккаунтов в NextCloud</title>
+      <link>/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</link>
+      <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-03-24&lt;/p&gt;
+&lt;h3 id=&#34;включение-oauth2-в-консоли-разработчика-consoledevelopersgooglecom&#34;&gt;Включение OAuth2 в консоли разработчика console.developers.google.com&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Заходим &lt;a href=&#34;https://console.developers.google.com&#34;&gt;https://console.developers.google.com&lt;/a&gt; под своей учётной записью.&lt;/li&gt;
+&lt;li&gt;Создаём новый проект, например &amp;ldquo;Nextcloud Social Login&amp;rdquo;.
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Местоположение&amp;rdquo;:
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Без организации&amp;rdquo; – в этом случае параметр &amp;ldquo;Тип приложения&amp;rdquo; в &amp;ldquo;Окно запроса доступа OAuth&amp;rdquo; будет недоступен (см. пункт 7);&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;&lt;em&gt;Название нашей организации&lt;/em&gt;&amp;rdquo; – если учётная запись принадлежит каком-либо домену;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Дожидаемся создания нашего нового проекта и переключаемся в него.&lt;/li&gt;
+&lt;li&gt;Заходим в раздел &amp;ldquo;API и сервисы&amp;rdquo; / &amp;ldquo;Учётные данные&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Здесь выбираем создание учётных данных &amp;ldquo;Идентификатор клиент OAuth&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;На предложение &amp;ldquo;Чтобы создать идентификатор клиента OAuth, укажите название продукта для окна запроса доступа.&amp;rdquo; соглашаемся через кнопку &amp;ldquo;Настроить окно запроса доступа&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;В разделе &amp;ldquo;Окно запроса доступа OAuth&amp;rdquo; выбираем:
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Тип приложения&amp;rdquo;: (данный параметр доступен при создании проекта внутри организации)
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Открытый доступ&amp;rdquo; – для доступа всем желающим;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Ограниченный доступ&amp;rdquo; – только для сотрудников организации;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Название приложения&amp;rdquo;: &amp;ldquo;Nextcloud Social Login&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Авторизованные домены&amp;rdquo;: &amp;ldquo;example.com&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;Нажимаем &amp;ldquo;Сохранить&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;В новом окне &amp;ldquo;Создание идентификатора клиента OAuth&amp;rdquo; выбираем:
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Тип приложения&amp;rdquo;: &amp;ldquo;Веб-приложение&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Название&amp;rdquo;: &amp;ldquo;Nextcloud Social Login&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Разрешенные URI перенаправления&amp;rdquo;: &amp;ldquo;&lt;a href=&#34;https://example.com/apps/sociallogin/oauth/google%22;&#34;&gt;https://example.com/apps/sociallogin/oauth/google&amp;quot;;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Нажимаем кнопку &amp;ldquo;Создать&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;В новом появившемся окошке видим наш &amp;ldquo;Идентификатор клиента&amp;rdquo; и &amp;ldquo;Секрет клиента&amp;rdquo;. Эту информацию введём в соответствующие поля в нашем экземпляре Nextcloud.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;включение-oauth2-в-nextcloud&#34;&gt;Включение OAuth2 в Nextcloud&lt;/h3&gt;
+&lt;p&gt;После включения nextcloud-приложения &amp;ldquo;Social Login&amp;rdquo; (&lt;a href=&#34;https://example.com/settings/apps/integration/sociallogin&#34;&gt;https://example.com/settings/apps/integration/sociallogin&lt;/a&gt;) в системных настройках Nextcloud появляется возможность настройки приложения (&lt;a href=&#34;https://example.com/settings/admin/sociallogin)&#34;&gt;https://example.com/settings/admin/sociallogin)&lt;/a&gt;.
+В соответствующие поля вносим &amp;ldquo;Идентификатор клиента&amp;rdquo; и &amp;ldquo;Секрет клиента&amp;rdquo;, после чего сохраняем настройки. С этого момента на странице входа в Nextcloud можно наблюдать кнопку &amp;ldquo;Google&amp;rdquo;, позволяющую осуществить авторизацию с помощью google-аккаунта.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Unable delete old snapshots of timeshift on btrfs volume</title>
+      <link>/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</link>
+      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-03-10&lt;/p&gt;
+&lt;h4 id=&#34;synopsis&#34;&gt;Synopsis&lt;/h4&gt;
+&lt;p&gt;На корневом btrfs-томе включён timeshift для периодического снятия снимков файловой системы. Замечено, что на томе осталось мало свободного места. При попытке удаления старых timeshift-снимков некоторые снимки не были удалены с возникновением ошибки &lt;code&gt;cannot delete &#39;*SnapshotName*&#39;&#39;: Directory not empty&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;solution&#34;&gt;Solution&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Так-как интересующие нас timeshift-снимки является подтомом корневого btrfs-тома, то для удобства работы с ними создаём отдельную директорию:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir /mnt/btrfs-root
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;К этой директории подключаем корень интересующего нас раздела:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mount /dev/sdb3 /mnt/btrfs-root
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Просматриваем список подтомов корневого тома:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /mnt/btrfs-root
+# btrfs subvolume list /mnt/btrfs-root
+ID 257 gen 97699 top level 5 path @
+ID 411 gen 97572 top level 5 path timeshift-btrfs/snapshots/2019-03-01_16-00-01/@
+ID 412 gen 90577 top level 411 path timeshift-btrfs/snapshots/2019-03-01_16-00-01/@/@
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Также можно посмотреть обычным способом:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ls -l /mnt/btrfs-root/snapshots
+2019-03-01_16-00-01/
+2019-03-01_16-00-01/
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Удаляем сначала вложенный том интересующего нас подтома:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# btrfs subvolume delete timeshift-btrfs/snapshots/2019-03-01_16-00-01/@/@
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Удаляем основной подтом:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# btrfs subvolume delete timeshift-btrfs/snapshots/2019-03-01_16-00-01/@
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: cryptsetup короткая памятка</title>
+      <link>/n/cryptsetup-korotkaya-pamyatka/</link>
+      <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/n/cryptsetup-korotkaya-pamyatka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2018-12-10&lt;/p&gt;
+&lt;p&gt;Создание крипто-тома с двумя ключами. В первом слоте используется ключевой файл, а в пятом парольная фраза:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cryptsetup luksFormat /dev/md11 pv11.key
+# cryptsetup -d pv11.key luksOpen /dev/md11 pv11
+# cryptsetup luksAddKey --key-slot 5 /dev/md11
+Enter password: ххххххххххххххх
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После применения &lt;code&gt;cryptsetup&lt;/code&gt;, для указанного тома (/dev/md11) UUID изменится на новый, а TYPE станет &amp;ldquo;crypto_LUKS&amp;rdquo;. Например, был том:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# blkid /dev/md11
+/dev/md11: UUID=&amp;#34;394d0e20-fbbf-11e8-b8b2-272ad0095723&amp;#34; TYPE=&amp;#34;ext4&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После применения &lt;code&gt;cryptsetup&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# blkid /dev/md11
+/dev/md11: UUID=&amp;#34;2c326492-fbbf-11e8-83e1-db657904e51b&amp;#34; TYPE=&amp;#34;crypto_LUKS&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;поэтому, при необходимости, необходимо поправить те скрипты, где используется том по ссылке &lt;code&gt;/dev/disk/by-uuid/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Зачистить определённый слот хранения пароля в заголовке:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cryptsetup -d /etc/cryptsetup-keys/pv11.key luksKillSlot /dev/md11 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Бэкап заголовка зашифрованного тома:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cryptsetup luksHeaderBackup --header-backup-file \
+md11_$(date +%Y%m%d)_$(blkid -o value | head -n1).header.backup /dev/md11
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или бэкап заголовка в ramfs, шифрованием и подписыванием бэкапа ключом gpg, сохранением зашифрованного бэкапа в текущую директорию:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir ramfs &amp;amp;&amp;amp; mount -t ramfs ramfs ramfs &amp;amp;&amp;amp; \
+cryptsetup luksHeaderBackup --header-backup-file ramfs/tmp.header.backup \
+/dev/md11 &amp;amp;&amp;amp; gpg -e -s -r srv0_backup_2018 \
+-o md11_$(date +%Y%m%d)_$(blkid -o value | head -n1).header.backup.gpg \
+ramfs/tmp.header.backup &amp;amp;&amp;amp; shred -u ramfs/tmp.header.backup &amp;amp;&amp;amp; \
+umount ramfs &amp;amp;&amp;amp; rmdir ramfs
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В заголовке тома хранится информация о параметрах шифрования тома, мастер-ключ (128, 256 или 512 бит), которым шифруются сектора тома, и восемь слотов по 256 байт, для хранения хэшей паролей к мастер-ключу.&lt;/p&gt;
+&lt;p&gt;Размер заголовка &lt;code&gt;luks&lt;/code&gt; тома примерно один мегабайт при длине ключа шифрования 256 бит и около двух мегабайтов при длине ключа 512 бит. Для надёжного уничтожения заголовка, а значит и мастер-ключа, достаточно зачистить первые три мегабайта тома:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# dd if=/dev/urandom of=/dev/md11 bs=1M count=3; sync
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# head -c 3M /dev/urandom &amp;gt; /dev/md11; sync
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если ранее был сделан бэкап заголовка, то с его помощью можно восстановить всю или часть информации из тома. В этом случае, для надёжной зачистки, нужно применить более продолжительное по времени перезапись всего пространства тома.&lt;/p&gt;
+&lt;p&gt;Обычно, перед окончанием аренды сервера, я запускаю сервер через rescue-образ, и выполняю для каждого диска:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# dd if=/dev/urandom of=/dev/sda bs=1M status=progress; sync
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При недостатке времени на перезапись всех дисков, зачищаю только заголовки зашифрованных томов и всё пространство незашифрованных разделов.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: AppArmor препятствует электронному подписыванию документов LibreOffice</title>
+      <link>/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</link>
+      <pubDate>Tue, 27 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2018-11-27&lt;/p&gt;
+&lt;h3 id=&#34;description&#34;&gt;Description&lt;/h3&gt;
+&lt;p&gt;При попытке подписать документ, в списке доступных подписей не наблюдаю доступных ключей. В менеджере криптографических ключей seahorse, вызываемого из libreoffice, также пустые списки.&lt;/p&gt;
+&lt;p&gt;В syslog заносятся записи:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apparmor=&amp;#34;DENIED&amp;#34; operation=&amp;#34;open&amp;#34; profile=&amp;#34;libreoffice-soffice//gpg&amp;#34; name=&amp;#34;/home/user/.gnupg/trustdb.gpg&amp;#34; comm=&amp;#34;gpg&amp;#34; requested_mask=&amp;#34;w&amp;#34; denied_mask=&amp;#34;w&amp;#34;
+apparmor=&amp;#34;DENIED&amp;#34; operation=&amp;#34;connect&amp;#34; profile=&amp;#34;libreoffice-soffice//gpg&amp;#34; name=&amp;#34;/run/user/1000/gnupg/S.gpg-agent&amp;#34;
+comm=&amp;#34;gpg&amp;#34; requested_mask=&amp;#34;wr&amp;#34; denied_mask=&amp;#34;wr&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;solution&#34;&gt;Solution&lt;/h3&gt;
+&lt;p&gt;В файле &lt;code&gt;/etc/apparmor.d/abstractions/gnupg&lt;/code&gt; добавил строку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;owner /run/user/*/gnupg/S.gpg-agent rw,
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В конце файла &lt;code&gt;/etc/apparmor.d/usr.lib.libreoffice.soffice.bin&lt;/code&gt;, в секции &amp;ldquo;profile gpg&amp;rdquo;, добавил строку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#include &amp;lt;abstractions/gnupg&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Mikrotik: Wireless WDS Mesh With Mesh Interface</title>
+      <link>/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</link>
+      <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2018-10-05&lt;/p&gt;
+&lt;h4 id=&#34;предварительная-настройка-mikrotik-routers&#34;&gt;Предварительная настройка mikrotik routers&lt;/h4&gt;
+&lt;p&gt;Рабочая частота, имя сети, безопасность wireless-интерфейсов должны быть одинаковыми на всех точках.&lt;/p&gt;
+&lt;h4 id=&#34;на-каждом-mesh-узле-произвести-следующие-одинаковые-действия&#34;&gt;На каждом mesh-узле произвести следующие одинаковые действия.&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Добавление mesh-интерфейса:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;interface mesh add name=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Добавление wireless-интерфейса с указанием автоматического добавления порта для wds-моста:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;interface wireless add wlan4 master-interface=wlan1 ssid=MESHNET mode=ap-bridge wds-mode=dynamic-mesh wds-default-bridge=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Добавление порта mesh для возможности подключения клиентов:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;interface mesh port add interface=wlan4 mesh=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;на-каждом-mesh-узле-указываем-разные-локальные-ip-адреса&#34;&gt;На каждом mesh-узле указываем разные локальные ip-адреса.&lt;/h4&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Указание адреса на mesh-интерфейсе первого узла:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ip address add address=192.168.65.1/24 interface=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Указание адреса на mesh-интерфейсе второго узла:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ip address add address=192.168.65.2/24 interface=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Указание адреса на mesh-интерфейсе третьего узла:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ip address add address=192.168.65.3/24 interface=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;ускоренное-отключение-клиентов-со-слабым-сигналом&#34;&gt;Ускоренное отключение клиентов со слабым сигналом&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/interface wireless access-list
+add authentication=yes comment=«Accept strong clients» signal-range=-71..120
+add authentication=no comment=«Block weak clients» signal-range=-120..-70
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;только-хорошее-качество-сигнала-для-построения-wds&#34;&gt;Только хорошее качество сигнала для построения WDS&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/interface wireless connect-list
+add comment=«Block weak wds» interface=mesh4 connect=no \
+security-profile=default signal-range=-120..-60
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;на-первом-шлюзе&#34;&gt;На первом шлюзе&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Добавление пула адресов:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/ip pooladd name=dhcp_meshnet ranges=192.168.65.65-192.168.65.249&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Добавление dhcp-сервера:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/ip dhcp-server add add-arp=yes address-pool=dhcp_meshnet interface=mesh4 lease-time=8h name=dhcp&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;дополнительные-заметки&#34;&gt;Дополнительные заметки&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Нет нужды на рядовых mesh-узлах добавлять relay dhcp-запросов, или настраивать файрвол, или ещё каким-либо образом администрировать пакеты от клиентов, так как mesh-технология прозрачно передаёт пакеты внутри mesh-моста на выходной узел.&lt;/li&gt;
+&lt;li&gt;На выходном узле необходимо добавить правило в файрвол для пропуска пакетов из/в новую mesh-сеть.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://mum.mikrotik.com//presentations/RU15/presentation_2573_1443518501.pdf&#34;&gt;https://mum.mikrotik.com//presentations/RU15/presentation_2573_1443518501.pdf&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Усиление защиты sshd</title>
+      <link>/n/usilenie-zashchity-sshd/</link>
+      <pubDate>Wed, 20 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/n/usilenie-zashchity-sshd/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2016-01-20&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://stribika.github.io/2015/01/04/secure-secure-shell.html&#34;&gt;https://stribika.github.io/2015/01/04/secure-secure-shell.html&lt;/a&gt;
+&lt;a href=&#34;https://www.opennet.ru/tips/2877_ssh_crypt_setup_security_nsa.shtml&#34;&gt;https://www.opennet.ru/tips/2877_ssh_crypt_setup_security_nsa.shtml&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Добавить ssh-audit&lt;/p&gt;
+&lt;p&gt;При создании новых ключей использовать ED25519 или RSA с длиной ключа более 4096:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh-keygen -o -a 129 -t ed25519 -C e0_20160116_ed25519 -f ~/.ssh/id_ed25519
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh-keygen -t rsa -b 4096 -o -a 132 -C e0_20160116_rsa -f ~/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;p&gt;На сервере в &lt;code&gt;sshd_config&lt;/code&gt; добавить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Там же оставить указание только на сильные серверные ключи:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Protocol 2
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;И пересоздать два серверных ключа rsa и ed25519 и сделать заглушки для отказа в создании новых dsa и ecdsa:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /etc/ssh
+# rm ssh_host_*key*
+# ssh-keygen -t ed25519 -N &amp;#39;&amp;#39; -f ssh_host_ed25519_key &amp;lt; /dev/null
+# ssh-keygen -t rsa -b 4096 -N &amp;#39;&amp;#39; -f ssh_host_rsa_key &amp;lt; /dev/null
+# ln -s /etc/ssh/ssh_host_ecdsa_key /etc/ssh/ssh_host_ecdsa_key
+# ln -s /etc/ssh/ssh_host_key /etc/ssh/ssh_host_key
+# ln -s /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_dsa_key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заглушки помешают последующим обновлениям, поэтому будет достаточно закомментить соответствующие строки в файле настройки sshd.&lt;/p&gt;
+&lt;p&gt;Отредактировать &lt;code&gt;/etc/ssh/moduli&lt;/code&gt; для использования RSA с длиной ключа больше 2000.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# awk &amp;#39;$5 &amp;gt; 2000&amp;#39; moduli &amp;gt; &amp;#34;${HOME}/moduli&amp;#34;
+# wc -l &amp;#34;${HOME}/moduli&amp;#34;
+# mv &amp;#34;${HOME}/moduli&amp;#34; moduli
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На клиенте в &lt;code&gt;/etc/ssh/ssh_config&lt;/code&gt; добавить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Host *
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: OpenWRT Управление питанием порта USB</title>
+      <link>/n/openwrt-upravlenie-pitaniem-porta-usb/</link>
+      <pubDate>Thu, 29 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/n/openwrt-upravlenie-pitaniem-porta-usb/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2015-10-29&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://wiki.openwrt.org/doc/howto/usb.overview&#34;&gt;OpenWRT. The USB Port: An Overview&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;На TP-Link TL-WR842ND ver.2 проверил:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ls /sys/class/gpio/
+export gpio4 gpiochip0 unexport
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Видимо используется пин 4, поэтому применил для выключения:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# echo 0 &amp;gt; /sys/class/gpio/gpio4/value
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для включения:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# echo 1 &amp;gt; /sys/class/gpio/gpio4/value
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Чтение состояния:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# echo /sys/class/gpio/gpio4/value
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Работает.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Отправка почты из контактной формы MODx Evo через gmail</title>
+      <link>/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</link>
+      <pubDate>Thu, 12 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Появился сайт на MODx&#39;е. Отправка почты из контактной формы не работает. Разработчик ушёл в оффлайн. С MODx&#39;ом я ранее дела не имел. Не уверен, что я правильно всё сделал, но пока работает.&lt;/p&gt;
+&lt;p&gt;В &#34;Инструменты - Конфигурация - Пользователи&#34; заполнено всё правильно:&lt;/p&gt;
+&lt;table cellpadding=&#34;3&#34; border=&#34;0&#34; cellspacing=&#34;0&#34;&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Метод отправки писем&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt; MAIL - cообщения отправляются с помощью функции mail().&lt;br /&gt;&lt;strong&gt; Через SMTP-сервер&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SMTP авторизация&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt; Да&lt;/strong&gt;&lt;br /&gt; Нет&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Адрес SMTP-сервера&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;smtp.gmail.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SMTP порт&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;465&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SMTP почта&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;ivanmoskvinvogradetule@example.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SMTP пароль&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Зашёл через ssh на хостинг и дал команду:&lt;/p&gt;
+&lt;pre&gt;&lt;strong&gt;$ grep -ri smtpsecure *&lt;/strong&gt;
+public_html/manager/includes/controls/phpmailer/class.phpmailer.php:  public $SMTPSecure    = &#39;&#39;;
+public_html/manager/includes/controls/phpmailer/class.phpmailer.php:        $tls = ($this-&amp;gt;SMTPSecure == &#39;tls&#39;);
+public_html/manager/includes/controls/phpmailer/class.phpmailer.php:        $ssl = ($this-&amp;gt;SMTPSecure == &#39;ssl&#39;);&lt;/pre&gt;
+&lt;p&gt;Почесав репу, изменил в public_html/manager/includes/controls/phpmailer/class.phpmailer.php строку:&lt;/p&gt;
+&lt;pre&gt;public $SMTPSecure    = &#39;ssl&#39;;&lt;/pre&gt;
+&lt;p&gt;Отправка заработала.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Краткое описание установки DD-WRT на роутер Linksys WRT610N V2.0</title>
+      <link>/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</link>
+      <pubDate>Sun, 25 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Пару лет назад я уже юзал DD-WRT на своём роутере, используя древнюю прошивку, которая указана в инструкции &lt;a href=&#34;http://www.dd-wrt.com/wiki/index.php/Linksys_WRT610N_v2.0&#34;&gt;http://www.dd-wrt.com/wiki/index.php/Linksys_WRT610N_v2.0&lt;/a&gt;. Но нестабильное подключение к провайдеру через PPPoE в DD-WRT вынудила перейти на древнюю и убогую прошивку от мира вай-фай для билайна. Позже я несколько раз пытался перейти обратно на DD-WRT, но натыкался на те же грабли с работой PPPoE. Сегодня заставил себя более плотно разобраться с DD-WRT, что и позволило, как мне кажется, решить вопрос с PPPoE.&lt;/p&gt;
+&lt;p&gt;Так как вышеупомянутая инструкция отсылает меня на ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2010/12-24-10-r15962/broadcom_K26/, то я решил попробовать найти там наиболее свежую и стабильную прошивку для моего аппарата Linksys WRT610N V2.0. Пропутешествовав в нужную сторону по папкам, я набрёл на &lt;a href=&#34;ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2012/07-20-12-r19519/broadcom_K26/&#34;&gt;ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2012/07-20-12-r19519/broadcom_K26/&lt;/a&gt;, откуда скачал две прошивки: &lt;a href=&#34;ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2012/07-20-12-r19519/broadcom_K26/dd-wrt.v24-19519_NEWD-2_K2.6_mini_wrt610nv2.bin&#34;&gt;dd-wrt.v24-19519_NEWD-2_K2.6_mini_wrt610nv2.bin&lt;/a&gt; и &lt;a href=&#34;ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2012/07-20-12-r19519/broadcom_K26/dd-wrt.v24-19519_NEWD-2_K2.6_mega.bin&#34;&gt;dd-wrt.v24-19519_NEWD-2_K2.6_mega.bin&lt;/a&gt;. Дополнительно я вывел на экран страничку &lt;a href=&#34;http://www.dd-wrt.com/wiki/index.php/Hard_reset_or_30/30/30&#34;&gt;http://www.dd-wrt.com/wiki/index.php/Hard_reset_or_30/30/30&lt;/a&gt; и вынул из роутера WAN-кабель. Теперь всё готово для перепрошивки.&lt;/p&gt;
+&lt;p&gt;Я понимал, что если в процессе перепрошивки что-нибудь пойдёт не так, то я могу потерять роутер. Также отсутствие UPS немного беспокоило меня, но, понадеявшись на авось, я зашёл в роутер через web-интерфейс на страницу обновления программного обеспечения. Тут, в соответствующем поле, я выбрал ранее скачанную mini-прошивку dd-wrt и начал процесс апгрейда. После окончания процесса я увидел через http://192.168.1.1 интерфейс DD-WRT mini. Следующим этапом было проведение процедуры hard reset 30/30/30.&lt;/p&gt;
+&lt;p&gt;Выведя на рабочий стол часы с секундной стрелкой, я нажал зубочисткой кнопку reset на заднице устройства и, продолжая её удерживать в этом положении, отсчитал 30 секунд. Не отпуская кнопки reset, я выдернул из роутера шнур питания и отсчитал ещё 30 секунд. Далее вернул шнур питания на место и продолжая удерживать кнопку reset в нажатом положении, отсчитал ещё 30 секунд. Процедура закончена и можно убирать зубочистку в безопасное место.&lt;/p&gt;
+&lt;p&gt;После успешного входа на роутер и насильственно предложенной смены логина и пароля администратора устройства, я зашёл на страницу &#34;Обновление прошивки&#34; и выбрал файл dd-wrt.v24-19519_NEWD-2_K2.6_mega.bin. Инициировал процесс апгрейда и минут 5 отдыхал... После успешной перепрошивки вновь провёл процедуру hard reset 30/30/30.&lt;/p&gt;
+&lt;p&gt;Вновь зашёл на устройство через http://192.168.1.1, сменил логин/пароль, сменил ip-подсеть, настроил PPPoE подключение, задал пароль на wi-fi, отключил вход в GUI через wireless, сменил DNS на 8.8.8.8 и 8.8.4.4, и так далее.&lt;/p&gt;
+&lt;p&gt;Вроде всё работает отлично.&lt;/p&gt;
+&lt;div&gt;Замечания:&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Дефолтный логин и пароль у DD-WRT – root/admin.&lt;/li&gt;
+&lt;li&gt;При входе на роутер через ssh, необходимо использовать логин – root, даже в том случае, если логин администратора был изменён.&lt;/li&gt;
+&lt;li&gt;Переход на dd-wrt.v24-19519_NEWD-2_K2.6_big.bin у меня не удался. Процесс перепрошивки прекращался через несколько секунд после начала с сообщением &#34;Upgrade failed&#34;.&lt;/li&gt;
+&lt;li&gt;При одной из процедур hard reset, после вынимания и втыкания шнура питания в роутер, устройство не включилось. Попинав его немного, оставил минут на 5 в покое, и со второго включения увидел мигание лампочек. После полного включения роутера, я вновь провёл hard reset.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Разборка трекбола Logitech M570</title>
+      <link>/n/razborka-trekbola-logitech-m570/</link>
+      <pubDate>Fri, 30 Mar 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/n/razborka-trekbola-logitech-m570/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Трекбол разбирается легко. Пять винтов на брюхе:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;один винт виден;&lt;/li&gt;
+&lt;li&gt;три винта под резиновыми нашлёпками;&lt;/li&gt;
+&lt;li&gt;один винт в батарейном отсеке под наклейкой с изображением батарейки.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Шарик вынимается лёгким подталкиванием через отверстие снизу.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/razborka-trekbola-logitech-m570/logitech_m570.jpg&#34; alt=&#34;Disassabling Logitech M570&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Настройка клиента OpenVPN на Windows XP</title>
+      <link>/n/nastroika-klienta-openvpn-na-windows-xp/</link>
+      <pubDate>Sat, 28 May 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/nastroika-klienta-openvpn-na-windows-xp/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2011-05-28&lt;/p&gt;
+&lt;h2 id=&#34;подготовка-к-настройке-openvpn-клиента&#34;&gt;Подготовка к настройке OpenVPN клиента&lt;/h2&gt;
+&lt;p&gt;Скачал с openvpn.net/download.html windows клиент и установил его, соглашаясь со всеми запросами, используя учётную запись администратора.
+Копирую файл &lt;code&gt;C:\Program Files\OpenVPN\sample-config\client.ovpn&lt;/code&gt; в папку &lt;code&gt;C:\Program Files\OpenVPN\config\&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;В эту же папку копирую с сервера сгенерированные файлы:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ca.crt — сертификат центра сертификации&lt;/li&gt;
+&lt;li&gt;client.key — приватный ключ клиента&lt;/li&gt;
+&lt;li&gt;client.crt — сертификат клиента&lt;/li&gt;
+&lt;li&gt;ta.key — TLS-ключ, если используется в настройках OpenVPN сервера&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;настройка-openvpn-клиента&#34;&gt;Настройка OpenVPN клиента&lt;/h2&gt;
+&lt;p&gt;Запускаю Пуск — Все программы — OpenVPN — OpenVPN GUI&lt;/p&gt;
+&lt;p&gt;Рядом с часами обнаруживаю иконку — два малиновых компьютерных экранчика с земным шариком. Нажимаю на эту иконку правую кнопку мышки и выбираю Edit Config. Запускается Блокнот с содержимым файла &lt;code&gt;client.ovpn&lt;/code&gt;. Содержимое файла в линуксоидном формате, поэтому, чтобы в ручную не форматировать файл, всё содержимое стёр и вставил строки из &lt;code&gt;sample-config-files/client.conf&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Отредактировал новое содержимое под свои нужды:&lt;/p&gt;
+&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Specify that we are a client and that we
+# will be pulling certain config file directives
+# from the server.
+client
+
+# Use the same setting as you are using on
+# the server.
+# On most systems, the VPN will not function
+# unless you partially or fully disable
+# the firewall for the TUN/TAP interface.
+;dev tap
+dev tun
+
+# Windows needs the TAP-Win32 adapter name
+# from the Network Connections panel
+# if you have more than one.  On XP SP2,
+# you may need to disable the firewall
+# for the TAP adapter.
+;dev-node MyTap
+
+# Are we connecting to a TCP or
+# UDP server?  Use the same setting as
+# on the server.
+;proto tcp
+proto udp
+
+# The hostname/IP and port of the server.
+# You can have multiple remote entries
+# to load balance between the servers.
+remote 192.168.0.1 1194
+;remote my-server-2 1194
+
+# Choose a random host from the remote
+# list for load-balancing.  Otherwise
+# try hosts in the order specified.
+;remote-random
+
+# Keep trying indefinitely to resolve the
+# host name of the OpenVPN server.  Very useful
+# on machines which are not permanently connected
+# to the internet such as laptops.
+resolv-retry infinite
+
+# Most clients don&amp;#39;t need to bind to
+# a specific local port number.
+nobind
+
+# Downgrade privileges after initialization (non-Windows only)
+;user nobody
+;group nobody
+
+# Try to preserve some state across restarts.
+persist-key
+persist-tun
+
+# If you are connecting through an
+# HTTP proxy to reach the actual OpenVPN
+# server, put the proxy server/IP and
+# port number here.  See the man page
+# if your proxy server requires
+# authentication.
+;http-proxy-retry # retry on connection failures
+;http-proxy [proxy server] [proxy port #]
+
+# Wireless networks often produce a lot
+# of duplicate packets.  Set this flag
+# to silence duplicate packet warnings.
+;mute-replay-warnings
+
+# SSL/TLS parms.
+# See the server config file for more
+# description.  It&amp;#39;s best to use
+# a separate .crt/.key file pair
+# for each client.  A single ca
+# file can be used for all clients.
+ca ca.crt
+cert client.crt
+key client.key
+
+# Verify server certificate by checking
+# that the certicate has the nsCertType
+# field set to &amp;#34;server&amp;#34;.  This is an
+# important precaution to protect against
+# a potential attack discussed here:
+#  http://openvpn.net/howto.html#mitm
+#
+# To use this feature, you will need to generate
+# your server certificates with the nsCertType
+# field set to &amp;#34;server&amp;#34;.  The build-key-server
+# script in the easy-rsa folder will do this.
+;ns-cert-type server
+
+# If a tls-auth key is used on the server
+# then every client must also have the key.
+tls-auth ta.key 1
+
+# Select a cryptographic cipher.
+# If the cipher option is used on the server
+# then you must also specify it here.
+cipher BF-CBC
+
+# Enable compression on the VPN link.
+# Don&amp;#39;t enable this unless it is also
+# enabled in the server config file.
+comp-lzo
+
+# Set log file verbosity.
+verb 3
+
+# Silence repeating messages
+;mute 20
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;h2 id=&#34;использование-openvpn-клиента&#34;&gt;Использование OpenVPN клиента&lt;/h2&gt;
+&lt;p&gt;Для работы OpenVPN клиента пользователю необходимы администраторские привилегии. Если у пользователя нет администраторских прав, то необходима дополнительная настройка компьютера.&lt;/p&gt;
+&lt;p&gt;Если OpenVPN клиент установлен на Windows Home Edition, то никаких дополнительных настроек не нужно. В этой операционной системе у обычных пользователей есть администраторские права, которые необходимы для работы OpenVPN клиента.&lt;/p&gt;
+&lt;p&gt;Пользователь запускает иконку &amp;ldquo;OpenVPN GUI&amp;rdquo; на рабочем столе или в меню Пуск и нажимает правую мышь на появившуюся иконку OpenVPN рядом с часами. Далее выбирает пункт &amp;ldquo;Connect&amp;rdquo;. Для разрыва связи пользователь выбирает пункт &amp;ldquo;Disconnect&amp;rdquo;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

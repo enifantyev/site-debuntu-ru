@@ -1,0 +1,545 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – JupiterHub</title>
+    <link>/tags/jupiterhub/</link>
+    <description>Recent content in JupiterHub on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 07 Jul 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/jupiterhub/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub</title>
+      <link>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
+      <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-07&lt;/p&gt;
+&lt;p&gt;После установки JupyterHub наблюдается недачный запуск systemd-юнита &amp;lsquo;jupyterhub.service&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Здесь приведён фрагмент из syslog&amp;rsquo;а с ошибками после запуска jupyterhub.service:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;jupyterhub: [I 2021-07-07 15:05:40.359 JupyterHub proxy:703] Starting proxy @ http://0.0.0.0:8000/
+jupyterhub: /usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/lib/registry.js:25
+jupyterhub: async getMetricAsPrometheusString(metric) {
+jupyterhub: ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jupyterhub: SyntaxError: Unexpected identifier
+jupyterhub: at createScript (vm.js:56:10)
+jupyterhub: at Object.runInThisContext (vm.js:97:10)
+jupyterhub: at Module._compile (module.js:549:28)
+jupyterhub: at Object.Module._extensions..js (module.js:586:10)
+jupyterhub: at Module.load (module.js:494:32)
+jupyterhub: at tryModuleLoad (module.js:453:12)
+jupyterhub: at Function.Module._load (module.js:445:3)
+jupyterhub: at Module.require (module.js:504:17)
+jupyterhub: at require (internal/module.js:20:19)
+jupyterhub: at Object.&amp;lt;anonymous&amp;gt; (/usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/index.js:8:20)
+jupyterhub: [C 2021-07-07 15:05:41.436 JupyterHub app:2739] Failed to start proxy
+jupyterhub: Traceback (most recent call last):
+jupyterhub: File &amp;#34;/opt/jupyterhub/lib64/python3.6/site-packages/jupyterhub/app.py&amp;#34;, line 2737, in start
+jupyterhub: await self.proxy.start()
+jupyterhub: File &amp;#34;/opt/jupyterhub/lib64/python3.6/site-packages/jupyterhub/proxy.py&amp;#34;, line 730, in start
+jupyterhub: _check_process()
+jupyterhub: File &amp;#34;/opt/jupyterhub/lib64/python3.6/site-packages/jupyterhub/proxy.py&amp;#34;, line 726, in _check_process
+jupyterhub: raise e from None
+jupyterhub: RuntimeError: Proxy failed to start with exit code 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Повторяем ошибку ручным запуском &lt;code&gt;configurable-http-proxy&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ configurable-http-proxy
+/usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/lib/registry.js:25
+        async getMetricAsPrometheusString(metric) {
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at createScript (vm.js:56:10)
+    at Object.runInThisContext (vm.js:97:10)
+    at Module._compile (module.js:549:28)
+    at Object.Module._extensions..js (module.js:586:10)
+    at Module.load (module.js:494:32)
+    at tryModuleLoad (module.js:453:12)
+    at Function.Module._load (module.js:445:3)
+    at Module.require (module.js:504:17)
+    at require (internal/module.js:20:19)
+    at Object.&amp;lt;anonymous&amp;gt; (/usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/index.js:8:20)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Узнал версию установленного пакета &lt;code&gt;configurable-http-proxy&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ configurable-http-proxy -V
+4.4.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В &lt;a href=&#34;https://github.com/jupyterhub/configurable-http-proxy/releases&#34;&gt;репозитории домашнего сайта пакета&lt;/a&gt; определил предыдущую версию пакета: 4.3.2 и попробовал установить её:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ npm install -g configurable-http-proxy@4.3.2
+/usr/bin/configurable-http-proxy -&amp;gt; /usr/lib/node_modules/configurable-http-proxy/bin/configurable-http-proxy
+- bintrees@1.0.1 node_modules/configurable-http-proxy/node_modules/bintrees
+- tdigest@0.1.1 node_modules/configurable-http-proxy/node_modules/tdigest
+- prom-client@13.1.0 node_modules/configurable-http-proxy/node_modules/prom-client
+/usr/lib
+└─┬ configurable-http-proxy@4.3.2
+  └─┬ lynx@0.2.0
+    ├── mersenne@0.0.4
+    └── statsd-parser@0.0.4
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для проверки запустил &lt;code&gt;configurable-http-proxy&lt;/code&gt; и убедился в отсутствии ошибок:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;15:49:41.655 [ConfigProxy] warn: REST API is not authenticated.
+15:49:41.668 [ConfigProxy] info: Proxying http://*:8000 to (no default)
+15:49:41.669 [ConfigProxy] info: Proxy API at http://localhost:8001/api/routes
+^C15:49:46.740 [ConfigProxy] warn: Interrupted
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Повторил запуск &amp;lsquo;jupyterhub.service&amp;rsquo;, на этот раз успешный:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ sudo systemctl start jupyterhub.service
+[eugene@localhost ~]$ sudo systemctl status jupyterhub.service
+● jupyterhub.service - JupyterHub
+   Loaded: loaded (/opt/jupyterhub/etc/systemd/jupyterhub.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2021-07-07 16:08:58 MSK;
+...
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Установка JupyterHub на CentOS 7 (draft)</title>
+      <link>/a/ustanovka-jupyterhub-na-centos-7/</link>
+      <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-jupyterhub-na-centos-7/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-07&lt;/p&gt;
+&lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/jupyterhub/jupyterhub-the-hard-way/blob/HEAD/docs/installation-guide-hard.md&#34;&gt;https://github.com/jupyterhub/jupyterhub-the-hard-way/blob/HEAD/docs/installation-guide-hard.md&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;1-установка-jupyterhub-и-jupyterlab&#34;&gt;1. Установка JupyterHub и JupyterLab&lt;/h2&gt;
+&lt;h3 id=&#34;11-подготовка-виртуального-окружения&#34;&gt;1.1. Подготовка виртуального окружения&lt;/h3&gt;
+&lt;p&gt;1.1.1. Cоздаём виртуальное окружение в каталоге &lt;code&gt;/opt/jupyterhub&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo python3 -m venv /opt/jupyterhub/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;span style=&#34;color:red&#34;&gt;С этого момента мы должны использовать команду &lt;em&gt;&amp;rsquo;/opt/jupyterhub/bin/python3 -m pip install&amp;rsquo;&lt;/em&gt; каждый раз, когда хотим установить дополнительные пакеты в это виртуальное окружение.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;1.1.2. Выполняем в созданном виртуальном окружении следующие команды:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo /opt/jupyterhub/bin/python3 -m pip install --upgrade pip
+sudo /opt/jupyterhub/bin/python3 -m pip install wheel
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;12-установка-необходимых-пакетов&#34;&gt;1.2. Установка необходимых пакетов&lt;/h3&gt;
+&lt;p&gt;1.2.1. Устанавливаем jupyterhub с новым пользовательским интерфейсом jupyterlab:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo /opt/jupyterhub/bin/python3 -m pip install jupyterhub jupyterlab
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;summary&gt;stdout ...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+Successfully built contextvars pandocfilters python-json-logger
+Installing collected packages: zipp, typing-extensions, six, ipython-genutils, decorator, traitlets, pyrsistent, importlib-metadata, attrs, wcwidth, tornado, pyzmq, python-dateutil, pyparsing, ptyprocess, parso, nest-asyncio, jupyter-core, jsonschema, immutables, webencodings, urllib3, pygments, pycparser, prompt-toolkit, pickleshare, pexpect, packaging, nbformat, MarkupSafe, jupyter-client, jedi, idna, contextvars, chardet, certifi, backcall, async-generator, testpath, sniffio, requests, pandocfilters, nbclient, mistune, jupyterlab-pygments, jinja2, ipython, entrypoints, defusedxml, dataclasses, cffi, bleach, websocket-client, terminado, Send2Trash, ruamel.yaml.clib, requests-unixsocket, pytz, prometheus-client, nbconvert, ipykernel, greenlet, cryptography, argon2-cffi, anyio, SQLAlchemy, ruamel.yaml, python-json-logger, python-editor, pyopenssl, notebook, Mako, jupyter-server, json5, babel, pamela, oauthlib, nbclassic, jupyterlab-server, jupyter-telemetry, certipy, alembic, jupyterlab, jupyterhub
+Successfully installed Mako-1.1.4 MarkupSafe-2.0.1 SQLAlchemy-1.4.20 Send2Trash-1.7.1 alembic-1.6.5 anyio-3.2.1 argon2-cffi-20.1.0 async-generator-1.10 attrs-21.2.0 babel-2.9.1 backcall-0.2.0 bleach-3.3.0 certifi-2021.5.30 certipy-0.1.3 cffi-1.14.5 chardet-4.0.0 contextvars-2.4 cryptography-3.4.7 dataclasses-0.8 decorator-5.0.9 defusedxml-0.7.1 entrypoints-0.3 greenlet-1.1.0 idna-2.10 immutables-0.15 importlib-metadata-4.6.1 ipykernel-5.5.5 ipython-7.16.1 ipython-genutils-0.2.0 jedi-0.18.0 jinja2-3.0.1 json5-0.9.6 jsonschema-3.2.0 jupyter-client-6.2.0 jupyter-core-4.7.1 jupyter-server-1.9.0 jupyter-telemetry-0.1.0 jupyterhub-1.4.1 jupyterlab-3.0.16 jupyterlab-pygments-0.1.2 jupyterlab-server-2.6.0 mistune-0.8.4 nbclassic-0.3.1 nbclient-0.5.3 nbconvert-6.0.7 nbformat-5.1.3 nest-asyncio-1.5.1 notebook-6.4.0 oauthlib-3.1.1 packaging-21.0 pamela-1.0.0 pandocfilters-1.4.3 parso-0.8.2 pexpect-4.8.0 pickleshare-0.7.5 prometheus-client-0.11.0 prompt-toolkit-3.0.19 ptyprocess-0.7.0 pycparser-2.20 pygments-2.9.0 pyopenssl-20.0.1 pyparsing-2.4.7 pyrsistent-0.18.0 python-dateutil-2.8.1 python-editor-1.0.4 python-json-logger-2.0.1 pytz-2021.1 pyzmq-22.1.0 requests-2.25.1 requests-unixsocket-0.2.0 ruamel.yaml-0.17.10 ruamel.yaml.clib-0.2.6 six-1.16.0 sniffio-1.2.0 terminado-0.10.1 testpath-0.5.0 tornado-6.1 traitlets-4.3.3 typing-extensions-3.10.0.0 urllib3-1.26.6 wcwidth-0.2.5 webencodings-0.5.1 websocket-client-1.1.0 zipp-3.5.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;&lt;br&gt;
+&lt;p&gt;1.2.2. Устанавливаем ipywidgets, also known as jupyter-widgets or simply widgets, are interactive HTML widgets for Jupyter notebooks and the IPython kernel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo /opt/jupyterhub/bin/python3 -m pip install ipywidgets
+Installing collected packages: widgetsnbextension, jupyterlab-widgets, ipywidgets
+Successfully installed ipywidgets-7.6.3 jupyterlab-widgets-1.0.0 widgetsnbextension-3.5.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.2.3. JupyterHub в настоящее время также по-умолчанию требует &amp;lsquo;configurable-http-proxy&amp;rsquo;, для чего нужны nodejs и npm:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y install nodejs npm
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;summary&gt;stdout ...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+Dependencies Resolved
+
+======================================================================================================
+ Package            Arch               Version                                Repository         Size
+======================================================================================================
+Installing:
+ nodejs             x86_64             1:6.17.1-1.el7                         epel7             4.7 M
+ npm                x86_64             1:3.10.10-1.6.17.1.1.el7               epel7             2.5 M
+Installing for dependencies:
+ libicu             x86_64             50.2-4.el7_7                           base              6.9 M
+ libuv              x86_64             1:1.41.0-1.el7                         epel7             153 k
+
+Transaction Summary
+======================================================================================================
+Install  2 Packages (+2 Dependent packages)
+
+Total download size: 14 M
+Installed size: 51 M
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;&lt;br&gt;
+&lt;p&gt;1.2.4. Устанавливаем &amp;lsquo;configurable-http-proxy&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo npm install -g configurable-http-proxy
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;summary&gt;stdout ...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/bin/configurable-http-proxy -&amp;gt; /usr/lib/node_modules/configurable-http-proxy/bin/configurable-http-proxy
+/usr/lib
+└─┬ configurable-http-proxy@4.4.0
+  ├── commander@7.2.0
+  ├─┬ http-proxy@1.18.1
+  │ ├── eventemitter3@4.0.7
+  │ ├── follow-redirects@1.14.1
+  │ └── requires-port@1.0.0
+  ├─┬ prom-client@13.1.0
+  │ └─┬ tdigest@0.1.1
+  │   └── bintrees@1.0.1
+  ├── strftime@0.10.0
+  └─┬ winston@3.3.3
+    ├─┬ @dabh/diagnostics@2.0.2
+    │ ├─┬ colorspace@1.1.2 
+    │ │ ├─┬ color@3.0.0 
+    │ │ │ ├─┬ color-convert@1.9.3 
+    │ │ │ │ └── color-name@1.1.3 
+    │ │ │ └─┬ color-string@1.5.5 
+    │ │ │   └─┬ simple-swizzle@0.2.2 
+    │ │ │     └── is-arrayish@0.3.2 
+    │ │ └── text-hex@1.0.0 
+    │ ├── enabled@2.0.0 
+    │ └── kuler@2.0.0
+    ├── async@3.2.0
+    ├── is-stream@2.0.0
+    ├─┬ logform@2.2.0
+    │ ├── colors@1.4.0
+    │ ├── fast-safe-stringify@2.0.7
+    │ ├── fecha@4.2.1
+    │ └── ms@2.1.3
+    ├─┬ one-time@1.0.0
+    │ └── fn.name@1.1.0
+    ├─┬ readable-stream@3.6.0
+    │ ├── inherits@2.0.4
+    │ ├─┬ string_decoder@1.3.0
+    │ │ └── safe-buffer@5.2.1
+    │ └── util-deprecate@1.0.2
+    ├── stack-trace@0.0.10
+    ├── triple-beam@1.3.0
+    └─┬ winston-transport@4.4.0
+      └─┬ readable-stream@2.3.7
+        ├── core-util-is@1.0.2
+        ├── isarray@1.0.0
+        ├── process-nextick-args@2.0.1
+        ├── safe-buffer@5.1.2
+        └── string_decoder@1.1.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;&lt;br&gt;
+&lt;h3 id=&#34;13-подготовка-файлов-для-настройки-jupyterhub&#34;&gt;1.3. Подготовка файлов для настройки JupyterHub&lt;/h3&gt;
+&lt;p&gt;1.3.1. Для удобства разместим все необходимые файлы в каталоге с ранее созданным виртуальным окружением, точнее в подкаталоге &lt;code&gt;/opt/jupyterhub/etc/&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mkdir -p /opt/jupyterhub/etc/jupyterhub/
+cd /opt/jupyterhub/etc/jupyterhub/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.3.2. Создание файла конфигурации по-умолчанию:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo /opt/jupyterhub/bin/jupyterhub --generate-config
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате выполнения этой команды был сгенерирован файл &lt;code&gt;/opt/jupyterhub/etc/jupyterhub/jupyterhub_config.py&lt;/code&gt;. Все строки в этом файле закомментированы.&lt;/p&gt;
+&lt;p&gt;1.3.3. Меняем следующие строки. Позже дописать:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;14-добавление-systemd-юнит-для-запуска-jupyterhub&#34;&gt;1.4. Добавление systemd-юнит для запуска JupyterHub&lt;/h3&gt;
+&lt;p&gt;1.4.1. Создаём systemd-юнит в каталоге &lt;code&gt;/opt/jupyterhub/etc/systemd&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mkdir -p /opt/jupyterhub/etc/systemd
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/jupyterhub/etc/systemd/jupyterhub.service
+[Unit]
+Description=JupyterHub
+After=syslog.target network.target
+ 
+[Service]
+Type=simple
+User=root
+Environment=&amp;#34;PATH=/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/jupyterhub/bin&amp;#34;
+ExecStart=/opt/jupyterhub/bin/jupyterhub --ip 0.0.0.0 --port 8000  -f /opt/jupyterhub/etc/jupyterhub/jupyterhub_config.py
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.4.2. Добавляем новый systemd-юнит в обработку подсистемы systemd:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo ln -s /opt/jupyterhub/etc/systemd/jupyterhub.service /etc/systemd/system/jupyterhub.service
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable jupyterhub.service
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;15-запуск-jupyterhub&#34;&gt;1.5. Запуск JupyterHub&lt;/h3&gt;
+&lt;p&gt;1.5.1. Запускаем новый systemd-юнит:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl start jupyterhub.service
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.5.2. Проверяем статус демона:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl status jupyterhub.service
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.5.3. Возникла проблема с запуском, которую я описал здесь &lt;a href=&#34;n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub&#34;&gt;Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2-настройка-conda&#34;&gt;2. Настройка Conda&lt;/h2&gt;
+&lt;h3 id=&#34;21-установка-conda&#34;&gt;2.1. Установка Conda&lt;/h3&gt;
+&lt;p&gt;2.1.1 На странице &lt;a href=&#34;https://www.anaconda.com/products/individual&#34;&gt;Anaconda Individual Edition&lt;/a&gt; находим ссылку на актуальную версию инсталлера, с помощью которой скачиваем файл и запускаем установку, принимаем лицензию, &lt;span style=&#34;color:red&#34;&gt;указываем каталог установки &lt;code&gt;/opt/conda&lt;/code&gt;&lt;/span&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;curl -LO https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
+sudo /bin/bash Anaconda3-2021.05-Linux-x86_64.sh
+...
+Do you accept the license terms? [yes|no]
+[no] &amp;gt;&amp;gt;&amp;gt; yes
+
+Anaconda3 will now be installed into this location:
+/root/anaconda3
+
+  - Press ENTER to confirm the location
+  - Press CTRL-C to abort the installation
+  - Or specify a different location below
+
+[/root/anaconda3] &amp;gt;&amp;gt;&amp;gt; /opt/conda
+PREFIX=/opt/conda
+Unpacking payload ...
+Collecting package metadata (current_repodata.json): done
+Solving environment: done
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На запрос инициализации Anaconda отвечаем утвердительно:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Do you wish the installer to initialize Anaconda3
+by running conda init? [yes|no]
+[no] &amp;gt;&amp;gt;&amp;gt; yes
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;summary&gt;stdout ...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;no change     /opt/conda/condabin/conda
+no change     /opt/conda/bin/conda
+no change     /opt/conda/bin/conda-env
+no change     /opt/conda/bin/activate
+no change     /opt/conda/bin/deactivate
+no change     /opt/conda/etc/profile.d/conda.sh
+no change     /opt/conda/etc/fish/conf.d/conda.fish
+no change     /opt/conda/shell/condabin/Conda.psm1
+no change     /opt/conda/shell/condabin/conda-hook.ps1
+no change     /opt/conda/lib/python3.8/site-packages/xontrib/conda.xsh
+no change     /opt/conda/etc/profile.d/conda.csh
+modified      /root/.bashrc
+
+==&amp;gt; For changes to take effect, close and re-open your current shell. &amp;lt;==
+
+If you&amp;#39;d prefer that conda&amp;#39;s base environment not be activated on startup, 
+   set the auto_activate_base parameter to false: 
+
+conda config --set auto_activate_base false
+
+Thank you for installing Anaconda3!
+
+===========================================================================
+
+Working with Python and Jupyter notebooks is a breeze with PyCharm Pro,
+designed to be used with Anaconda. Download now and have the best data
+tools at your fingertips.
+
+PyCharm Pro for Anaconda is available at: https://www.anaconda.com/pycharm
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;&lt;br&gt;
+&lt;p&gt;Информацию об установленной Anaconda смотрим командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ /opt/conda/bin/conda info -a
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.1.2. Делаем conda доступной для всех пользователей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;22-установка-окружения-conda-по-умолчанию-для-всех-пользователей&#34;&gt;2.2. Установка окружения conda по умолчанию для всех пользователей&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo mkdir /opt/conda/envs/
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo /opt/conda/bin/conda create --prefix /opt/conda/envs/jupyter_env python=3.6 ipykernel
+...
+jupyter_core-4.7.1   | 68 KB     | ########################################################################################## | 100% 
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+#
+# To activate this environment, use
+#
+#     $ conda activate /opt/conda/envs/jupyter_env
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivat
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Посмотреть conda-среды:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ conda info --envs
+
+# conda environments:
+#
+base                  *  /opt/conda
+jupyter_env              /opt/conda/envs/jupyter_env
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost /]$ sudo su
+
+(base) [root@localhost ~]#source activate jupyter_env
+
+(jupyter_env) [root@localhost ~]# /opt/conda/envs/jupyter_env/bin/python -m ipykernel install --prefix=/usr/local --name &amp;#39;python36-spark-conda&amp;#39; --display-name &amp;#34;python36-spark-conda&amp;#34;
+Installed kernelspec python36-spark-conda in /usr/local/share/jupyter/kernels/python36-spark-conda
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;(jupyter_env) [root@localhost ~]# cat /usr/local/share/jupyter/kernels/python36-spark-conda/kernel.json
+{
+ &amp;#34;argv&amp;#34;: [
+  &amp;#34;/opt/conda/envs/jupyter_env/bin/python&amp;#34;,
+  &amp;#34;-m&amp;#34;,
+  &amp;#34;ipykernel_launcher&amp;#34;,
+  &amp;#34;-f&amp;#34;,
+  &amp;#34;{connection_file}&amp;#34;
+ ],
+ &amp;#34;display_name&amp;#34;: &amp;#34;python36-spark-conda&amp;#34;,
+ &amp;#34;language&amp;#34;: &amp;#34;python&amp;#34;
+}(jupyter_env)
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;(jupyter_env) [root@localhost ~]# conda install -c conda-forge jupyter_contrib_nbextensions
+
+[I 12:51:08 InstallContribNbextensionsApp] Up to date: /opt/conda/envs/jupyter_env/share/jupyter/nbextensions/latex_envs/doc/latex_env_doc_files/latex_env_doc_52_0.png
+[I 12:51:08 InstallContribNbextensionsApp] - Validating: OK
+[I 12:51:08 InstallContribNbextensionsApp] Installing jupyter_contrib_nbextensions items to config in /opt/conda/envs/jupyter_env/etc/jupyter
+Enabling: jupyter_nbextensions_configurator
+- Writing config: /opt/conda/envs/jupyter_env/etc/jupyter
+    - Validating...
+      jupyter_nbextensions_configurator 0.4.1 OK
+Enabling notebook nbextension nbextensions_configurator/config_menu/main...
+Enabling tree nbextension nbextensions_configurator/tree_tab/main...
+[I 12:51:08 InstallContribNbextensionsApp] Enabling notebook extension contrib_nbextensions_help_item/main...
+[I 12:51:08 InstallContribNbextensionsApp]       - Validating: OK
+[I 12:51:08 InstallContribNbextensionsApp] - Editing config: /opt/conda/envs/jupyter_env/etc/jupyter/jupyter_nbconvert_config.json
+[I 12:51:08 InstallContribNbextensionsApp] --  Configuring nbconvert template path
+[I 12:51:08 InstallContribNbextensionsApp] --  Configuring nbconvert preprocessors
+[I 12:51:08 InstallContribNbextensionsApp] - Writing config: /opt/conda/envs/jupyter_env/etc/jupyter/jupyter_nbconvert_config.json
+[I 12:51:08 InstallContribNbextensionsApp] --  Writing updated config file /opt/conda/envs/jupyter_env/etc/jupyter/jupyter_nbconvert_config.json
+done
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;(jupyter_env) [root@localhost ~]# conda install -c conda-forge jupyter-resource-usage
+...
+The following NEW packages will be INSTALLED:
+
+  anyio              conda-forge/linux-64::anyio-3.2.1-py36h5fab9bb_0
+  async_generator    conda-forge/noarch::async_generator-1.10-py_0
+  brotlipy           conda-forge/linux-64::brotlipy-0.7.0-py36h8f6f2f9_1001
+  chardet            conda-forge/linux-64::chardet-4.0.0-py36h5fab9bb_1
+  contextvars        conda-forge/noarch::contextvars-2.4-py_0
+  cryptography       conda-forge/linux-64::cryptography-3.4.7-py36hb60f036_0
+  dataclasses        conda-forge/noarch::dataclasses-0.8-pyh787bdff_0
+  idna               conda-forge/noarch::idna-2.10-pyh9f0ad1d_0
+  immutables         conda-forge/linux-64::immutables-0.15-py36h8f6f2f9_0
+  jupyter-resource-~ conda-forge/noarch::jupyter-resource-usage-0.6.0-pyhd8ed1ab_0
+  jupyter_server     conda-forge/noarch::jupyter_server-1.9.0-pyhd8ed1ab_0
+  psutil             conda-forge/linux-64::psutil-5.8.0-py36h8f6f2f9_1
+  pyopenssl          conda-forge/noarch::pyopenssl-20.0.1-pyhd8ed1ab_0
+  pysocks            conda-forge/linux-64::pysocks-1.7.1-py36h5fab9bb_3
+  requests           conda-forge/noarch::requests-2.25.1-pyhd3deb0d_0
+  requests-unixsock~ conda-forge/noarch::requests-unixsocket-0.2.0-py_0
+  sniffio            conda-forge/linux-64::sniffio-1.2.0-py36h5fab9bb_1
+  urllib3            conda-forge/noarch::urllib3-1.26.6-pyhd8ed1ab_0
+  websocket-client   conda-forge/linux-64::websocket-client-0.57.0-py36h5fab9bb_4
+...
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;(jupyter_env) [root@localhost ~]# conda install -c conda-forge jupyterlab
+...
+The following NEW packages will be INSTALLED:
+
+  babel              conda-forge/noarch::babel-2.9.1-pyh44b312d_0
+  json5              conda-forge/noarch::json5-0.9.5-pyh9f0ad1d_0
+  jupyterlab         conda-forge/noarch::jupyterlab-3.0.16-pyhd8ed1ab_0
+  jupyterlab_server  conda-forge/noarch::jupyterlab_server-2.6.0-pyhd8ed1ab_0
+  nbclassic          conda-forge/noarch::nbclassic-0.3.1-pyhd8ed1ab_1
+  pytz               conda-forge/noarch::pytz-2021.1-pyhd8ed1ab_0
+...
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;(jupyter_env) [root@localhost ~]# conda install -c conda-forge jupyterlab-git
+...
+The following NEW packages will be INSTALLED:
+
+  colorama           conda-forge/noarch::colorama-0.4.4-pyh9f0ad1d_0
+  gitdb              conda-forge/noarch::gitdb-4.0.7-pyhd8ed1ab_0
+  gitpython          conda-forge/noarch::gitpython-3.1.18-pyhd8ed1ab_0
+  jupyter-server-ma~ conda-forge/noarch::jupyter-server-mathjax-0.2.3-pyhd8ed1ab_0
+  jupyterlab-git     conda-forge/noarch::jupyterlab-git-0.30.1-pyhd8ed1ab_0
+  nbdime             conda-forge/noarch::nbdime-3.1.0-pyhd8ed1ab_0
+  smmap              conda-forge/noarch::smmap-3.0.5-pyh44b312d_0
+...
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;(jupyter_env) [root@localhost ~]# conda install -c conda-forge jupyterthemes
+...
+The following NEW packages will be INSTALLED:
+
+  cycler             conda-forge/noarch::cycler-0.10.0-py_2
+  freetype           conda-forge/linux-64::freetype-2.10.4-h0708190_1
+  jbig               conda-forge/linux-64::jbig-2.1-h7f98852_2003
+  jpeg               conda-forge/linux-64::jpeg-9d-h36c2ea0_0
+  jupyterthemes      conda-forge/noarch::jupyterthemes-0.20.0-py_1
+  kiwisolver         conda-forge/linux-64::kiwisolver-1.3.1-py36h605e78d_1
+  lcms2              conda-forge/linux-64::lcms2-2.12-hddcbb42_0
+  lerc               conda-forge/linux-64::lerc-2.2.1-h9c3ff4c_0
+  lesscpy            conda-forge/noarch::lesscpy-0.14.0-pyhd8ed1ab_0
+  libblas            conda-forge/linux-64::libblas-3.9.0-9_openblas
+  libcblas           conda-forge/linux-64::libcblas-3.9.0-9_openblas
+  libdeflate         conda-forge/linux-64::libdeflate-1.7-h7f98852_5
+  libgfortran-ng     conda-forge/linux-64::libgfortran-ng-9.3.0-hff62375_19
+  libgfortran5       conda-forge/linux-64::libgfortran5-9.3.0-hff62375_19
+  liblapack          conda-forge/linux-64::liblapack-3.9.0-9_openblas
+  libopenblas        conda-forge/linux-64::libopenblas-0.3.15-pthreads_h8fe5266_1
+  libpng             conda-forge/linux-64::libpng-1.6.37-h21135ba_2
+  libtiff            conda-forge/linux-64::libtiff-4.3.0-hf544144_1
+  libwebp-base       conda-forge/linux-64::libwebp-base-1.2.0-h7f98852_2
+  lz4-c              conda-forge/linux-64::lz4-c-1.9.3-h9c3ff4c_0
+  matplotlib-base    conda-forge/linux-64::matplotlib-base-3.3.4-py36hd391965_0
+  numpy              conda-forge/linux-64::numpy-1.19.5-py36h2aa4a07_1
+  olefile            conda-forge/noarch::olefile-0.46-pyh9f0ad1d_1
+  openjpeg           conda-forge/linux-64::openjpeg-2.4.0-hb52868f_1
+  pillow             conda-forge/linux-64::pillow-8.3.1-py36h676a545_0
+  ply                conda-forge/noarch::ply-3.11-py_1
+  zstd               conda-forge/linux-64::zstd-1.5.0-ha95c52a_0
+...
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;(jupyter_env) [root@localhost ~]# conda install -c conda-forge nbresuse
+...
+The following NEW packages will be INSTALLED:
+
+  nbresuse           conda-forge/noarch::nbresuse-0.4.0-pyhd8ed1ab_0
+...
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-настройка-reverse-proxy&#34;&gt;3. Настройка reverse proxy&lt;/h2&gt;
+&lt;h3 id=&#34;31-установка-nginx&#34;&gt;3.1. Установка nginx&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum -y install nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/nginx/conf.d/jupyter_proxy.conf
+map \$http_upgrade \$connection_upgrade {
+    default upgrade;
+    &amp;#39;&amp;#39;      close;
+}
+
+server {
+    listen 80;
+    server_name ${HOSTNAME};
+    return 301 https://\$host\$request_uri;
+}
+
+server {
+    listen 8888 ssl;
+
+    server_name dev-jupyter.example.org;
+
+    # certs sent to the client in SERVER HELLO are concatenated in ssl_certificate
+    ssl_certificate /opt/cloudera/security/pki/HTTP_${HOSTNAME}.crt;
+    ssl_certificate_key /opt/cloudera/security/pki/HTTP_${HOSTNAME}.key;
+    ssl_session_timeout 1d;
+    ssl_session_cache shared:SSL:50m;
+    ssl_session_tickets off;
+
+
+
+    # intermediate configuration, tweak to your needs
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers &amp;#39;ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS&amp;#39;;
+    ssl_prefer_server_ciphers on;
+
+    ## verify chain of trust of OCSP response using Root CA and Intermediate certs
+    ssl_trusted_certificate /etc/ipa/ca.crt;
+
+    # resolver &amp;lt;IP DNS resolver&amp;gt; valid=300s;
+    # resolver_timeout 5s;
+    resolver 10.206.226.129 10.206.226.130 valid=30s ipv6=off;
+    resolver_timeout 5s;
+
+
+  location / {    
+    # NOTE important to also set base url of jupyterhub to /jupyter in its config
+    proxy_pass http://127.0.0.1:8000;
+
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header Host \$host:\$server_port;
+    proxy_set_header X-Scheme \$scheme;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    #set \$ref &amp;#34;&amp;#34;;
+    #access_by_lua_block {
+    #  if (ngx.var.http_referer ~= nil and ngx.var.http_referer ~= &amp;#34;&amp;#34;) then
+    #   ngx.var.ref = string.gsub(ngx.var.http_referer, &amp;#34;https&amp;#34;, &amp;#34;http&amp;#34;)
+    #  end
+    # }
+
+    #proxy_set_header Referer \$ref;
+    #proxy_set_header  Referer  http://\$host;
+    add_header &amp;#39;Access-Control-Allow-Origin&amp;#39; &amp;#34;\$http_origin&amp;#34;;
+
+    # websocket headers
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade \$http_upgrade;
+    proxy_set_header Connection \$connection_upgrade;
+
+
+    proxy_buffering off;
+  }
+
+}
+EOF
+
+systemctl enable --now nginx
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

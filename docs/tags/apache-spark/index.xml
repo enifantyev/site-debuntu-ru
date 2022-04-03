@@ -1,0 +1,74 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Apache Spark</title>
+    <link>/tags/apache-spark/</link>
+    <description>Recent content in Apache Spark on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 30 Apr 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/apache-spark/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Настройка аутентификации/авторизации в Apache Spark</title>
+      <link>/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</link>
+      <pubDate>Fri, 30 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;spark&#34;&gt;Spark&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Value&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Spark Authentication&lt;/strong&gt;&lt;br/&gt;spark.authenticate&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;☑&lt;/td&gt;
+&lt;td&gt;Enable whether the Spark communication protocols do authentication using a shared secret.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;spark-history&#34;&gt;Spark History&lt;/h2&gt;
+&lt;p&gt;Если не настроено, то страница Spark History Web UI доступна анониму, где в логах аноним может увидеть использующиеся логины/пароли пользователей. За доступ к странице отвечают параметры:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;Value&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Enable User Authentication&lt;/strong&gt;&lt;br&gt;history_server_spnego_enabled&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;☑&lt;/td&gt;
+&lt;td&gt;Enables user authentication using SPNEGO (requires Kerberos), and enables access control to application history data.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Admin Users&lt;/strong&gt;&lt;br&gt;spark.history.ui.admin.acls&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;eugene,&amp;hellip;&lt;/td&gt;
+&lt;td&gt;Comma-separated list of users who can view all applications when authentication is enabled.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;После включения первого параметра и с пустой строкой во втором параметре, анонимный доступ к Spark History прекращается. Страница доступна только при наличии в веб-браузере действующего Kerberos-билета. В случае отсутствия валидного Kerberos-тикета, страница возвращает сообщение &amp;ldquo;HTTP ERROR 401. Authentication required&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;После заполнения второго параметра, например &amp;lsquo;admin&amp;rsquo; или любое другое случайное значение, остаётся возможность просмотра страницы из-под любого пользователя с валидным Kerberos-тикетом, но нельзя пройти по ссылкам к логам приложений, присутствующих на главной странице.&lt;/p&gt;
+&lt;p&gt;После заполнения второго параметра действующими логинами IPA-аккаунтов (пользовательские группы не работают), этим пользователям предоставляется доступ к логами приложений.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

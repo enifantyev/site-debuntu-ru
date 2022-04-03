@@ -1,0 +1,45 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – DD-WRT</title>
+    <link>/tags/dd-wrt/</link>
+    <description>Recent content in DD-WRT on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 25 Nov 2012 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/dd-wrt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Краткое описание установки DD-WRT на роутер Linksys WRT610N V2.0</title>
+      <link>/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</link>
+      <pubDate>Sun, 25 Nov 2012 00:00:00 +0000</pubDate>
+      
+      <guid>/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Пару лет назад я уже юзал DD-WRT на своём роутере, используя древнюю прошивку, которая указана в инструкции &lt;a href=&#34;http://www.dd-wrt.com/wiki/index.php/Linksys_WRT610N_v2.0&#34;&gt;http://www.dd-wrt.com/wiki/index.php/Linksys_WRT610N_v2.0&lt;/a&gt;. Но нестабильное подключение к провайдеру через PPPoE в DD-WRT вынудила перейти на древнюю и убогую прошивку от мира вай-фай для билайна. Позже я несколько раз пытался перейти обратно на DD-WRT, но натыкался на те же грабли с работой PPPoE. Сегодня заставил себя более плотно разобраться с DD-WRT, что и позволило, как мне кажется, решить вопрос с PPPoE.&lt;/p&gt;
+&lt;p&gt;Так как вышеупомянутая инструкция отсылает меня на ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2010/12-24-10-r15962/broadcom_K26/, то я решил попробовать найти там наиболее свежую и стабильную прошивку для моего аппарата Linksys WRT610N V2.0. Пропутешествовав в нужную сторону по папкам, я набрёл на &lt;a href=&#34;ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2012/07-20-12-r19519/broadcom_K26/&#34;&gt;ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2012/07-20-12-r19519/broadcom_K26/&lt;/a&gt;, откуда скачал две прошивки: &lt;a href=&#34;ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2012/07-20-12-r19519/broadcom_K26/dd-wrt.v24-19519_NEWD-2_K2.6_mini_wrt610nv2.bin&#34;&gt;dd-wrt.v24-19519_NEWD-2_K2.6_mini_wrt610nv2.bin&lt;/a&gt; и &lt;a href=&#34;ftp://dd-wrt.com/others/eko/BrainSlayer-V24-preSP2/2012/07-20-12-r19519/broadcom_K26/dd-wrt.v24-19519_NEWD-2_K2.6_mega.bin&#34;&gt;dd-wrt.v24-19519_NEWD-2_K2.6_mega.bin&lt;/a&gt;. Дополнительно я вывел на экран страничку &lt;a href=&#34;http://www.dd-wrt.com/wiki/index.php/Hard_reset_or_30/30/30&#34;&gt;http://www.dd-wrt.com/wiki/index.php/Hard_reset_or_30/30/30&lt;/a&gt; и вынул из роутера WAN-кабель. Теперь всё готово для перепрошивки.&lt;/p&gt;
+&lt;p&gt;Я понимал, что если в процессе перепрошивки что-нибудь пойдёт не так, то я могу потерять роутер. Также отсутствие UPS немного беспокоило меня, но, понадеявшись на авось, я зашёл в роутер через web-интерфейс на страницу обновления программного обеспечения. Тут, в соответствующем поле, я выбрал ранее скачанную mini-прошивку dd-wrt и начал процесс апгрейда. После окончания процесса я увидел через http://192.168.1.1 интерфейс DD-WRT mini. Следующим этапом было проведение процедуры hard reset 30/30/30.&lt;/p&gt;
+&lt;p&gt;Выведя на рабочий стол часы с секундной стрелкой, я нажал зубочисткой кнопку reset на заднице устройства и, продолжая её удерживать в этом положении, отсчитал 30 секунд. Не отпуская кнопки reset, я выдернул из роутера шнур питания и отсчитал ещё 30 секунд. Далее вернул шнур питания на место и продолжая удерживать кнопку reset в нажатом положении, отсчитал ещё 30 секунд. Процедура закончена и можно убирать зубочистку в безопасное место.&lt;/p&gt;
+&lt;p&gt;После успешного входа на роутер и насильственно предложенной смены логина и пароля администратора устройства, я зашёл на страницу &#34;Обновление прошивки&#34; и выбрал файл dd-wrt.v24-19519_NEWD-2_K2.6_mega.bin. Инициировал процесс апгрейда и минут 5 отдыхал... После успешной перепрошивки вновь провёл процедуру hard reset 30/30/30.&lt;/p&gt;
+&lt;p&gt;Вновь зашёл на устройство через http://192.168.1.1, сменил логин/пароль, сменил ip-подсеть, настроил PPPoE подключение, задал пароль на wi-fi, отключил вход в GUI через wireless, сменил DNS на 8.8.8.8 и 8.8.4.4, и так далее.&lt;/p&gt;
+&lt;p&gt;Вроде всё работает отлично.&lt;/p&gt;
+&lt;div&gt;Замечания:&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;Дефолтный логин и пароль у DD-WRT – root/admin.&lt;/li&gt;
+&lt;li&gt;При входе на роутер через ssh, необходимо использовать логин – root, даже в том случае, если логин администратора был изменён.&lt;/li&gt;
+&lt;li&gt;Переход на dd-wrt.v24-19519_NEWD-2_K2.6_big.bin у меня не удался. Процесс перепрошивки прекращался через несколько секунд после начала с сообщением &#34;Upgrade failed&#34;.&lt;/li&gt;
+&lt;li&gt;При одной из процедур hard reset, после вынимания и втыкания шнура питания в роутер, устройство не включилось. Попинав его немного, оставил минут на 5 в покое, и со второго включения увидел мигание лампочек. После полного включения роутера, я вновь провёл hard reset.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

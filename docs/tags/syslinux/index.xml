@@ -1,0 +1,85 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – syslinux</title>
+    <link>/tags/syslinux/</link>
+    <description>Recent content in syslinux on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 22 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/syslinux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Установка Alpine Linux в подтом btrfs</title>
+      <link>/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
+      <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-12-22&lt;/p&gt;
+&lt;h3 id=&#34;установка-alpine-linux&#34;&gt;Установка Alpine Linux&lt;/h3&gt;
+&lt;p&gt;Устанавливаем Alpine Linux 3.11 обычным порядком, но с указанием &lt;code&gt;lvmsys&lt;/code&gt; для размещения системного раздела в lvm-томе.&lt;/p&gt;
+&lt;p&gt;После завершения процедуры &lt;code&gt;setup-alpine&lt;/code&gt;, но до перезагрузки, будет удобно дать себе возможность войти в этот работающий экземпляр установки через ssh:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^#PermitRootLogin.*$/PermitRootLogin yes/&amp;#34; /etc/ssh/sshd_config
+/etc/init.d/sshd restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заходим в работающий экземпляр установки alpine linux через ssh под root&amp;rsquo;ом и продолжаем работать.&lt;/p&gt;
+&lt;h3 id=&#34;работаем-с-экземпляром-через-ssh&#34;&gt;Работаем с экземпляром через ssh&lt;/h3&gt;
+&lt;p&gt;Устанавливаем необходимые пакеты, уменьшаем системный раздел и конвертируем его из &lt;code&gt;ext4&lt;/code&gt; в &lt;code&gt;btrfs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk update &amp;amp;&amp;amp; apk add btrfs-progs btrfs-progs-extra lvm2 lvm2-extra device-mapper e2fsprogs e2fsprogs-extra util-linux
+lvchange -ay /dev/vg0/lv_root
+lvresize -r -L50G /dev/vg0/lv_root
+btrfs-convert /dev/vg0/lv_root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём снимок системного раздела в подтом &lt;code&gt;@&lt;/code&gt; с целью использовать его в дальнейшем как системный. Удаляем корневую систему и монтируем подтом &lt;code&gt;@&lt;/code&gt;, как актуальный системный раздел, в каталог &lt;code&gt;/mnt/&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount -t btrfs /dev/vg0/lv_root /mnt
+btrfs subvolume delete /mnt/ext2_saved
+btrfs subvolume snapshot /mnt /mnt/@
+cd /mnt
+find -maxdepth 1 ! -name @ -exec rm -rf {} \;
+cd /
+umount /mnt
+mount -t btrfs -o subvol=@ /dev/vg0/lv_root /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Подготавливаем песочницу и входим в неё через &lt;code&gt;chroot&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount /dev/sda1 /mnt/boot
+mount --bind /proc /mnt/proc
+mount --bind /dev /mnt/dev
+mount --bind /sys /mnt/sys
+mount --bind /run /mnt/run
+chroot /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;работа-в-песочнице&#34;&gt;Работа в песочнице&lt;/h3&gt;
+&lt;p&gt;Добавляем в будущую систему пакеты btrfs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk update
+apk add btrfs-progs btrfs-progs-extra
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Оказалось, что новая система загрузится и без корректировки этого файла, но для порядка изменяем строку в файле &lt;code&gt;/etc/fstab&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-/dev/vg0/lv_root        /       ext4    rw,relatime 0 1
++/dev/vg0/lv_root        /       btrfs    subvol=@,rw,relatime 0 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файл &lt;code&gt;/etc/mkinitfs/mkinitfs.conf&lt;/code&gt; добавляем запись о модуле &lt;code&gt;btrfs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-features=&amp;#34;ata base ide scsi usb virtio ext4 lvm&amp;#34;
++features=&amp;#34;ata base ide scsi usb virtio ext4 lvm btrfs&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;и пересоздаём initrd командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkinitfs
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Изменяем строки в файле &lt;code&gt;/etc/update-extlinux.conf&lt;/code&gt;, для подгрузки модуля btrfs и монтирования &lt;code&gt;/dev/vg0/lv_root&lt;/code&gt; в &lt;code&gt;/sysroot&lt;/code&gt; во время запуска initramfs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-modules=sd-mod,usb-storage,ext4
++modules=sd-mod,usb-storage,ext4,btrfs
+-default_kernel_opts=&amp;#34;nomodeset quiet rootfstype=ext4&amp;#34;
++default_kernel_opts=&amp;#34;nomodeset rootflags=subvol=@&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пересоздаём &lt;code&gt;/boot/extlinux.cfg&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;update-extlinux
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;С настройкой загрузки системы в подтом &lt;code&gt;@&lt;/code&gt; btrfs-раздела закончено. Сейчас можно настроить sshd, чтобы после перезагрузки была возможность сразу войти в новую систему через сеть, не дотрагиваясь до консоли. Минимально мы вновь можем изменить &lt;code&gt;PermitRootLogin&lt;/code&gt;, но уже для будущей системы, пока работающей в песочнице:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^#PermitRootLogin.*$/PermitRootLogin yes/&amp;#34; /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;выход-из-песочницы-и-перезагрузка&#34;&gt;Выход из песочницы и перезагрузка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;exit
+sync
+reboot
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

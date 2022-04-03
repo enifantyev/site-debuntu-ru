@@ -1,0 +1,65 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – cryptsetup</title>
+    <link>/tags/cryptsetup/</link>
+    <description>Recent content in cryptsetup on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 10 Dec 2018 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/cryptsetup/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: cryptsetup короткая памятка</title>
+      <link>/n/cryptsetup-korotkaya-pamyatka/</link>
+      <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/n/cryptsetup-korotkaya-pamyatka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2018-12-10&lt;/p&gt;
+&lt;p&gt;Создание крипто-тома с двумя ключами. В первом слоте используется ключевой файл, а в пятом парольная фраза:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cryptsetup luksFormat /dev/md11 pv11.key
+# cryptsetup -d pv11.key luksOpen /dev/md11 pv11
+# cryptsetup luksAddKey --key-slot 5 /dev/md11
+Enter password: ххххххххххххххх
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После применения &lt;code&gt;cryptsetup&lt;/code&gt;, для указанного тома (/dev/md11) UUID изменится на новый, а TYPE станет &amp;ldquo;crypto_LUKS&amp;rdquo;. Например, был том:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# blkid /dev/md11
+/dev/md11: UUID=&amp;#34;394d0e20-fbbf-11e8-b8b2-272ad0095723&amp;#34; TYPE=&amp;#34;ext4&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После применения &lt;code&gt;cryptsetup&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# blkid /dev/md11
+/dev/md11: UUID=&amp;#34;2c326492-fbbf-11e8-83e1-db657904e51b&amp;#34; TYPE=&amp;#34;crypto_LUKS&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;поэтому, при необходимости, необходимо поправить те скрипты, где используется том по ссылке &lt;code&gt;/dev/disk/by-uuid/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Зачистить определённый слот хранения пароля в заголовке:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cryptsetup -d /etc/cryptsetup-keys/pv11.key luksKillSlot /dev/md11 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Бэкап заголовка зашифрованного тома:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cryptsetup luksHeaderBackup --header-backup-file \
+md11_$(date +%Y%m%d)_$(blkid -o value | head -n1).header.backup /dev/md11
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или бэкап заголовка в ramfs, шифрованием и подписыванием бэкапа ключом gpg, сохранением зашифрованного бэкапа в текущую директорию:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir ramfs &amp;amp;&amp;amp; mount -t ramfs ramfs ramfs &amp;amp;&amp;amp; \
+cryptsetup luksHeaderBackup --header-backup-file ramfs/tmp.header.backup \
+/dev/md11 &amp;amp;&amp;amp; gpg -e -s -r srv0_backup_2018 \
+-o md11_$(date +%Y%m%d)_$(blkid -o value | head -n1).header.backup.gpg \
+ramfs/tmp.header.backup &amp;amp;&amp;amp; shred -u ramfs/tmp.header.backup &amp;amp;&amp;amp; \
+umount ramfs &amp;amp;&amp;amp; rmdir ramfs
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В заголовке тома хранится информация о параметрах шифрования тома, мастер-ключ (128, 256 или 512 бит), которым шифруются сектора тома, и восемь слотов по 256 байт, для хранения хэшей паролей к мастер-ключу.&lt;/p&gt;
+&lt;p&gt;Размер заголовка &lt;code&gt;luks&lt;/code&gt; тома примерно один мегабайт при длине ключа шифрования 256 бит и около двух мегабайтов при длине ключа 512 бит. Для надёжного уничтожения заголовка, а значит и мастер-ключа, достаточно зачистить первые три мегабайта тома:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# dd if=/dev/urandom of=/dev/md11 bs=1M count=3; sync
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# head -c 3M /dev/urandom &amp;gt; /dev/md11; sync
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если ранее был сделан бэкап заголовка, то с его помощью можно восстановить всю или часть информации из тома. В этом случае, для надёжной зачистки, нужно применить более продолжительное по времени перезапись всего пространства тома.&lt;/p&gt;
+&lt;p&gt;Обычно, перед окончанием аренды сервера, я запускаю сервер через rescue-образ, и выполняю для каждого диска:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# dd if=/dev/urandom of=/dev/sda bs=1M status=progress; sync
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При недостатке времени на перезапись всех дисков, зачищаю только заголовки зашифрованных томов и всё пространство незашифрованных разделов.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

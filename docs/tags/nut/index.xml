@@ -1,0 +1,123 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – NUT</title>
+    <link>/tags/nut/</link>
+    <description>Recent content in NUT on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/nut/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Настройка NUT для IPPON BACK POWER PRO 600</title>
+      <link>/n/nastroika-nut-dlya-ippon-back-power-pro-600/</link>
+      <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/nastroika-nut-dlya-ippon-back-power-pro-600/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;a href=&#34;http://blog.shadypixel.com/monitoring-a-ups-with-nut-on-debian-or-ubuntu-linux/&#34;&gt;http://blog.shadypixel.com/monitoring-a-ups-with-nut-on-debian-or-ubuntu-linux/&lt;/a&gt;&lt;/p&gt;
+&lt;div&gt;man ups.conf&lt;/div&gt;
+&lt;div&gt;man upsd.conf&lt;/div&gt;
+&lt;div&gt;man upsd.users&lt;/div&gt;
+&lt;div&gt;man upsmon.conf&lt;/div&gt;
+&lt;div&gt;$ aptitude install nut&lt;/div&gt;
+&lt;p&gt;Надо проверить наличие юзера и группы с именем nut и, если автоматом не были созданы, создать.&lt;/p&gt;
+&lt;div&gt;Лезем &lt;a href=&#34;http://www.networkupstools.org/compat/stable.html&#34;&gt;http://www.networkupstools.org/compat/stable.html&lt;/a&gt; и видим что для данной модели UPS можно юзать два дрйвера blazer_ser or megatec.&lt;br /&gt;Создаём /etc/nut/ups/ups.conf и пишем внутри:
+&lt;div&gt;# /etc/nut/ups.conf&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;[ippon]&lt;/div&gt;
+&lt;div&gt;driver = megatec&lt;/div&gt;
+&lt;div&gt;port = /dev/ttyS0 (так как у меня UPS сидит на COM1)&lt;/div&gt;
+&lt;div&gt; &lt;/div&gt;
+&lt;div&gt;Создаём /etc/udev/rules.d/99_nut-serialups.rules:&lt;/div&gt;
+&lt;div&gt;# /etc/udev/rules.d/99_nut-serialups.rules&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;KERNEL==&#34;ttyS0&#34;, GROUP=&#34;nut&#34;&lt;/div&gt;
+&lt;p&gt;Даём команды, чтобы не перегружать компутер:&lt;/p&gt;
+&lt;div&gt;$ sudo udevadm control --reload-rules&lt;br /&gt;$ sudo udevadm trigger&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt; &lt;/div&gt;
+&lt;div&gt;Запускаем:&lt;/div&gt;
+&lt;div&gt;$ sudo upsdrvctl start&lt;br /&gt;и видим ответ:&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;Network UPS Tools - UPS driver controller 2.4.1&lt;/div&gt;
+&lt;div&gt;Network UPS Tools - Megatec protocol driver 1.6 (2.4.1)&lt;/div&gt;
+&lt;div&gt;Megatec protocol UPS detected.&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;Создаём /etc/nut/upsd.conf:&lt;/div&gt;
+&lt;div&gt;# /etc/nut/upsd.conf&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;LISTEN 127.0.0.1 3493&lt;/div&gt;
+&lt;div&gt; &lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;Создаём  /etc/nut/upsd.users:&lt;/div&gt;
+&lt;div&gt;# /etc/nut/upsd.users&lt;/div&gt;
+&lt;div&gt;[local_mon]&lt;/div&gt;
+&lt;div&gt;password = VasyaLiSiCyn83 (здесь придумываем пароль)&lt;/div&gt;
+&lt;div&gt;    allowfrom = localhost&lt;/div&gt;
+&lt;div&gt;    upsmon master&lt;/div&gt;
+&lt;p&gt;Создаём /etc/nut/upsmon.conf:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;# /etc/nut/upsmon.conf&lt;/div&gt;
+&lt;div&gt;MONITOR ippon@localhost:3493 1 local_mon VasyaLiSiCyn83 master&lt;/div&gt;
+&lt;div&gt;POWERDOWNFLAG /etc/killpower&lt;/div&gt;
+&lt;div&gt;SHUTDOWNCMD &#34;/sbin/shutdown -h now&#34; &lt;/div&gt;
+&lt;div&gt;Настраиваем права:&lt;/div&gt;
+&lt;div&gt;$ sudo chown root:nut /etc/nut/*&lt;br /&gt;$ sudo chmod 640 /etc/nut/*&lt;/div&gt;
+&lt;p&gt;И в финале создаём и редактируем /etc/default/nut&lt;/p&gt;
+&lt;div&gt;
+&lt;pre&gt;# /etc/default/nut
+START_UPSD=yes
+START_UPSMON=yes 
+&lt;/pre&gt;
+&lt;p&gt;Запускаем:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;$ /etc/init.d/nut start&lt;/div&gt;
+&lt;div&gt;Можно дать команду:&lt;/div&gt;
+&lt;div&gt;$ upsc ippon и получить данные UPS&#39;а.&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;battery.charge: 100.0&lt;/div&gt;
+&lt;div&gt;battery.voltage: 13.80&lt;/div&gt;
+&lt;div&gt;battery.voltage.nominal: 12.0&lt;/div&gt;
+&lt;div&gt;driver.name: megatec&lt;/div&gt;
+&lt;div&gt;driver.parameter.pollinterval: 2&lt;/div&gt;
+&lt;div&gt;driver.parameter.port: /dev/ttyS0&lt;/div&gt;
+&lt;div&gt;driver.version: 2.4.1&lt;/div&gt;
+&lt;div&gt;driver.version.internal: 1.6&lt;/div&gt;
+&lt;div&gt;input.frequency: 50.1&lt;/div&gt;
+&lt;div&gt;input.frequency.nominal: 50.0&lt;/div&gt;
+&lt;div&gt;input.voltage: 248.0&lt;/div&gt;
+&lt;div&gt;input.voltage.fault: 248.0&lt;/div&gt;
+&lt;div&gt;input.voltage.maximum: 250.0&lt;/div&gt;
+&lt;div&gt;input.voltage.minimum: 234.0&lt;/div&gt;
+&lt;div&gt;input.voltage.nominal: 230.0&lt;/div&gt;
+&lt;div&gt;output.voltage: 248.0&lt;/div&gt;
+&lt;div&gt;ups.beeper.status: disabled&lt;/div&gt;
+&lt;div&gt;ups.delay.shutdown: 0&lt;/div&gt;
+&lt;div&gt;ups.delay.start: 2&lt;/div&gt;
+&lt;div&gt;ups.load: 31.0&lt;/div&gt;
+&lt;div&gt;ups.mfr: unknown&lt;/div&gt;
+&lt;div&gt;ups.model: unknown&lt;/div&gt;
+&lt;div&gt;ups.serial: unknown&lt;/div&gt;
+&lt;div&gt;ups.status: OL&lt;/div&gt;
+&lt;div&gt;ups.temperature: 37.8&lt;/div&gt;
+&lt;div&gt;ups.type: standby&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;Дополнительно скачал и установил два пакета из &lt;/div&gt;
+&lt;div&gt;&lt;a href=&#34;http://www.lestat.st/informatique/projets/pynut-en&#34;&gt;http://www.lestat.st/informatique/projets/pynut-en&lt;/a&gt; и &lt;a href=&#34;http://www.lestat.st/informatique/projets/nut-monitor-en&#34;&gt;http://www.lestat.st/informatique/projets/nut-monitor-en&lt;/a&gt;.&lt;/div&gt;
+&lt;div&gt;В результате в гноме могу глядеть нагрузку на UPS и прочее через GUI.&lt;/div&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

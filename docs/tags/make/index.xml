@@ -1,0 +1,118 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – make</title>
+    <link>/tags/make/</link>
+    <description>Recent content in make on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 01 Apr 2011 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/make/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Как собрать новое ядро linux</title>
+      <link>/n/kak-sobrat-novoe-yadro-linux/</link>
+      <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/kak-sobrat-novoe-yadro-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2011-04-01&lt;/p&gt;
+&lt;p&gt;Взято с: http://ebash.in/howto/Kak-sobrat-svoe-yadro-v-Debian-Etch&lt;/p&gt;
+&lt;p&gt;В каждом дистрибутиве имеется своя специфика сборки ядра и это HowTo ориентировано именно на то, как это сделать в Debian Etch. Так же раскрывается вопрос, как наложить тот или иной патч на ядро, когда необходима поддержка определенной функциональности или нового оборудования в Вашей системе. HowTo предназначено в первую очередь на более подготовленных пользователей и нет никаких гарантий, что этот способ будет работать так, как надо и все описанные действия и ответственность ложатся на Вас.&lt;/p&gt;
+&lt;p&gt;Примечание.&lt;/p&gt;
+&lt;p&gt;Будет описано два способа сборки ядра. Первым будет описан вариант сборки .deb пакетов, которые могут быть установлены в Вашей или другой системе. Второй метод, так называемый &amp;ldquo;traditional&amp;rdquo; way :-)&lt;/p&gt;
+&lt;h2 id=&#34;способ-первый-сборка-ядра-в-deb-пакеты&#34;&gt;Способ первый. Сборка ядра в .deb пакеты.&lt;/h2&gt;
+&lt;h3 id=&#34;установка-необходимых-пакетов-для-компиляции-ядра&#34;&gt;Установка необходимых пакетов для компиляции ядра.&lt;/h3&gt;
+&lt;p&gt;Для начала обновим списки пакетов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apt-get update
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Установим нужные нам пакеты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apt-get install kernel-package libncurses5-dev fakeroot wget bzip2 build-essential
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;скачиваем-исходники-ядра&#34;&gt;Скачиваем исходники ядра.&lt;/h3&gt;
+&lt;p&gt;Переходим в каталог &lt;code&gt;/usr/src&lt;/code&gt;, идем на &lt;a href=&#34;https://www.kernel.org&#34;&gt;www.kernel.org&lt;/a&gt; и выбираем нужную версию ядра. В данном случае будет рассмотрена версия &lt;code&gt;linux-2.6.23.1.tar.bz2&lt;/code&gt;. Скачиваем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /usr/src
+# wget http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.23.1.tar.bz2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Распакуем исходники и создадим символьную ссылку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt; # tar xjf linux-2.6.23.1.tar.bz2
+ # ln -sf linux-2.6.23.1 linux 
+ # cd /usr/src/linux
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;накладываем-патчи&#34;&gt;Накладываем патчи.&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Опционально и без необходимости не делайте этого!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Иногда требуются драйвера или средства, которые не поддерживаются в имеющемся ядре, например технология виртуализации или иная другая специфика, которой нет в текущем релизе. В любом случае это исправляется наложением так называемых патчей (если таковые имеются).&lt;/p&gt;
+&lt;p&gt;Итак, предположим вы скачали необходимый патч (для примера назовем &lt;code&gt;patch.bz2&lt;/code&gt;) в &lt;code&gt;/usr/src&lt;/code&gt;. Применим скачанный патч на наши исходники (Вы должны быть все еще в каталоге &lt;code&gt;/usr/src/linux&lt;/code&gt;):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# bzip2 -dc /usr/src/patch.bz2 | patch -p1 --dry-run
+# bzip2 -dc /usr/src/patch.bz2 | patch -p1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Первая команда &amp;ndash; только тест и никакие изменения не будут применены к исходникам. Если после первой команды не было выдано никаких ошибок, можно выполнить вторую команду для применения патча. Ни в коем случае не выполняйте вторую команду, если после первой были выданы ошибки!&lt;/p&gt;
+&lt;p&gt;Таким образом Вы можете накладывать патчи на исходники ядра. Например, имеются некоторые особенности, которые доступны только в 2.6.23.8 ядре, а исходники не содержали необходимой функциональности, но выпущен патч &lt;code&gt;patch-2.6.23.8.bz2&lt;/code&gt;. Вы можете применить этот патч к исходникам ядра 2.6.23, но не 2.6.23.1 или 2.6.23.3 и т.д.&lt;/p&gt;
+&lt;p&gt;Предъисправления (препатчи) - эквивалентны альфа релизам; патчи должны быть применены к исходникам полного предыдущего релиза с 3-х значной версией (например, патч 2.6.12-rc4 может быть применен к исходникам версии 2.6.11, но не к версии 2.6.11.10.)&lt;/p&gt;
+&lt;p&gt;Это значит, если мы хотим собрать ядро 2.6.23.8, необходимо скачать исходники версии 2.6.23 (&lt;a href=&#34;http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.23.tar.gz&#34;&gt;http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.23.tar.gz&lt;/a&gt;) применительно во втором способе &amp;ldquo;traditonal&amp;rdquo; way!&lt;/p&gt;
+&lt;p&gt;Применяем патч patch-2.6.23.8.bz2 к ядру 2.6.23:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /usr/src
+# wget http://www.kernel.org/pub/linux/kernel/v2.6/patch-2.6.22.8.bz2
+# cd /usr/src/linux
+# bzip2 -dc /usr/src/patch-2.6.23.8.bz2 | patch -p1 --dry-run
+# bzip2 -dc /usr/src/patch-2.6.23.8.bz2 | patch -p1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;Дополнение&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;Можно скачать файлик с расширением patch в &lt;code&gt;/usr/src/linux&lt;/code&gt; и применить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat file.patch | patch -p1
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;конфигурирование-ядра&#34;&gt;Конфигурирование ядра.&lt;/h3&gt;
+&lt;p&gt;Неплохой идеей будет использование существующего конфигурационного файла работающего ядра и для нового. Поэтому копируем существующую конфигурацию в &lt;code&gt;/usr/src/linux&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# make clean &amp;amp;&amp;amp; make mrproper
+# cp /boot/config-`uname -r` ./.config
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Далее даем команду:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# make menuconfig
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;после которой загрузится графическое меню конфигурации ядра. Выбираем в меню конфигуратора пункт &amp;ldquo;Load an Alternate Configuration File&amp;rdquo; и нажимаем &amp;ldquo;Оk&amp;rdquo;. Затем (если требуется) сделайте необходимые изменения в конфигурации ядра перемещаясь по меню (подробности конфигурации ядра можно найти в &lt;a href=&#34;https://www.google.com&#34;&gt;www.google.com&lt;/a&gt; :-) ). Когда закончите и нажмете &amp;ldquo;Exit&amp;rdquo;, будет задан вопрос &amp;ldquo;Do you wish to save your new kernel configuration?&amp;rdquo;, отвечаем утвердительно &amp;ldquo;Yes&amp;rdquo;.&lt;/p&gt;
+&lt;h3 id=&#34;компиляция-ядра&#34;&gt;Компиляция ядра.&lt;/h3&gt;
+&lt;p&gt;Сборка ядра выполняется всего в две команды:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# make-kpkg clean
+# fakeroot make-kpkg --initrd --append-to-version=-cybermind kernel_image kernel_headers
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После &lt;code&gt;--append-to-version=&lt;/code&gt;, можно написать любое название, какое Вам угодно, но оно должно начинаться со знака минус (-) и не иметь пробелов.&lt;/p&gt;
+&lt;p&gt;Процесс компиляции и сборки .deb пакетов может занят довольно продолжительное время. Все будет зависить от конфигурации ядра и возможностей Вашего процессора.&lt;/p&gt;
+&lt;h3 id=&#34;установка-нового-ядра&#34;&gt;Установка нового ядра.&lt;/h3&gt;
+&lt;p&gt;Когда удачно завершится сборка ядра, в каталоге /usr/src будут созданы два .deb пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /usr/src
+# ls -l
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;linux-image-2.6.23.1-cybermind_2.6.23.1-cybermind-10.00.Custom_i386.deb&lt;/code&gt; - собственно само актуальное ядро и&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;linux-headers-2.6.23.1-cybermind_2.6.23.1-cybermind-10.00.Custom_i386.deb&lt;/code&gt; - заголовки ядра, необходимые для сборки других модулей (например при сборке модулей драйвера nVidia).&lt;/p&gt;
+&lt;p&gt;Инсталлируем их:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# dpkg -i linux-image-2.6.23.1-cybermind_2.6.23.1-cybermind-10.00.Custom_i386.deb
+# dpkg -i linux-headers-2.6.23.1-cybermind_2.6.23.1-cybermind-10.00.Custom_i386.deb
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;(Эти пакеты теперь могут быть установлены на другой системе и собирать их заново уже не будет необходимости.)&lt;/p&gt;
+&lt;p&gt;Всё, инсталяция завершена, меню загрузчика, установка нового рамдиска и ядра будут сделаны автоматически. Остается только перезагрузиться:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;способ-второй-traditional-way--&#34;&gt;Способ второй. &amp;ldquo;traditional&amp;rdquo; way :-)&lt;/h2&gt;
+&lt;p&gt;Выполняем все пункты, описанные выше ДО пункта &amp;ldquo;Компиляция ядра&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Далее, традиционный способ:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# make all
+# make modules_install
+# make install
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Как обычно, сборка может занять продолжительное время, зависящее от конфигурации ядра и возможностей процессора.&lt;/p&gt;
+&lt;p&gt;Следующие шаги:&lt;/p&gt;
+&lt;p&gt;Ядро собрано и установлено, но еще теперь необходимо создать рамдиск (без которого ядро просто не загрузится) и необходимо обновить загрузчик GRUB. Для этого выполним следующее:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# depmod 2.6.23.1
+# apt-get install yaird
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Установим рамдиск:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkinitrd.yaird -o /boot/initrd.img-2.6.23.1 2.6.23.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Обновим легко и безболезненно загрузчик:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# update-grub
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Всё, загрузчик и новое ядро готовы, остается только перезагрузиться:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;проблемы&#34;&gt;Проблемы.&lt;/h2&gt;
+&lt;p&gt;Если после перезагрузки, выбранное вами новое ядро не загружается, перезагрузитесь и выберите Ваше предыдущее ядро и можно попробовать проделать весь процесс заново, чтоб собрать рабочееядро. Не забывайте в таком случае удалить строчки нерабочего ядра в &lt;code&gt;/boot/grub/menu.lst&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Ссылки:
+&lt;a href=&#34;http://ebash.in/howto/Kak-sobrat-svoe-yadro-v-Debian-Etch&#34;&gt;http://ebash.in/howto/Kak-sobrat-svoe-yadro-v-Debian-Etch&lt;/a&gt;
+&lt;a href=&#34;http://www.linuxcenter.ru/lib/articles/system/kernel26_install.phtml&#34;&gt;http://www.linuxcenter.ru/lib/articles/system/kernel26_install.phtml&lt;/a&gt;
+&lt;a href=&#34;http://www.opennet.ru/base/sys/install_linux_kernel.txt.html&#34;&gt;http://www.opennet.ru/base/sys/install_linux_kernel.txt.html&lt;/a&gt;
+&lt;a href=&#34;http://www.mr-h1z.com/linux/ubuntu/%D0%A1%D0%BE%D0%B1%D0%B8%D1%80%D0%B0%D0%B5%D0%BC-%D1%81%D0%B2%D0%BE%D0%B5-%D1%8F%D0%B4%D1%80%D0%BE-%D0%B4%D0%BB%D1%8F-%D1%83%D0%B1%D1%83%D0%BD%D1%82%D1%8B&#34;&gt;http://www.mr-h1z.com/linux/ubuntu/%D0%A1%D0%BE%D0%B1%D0%B8%D1%80%D0%B0%D0%B5%D0%BC-%D1%81%D0%B2%D0%BE%D0%B5-%D1%8F%D0%B4%D1%80%D0%BE-%D0%B4%D0%BB%D1%8F-%D1%83%D0%B1%D1%83%D0%BD%D1%82%D1%8B&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

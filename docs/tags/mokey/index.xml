@@ -1,0 +1,185 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Mokey</title>
+    <link>/tags/mokey/</link>
+    <description>Recent content in Mokey on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 27 May 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/mokey/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Mokey - пользовательский сервис сброса/смены паролей FreeIPA</title>
+      <link>/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
+      <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-05-27&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Сервис Mokey предназачен для самообслуживания пользователей FreeIPA домена, с помощью которого предоставляется возможность смены пароля или сброса забытого пароля, с отправкой одноразовой ссылки на зарегистрированную в IPA почту пользователя. Замечу, что &lt;strong&gt;mokey, не работает с учётными записями, состоящими во встроенной IPA-группе &amp;lsquo;admins&amp;rsquo;&lt;/strong&gt;, так как роль helpdesk не сможет изменить пароль таких УЗ. Вообще, рекомендуется использовать отдельную УЗ, участницу группы &amp;lsquo;admins&amp;rsquo;, для администрирования FreeIPA.&lt;/p&gt;
+&lt;h2 id=&#34;установка-mokey&#34;&gt;Установка mokey&lt;/h2&gt;
+&lt;p&gt;Установка mokey банальна и не вызывает интереса. Скачиваем последний релиз rpm-пакет из &lt;a href=&#34;https://github.com/ubccr/mokey&#34;&gt;github.com/ubccr/mokey&lt;/a&gt; и устанавливаем обычным способом.&lt;/p&gt;
+&lt;h2 id=&#34;установка-mariadb-и-создание-базы-mokey&#34;&gt;Установка MariaDB и создание базы mokey&lt;/h2&gt;
+&lt;p&gt;Устанавливаем mariadb-server:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum install mariadb-server
+systemctl enable --now mariadb-server
+systemctl enable --now mariadb
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Далее стандартный вызов &lt;code&gt;mysql_secure_installation&lt;/code&gt; с придумыванием хорошего пароля root&amp;rsquo;а для mariadb:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mysql_secure_installation
+  Root Password:
+  Remove anonymous users? [Y/n] y
+  Disallow root login remotely? [Y/n] y
+  Remove test database and access to it? [Y/n] y
+  Reload privilege tables now? [Y/n] y
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Далее создание базы данных mokey с логином/паролем и импорт схемы таблиц:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mysql -u root -p
+  mysql&amp;gt; create database mokey;
+  mysql&amp;gt; grant all on mokey.* to [user]@localhost identified by &amp;#39;[pass]&amp;#39;
+  mysql&amp;gt; exit
+mysql -u root -p mokey &amp;lt; /usr/share/mokey/ddl/schema.sql
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;создание-сервиса-mokey-и-получение-keytabов&#34;&gt;Создание сервиса mokey и получение keytab&amp;rsquo;ов&lt;/h2&gt;
+&lt;p&gt;Выполняем создание сервиса и &lt;strong&gt;создание keytab&amp;rsquo;а&lt;/strong&gt; на первом контроллере домена с правами обычного пользователя, но с принципалом, имеющим администраторские права во FreeIPA (здесь с принципалом admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit admin
+
+# Добавляем сервис mokey
+ipa service-add mokey/ipa-selfservice.test.lan --skip-host-check --force
+
+# Даём юзеру право на создание keytab&amp;#39;а
+ipa service-allow-create-keytab mokey/ipa-selfservice.test.lan --users=admin
+
+# Создаём и сохраняем keytab в каталоге
+ipa-getkeytab -p mokey/ipa-selfservice.test.lan -k /etc/mokey/keytab/mokeyapp.keytab
+
+# Отнимаем у пользователя право на создание keytab&amp;#39;а для этого сервиса
+ipa service-disallow-create-keytab mokey/ipa-selfservice.test.lan --users=admin
+
+chmod 640 /etc/mokey/keytab/mokeyapp.keytab
+chgrp mokey /etc/mokey/keytab/mokeyapp.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На других контроллерах домена выполняем &lt;strong&gt;получение keytab&amp;rsquo;а&lt;/strong&gt; (здесь с принципалом admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit admin
+
+# Даём юзеру право на получение keytab&amp;#39;а
+ipa service-allow-retrieve-keytab mokey/ipa-selfservice.test.lan --users=admin
+
+# Создаём и сохраняем keytab в каталоге
+ipa-getkeytab -p mokey/ipa-selfservice.test.lan -k /etc/mokey/keytab/mokeyapp.keytab -r
+
+# Отнимаем у пользователя право на получение keytab&amp;#39;а для этого сервиса
+ipa service-disallow-retrieve-keytab mokey/ipa-selfservice.test.lan --users=admin
+
+chmod 640 /etc/mokey/keytab/mokeyapp.keytab
+chgrp mokey /etc/mokey/keytab/mokeyapp.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;создание-http-сервиса-для-mokey-и-получение-сертификатов&#34;&gt;Создание HTTP-сервиса для mokey и получение сертификатов&lt;/h2&gt;
+&lt;p&gt;На первом контроллере домена выполняем создание сервиса HTTP и запрос на получение сертификата (здесь с принципалом admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit admin
+
+# Создаём сервис без привязки к хосту
+ipa service-add HTTP/ipa-selfservice.test.lan --skip-host-check --force
+
+# Даём управление сервисом для всех контроллеров домена
+ipa service-add-host HTTP/ipa-selfservice.test.lan \
+    --host prod-ipa01p.test.lan \
+    --host prod-ipa02p.test.lan \
+    --host prod-ipa03p.test.lan \
+
+# Создаём ключи и запрашиваем сертификат с одновременной постановкой на отслеживание
+ipa-getcert request -w -K &amp;#34;HTTP/$(hostname)&amp;#34; \
+                          -k &amp;#34;/etc/mokey/mokey_ssl.key&amp;#34; \
+                          -f &amp;#34;/etc/mokey/mokey_ssl.crt&amp;#34; \
+                          -D $(hostname) \
+                          -D &amp;#34;ipa-selfservice.test.lan&amp;#34; \
+                          -C &amp;#34;/bin/bash -c &amp;#39;/bin/chgrp mokey /etc/mokey/mokey_ssl.* &amp;amp;&amp;amp; /bin/chmod 640 /etc/mokey/mokey_ssl.*&amp;#39;&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На других контроллерах домена выполняем только запрос на получение сертификата (здесь с принципалом admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit admin
+
+ipa-getcert request -w -K &amp;#34;HTTP/$(hostname)&amp;#34; \
+                          -k &amp;#34;/etc/mokey/mokey_ssl.key&amp;#34; \
+                          -f &amp;#34;/etc/mokey/mokey_ssl.crt&amp;#34; \
+                          -D $(hostname) \
+                          -D &amp;#34;ipa-selfservice.test.lan&amp;#34; \
+                          -C &amp;#34;/bin/bash -c &amp;#39;/bin/chgrp mokey /etc/mokey/mokey_ssl.* &amp;amp;&amp;amp; /bin/chmod 640 /etc/mokey/mokey_ssl.*&amp;#39;&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;редактируем-etcmokeymokeyyml&#34;&gt;Редактируем /etc/mokey/mokey.yml&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;vi /etc/mokey/mokey.yaml&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dsn: &amp;#34;mokey:[Соответствующий Пароль]@/mokey?parseTime=true&amp;#34;
+driver: &amp;#34;mysql&amp;#34;
+port: 8081
+bind: &amp;#34;127.0.0.1&amp;#34;
+min_passwd_len: 12
+min_passwd_classes: 2
+auth_key: &amp;lt;!-- здесь строка из 64 случайных символа из словаря 0123456789abcdef --&amp;gt;
+enc_key: &amp;lt;!-- здесь строка из 32 случайных символа из словаря 0123456789abcdef --&amp;gt;
+templates: /usr/share/mokey/templates
+ipahost: &amp;#34;prod-ipa01p.test.lan&amp;#34;
+keytab: &amp;#34;/etc/mokey/keytab/mokeyapp.keytab&amp;#34;
+ktuser: &amp;#34;mokey/ipa-selfservice.test.lan&amp;#34;
+rate_limit: false
+
+smtp_host: &amp;#34;10.0.0.1&amp;#34;
+smtp_port: 25
+smtp_tls: &amp;#34;off&amp;#34;
+
+email_from: &amp;#34;bigdata-servers@test.lan&amp;#34;
+email_sig: &amp;#34;System Administrators &amp;amp;&amp;amp; Co&amp;#34;
+
+#------------------------------------------------------------------------------
+# Base URL of mokey server. Used for links in emails
+#------------------------------------------------------------------------------
+email_link_base: &amp;#34;https://ipa-selfservice.test.lan:8095&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Стартуем mokey:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl start mokey
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В случае проблем, для отладки, запускаем &lt;code&gt;/usr/bin/mokey -c /etc/mokey/mokey.yaml -d server&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;донастройка-httpd-сервера-из-состава-freeipa&#34;&gt;Донастройка httpd-сервера из состава FreeIPA&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Listen 8085 https
+SSLSessionCache         shmcb:/run/httpd/sslcache2(512000)
+SSLSessionCacheTimeout  300
+SSLRandomSeed startup file:/dev/urandom  256
+SSLRandomSeed connect builtin
+SSLCryptoDevice builtin
+&amp;lt;VirtualHost _default_:8085&amp;gt;
+  ErrorLog logs/error_ss_log
+  TransferLog logs/access_ss_log
+  LogLevel info
+  &amp;lt;Location &amp;#34;/&amp;#34;&amp;gt;
+    ProxyPass &amp;#34;http://127.0.0.1:8081/&amp;#34;
+  &amp;lt;/Location&amp;gt;
+  SSLEngine on
+  SSLProtocol +TLSv1 +TLSv1.1 +TLSv1.2
+  SSLHonorCipherOrder on
+  SSLCipherSuite kEECDH:kRSA:kEDH:!aDSS:!EXP:!3DES:!DES:!RC4:!RC2:!IDEA:!SEED:!eNULL:!aNULL:!MD5:!SSLv2:!ADH
+  SSLProxyCipherSuite kEECDH:kRSA:kEDH:!aDSS:!EXP:!3DES:!DES:!RC4:!RC2:!IDEA:!SEED:!eNULL:!aNULL:!MD5:!SSLv2:!ADH
+  SSLCertificateFile /etc/mokey/mokey_ssl.crt
+  SSLCertificateKeyFile /etc/mokey/mokey_ssl.key
+  SSLCACertificateFile /etc/ipa/ca.crt
+  SSLVerifyDepth 5
+  BrowserMatch &amp;#34;MSIE [2-5]&amp;#34; \
+         nokeepalive ssl-unclean-shutdown \
+         downgrade-1.0 force-response-1.0
+  CustomLog logs/ssl_request_log \
+          &amp;#34;%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \&amp;#34;%r\&amp;#34; %b&amp;#34;
+&amp;lt;/VirtualHost&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Перезапускаем Apache:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl restart httpd
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;проверка&#34;&gt;Проверка&lt;/h2&gt;
+&lt;p&gt;Так как ранее мы создали TLS-сертификаты с SAN для имени ipa-selfservice.test.lan, то возможно добавить соответствующую запись в DNS и указать пользователям использовать URL &lt;a href=&#34;https://ipa-selfservice.test.lan:8085/&#34;&gt;https://ipa-selfservice.test.lan:8085/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Через браузер проверяем наличие морд на URL&amp;rsquo;ах:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://prod-ipa01p.test.lan:8085&#34;&gt;https://prod-ipa01p.test.lan:8085&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://prod-ipa02p.test.lan:8085&#34;&gt;https://prod-ipa02p.test.lan:8085&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://prod-ipa03p.test.lan:8085&#34;&gt;https://prod-ipa03p.test.lan:8085&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://ipa-selfservice.test.lan:8085/&#34;&gt;https://ipa-selfservice.test.lan:8085/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

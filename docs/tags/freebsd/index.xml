@@ -1,0 +1,188 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – FreeBSD</title>
+    <link>/tags/freebsd/</link>
+    <description>Recent content in FreeBSD on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 13 Sep 2014 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/freebsd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: FreeBSD Установка, удаление программ</title>
+      <link>/a/freebsd-ustanovka-udalenie-programm/</link>
+      <pubDate>Sat, 13 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/a/freebsd-ustanovka-udalenie-programm/</guid>
+      <description>
+        
+        
+        &lt;div&gt;2014-09-13&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#Введение&#34;&gt;Введение&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Установка программы из пакета&#34;&gt;Установка программы из пакета&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pkg&#34;&gt;pkg&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#pkgng&#34;&gt;pkgng&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Установка программы из порта&#34;&gt;Установка программы из порта&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#Развёртывание дерева портов&#34;&gt;Развёртывание дерева портов&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Поиск программы в дереве портов&#34;&gt;Поиск программы в дереве портов&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Установка программы&#34;&gt;Установка программы&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Удаление программы&#34;&gt;Удаление программы&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Способы обновлений установленного программного обеспечения&#34;&gt;Способы обновлений установленного программного обеспечения&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#portupgrade&#34;&gt;portupgrade&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#portmanager&#34;&gt;portmanager&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#portmaster&#34;&gt;portmaster&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;&lt;a id=&#34;Введение&#34; name=&#34;Введение&#34;&gt;&lt;/a&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Во FreeBSD я обнаружил два способа централизованной установки программ. Первый способ — установка программ из готовых пакетов, хранящихся на специальном сервере-репозитории, а второй способ — сборка программы из исходников-портов.&lt;/p&gt;
+&lt;p&gt;Пакет — архив txz, содержащий всё необходимое для работы программы. Плюс в скорости установки, но минус в неполном соответствии локальному железу. Я хочу сказать, что программа в пакете, возможно, скомпилирована под древний Intel 80486 процессор, тогда как на целевом сервере трудятся два ксеона. Работать будет, но не в полную силу. Ещё один минус, как мне кажется, заключается в несвоевременности получения заплаток к найденным дыркам в приложениях. Придётся подождать, пока добрые самаритяне произведут сборку пакета с применением заплатки.&lt;/p&gt;
+&lt;p&gt;Порт — представляет собой отдельную папку с файлами, содержащими исходные коды программы и инструкции для автоматической сборки. Эту совокупность файлов необходимо собрать в программу на локальном компьютере. Огромный минус, особенно для медленных машин, в скорости установки. Компиляция может затянуться на несколько дней. А плюс тот, что программа компилируется на железе, на котором будет работать, а значит, как мне кажется, при сборке будут учтены все особенности локального железа. То есть, если программа, которую я устанавливаю из пакета, возможно скомпилирована для Intel 486 с целью максимальной совместимости с многообразием возможного железа, то при сборке этой программы из портов на сервере с двумя ксеонами, вероятно будут использованы все современные технологии, реализованные на установленном железе. Также, огромный плюс в том, что при появлении заплатки для приложения, не нужно ждать доброго дядю-компилятора и выпуска обновлённого пакета, а можно самому своевременно применить заплатку. И ещё один плюс заключается в возможности сборки программы из порта с определёнными опциями, тогда как в пакете мы получаем программу с опциями по умолчанию?&lt;/p&gt;
+&lt;p&gt;Я пользую оба способа. Алгоритм предпочтения пока мне самому не вполне ясен. Чаще собираю из портов, но и pkgng исользую.&lt;/p&gt;
+&lt;h2&gt;&lt;a id=&#34;Установка программы из пакета&#34; name=&#34;Установка программы из пакета&#34;&gt;&lt;/a&gt;Установка программы из пакета&lt;/h2&gt;
+&lt;p&gt;Для работы с пакетами, я использую новую систему pkgng. Во FreeBSD 9 приходится устанавливать новый pkgng рядом со старым pkg, произведя определённые процедуры по обновлению базы установленных пакетов. Во FreeBSD 10 по умолчанию установлен pkgng, а не pkg.&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;pkg&#34; name=&#34;pkg&#34;&gt;&lt;/a&gt;pkg&lt;/h3&gt;
+&lt;p&gt;Система устарела. Для установки, удаления программ использовались отдельные команды: pkg_add, pkg_delete. Я не стану углубляться в описание этой системы.&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;pkgng&#34; name=&#34;pkgng&#34;&gt;&lt;/a&gt;pkgng&lt;/h3&gt;
+&lt;p&gt;Список репозиториев находится в файле /etc/pkg/FreeBSD.conf? (Уточнить при следующей установке. Какая-то возня у меня была с указанием репозиториев при установке свежей FreeBSD.)&lt;/p&gt;
+&lt;p&gt;Список всех установленных пакетов:&lt;br /&gt;# pkg info&lt;br /&gt;Поиск названия пакета:&lt;br /&gt;# pkg search mariadb&lt;br /&gt;mariadb55-client-5.5.33a_1&lt;br /&gt;mariadb55-server-5.5.33a_1&lt;br /&gt;Получение информации о пакете:&lt;br /&gt;# pkg info mariadb55-server&lt;br /&gt;Установка пакета:&lt;br /&gt;# pkg install mariadb55-server&lt;br /&gt;Удаление установленной программы:&lt;br /&gt;# pkg delete mariadb55-server&lt;br /&gt;Уточнение изменений в списке доступных пакетов из подключённых репозиториев:&lt;br /&gt;# pkg update&lt;br /&gt;Обновление всех установленных пакетов:&lt;br /&gt;# pkg upgrade&lt;/p&gt;
+&lt;h2&gt;&lt;a id=&#34;Установка программы из порта&#34; name=&#34;Установка программы из порта&#34;&gt;&lt;/a&gt;Установка программы из порта&lt;/h2&gt;
+&lt;h3&gt;&lt;a id=&#34;Развёртывание дерева портов&#34; name=&#34;Развёртывание дерева портов&#34;&gt;&lt;/a&gt;Развёртывание дерева портов&lt;/h3&gt;
+&lt;p&gt;Для установки программ из портов будет удобно создать локальную копию дерева портов c сайта portsnap.freebsd.org.&lt;br /&gt;Для создания и обновления дерева портов можно использовать несколько команд утилиты portsnap (http://www.freebsd.org/cgi/man.cgi?query=portsnap):&lt;br /&gt;# portsnap fetch — позволит скачать дерево портов с какого-либо сайта.&lt;br /&gt;# portsnap extract — одноразовая команда для первоначального развёртывания дерева на локальной машине. Дерево портов будет лежать в /usr/ports.&lt;br /&gt;# portsnap fetch update — обновляет дерево до актуального состояния, что необходимо делать перед установкой и/или обновлением программ.&lt;/p&gt;
+&lt;p&gt;В данный момент (2014-03-17) размер папки /usr/ports составляет 660 мегабайт.&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Поиск программы в дереве портов&#34; name=&#34;Поиск программы в дереве портов&#34;&gt;&lt;/a&gt;Поиск программы в дереве портов&lt;/h3&gt;
+&lt;p&gt;Искать папку с необходимым портом во множестве подпапок директории /usr/ports не так сложно, если использовать команды:&lt;br /&gt;# whereis php5&lt;br /&gt;php5: /usr/ports/lang/php5&lt;br /&gt;# whereis apache24&lt;br /&gt;apache24: /usr/ports/www/apache24&lt;/p&gt;
+&lt;p&gt;# echo /usr/ports/*/*apache*&lt;br /&gt;/usr/ports/Mk/bsd.apache.mk /usr/ports/devel/apache-ant /usr/ports/distfiles/apache22 /usr/ports/net-mgmt/zenpack-apachemonitor /usr/ports/security/apache-xml-security-c /usr/ports/sysutils/apachetop /usr/ports/textproc/apache-solr /usr/ports/textproc/apache-solr3 /usr/ports/www/apache-forrest /usr/ports/www/apache-mode.el /usr/ports/www/apache22 /usr/ports/www/apache22-event-mpm /usr/ports/www/apache22-itk-mpm /usr/ports/www/apache22-peruser-mpm /usr/ports/www/apache22-worker-mpm /usr/ports/www/apache24 /usr/ports/www/mkapachepw /usr/ports/www/py-apachelog&lt;/p&gt;
+&lt;p&gt;# cd /usr/ports&lt;br /&gt;# make quicksearch name=apache24&lt;br /&gt;Port:   apache24-2.4.4_2&lt;br /&gt;Path:   /usr/ports/www/apache24&lt;br /&gt;Info:   Version 2.4.x of Apache web server&lt;br /&gt;&amp;lt;cit from http://www.freebsd.org/doc/ru/books/handbook/ports-finding-applications.html&amp;gt;&#34;Для выполнения более глубокого поиска используйте make search key=string или make quicksearch key=string, где string представляет собой некоторый текст, относящийся к искомому порту. Текст ищется в комментариях, описаниях или зависимостях. Этот способ можно использовать для поиска портов, связанных с некоторой темой, когда название программы неизвестно.&#34;&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Установка программы&#34; name=&#34;Установка программы&#34;&gt;&lt;/a&gt;Установка программы&lt;/h3&gt;
+&lt;p&gt;Установка приложения происходит из соответствующей найденной папки. Сначала переходим в папку:&lt;br /&gt;# cd `whereis -q apache24`&lt;br /&gt;или &lt;br /&gt;# cd /usr/ports/www/apache24&lt;br /&gt;И уже находясь в папке запускаем компиляцию программы:&lt;br /&gt;# make install clean&lt;br /&gt;или из любого места, но с указанием целевой директории (опция -C программы make):&lt;br /&gt;# make install clean -C /usr/ports/www/apache24&lt;/p&gt;
+&lt;p&gt;При компилировании программы из порта возможно появление псевдографических меню для выбора дополнительных настроек. Эти настройки сохраняются, и повторно, при переустановке пакета, не выводятся. Чтобы вновь увидеть эти диалоговые окна необходимо выполнить команды:&lt;br /&gt;# cd /usr/ports/www/apache24&lt;br /&gt;# make config&lt;br /&gt;для изменения ранее установленных опций.&lt;br /&gt;Или&lt;br /&gt;# make rmconfig&lt;br /&gt;для удаления  ранее установленных опций.&lt;br /&gt;Далее выполняем команду:&lt;br /&gt;# make reinstall clean&lt;br /&gt;Или даже сразу:&lt;br /&gt;# make config reinstall clean&lt;br /&gt;(команда clean для make нужно, чтобы удалить временную рабочую папку work, куда скачивались исходники, применялись к этим исходникам заплатки и где производилась компиляция программы. В большинстве случаев этот оставшийся мусор не нужен.)&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Удаление программы&#34; name=&#34;Удаление программы&#34;&gt;&lt;/a&gt;Удаление программы&lt;/h3&gt;
+&lt;p&gt;Удаление приложения происходит из соответствующей найденной папки:&lt;br /&gt;# cd /usr/ports/www/apache24&lt;br /&gt;# make deinstall&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Способы обновлений установленного программного обеспечения&#34; name=&#34;Способы обновлений установленного программного обеспечения&#34;&gt;&lt;/a&gt;Способы обновлений установленного программного обеспечения&lt;/h3&gt;
+&lt;h4&gt;&lt;a id=&#34;portupgrade&#34; name=&#34;portupgrade&#34;&gt;&lt;/a&gt;portupgrade&lt;/h4&gt;
+&lt;p&gt;portupgrade — видимо уже устаревшая программа, которая поможет автоматически обновить установленные приложения. Умеет работать с pkgng.&lt;br /&gt;Установка приложения portupgrade из дерева портов:&lt;br /&gt;# make install clean -C /usr/ports/ports-mgmt/portupgrade&lt;br /&gt;# cd /usr/ports&lt;br /&gt;# portupgrade -ai — для обновления всех установленных приложений с принудительным подтверждением (нажатием Yes).&lt;/p&gt;
+&lt;h4&gt;&lt;a id=&#34;portmanager&#34; name=&#34;portmanager&#34;&gt;&lt;/a&gt;portmanager&lt;/h4&gt;
+&lt;p&gt;portmanager — это приложение устарело и более не используется?&lt;/p&gt;
+&lt;h4&gt;&lt;a id=&#34;portmaster&#34; name=&#34;portmaster&#34;&gt;&lt;/a&gt;portmaster&lt;/h4&gt;
+&lt;p&gt;portmaster — заменяет/дополняет portupgrade. Умеет работать с pkgng. Имеет ряд преимуществ перед portupgrade?&lt;br /&gt;Установка приложения portmaster из дерева портов:&lt;br /&gt;# make install clean -C /usr/ports/ports-mgmt/portmaster&lt;br /&gt;# cd /usr/ports&lt;br /&gt;# portmaster -ad — для обновления всех установленных приложений без лишних запросов на удаление устаревших копий портов.&lt;/p&gt;
+&lt;p&gt;————————————————————————————-&lt;/p&gt;
+&lt;p&gt;Ссылки:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.freebsd.org/doc/ru/books/handbook/ports.html&#34; rel=&#34;noopener&#34; target=&#34;_blank&#34;&gt;http://www.freebsd.org/doc/ru/books/handbook/ports.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.opennet.ru/tips/2715_pkgng_freebsd_pkg_ports_package.shtml&#34; rel=&#34;noopener&#34; target=&#34;_blank&#34;&gt;http://www.opennet.ru/tips/2715_pkgng_freebsd_pkg_ports_package.shtml&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Установка и использование в FreeBSD 9.1 нового пакетного менеджера pkgng</title>
+      <link>/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</link>
+      <pubDate>Wed, 24 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</guid>
+      <description>
+        
+        
+        &lt;div&gt; &lt;/div&gt;
+&lt;div&gt;ОС: FreeBSD 9.1&lt;/div&gt;
+&lt;div&gt;Последнее существенное изменение: 2013-04-24&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#Введение в pkgng&#34;&gt;Введение&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Установка pkgng&#34;&gt;Установка&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Настройка pkgng&#34;&gt;Настройка&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Использование pkgng&#34;&gt;Использование&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#Ссылки&#34;&gt;Ссылки&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;&lt;a id=&#34;Введение в pkgng&#34; name=&#34;Введение в pkgng&#34;&gt;&lt;/a&gt;Введение&lt;/h3&gt;
+&lt;p&gt;Мой опыт использования FreeBSD не превышает нескольких дней, поэтому подразумевается, что в тексте обильно рассыпаны фразеологизмы &#34;насколько я понял&#34;, &#34;если я правильно понял&#34; и т.п. Если их не видно, это не значит, что их там нет.&lt;/p&gt;
+&lt;p&gt;Пакетный менеджер pkgng пришёл на смену pkg_install и более старым способам сборки портов прямо на компьютере. Изначально процесс установки пакета состоял из скачивания исходников пакета на компьютер и сборку пакета через make и т.д. Потом автоматизировали процесс, появился пакетный менеджер pkg_install, который позволил скачивать готовые собранные пакеты и устанавливать их через команду pkg_add, удалять через pkg_delete и т.д. Но и этот менеджер пакетов не был пределом мечтаний и в году 2010 начали создавать новый пакетный менеджер pkgng, который мне напоминает apt в debian.&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Установка pkgng&#34; name=&#34;Установка pkgng&#34;&gt;&lt;/a&gt;Установка&lt;/h3&gt;
+&lt;p&gt;На чистой FreeBSD предусмотрительно надо установить несколько пакетов, которые облегчат в дальнейшем переход на pkgng:&lt;/p&gt;
+&lt;pre&gt;# pkg_add -r wget screen mc&lt;/pre&gt;
+&lt;p&gt;Установку нового pkgng я произвёл посредством старого pkg_install:&lt;/p&gt;
+&lt;p&gt;# pkg_add -r pkg&lt;/p&gt;
+&lt;p&gt;Потом, по инструкции, конвертировал базу установленных пакетов в новый формат:&lt;/p&gt;
+&lt;p&gt;# pkg2ng&lt;/p&gt;
+&lt;p&gt;В файл /etc/make.conf добавил строку:&lt;/p&gt;
+&lt;pre&gt;WITH_PKGNG=yes&lt;/pre&gt;
+&lt;p&gt;Формат баз установленных портов для pkgng и pkg_install разные, поэтому после установки pkgng и конвертации базы в новый формат нельзя использовать старый pkg_install(?). Я пока не знаю как полностью избавиться от pkg_install, да и подозреваю, что на данный момент этого делать не стоит.&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Настройка pkgng&#34; name=&#34;Настройка pkgng&#34;&gt;&lt;/a&gt;Настройка&lt;/h3&gt;
+&lt;p&gt;Файл настроек находится в /usr/local/etc/pkg.conf, который я сделал из тут же лежащего pkg.conf.sample. Вначале я ничего не менял в этом файле и помучился с сообщениями об отсутствии в репозитории файла repo.txz, когда попытался установить mc:&lt;/p&gt;
+&lt;pre&gt;# pkg install mc&lt;/pre&gt;
+&lt;p&gt;Потом прочитал, что &lt;em&gt;открылся специальный репозиторий для pkgng&lt;a href=&#34;#link3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt;&lt;/em&gt; и внёс изменения в файл pkg.conf, в соответствии с мануалом&lt;a href=&#34;#link4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;. Вот что там у меня сейчас:&lt;/p&gt;
+&lt;pre&gt;&lt;strong&gt;# cat pkg.conf&lt;/strong&gt;
+# System-wide configuration file for pkg(1)
+# For more information on the file format and
+# options please refer to the pkg.conf(5) man page&lt;/pre&gt;
+&lt;pre&gt;# Configuration options
+PACKAGESITE         : http://ftp.pcbsd.org/pub/mirror/packages/9.1-RELEASE/amd64/
+#PACKAGESITE         : http://mirror.corbina.net/pub/pcbsd/packages/9.1-RELEASE/amd64/
+#PKG_DBDIR          : /var/db/pkg
+PKG_CACHEDIR        : /usr/local/tmp
+#PORTSDIR           : /usr/ports
+PUBKEY              : /usr/local/etc/pkg-pubkey.cert
+#HANDLE_RC_SCRIPTS   : NO
+#PKG_MULTIREPOS     : NO
+#ASSUME_ALWAYS_YES   : NO
+#SYSLOG             : YES
+#SHLIBS             : NO
+#AUTODEPS           : NO
+#PORTAUDIT_SITE     : http://portaudit.FreeBSD.org/auditfile.tbz
+&lt;h1 id=&#34;repository-definitions&#34;&gt;Repository definitions&lt;/h1&gt;
+&lt;p&gt;#repos:&lt;/p&gt;
+&lt;h1 id=&#34;default--httpexampleorgpkgng&#34;&gt;default : &lt;a href=&#34;http://example.org/pkgng/&#34;&gt;http://example.org/pkgng/&lt;/a&gt;&lt;/h1&gt;
+&lt;h1 id=&#34;repo1--httpsomewhereorgpkgngrepo1&#34;&gt;repo1 : &lt;a href=&#34;http://somewhere.org/pkgng/repo1/&#34;&gt;http://somewhere.org/pkgng/repo1/&lt;/a&gt;&lt;/h1&gt;
+&lt;h1 id=&#34;repo2--httpsomewhereorgpkgngrepo2pre&#34;&gt;repo2 : &lt;a href=&#34;http://somewhere.org/pkgng/repo2/&#34;&gt;http://somewhere.org/pkgng/repo2/&lt;/a&gt;&lt;/pre&gt;&lt;/h1&gt;
+&lt;div&gt;Может такое статься, что этот репозиторий закрыт по географическому признаку, поэтому я подготовил заремаренную ссылку на корбиновский репозиторий. Прочие российские зеркала pkgng репозитория можно найти здесь: &lt;a href=&#34;http://www.pcbsd.org/getmirrors.php?url=packages&#34;&gt;http://www.pcbsd.org/getmirrors.php?url=packages&lt;/a&gt;.&lt;/div&gt;
+&lt;p&gt;Потом, следуя инструкции&lt;a href=&#34;#link4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;, я скачал открытый ключ репозитория и поместил его здесь:&lt;/p&gt;
+&lt;pre&gt;# cd /usr/local/etc
+# wget http://trac.pcbsd.org/export/21629/pcbsd/current/src-sh/pc-extractoverlay/desktop-overlay/usr/local/etc/pkg-pubkey.cert&lt;/pre&gt;
+&lt;p&gt;И обновил установленные пакеты до версий из нового репозитория:&lt;/p&gt;
+&lt;pre&gt;# pkg upgrade -fy&lt;/pre&gt;
+&lt;h3&gt;&lt;a id=&#34;Использование pkgng&#34; name=&#34;Использование pkgng&#34;&gt;&lt;/a&gt;Использование&lt;/h3&gt;
+&lt;p&gt;Справки по командам можно получить, например:&lt;/p&gt;
+&lt;pre&gt;# man pkg-upgrade&lt;/pre&gt;
+&lt;p&gt;или&lt;/p&gt;
+&lt;pre&gt;# pkg help upgrade&lt;/pre&gt;
+&lt;p&gt;Обновление пакетов:&lt;/p&gt;
+&lt;pre&gt;# pkg upgrade&lt;/pre&gt;
+&lt;p&gt;Первый апгрейд у меня не получился из-за нарушения зависимостей. Мешал пакет pkg-config. Я решил его удалить, но он был нужен для работы tcpdump, wget и ещё пары пакетов. Я удалил все четыре мешающих пакетов:&lt;/p&gt;
+&lt;pre&gt;# pkg delete libidn libsmi tcpdump wget&lt;/pre&gt;
+&lt;p&gt;после чего произвёл удачный апгрейд. Далее удалил pkg-config. И, на всякий случай, восстановил все четыре ранее удалённых пакетов, включая tcpdump. Не спрашивайте почему я сразу не удалил pkg-config вместе с четырьмя прочими пакетами. В тот момент мне казалось это неплохой идеей.&lt;/p&gt;
+&lt;p&gt;Установка пакета:&lt;/p&gt;
+&lt;pre&gt;# pkg install &lt;em&gt;package&lt;/em&gt;&lt;/pre&gt;
+&lt;p&gt;Информация по пакету:&lt;/p&gt;
+&lt;pre&gt;# pkg info &lt;em&gt;package&lt;/em&gt;&lt;/pre&gt;
+&lt;p&gt;Удалить пакет:&lt;/p&gt;
+&lt;pre&gt;# pkg delete &lt;em&gt;package&lt;/em&gt;&lt;/pre&gt;
+&lt;p&gt;Также в pkgng есть своя проверка пакетов на уязвимости, которая заменяет portaudit. Проверить пакеты на уязвимости:&lt;/p&gt;
+&lt;pre&gt;# pkg audit -F&lt;/pre&gt;
+&lt;p&gt;И ещё много полезного...&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Ссылки&#34; name=&#34;Ссылки&#34;&gt;&lt;/a&gt;Ссылки&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/pkgng-intro.html&#34;&gt;Using pkgng for Binary Package Management&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.opennet.ru/opennews/art.shtml?num=34739&#34;&gt;04.09.2012 14:04 Вышел pkgng 1.0, новый пакетный менеджер для FreeBSD&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;link3&#34; href=&#34;http://www.opennet.ru/opennews/art.shtml?num=36730&#34; name=&#34;link3&#34;&gt;19.04.2013 09:56  Введён в строй постоянно обновляемый pkgng-репозиторий для PC-BSD и FreeBSD 9.1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a id=&#34;link4&#34; href=&#34;http://wiki.pcbsd.org/index.php/Convert_a_FreeBSD_System_to_PC-BSD%C2%AE#Switching_to_the_PC-BSD.C2.AE_pkgng_Repository&#34; name=&#34;link4&#34;&gt;Switching to the PC-BSD® pkgng Repository&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,91 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Kerberos</title>
+    <link>/tags/kerberos/</link>
+    <description>Recent content in Kerberos on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/kerberos/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Получение keytab-файла для сервисного принципала</title>
+      <link>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-04-01&lt;/p&gt;
+&lt;p&gt;Ссылки:
+&lt;a href=&#34;https://www.freeipa.org/page/V4/Keytab_Retrieval_Management&#34;&gt;https://www.freeipa.org/page/V4/Keytab_Retrieval_Management&lt;/a&gt;
+&lt;a href=&#34;https://www.freeipa.org/page/V4/Keytab_Retrieval&#34;&gt;https://www.freeipa.org/page/V4/Keytab_Retrieval&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Например, находясь на узле со службой, для которой нам необходимо получить keytab, сначала, если ещё не получили, то получаем тикет:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Назначаем себе право получения таблицу ключей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa service-allow-retrieve-keytab hbase/$(hostname) --users=$USER
+  Имя учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG
+  Псевдоним учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG
+  Managed by: prod-hbr01p.example.org
+  Пользователи, которым разрешено получать таблицу ключей: eugene
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Получаем таблицу ключей и сохраняем её в файле:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa-getkeytab -r -p hbase/$(hostname) -k ~/keytabs/hbase_$(hostname -s).keytab
+  Keytab successfully retrieved and stored in: /home/eugene/keytabs/hbase_prod-hbr01p.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Всё ещё имея свой персональный kerberos-билет, отнимаем у себя право получения таблицы ключей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipa service-disallow-retrieve-keytab hbase/$(hostname) --users=$USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Используем полученный keytab для выпуска билета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit -kt ~/keytabs/hbase_prod-hbr01p.keytab hbase/$(hostname)
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Создание keytab-файла для пользовательского принципала</title>
+      <link>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
+      <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-01-30&lt;/p&gt;
+&lt;p&gt;При получении keytab&amp;rsquo;а из FreeIPA, для пользователя потребуется сменить пароль.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В домашнем каталоге пользователя запускаем утилиту &amp;lsquo;ipa-getkeytab&amp;rsquo; для генерации keytab-файла для пользователя;&lt;/li&gt;
+&lt;li&gt;на запрос пароля, дважды вводим НОВЫЙ пароль, который с этого момента станет актуальным для пользовательского УЗ;&lt;/li&gt;
+&lt;li&gt;одновременно, все прочие keytab&amp;rsquo;ы, сгенерированные ранее, станут недействительными.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa-getkeytab -p username -k username.keytab -P
+New Principal Password:
+Verify Principal Password:
+Keytab successfully retrieved and stored in: username.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяем, что в созданном keytab-файле присутствует информация:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ klist -kte username.keytab
+Keytab name: FILE:username.keytab
+KVNO Timestamp           Principal
+---- ------------------- ------------------------------------------------------
+  33 01/16/2021 11:52:00 username@EXAMPLE.ORG (aes256-cts-hmac-sha1-96)
+  33 01/16/2021 11:52:00 username@EXAMPLE.ORG (aes128-cts-hmac-sha1-96)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Получение kerberos-билета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit -kt username.keytab username
+$ klist
+Ticket cache: FILE:/tmp/krb5cc_192800004_g8LRFe
+Default principal: username@EXAMPLE.ORG
+ 
+Valid starting       Expires              Service principal
+01/16/2021 12:00:20  01/17/2021 12:00:20  krbtgt/EXAMPLE.ORG@EXAMPLE.ORG
+        renew until 01/23/2021 12:00:20
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если полученная информация напоминает вышеприведённую, то можно считать, что keytab-файл успешно создан.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

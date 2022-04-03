@@ -1,0 +1,545 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Void Linux</title>
+    <link>/tags/void-linux/</link>
+    <description>Recent content in Void Linux on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 08 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/void-linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Void Linux Послеустановочные шаги</title>
+      <link>/a/void-linux-posleustanovochnye-shagi/</link>
+      <pubDate>Wed, 08 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/void-linux-posleustanovochnye-shagi/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-04-08&lt;/p&gt;
+&lt;p&gt;Для своего нетбука Asus 1215n я выбрал &lt;a href=&#34;https://a-hel-fi.m.voidlinux.org/live/current/void-live-x86_64-20191109-mate.iso&#34;&gt;дистрибутив Void Linux с &lt;code&gt;libc&lt;/code&gt;-библиотекой и Mate для графической оболочки&lt;/a&gt;, так как для дистрибутива с &lt;code&gt;musl&lt;/code&gt;-библиотекой отсутствует возможность установки проприетарных драйверов для видеокарты &amp;ldquo;Nvidia ION&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Для стационарного компьютера, с &amp;ldquo;NVidia GeForce GT 630&amp;rdquo; на борту, мной был выбран &lt;a href=&#34;https://a-hel-fi.m.voidlinux.org/live/current/void-live-x86_64-20191109-cinnamon.iso&#34;&gt;Void Linux, также с &lt;code&gt;libc&lt;/code&gt;-библиотекой + Cinnamon&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Установка с флэшки быстра и незатейлива и здесь приведена не будет. Отмечу только, что для корневой ФС выбираю BtrFS.&lt;/p&gt;
+&lt;h3 id=&#34;обновление-и-подключение-дополнительных-репо&#34;&gt;Обновление и подключение дополнительных репо&lt;/h3&gt;
+&lt;p&gt;После перезагрузки дважды выполняем обновление системы. Второе обновление мне понадобилось, чтобы разрешить зависимости пакетов, установленных при первом обновлении:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;xbps-install -Suy
+xbps-install -Suy
+reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаляем старые ядра Linux, кроме последнего:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vkpurge rm all
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Делаем запрос на получение списка доступных репозиториев и подключаем три из них:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xbps-query -Rs void-repo
+[-] void-repo-debug-9_4            Void Linux drop-in file for the debug repository
+[-] void-repo-multilib-6_3         Void Linux drop-in file for the multilib repository
+[-] void-repo-multilib-nonfree-6_3 Void Linux drop-in file for the multilib/nonfree repository
+[-] void-repo-nonfree-9_4          Void Linux drop-in file for the nonfree repository
+
+# xbps-install -Su void-repo-multilib void-repo-multilib-nonfree void-repo-nonfree
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;безопасность-ssh&#34;&gt;Безопасность SSH&lt;/h3&gt;
+&lt;p&gt;В Void Linux по умолчанию устанавливается демон &lt;code&gt;sshd&lt;/code&gt; с настройками, позволяющими авторизоваться root по паролю. В современных условиях это потенциальная дыра в безопасности системы. Без промедления исправляем:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;останавливаем демон sshd:&lt;br&gt;
+&lt;code&gt;# sv stop sshd&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;при необходимости запрещаем запуск демона sshd:&lt;br&gt;
+&lt;code&gt;# rm /var/service/sshd&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Замечу, что я использую ssh ключи ed25519, поэтому в файле &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;комментирую все host-ключи, кроме &lt;code&gt;/etc/ssh/ssh_host_ed25519_key&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;далее запрещаем вход для root&amp;rsquo;а:&lt;br&gt;
+&lt;code&gt;PermitRootLogin no&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;разрешаем вход по открытому ключу:&lt;br&gt;
+&lt;code&gt;PubkeyAuthentication yes&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;запрещаем вход по паролю:&lt;br&gt;
+&lt;code&gt;PasswordAuthentication no&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;отключение-аккаунта-root&#34;&gt;Отключение аккаунта root&lt;/h3&gt;
+&lt;p&gt;Так как моя учётная запись пользователя учавствует в группе &lt;code&gt;wheel&lt;/code&gt;, то отключаю &lt;code&gt;root&lt;/code&gt; за ненадобностью:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo passwd -dl root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Так как root теперь отключён, то загрузка в recovery mode завершится сообщением о невозможности ввода пароля для root по причиние его отключённого состояния и предложением прочитать sulogin(8). Из чтения данного мана выясняется, что единственный способ выйти из этого положения, это разрешить беспарольный вход, то есть без запроса пароля root&amp;rsquo;а. Реализуется этот способ добавлением ключа &lt;code&gt;-e&lt;/code&gt; или &lt;code&gt;--force&lt;/code&gt; к &lt;code&gt;sulogin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;В файле &lt;code&gt;/etc/sv/sulogin/run&lt;/code&gt; в строке &lt;code&gt;exec setsid sulogin ${OPTS:=-p} &amp;lt; $tty &amp;gt;$tty 2&amp;gt;&amp;amp;1&lt;/code&gt;, к опциям запуска sulogin добавляем ключ &lt;code&gt;-e&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;exec setsid sulogin ${OPTS:=-pe} &amp;lt; $tty &amp;gt;$tty 2&amp;gt;&amp;amp;1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Внимание!!! Данный беспарольный способ входа, по понятным причинами, является дырой в безопасности. Поэтому я его использовал только для проведения манипуляций с BTRFS из параграфа &amp;ldquo;Timeshift&amp;rdquo;. После проведения работ, беспарольный sulogin мной был вновь отключен. Что, конечно же, не помешает подготовленному злоумышленнику загрузиться с флэшки.&lt;/p&gt;
+&lt;p&gt;Если использовать FDE (полнодисковое шифрование), то, вероятно, &lt;code&gt;sulogin -pe&lt;/code&gt; можно применять без страха компрометации компьютера.&lt;/p&gt;
+&lt;h3 id=&#34;отключение-смягчения-уязвимостей-для-старого-ноута&#34;&gt;Отключение &amp;ldquo;смягчения&amp;rdquo; уязвимостей для старого ноута&lt;/h3&gt;
+&lt;p&gt;Надо проверить, имеет ли смысл отключать &amp;ldquo;смягчения&amp;rdquo;, так как в старом ноуте &amp;ldquo;Asus 1215n&amp;rdquo; установлен процессор &amp;ldquo;Intel Atom&amp;rdquo;, который не подвержен некоторым узвимостям, а значит замедление работы, вследствии применения &amp;ldquo;смягчений&amp;rdquo;, может быть незначительным.&lt;/p&gt;
+&lt;p&gt;В &lt;code&gt;/etc/default/grub&lt;/code&gt; добавляем в параметры загрузки ядра &lt;code&gt;mitigations=off&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;GRUB_CMDLINE_LINUX_DEFAULT=&amp;#34;loglevel=4 slub_debug=P page_poison=1 mitigations=off&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Обновляем GRUB и перегружаемся:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo update-grub
+$ sudo reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;включение-firewall&#34;&gt;Включение Firewall&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://wiki.voidlinux.org/Firewall_Configuration&#34;&gt;Firewall Configuration&lt;/a&gt;
+По умолчанию в Void Linux установлен &lt;code&gt;iptables&lt;/code&gt;. Как обычно, правила храняться в &lt;code&gt;/etc/iptables/iptables.rules&lt;/code&gt; и &lt;code&gt;/etc/iptables/ip6tables.rules&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Пример &lt;code&gt;iptables.rules&lt;/code&gt; :&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;*filter
+:INPUT DROP
+:FORWARD DROP
+:OUTPUT ACCEPT
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+#-A INPUT -m conntrack --ctstate INVALID -j LOG --log-prefix &amp;#34;IPV4 INVALID packets: &amp;#34;
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+# incoming ping &amp;amp; traceroute
+#-A INPUT -p icmp -m icmp --icmp-type echo-request -m conntrack --ctstate NEW -j ACCEPT
+#-A INPUT -p udp -m udp --dport 33434:33534 -m conntrack --ctstate NEW -j ACCEPT
+# ssh
+#-A INPUT -p tcp -m tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT
+# logging drop packets
+#-A INPUT -j LOG --log-prefix &amp;#34;IPV4 DROP packets: &amp;#34;
+-A INPUT -j DROP
+COMMIT
+
+*nat
+:PREROUTING ACCEPT
+:INPUT ACCEPT
+:OUTPUT ACCEPT
+:POSTROUTING ACCEPT
+COMMIT
+
+*mangle
+:PREROUTING ACCEPT
+:INPUT ACCEPT
+:FORWARD ACCEPT
+:OUTPUT ACCEPT
+:POSTROUTING ACCEPT
+COMMIT
+
+*raw
+:PREROUTING ACCEPT
+:OUTPUT ACCEPT
+COMMIT
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пример &lt;code&gt;ip6tables.rules&lt;/code&gt; :&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;*filter
+:INPUT DROP
+:FORWARD DROP
+:OUTPUT ACCEPT
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+#-A INPUT -m conntrack --ctstate INVALID -j LOG --log-prefix &amp;#34;IPV6 INVALID packets: &amp;#34;
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+# icmpv6
+-A INPUT -p icmpv6 --icmpv6-type router-advertisement -m conntrack --ctstate UNTRACKED -m hl --hl-eq 255 -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type neighbour-advertisement -m conntrack --ctstate UNTRACKED -m hl --hl-eq 255 -j ACCEPT
+-A INPUT -p icmpv6 --icmpv6-type neighbour-solicitation -m conntrack --ctstate UNTRACKED -m hl --hl-eq 255 -j ACCEPT
+# incoming ping traceroute
+#-A INPUT -p icmpv6 -m icmpv6 --icmpv6-type echo-request -m conntrack --ctstate NEW -j ACCEPT -m limit --limit 5/second
+#-A INPUT -p udp -m udp --dport 33434:33534 -m conntrack --ctstate NEW -j ACCEPT
+# ssh
+#-A INPUT -p tcp -m tcp --dport 22 -m conntrack --ctstate NEW -j ACCEPT
+# logging drop packets
+#-A INPUT -j LOG --log-prefix &amp;#34;IPV6 DROP packets: &amp;#34;
+-A INPUT -j DROP
+COMMIT
+
+*nat
+:PREROUTING ACCEPT
+:INPUT ACCEPT
+:OUTPUT ACCEPT
+:POSTROUTING ACCEPT
+COMMIT
+
+*mangle
+:PREROUTING ACCEPT
+:INPUT ACCEPT
+:FORWARD ACCEPT
+:OUTPUT ACCEPT
+:POSTROUTING ACCEPT
+COMMIT
+
+*raw
+:PREROUTING ACCEPT
+:OUTPUT ACCEPT
+COMMIT
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/detailes&gt;&lt;br&gt;
+&lt;p&gt;Для восстановления правил после перезагрузки включаем демоны:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ln -s /etc/sv/iptables /var/service/
+ln -s /etc/sv/ip6tables /var/service/
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;служба-времени&#34;&gt;Служба времени&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;xbps-install -S chrony
+ln -s /etc/sv/chronyd/ /var/service/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;chronyc makestep&lt;/code&gt; – для немедленной синхронизации.&lt;/p&gt;
+&lt;h3 id=&#34;локализация-и-русификация-консоли&#34;&gt;Локализация и русификация консоли&lt;/h3&gt;
+&lt;p&gt;Подправляем локаль для правильной работы программ, в частности &lt;code&gt;mosh&lt;/code&gt;, &lt;code&gt;gnome-terminal&lt;/code&gt;, клиента NextCloud. Также русифицируем консоль с переключением клавиатурных раскладок по &amp;ldquo;Alt+Shift&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;В &lt;code&gt;/etc/default/libc-locales&lt;/code&gt; раскомментируем необходимые нам локали и запускаем их генерацию (для &lt;code&gt;ru_RU.UTF-8&lt;/code&gt;):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s|#ru_RU.UTF-8|ru_RU.UTF-8|&amp;#34; /etc/default/libc-locales
+xbps-reconfigure -f glibc-locales
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Задаём локаль по умолчанию:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# echo &amp;#34;LANG=ru_RU.UTF-8&amp;#34; &amp;gt; /etc/locale.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Выбираем консольный шрифт &lt;a href=&#34;http://terminus-font.sourceforge.net/&#34;&gt;Terminus&lt;/a&gt; размером 24 и полужирным начертанием, и добавляем в консоль переключение между языками по &amp;ldquo;Alt+Shift&amp;rdquo;. Для этого изменяем соответствующие строки в &lt;code&gt;/etc/rc.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;KEYMAP=&amp;#34;ruwin_alt_sh-UTF-8&amp;#34;
+FONT=&amp;#34;ter-v24b&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Изменения вступят в силу после перезагрузки.&lt;/p&gt;
+&lt;p&gt;Заметка: консольные шрифты хранятся в &lt;code&gt;/usr/share/kbd/consolefonts&lt;/code&gt;. Сверяясь с этим каталогом и переключившись в консоль, подбираем для себя шрифт командой &lt;code&gt;setfont&lt;/code&gt;. Изменения происходят мгновенно. Название файла с шрифтом можно задавать любым способом, показанным ниже. Например:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ setfont /usr/share/kbd/consolefonts/UniCyrExt_8x16.psf.gz
+$ setfont /usr/share/kbd/consolefonts/ruscii_8x16
+$ setfont ter-v24n
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;logging&#34;&gt;Logging&lt;/h3&gt;
+&lt;p&gt;По умолчанию в Void Linux отсутствует логгирование. При необходимости в нём, на странице &lt;a href=&#34;https://docs.voidlinux.org/config/services/logging.html&#34;&gt;Logging in Void Linux&lt;/a&gt;, предлагается установить &lt;code&gt;socklog&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;xbps-install -S socklog-void
+ln -s /etc/sv/socklog-unix /var/service/
+ln -s /etc/sv/nanoklogd /var/service/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запись логов ведётся в &lt;code&gt;/var/log/socklog/&lt;/code&gt;. Для их чтения добавляем себя в группу &lt;code&gt;socklog&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo usermod -aG socklog $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;добавление-часто-используемого-по&#34;&gt;Добавление часто используемого ПО&lt;/h3&gt;
+&lt;p&gt;Устанавливаем часто используемые пакеты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo xbps-install -Su unzip atom vscode mosh mc chromium opera torbrowser-launcher keepassxc encfs libreoffice tint2 stellarium net-tools mtr NetworkManager-openvpn wireshark-qt zenmap tcpdump calibre atril file-roller mplayer vlc gnome-calculator gnome-system-monitor gedit clamav rkhunter chkrootkit smartmontools parted remmina telegram-desktop cool-retro-term font-3270 ntfs-3g attr-progs acl-progs libcap-ng-progs vsv bootiso bridge-utils io.elementary.photos
+$ sudo usermod -a -G wireshark $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;vga&#34;&gt;VGA&lt;/h3&gt;
+&lt;h4 id=&#34;nvidia340&#34;&gt;nvidia340&lt;/h4&gt;
+&lt;p&gt;Так как мой старенький нетбук имеет дополнительный видеочип на &amp;ldquo;Nvidia ION&amp;rdquo;, а его поддержка закончилась на 340-ой версии драйверов от Nvidia, то устанавливаем соответствующий драйвер; добавляем свой логин в группу пользователей этого видеочипа, и добавляем демон &lt;code&gt;bumblebeed&lt;/code&gt; в автозагрузку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo xbps-install -Su nvidia340 bumblebee bbswitch
+$ sudo usermod -a -G bumblebee $USER
+$ sudo ln -s /etc/sv/bumblebeed /var/service
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После ближайшей перезагрузки запускаем различные тесты для проверки работы bumblebee и изменяем пункты меню тех приложений, которым требуется для запуска GLX:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ optirun glxgears -info
+$ optirun glxspheres64
+$ optirun stellarium
+$ optirun cool-retro-term
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;nvidia390&#34;&gt;nvidia390&lt;/h4&gt;
+&lt;p&gt;На моём стационарном компе установлен GeForce GT 630, для которого, судя по информации с сайта nvidia, поддержка закончилась на 390-ой версии.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo xbps-install -Su nvidia390
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;intel-gpu&#34;&gt;Intel GPU&lt;/h4&gt;
+&lt;p&gt;Второй монитор в &amp;ldquo;Linux Mint&amp;rdquo; был обнаружен и подключён автоматически. Здесь счастья не случилось. Пока не знаю способа решения.&lt;/p&gt;
+&lt;!--
+На моём стационарном компе доступна встроенная intel gpu.
+[Intel GPU - Void Linux Handbook](https://docs.voidlinux.org/config/graphics/intel.html)
+```
+$ sudo xbps-install -S mesa-dri intel-video-accel
+```
+--&gt;
+&lt;h3 id=&#34;wifi-adapter-broadcom-bcm4313&#34;&gt;Wifi adapter Broadcom BCM4313&lt;/h3&gt;
+&lt;p&gt;Можно оставаться на драйвере, разрабатываемом сообществом. Или, при желании, ищем подходящие проприетарные драйвера в репозиториях и устанавливаем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xbps-query -Rs broadcom
+[-] b43-fwcutter-019_3                 Firmware extraction tool for Broadcom wireless driver
+[-] broadcom-bt-firmware-12.0.1.1011_1 Broadcom Bluetooth firmware for Linux kernel
+[-] broadcom-wl-dkms-6.30.223.271_8    Broadcom proprietary wireless drivers for Linux - DKMS kernel module
+
+# xbps-install -Su broadcom-wl-dkms
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Интересно, что после установки проприетарных драйверов, соединение с базовой станцией (Mikrotik) происходит не с первой попытки. Иногда только после закрытия/открытия крышки нетбука, то есть через спящий режим. Позже попробуем разобраться в причинах такого поведения, а пока нащупал костыль: &lt;code&gt;# rmmod wl cfg80211 &amp;amp;&amp;amp; sleep 1 &amp;amp;&amp;amp; modprobe wl&lt;/code&gt;, после применения которого происходит мгновенное подключение.&lt;/p&gt;
+&lt;h3 id=&#34;nextcloud&#34;&gt;NextCloud&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xbps-install -Su nextcloud-client libgnome-keyring
+...
+========================================================================
+To actually use qtkeychain-qt5 you need to either have kwallet or
+libgnome-keyring installed.
+========================================================================
+qtkeychain-qt5-0.9.1_1: installed successfully.
+nextcloud-client-2.6.0_1: configuring ...
+Updating GTK+ icon cache for /usr/share/icons/hicolor...
+Updating MIME database...
+nextcloud-client-2.6.0_1: post-install message:
+========================================================================
+NextCloud client end-to-end encryption (e2e) is currently unavailable
+(LibreSSL 2.9.2 does not provide EVP_PKEY_CTX_set_rsa_oaep_md primitive)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;libgnome-keyring&lt;/code&gt; – для подавления запроса авторизации в браузере.&lt;/p&gt;
+&lt;h3 id=&#34;timeshift&#34;&gt;Timeshift&lt;/h3&gt;
+&lt;p&gt;По умолчанию в Void Linux не предусмотрен какой-нибудь &lt;em&gt;планировщик задач&lt;/em&gt;, поэтому устанавливаем его для обеспечения запуска задач из &lt;code&gt;timeshift&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;xbps-install -Su timeshift cronie libgee
+ln -s /etc/sv/crond /var/service/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Void Linux устанавливается в btrfs-раздел без использования &lt;em&gt;подтомов&lt;/em&gt;, тогда как Timeshift нацелен на их использование в стиле Ubuntu, когда система размещена в &lt;em&gt;подтоме&lt;/em&gt; &lt;strong&gt;@&lt;/strong&gt;, а &lt;code&gt;/home&lt;/code&gt; в подтоме &lt;strong&gt;@home&lt;/strong&gt;. Для соблюдения этих условий необходимо:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Загрузиться в Recovery Mode, или с &lt;em&gt;live&lt;/em&gt;-флэшки, например voidlinux. При прохождении этого квеста из режима восстановления, по понятным причинам, выполнение пункта 4 необходимо отложить до загрузки в нормальном режиме.&lt;/li&gt;
+&lt;li&gt;Примонтировать системный раздел (у меня sda3) к, например, &lt;code&gt;/mnt&lt;/code&gt;:
+&lt;code&gt;mount /dev/sda3 /mnt&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Создать снимок корня системного раздела в &lt;em&gt;подтом&lt;/em&gt; с названием &lt;code&gt;@&lt;/code&gt; (древний символ, использовавшийся торговцами для учёта амфор с вином или оливковым маслом):
+&lt;code&gt;btrfs subvolume snapshot /mnt /mnt/@&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Удалить содержимое корневого тома, кроме подтома &lt;code&gt;@&lt;/code&gt; (только не в Recovery Mode):
+&lt;code&gt;cd /mnt&lt;/code&gt;
+&lt;code&gt;find -maxdepth 1 ! -name @ -exec rm -rf {} \;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;в файле &lt;code&gt;/mnt/@/etc/fstab&lt;/code&gt;, в строке монтирования системного раздела, после &lt;code&gt;defaults&lt;/code&gt; через запятую, добавить опцию &lt;code&gt;subvol=@&lt;/code&gt; (здесь приведён результат работы через &lt;code&gt;vi&lt;/code&gt;):
+&lt;code&gt;vi /mnt/@/etc/fstab&lt;/code&gt;
+&lt;code&gt;UUID=b8d4b8a5-0392-41e4-ad14-1255f12321b6 / btrfs defaults,subvol=@ 0 1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Отмонтировать системный раздел:
+&lt;code&gt;umount /mnt&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Примонтировать к &lt;code&gt;/mnt&lt;/code&gt; только что созданный подтом &lt;code&gt;@&lt;/code&gt; :
+&lt;code&gt;mount -o subvol=@ /dev/sda3 /mnt&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Монтируем важные каталоги и делаем &lt;code&gt;chroot&lt;/code&gt; в &lt;code&gt;/mnt&lt;/code&gt;:
+&lt;code&gt;mount -t proc /proc /mnt/proc&lt;/code&gt;
+&lt;code&gt;mount --bind /dev /mnt/dev&lt;/code&gt;
+&lt;code&gt;mount --bind /sys /mnt/sys&lt;/code&gt;
+&lt;code&gt;mount --bind /run /mnt/run&lt;/code&gt;
+&lt;code&gt;chroot /mnt /bin/bash&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Обновляем загрузчик системы и выходим из песочницы:
+&lt;code&gt;update-grub&lt;/code&gt;
+&lt;code&gt;grub-install /dev/sda&lt;/code&gt;
+&lt;code&gt;exit&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Перегружаем компьютер:
+&lt;code&gt;sync &amp;amp;&amp;amp; reboot&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;После загрузки в нормальном режиме, при необходимости удаления каталогов, как в пунке 4, монтируем корневой подтом файловой системы BTRFS к каталогу &lt;code&gt;mnt&lt;/code&gt;. Так как корень BTRFS всегда имеет ID=5, то его монтирование, удаление ненужных каталогов, с последующим отмонтированием, делаем так:
+&lt;code&gt;mount -o subvolid=5 /dev/sda3 /mnt&lt;/code&gt;
+&lt;code&gt;cd /mnt&lt;/code&gt;
+&lt;code&gt;find -maxdepth 1 ! -name @ -exec rm -rf {} \;&lt;/code&gt;
+&lt;code&gt;umount /mnt&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;При наличии UEFI, перед выполнением перемещения в песочницу &lt;code&gt;chroot&lt;/code&gt; в пункте 8, необходимо дополнительно примонтировать efi-раздел (у меня sda2), например: &lt;code&gt;mount /dev/sda2 /mnt/boot/efi&lt;/code&gt;. А после, находясь в песочнице, при установке загрузчика (пункт 9), выполнить: &lt;code&gt;grub-install&lt;/code&gt; без указания устройства.&lt;/p&gt;
+&lt;h3 id=&#34;powertop&#34;&gt;powertop&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;xbps-install -Su powertop xset
+echo &amp;#34;powertop --auto-tune&amp;#34; &amp;gt;&amp;gt; /etc/rc.local
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;добавление-мфу-hp-laserjet-pro-200-mfp-m276nw&#34;&gt;Добавление МФУ HP LaserJet Pro 200 MFP M276nw&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://wiki.voidlinux.org/SANE&#34;&gt;SANE - Void Linux Wiki&lt;/a&gt;
+Установил необходимые пакеты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo xbps-install -Su sane xsane simple-scan hplip gnupg system-config-printer
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавил себя в группы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo usermod -aG lp,lpadmin $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запустил CUPS:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ln -s /etc/sv/cupsd /var/service/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запустил процедуру установки МФУ:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo hp-setup -i 192.168.120.10
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавил в &lt;code&gt;/etc/sane.d/dll.conf&lt;/code&gt; строку &lt;code&gt;hpaio&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo sh -c &amp;#39;echo &amp;#34;hpaio&amp;#34; &amp;gt;&amp;gt; /etc/sane.d/dll.conf&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверка сканера:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ scanimage -L
+device `hpaio:/net/HP_LaserJet_200_colorMFP_M276nw?ip=192.168.120.10&amp;#39; is a Hewlett-Packard HP_LaserJet_200_colorMFP_M276nw all-in-one
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Указание предпочтительного размера печатного листа:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# sudo sh -c &amp;#39;echo a4 &amp;gt;&amp;gt; /etc/papersize&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;teamviewer&#34;&gt;TeamViewer&lt;/h3&gt;
+&lt;p&gt;Для подключения к другим компьютерам через TeamViewer, необходимо установить в систему два пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xbps-install -Su qt5-webkit qt5-quickcontrols
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скачиваем &lt;a href=&#34;https://download.teamviewer.com/download/linux/teamviewer_amd64.tar.xz&#34;&gt;teamviewer for linux&lt;/a&gt; и распаковываем в, например, &lt;code&gt;/opt&lt;/code&gt;. Запуск teamviewer производим под обычным пользователем &lt;code&gt;$ /opt/teamviewer/teamviewer&lt;/code&gt;. В случае неудачи можем проверить наличие в системе требуемых библиотек &lt;code&gt;$ /opt/teamviewer/tv-setup checklibs&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;помощь-проекту-статистикой&#34;&gt;Помощь проекту статистикой&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.voidlinux.org/contributing/usage-statistics.html&#34;&gt;Usage Statistics&lt;/a&gt;
+Посмотреть собираемые данные можно &lt;a href=&#34;http://popcorn.voidlinux.org/&#34;&gt;здесь&lt;/a&gt;. Каждые 24 часа PopCorn посылает информацию об установленных пакетах и их версиях, версии ядра, архитектуре процессора, и ещё пара-тройка параметров. Каждый клиент генерирует уникальный UUID, на основе которого можно отслеживать источники статистики. Поэтому мой стационарный комп посылает статистику, а ноут пока не посылает. Я параноик, но не совсем.&lt;/p&gt;
+&lt;p&gt;Скачиваем и запускаем PopCorn:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;xbps-install PopCorn
+ln -s /etc/sv/popcorn /var/service/
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;прочее&#34;&gt;Прочее&lt;/h3&gt;
+&lt;p&gt;Настройку NetworkManager, Tint2 и прочее здесь описывать не буду.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Void Linux Установка QEMU/KVM</title>
+      <link>/n/void-linux-ustanovka-kvm/</link>
+      <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/void-linux-ustanovka-kvm/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-03-17&lt;/p&gt;
+&lt;p&gt;QEMU/KVM не требует DKMS-модуля для своей работы, в отличии от VirtualBox. Бла-бла-бла.&lt;/p&gt;
+&lt;h2 id=&#34;установка-необходимых-пакетов&#34;&gt;Установка необходимых пакетов&lt;/h2&gt;
+&lt;p&gt;Для эмуляции на основе &lt;code&gt;qemu/kvm&lt;/code&gt; необходимы следующие компоненты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;virt-manager&lt;/code&gt; — GUI для работы с &lt;code&gt;libvirt&lt;/code&gt; и &lt;code&gt;qemu&lt;/code&gt;. Позволяет подключаться к локальному и/или удалённому экземпляру &lt;code&gt;qemu/kvm&lt;/code&gt;. Поключение к удалённому экземпляру &lt;code&gt;libvirt&lt;/code&gt; и просмотр консоли удалённой эмулируемой машины обеспечивает ssh-туннель.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;qemu&lt;/code&gt; — программа, умеющая эмулировать различные процессоры и другое оборудование.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;libvirt&lt;/code&gt; — библиотека для работы с &lt;code&gt;kvm&lt;/code&gt; из &lt;em&gt;пространства пользователя&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kvm&lt;/code&gt; — гипервизор, модуль находящийся в ядре системы, значительно ускоряющий выполнение эмулируемой машины в &lt;code&gt;qemu&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo xbps-install -Su virt-manager libvirt qemu
+Name               Action    Version           New version            Download size
+gnome-ssh-askpass  install   -                 8.1p1_1                9060B
+libbsd             install   -                 0.10.0_1               41KB
+openbsd-netcat     install   -                 1.206_1                21KB
+yajl               install   -                 2.1.0_4                21KB
+libvirt-glib       install   -                 2.0.0_3                141KB
+gtk-vnc            install   -                 0.9.0_3                97KB
+osinfo-db          install   -                 20191125_1             112KB
+libosinfo          install   -                 1.7.1_1                569KB
+libvirt-python3    install   -                 6.0.0_1                130KB
+libxml2-python3    install   -                 2.9.10_2               122KB
+virt-manager-tools install   -                 2.2.1_1                164KB
+virt-manager       install   -                 2.2.1_1                846KB
+dnsmasq            install   -                 2.80_7                 194KB
+libnuma            install   -                 2.0.13_1               17KB
+libapparmor        install   -                 2.13.3_4               90KB
+libvirt            install   -                 6.0.0_1                5175KB
+libvde2            install   -                 2.3.2_21               25KB
+libbluetooth       install   -                 5.52_1                 45KB
+spice              install   -                 0.14.2_2               318KB
+virglrenderer      install   -                 0.8.1_1                176KB
+libpcsclite        install   -                 1.8.26_1               22KB
+libcacard          install   -                 2.7.0_1                30KB
+qemu               install   -                 4.2.0_2                100MB
+========================================================================
+To enable KVM your user must be added to the &amp;#39;kvm&amp;#39; group:
+
+        $ usermod -aG kvm &amp;lt;username&amp;gt;
+
+Don&amp;#39;t forget to load the appropiate KVM module for your CPU (x86 only):
+
+        $ modprobe kvm-amd # for AMD CPUs
+        $ modprobe kvm-intel # for Intel CPUs
+========================================================================
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;дополнительные-телодвижения&#34;&gt;Дополнительные телодвижения&lt;/h2&gt;
+&lt;p&gt;Добавляем себя к группам пользователей-эмуляторов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo usermod -aG kvm $USER
+$ sudo usermod -aG libvirt $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Загружаем подходящий модуль (здесь для процессора Intel) и запускаем демоны:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;modprobe kvm-intel
+ln -s /etc/sv/libvirtd /var/service
+ln -s /etc/sv/virtlockd /var/service
+ln -s /etc/sv/virtlogd /var/service
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После выхода из своего сеанса и повторного входа, или перезагрузки компьютера, появляется возможность запустить &lt;code&gt;virt-manager&lt;/code&gt; и создать/добавить первую виртуальную машину.&lt;/p&gt;
+&lt;h2 id=&#34;инструменты-настройки&#34;&gt;Инструменты настройки&lt;/h2&gt;
+&lt;p&gt;Настройка производится с помощью:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;virsh&lt;/code&gt; — консольная утилита;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;virt-manager&lt;/code&gt; — относительно удобная GUI-утилита.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;настройка-хранилищ-pool&#34;&gt;Настройка хранилищ (pool)&lt;/h2&gt;
+&lt;p&gt;Хранилища — это места хранения образов винчестеров виртуальных машин, образов DVD-дисков. Хранилищем может стать каталог файловой системы, или выделенный раздел на LVM2. Перед работой с ними их необходимо добавить в систему.&lt;/p&gt;
+&lt;p&gt;По умолчанию доступно одно хранилище &lt;code&gt;/var/lib/libvirt/images&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;настройка-сети-для-qemukvm&#34;&gt;Настройка сети для QEMU/KVM&lt;/h2&gt;
+&lt;h3 id=&#34;virtual-network-default--nat&#34;&gt;Virtual network &amp;lsquo;default&amp;rsquo; : NAT&lt;/h3&gt;
+&lt;p&gt;При запуске демона &lt;code&gt;libvirtd&lt;/code&gt; в систему автоматически добавляется виртуальный сетевой интерфейс &lt;code&gt;virbr0&lt;/code&gt; с отдельной подсеткой &lt;code&gt;192.168.122.0/24&lt;/code&gt;, а в netfilter дописываются правила, с помощью которых, через NAT, виртуальные машины смогут иметь доступ к инету:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;*mangle
+-N LIBVIRT_PRT
+-A POSTROUTING -j LIBVIRT_PRT
+-A LIBVIRT_PRT -o virbr0 -p udp -m udp --dport 68 -j CHECKSUM --checksum-fill
+
+*nat
+-N LIBVIRT_PRT
+-A POSTROUTING -j LIBVIRT_PRT
+-A LIBVIRT_PRT -s 192.168.122.0/24 -d 224.0.0.0/24 -j RETURN
+-A LIBVIRT_PRT -s 192.168.122.0/24 -d 255.255.255.255/32 -j RETURN
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p tcp -j MASQUERADE --to-ports 1024-65535
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -j MASQUERADE
+
+*filter
+-N LIBVIRT_FWI
+-N LIBVIRT_FWO
+-N LIBVIRT_FWX
+-N LIBVIRT_INP
+-N LIBVIRT_OUT
+-A INPUT -j LIBVIRT_INP
+-A LIBVIRT_FWI -d 192.168.122.0/24 -o virbr0 -j ACCEPT
+-A LIBVIRT_FWI -o virbr0 -j REJECT --reject-with icmp-port-unreachable
+-A LIBVIRT_FWO -s 192.168.122.0/24 -i virbr0 -j ACCEPT
+-A LIBVIRT_FWO -i virbr0 -j REJECT --reject-with icmp-port-unreachable
+-A LIBVIRT_FWX -i virbr0 -o virbr0 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p udp -m udp --dport 53 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p tcp -m tcp --dport 53 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p udp -m udp --dport 67 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p tcp -m tcp --dport 67 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p udp -m udp --dport 53 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p tcp -m tcp --dport 53 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p udp -m udp --dport 68 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p tcp -m tcp --dport 68 -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Также запускается &lt;code&gt;dnsmasq&lt;/code&gt; для раздачи ip-адресов из назначенной подсети.&lt;/p&gt;
+&lt;p&gt;Описание сети &lt;code&gt;default&lt;/code&gt; находится в &lt;code&gt;/etc/libvirt/qemu/networks/default.xml&lt;/code&gt;. Вручную изменять этот файл не рекомендуется, и хорошей практикой будет использование команды &lt;code&gt;virsh net-edit default&lt;/code&gt;, которая запустит редактор &lt;code&gt;vi&lt;/code&gt;, а после завершения редактирования, проверит файл на соответствие правилам.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;network&amp;gt;
+  &amp;lt;name&amp;gt;default&amp;lt;/name&amp;gt;
+  &amp;lt;bridge name=&amp;#34;virbr0&amp;#34;/&amp;gt;
+  &amp;lt;forward mode=&amp;#34;nat&amp;#34;/&amp;gt;
+  &amp;lt;ip address=&amp;#34;192.168.122.1&amp;#34; netmask=&amp;#34;255.255.255.0&amp;#34;&amp;gt;
+    &amp;lt;dhcp&amp;gt;
+      &amp;lt;range start=&amp;#34;192.168.122.2&amp;#34; end=&amp;#34;192.168.122.254&amp;#34;/&amp;gt;
+    &amp;lt;/dhcp&amp;gt;
+  &amp;lt;/ip&amp;gt;
+&amp;lt;/network&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Естественно, если демоны &lt;code&gt;iptables&lt;/code&gt; и &lt;code&gt;ip6tables&lt;/code&gt; запускаются после &lt;code&gt;libvirtd&lt;/code&gt;, то iptables-правила для виртуальной сетки будут затёрты. Для решения этой проблемы дописываем в самое начало runit-скрипта &lt;code&gt;/etc/sv/libvirtd/run&lt;/code&gt; две строки, чтобы &lt;code&gt;runit&lt;/code&gt; сам расставил зависимости:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sv start iptables || exit 1
+sv start ip6tables || exit 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Конечно, будет лучше взять правила для файрвола под свой контроль, так как автоматически добавляемые правила не слишком эффективны и не всегда применяются должным образом.&lt;/p&gt;
+&lt;p&gt;Отменяем автоматическое создание сети командой &lt;code&gt;virsh net-autostart default --disable&lt;/code&gt;, в результате чего будет удалена ссылка &lt;code&gt;/etc/libvirt/qemu/networks/autostart/@default.xml&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;shared-device&#34;&gt;Shared device&lt;/h3&gt;
+&lt;p&gt;Чтобы выставить новую виртуальную машину в текущую локальную сеть создаём мост, в составе которого будут работать текущий физический сетевой интерфейс и сетевые интерфейсы виртуальных машин.&lt;/p&gt;
+&lt;p&gt;Выключаем демон &lt;code&gt;dhcpcd&lt;/code&gt;, чтобы не мешал работе &lt;code&gt;NetworkManager&lt;/code&gt;. В моём случае &lt;code&gt;dhcpcd&lt;/code&gt; был включен, несмотря на используемый &lt;code&gt;NetworkManager&lt;/code&gt;, и настойчиво назначал ip-адрес физическому интерфейсу, тогда как &lt;code&gt;NetworkManager&lt;/code&gt; назначал эти же данные на мост &lt;code&gt;br0&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sv stop dhcpcd
+rm /var/service/dhcpcd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Определяем текущее сетевое подключение. В выводе информации о текущих подключениях видим  &amp;ldquo;Wired connection 1&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# nmcli d
+DEVICE      TYPE      STATE           CONNECTION         
+enp3s0      ethernet  подключено      Wired connection 1
+virbr0      bridge    подключено      virbr0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После выяснения текущего сетевого соединения выполняем:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Выключаем текущее сетевое подключение &amp;ldquo;Wired connection 1&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Отключаем автоподнятие интерфейса &amp;ldquo;Wired connection 1&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Создаём мост &lt;code&gt;br0&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Добавляем текущий физический сетевой интерфейс в этот мост.&lt;/li&gt;
+&lt;li&gt;Отключаем stp, так как вероятность петли на интерфейсе &lt;code&gt;br0&lt;/code&gt;, по понятным причинам, стремится к нулю.&lt;/li&gt;
+&lt;li&gt;Поднимаем мост &lt;code&gt;br0&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nmcli con down &amp;#34;Wired connection 1&amp;#34;
+nmcli con mod &amp;#39;Wired connection 1&amp;#39; connection.autoconnect off
+nmcli con add type bridge ifname br0 con-name br0
+nmcli con add type bridge-slave ifname enp3s0 master br0 con-name enp3s0s
+nmcli con mod br0 bridge.stp no
+nmcli con up br0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если в локальной сети присутствует dhcp-сервер, то на &lt;code&gt;br0&lt;/code&gt; назначится ip-адрес, иначе назначение проводим вручную.&lt;/p&gt;
+&lt;p&gt;В заключении, указываем новой виртуальной машине &lt;code&gt;br0&lt;/code&gt; в качестве &amp;ldquo;Shared physical device&amp;rdquo;.&lt;/p&gt;
+&lt;h3 id=&#34;host-device-eth0-macvtap&#34;&gt;Host device eth0: macvtap&lt;/h3&gt;
+&lt;p&gt;Вспомнить. Несколько лет назад. ovh.com. Дополнительный failover ip для которого OVH назначает свой MAC (по моему запросу)? В этом случае я использовал macvtap (с указанием MAC от OVH) для виртуального сервера.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Void Linux Установка Docker</title>
+      <link>/n/void-linux-ustanovka-docker/</link>
+      <pubDate>Sat, 22 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/void-linux-ustanovka-docker/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-02-22&lt;/p&gt;
+&lt;h3 id=&#34;установка-требуемых-пакетов&#34;&gt;Установка требуемых пакетов&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xbps-install -Su docker
+Name       Action    Version           New version            Download size
+runc       install   -                 1.0.0_12               4084KB
+containerd install   -                 1.3.2_1                30MB
+docker     install   -                 19.03.6_2              37MB
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ln -s /etc/sv/containerd /var/service
+ln -s /etc/sv/docker /var/service
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После запуска служб:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;создаётся известный каталог и в нём файл &lt;code&gt;/etc/docker/key.json&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;в систему добавляется виртуальный сетевой интерфейс &lt;code&gt;docker0&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;в &lt;code&gt;netfilter&lt;/code&gt; добавляются правила, обеспечивающие будущие docker-контейнеры доступом к физической сети через NAT.&lt;/li&gt;
+&lt;li&gt;в систему добавляется группа &lt;code&gt;docker&lt;/code&gt;, обеспечивающая своим участникам запуск контейнеров, что может быть ими использовано для получения root-привилегий на хосте. Смотри &lt;a href=&#34;https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface&#34;&gt;Docker Daemon Attack Surface&lt;/a&gt; для подробностей.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Написано:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Adding a user to the “docker” group grants them the ability to run containers which can be used to obtain root privileges on the Docker host. Refer to &lt;a href=&#34;https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface&#34;&gt;Docker Daemon Attack Surface&lt;/a&gt; for more information.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ещё заметка:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;To install Docker without root privileges, see &lt;a href=&#34;https://docs.docker.com/engine/security/rootless/&#34;&gt;Run the Docker daemon as a non-root user (Rootless mode)&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Rootless mode is currently available as an experimental feature.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Первое впечатление от Void Linux</title>
+      <link>/n/pervye-vpechatleniya-o-void-linux/</link>
+      <pubDate>Tue, 29 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/pervye-vpechatleniya-o-void-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-10-29&lt;/p&gt;
+&lt;p&gt;Наслышанный ранее про Void Linux, недавно я решил попробовать его на своём стареньком нетбуке. И, признаюсь, я впечатлён номерами версий пакетов из репо. Всё самое свежее! &lt;code&gt;Keepassxc&lt;/code&gt; за три дня обновился два раза! Более нет нужды искать непонятно кем обновляемые &lt;code&gt;ppa&lt;/code&gt;, или самому отслеживать и собирать последние версии софта!&lt;/p&gt;
+&lt;p&gt;Как говорят в культурной столице, я продолжу его &amp;ldquo;колыхать и телебонить&amp;rdquo;.&lt;/p&gt;
+&lt;h3 id=&#34;информация-с-главной-страницы-сайтаhttpsvoidlinuxorg&#34;&gt;Информация с главной страницы &lt;a href=&#34;https://voidlinux.org/&#34;&gt;сайта&lt;/a&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Void Linux – это &lt;strong&gt;независимый дистрибутив&lt;/strong&gt;, полностью разрабатываемый волонтёрами. В отличии от триллионов других, Void не является модификацией какого-либо существующего дистрибутива Linux. Его менеджер пакетов и система сборки была написана с нуля.&lt;/li&gt;
+&lt;li&gt;Однажды установив, обновляйся ежедневно, и твоя система будет всегда свежей. Благодаря &lt;a href=&#34;http://build.voidlinux.org/&#34;&gt;&lt;strong&gt;системе непрерывной сборки&lt;/strong&gt;&lt;/a&gt;, новый софт собирается в бинарные пакеты тот час, как только новые версии публикуются в репозиториях Void.&lt;/li&gt;
+&lt;li&gt;Для подсистем &lt;em&gt;init&lt;/em&gt; и &lt;em&gt;сервис супервайзер&lt;/em&gt;, Void использует &lt;strong&gt;runit&lt;/strong&gt;. Это простой и эффективный подход к инициализации системы и надёжного управления службами.&lt;/li&gt;
+&lt;li&gt;Void Linux – первый дистрибутив, который перешёл на использование новой библиотеки &lt;strong&gt;LibreSSL&lt;/strong&gt;. Мы верим, что известные своей высочайшей квалификацией разработчики из проекта &lt;a href=&#34;http://www.openbsd.org/&#34;&gt;OpenBSD&lt;/a&gt; в состоянии обеспечить более безопасную альтернативу старой &lt;em&gt;OpenSSL&lt;/em&gt;, известную по мега багу &lt;a href=&#34;https://ru.wikipedia.org/wiki/Heartbleed&#34;&gt;Heartbleed&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Родным менеджером пакетов, написанным с нуля, является &lt;strong&gt;xbps&lt;/strong&gt;. Он обеспечивает быструю установку/обновление/удаление программы в вашей системе, а также определяет несовместимые разделяемые библиотеки и зависимости обновляемых или удаляемых пакетов.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;xbps&lt;/em&gt;-пакеты создаются с помощью &lt;strong&gt;xbps-src&lt;/strong&gt;, написанного с нуля сборщика пакетов, который не требует root-привилегий. Сборка софта осуществляется в изолированном контейнере, используя &lt;em&gt;Linux namespaces&lt;/em&gt;. Дополнительно, &lt;em&gt;xbps-src&lt;/em&gt; обеспечивает как нативную, так и кросс-компиляцию под требуемую машину, а также поддерживает несколько C-библиотек (в настоящий момент &lt;code&gt;glibc&lt;/code&gt; и &lt;code&gt;musl&lt;/code&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

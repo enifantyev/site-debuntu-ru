@@ -1,0 +1,91 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Hue</title>
+    <link>/tags/hue/</link>
+    <description>Recent content in Hue on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 09 Jun 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/hue/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Проблема с пакетом psycopg2 при создании нового суперюзера для Cloudera Hue</title>
+      <link>/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</link>
+      <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-06-09&lt;/p&gt;
+&lt;p&gt;Манипуляции производятся в Cloudera CDH 6.3.2. На машине с установленной ролью Hue выполняю команду и получаю ошибку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# /usr/lib/hue/build/env/bin/hue createsuperuser --cm-managed
+LD_LIBRARY_PATH can&amp;#39;t be found, if you are using ORACLE for your Hue database
+then it must be set, if not, you can ignore
+  export LD_LIBRARY_PATH=/path/to/instantclient
+Traceback (most recent call last):
+  File &amp;#34;/usr/lib/hue/build/env/bin/hue&amp;#34;, line 14, in &amp;lt;module&amp;gt;
+    load_entry_point(&amp;#39;desktop&amp;#39;, &amp;#39;console_scripts&amp;#39;, &amp;#39;hue&amp;#39;)()
+  File &amp;#34;/usr/lib/hue/desktop/core/src/desktop/manage_entry.py&amp;#34;, line 225, in entry
+    raise e
+django.core.exceptions.ImproperlyConfigured: psycopg2_version 2.5.4 or newer is required; you have 2.5.1 (dt dec pq3 ext)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяю версию установленной библиотеки и убеждаюсь, что версия 2.5.1:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pip2 freeze|grep psycopg
+You are using pip version 8.1.2, however version 21.1.2 is available.
+You should consider upgrading via the &amp;#39;pip install --upgrade pip&amp;#39; command.
+psycopg2==2.5.1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаю последнюю версию пакета psycopg в бинарной версии, чтобы не устанавливать пакеты для сборки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pip2 install psycopg2-binary
+Collecting psycopg2-binary
+  Downloading http://10.15.61.1:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
+    100% |████████████████████████████████| 2.9MB 96.1MB/s 
+Installing collected packages: psycopg2-binary
+Successfully installed psycopg2-binary-2.8.6
+You are using pip version 8.1.2, however version 21.1.2 is available.
+You should consider upgrading via the &amp;#39;pip install --upgrade pip&amp;#39; command.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Вновь пытаюсь создать суперюзера и на этот раз успешно:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# /usr/lib/hue/build/env/bin/hue createsuperuser --cm-managed
+LD_LIBRARY_PATH can&amp;#39;t be found, if you are using ORACLE for your Hue database
+then it must be set, if not, you can ignore
+  export LD_LIBRARY_PATH=/path/to/instantclient
+Username (leave blank to use &amp;#39;root&amp;#39;): admhue
+Email address: admhue@example.org
+Password: 
+Password (again): 
+Superuser created successfully.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Убеждаюсь, что текущая настройка Hue — &amp;lsquo;Authentication Backend&amp;rsquo; — содержит параметр &lt;code&gt;desktop.auth.backend.AllowFirstUserDjangoBackend&lt;/code&gt;:
+&lt;img src=&#34;cloudera_hue_param_authentication_backend.png&#34; alt=&#34;cloudera hue param authentication backend&#34;&gt;&lt;/p&gt;
+&lt;p&gt;После чего я вхожу в Hue под новым суперюзером и выполняю необходимые настройки.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</title>
+      <link>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-06-05&lt;/p&gt;
+&lt;h2 id=&#34;анамнез&#34;&gt;Анамнез&lt;/h2&gt;
+&lt;p&gt;После перезапуска Hue в логе видны предупреждения &amp;ldquo;Couldn&amp;rsquo;t import snappy. Support for snappy compression disabled.&amp;rdquo;:
+&lt;img src=&#34;hue_couldnt_import_snappy.png&#34; alt=&#34;Couldn&amp;amp;rsquo;t import snappy. Support for snappy compression disabled.&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
+&lt;p&gt;На всех машинах кластера выполнил из-под root:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip2 install python-snappy
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Предупреждение исчезло.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

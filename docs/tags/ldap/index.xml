@@ -1,0 +1,266 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – LDAP</title>
+    <link>/tags/ldap/</link>
+    <description>Recent content in LDAP on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 26 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/ldap/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Создание system account для подключения LDAP-клиента к FreeIPA</title>
+      <link>/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
+      <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-11-26&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Для подключения некоторых сервисов к FreeIPA по протоколу LDAP, требуется указать учётные данные какого-либо пользователя. Для этих целей мы будем использовать специальный тип аккаунта &amp;lsquo;system account&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Преимущества данного типа аккаунта в том, что у него отсутствуют все атрибуты пользователя, кроме логина и пароля. &amp;lsquo;System account&amp;rsquo; не имеет возможности:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;получить kerberos-билет;&lt;/li&gt;
+&lt;li&gt;выполнить вход на хост или сервис;&lt;/li&gt;
+&lt;li&gt;возобладать каким-либо объектом;&lt;/li&gt;
+&lt;li&gt;записать или изменить в LDAP какую-либо информацию.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Также на &amp;lsquo;system account&amp;rsquo; не распространяются пользовательские политики. Например, политика периодической смены пароля.&lt;/p&gt;
+&lt;p&gt;Информация о &amp;ldquo;системных аккаунтах&amp;rdquo; хранится в отдельной от остальных пользователей ветке &amp;lsquo;cn=sysaccounts,cn=etc,dc=example,dc=org&amp;rsquo;. Для добавления &amp;lsquo;system account&amp;rsquo; можно использовать обычный ldif-файл, но более удобным способом является использование &lt;a href=&#34;https://github.com/noahbliss/freeipa-sam&#34;&gt;sh-скрипта freeipa-sam&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;работа-со-скриптом-freeipa-sam&#34;&gt;Работа со скриптом freeipa-sam&lt;/h2&gt;
+&lt;p&gt;Любым способом, даже через copy/paste, копируем &lt;a href=&#34;https://raw.githubusercontent.com/noahbliss/freeipa-sam/master/freeipa-sam.sh&#34;&gt;скрипт&lt;/a&gt; на, например, свою рабочую машину, которая имеет доступ к FreeIPA-домену.&lt;/p&gt;
+&lt;p&gt;Запускаем скрипт &amp;lsquo;/bin/bash freeipa-sam.sh&amp;rsquo; и видим:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;### FreeIPA - System Account Manager ###
+1.) ldapserver=
+2.) domain= (ldapdomain=)
+3.) binduser=
+4.) bindpass=UNSET!
+5.) ssl=true
+
+Actions (conditions not yet met):
+  add | rm | ls | info | passwd
+
+---   Results   ---
+
+--- End Results ---
+
+&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Набирая цифру, соответствующую параметру, заполняем:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Вводим адрес LDAP-сервера:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ldap.example.org&lt;/code&gt; или &lt;code&gt;ldap.example.org:636&lt;/code&gt;, если требуется указать нестандартный порт.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Самозаполнится, взяв имя домена из адреса сервера:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;example.org&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Вводим имя своей или, если такая предусмотрена регламентом, другой учётной записи с правами администратора:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;eugene&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Вводим пароль.&lt;/li&gt;
+&lt;li&gt;Оставляем без изменений.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Результат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;### FreeIPA - System Account Manager ###
+1.) ldapserver=ldap.example.org
+2.) domain=example.org (ldapdomain=dc=example,dc=org)
+3.) binduser=uid=eugene,cn=users,cn=accounts,dc=example,dc=org
+4.) bindpass=SET!
+5.) ssl=true
+
+Actions (ready):
+  add | rm | ls | info | passwd
+
+---   Results   ---
+
+--- End Results ---
+
+&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Переходим к выполнению операций над &amp;ldquo;системными аккаунтами&amp;rdquo;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;add&lt;/code&gt; — добавить &amp;lsquo;system account&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rm&lt;/code&gt; — удалить аккаунт.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ls&lt;/code&gt; — вывести краткий список существующих аккаунтов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;info&lt;/code&gt; — вывести расширенную информацию по всем или одному из существующих аккаунтов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;passwd&lt;/code&gt; — изменить пароль определённого аккаунта.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;добавление-аккаунта&#34;&gt;Добавление аккаунта&lt;/h2&gt;
+&lt;p&gt;Выполняя добавление &amp;lsquo;system account&amp;rsquo;, поочерёдно вводим логин и пароль. Запрос &amp;lsquo;password expiration date YYYYMMDD (blank for 20380119)&amp;rsquo; оставляем незаполненным, что автоматически назначит аккаунту дату &lt;code&gt;20380119031407Z&lt;/code&gt;, означающую бессрочное время действия пароля.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;gt; add
+uid of new user=binddn_test
+password of new user=
+password expiration date YYYYMMDD (blank for 20380119)=
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;По команде &lt;code&gt;ls&lt;/code&gt; можно убедиться в наличии созданного аккаунта:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;---   Results   ---
+dn: uid=sudo,cn=sysaccounts,cn=etc,dc=example,dc=org
+dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
+--- End Results ---
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Командой &lt;code&gt;rm binddn_test&lt;/code&gt; удаляем наш тестовый аккаунт.&lt;/p&gt;
+&lt;p&gt;Через &lt;code&gt;exit&lt;/code&gt; завершаем работу со скриптом.&lt;/p&gt;
+&lt;h2 id=&#34;рекомендации-к-именованию-новых-system-accounts&#34;&gt;Рекомендации к именованию новых system accounts&lt;/h2&gt;
+&lt;p&gt;Пример: binddn_airflow, binddn_hue, binddn_hive.&lt;/p&gt;
+&lt;p&gt;Все сервисы в отдельной Информационной Системе, подключаемые к LDAP, имеют один &amp;lsquo;system account&amp;rsquo;. В этом случае, при подозрении на компрометацию пароля с его последующей сменой, понадобится ввести новый пароль лишь в нескольких экземплярах сервиса, тогда как при использовании одного &amp;lsquo;system account&amp;rsquo; для всех сервисов организации, объём работы по вводу нового пароля резко увеличивается.&lt;/p&gt;
+&lt;p&gt;К тому же, периодическая смена пароля, если будет введён такой регламент, может быть растянут по времени, когда пароль от &amp;lsquo;system account&amp;rsquo; для каждого сервиса меняется в свой отдельный день. В этом случае, миграция производится безболезненно, потому что изменить пароль в трёх местах проще, чем одновременно в сотне мест.&lt;/p&gt;
+&lt;p&gt;Но замечу, что ничто не мешает создать новый &amp;lsquo;system account&amp;rsquo; с чуть изменённым логином и уникальным паролем и переводить сервисы на его использование постепенно.&lt;/p&gt;
+&lt;h2 id=&#34;ссылки-на-использованные-материалы&#34;&gt;Ссылки на использованные материалы&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.freeipa.org/page/HowTo/LDAP#System_Accounts&#34;&gt;https://www.freeipa.org/page/HowTo/LDAP#System_Accounts&lt;/a&gt;
+&lt;a href=&#34;https://github.com/noahbliss/freeipa-sam&#34;&gt;https://github.com/noahbliss/freeipa-sam&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: LDAP binding во FreeIPA</title>
+      <link>/n/ldap-binding-vo-freeipa/</link>
+      <pubDate>Sun, 15 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ldap-binding-vo-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-11-15&lt;/p&gt;
+&lt;p&gt;Во FreeIPA существует специальный тип учётных записей, называемый &amp;ldquo;system account&amp;rdquo;. Прямое предназначение &amp;lsquo;system account&amp;rsquo;, это организация безопасного подключения различных сервисов к LDAP, то есть LDAP binding.&lt;/p&gt;
+&lt;p&gt;Аккаунт этого типа создаётся в отдельном специальном LDAP-контейнере вручную или с помощью утилит, облегчающих эту задачу. &amp;lsquo;System account&amp;rsquo; не имеет права записи в LDAP и полностью ограничен в возможности входа куда-либо и владении чем-либо, но имеет право чтения некоторой информации из LDAP. Политики паролей не применяются к &amp;ldquo;системным аккаунтам&amp;rdquo; и назначенный им пароль не имеет срока действия. Информация о &amp;ldquo;системных аккаунтах&amp;rdquo; скрыта от пользователей.&lt;/p&gt;
+&lt;p&gt;Проведённые на скорую руку испытания видимого горизонта для &amp;ldquo;системного аккаунта&amp;rdquo; показали, что, по умолчанию, для &amp;lsquo;system account&amp;rsquo; доступно чтение не только содержимого контейнера &amp;lsquo;accounts&amp;rsquo; с пользователями, группами, хостами, и т.д., но и содержимое некоторых других контейнеров. Конечно, такая ситуация не может беспокоить любого здравомыслящего ипат-внедренца и, к счастью, во FreeIPA присутствует возможность сужения видимого пространства LDAP-каталога до минимально необходимого диапазона, с помощью написания для &amp;lsquo;system account&amp;rsquo; правил ACI.&lt;/p&gt;
+&lt;p&gt;Утилиты для создания &amp;lsquo;system account&amp;rsquo;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/noahbliss/freeipa-sam&#34;&gt;freeipa-sam&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Использованные ссылки:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.freeipa.org/page/HowTo/LDAP#System_Accounts&#34;&gt;FreeIPA HowTo/LDAP System Account&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Настройка LDAP-аутентификации в Nexus Repository Manager</title>
+      <link>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
+      <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;факты&#34;&gt;Факты&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Исполняемое Java-ядро лежит в &lt;code&gt;/data/Nexus/nexus&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Изменяемая часть, включая репозитории, лежат в &lt;code&gt;/data/Nexus/sonatype-work&lt;/code&gt;. Примерный размер каталога ~265GB. Для бэкапа достаточно сделать копию этого каталога.&lt;/li&gt;
+&lt;li&gt;Автозапуск организован ручным созданием простой ссылкой &lt;code&gt;/etc.init.d/nexus → /data/Nexus/nexus/bin/nexus&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Настройка аккаунтов локальных пользователей и подключение по LDAP разнесены в меню.&lt;/li&gt;
+&lt;li&gt;Нет необходимости делать бэкап Nexus&amp;rsquo;а, так как локальная база пользователей и получение пользователей из LDAP мирно сосуществуют рядом, не мешая друг другу.&lt;/li&gt;
+&lt;li&gt;Пользователи подключающиеся через LDAP не заносятся в локальную базу, в отличии от GrayLog, например.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;настройка-аутентификации-security--ldap&#34;&gt;Настройка аутентификации (Security – LDAP)&lt;/h2&gt;
+&lt;h3 id=&#34;вкладка-connection&#34;&gt;Вкладка Connection&lt;/h3&gt;
+&lt;p&gt;Самоподписанный сертификат контроллера домена добавляется в NXRM через кнопку &amp;ldquo;View certificate&amp;rdquo;, где доступна операция &amp;ldquo;Add certificate to truststore&amp;rdquo;. После чего, добавленный сертификат можно наблюдать в разделе Security – SSL Certificates.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;вкладка-user-and-group&#34;&gt;Вкладка User and group&lt;/h3&gt;
+&lt;p&gt;Select template: Generic Ldap Server (делаем это в первый и единственный раз при настройке подключения).&lt;/p&gt;
+&lt;p&gt;User relative DN: cn=users&lt;/p&gt;
+&lt;p&gt;User subtree: не активируем, так как все пользователи во FreeIPA находятся в cn=users,cn=accounts,dc=example,dc=org, и нет нужды искать их во вложенных контейнерах.&lt;/p&gt;
+&lt;p&gt;Object class: inetOrgPerson&lt;/p&gt;
+&lt;p&gt;User filter: memberOf=cn=_nxrm,cn=groups,cn=accounts,dc=example,dc=org (проверяем наличие доступа к NXRM у  пользователя, через его наследуемое членство в центральной группе _nxrm, в каковую группу вложены подгруппы для авторизации – _nxrm_admins, _nxrm_ubic-users, etc.)&lt;/p&gt;
+&lt;p&gt;User ID attribute: uid&lt;/p&gt;
+&lt;p&gt;Real name attribute: cn&lt;/p&gt;
+&lt;p&gt;Email attribute: mail&lt;/p&gt;
+&lt;p&gt;Password attribute: оставляем пустым.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Ниже настраиваем отображение групп пользователей из IPA в соответствующие роли NXRM.&lt;/p&gt;
+&lt;p&gt;Map LDAP groups as roles: устанавливаем галку.&lt;/p&gt;
+&lt;p&gt;Group type: Static Groups&lt;/p&gt;
+&lt;p&gt;Group relative DN: cn=groups&lt;/p&gt;
+&lt;p&gt;Group subtree: оставляем без активации, так как все необходимые группы в IPA хранятся в cn=groups,cn=accounts,dc=example,dc=org.&lt;/p&gt;
+&lt;p&gt;Group object class: groupOfNames&lt;/p&gt;
+&lt;p&gt;Group ID attribute: cn&lt;/p&gt;
+&lt;p&gt;Group member attribute: member&lt;/p&gt;
+&lt;p&gt;Group member format: uid=${username},cn=users,cn=accounts,dc=example,dc=org&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;После чего появляется возможность добавить внешнюю роль, имя которой берётся из LDAP.&lt;/p&gt;
+&lt;h2 id=&#34;настройка-авторизации&#34;&gt;Настройка авторизации&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;включение-ldap&#34;&gt;Включение LDAP&lt;/h2&gt;
+&lt;p&gt;Добавляем в активные LDAP realms.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Предположим, что в локальной базе есть пользователь с совпадающим логином, как в IPA, но с разными паролями. Логика работы аутентификации будет следующей:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Сначала nxrm найдёт пользователя в локальной базе, но так как пароль не подойдёт, то будет просмотрены и другие Realms.&lt;/li&gt;
+&lt;li&gt;Наконец в LDAP Realms совпадут и логин и пароль. И пользователь будет аутентифицирован.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Best Practices for Using LDAP Link with Vertica (перевод)</title>
+      <link>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
+      <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-07-03&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&#34;&gt;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Итак, вы настроили и включили LDAP Link и работаете с Vertica, что позволяет синхронизировать пользователей и группы LDAP с соответствующими пользователями и ролями Vertica. Но вы по прежнему должны управлять пользователями и ролями в Vertica, которые вы не создавали с помощью LDAP Link. На следующем рисунке показано, как может выглядеть ваша конфигурация.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;VerticaLDAPLinkSync.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Но есть несколько рекомендаций, которым вы должны следовать, чтобы убедиться, что вы случайно не потеряете ни пользователей, ни данные. В этом блоге объясняется, как обеспечить бесперебойную работу службы LDAP Link.&lt;/p&gt;
+&lt;h3 id=&#34;перед-включением-ldap-link-выполните-тестовый-прогон-всухую&#34;&gt;Перед включением LDAP Link выполните тестовый &amp;ldquo;прогон всухую&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Параметр &amp;ldquo;LDAPLinkDryRun&amp;rdquo; определяет, должна ли Vertica выполнить тесты между LDAP-сервером и Vertica. &amp;ldquo;Прогон всухую&amp;rdquo; проверяет:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;что соединение работает;&lt;/li&gt;
+&lt;li&gt;параметры установлены корректно;&lt;/li&gt;
+&lt;li&gt;запросы к LDAP-серверу возвращает правильные результаты, записываемые в файл ldap_server_response.log.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;ldquo;Прогон всухую&amp;rdquo; не производит никаких изменений в Базе Данных Vertica.&lt;/p&gt;
+&lt;p&gt;Для лучшего результата, установить параметр &amp;ldquo;LDAPLinkDryRun&amp;rdquo; в 1 и выполните &amp;ldquo;прогон всухую&amp;rdquo; в тестовом окружении. Выполение этого увеличит шансы, что вы останетесь без синхронизации в тот момент, когда подключите LDAP Link в вашем прод-окружении.&lt;/p&gt;
+&lt;h3 id=&#34;предотвратите-потерю-объектов-в-базе-данных&#34;&gt;Предотвратите потерю объектов в Базе Данных&lt;/h3&gt;
+&lt;p&gt;При удалении пользователя из LDAP-каталога, Vertica, при следующей синхронизации LDAP, удалит пользователя из Vertica-пользователей, а с ним удалит из Базы Данных все объекты (таблицы, виды, и т.д.), принадлежавшие пользователю. Эти объекты будут потеряны без возможности восстановления.&lt;/p&gt;
+&lt;p&gt;Для сохранения в Базе Данных объектов, принадлежащих удаляемому пользователю, используйте параметр &amp;ldquo;GlobalHeirUserName&amp;rdquo;. Этот параметр определяет, что произойдёт с объектами, когда их владелец исчезнет:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AUTO (по умолчанию) – Vertica назначит новым родителем объектов пользователя dbadmin.&lt;/li&gt;
+&lt;li&gt;&lt;username&gt; – Vertica назначит определённого пользователя, как нового родителя этих объектов.&lt;/li&gt;
+&lt;li&gt;Empty – Vertica не будет назначать объектам какого-либо пользователя. В этом случае объекты будут потеряны без возможности восстановления. Этот параметр сродни выполнению операции =&amp;gt; DROP USER user_name CASCADE;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;избегайте-случайного-удаления-пользователей&#34;&gt;Избегайте случайного удаления пользователей&lt;/h3&gt;
+&lt;p&gt;Допустим, что LDAP Link синхронизируется, но не найдёт пользователей в LDAP-сервере. В этой ситуации, LDAP Link удалит из Vertica только тех пользователей , которые были созданы с помощью LDAP Link. (LDAP Link никогда не удалит из Vertica не-LDAP пользователей.)&lt;/p&gt;
+&lt;p&gt;Чтобы изменить такое поведение, установите параметр LDAPLinkStopIfZeroUsers в 1. Этот параметр указывает, что при неудачной синхронизации, когда возвращается пустой список пользователей в LDAP-каталоге, LDAP Link синхронизация должна вызывать ошибку. Это предотвратит случайное удаление легитимных LDAP-пользователей из Vertica.&lt;/p&gt;
+&lt;p&gt;Когда происходит ошибка синхронизации, запись о ней заносится в vertica.log, а также добавляется запись в системную таблицу LDAP_LINK_EVENTS.&lt;/p&gt;
+&lt;p&gt;После выяснения и исправления ситуации с отсутствием пользователей в LDAP-каталоге, установите параметр LDAPLinkStopIfZeroUsers в 0 и перезапустите синхронизацию.&lt;/p&gt;
+&lt;h3 id=&#34;кратко&#34;&gt;Кратко&lt;/h3&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Параметр&lt;/th&gt;&lt;th&gt;Рекомендованное значение&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkDryRun&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkURL&lt;/td&gt;&lt;td&gt;Без изменений&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkSearchBase&lt;/td&gt;&lt;td&gt;Без изменений&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;GlobalHeirUserName&lt;/td&gt;&lt;td&gt;&lt;b&gt;AUTO&lt;/b&gt;&amp;nbsp;&amp;mdash; автоназначение объектам пользователя dbadmin только в тех случаях, когда Vertica удаляет LDAP-пользователей.&lt;br&gt;
+&lt;b&gt;username&lt;/b&gt;&amp;nbsp;&amp;mdash; в тех случаях, когда могут быть удалены любые пользователи, а не только LDAP.&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkStopIfZeroUsers&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;доп-информация&#34;&gt;Доп информация&lt;/h3&gt;
+&lt;p&gt;Если вы будете следовать этим процедурам, вы сможете управлять своими Vertica-пользователями с помощью подключения к LDAP, без потерь пользователей или данных. Для полной информации о LDAP Link смотрите LDAP Link Service в документации к Vertica.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

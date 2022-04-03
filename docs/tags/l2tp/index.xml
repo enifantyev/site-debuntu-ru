@@ -1,0 +1,107 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – L2TP</title>
+    <link>/tags/l2tp/</link>
+    <description>Recent content in L2TP on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 01 Apr 2011 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/l2tp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Настройка проброса L2TP через NAT</title>
+      <link>/n/nastroika-probrosa-l2tp/</link>
+      <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/nastroika-probrosa-l2tp/</guid>
+      <description>
+        
+        
+        &lt;p&gt;L2TP сервер слушает на портах udp 1701 и udp 500.&lt;/p&gt;
+&lt;div&gt;L2TP не обеспечивает шифрования трафика. Для шифрования используется IPsec (протокол #50).&lt;/div&gt;
+&lt;div&gt;Есть проблема при прохождении IPsec через NAT. Для его решения используется протокол NAT-T (порт udp 4500). В заголовок пакета IPsec вставляется заголовок обычного udp. Таким образом, протокол IPsec инкапсулирован в протокол UDP и обрабатывается в сети, как обычный UDP, что обеспечивает ему прохождение через барьеры.&lt;/div&gt;
+&lt;div&gt;Есть проблема с клиентами Microsoft. На Windows XP надо проделать процедуру, чтобы IPsec пошёл через NAT.&lt;/div&gt;
+&lt;div&gt;Итого:&lt;/div&gt;
+&lt;div&gt;На клиенте - windows xp - надо создать параметр DWORD&lt;br /&gt;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\IPsec\AssumeUDPEncapsulationContextOnSendRule&lt;br /&gt;и установить его значение в 2. Перегрузить компутер. Для удобства добавления, я приложил reg-файлик с этим параметром.&lt;/div&gt;
+&lt;div&gt;&lt;br /&gt;На шлюзе перед сервером в iptables создаём несколько правил для прохождения пакетов от windows xp к windows 2003 и обратно (eth1 - wan интерфейс):&lt;/div&gt;
+&lt;div&gt;
+&lt;pre&gt;iptables -A FORWARD -d 192.168.0.1/32 -i eth1 -p udp -m udp --dport 500 -j ACCEPT
+iptables -A FORWARD -s 192.168.0.1/32 -o eth1 -p udp -m udp --sport 500 -j ACCEPT
+iptables -A FORWARD -d 192.168.0.1/32 -i eth1 -p udp -m udp --dport 4500 -j ACCEPT
+iptables -A FORWARD -s 192.168.0.1/32 -o eth1 -p udp -m udp --sport 4500 -j ACCEPT
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div&gt;
+&lt;pre&gt;iptables -t nat -A PREROUTING -d 88.88.88.88/32 -p udp -m udp --dport 500 -j DNAT --to-destination 192.168.0.1
+iptables -t nat -A PREROUTING -d 88.88.88.88/32 -p udp -m udp --dport 4500 -j DNAT --to-destination 192.168.0.1
+iptables -t nat -A POSTROUTING -d 192.168.0.1/32 -p udp -m udp --dport 500 -j SNAT --to-source 88.88.88.88
+iptables -t nat -A POSTROUTING -d 192.168.0.1/32 -p udp -m udp --dport 4500 -j SNAT --to-source 88.88.88.88&lt;/pre&gt;
+&lt;div&gt;Если на шлюзе стоит биллинг Traffpro, то заносим эти правила в /etc/traffpro/traffpro_rule.cfg. При запуске биллинга очищается цепочка forward в таблице filter. Добавляются лишь правила из вышеуказанного файла.&lt;/div&gt;
+&lt;div&gt; &lt;/div&gt;
+&lt;div&gt;Естественно, не забываем настроить на принимающем windows 2003 server L2TP и шлюз по умолчанию!&lt;/div&gt;
+&lt;div&gt;Пока вот так работает. Не понимаю почему работает. Надо почитать литературу и сделать виртуальную сетку с чистыми машинами, попробовать ещё раз и посмотреть снифферами чего на узлах происходит.&lt;/div&gt;
+&lt;h2&gt;Посмотрел TCPDump&#39;ом:&lt;/h2&gt;
+&lt;div&gt;Создание и разрыв L2TP&lt;/div&gt;
+&lt;div&gt;192.168.0.110 - внешний интерфейс шлюза&lt;/div&gt;
+&lt;div&gt;192.168.56.102 - Windows 2003 Standart R2 с поднятым L2TP.&lt;/div&gt;
+&lt;div&gt;isakmp - порт 500&lt;/div&gt;
+&lt;div&gt;Порт 1701 не используется на шлюзе.&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;16:12:12.065083 IP 192.168.0.110.isakmp &amp;gt; 192.168.56.102.isakmp: isakmp: phase 1 I ident&lt;/div&gt;
+&lt;div&gt;16:12:12.067619 IP 192.168.56.102.isakmp &amp;gt; 192.168.0.110.isakmp: isakmp: phase 1 R ident&lt;/div&gt;
+&lt;div&gt;16:12:12.082883 IP 192.168.0.110.isakmp &amp;gt; 192.168.56.102.isakmp: isakmp: phase 1 I ident&lt;/div&gt;
+&lt;div&gt;16:12:12.105346 IP 192.168.56.102.isakmp &amp;gt; 192.168.0.110.isakmp: isakmp: phase 1 R ident&lt;/div&gt;
+&lt;div&gt;16:12:12.110944 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: NONESP-encap: isakmp: phase 1 I ident[E]&lt;/div&gt;
+&lt;div&gt;16:12:12.112232 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: NONESP-encap: isakmp: phase 1 R ident[E]&lt;/div&gt;
+&lt;div&gt;16:12:12.112899 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: NONESP-encap: isakmp: phase 2/others I oakley-quick[E]&lt;/div&gt;
+&lt;div&gt;16:12:12.113696 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: NONESP-encap: isakmp: phase 2/others R oakley-quick[EC]&lt;/div&gt;
+&lt;div&gt;16:12:12.113958 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: NONESP-encap: isakmp: phase 2/others I oakley-quick[EC]&lt;/div&gt;
+&lt;div&gt;16:12:12.114603 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: NONESP-encap: isakmp: phase 2/others R oakley-quick[EC]&lt;/div&gt;
+&lt;div&gt;16:12:12.115357 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: UDP-encap: ESP(spi=0xf8ef9e0a,seq=0x1), length 148&lt;/div&gt;
+&lt;div&gt;16:12:12.116170 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: UDP-encap: ESP(spi=0x90dd0da3,seq=0x1), length 148&lt;/div&gt;
+&lt;div&gt;.........................................................&lt;/div&gt;
+&lt;div&gt;16:12:12.170299 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: UDP-encap: ESP(spi=0xf8ef9e0a,seq=0x15), length 188&lt;/div&gt;
+&lt;div&gt;16:12:16.170445 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: UDP-encap: ESP(spi=0xf8ef9e0a,seq=0x16), length 188&lt;/div&gt;
+&lt;div&gt;16:12:17.579110 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: isakmp-nat-keep-alive&lt;/div&gt;
+&lt;div&gt;16:12:25.122813 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: UDP-encap: ESP(spi=0xf8ef9e0a,seq=0x17), length 68&lt;/div&gt;
+&lt;div&gt;16:12:25.123463 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: UDP-encap: ESP(spi=0x90dd0da3,seq=0x15), length 68&lt;/div&gt;
+&lt;div&gt;16:12:25.174438 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: UDP-encap: ESP(spi=0xf8ef9e0a,seq=0x18), length 76&lt;/div&gt;
+&lt;div&gt;16:12:25.175869 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: UDP-encap: ESP(spi=0x90dd0da3,seq=0x16), length 52&lt;/div&gt;
+&lt;div&gt;16:12:25.176367 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: UDP-encap: ESP(spi=0xf8ef9e0a,seq=0x19), length 76&lt;/div&gt;
+&lt;div&gt;16:12:25.177835 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: UDP-encap: ESP(spi=0x90dd0da3,seq=0x17), length 52&lt;/div&gt;
+&lt;div&gt;16:12:25.180234 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: NONESP-encap: isakmp: phase 2/others I inf[E]&lt;/div&gt;
+&lt;div&gt;16:12:25.181419 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: NONESP-encap: isakmp: phase 2/others R inf[E]&lt;/div&gt;
+&lt;div&gt;16:12:25.182303 IP 192.168.0.110.4500 &amp;gt; 192.168.56.102.4500: NONESP-encap: isakmp: phase 2/others I inf[E]&lt;/div&gt;
+&lt;div&gt;16:12:25.182883 IP 192.168.56.102.4500 &amp;gt; 192.168.0.110.4500: NONESP-encap: isakmp: phase 2/others R inf[E]&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;
+&lt;h2&gt;&lt;a id=&#34;NAT traversal and IPsec&#34; name=&#34;NAT traversal and IPsec&#34;&gt;&lt;/a&gt;NAT traversal and IPsec&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/NAT_traversal&#34;&gt;http://en.wikipedia.org/wiki/NAT_traversal&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In order for &lt;a title=&#34;IPsec&#34; href=&#34;http://en.wikipedia.org/wiki/IPsec&#34;&gt;IPsec&lt;/a&gt; to work through a NAT, the following protocols need to be allowed on the firewall:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Internet Key Exchange (IKE) - User Datagram Protocol (UDP) port 500&lt;/li&gt;
+&lt;li&gt;Encapsulating Security Payload (ESP) - IP protocol number 50&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;or, in case of NAT-T:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;IPsec NAT-T - UDP port 4500&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Often this is accomplished on home routers by enabling &#34;IPsec Passthrough&#34;.&lt;/p&gt;
+&lt;p&gt;The default behavior of Windows XP SP2 was changed to no longer have NAT-T enabled by default, because of a rare and controversial security issue. This prevents most home users from using IPsec without making adjustments to their computer configuration. To enable NAT-T for systems behind NATs to communicate with other systems behind NATs, the following registry key needs to be added and set to a value of 2:HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\IPsec\AssumeUDPEncapsulationContextOnSendRule&lt;/p&gt;
+&lt;p&gt;IPsec NAT-T patches are also available for Windows 2000, Windows NT and Windows 98.&lt;/p&gt;
+&lt;p&gt;One usage of NAT-T and IPsec is to enable &lt;a title=&#34;Opportunistic encryption&#34; href=&#34;http://en.wikipedia.org/wiki/Opportunistic_encryption&#34;&gt;opportunistic encryption&lt;/a&gt; between systems. NAT-T allows systems behind NATs to request and establish secure connections on demand.&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

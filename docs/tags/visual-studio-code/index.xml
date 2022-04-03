@@ -1,0 +1,34 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Visual Studio Code</title>
+    <link>/tags/visual-studio-code/</link>
+    <description>Recent content in Visual Studio Code on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 15 Apr 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/visual-studio-code/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Исправление проблемы с переключением раскладки клавиатуры в Visual Studio Code</title>
+      <link>/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</link>
+      <pubDate>Thu, 15 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Причина кроется в обработке нажатия клавиши &amp;lsquo;Alt&amp;rsquo;, даже в составе комбинации, что приводит к вызову меню.&lt;/p&gt;
+&lt;p&gt;Решение найдено здесь: &lt;a href=&#34;https://github.com/microsoft/vscode/issues/85405#issuecomment-656659452&#34;&gt;https://github.com/microsoft/vscode/issues/85405#issuecomment-656659452&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;В настройках Visual Studio Code ищем опцию &amp;lsquo;window.titleBarStyle&amp;rsquo;, которая по умолчанию установлена в &amp;rsquo;native&amp;rsquo;. После смены значения на &amp;lsquo;custom&amp;rsquo;, нажатие клавиши &amp;lsquo;Alt&amp;rsquo; перестаёт вызывать меню.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

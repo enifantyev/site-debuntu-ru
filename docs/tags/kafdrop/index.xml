@@ -1,0 +1,198 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Kafdrop</title>
+    <link>/tags/kafdrop/</link>
+    <description>Recent content in Kafdrop on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/kafdrop/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Kafdrop. 01. Сборка jar-пакета</title>
+      <link>/a/kafdrop-sborka-jar-paketa/</link>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/kafdrop-sborka-jar-paketa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-11-25&lt;/p&gt;
+&lt;h2 id=&#34;1-подготовка-к-сборке&#34;&gt;1. Подготовка к сборке&lt;/h2&gt;
+&lt;p&gt;В дополнение к Maven&amp;rsquo;у устанавливаем Java11:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo yum -y install java-11-openjdk java-11-openjdk-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скачиваем последнюю версию приложения Kafdrop (на данный момент Kafdrop 3.27.0) и распаковываем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILE=&amp;#34;3.27.0.tar.gz&amp;#34;
+
+mkdir ~/src &amp;amp;&amp;amp; cd ~/src
+curl -LO https://github.com/obsidiandynamics/kafdrop/archive/refs/tags/${FILE}
+tar xvf ${FILE}
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-сборка-jar-пакета&#34;&gt;2. Сборка jar-пакета&lt;/h2&gt;
+&lt;p&gt;Запускаем сборку пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export JAVA_HOME=/usr/lib/jvm/jre-11-openjdk
+
+cd ~/src/kafdrop-3.27.0
+mvn clean package
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-результат&#34;&gt;3. Результат&lt;/h2&gt;
+&lt;p&gt;В каталоге &lt;code&gt;~/src/kafdrop-3.27.0/target&lt;/code&gt; наблюдаем пакет &lt;code&gt;kafdrop-3.27.0.jar&lt;/code&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Kafdrop. 02. Установка и настройка</title>
+      <link>/a/kafdrop-ustanovka-i-nastroika/</link>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/kafdrop-ustanovka-i-nastroika/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-11-25&lt;/p&gt;
+&lt;h2 id=&#34;1-установка&#34;&gt;1. Установка&lt;/h2&gt;
+&lt;h3 id=&#34;11-создание-локального-аккаунта&#34;&gt;1.1. Создание локального аккаунта&lt;/h3&gt;
+&lt;p&gt;Создаём локальный аккаунт &amp;lsquo;kafdrop&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ useradd -r -s /sbin/nologin -d /opt/kafdrop -M kafdrop
+
+$ kinit
+$ ipa service-add kafdrop/$(hostname)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;12-создание-рабочего-каталога&#34;&gt;1.2. Создание рабочего каталога&lt;/h3&gt;
+&lt;p&gt;Создаём каталог, где будет всё необходимое для работы Kafdrop:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir /opt/kafdrop
+chown kafdrop.kafdrop /opt/kafdrop
+chmod 2770 /opt/kafdrop
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;13-загрузка-ранее-скомпилированного-jar-файла&#34;&gt;1.3. Загрузка ранее скомпилированного jar-файла&lt;/h3&gt;
+&lt;p&gt;Важно! Тем или иным образом копируем ранее собранный пакет &lt;code&gt;kafdrop-3.27.0.jar&lt;/code&gt; в каталог &lt;code&gt;/opt/kafdrop&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;После чего делаем link с расчётом на дальнейшие обновления пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd /opt/kafdrop
+ln -s kafdrop-3.27.0.jar kafdrop.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-подготовка&#34;&gt;2. Подготовка&lt;/h2&gt;
+&lt;h3 id=&#34;21-создание-во-freeipa-сервис-аккаунт-kafdrop&#34;&gt;2.1. Создание во FreeIPA сервис-аккаунт &amp;lsquo;kafdrop&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;Создаём сервис-аккаунт во FreeIPA с таким же именем, не забывая заранее получить kerberos-тикет для УЗ, обладающей правом на добавление сервис-аккаунтов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit
+$ ipa service-add kafdrop/$(hostname)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём keytab для сервисной УЗ &amp;lsquo;kafdrop&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SERVICE=&amp;#34;kafdrop&amp;#34;
+REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+ 
+## При необходимости получаем kerberos-билет
+# kinit ${IPAADMIN}
+ 
+## Если требуются права на создание ключей.
+ipa service-allow-create-keytab ${SERVICE}/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -p ${SERVICE}/$(hostname) -k ~/${SERVICE}.keytab
+ipa service-disallow-create-keytab ${SERVICE}/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+  
+sudo mv ~/${SERVICE}.keytab /opt/${SERVICE}/
+sudo chown ${SERVICE}.${SERVICE} /opt/${SERVICE}/${SERVICE}.keytab
+sudo chmod 600 /opt/${SERVICE}/${SERVICE}.keytab
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;22-настройка-kafka-в-cloudera-managent&#34;&gt;2.2. Настройка Kafka в Cloudera Managent&lt;/h3&gt;
+&lt;p&gt;Необходимо добавить имя учётной записи &amp;lsquo;kafdrop&amp;rsquo; в параметр &amp;lsquo;super.users&amp;rsquo;, в дополнение к уже существующей там записи для аккаунта &amp;lsquo;kafka&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;В результате, Apache Kafka будет запускаться со следующей строкой в `kafka.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;super.users=User:kafka;User:kafdrop
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;23-создание-systemd-юнита&#34;&gt;2.3. Создание systemd-юнита&lt;/h3&gt;
+&lt;p&gt;Добавляем юнит в systemd для автоматического запуска kafdrop:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/kafdrop.service
+[Unit]
+Description=Kafdrop Service
+After=network.target
+ 
+[Service]
+Type=simple
+RuntimeDirectory=kafdrop
+RuntimeDirectoryMode=0775
+WorkingDirectory=/opt/kafdrop
+
+User=kafdrop
+Group=kafdrop
+
+EnvironmentFile=/etc/sysconfig/kafdrop
+
+ExecStart=/usr/bin/java --add-opens=java.base/sun.nio.ch=ALL-UNNAMED \\
+  -Djava.security.auth.login.config=/opt/kafdrop/jaas.conf \\
+  -jar /opt/kafdrop/kafdrop.jar \\
+  --kafka.brokerConnect=\${KAFKABROKERS} \\
+  --server.port=\${SRVPORT} --management.server.port=\${MNGSRVPORT}
+
+TimeoutSec=30
+ 
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Делаем файл с переменными для запуска Kafdrop:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/sysconfig/kafdrop
+# List of Kafka Brokers
+KAFKABROKERS=&amp;#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&amp;#34;
+
+# Listen port
+SRVPORT=&amp;#34;8000&amp;#34;
+
+# Management Server Port
+MNGSRVPORT=&amp;#34;8001&amp;#34;
+EOF
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка&#34;&gt;Настройка&lt;/h2&gt;
+&lt;h3 id=&#34;создание-jaasconf&#34;&gt;Создание jaas.conf&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SERVICE=&amp;#34;kafdrop&amp;#34;
+REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+PRINCIPAL=&amp;#34;${SERVICE}/$(hostname)@${REALMNAME}&amp;#34;
+ 
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/${SERVICE}/jaas.conf
+KafkaClient {
+  com.sun.security.auth.module.Krb5LoginModule required
+  useKeyTab=true
+  keyTab=&amp;#34;/opt/${SERVICE}/${SERVICE}.keytab&amp;#34;
+  storeKey=true
+  principal=&amp;#34;${PRINCIPAL}&amp;#34;
+  serviceName=kafka
+  debug=false;
+};
+EOF
+ 
+sudo chown ${SERVICE}.${SERVICE} /opt/${SERVICE}/jaas.conf
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-kafkaproperties&#34;&gt;Создание kafka.properties&lt;/h3&gt;
+&lt;p&gt;Создаём основной файл &lt;code&gt;kafka.properties&lt;/code&gt;. Предполагается, что параметр &amp;lsquo;security.inter.broker.protocol&amp;rsquo; в настройках Kafka-брокеров установлен в &amp;lsquo;SASL_PLAINTEXT&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /opt/kafdrop/kafka.properties 
+#ssl.keystore.location=/opt/cloudera/security/pki/server.jks
+#ssl.keystore.password = changeit
+
+#ssl.truststore.location = /usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts
+#ssl.truststore.password = changeit
+
+#ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1
+#ssl.protocol=TLS
+security.protocol=SASL_PLAINTEXT
+
+#log4j.appender.console.threshold=DEBUG
+EOF
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-прав-на-каталог-optkafdrop&#34;&gt;Установка прав на каталог &lt;code&gt;/opt/kafdrop&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Обновляем права:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo chown -R kafdrop.kafdrop /opt/kafdrop
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;запуск-kafdrop&#34;&gt;Запуск Kafdrop&lt;/h2&gt;
+&lt;h3 id=&#34;запуск-демона&#34;&gt;Запуск демона&lt;/h3&gt;
+&lt;p&gt;Включаем и запускаем демон &amp;lsquo;kafdrop.service&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl enable --now kafdrop
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;адрес-web-ui&#34;&gt;Адрес Web UI&lt;/h3&gt;
+&lt;p&gt;Web-морда Kafdrop доступна по адресу &amp;lsquo;http://ip-address:8000/&amp;rsquo;. Необходимо помнить, что никаких встроенных средств для организации аутентификации и TLS-шифрования трафика в Kafdrop не предусмотрено. На сайте проекта &lt;a href=&#34;https://github.com/obsidiandynamics/kafdrop&#34;&gt;https://github.com/obsidiandynamics/kafdrop&lt;/a&gt; для этих целей предлагается использовать Nginx.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

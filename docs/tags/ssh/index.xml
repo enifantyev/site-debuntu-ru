@@ -1,0 +1,397 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – ssh</title>
+    <link>/tags/ssh/</link>
+    <description>Recent content in ssh on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 16 Mar 2022 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Обфускация ssh-трафика с помощью stunnel</title>
+      <link>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-11-19&lt;/p&gt;
+&lt;h2 id=&#34;настройка-сервера&#34;&gt;Настройка сервера&lt;/h2&gt;
+&lt;p&gt;Устанавливаем на сервер пакет stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Компилируем свежий stunnel по инструкции &lt;a href=&#34;n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7&#34;&gt;Компиляция свежего stunnel 5.60 из исходников на CentOS7&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Подменяем установленный stunnel 4.56, новым stunnel 5.60:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56
+sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin
+cd /usr/bin
+ln -s stunnel-5.60 stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавляем системного пользователя, под которым будет запускаться stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo useradd -r -s /sbin/nologin -M stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&amp;lt;Здесь используем FreeIPA-сертификаты, сгенерированные на сервере. Потом допишу процесс получения и автообновления с помощью Certmonger.&amp;gt;&lt;/p&gt;
+&lt;p&gt;Создаём конфигурационный файл для stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/stunnel/stunnel.conf 
+#output = /var/log/stunnel/stunnel.log
+pid = /run/stunnel/stunnel.pid
+
+[ssh]
+client = no
+accept = 2222
+connect = 127.0.0.1:22
+
+CAfile = /etc/ipa/ca.crt
+cert = /etc/pki/tls/certs/HTTP_srv.example.org.crt
+key = /etc/pki/tls/private/HTTP_srv.example.org.key
+CApath = /etc/stunnel/certs
+
+# CentOS7 - obsolete options.
+#sslVersion = TLSv1.2
+#verify = 2
+
+# New options.
+requireCert = yes
+verifyChain = yes
+
+sslVersion = all
+options    = NO_SSLv2
+options    = NO_SSLv3
+options    = NO_TLSv1
+options    = NO_TLSv1.1
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создадим каталог для log-файла и назначим права:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mkdir /var/log/stunnel
+sudo chown stunnel.stunnel /var/log/stunnel
+sudo chown -R stunnel.stunnel /etc/stunnel 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём systemd unit для автоматического запуска stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/stunnel.service
+[Unit]
+Description=Stunnel service
+After=network.target syslog.target
+ 
+[Service]
+RuntimeDirectory=stunnel
+RuntimeDirectoryMode=0775
+User=stunnel
+Group=stunnel
+Type=forking
+#ExecStart=/usr/bin/stunnel -v /etc/stunnel/stunnel.conf
+ExecStart=/usr/bin/stunnel  /etc/stunnel/stunnel.conf
+Restart=on-failure
+RestartSec=5s
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Перечитываем systemd и запускаем stunnel.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl daemon-reload
+sudo systemctl enable --now stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;получение-сертификата-пользователя&#34;&gt;Получение сертификата пользователя&lt;/h2&gt;
+&lt;p&gt;На своей рабочей машине создаём свой приватный ключ &lt;code&gt;eugene.key&lt;/code&gt;и запрос на сертификацию &lt;code&gt;cert.csr&lt;/code&gt; (опция &amp;lsquo;-nodes&amp;rsquo; опускает задание пароля для ключа):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ openssl req -new -newkey rsa:4096 -nodes -keyout eugene.key -out cert.csr -subj &amp;#39;/CN=eugene&amp;#39;
+Generating a RSA private key
+...........++++
+.........++++
+writing new private key to &amp;#39;eugene.key&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&amp;lt;Здесь дописать процедуру получения TLS-сертификата из FreeIPA с помощью созданного файла с запросом на сертификацию.&amp;gt;&lt;/p&gt;
+&lt;p&gt;После получения сертификата, вычисляем его hash:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ openssl x509 -hash -noout -in eugene.crt
+0518aad7
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём на сервере в каталоге &lt;code&gt;/etc/stunnel/certs&lt;/code&gt; файл &lt;code&gt;0518aad7.0&lt;/code&gt; с содержимым, копией содержимого полученного сертификата. Цифра в расширении имени файла означает порядковый номер. Следующему добавленному сертификату дадим имя &lt;code&gt;xxxxxxxx.1&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Возможно, что на сервере, после добавления очередного сертификата, потребуется перезапустить демон tunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка-клиента&#34;&gt;Настройка клиента&lt;/h2&gt;
+&lt;p&gt;Устанавливаем пакет stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo apt install stunnel4
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём конфигурационный файл для stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/.config/stunnel/
+
+cat &amp;lt;&amp;lt; EOF &amp;gt; ~/.config/stunnel/stunnel1.conf
+output = /tmp/stunnel.log
+pid = /tmp/stunnel.pid
+
+[ssh]
+client = yes
+accept = 127.0.0.1:2222
+connect = 10.15.61.28:2222
+
+CAfile = /home/user/.config/stunnel/ca.crt
+cert = /home/user/.config/stunnel/eugene_example.org.pub
+key = /home/user/.config/stunnel/eugene.key
+
+verifyChain = yes
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;С этого момента можно сразу вручную прокинуть мост до удалённого сервера командой &lt;code&gt;stunnel ~/.config/stunnel/stunnel1.conf&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Для облегчения запуска туннеля, создаём запускаемый файл в каталоге &lt;code&gt;~/.local/bin&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; ~/.local/bin/stun1
+#!/bin/bash
+stunnel ~/.config/stunnel/stunnel1.conf
+EOF
+
+chmod u+x ~/.local/bin/stun1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;С этого момента можно запускать туннель командой &lt;code&gt;stun1&lt;/code&gt; при условии, что в переменной PATH указан путь &lt;code&gt;~/.local/bin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Добавляем Alias для входа на удалённый sshd через TLS-туннель:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;alias ssh1=&amp;#34;ssh -p 2222 eugene@127.0.0.1&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При желании, можно добавить этот Alias в &lt;code&gt;~/.bashrc&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;процедура-подключения-к-ssh-серверу&#34;&gt;Процедура подключения к ssh-серверу&lt;/h2&gt;
+&lt;p&gt;Поднимаем туннель и подключаемся через него к удалённому серверу:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;stun1
+ssh1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При необходимости роняем TLS-туннель командой, например:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pkill stunnel
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Jenkins Проблемы выполнения удалённых команд в сетях со stateful firewall и способы их решения</title>
+      <link>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-05-31&lt;/p&gt;
+&lt;h2 id=&#34;описание-проблемы&#34;&gt;Описание проблемы&lt;/h2&gt;
+&lt;p&gt;Для запуска скрипта на удалённом узле могут использоваться два jenkins-плагина:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Publish over SSH plugin&amp;rdquo;, который не имеет встроенного keepalive-механизма.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;SSH plugin&amp;rdquo;, который имеет возможность посылки keepalive-пакетов, но требует настройки, так как по умолчанию это функция выключена.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;В процессе выполнения задач с использованием вышеуказанных плагинов, особенно если задача выполняется десятки минут или больше, то в дженкинсе наблюдалось прекращение вывода stdout в консоль, хотя скрипт, выполняемый на удалённом сервере, продолжал работу. Так как на дженкинсе оставался открытый ssh-сеанс в подвешенном состоянии, то дженкинс не мог определить завершения шага. Через некоторое время срабатывал принудительный останов задачи по таймауту и задача завершалась с Finished: FAILURE.&lt;/p&gt;
+&lt;h2 id=&#34;причина&#34;&gt;Причина&lt;/h2&gt;
+&lt;p&gt;Для контроля трафика между подсетями, VMWare использует по умолчанию stateful firewall, в настройках которых стоит параметр tcpTimeoutEstablished равный 3600 секунд, по истечении которых, tcp-сеансы с нулевым трафиком будут забыты. То есть, если выполняющаяся jenkins-задача не выдаёт никакой информации в stdout довольно продолжительное время, то tcp-сеанс будет прерван файрволом. В этом случае, после окончания работы скрипта на удалённом сервере, мы можем наблюдать всё ещё открытый ssh-сеанс на дженкинс-сервере, тогда как на втором конце ssh-сеанс будет давно закрыт.&lt;/p&gt;
+&lt;p&gt;Далее опишу различия в файрволах.&lt;/p&gt;
+&lt;h3 id=&#34;stateless-firewall&#34;&gt;Stateless firewall&lt;/h3&gt;
+&lt;p&gt;Файрволы без сохранения состояния используют для описания прохождения трафика незамысловатые правила, типа разрешить трафик из одной подсети с портов выше 1024 в другую подсеть на порт 22.&lt;/p&gt;
+&lt;p&gt;Файрвол не смотрит внутрь пакетов и не отслеживает состояние tcp-сеансов, то есть можно направить миллионы пакеты с установленным флагом SYN, что заставит целевой сервер открыть миллион tcp-сеансов с выделением каждому кусочка памяти, и файрвол пропустит их все.&lt;/p&gt;
+&lt;h3 id=&#34;stateful-firewall&#34;&gt;Stateful firewall&lt;/h3&gt;
+&lt;p&gt;Файрволы с сохранением состояния, в сравнении с Stateless firewall, используют для описания прохождения трафика правила посложнее. Например, разрешить трафик из одной подсети с портов выше 1024 в другую подсеть на порт 22 с установленным флагом SYN. Если хэндшейк свершился, то пропускать на этот же порт все следующие пакеты в рамках открытой ssh-сессии.&lt;/p&gt;
+&lt;p&gt;Для обеспечения такой работы с запоминанием состояния tcp-сеансов, необходимо выделить ресурсы. Поэтому, чтобы освобождать память от бесполезной информации, незакрытые сеансы сбрасываются и их состояние забывается.&lt;/p&gt;
+&lt;p&gt;В результате, когда ранее молчавший скрипт через час выдаст в stdout какую-нибудь информацию, то stateful firewall не пропустит пакет без установленного флага SYN.&lt;/p&gt;
+&lt;h2 id=&#34;способы-решения&#34;&gt;Способы решения&lt;/h2&gt;
+&lt;p&gt;Способ решения давно известен — это периодическая посылка keepalive-пакетов.&lt;/p&gt;
+&lt;p&gt;Включить такой способ предохранения от сброса tcp-сеанса можно несколькими способами.&lt;/p&gt;
+&lt;h3 id=&#34;включение-keepalive-в-настройках-sshd-удалённого-сервера&#34;&gt;Включение keepalive в настройках sshd удалённого сервера&lt;/h3&gt;
+&lt;p&gt;Это будет работать с обоими плагинами. Указываем на удалённом сервера в &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; следующие строки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#TCPKeepAlive yes # эта опция включена по умолчанию
+ClientAliveInterval 15
+ClientAliveCountMax 3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После добавления опций не забываем перезапустить sshd:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;включение-keepalive-в-настройках-ssh-plugin&#34;&gt;Включение keepalive в настройках &amp;ldquo;SSH plugin&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Заходим в &amp;ldquo;настройки дженкинса&amp;rdquo; — &amp;ldquo;конфигурация системы&amp;rdquo;, где можно наблюдать параграф &amp;ldquo;SSH remote hosts&amp;rdquo;. В полях &amp;ldquo;serverAliveInterval&amp;rdquo; и &amp;ldquo;timeout&amp;rdquo; устанавливаем время в миллисекундах. Для первого поля я выбрал значение 15000, а для второго 60000.&lt;/p&gt;
+&lt;p&gt;Понятно, что это будет работать только с плагином &amp;ldquo;SSH plugin&amp;rdquo;. В этом случае, плагин &amp;ldquo;Publish over SSH plugin&amp;rdquo; используется только для заброски файлов на удалённые сервера.&lt;/p&gt;
+&lt;h3 id=&#34;использование-стандартного-ssh-клиента-в-execute-shell&#34;&gt;Использование стандартного ssh-клиента в &amp;ldquo;Execute shell&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Никто не запрещает выполнять стандартные &lt;code&gt;rsync&lt;/code&gt; и &lt;code&gt;ssh&lt;/code&gt; для заброски скрипта на удалённый сервер и его выполнения там же. Не забываем добавить на jenkins-сервере в &lt;code&gt;/etc/ssh/ssh_config&lt;/code&gt; или в &lt;code&gt;/var/lib/jenkins/.ssh/config&lt;/code&gt; строчки активизирующие keepalive со стороны клиента:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Host *
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Также можно выполнять команду &lt;code&gt;ssh&lt;/code&gt; с опциями &lt;code&gt;ssh -oServerAliveInterval=15 -oServerAliveCountMax=3&lt;/code&gt; для этих же целей.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Chroot rsync для безопасного сбора бэкапов с удалённых хостов</title>
+      <link>/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
+      <pubDate>Sun, 12 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-12&lt;/p&gt;
+&lt;p&gt;Один из способов использования &lt;a href=&#34;https://rsync.samba.org/&#34;&gt;Rsync&lt;/a&gt; для синхронизации файлов между машинами, это подключение &lt;strong&gt;rsync-клиента&lt;/strong&gt; к &lt;strong&gt;rsync-серверу&lt;/strong&gt; через ssh-сеанс.&lt;/p&gt;
+&lt;p&gt;Здесь я описал следующий сценарий выкачивания файлов из удалённого хоста &lt;code&gt;site01.example.com&lt;/code&gt; на &lt;em&gt;бэкап-хост&lt;/em&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;На &lt;em&gt;клиенте&lt;/em&gt;, которым выступает &lt;em&gt;бэкап-хост&lt;/em&gt;, запускаем &lt;strong&gt;rsync-клиент&lt;/strong&gt;:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rsync -avP rbkp@site01.example.com:/backup/ /backup/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Клиент&lt;/em&gt; стучится на ssh-порт &lt;em&gt;сервера&lt;/em&gt; &lt;code&gt;site01.example.com&lt;/code&gt; от имени пользователя &lt;em&gt;rbkp&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;На &lt;em&gt;сервере&lt;/em&gt; служба &lt;code&gt;sshd&lt;/code&gt; создаёт сеанс для &lt;em&gt;rbkp&lt;/em&gt; в подготовленной песочнице.&lt;/li&gt;
+&lt;li&gt;В контексте сеанса &lt;em&gt;rbkp&lt;/em&gt; через &lt;code&gt;/bin/sh&lt;/code&gt; начинает выполняться &lt;strong&gt;rsync-сервер&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rsync --server --sender -vlogDtpre.iLsf . /backup/&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Происходит синхронизация между &lt;strong&gt;rsync-клиентом&lt;/strong&gt; и &lt;strong&gt;rsync-сервером&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;подготавливаем-песочницу-на-удалённом-хосте&#34;&gt;Подготавливаем песочницу на удалённом хосте&lt;/h3&gt;
+&lt;p&gt;Создаём скелет песочницы для &lt;strong&gt;rsync-сервера&lt;/strong&gt;, то есть создаём отдельную директорию с небольшим количеством файлов. Подключившийся пользователь, от имени которого запустится &lt;code&gt;rsync --server ...&lt;/code&gt;, будет иметь доступ только к содержимому этой директории.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir -p /mnt/rbkp/{.ssh,backup,bin}
+# chmod g+s /mnt/rbkp/backup
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;В директории &lt;code&gt;.ssh&lt;/code&gt; создадим  файл &lt;code&gt;authorized_keys&lt;/code&gt; со строкой идентификатора публичного ключа для ssh-сеанса.&lt;/li&gt;
+&lt;li&gt;В директории &lt;code&gt;backup&lt;/code&gt; складируем бэкапы, предназначенные для передачи в архив.&lt;/li&gt;
+&lt;li&gt;В папке &lt;code&gt;bin&lt;/code&gt; лежат бинарники, необходимые для работы &lt;strong&gt;rsync-сервера&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;В процессе подготовки песочницы появятся ещё две или три директории (&lt;code&gt;lib, lib64, usr/lib&lt;/code&gt; и т.д.) с библиотеками, необходимыми для работы бинарников.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Копируем бинарники:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cp /bin/sh /usr/bin/rsync /mnt/rbkp/bin/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Ищем библиотеки необходимые для работы бинарников и копируем их в соответствующие папки. Для &lt;code&gt;/bin/sh&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# for f in $(ldd /bin/sh | awk &amp;#39;{print $1&amp;#34;\n&amp;#34;$3}&amp;#39; | grep ^/); do echo $f &amp;amp;&amp;amp; rsync -aRL $f /mnt/rbkp; done
+/lib/x86_64-linux-gnu/libc.so.6
+/lib64/ld-linux-x86-64.so.2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для &lt;code&gt;/usr/bin/rsync&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# for f in $(ldd /usr/bin/rsync | awk &amp;#39;{print $1&amp;#34;\n&amp;#34;$3}&amp;#39; | grep ^/); do echo $f &amp;amp;&amp;amp; rsync -aRL $f /mnt/rbkp; done
+/lib/x86_64-linux-gnu/libattr.so.1
+/lib/x86_64-linux-gnu/libacl.so.1
+/lib/x86_64-linux-gnu/libpopt.so.0
+/lib/x86_64-linux-gnu/libc.so.6
+/lib64/ld-linux-x86-64.so.2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате выполнения этих команд в песочнице появятся библиотеки, необходимые для работы бинарников.&lt;/p&gt;
+&lt;h3 id=&#34;создаём-пользователя-для-работы-rsync-сервера-на-удалённом-хосте&#34;&gt;Создаём пользователя для работы &lt;strong&gt;rsync-сервера&lt;/strong&gt; на удалённом хосте&lt;/h3&gt;
+&lt;p&gt;Создаём пользователя без домашней папки, пароля и с минималистическим командной оболочкой &lt;code&gt;sh&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# adduser --home /mnt/rbkp --no-create-home --disabled-password --shell /bin/sh rbkp
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;назначим-правильных-владельцев-на-песочницу&#34;&gt;Назначим правильных владельцев на песочницу&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# chown -R root:root /mnt/rbkp
+# chown -R rbkp:rbkp /mnt/rbkp/.ssh /mnt/rbkp/backup
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настраиваем-sshd-на-удалённом-хосте&#34;&gt;Настраиваем sshd на удалённом хосте&lt;/h3&gt;
+&lt;p&gt;Подразумевается, что sshd уже настроен на подключение с помощью открытых ключей.&lt;/p&gt;
+&lt;p&gt;В файл &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; добавляем блок отвечающий за перемещение пользователя rbkp в песочницу. Перемещение выполняется после проверки ключа ssh.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Match User rbkp
+    ChrootDirectory /mnt/rbkp
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;генерируем-ssh-ключи-и-настраиваем-свойства-подключения&#34;&gt;Генерируем ssh-ключи и настраиваем свойства подключения&lt;/h3&gt;
+&lt;p&gt;На &lt;em&gt;бэкап-хосте&lt;/em&gt;, в директории для бэкапов, генерируем новые безпарольные ssh-ключи:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh-keygen -t ed25519 -a 256 -C rbkp_ed25519_$(date +%Y%m%d) -f rbkp_ed25519_$(date +%Y%m%d)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На удалённом хосте в файл &lt;code&gt;/mnt/rbkp/.ssh/authorized_keys&lt;/code&gt; добавляем публичную часть нового ssh-ключа и указываем опции ужесточающие политику подключения:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cat /mnt/rbkp/.ssh/authorized_keys
+command=&amp;#34;/bin/rsync --server --sender -vlogDtpre.iLsf . /backup/&amp;#34;,no-port-forwarding,no-X11-forwarding,no-user-rc,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3Nza...fDWFH rbkp_ed25519_20190331
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;итоги&#34;&gt;Итоги&lt;/h3&gt;
+&lt;p&gt;На бэкап-сервере ставим в крон задачу:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rsync -avP -e&amp;#39;ssh -p22 -irbkp_ed25519_20190331 -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no&amp;#39; --bwlimit=1M rbkp@site01.example.com:/backup/ /mnt/backup/example.com/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В случае кражи ssh-ключей и информации о параметрах для подключения к удалённому хосту, злоумышленнику будет доступен удалённый просмотр папки &lt;code&gt;/mnt/rbkp/backup&lt;/code&gt; (посредством &lt;code&gt;rsync --list-only&lt;/code&gt;) и её выкачивание на свою машину. Если права на папку допускают удаление, то информация в этой папке может быть уничтожена.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Усиление защиты sshd</title>
+      <link>/n/usilenie-zashchity-sshd/</link>
+      <pubDate>Wed, 20 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/n/usilenie-zashchity-sshd/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2016-01-20&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://stribika.github.io/2015/01/04/secure-secure-shell.html&#34;&gt;https://stribika.github.io/2015/01/04/secure-secure-shell.html&lt;/a&gt;
+&lt;a href=&#34;https://www.opennet.ru/tips/2877_ssh_crypt_setup_security_nsa.shtml&#34;&gt;https://www.opennet.ru/tips/2877_ssh_crypt_setup_security_nsa.shtml&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Добавить ssh-audit&lt;/p&gt;
+&lt;p&gt;При создании новых ключей использовать ED25519 или RSA с длиной ключа более 4096:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh-keygen -o -a 129 -t ed25519 -C e0_20160116_ed25519 -f ~/.ssh/id_ed25519
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh-keygen -t rsa -b 4096 -o -a 132 -C e0_20160116_rsa -f ~/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;p&gt;На сервере в &lt;code&gt;sshd_config&lt;/code&gt; добавить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Там же оставить указание только на сильные серверные ключи:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Protocol 2
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;И пересоздать два серверных ключа rsa и ed25519 и сделать заглушки для отказа в создании новых dsa и ecdsa:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /etc/ssh
+# rm ssh_host_*key*
+# ssh-keygen -t ed25519 -N &amp;#39;&amp;#39; -f ssh_host_ed25519_key &amp;lt; /dev/null
+# ssh-keygen -t rsa -b 4096 -N &amp;#39;&amp;#39; -f ssh_host_rsa_key &amp;lt; /dev/null
+# ln -s /etc/ssh/ssh_host_ecdsa_key /etc/ssh/ssh_host_ecdsa_key
+# ln -s /etc/ssh/ssh_host_key /etc/ssh/ssh_host_key
+# ln -s /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_dsa_key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заглушки помешают последующим обновлениям, поэтому будет достаточно закомментить соответствующие строки в файле настройки sshd.&lt;/p&gt;
+&lt;p&gt;Отредактировать &lt;code&gt;/etc/ssh/moduli&lt;/code&gt; для использования RSA с длиной ключа больше 2000.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# awk &amp;#39;$5 &amp;gt; 2000&amp;#39; moduli &amp;gt; &amp;#34;${HOME}/moduli&amp;#34;
+# wc -l &amp;#34;${HOME}/moduli&amp;#34;
+# mv &amp;#34;${HOME}/moduli&amp;#34; moduli
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На клиенте в &lt;code&gt;/etc/ssh/ssh_config&lt;/code&gt; добавить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Host *
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 15. Создание шлюза в удалённой ИС для доступа хостов к бэкап-серверу</title>
+      <link>/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
+      <pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-03-16&lt;/p&gt;
+&lt;h2 id=&#34;топология&#34;&gt;Топология&lt;/h2&gt;
+&lt;p&gt;Имеется четыре машины в трёх Информационных Системах:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Information System 1 (IS1):
+&lt;ul&gt;
+&lt;li&gt;backup server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Information System 2 (IS2):
+&lt;ul&gt;
+&lt;li&gt;awx host&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Information System 3 (IS3):
+&lt;ul&gt;
+&lt;li&gt;backup client 1&lt;/li&gt;
+&lt;li&gt;backup client 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;   +----------------------+
+   |        IS1           |
++-&amp;gt;| &amp;#39;backup-server&amp;#39;:ssh  |&amp;lt;-X
+|  |                      |  |
+|  +----------------------+  |
+|  |        IS2           |  |
++-&amp;lt;|   &amp;#39;awx-host&amp;#39;:ssh     |&amp;lt;-X
+|  |                      |  |
+|  +----------------------+  |
+|  |        IS3           |  |
++-&amp;gt;| &amp;#39;backup-client1&amp;#39;:ssh |&amp;lt;-X
+|  |                      |  |
++-&amp;gt;| &amp;#39;backup-client2&amp;#39;:ssh |&amp;lt;-X
+   |                      |
+   +----------------------+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Так как ssh-доступ между &amp;lsquo;Backup Server&amp;rsquo; и &amp;lsquo;Backup Clients&amp;rsquo; отсутствует, тогда как с хоста &amp;lsquo;Awx Host&amp;rsquo; мы можем подключиться к любому хосту, то решением является создание с &amp;lsquo;Awx Host&amp;rsquo; временного туннеля-шлюза между одним из Бэкап-клиентов, например, &amp;lsquo;backup-client1&amp;rsquo;, и Бэкап-сервером. Остальные Бэкап-клиенты смогут обратиться на произвольно выбранный tcp-порт хоста &amp;lsquo;backup-client1&amp;rsquo;, что позволит им общаться с Бэкап-сервером напрямую.&lt;/p&gt;
+&lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
+&lt;p&gt;Находясь на AWX-хосте, выбираем призвольную машину в удалённой третьей ИС с бэкап-клиентами, и модернизируем на ней настройки sshd для возможности создания ssh-шлюза. Напомню, что такая возможность по умолчанию ограничена открытием порта на lo-интерфейсе 127.0.0.1, вместо интересующего нас 0.0.0.0.&lt;/p&gt;
+&lt;h3 id=&#34;backup-client1-включение-ssh-gateway&#34;&gt;&amp;lsquo;backup-client1&amp;rsquo;. Включение ssh gateway&lt;/h3&gt;
+&lt;p&gt;Итак, на хосте &amp;lsquo;backup-client1&amp;rsquo; включаем опцию &amp;lsquo;GatewayPorts&amp;rsquo; и перезапускаем демон sshd:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i &amp;#39;s/#GatewayPorts no/GatewayPorts yes/&amp;#39; /etc/ssh/sshd_config
+systemctl restart sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверка:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sshd -T | grep gatewayports
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;awx-host-прокидывание-временного-туннеля-шлюза-между-backup-client1-и-backup-server&#34;&gt;&amp;lsquo;awx-host&amp;rsquo;. Прокидывание временного туннеля-шлюза между &amp;lsquo;backup-client1&amp;rsquo; и &amp;lsquo;backup-server&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;На машине &amp;lsquo;awx-host&amp;rsquo; выполняем создание туннеля-шлюза. Для удобства последующего закрытия туннеля, используем мультиплексирование с созданием управляющего сокета, через который сможем подать команду на закрытие туннеля. Кроме того, запретим подачу команд через этот туннель удалённой машине, а также переведём соединение в фоновый режим:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh -MS /tmp/borg-is3 -Nf -R 0.0.0.0:2222:backup-server:22 eugene@backup-client1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После окончания операций бэкапа, через управляющий сокет, подаём команду закрыть туннель:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh -S /tmp/borg-is3 -O exit eugene@backup-client1
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-клиентов&#34;&gt;Настройка клиентов&lt;/h3&gt;
+&lt;p&gt;Ключ ssh для доступа к borg-репозиторию создаём в &lt;code&gt;~/.ssh&lt;/code&gt;, а в &lt;code&gt;~/.bashrc&lt;/code&gt; добавляем переменные для работы с borg-репозиторием:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORG_RSH=&amp;#34;ssh -i /root/.ssh/borg1&amp;#34;
+export BORG_REPO=&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

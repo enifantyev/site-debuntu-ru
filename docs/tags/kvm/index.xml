@@ -1,0 +1,178 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – KVM</title>
+    <link>/tags/kvm/</link>
+    <description>Recent content in KVM on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 17 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/kvm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Void Linux Установка QEMU/KVM</title>
+      <link>/n/void-linux-ustanovka-kvm/</link>
+      <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/void-linux-ustanovka-kvm/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-03-17&lt;/p&gt;
+&lt;p&gt;QEMU/KVM не требует DKMS-модуля для своей работы, в отличии от VirtualBox. Бла-бла-бла.&lt;/p&gt;
+&lt;h2 id=&#34;установка-необходимых-пакетов&#34;&gt;Установка необходимых пакетов&lt;/h2&gt;
+&lt;p&gt;Для эмуляции на основе &lt;code&gt;qemu/kvm&lt;/code&gt; необходимы следующие компоненты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;virt-manager&lt;/code&gt; — GUI для работы с &lt;code&gt;libvirt&lt;/code&gt; и &lt;code&gt;qemu&lt;/code&gt;. Позволяет подключаться к локальному и/или удалённому экземпляру &lt;code&gt;qemu/kvm&lt;/code&gt;. Поключение к удалённому экземпляру &lt;code&gt;libvirt&lt;/code&gt; и просмотр консоли удалённой эмулируемой машины обеспечивает ssh-туннель.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;qemu&lt;/code&gt; — программа, умеющая эмулировать различные процессоры и другое оборудование.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;libvirt&lt;/code&gt; — библиотека для работы с &lt;code&gt;kvm&lt;/code&gt; из &lt;em&gt;пространства пользователя&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;kvm&lt;/code&gt; — гипервизор, модуль находящийся в ядре системы, значительно ускоряющий выполнение эмулируемой машины в &lt;code&gt;qemu&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo xbps-install -Su virt-manager libvirt qemu
+Name               Action    Version           New version            Download size
+gnome-ssh-askpass  install   -                 8.1p1_1                9060B
+libbsd             install   -                 0.10.0_1               41KB
+openbsd-netcat     install   -                 1.206_1                21KB
+yajl               install   -                 2.1.0_4                21KB
+libvirt-glib       install   -                 2.0.0_3                141KB
+gtk-vnc            install   -                 0.9.0_3                97KB
+osinfo-db          install   -                 20191125_1             112KB
+libosinfo          install   -                 1.7.1_1                569KB
+libvirt-python3    install   -                 6.0.0_1                130KB
+libxml2-python3    install   -                 2.9.10_2               122KB
+virt-manager-tools install   -                 2.2.1_1                164KB
+virt-manager       install   -                 2.2.1_1                846KB
+dnsmasq            install   -                 2.80_7                 194KB
+libnuma            install   -                 2.0.13_1               17KB
+libapparmor        install   -                 2.13.3_4               90KB
+libvirt            install   -                 6.0.0_1                5175KB
+libvde2            install   -                 2.3.2_21               25KB
+libbluetooth       install   -                 5.52_1                 45KB
+spice              install   -                 0.14.2_2               318KB
+virglrenderer      install   -                 0.8.1_1                176KB
+libpcsclite        install   -                 1.8.26_1               22KB
+libcacard          install   -                 2.7.0_1                30KB
+qemu               install   -                 4.2.0_2                100MB
+========================================================================
+To enable KVM your user must be added to the &amp;#39;kvm&amp;#39; group:
+
+        $ usermod -aG kvm &amp;lt;username&amp;gt;
+
+Don&amp;#39;t forget to load the appropiate KVM module for your CPU (x86 only):
+
+        $ modprobe kvm-amd # for AMD CPUs
+        $ modprobe kvm-intel # for Intel CPUs
+========================================================================
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;дополнительные-телодвижения&#34;&gt;Дополнительные телодвижения&lt;/h2&gt;
+&lt;p&gt;Добавляем себя к группам пользователей-эмуляторов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo usermod -aG kvm $USER
+$ sudo usermod -aG libvirt $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Загружаем подходящий модуль (здесь для процессора Intel) и запускаем демоны:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;modprobe kvm-intel
+ln -s /etc/sv/libvirtd /var/service
+ln -s /etc/sv/virtlockd /var/service
+ln -s /etc/sv/virtlogd /var/service
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После выхода из своего сеанса и повторного входа, или перезагрузки компьютера, появляется возможность запустить &lt;code&gt;virt-manager&lt;/code&gt; и создать/добавить первую виртуальную машину.&lt;/p&gt;
+&lt;h2 id=&#34;инструменты-настройки&#34;&gt;Инструменты настройки&lt;/h2&gt;
+&lt;p&gt;Настройка производится с помощью:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;virsh&lt;/code&gt; — консольная утилита;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;virt-manager&lt;/code&gt; — относительно удобная GUI-утилита.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;настройка-хранилищ-pool&#34;&gt;Настройка хранилищ (pool)&lt;/h2&gt;
+&lt;p&gt;Хранилища — это места хранения образов винчестеров виртуальных машин, образов DVD-дисков. Хранилищем может стать каталог файловой системы, или выделенный раздел на LVM2. Перед работой с ними их необходимо добавить в систему.&lt;/p&gt;
+&lt;p&gt;По умолчанию доступно одно хранилище &lt;code&gt;/var/lib/libvirt/images&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;настройка-сети-для-qemukvm&#34;&gt;Настройка сети для QEMU/KVM&lt;/h2&gt;
+&lt;h3 id=&#34;virtual-network-default--nat&#34;&gt;Virtual network &amp;lsquo;default&amp;rsquo; : NAT&lt;/h3&gt;
+&lt;p&gt;При запуске демона &lt;code&gt;libvirtd&lt;/code&gt; в систему автоматически добавляется виртуальный сетевой интерфейс &lt;code&gt;virbr0&lt;/code&gt; с отдельной подсеткой &lt;code&gt;192.168.122.0/24&lt;/code&gt;, а в netfilter дописываются правила, с помощью которых, через NAT, виртуальные машины смогут иметь доступ к инету:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;*mangle
+-N LIBVIRT_PRT
+-A POSTROUTING -j LIBVIRT_PRT
+-A LIBVIRT_PRT -o virbr0 -p udp -m udp --dport 68 -j CHECKSUM --checksum-fill
+
+*nat
+-N LIBVIRT_PRT
+-A POSTROUTING -j LIBVIRT_PRT
+-A LIBVIRT_PRT -s 192.168.122.0/24 -d 224.0.0.0/24 -j RETURN
+-A LIBVIRT_PRT -s 192.168.122.0/24 -d 255.255.255.255/32 -j RETURN
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p tcp -j MASQUERADE --to-ports 1024-65535
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -j MASQUERADE
+
+*filter
+-N LIBVIRT_FWI
+-N LIBVIRT_FWO
+-N LIBVIRT_FWX
+-N LIBVIRT_INP
+-N LIBVIRT_OUT
+-A INPUT -j LIBVIRT_INP
+-A LIBVIRT_FWI -d 192.168.122.0/24 -o virbr0 -j ACCEPT
+-A LIBVIRT_FWI -o virbr0 -j REJECT --reject-with icmp-port-unreachable
+-A LIBVIRT_FWO -s 192.168.122.0/24 -i virbr0 -j ACCEPT
+-A LIBVIRT_FWO -i virbr0 -j REJECT --reject-with icmp-port-unreachable
+-A LIBVIRT_FWX -i virbr0 -o virbr0 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p udp -m udp --dport 53 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p tcp -m tcp --dport 53 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p udp -m udp --dport 67 -j ACCEPT
+-A LIBVIRT_INP -i virbr0 -p tcp -m tcp --dport 67 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p udp -m udp --dport 53 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p tcp -m tcp --dport 53 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p udp -m udp --dport 68 -j ACCEPT
+-A LIBVIRT_OUT -o virbr0 -p tcp -m tcp --dport 68 -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Также запускается &lt;code&gt;dnsmasq&lt;/code&gt; для раздачи ip-адресов из назначенной подсети.&lt;/p&gt;
+&lt;p&gt;Описание сети &lt;code&gt;default&lt;/code&gt; находится в &lt;code&gt;/etc/libvirt/qemu/networks/default.xml&lt;/code&gt;. Вручную изменять этот файл не рекомендуется, и хорошей практикой будет использование команды &lt;code&gt;virsh net-edit default&lt;/code&gt;, которая запустит редактор &lt;code&gt;vi&lt;/code&gt;, а после завершения редактирования, проверит файл на соответствие правилам.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;network&amp;gt;
+  &amp;lt;name&amp;gt;default&amp;lt;/name&amp;gt;
+  &amp;lt;bridge name=&amp;#34;virbr0&amp;#34;/&amp;gt;
+  &amp;lt;forward mode=&amp;#34;nat&amp;#34;/&amp;gt;
+  &amp;lt;ip address=&amp;#34;192.168.122.1&amp;#34; netmask=&amp;#34;255.255.255.0&amp;#34;&amp;gt;
+    &amp;lt;dhcp&amp;gt;
+      &amp;lt;range start=&amp;#34;192.168.122.2&amp;#34; end=&amp;#34;192.168.122.254&amp;#34;/&amp;gt;
+    &amp;lt;/dhcp&amp;gt;
+  &amp;lt;/ip&amp;gt;
+&amp;lt;/network&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Естественно, если демоны &lt;code&gt;iptables&lt;/code&gt; и &lt;code&gt;ip6tables&lt;/code&gt; запускаются после &lt;code&gt;libvirtd&lt;/code&gt;, то iptables-правила для виртуальной сетки будут затёрты. Для решения этой проблемы дописываем в самое начало runit-скрипта &lt;code&gt;/etc/sv/libvirtd/run&lt;/code&gt; две строки, чтобы &lt;code&gt;runit&lt;/code&gt; сам расставил зависимости:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sv start iptables || exit 1
+sv start ip6tables || exit 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Конечно, будет лучше взять правила для файрвола под свой контроль, так как автоматически добавляемые правила не слишком эффективны и не всегда применяются должным образом.&lt;/p&gt;
+&lt;p&gt;Отменяем автоматическое создание сети командой &lt;code&gt;virsh net-autostart default --disable&lt;/code&gt;, в результате чего будет удалена ссылка &lt;code&gt;/etc/libvirt/qemu/networks/autostart/@default.xml&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;shared-device&#34;&gt;Shared device&lt;/h3&gt;
+&lt;p&gt;Чтобы выставить новую виртуальную машину в текущую локальную сеть создаём мост, в составе которого будут работать текущий физический сетевой интерфейс и сетевые интерфейсы виртуальных машин.&lt;/p&gt;
+&lt;p&gt;Выключаем демон &lt;code&gt;dhcpcd&lt;/code&gt;, чтобы не мешал работе &lt;code&gt;NetworkManager&lt;/code&gt;. В моём случае &lt;code&gt;dhcpcd&lt;/code&gt; был включен, несмотря на используемый &lt;code&gt;NetworkManager&lt;/code&gt;, и настойчиво назначал ip-адрес физическому интерфейсу, тогда как &lt;code&gt;NetworkManager&lt;/code&gt; назначал эти же данные на мост &lt;code&gt;br0&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sv stop dhcpcd
+rm /var/service/dhcpcd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Определяем текущее сетевое подключение. В выводе информации о текущих подключениях видим  &amp;ldquo;Wired connection 1&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# nmcli d
+DEVICE      TYPE      STATE           CONNECTION         
+enp3s0      ethernet  подключено      Wired connection 1
+virbr0      bridge    подключено      virbr0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После выяснения текущего сетевого соединения выполняем:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Выключаем текущее сетевое подключение &amp;ldquo;Wired connection 1&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Отключаем автоподнятие интерфейса &amp;ldquo;Wired connection 1&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Создаём мост &lt;code&gt;br0&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Добавляем текущий физический сетевой интерфейс в этот мост.&lt;/li&gt;
+&lt;li&gt;Отключаем stp, так как вероятность петли на интерфейсе &lt;code&gt;br0&lt;/code&gt;, по понятным причинам, стремится к нулю.&lt;/li&gt;
+&lt;li&gt;Поднимаем мост &lt;code&gt;br0&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nmcli con down &amp;#34;Wired connection 1&amp;#34;
+nmcli con mod &amp;#39;Wired connection 1&amp;#39; connection.autoconnect off
+nmcli con add type bridge ifname br0 con-name br0
+nmcli con add type bridge-slave ifname enp3s0 master br0 con-name enp3s0s
+nmcli con mod br0 bridge.stp no
+nmcli con up br0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если в локальной сети присутствует dhcp-сервер, то на &lt;code&gt;br0&lt;/code&gt; назначится ip-адрес, иначе назначение проводим вручную.&lt;/p&gt;
+&lt;p&gt;В заключении, указываем новой виртуальной машине &lt;code&gt;br0&lt;/code&gt; в качестве &amp;ldquo;Shared physical device&amp;rdquo;.&lt;/p&gt;
+&lt;h3 id=&#34;host-device-eth0-macvtap&#34;&gt;Host device eth0: macvtap&lt;/h3&gt;
+&lt;p&gt;Вспомнить. Несколько лет назад. ovh.com. Дополнительный failover ip для которого OVH назначает свой MAC (по моему запросу)? В этом случае я использовал macvtap (с указанием MAC от OVH) для виртуального сервера.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,82 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – venv</title>
+    <link>/tags/venv/</link>
+    <description>Recent content in venv on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 01 Jan 1970 03:00:02 +0300</lastBuildDate>
+    
+	  <atom:link href="/tags/venv/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Refbooks: Управление пакетами в Python</title>
+      <link>/refbooks/python/upravleniye-paketami-v-payton/</link>
+      <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
+      
+      <guid>/refbooks/python/upravleniye-paketami-v-payton/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;способы-установки-python-пакетов&#34;&gt;Способы установки python-пакетов&lt;/h2&gt;
+&lt;h3 id=&#34;с-помощью-системного-менеджера-пакетов-apt-или-yum&#34;&gt;С помощью системного менеджера пакетов APT или YUM&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install python3-requests
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;с-помощью-python-модуля-pip&#34;&gt;С помощью python-модуля pip&lt;/h3&gt;
+&lt;p&gt;Если на машине установлена только одна версия python, или установка производится в активированном виртуальном окружении, то можно установить пакет/ы следующим образом:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install wheel requests
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Узнать к какой версии Python принадлежит &lt;code&gt;pip&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@wks1 ~]$ pip -V
+pip 20.3.4 from /usr/lib/python2.7/site-packages/pip (python 2.7)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Исключающее ошибку в версии Python установка пакетов с использованием &lt;code&gt;pip&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3.8 -m pip install airflow
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;ручная-сборка-python-пакета&#34;&gt;Ручная сборка python-пакета&lt;/h3&gt;
+&lt;h3 id=&#34;установка-пакетов-в-виртуальное-окружение&#34;&gt;Установка пакетов в виртуальное окружение&lt;/h3&gt;
+&lt;p&gt;Создадим каталог для Python-проекта, где развернём виртуальное окружение, активируем его, после чего установим пакет wheel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@wks1 ~]$ mkdir -p ~/pythonprojects/airflow
+[eugene@wks1 ~]$ cd ~/pythonprojects/airflow
+[eugene@wks1 ~]$ python3.6 -m venv .
+[eugene@wks1 ~]$ source bin/activate
+(airflow) [eugene@wks1 ~]$ pip -V
+pip 18.1 from /root/pythonprojects/airflow/lib64/python3.6/site-packages/pip (python 3.6)
+(airflow) [eugene@wks1 ~]$ pip install wheel
+Collecting wheel
+  Using cached wheel-0.37.1-py2.py3-none-any.whl (35 kB)
+Installing collected packages: wheel
+Successfully installed wheel-0.37.1
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;адреса-директорий-с-установленными-пакетами&#34;&gt;Адреса директорий с установленными пакетами&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;yum&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;/usr/lib/python3.6&lt;/code&gt; и доступны для всей системы.&lt;/li&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;sudo pip install&lt;/code&gt;, размещаются там же, как в примере выше.&lt;/li&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;sudo pip install --user&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;/root/.local/lib/python3.8&lt;/code&gt;, и доступны только для аккаунта &lt;code&gt;root&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;pip install&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;~/.local/lib/python3.8&lt;/code&gt;, то есть в домашний каталог пользователя и доступны только пользователю.&lt;/li&gt;
+&lt;li&gt;Пакеты, устанавливаемые в виртуальном окружении, размещаются в этом же каталоге, где развёрнут &amp;lsquo;venv&amp;rsquo;, точнее в подкаталоге &lt;code&gt;./lib/python3.8&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;способы-обновления-пакетов&#34;&gt;Способы обновления пакетов&lt;/h2&gt;
+&lt;h3 id=&#34;обновление-pip&#34;&gt;Обновление pip&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install --upgrade pip
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;принудительное-обновление-пакета-который-установлен-через-yum&#34;&gt;Принудительное обновление пакета, который установлен через yum&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ERROR: Cannot uninstall &amp;#39;systemd-python&amp;#39;. It is a distutils installed project
+and thus we cannot accurately determine which files belong to it which would
+lead to only a partial uninstall.
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install --ignore-installed systemd-python
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;способы-удаления-всех-пакетов&#34;&gt;Способы удаления всех пакетов&lt;/h2&gt;
+&lt;h3 id=&#34;способ-с-сохранением-списка-пакетов&#34;&gt;Способ с сохранением списка пакетов&lt;/h3&gt;
+&lt;p&gt;Остаётся возможность восстановления всех пакетов из списка. Сохраняем список, удаляем пакеты, устанавливаем пакеты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip freeze &amp;gt; requirements.txt
+pip uninstall -r requirements.txt -y
+pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-всех-пакетов-без-сохранения-списка&#34;&gt;Удаление всех пакетов без сохранения списка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip uninstall -y -r &amp;lt;(pip freeze)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip freeze | xargs pip uninstall -y
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

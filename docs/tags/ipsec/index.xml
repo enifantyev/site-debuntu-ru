@@ -1,0 +1,96 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – IPsec</title>
+    <link>/tags/ipsec/</link>
+    <description>Recent content in IPsec on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 22 Apr 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/ipsec/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Простой Центр Сертификации для strongSwan IPsec</title>
+      <link>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-04-22&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Начиная с версии strongswan 5.1.1 использование префикса &lt;em&gt;ipsec&lt;/em&gt; перед &lt;code&gt;pki&lt;/code&gt; является опциональным.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://wiki.strongswan.org/projects/strongswan/wiki/SimpleCA&#34;&gt;Setting-up a Simple CA Using the strongSwan PKI Tool&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Для работы PKI необходимо установить пакеты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;strongswan-starter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;strongswan-pki&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;libcharon-extra-plugins&lt;/code&gt; # для поддержки &lt;em&gt;ed25519&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Используемые сокращения и термины:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CA&lt;/strong&gt;, &lt;strong&gt;Certification Authority&lt;/strong&gt;, &lt;strong&gt;Центр Сертификации&lt;/strong&gt;. Здесь оформлен в виде директории, в которой лежат два файла: &lt;em&gt;приватный ключ Центра Сертификации&lt;/em&gt; и &lt;em&gt;самоподписанный сертификат Центра Сертификации&lt;/em&gt;. В этой же папке создаются пары (&lt;em&gt;приватный ключ&lt;/em&gt; и соответствующий ему &lt;em&gt;сертификат открытого ключа&lt;/em&gt;) файлов-ключей для удостоверения каждого члена IPsec-сети организации.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CRL&lt;/strong&gt;, &lt;strong&gt;Certificate Revocation List&lt;/strong&gt;, &lt;strong&gt;Список Отозванных Сертификатов&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;private key&lt;/strong&gt;, &lt;strong&gt;приватный ключ&lt;/strong&gt;, &lt;strong&gt;закрытый ключ&lt;/strong&gt;. Здесь оформлен в виде файла с уникальной последовательностью бит. Из &lt;em&gt;приватного ключа&lt;/em&gt; всегда можно вычислить парный ему уникальный &lt;em&gt;публичный ключ&lt;/em&gt;, тогда как обратная операция математически невозможна.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;public key&lt;/strong&gt;, &lt;strong&gt;публичный ключ&lt;/strong&gt;, &lt;strong&gt;открытый ключ&lt;/strong&gt;. Всегда может быть вычислен из &lt;em&gt;приватного ключа&lt;/em&gt; и записан в отдельный файл, но в таком виде не используется. Вместо этого используется &lt;em&gt;сертификат открытого ключа&lt;/em&gt;. Часто под понятием &lt;em&gt;публичный ключ&lt;/em&gt; имеется ввиду &lt;em&gt;сертификат открытого ключа&lt;/em&gt; выданный каким-либо &lt;em&gt;Центром Сертификации&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;сертификат открытого ключа&lt;/strong&gt;. Здесь оформлен в виде файла, содержащего &lt;em&gt;публичный ключ&lt;/em&gt; и &lt;em&gt;подпись Центра Сертификации&lt;/em&gt;. Только &lt;em&gt;подписанный публичный ключ&lt;/em&gt; может использоваться в IPsec-сети организации, так как при подключении узла к IPsec-сети проверяется наличие &lt;em&gt;подписи Центра Сертификации&lt;/em&gt; организации.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;выпуск-ключевой-пары-центра-сертификации&#34;&gt;Выпуск ключевой пары Центра Сертификации&lt;/h3&gt;
+&lt;p&gt;В отдельной директории, которая выделена для работы &lt;strong&gt;CA&lt;/strong&gt; выполняется генерация &lt;strong&gt;приватного ключа Центра Сертификации&lt;/strong&gt;:
+для ключа Ed25519 (длина всегда 256 бит)&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --gen --type ed25519 &amp;gt; caKey.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;для RSA используется длина 4096 бит&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --gen --type rsa --size 4096 &amp;gt; caKey.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При малой заполненности &lt;code&gt;/dev/random&lt;/code&gt; неизбежно долгое ожидание завершения генерирования RSA-ключа. В этом случае рекомендуется использовать &lt;code&gt;openssl&lt;/code&gt;, который при пустом &lt;code&gt;/dev/random&lt;/code&gt; использует информацию из &lt;code&gt;/dev/urandom&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# openssl genrsa -out caKey.pem 4096
+# openssl rsa -inform pem -outform der -in caKey.pem -out caKey.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Из этого &lt;em&gt;приватного ключа&lt;/em&gt; вычисляется парный ему уникальный &lt;em&gt;публичный ключ&lt;/em&gt; и к нему выпускается &lt;strong&gt;самоподписанный сертификат публичного ключа Центра Сертификации&lt;/strong&gt; действительный три года начиная с момента выпуска:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --self --in caKey.der --dn &amp;#34;C=RU, O=ExampleOrg, CN=ExampleOrg CA&amp;#34; --ca &amp;gt; caCert.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате этих действий в директории &lt;em&gt;CA&lt;/em&gt; находятся два файла:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;caKey.der&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;caCert.der&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;С помощью первого файла производится &lt;em&gt;подписание&lt;/em&gt;, с последующим выпуском &lt;em&gt;сертификатов открытых ключей&lt;/em&gt; для узлов IPsec-сети организации. Вследствие очевидной важности файла, он обязан храниться в секретном месте.&lt;/p&gt;
+&lt;h3 id=&#34;создание-ключевой-пары-для-каждого-узла-в-ipsec-сети&#34;&gt;Создание ключевой пары для каждого узла в IPsec-сети&lt;/h3&gt;
+&lt;p&gt;Для каждого узла генерируетс &lt;strong&gt;приватный ключ&lt;/strong&gt; Ed25519 или RSA:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --gen --type rsa --size 4096 &amp;gt; srv0Key.der
+# ipsec pki --gen --type rsa --size 4096 &amp;gt; srv1Key.der
+# ipsec pki --gen --type rsa --size 4096 &amp;gt; usr0Key.der
+# ipsec pki --gen --type rsa --size 4096 &amp;gt; usr1Key.der
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;если не хватает энтропии из &lt;code&gt;/dev/random&lt;/code&gt; для создания RSA-ключа, то вновь применяем &lt;code&gt;openssl&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;На основе каждого &lt;em&gt;приватного ключа&lt;/em&gt; необходимо сгенерировать &lt;strong&gt;запрос на сертификацию публичного ключа&lt;/strong&gt; и направить в &lt;em&gt;CA&lt;/em&gt; организации, где на основе &lt;em&gt;запроса&lt;/em&gt; выпускается &lt;strong&gt;сертификат публичного ключа&lt;/strong&gt; подписанный &lt;em&gt;CA&lt;/em&gt;, то есть утверждённый к работе в IPsec-сети организации.&lt;/p&gt;
+&lt;p&gt;Так как работа &lt;em&gt;CA&lt;/em&gt; и выпуск &lt;em&gt;приватных ключей&lt;/em&gt; находится под нашим полным контролем, то всё вышесказанное можно организовать единственной командой для каждого ключа:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --issue --in sv0Key.der --type priv --cacert caCert.der --cakey caKey.der \
+--dn &amp;#34;C=RU, O=ExampleOrg, CN=srv0&amp;#34; --san srv0 &amp;gt; srv0Cert.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;и так далее для каждого ключа.&lt;/p&gt;
+&lt;h3 id=&#34;список-отозванных-сертификатов&#34;&gt;Список Отозванных сертификатов&lt;/h3&gt;
+&lt;p&gt;Для отзыва сертификата &lt;code&gt;usr1Cert.der&lt;/code&gt; выполняется:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --signcrl --cacert caCert.der --cakey caKey.der --reason superseded --cert usr1Cert.der &amp;gt; crl.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Файл &lt;code&gt;crl.der&lt;/code&gt; распространяется на все узлы IPsec-сети организации.&lt;/p&gt;
+&lt;h3 id=&#34;размещение-ключей-и-сертификатов-на-узлах-ipsec-сети&#34;&gt;Размещение ключей и сертификатов на узлах IPsec-сети&lt;/h3&gt;
+&lt;p&gt;Ключи и сертификаты сохраняются в директории &lt;code&gt;/etc/ipsec.d/&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/private/srv0Key.der&lt;/code&gt; содержит &lt;em&gt;приватный ключ&lt;/em&gt; узла. Необходимо прописать его загрузку в &lt;code&gt;ipsec.secrets&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/certs/srv0Cert.der&lt;/code&gt; содержит &lt;em&gt;сертификат открытого ключа&lt;/em&gt; узла. Для его использования необходимо прописать его в &lt;code&gt;ipsec.conf&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/cacerts/caCert.der&lt;/code&gt; подгружается автоматически и используется для проверки всех подключающихся узлов.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Опционально размещается &lt;em&gt;CRL&lt;/em&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/crls/crl.der&lt;/code&gt; содержит &lt;em&gt;список отозванных сертификатов&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

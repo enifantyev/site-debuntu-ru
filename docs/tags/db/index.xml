@@ -1,0 +1,218 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – DB</title>
+    <link>/tags/db/</link>
+    <description>Recent content in DB on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 03 Jul 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/db/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Best Practices for Using LDAP Link with Vertica (перевод)</title>
+      <link>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
+      <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-07-03&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&#34;&gt;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Итак, вы настроили и включили LDAP Link и работаете с Vertica, что позволяет синхронизировать пользователей и группы LDAP с соответствующими пользователями и ролями Vertica. Но вы по прежнему должны управлять пользователями и ролями в Vertica, которые вы не создавали с помощью LDAP Link. На следующем рисунке показано, как может выглядеть ваша конфигурация.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;VerticaLDAPLinkSync.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Но есть несколько рекомендаций, которым вы должны следовать, чтобы убедиться, что вы случайно не потеряете ни пользователей, ни данные. В этом блоге объясняется, как обеспечить бесперебойную работу службы LDAP Link.&lt;/p&gt;
+&lt;h3 id=&#34;перед-включением-ldap-link-выполните-тестовый-прогон-всухую&#34;&gt;Перед включением LDAP Link выполните тестовый &amp;ldquo;прогон всухую&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Параметр &amp;ldquo;LDAPLinkDryRun&amp;rdquo; определяет, должна ли Vertica выполнить тесты между LDAP-сервером и Vertica. &amp;ldquo;Прогон всухую&amp;rdquo; проверяет:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;что соединение работает;&lt;/li&gt;
+&lt;li&gt;параметры установлены корректно;&lt;/li&gt;
+&lt;li&gt;запросы к LDAP-серверу возвращает правильные результаты, записываемые в файл ldap_server_response.log.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;ldquo;Прогон всухую&amp;rdquo; не производит никаких изменений в Базе Данных Vertica.&lt;/p&gt;
+&lt;p&gt;Для лучшего результата, установить параметр &amp;ldquo;LDAPLinkDryRun&amp;rdquo; в 1 и выполните &amp;ldquo;прогон всухую&amp;rdquo; в тестовом окружении. Выполение этого увеличит шансы, что вы останетесь без синхронизации в тот момент, когда подключите LDAP Link в вашем прод-окружении.&lt;/p&gt;
+&lt;h3 id=&#34;предотвратите-потерю-объектов-в-базе-данных&#34;&gt;Предотвратите потерю объектов в Базе Данных&lt;/h3&gt;
+&lt;p&gt;При удалении пользователя из LDAP-каталога, Vertica, при следующей синхронизации LDAP, удалит пользователя из Vertica-пользователей, а с ним удалит из Базы Данных все объекты (таблицы, виды, и т.д.), принадлежавшие пользователю. Эти объекты будут потеряны без возможности восстановления.&lt;/p&gt;
+&lt;p&gt;Для сохранения в Базе Данных объектов, принадлежащих удаляемому пользователю, используйте параметр &amp;ldquo;GlobalHeirUserName&amp;rdquo;. Этот параметр определяет, что произойдёт с объектами, когда их владелец исчезнет:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AUTO (по умолчанию) – Vertica назначит новым родителем объектов пользователя dbadmin.&lt;/li&gt;
+&lt;li&gt;&lt;username&gt; – Vertica назначит определённого пользователя, как нового родителя этих объектов.&lt;/li&gt;
+&lt;li&gt;Empty – Vertica не будет назначать объектам какого-либо пользователя. В этом случае объекты будут потеряны без возможности восстановления. Этот параметр сродни выполнению операции =&amp;gt; DROP USER user_name CASCADE;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;избегайте-случайного-удаления-пользователей&#34;&gt;Избегайте случайного удаления пользователей&lt;/h3&gt;
+&lt;p&gt;Допустим, что LDAP Link синхронизируется, но не найдёт пользователей в LDAP-сервере. В этой ситуации, LDAP Link удалит из Vertica только тех пользователей , которые были созданы с помощью LDAP Link. (LDAP Link никогда не удалит из Vertica не-LDAP пользователей.)&lt;/p&gt;
+&lt;p&gt;Чтобы изменить такое поведение, установите параметр LDAPLinkStopIfZeroUsers в 1. Этот параметр указывает, что при неудачной синхронизации, когда возвращается пустой список пользователей в LDAP-каталоге, LDAP Link синхронизация должна вызывать ошибку. Это предотвратит случайное удаление легитимных LDAP-пользователей из Vertica.&lt;/p&gt;
+&lt;p&gt;Когда происходит ошибка синхронизации, запись о ней заносится в vertica.log, а также добавляется запись в системную таблицу LDAP_LINK_EVENTS.&lt;/p&gt;
+&lt;p&gt;После выяснения и исправления ситуации с отсутствием пользователей в LDAP-каталоге, установите параметр LDAPLinkStopIfZeroUsers в 0 и перезапустите синхронизацию.&lt;/p&gt;
+&lt;h3 id=&#34;кратко&#34;&gt;Кратко&lt;/h3&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Параметр&lt;/th&gt;&lt;th&gt;Рекомендованное значение&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkDryRun&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkURL&lt;/td&gt;&lt;td&gt;Без изменений&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkSearchBase&lt;/td&gt;&lt;td&gt;Без изменений&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;GlobalHeirUserName&lt;/td&gt;&lt;td&gt;&lt;b&gt;AUTO&lt;/b&gt;&amp;nbsp;&amp;mdash; автоназначение объектам пользователя dbadmin только в тех случаях, когда Vertica удаляет LDAP-пользователей.&lt;br&gt;
+&lt;b&gt;username&lt;/b&gt;&amp;nbsp;&amp;mdash; в тех случаях, когда могут быть удалены любые пользователи, а не только LDAP.&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkStopIfZeroUsers&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;доп-информация&#34;&gt;Доп информация&lt;/h3&gt;
+&lt;p&gt;Если вы будете следовать этим процедурам, вы сможете управлять своими Vertica-пользователями с помощью подключения к LDAP, без потерь пользователей или данных. Для полной информации о LDAP Link смотрите LDAP Link Service в документации к Vertica.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Бэкап дампа базы Postgresql и его восстановление на новом сервере</title>
+      <link>/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
+      <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-04-21&lt;/p&gt;
+&lt;p&gt;Создание дампа может занять продолжительное время, поэтому работы производим через &lt;code&gt;screen&lt;/code&gt;, который позволит нам сохранить работающий сеанс на сервере, даже если мы отключимся случайно или по какой-то причине.&lt;/p&gt;
+&lt;h2 id=&#34;работы-на-исходном-сервере&#34;&gt;Работы на исходном сервере&lt;/h2&gt;
+&lt;h3 id=&#34;сбор-сведений-перед-созданием-дампа&#34;&gt;Сбор сведений перед созданием дампа&lt;/h3&gt;
+&lt;p&gt;На исходном сервере запоминаем версию postgresql:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rpm -qa|grep sql
+postgresql11-server-11.4-1PGDG.rhel7.x86_64
+postgresql11-11.4-1PGDG.rhel7.x86_64
+postgresql11-libs-11.4-1PGDG.rhel7.x86_64
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Смотрим &lt;code&gt;who&lt;/code&gt; и активные сетевые подключения через &lt;code&gt;ss -tul&lt;/code&gt;, чтобы удостовериться в своём одиноком присутствии на сервере.&lt;/p&gt;
+&lt;p&gt;Ознакомимся со свободным местом на сервере, где увидим, что есть свободные 340G:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/rhel-root  1.3T  906G  340G  73% /
+devtmpfs                16G     0   16G   0% /dev
+tmpfs                   16G  8.0K   16G   1% /dev/shm
+tmpfs                   16G  353M   16G   3% /run
+tmpfs                   16G     0   16G   0% /sys/fs/cgroup
+/dev/sda1              950M  251M  700M  27% /boot
+tmpfs                  3.2G     0  3.2G   0% /run/user/1000
+tmpfs                  3.2G     0  3.2G   0% /run/user/1007
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Ищем postgresql в обычном месте &lt;code&gt;/var/lib&lt;/code&gt; и находим экземпляр в &lt;code&gt;/var/lib/pgsql/11/data&lt;/code&gt;. Узнаём размер каталога:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# du -hs du -hs /var/lib/pgsql/11/data
+895G    du -hs /var/lib/pgsql/11/data
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Огромная база в 900 Гигабайт и свободное место на 340 Гигабайт. Интересуемся у ответственного лица о содержимом базы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;gt; Ещё вопрос, пожалуйста. Внутри базы postgres хорошо сжимаемые данные, типа текста, или что-нибудь несжимаемое, типа jpg?
+
+&amp;lt; картинок нет точно. в основном это csvшки с данными
+
+&amp;gt; отлично. Ещё раз спасибо.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Из вышеприведённого диалога понятно, что база заполнена хорошо сжимаемым содержимым. Опережая события сообщу, что база сжалась до 52G (за 1,5 часа?).&lt;/p&gt;
+&lt;p&gt;В противном случае нам пришлось бы сжимать базу с автоматическим разделением дампа на части, чтобы была возможность переносить готовые куски на новый сервер, освобождая место на старом сервере для следующих параллельно создаваемых частей. Или, в крайнем случае, останавливаем postgres и, за 10-20 часов, в зависимости от ширины канала, копируем содержимое &lt;code&gt;/var/lib/pgsql/11/data&lt;/code&gt; на новый сервер.&lt;/p&gt;
+&lt;h3 id=&#34;выбор-места-создания-дампа&#34;&gt;Выбор места создания дампа&lt;/h3&gt;
+&lt;p&gt;После знакомства со структурой каталогов на сервере, решаем попробовать задампиться в &lt;code&gt;/var/lib/pgsql/11/backups&lt;/code&gt;. Мне кажется, что выбор этого места логичен в данном случае.&lt;/p&gt;
+&lt;h3 id=&#34;создание-полного-дампа-исходного-экземпляра-posgresql&#34;&gt;Создание полного дампа исходного экземпляра posgresql&lt;/h3&gt;
+&lt;p&gt;Определяем количество ядер у процессора (через &lt;code&gt;top&lt;/code&gt;, &lt;code&gt;htop&lt;/code&gt;, &lt;code&gt;cat /proc/cpuinfo&lt;/code&gt;) и запускаем создание дампа со сжатием через lbzip2, с указанием найденного количества ядер для ускорения работы (в данном случае восемь потоков):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo su
+su - postgres
+time pg_dumpall -v | lbzip2 -n 8 -9 &amp;gt; /var/lib/pgsql/11/backups/pgsql_dumpall_$(date -u +%Y%m%d-%H%M%S).bz2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Забегая вперёд покажу затраченное время:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;real    88m17.100s
+user    463m50.451s
+sys     16m31.101s
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Посмотреть на текущий, и всё увеличивающийся, размер базы можно через дополнительный &amp;ldquo;экран screen&amp;rdquo; (масло масляное :-).&lt;/p&gt;
+&lt;p&gt;Пока дамп создаётся, не теряем времени и заходим на новый сервер.&lt;/p&gt;
+&lt;h2 id=&#34;подготовка-нового-сервера-к-поднятию-копии-postgesql&#34;&gt;Подготовка нового сервера к поднятию копии postgesql&lt;/h2&gt;
+&lt;h3 id=&#34;стандартные-действия-после-установки-системы&#34;&gt;Стандартные действия после установки системы&lt;/h3&gt;
+&lt;p&gt;На новом сервере произвёл:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;обновление системы &lt;code&gt;yum update&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;перезагрузка &lt;code&gt;reboot&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;подключение репо postgresql&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Памятуя о версии на исходном сервере, производим установку конкретной версии posgresql:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# yum install postgresql11-server-11.4-1PGDG.rhel7.x86_64
+...
+=======================================================================================
+ Package                        Arch       Version            Repository     Size
+=======================================================================================
+Installing:
+ postgresql11-server            x86_64     11.4-1PGDG.rhel7   postgres11     4.7 M
+Installing for dependencies:
+ postgresql11                   x86_64     11.4-1PGDG.rhel7   postgres11     1.6 M
+ postgresql11-libs              x86_64     11.4-1PGDG.rhel7   postgres11     361 k
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем пакет &lt;code&gt;yum-plugin-versionlock&lt;/code&gt; для возможности блокировки пакетов от апгрейда и выполняем блокировку пакетов &lt;code&gt;postgresql11*&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# yum install yum-plugin-versionlock
+# yum versionlock postgresql11*
+Loaded plugins: product-id, rhnplugin, search-disabled-repos, versionlock
+This system is receiving updates from RHN Classic or Red Hat Satellite.
+Adding versionlock on: 0:postgresql11-libs-11.4-1PGDG.rhel7
+Adding versionlock on: 0:postgresql11-server-11.4-1PGDG.rhel7
+Adding versionlock on: 0:postgresql11-11.4-1PGDG.rhel7
+versionlock added: 3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При необходимости, актуальный список залоченных пакетов смотрим здесь &lt;code&gt;cat /etc/yum/pluginconf.d/versionlock.list&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;монтирование-большого-раздела-к-varlibpgsql&#34;&gt;Монтирование большого раздела к /var/lib/pgsql&lt;/h3&gt;
+&lt;p&gt;На новом сервер наблюдаем отдельный большой раздел 1.5TB подмонтрованный к &lt;code&gt;/data&lt;/code&gt;. Создадим на нём каталог pgsql и прочее:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir -p /data/pgsql/11/{data,backup}
+chown postgres:postgres /data/pgsql -R
+chmod 700 /data/pgsql -R
+cp /var/lib/pgsql/.bash_profile /data/pgsql
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавим в /etc/fstab следующую строку для автоматического биндинга &lt;code&gt;/data/pgsql&lt;/code&gt; к &lt;code&gt;/var/lib/pgsql&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/data/pgsql /var/lib/pgsql none defaults,bind 0 0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Важно!!! Если после последней строки в файле &lt;code&gt;/etc/fstab&lt;/code&gt; не будет добавлена пустая строка, то сервер зависнет на этапе загрузки системы. Не помню причины этого явления, поэтому примите на веру, если не знали.&lt;/p&gt;
+&lt;h3 id=&#34;инициализация-и-запуск&#34;&gt;Инициализация и запуск&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/pgsql-11/bin/postgresql-11-setup initdb
+systemctl start postgresql-11
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;завершающие-действия&#34;&gt;Завершающие действия&lt;/h2&gt;
+&lt;h3 id=&#34;копирование-дампа-на-новый-сервер&#34;&gt;Копирование дампа на новый сервер&lt;/h3&gt;
+&lt;p&gt;В нашем случае прямое ssh-соединение между серверами отсутствует, поэтому скопируем полученный дамп через форпост, который доступен из обоих сегментов сети.&lt;/p&gt;
+&lt;p&gt;Сейчас мы находимся на промежуточном сервере. Сначала подключаемся по ssh к одному из серверов, на каковом сервере открывается локальный порт 50000, который связывается с портом 22 другого сервера (через промежуточный сервер!):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ssh -R 127.0.0.1:50000:10.0.0.2:22 root@10.0.0.1
+[root@10.0.0.1]# _
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Теперь, находясь на сервере 10.0.0.1 (что видно по приглашению командной строки) помним, что постучавшись на локальный порт &lt;code&gt;127.0.0.1:50000&lt;/code&gt;, мы, на самом деле, стучимся на &lt;code&gt;10.0.0.2:22&lt;/code&gt;, но не на прямую, а через промежуточный сервер.&lt;/p&gt;
+&lt;p&gt;Поэтому здесь же запускаем процесс копирования с докачкой и проверкой. Копируем дамп и файлы настроек:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rsync -avP -e &amp;#34;ssh -p50000&amp;#34; /var/lib/pgsql/11/backup/pgsql_dumpall_20200421-103341.bz2 127.0.0.1:/data/pgsql/11/backup/
+rsync -vP -e &amp;#34;ssh -p50000&amp;#34; /var/lib/pgsql/11/data/* 127.0.0.1:/data/pgsql/11/backup/data
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате этой команды, наш дамп, через промежуточный сервер, будет залит на новый сервер.&lt;/p&gt;
+&lt;h3 id=&#34;восстановление-дампа-на-новом-сервере&#34;&gt;Восстановление дампа на новом сервере&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo su
+su - postgres
+lbzip2 -c -d /data/pgsql/11/backup/psql_dumpall_20200421-103341.bz2 | psql postgres
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;восстановление-настроек-экземпляра-postresgql&#34;&gt;Восстановление настроек экземпляра postresgql&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cp /data/pgsql/11/backup/data/* /data/pgsql/11/data/
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-атозапуска-postgesql&#34;&gt;Настройка атозапуска postgesql&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl enable postgresql-11
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;перезагрузка-для-проверки&#34;&gt;Перезагрузка для проверки&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Использованный материал:
+&lt;a href=&#34;https://access.redhat.com/solutions/98873&#34;&gt;How to restrict yum to install or upgrade a package to a fixed specific package version?&lt;/a&gt;
+&lt;a href=&#34;https://www.postgresql.org/docs/11/backup-dump.html&#34;&gt;25.1. SQL Dump Chapter 25. Backup and Restore&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Установка PostgreSQL 9.0 на Debian 6.0</title>
+      <link>/a/ustanovka-postgresql-90-na-debian-60/</link>
+      <pubDate>Thu, 17 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-postgresql-90-na-debian-60/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;br /&gt;2011-03-17&lt;/p&gt;
+&lt;h2&gt;&lt;a id=&#34;Установка Debian 6.0&#34; name=&#34;Установка Debian 6.0&#34;&gt;&lt;/a&gt;Установка Debian 6.0&lt;/h2&gt;
+&lt;p&gt;Установка произведена с помощью первого CD-диска Debian на виртуальную машину VMWare Player. При установке выбрал метод разметки “Авто - использовать весь диск с шифрованным LVM”. Также использовал схему разметки “Отдельные разделы для /home, /usr, /var, /tmp”. Выбор программного обеспечения, предлагаемый на заключительном этапе установки системы, не производил. Предпочитаю выбрать необходимые пакеты после завершения установки операционной системы.&lt;/p&gt;
+&lt;h2&gt;&lt;a id=&#34;Установка необходимых пакетов&#34; name=&#34;Установка необходимых пакетов&#34;&gt;&lt;/a&gt;Установка необходимых пакетов&lt;/h2&gt;
+&lt;p&gt;После завершения установки Debian 6.0 и перезагрузки системы начал установку пакетов:&lt;br /&gt;# aptitude install openssh-server mc less&lt;/p&gt;
+&lt;h2&gt;&lt;a id=&#34;Установка и настройка PostgreSQL 9.0&#34; name=&#34;Установка и настройка PostgreSQL 9.0&#34;&gt;&lt;/a&gt;Установка и настройка PostgreSQL 9.0&lt;/h2&gt;
+&lt;p&gt;Нашёл пакет PostgreSQL 9.0 в &lt;a href=&#34;http://backports.debian.org/&#34;&gt;Debian Backports&lt;/a&gt;. Добавил в /etc/apt/sources.list строку:&lt;br /&gt;deb http://backports.debian.org/debian-backports squeeze-backports main&lt;br /&gt;Обновил список доступных пакетов:&lt;br /&gt;# aptitude update&lt;br /&gt;Установил пакет libpq5 (&amp;gt;= 9.0~) из backports:&lt;br /&gt;# aptitude -t squeeze-backports install libpq5&lt;br /&gt;Следующие НОВЫЕ пакеты будут установлены:        &lt;br /&gt;libgcrypt11{a} libgnutls26{a} libgpg-error0{a} libldap-2.4-2{a} libpq5 libsasl2-2{a} libsasl2-modules{a} libtasn1-3{a}&lt;br /&gt;Установил PostgreSQL 9.0:&lt;br /&gt;# aptitude install postgresql-9.0&lt;br /&gt;Следующие НОВЫЕ пакеты будут установлены:        &lt;br /&gt;lsb-release{a} openssl{a} postgresql-9.0 postgresql-client-9.0{a} postgresql-client-common{a} postgresql-common{a} python{a} python-minimal{a} python-support{a} python2.6{a} python2.6-minimal{a} ssl-cert{a}&lt;br /&gt;…&lt;br /&gt;Настраивается пакет postgresql-client-9.0 (9.0.3-1~bpo60+1) ...&lt;br /&gt;update-alternatives: используется `/usr/share/postgresql/9.0/man/man1/psql.1.gz&#39; для предоставления `/usr/share/man/man1/psql.1.gz&#39; (psql.1.gz) в автоматический режим.&lt;br /&gt;Настраивается пакет ssl-cert (1.0.28) ...&lt;br /&gt;Настраивается пакет postgresql-common (113) ...&lt;br /&gt;Добавление пользователя postgres в группу ssl-cert&lt;br /&gt;Building PostgreSQL dictionaries from installed myspell/hunspell packages...&lt;br /&gt;Настраивается пакет postgresql-9.0 (9.0.3-1~bpo60+1) ...&lt;br /&gt;Creating new cluster (configuration: /etc/postgresql/9.0/main, data: /var/lib/postgresql/9.0/main)...&lt;br /&gt;Moving configuration file /var/lib/postgresql/9.0/main/postgresql.conf to /etc/postgresql/9.0/main...&lt;br /&gt;Moving configuration file /var/lib/postgresql/9.0/main/pg_hba.conf to /etc/postgresql/9.0/main...&lt;br /&gt;Moving configuration file /var/lib/postgresql/9.0/main/pg_ident.conf to /etc/postgresql/9.0/main...&lt;br /&gt;Configuring postgresql.conf to use port 5432...&lt;br /&gt;update-alternatives: используется `/usr/share/postgresql/9.0/man/man1/postmaster.1.gz&#39; для предоставления `/usr/share/man/man1/postmaster.1.gz&#39; (postmaster.1.gz) в автоматический режим.&lt;br /&gt;Starting PostgreSQL 9.0 database server: main.&lt;br /&gt;Обрабатываются триггеры для python-support ...&lt;br /&gt;Установил пароль нового юзера postgres, появившегося после установки постгреса:&lt;br /&gt;# passwd postgres&lt;br /&gt;Сменил текущего пользователя и зашёл в терминал PostgreSQL’а:&lt;br /&gt;# su -l postgres&lt;br /&gt;$ psql&lt;br /&gt;psql (9.0.3)&lt;br /&gt;Type &#34;help&#34; for help.&lt;br /&gt;Сменил пароль администратора базы данных, вышел из терминала и вернулся в контекст root’а:&lt;br /&gt;postgres=# alter user postgres with password ’63S7kv8gLLtiRp2b’;&lt;br /&gt;ALTER ROLE&lt;br /&gt;postgres=# \q&lt;br /&gt;$ exit&lt;/p&gt;
+&lt;h2&gt;&lt;a id=&#34;Установка phppgadmin&#34; name=&#34;Установка phppgadmin&#34;&gt;&lt;/a&gt;Установка phppgadmin&lt;/h2&gt;
+&lt;p&gt;# aptitude install phppgadmin&lt;br /&gt;...&lt;br /&gt;Настраивается пакет apache2-mpm-prefork (2.2.16-6) ...&lt;br /&gt;Starting web server: apache2apache2: Syntax error on line 227 of /etc/apache2/apache2.conf: Could not open configuration file /etc/apache2/conf.d/phppgadmin: No such file or directory&lt;br /&gt;Action &#39;start&#39; failed.&lt;br /&gt;The Apache error log may have more information.&lt;br /&gt;failed!&lt;br /&gt;invoke-rc.d: initscript apache2, action &#34;start&#34; failed.&lt;br /&gt;…&lt;br /&gt;Creating config file /etc/php5/apache2/php.ini with new version&lt;br /&gt;Action &#39;configtest&#39; failed.&lt;br /&gt;The Apache error log may have more information.&lt;br /&gt;Your apache2 configuration is broken, so we&#39;re not restarting it for you.&lt;br /&gt;Настраивается пакет php5-cli (5.3.3-7) ...&lt;br /&gt;…&lt;br /&gt;Чтобы заходит в phppgadmin с других компьютеров необходимо:&lt;br /&gt;В /etc/phppgadmin/apache2.conf раскомментируем строку &#34;allow from all&#34;.&lt;br /&gt;В /etc/phppgadmin/config.inc.php отключаем:&lt;br /&gt;$conf[&#39;extra_login_security&#39;] = false;&lt;br /&gt;и перезапускаем Апач:&lt;br /&gt;# service apache2 restart&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

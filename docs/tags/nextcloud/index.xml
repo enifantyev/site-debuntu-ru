@@ -1,0 +1,75 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – NextCloud</title>
+    <link>/tags/nextcloud/</link>
+    <description>Recent content in NextCloud on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 24 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/nextcloud/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Настройка OAuth2-авторизации Google-аккаунтов в NextCloud</title>
+      <link>/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</link>
+      <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-03-24&lt;/p&gt;
+&lt;h3 id=&#34;включение-oauth2-в-консоли-разработчика-consoledevelopersgooglecom&#34;&gt;Включение OAuth2 в консоли разработчика console.developers.google.com&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Заходим &lt;a href=&#34;https://console.developers.google.com&#34;&gt;https://console.developers.google.com&lt;/a&gt; под своей учётной записью.&lt;/li&gt;
+&lt;li&gt;Создаём новый проект, например &amp;ldquo;Nextcloud Social Login&amp;rdquo;.
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Местоположение&amp;rdquo;:
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Без организации&amp;rdquo; – в этом случае параметр &amp;ldquo;Тип приложения&amp;rdquo; в &amp;ldquo;Окно запроса доступа OAuth&amp;rdquo; будет недоступен (см. пункт 7);&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;&lt;em&gt;Название нашей организации&lt;/em&gt;&amp;rdquo; – если учётная запись принадлежит каком-либо домену;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Дожидаемся создания нашего нового проекта и переключаемся в него.&lt;/li&gt;
+&lt;li&gt;Заходим в раздел &amp;ldquo;API и сервисы&amp;rdquo; / &amp;ldquo;Учётные данные&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;Здесь выбираем создание учётных данных &amp;ldquo;Идентификатор клиент OAuth&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;На предложение &amp;ldquo;Чтобы создать идентификатор клиента OAuth, укажите название продукта для окна запроса доступа.&amp;rdquo; соглашаемся через кнопку &amp;ldquo;Настроить окно запроса доступа&amp;rdquo;.&lt;/li&gt;
+&lt;li&gt;В разделе &amp;ldquo;Окно запроса доступа OAuth&amp;rdquo; выбираем:
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Тип приложения&amp;rdquo;: (данный параметр доступен при создании проекта внутри организации)
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Открытый доступ&amp;rdquo; – для доступа всем желающим;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Ограниченный доступ&amp;rdquo; – только для сотрудников организации;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Название приложения&amp;rdquo;: &amp;ldquo;Nextcloud Social Login&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Авторизованные домены&amp;rdquo;: &amp;ldquo;example.com&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;Нажимаем &amp;ldquo;Сохранить&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;В новом окне &amp;ldquo;Создание идентификатора клиента OAuth&amp;rdquo; выбираем:
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Тип приложения&amp;rdquo;: &amp;ldquo;Веб-приложение&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Название&amp;rdquo;: &amp;ldquo;Nextcloud Social Login&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Разрешенные URI перенаправления&amp;rdquo;: &amp;ldquo;&lt;a href=&#34;https://example.com/apps/sociallogin/oauth/google%22;&#34;&gt;https://example.com/apps/sociallogin/oauth/google&amp;quot;;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Нажимаем кнопку &amp;ldquo;Создать&amp;rdquo;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;В новом появившемся окошке видим наш &amp;ldquo;Идентификатор клиента&amp;rdquo; и &amp;ldquo;Секрет клиента&amp;rdquo;. Эту информацию введём в соответствующие поля в нашем экземпляре Nextcloud.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;включение-oauth2-в-nextcloud&#34;&gt;Включение OAuth2 в Nextcloud&lt;/h3&gt;
+&lt;p&gt;После включения nextcloud-приложения &amp;ldquo;Social Login&amp;rdquo; (&lt;a href=&#34;https://example.com/settings/apps/integration/sociallogin&#34;&gt;https://example.com/settings/apps/integration/sociallogin&lt;/a&gt;) в системных настройках Nextcloud появляется возможность настройки приложения (&lt;a href=&#34;https://example.com/settings/admin/sociallogin)&#34;&gt;https://example.com/settings/admin/sociallogin)&lt;/a&gt;.
+В соответствующие поля вносим &amp;ldquo;Идентификатор клиента&amp;rdquo; и &amp;ldquo;Секрет клиента&amp;rdquo;, после чего сохраняем настройки. С этого момента на странице входа в Nextcloud можно наблюдать кнопку &amp;ldquo;Google&amp;rdquo;, позволяющую осуществить авторизацию с помощью google-аккаунта.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

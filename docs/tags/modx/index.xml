@@ -1,0 +1,68 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – MODx</title>
+    <link>/tags/modx/</link>
+    <description>Recent content in MODx on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 12 Dec 2013 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/modx/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Отправка почты из контактной формы MODx Evo через gmail</title>
+      <link>/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</link>
+      <pubDate>Thu, 12 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Появился сайт на MODx&#39;е. Отправка почты из контактной формы не работает. Разработчик ушёл в оффлайн. С MODx&#39;ом я ранее дела не имел. Не уверен, что я правильно всё сделал, но пока работает.&lt;/p&gt;
+&lt;p&gt;В &#34;Инструменты - Конфигурация - Пользователи&#34; заполнено всё правильно:&lt;/p&gt;
+&lt;table cellpadding=&#34;3&#34; border=&#34;0&#34; cellspacing=&#34;0&#34;&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Метод отправки писем&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt; MAIL - cообщения отправляются с помощью функции mail().&lt;br /&gt;&lt;strong&gt; Через SMTP-сервер&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SMTP авторизация&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt; Да&lt;/strong&gt;&lt;br /&gt; Нет&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Адрес SMTP-сервера&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;smtp.gmail.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SMTP порт&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;465&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SMTP почта&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;ivanmoskvinvogradetule@example.com&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;SMTP пароль&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Зашёл через ssh на хостинг и дал команду:&lt;/p&gt;
+&lt;pre&gt;&lt;strong&gt;$ grep -ri smtpsecure *&lt;/strong&gt;
+public_html/manager/includes/controls/phpmailer/class.phpmailer.php:  public $SMTPSecure    = &#39;&#39;;
+public_html/manager/includes/controls/phpmailer/class.phpmailer.php:        $tls = ($this-&amp;gt;SMTPSecure == &#39;tls&#39;);
+public_html/manager/includes/controls/phpmailer/class.phpmailer.php:        $ssl = ($this-&amp;gt;SMTPSecure == &#39;ssl&#39;);&lt;/pre&gt;
+&lt;p&gt;Почесав репу, изменил в public_html/manager/includes/controls/phpmailer/class.phpmailer.php строку:&lt;/p&gt;
+&lt;pre&gt;public $SMTPSecure    = &#39;ssl&#39;;&lt;/pre&gt;
+&lt;p&gt;Отправка заработала.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1337 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Установка Apache Atlas 2.2.0</title>
+    <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/</link>
+    <description>Recent content in Установка Apache Atlas 2.2.0 on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 03 Nov 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Manuals: 01. Подготовительные работы для установки Atlas&#39;а</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</link>
+      <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Везде, где выполняется работа с керберизированными сервисами, помним о предварительном получении Kerberos-билета, если таковой не был получен ранее.&lt;/p&gt;
+&lt;p&gt;Подавляющее число операций производим на Atlas-машине, иначе специально указывается иное.&lt;/p&gt;
+&lt;h2 id=&#34;1-введение-выделенного-для-atlas-хоста-в-домен&#34;&gt;1. Введение выделенного для Atlas хоста в домен&lt;/h2&gt;
+&lt;p&gt;Выполняется с помощью  стандартных процедур.&lt;/p&gt;
+&lt;h2 id=&#34;2-добавление-хоста-к-hadoop-кластеру&#34;&gt;2. Добавление хоста к Hadoop-кластеру&lt;/h2&gt;
+&lt;p&gt;Выполняется с помощью  стандартных процедур.&lt;/p&gt;
+&lt;h2 id=&#34;3-добавление-учётных-записей&#34;&gt;3. Добавление учётных записей&lt;/h2&gt;
+&lt;h3 id=&#34;31-добавление-локальной-уз-atlas&#34;&gt;3.1. Добавление локальной УЗ &amp;lsquo;atlas&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;На все машины кластера добавляем локальную УЗ &amp;lsquo;atlas&amp;rsquo;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo useradd -r -s /sbin/nologin -d /opt/atlas -M atlas
+sudo usermod -aG hadoop atlas
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;32-добавление-сервисной-уз-во-freeipa&#34;&gt;3.2. Добавление сервисной УЗ во FreeIPA&lt;/h3&gt;
+&lt;p&gt;Находясь на Atlas-машине, добавляем в IPA сервисную УЗ для Atlas-машины. Необходимо иметь права на добавление сервиса во FreeIPA.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ATLASSERVER=&amp;#34;$(hostname)&amp;#34;
+
+# При необходимости получаем kerberos-билет
+# kinit
+
+ipa service-add atlas/${ATLASSERVER}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;33-добавление-в-freeipa-пользовательских-групп-для-авторизации-в-atlas&#34;&gt;3.3. Добавление в FreeIPA пользовательских групп для авторизации в Atlas&lt;/h3&gt;
+&lt;p&gt;Создаём по минимуму две группы, &amp;lsquo;clustername_atlas_admin&amp;rsquo; и &amp;lsquo;clustername_atlas_user&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;В переменной CLUSTERNAME требуется указать правильное имя кластера!&lt;/p&gt;
+&lt;p&gt;В переменной JIRA требуется указать правильный номер задачи!&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;CLUSTERNAME=&amp;#34;TEST2&amp;#34;
+JIRA=&amp;#34;SDK-2198&amp;#34;
+
+CLNLOWER=$(echo $CLUSTERNAME | tr [:upper:] [:lower:])
+CLNUPPER=$(echo $CLUSTERNAME | tr [:lower:] [:upper:])
+ipa group-add --desc=&amp;#34;Группа для роли ROLE_ADMIN в Atlas&amp;#39;е в кластере ${CLNUPPER}. ${JIRA}.&amp;#34; ${CLNLOWER}_atlas_admins
+ipa group-add --desc=&amp;#34;Группа для роли DATA_SCIENTIST в Atlas&amp;#39;е в кластере ${CLNUPPER}. ${JIRA}.&amp;#34; ${CLNLOWER}_atlas_users
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;4-добавление-необходимых-ролей-на-машину-с-atlasом&#34;&gt;4. Добавление необходимых ролей на машину с Atlas&amp;rsquo;ом&lt;/h2&gt;
+&lt;p&gt;На машину с Atlas&amp;rsquo;ом, через Cloudera Manager, устанавливаем роли, которые требуются для следующего:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HDFS Gateway — для получения и обновления информации о принадлежности какого-либо аккаунта к группам (UGI — User Group Information), используемым Hadoop&amp;rsquo;ом. Полезно при отладке.&lt;/li&gt;
+&lt;li&gt;HBase Gateway — для первоначального импорта содержимого HBase и здесь Atlas хранит свою базу данных Janus, поэтому требуется постоянный доступ к двум таблицам в сервисе Apache HBase.&lt;/li&gt;
+&lt;li&gt;Hive Gateway — только для первоначального импорта содержимого Hive.&lt;/li&gt;
+&lt;li&gt;Kafka Gateway — похоже, что исключительно для настройки Sentry через утилиту &lt;code&gt;kafka-sentry&lt;/code&gt;, работающей только с  Kafka-привилегиями.&lt;/li&gt;
+&lt;li&gt;Solr Gateway — похоже, что исключительно для настройки Sentry через утилиту &lt;code&gt;soltctl&lt;/code&gt;, работающей только с  Solr-привилегиями.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 02. Подготовка служб Hadoop-кластера к развёртыванию Atlas&#39;а</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</link>
+      <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-10 – 2021-11-03&lt;/p&gt;
+&lt;h2 id=&#34;1-apache-hbase&#34;&gt;1. Apache HBase&lt;/h2&gt;
+&lt;p&gt;Apache HBase используется Atlas&amp;rsquo;ом для хранения своей Janus базы данных. Бла-бла-бла&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;11-настройка-apache-hbase&#34;&gt;1.1. Настройка Apache HBase&lt;/h3&gt;
+&lt;p&gt;Настройка HBase в тестовом кластере была выполнена в соответствии с инструкцией 16. HBase. Установка и настройка.&lt;/p&gt;
+&lt;h3 id=&#34;12-создание-необходимых-таблиц-в-hbase&#34;&gt;1.2. Создание необходимых таблиц в HBase&lt;/h3&gt;
+&lt;p&gt;1.2.1. На Atlas-машине, или на любой машине с установленной ролью &amp;lsquo;HBase Gateway&amp;rsquo;, создаём необходимые таблицы и даём на них все права для УЗ &amp;lsquo;atlas&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Названия таблиц по умолчанию:
+TABLE1=&amp;#34;apache_atlas_entity_audit&amp;#34;
+TABLE2=&amp;#34;apache_atlas_janus&amp;#34;
+
+echo &amp;#34;create &amp;#39;${TABLE1}&amp;#39;, &amp;#39;dt&amp;#39;; grant &amp;#39;atlas&amp;#39;, &amp;#39;RWXCA&amp;#39;, &amp;#39;${TABLE1}&amp;#39;&amp;#34;  | hbase shell
+echo &amp;#34;create &amp;#39;${TABLE2}&amp;#39;, &amp;#39;s&amp;#39;; grant &amp;#39;atlas&amp;#39;, &amp;#39;RWXCA&amp;#39;, &amp;#39;${TABLE2}&amp;#39;&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;В случае внесения УЗ &amp;lsquo;atlas&amp;rsquo; в параметр &amp;lsquo;hbase.superuser&amp;rsquo;, или в IPA-группу &amp;rsquo;test2_hbase_su&amp;rsquo; (в случае прямого подключения Hadoop&amp;rsquo;а к LDAP), или назначении всех прав на HBase для УЗ &amp;lsquo;atlas&amp;rsquo; — &lt;code&gt;echo &amp;quot;grant &#39;atlas&#39;, &#39;RWXCA&#39;&amp;quot; | hbase shell&lt;/code&gt;, Atlas самостоятельно создаст необходимые базы и назначит для УЗ &amp;lsquo;atlas&amp;rsquo; права на них. Это иногда удобно, например, для исследовательских целей.&lt;br&gt;
+Замечу, что с Atlas 2.2.0 такое не получилось в случае добавления &amp;lsquo;atlas&amp;rsquo; в &amp;lsquo;hbase.superuser&amp;rsquo;. В след раз попробую &lt;code&gt;echo &amp;quot;grant &#39;atlas&#39;, &#39;RWXCA&#39;&amp;quot; | hbase shell&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;13-проверяем-назначенные-на-таблицы-права&#34;&gt;1.3. Проверяем назначенные на таблицы права&lt;/h3&gt;
+&lt;p&gt;1.3.1. На Atlas-машине, или на любой машине с установленной ролью &amp;lsquo;HBase Gateway&amp;rsquo;, выполняем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;user_permission &amp;#39;apache_atlas_.*&amp;#39;&amp;#34; | hbase shell
+
+user_permission &amp;#39;apache_atlas_.*&amp;#39;
+User                               Namespace,Table,Family,Qualifier:Permission                                                      
+ atlas                             default,apache_atlas_entity_audit,,: [Permission: actions=READ,WRITE,EXEC,CREATE,ADMIN]          
+ atlas                             default,apache_atlas_janus,,: [Permission: actions=READ,WRITE,EXEC,CREATE,ADMIN]                 
+2 row(s)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-apache-hive&#34;&gt;2. Apache Hive&lt;/h2&gt;
+&lt;p&gt;Установка и настройка Apache Hive выполняется по инструкции &amp;lsquo;18. Hive. Установка и настройка&amp;rsquo;.&lt;/p&gt;
+&lt;h2 id=&#34;3-apache-kafka&#34;&gt;3. Apache Kafka&lt;/h2&gt;
+&lt;p&gt;Apache Kafka используется Atlas&amp;rsquo;ом для получения сообщений о произошедших событиях в сервисах Hadoop&amp;rsquo;а. Сообщения отправляются с помощью специальных библиотек из состава Atlas&amp;rsquo;а, внедрённых в определённые сервисы. На данный момент Atlas читает сообщения о таких событиях в Hbase и Hive, как создание и удаление таблиц, добавления столбцов, бла-бла-бла&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;31-установка-apache-kafka&#34;&gt;3.1. Установка Apache Kafka&lt;/h3&gt;
+&lt;p&gt;3.1.1. Установка и настройка Kafka выполняется по инструкции &amp;lsquo;22. Kafka. Установка и настройка&amp;rsquo;.&lt;/p&gt;
+&lt;h3 id=&#34;32-добавление-в-kafka-необходимых-топиков&#34;&gt;3.2. Добавление в Kafka необходимых топиков&lt;/h3&gt;
+&lt;p&gt;3.2.1 Для работы Apache Atlas требуется наличие трёх топиков в Apache Kafka. Создаём их на любой машине с ролью &amp;lsquo;Kafka Gateway&amp;rsquo; командами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVERS=&amp;#34;dev-zk110p.test2.lan,dev-zk111p.test2.lan,dev-zk112p.test2.lan/kafka&amp;#34;
+# Список имён топиков по умолчанию:
+TOPIC1=&amp;#34;_HOATLASOK&amp;#34;
+TOPIC2=&amp;#34;ATLAS_ENTITIES&amp;#34;
+TOPIC3=&amp;#34;ATLAS_HOOK&amp;#34;
+
+kafka-topics --zookeeper ${ZKSERVERS} --create --replication-factor 2 --partitions 2 --topic ${TOPIC1}
+kafka-topics --zookeeper ${ZKSERVERS} --create --replication-factor 2 --partitions 2 --topic ${TOPIC2}
+kafka-topics --zookeeper ${ZKSERVERS} --create --replication-factor 2 --partitions 2 --topic ${TOPIC3}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;33-проверка-наличия-топиков&#34;&gt;3.3. Проверка наличия топиков&lt;/h3&gt;
+&lt;p&gt;3.3.1. Здесь же проверим наличие информации о топиках через &lt;code&gt;kafka-topics&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kafka-topics --zookeeper ${ZKSERVERS} --list
+...
+ATLAS_ENTITIES
+ATLAS_HOOK
+_HOATLASOK
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.3.2. И/или на любом хосте кластера даём команду:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVER=&amp;#34;dev-zk110p.test2.lan&amp;#34;
+
+echo &amp;#34;ls /kafka/brokers/topics&amp;#34; | zookeeper-client -server ${ZKSERVER}
+...
+ment complete on server localhost/127.0.0.1:2181, sessionid = 0x37c9e0ee4460070, negotiated timeout = 30000
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:None path:null
+[zk: localhost:2181(CONNECTED) 0] ls /kafka/brokers/topics
+[ATLAS_HOOK, ATLAS_ENTITIES, _HOATLASOK]
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;34-настройка-роли-в-sentry-для-доступа-atlasа-к-топикам-в-kafka&#34;&gt;3.4. Настройка роли в Sentry для доступа Atlas&amp;rsquo;а к топикам в Kafka&lt;/h3&gt;
+&lt;p&gt;3.4.1. На машине с ролью &amp;lsquo;Kafka Gateway&amp;rsquo; создаём в Sentry роль &amp;lsquo;kafka4atlas_role:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;KROLE=&amp;#34;kafka4atlas_role&amp;#34;
+
+kafka-sentry -cr -r ${KROLE}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.4.2. Назначаем созданную роль на группу atlas:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kafka-sentry -arg -r ${KROLE} -g atlas
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.4.3. Назначаем привилегии для потребителя:
+&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kafka_security.html#concept_s4z_nlh_znb__section_elp_rph_znb&#34;&gt;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kafka_security.html#concept_s4z_nlh_znb__section_elp_rph_znb&lt;/a&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Список имён топиков по умолчанию:
+TOPIC1=&amp;#34;_HOATLASOK&amp;#34;
+TOPIC2=&amp;#34;ATLAS_ENTITIES&amp;#34;
+TOPIC3=&amp;#34;ATLAS_HOOK&amp;#34;
+
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;Host=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=read&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;Host=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=describe&amp;#34;
+
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC1}-&amp;gt;action=read&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC2}-&amp;gt;action=read&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC3}-&amp;gt;action=read&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC1}-&amp;gt;action=describe&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC2}-&amp;gt;action=describe&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC3}-&amp;gt;action=describe&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.4.4. Назначаем привилегии для продюсера:
+&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kafka_security.html#concept_s4z_nlh_znb__section_jn2_sph_znb&#34;&gt;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kafka_security.html#concept_s4z_nlh_znb__section_jn2_sph_znb&lt;/a&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC1}-&amp;gt;action=write&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC2}-&amp;gt;action=write&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC3}-&amp;gt;action=write&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;35-проверка-настроек-sentry-для-kafka&#34;&gt;3.5. Проверка настроек Sentry для Kafka&lt;/h3&gt;
+&lt;p&gt;3.5.1. Выводим список существующих ролей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kafka-sentry -lr
+....
+solradm_role
+kafka4atlas_role
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.5.2. Выводим список групп с назначенными им ролями:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kafka-sentry -lg
+...
+atlas = kafka4atlas_role
+test2_solr_admins = solradm_role
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.5.3. Выводим список привилегий:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kafka-sentry -lp -r kafka4atlas_role
+...
+HOST=*-&amp;gt;TOPIC=_HOATLASOK-&amp;gt;action=read
+HOST=*-&amp;gt;TOPIC=_HOATLASOK-&amp;gt;action=describe
+HOST=*-&amp;gt;TOPIC=ATLAS_HOOK-&amp;gt;action=read
+HOST=*-&amp;gt;TOPIC=ATLAS_ENTITIES-&amp;gt;action=describe
+HOST=*-&amp;gt;TOPIC=ATLAS_HOOK-&amp;gt;action=describe
+HOST=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=describe
+HOST=*-&amp;gt;TOPIC=_HOATLASOK-&amp;gt;action=write
+HOST=*-&amp;gt;TOPIC=ATLAS_ENTITIES-&amp;gt;action=write
+HOST=*-&amp;gt;TOPIC=ATLAS_HOOK-&amp;gt;action=write
+HOST=*-&amp;gt;TOPIC=ATLAS_ENTITIES-&amp;gt;action=read
+HOST=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=read
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;Если наблюдаем лишние привилегии, то удаляем их командой, например:&lt;br&gt;
+&lt;code&gt;  $ kafka-sentry -r kafka4atlas_role -rpr -p &#39;HOST=*-&amp;gt;TOPIC=*-&amp;gt;action=all&#39;&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</link>
+      <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-10 – 2021-11-03&lt;/p&gt;
+&lt;h2 id=&#34;1-выбор-поискового-движка-apache-solr-or-elasticsearch&#34;&gt;1. Выбор поискового движка: Apache Solr or Elasticsearch&lt;/h2&gt;
+&lt;p&gt;1.1. Стандартно используется Apache Solr.&lt;/p&gt;
+&lt;p&gt;1.2. В расчёте на дальнейшую установку Amundsen&amp;rsquo;а, необходимо выбрать ElsaticSarch. На данный момент находится в разработке.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Я попробую установить оба Index-сервиса с двумя экземплярами Atlas&amp;rsquo;а. Первый экземпляр Atlas&amp;rsquo;а будет использовать Apache Solr, а второй экземпляр Atlas&amp;rsquo;а, соответственно, Elasticsearch.&lt;br&gt;
+&lt;br&gt;
+Мысли под запись:&lt;br&gt;
+УЗ &amp;lsquo;atlas&amp;rsquo;, как локальная, так и сервисная УЗ &amp;lsquo;atlas/_HOST&amp;rsquo;, будут использоваться обоими экземплярами Atlas&amp;rsquo;а.
+Apache Kafka — один сервис, который будет обслуживать оба Atlas&amp;rsquo;а.
+Apache HBase — создадим два набора таблиц для хранения сущностей.
+У Atlas&amp;rsquo;а есть параметр &amp;lsquo;atlas.cluster.name=primary&amp;rsquo;. Для второго экземпляра выбрать &amp;lsquo;secondary&amp;rsquo;?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;2-apache-solr&#34;&gt;2. Apache Solr&lt;/h2&gt;
+&lt;p&gt;На тестовом кластере использовалась четыре узла Apache Solr. В общем случае, рекомендуется использовать не менее двух узлов.&lt;/p&gt;
+&lt;h3 id=&#34;21-установка-и-настройка-apache-solr&#34;&gt;2.1. Установка и настройка Apache Solr&lt;/h3&gt;
+&lt;p&gt;Установка и настройка Apache Solr выполняется по инструкции &amp;lsquo;21. Solr. Установка и настройка&amp;rsquo;.&lt;/p&gt;
+&lt;h3 id=&#34;22-добавление-нового-шаблона-в-solr&#34;&gt;2.2. Добавление нового шаблона в Solr&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/2.1.0/index.html#/Installation&#34;&gt;Configuring Apache Solr as the indexing backend for the Graph Repository&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2.2.1. Проверяем в Zookeeper&amp;rsquo;е текущий список конфигов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVER=&amp;#34;dev-zk110p.test2.lan&amp;#34;
+
+echo &amp;#34;ls /solr/configs&amp;#34; | zookeeper-client -server ${ZKSERVER}
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Пример stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+[zk: localhost:2181(CONNECTED) 17] ls /solr/configs
+[managedTemplate, schemalessTemplate, _default, managedTemplateSecure, schemalessTemplateSecure]
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;2.2.2. Добавляем atlas-конфиг в Apache Solr.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;В переменной NXUSERPASS требуется указать правильный логин/пароль!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;set +o history
+NXUSERPASS=&amp;#34;eugene:xxxxxxxxxxxxx&amp;#34;
+set -o history
+# Файл конфиг для Solr
+FILENAME=&amp;#34;atlasSolrConfig.zip&amp;#34;
+
+SOLRSERVER=&amp;#34;https://dev-app111p.test2.lan&amp;#34;
+
+# Скачиваем сборку с Nexus&amp;#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://nexus.example.org:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+
+# Отправляем конфиг в Solr через любой Solr-хост
+curl --negotiate -u : -X POST --header &amp;#34;Content-Type:application/octet-stream&amp;#34; --data-binary @${FILENAME} &amp;#34;${SOLRSERVER}:8985/solr/admin/configs?action=UPLOAD&amp;amp;name=atlasTemplate&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.2.3. Проверяем факт, что конфиг появился в Zookeeper&amp;rsquo;е.&lt;/p&gt;
+&lt;p&gt;Сначала выводим список кофигов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVER=&amp;#34;dev-zk110p.test2.lan&amp;#34;
+
+echo &amp;#34;ls /solr/configs&amp;#34; | zookeeper-client -server ${ZKSERVER}
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Пример stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+[zk: dev-zk111p(CONNECTED) 0] ls /solr/configs
+[managedTemplate, schemalessTemplate, _default, managedTemplateSecure, atlasTemplate, schemalessTemplateSecure]
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;Потом, убедившись в наличии конфига &amp;lsquo;atlasTemplate&amp;rsquo;, выводим его содержимое:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVER=&amp;#34;dev-zk110p.test2.lan&amp;#34;
+
+echo &amp;#34;ls /solr/configs/atlasTemplate&amp;#34; | zookeeper-client -server ${ZKSERVER}
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Пример stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+[zk: dev-zk110p.test2.lan(CONNECTED) 0] ls /solr/configs/atlasTemplate
+[currency.xml, protwords.txt, solrconfig.xml, synonyms.txt, stopwords.txt, schema.xml, lang]
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;После появления нового шаблона, создаём в Apache Solr три коллекции:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SOLRSERVER=&amp;#34;dev-app111p.test2.lan&amp;#34;
+# Названия коллекций по умолчанию:
+COLLECTION1=&amp;#34;fulltext_index&amp;#34;
+COLLECTION2=&amp;#34;edge_index&amp;#34;
+COLLECTION3=&amp;#34;vertex_index&amp;#34;
+
+curl --negotiate -u : &amp;#34;https://${SOLRSERVER}:8985/solr/admin/collections?action=CREATE&amp;amp;name=${COLLECTION1}&amp;amp;collection.configName=atlasTemplate&amp;amp;numShards=2&amp;amp;replicationFactor=2&amp;#34;
+curl --negotiate -u : &amp;#34;https://${SOLRSERVER}:8985/solr/admin/collections?action=CREATE&amp;amp;name=${COLLECTION2}&amp;amp;collection.configName=atlasTemplate&amp;amp;numShards=2&amp;amp;replicationFactor=2&amp;#34;
+curl --negotiate -u : &amp;#34;https://${SOLRSERVER}:8985/solr/admin/collections?action=CREATE&amp;amp;name=${COLLECTION3}&amp;amp;collection.configName=atlasTemplate&amp;amp;numShards=2&amp;amp;replicationFactor=2&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Пример stdout...&lt;/summary&gt;
+&lt;p&gt;{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:3663},
+&amp;ldquo;success&amp;rdquo;:{
+&amp;ldquo;dev-zk112p.test2.lan:8985_solr&amp;rdquo;:{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:1477},
+&amp;ldquo;core&amp;rdquo;:&amp;ldquo;edge_index_shard1_replica_n1&amp;rdquo;},
+&amp;ldquo;dev-zk110p.test2.lan:8985_solr&amp;rdquo;:{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:1962},
+&amp;ldquo;core&amp;rdquo;:&amp;ldquo;edge_index_shard2_replica_n4&amp;rdquo;},
+&amp;ldquo;dev-app111p.test2.lan:8985_solr&amp;rdquo;:{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:2289},
+&amp;ldquo;core&amp;rdquo;:&amp;ldquo;edge_index_shard2_replica_n6&amp;rdquo;},
+&amp;ldquo;dev-zk111p.test2.lan:8985_solr&amp;rdquo;:{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:2291},&lt;/p&gt;
+&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;Через Web UI Solr&amp;rsquo;а наблюдаем три ранее добавленные коллекции:
+&lt;img src=&#34;/img/ustanovka-apache-atlas-2.2.0/solr-collections.png&#34; alt=&#34;Solr collections&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;23-добавление-роли-в-sentry-для-доступа-atlasа-в-solr&#34;&gt;2.3. Добавление роли в Sentry для доступа Atlas&amp;rsquo;а в Solr&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_iw1_5dp_wk&#34;&gt;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_iw1_5dp_wk&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Аккаунт, под которым производится добавление ролей в Sentry, должен быть упомянут (напрямую или через членство в группу)  в следующих параметрах Sentry-сервиса:&lt;br&gt;
+sentry.service.admin.group&lt;br&gt;
+sentry.service.allow.connect&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;2.3.1. Создаём роль &amp;lsquo;solr4atlas_role&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SROLE=&amp;#34;solr4atlas_role&amp;#34;
+# Названия коллекций по умолчанию:
+COLLECTION1=&amp;#34;fulltext_index&amp;#34;
+COLLECTION2=&amp;#34;edge_index&amp;#34;
+COLLECTION3=&amp;#34;vertex_index&amp;#34;
+
+solrctl sentry --create-role ${SROLE}
+
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;collection=${COLLECTION1}-&amp;gt;action=*&amp;#34;
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;collection=${COLLECTION2}-&amp;gt;action=*&amp;#34;
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;collection=${COLLECTION3}-&amp;gt;action=*&amp;#34;
+
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;Config=${COLLECTION1}-&amp;gt;action=*&amp;#34;
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;Config=${COLLECTION2}-&amp;gt;action=*&amp;#34;
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;Config=${COLLECTION3}-&amp;gt;action=*&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.3.2. Назначим роль на группу &amp;lsquo;atlas&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;solrctl sentry --add-role-group ${SROLE} atlas
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;24-проверка-настроек-sentry-для-solr&#34;&gt;2.4. Проверка настроек Sentry для Solr&lt;/h3&gt;
+&lt;p&gt;2.4.1. Список существующих ролей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ solrctl sentry --list-roles
+...
+solr_adm_role
+kafka4atlas_role
+hive_admins
+solr4atlas_role
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.4.2. Вывод назначенных ролей на группу &amp;lsquo;atlas&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ solrctl sentry --list-roles -g atlas
+...
+solr4atlas_role
+kafka4atlas_role
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.4.3. Вывод списка привилегий:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ solrctl sentry --list-privileges solr4atlas_role
+..
+Config=vertex_index-&amp;gt;action=*
+Collection=edge_index-&amp;gt;action=*
+Collection=fulltext_index-&amp;gt;action=*
+Config=edge_index-&amp;gt;action=*
+Config=fulltext_index-&amp;gt;action=*
+Collection=vertex_index-&amp;gt;action=*
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.4.4. При необходимости удаляем лишние привилегии командой, пример:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ solrctl sentry --revoke-privilege solr4atlas_role &amp;#39;Config=${collection1}-&amp;gt;action=*&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;Продолжение инструкции находится в стадии разработки и не требует выполнения!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;3-установка-elasticsearch-6x-на-стадии-разработки&#34;&gt;3. Установка Elasticsearch 6.x (на стадии разработки)&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Здесь рассмотрена бесплатная версия Elasticsearch, которая не имеет какого-либо способа аутентификации?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;В расчёте на последующие попытки подключения Amundsen, устанавливаем Elasticsearch 6-ой версии, а не 7-ой. Elasticsearch 6.x указана, как поддерживаемая в требованиях Amundsen.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;31-добавление-репо-файла&#34;&gt;3.1. Добавление репо-файла&lt;/h3&gt;
+&lt;p&gt;3.1.1. Выполняем из-под &amp;lsquo;root&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;USERNAME=nx-pubrepo-r
+PASSWORD=eu6yWX6jfzUebShTwF1Qa434hovhm4
+
+cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/yum.repos.d/elasticsearch.repo
+[elasticsearch7]
+username=$USERNAME
+password=$PASSWORD
+name=Elasticsearch repository for 7.x packages
+baseurl=http://nexus.example.org:8081/repository/all_elasticsearch_yum/packages/7.x/yum
+gpgcheck=1
+gpgkey=http://nexus.example.org:8081/repository/all_elasticsearch_yum/GPG-KEY-elasticsearch
+enabled=0
+autorefresh=1
+type=rpm-md
+
+[elasticsearch6]
+username=$USERNAME
+password=$PASSWORD
+name=Elastic repository for 6.x packages
+baseurl=http://nexus.example.org:8081/repository/all_elasticsearch_yum/packages/6.x/yum
+gpgcheck=1
+gpgkey=http://nexus.example.org:8081/repository/all_elasticsearch_yum/GPG-KEY-elasticsearch
+enabled=0
+autorefresh=1
+type=rpm-md
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;32-устанавливаем-elasticsearch&#34;&gt;3.2. Устанавливаем Elasticsearch&lt;/h3&gt;
+&lt;p&gt;3.2.1. Включаем репо для Elasticsearch 6.x и выполняем установку пакета определённой версии, с которым производилась сборка Atlas&amp;rsquo;а (не знаю, насколько критично точное совпадение используемых версий):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum install -y --enablerepo=elasticsearch6 elasticsearch-6.8.20-1
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;33-настройка-конфигурации&#34;&gt;3.3. Настройка конфигурации&lt;/h3&gt;
+&lt;p&gt;3.3.1. Изменяем следующие параметры:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;path.data: /data/elasticsearch
+
+path.logs: /data/log/elasticsearch
+
+# По умолчанию, Elasticsearch привязывается только в 127.0.0.1
+network.host: 10.15.137.11
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;34-запуск&#34;&gt;3.4. Запуск&lt;/h3&gt;
+&lt;p&gt;3.4.1. Запускаем Elasticsearch:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl start elasticsearch
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 04. Распаковка и настройка Apache Atlas</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</link>
+      <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-10-20 – 2021-11-02&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Везде, где выполняется работа с керберизированными сервисами, помним о предварительном получении Kerberos-билета, если таковой не был получен ранее.
+&lt;br&gt;&lt;br&gt;
+Подавляющее число операций производим на Atlas-машине, иначе специально указывается иное.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;1скачивание-и-распаковка-собранного-приложения-apache-atlas&#34;&gt;1. Скачивание и распаковка собранного приложения Apache Atlas&lt;/h2&gt;
+&lt;p&gt;Стандартное размещение Atlas&amp;rsquo;а находится в каталоге &lt;code&gt;/opt/atlas&lt;/code&gt;. Для удобства работы с множеством версий, мы разместим эту и последующие сборки Atlas&amp;rsquo;а, каждую в своём каталоге, например &lt;code&gt;/opt/apache-atlas-2.2.0&lt;/code&gt;. После чего создадим линк &lt;code&gt;/opt/atlas&lt;/code&gt; для текущей актуальной сборки. Все пути в конфиг-файлах унифицированы и указывают на &lt;code&gt;/opt/atlas&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;1.1. На машине, предназначенной для работы Apache Atlas&amp;rsquo;а, скачиваем и распаковываем файл с уже собранным Atlas&amp;rsquo;ом (описываемая версия 2.2.0) в каталог &lt;code&gt;/opt/apache-atlas-2.2.0&lt;/code&gt;, после чего делаем ссылку &lt;code&gt;/opt/atlas&lt;/code&gt; на этот каталога.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;В переменной NXUSERPASS требуется указать правильный логин/пароль!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ATLASDIR=&amp;#34;apache-atlas-2.2.0_rs-api-2.1.1&amp;#34;
+FILENAME=&amp;#34;apache-atlas-2.2.0_rs-api-2.1.1.tar.bz2&amp;#34;
+
+set +o history
+NXUSERPASS=&amp;#34;eugene:xxxxxxxxxxxxx&amp;#34;
+set -o history
+
+## Скачиваем сборку с Nexus&amp;#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://nexus.example.org:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+
+# Распаковываем в /opt и делаем символическую ссылку
+sudo tar -xvf ${FILENAME} -C /opt
+sudo chown -R atlas.atlas /opt/${ATLASDIR}
+
+sudo ln -s /opt/${ATLASDIR} /opt/atlas
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-создание-keytabа-для-atlas&#34;&gt;2. Создание keytab&amp;rsquo;а для atlas&lt;/h2&gt;
+&lt;p&gt;Так как Hadoop-кластер, с которым мы работает, керберизирован, то каждый участник кластера обязан иметь свой kerberos-принципал с ключами.&lt;/p&gt;
+&lt;h3 id=&#34;21-получение-kerberos-ключа-для-принципала-atlashostname&#34;&gt;2.1.  Получение Kerberos-ключа для принципала atlas/$(hostname)&lt;/h3&gt;
+&lt;p&gt;Этот принципал — &amp;lsquo;atlas/$(hostname)&amp;rsquo; — используется для Kerberos-аутентификации Atlas&amp;rsquo;а в различных Hadoop-сервисах.&lt;/p&gt;
+&lt;p&gt;2.1.1. Напомню, что последующие получения ключей необходимо выполнять с опцией &amp;lsquo;-r&amp;rsquo;, иначе вместо получения keytab&amp;rsquo;а с существующим kerberos-ключём, будет создан новый ключ с новым номером KVNO (key version number), вследствие чего уже работающие сервисы Atlas&amp;rsquo;а перестанут аутентифицироваться и потребуется повторить для них получение ключей с последующим перезапуском сервиса:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+
+## При необходимости получаем kerberos-билет
+# kinit ${IPAADMIN}
+
+## Если требуются права на создание ключей.
+ipa service-allow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+## Если требуются права на получение ключей, ранее уже созданных.
+ipa service-allow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -p atlas/$(hostname) -k ~/atlas.keytab
+ipa service-disallow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-disallow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
+sudo mv ~/atlas.keytab /opt/atlas/conf/
+sudo chown atlas.atlas /opt/atlas/conf/atlas.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;22-получение-kerberos-ключа-для-принципала-httphostname&#34;&gt;2.2. Получение Kerberos-ключа для принципала HTTP/$(hostname)&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Пересмотреть данный пункт.&lt;br&gt;
+&lt;br&gt;
+Необходимо локализовать параметры, отвечающие за kerberos-аутентификацию пользователей в Atlas Web UI. Существуют сомнения в части использования этого принципала для упомянутых целей.
+Выяснить, для каких целей используются принципалы HTTP в Hadoop-кластере.&lt;br&gt;
+&lt;br&gt;
+Выполнение этого пункта не наносит вреда, но этот принципал, на данный момент, нигде не используется.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Этот принципал используется для Kerberos-аутентификации пользователей в Atlas Web UI.&lt;/p&gt;
+&lt;p&gt;2.2.1. Есть большая вероятность, что при добавлении машины к Hadoop-кластеру и добавления на машину какой-либо роли, Cloudera Manager уже сгенерировал для машины этот keytab, поэтому запрашиваем его с опцией &amp;lsquo;-r&amp;rsquo;, иначе создаём новый keytab по аналогии с предыдущим пунктом &amp;ldquo;Keytab для atlas/_HOST&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipa service-allow-retrieve-keytab HTTP/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -p HTTP/$(hostname) -k /opt/atlas/conf/atlas.keytab -r
+ipa service-disallow-retrieve-keytab HTTP/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;23-проверяем-наличие-ключей-в-созданном-keytab-файле&#34;&gt;2.3. Проверяем наличие ключей в созданном keytab-файле&lt;/h3&gt;
+&lt;p&gt;2.3.1. Выполняем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ klist -kte /opt/atlas/conf/atlas.keytab
+
+Keytab name: FILE:/opt/atlas/conf/atlas.keytab
+KVNO Timestamp           Principal
+---- ------------------- ------------------------------------------------------
+   1 03.11.2021 14:28:59 atlas/dev-app111p.test2.lan@TEST2.LAN (aes256-cts-hmac-sha1-96)
+   1 03.11.2021 14:35:11 HTTP/dev-app111p.test2.lan@TEST2.LAN (aes256-cts-hmac-sha1-96)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-создание-хранилища-для-безопасного-хранения-паролей&#34;&gt;3. Создание хранилища для безопасного хранения паролей&lt;/h2&gt;
+&lt;p&gt;Atlas поддерживает новый способ хранения паролей для jks-хранилищ. Если раньше пароли указывались в открытом виде в conf-файла, то теперь пароли от хранилищ скрываются от глаз в отдельном хранилище.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Напомню, что дефолтным паролем для java-хранилищ является &amp;lsquo;changeit&amp;rsquo;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;3.1. Добавляем jceks-файла &lt;code&gt;/opt/atlas/conf/atlas.jceks&lt;/code&gt; с паролями от хранилищ. Запускаем Atlas-утилиту &lt;code&gt;cputil.py&lt;/code&gt; и на её запросы вводим:&lt;br&gt;
+путь к хранилищу: jceks:///opt/atlas/conf/atlas.jceks;&lt;br&gt;
+пароли для хранилищ: changeit.&lt;br&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export JAVA_HOME=&amp;#34;/usr/java/jdk1.8.0_181-cloudera/&amp;#34;
+sudo -E /opt/atlas/bin/cputil.py
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Please enter the full path to the credential provider: jceks:///opt/atlas/conf/atlas.jceks
+Please enter the password value for keystore.password: changeit
+Please enter the password value for keystore.password again: changeit
+Please enter the password value for truststore.password: changeit
+Please enter the password value for truststore.password again: changeit
+Please enter the password value for password: changeit
+Please enter the password value for password again: changeit
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;3.2. Исправляем права на созданный файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo chown atlas.atlas /opt/atlas/conf/atlas.jceks
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;4-настройка-apache-atlas&#34;&gt;4. Настройка Apache Atlas&lt;/h2&gt;
+&lt;h3 id=&#34;41-подготовка-ролей-atlasа-для-adminов-и-userов&#34;&gt;4.1. Подготовка ролей Atlas&amp;rsquo;а для Admin&amp;rsquo;ов и User&amp;rsquo;ов&lt;/h3&gt;
+&lt;p&gt;На одном из предыдущих этапов, во FreeIPA были подготовлены две группы — &amp;rsquo;test2_atlas_admins&amp;rsquo; и &amp;rsquo;test2_atlas_users&amp;rsquo; — для авторизации в Atlas. Используем их для назначения ролей авторизующимся в Atlas пользователям.&lt;/p&gt;
+&lt;p&gt;В конце файла &lt;code&gt;/opt/atlas/conf/atlas-simple-authz-policy.json&lt;/code&gt; добавляем (или исправляем сущестующие)  сопоставления, ранее созданных LDAP-групп с ролями Atlas&amp;rsquo;а, как показано здесь:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;При получении названий групп через UGI (предпочтительней):&lt;/th&gt;
+&lt;th&gt;При получении названий групп напрямую из LDAP-каталога:&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;
+  &#34;groupRoles&#34;: {
+    &#34;test2_atlas_admins&#34;: [ &#34;ROLE_ADMIN&#34; ],
+    &#34;test2_atlas_users&#34;: [ &#34;ROLE_SCIENTIST&#34; ],
+    &#34;RANGER_TAG_SYNC&#34;: [ &#34;DATA_SCIENTIST&#34; ]
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;
+  &#34;groupRoles&#34;: {
+    &#34;ROLE_TEST2_ATLAS_ADMINS&#34;: [ &#34;ROLE_ADMIN&#34; ],
+    &#34;ROLE_TEST2_ATLAS_USERS&#34;: [ &#34;ROLE_SCIENTIST&#34; ],
+    &#34;RANGER_TAG_SYNC&#34;: [ &#34;DATA_SCIENTIST&#34; ]
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;42-изменения-файла-optatlasconfatlas-applicationproperties&#34;&gt;4.2. Изменения файла &amp;lsquo;/opt/atlas/conf/atlas-application.properties&amp;rsquo;&lt;/h2&gt;
+&lt;p&gt;В данном примере показан способ получения пользовательских групп, необходимых для авторизации пользователя в Atlas Web UI, через Hadoop UGI (UserGroupInformation), а не через  LDAP. Преимущество этого способа в том, что с ним работают вложенные группы. То есть достаточно добавлять отдельные пользовательские группы в группу &amp;rsquo;test2_atlas_admin&amp;rsquo;, вместо добавления отдельных пользовательских аккаунтов.&lt;/p&gt;
+&lt;p&gt;Если этот способ не сработает, выполняем полную настройку LDAP-подключения с настройкой фильтров для получения информации о членстве УЗ, соответствующей введённому логину. Для этого необходимо расскомментировать соответствующие строки.&lt;/p&gt;
+&lt;p&gt;Основной файл настроек Atlas&amp;rsquo;а сгенерируем следующим кодом. Перед запуском этого сценария приводим переменные к актуальным значениям:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;В тех местах настроек, где наблюдаются словосочетания &amp;lsquo;&lt;a href=&#34;mailto:atlas/_HOST@TEST2.LAN&#34;&gt;atlas/_HOST@TEST2.LAN&lt;/a&gt;&amp;rsquo;, Atlas автоматически вставляет вместо &amp;lsquo;_HOST&amp;rsquo; полное имя локальной машины.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;CLUSTERNAME=&amp;#34;TEST2&amp;#34;
+REALMNAME=&amp;#34;TEST2.LAN&amp;#34;
+LDAPDOMAINNAME=&amp;#34;dc=test2,dc=lan&amp;#34;
+LDAPSERVERS=&amp;#34;ldaps://dev-ipa110p.test2.lan ldaps://dev-ipa111p.test2.lan ldaps://dev-ipa112p.test2.lan&amp;#34;
+ZOOKEEPERSERVERS=&amp;#34;dev-zk110p.test2.lan:2181,dev-zk111p.test2.lan:2181,dev-zk112p.test2.lan:2181&amp;#34;
+KAFKASERVERS=&amp;#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&amp;#34;
+ATLASURL=&amp;#34;https://$(hostname)&amp;#34;
+
+CLNLOWER=$(echo $CLUSTERNAME | tr [:upper:] [:lower:])
+
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/atlas-application.properties
+ #
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# &amp;#34;License&amp;#34;); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+#########  Graph Database Configs  #########
+
+# Graph Database
+
+#Configures the graph database to use.  Defaults to JanusGraph
+#atlas.graphdb.backend=org.apache.atlas.repository.graphdb.janus.AtlasJanusGraphDatabase
+
+# Graph Storage
+# Set atlas.graph.storage.backend to the correct value for your desired storage
+# backend. Possible values:
+#
+# hbase
+# cassandra
+# embeddedcassandra - Should only be set by building Atlas with  -Pdist,embedded-cassandra-solr
+# berkeleyje
+#
+# See the configuration documentation for more information about configuring the various  storage backends.
+#
+atlas.graph.storage.backend=hbase2
+atlas.graph.storage.hbase.table=apache_atlas_janus
+
+#Hbase
+#For standalone mode , specify localhost
+#for distributed mode, specify zookeeper quorum here
+atlas.graph.storage.hostname=${ZOOKEEPERSERVERS}
+atlas.graph.storage.hbase.regions-per-server=1
+atlas.graph.storage.lock.wait-time=10000
+
+#In order to use Cassandra as a backend, comment out the hbase specific properties above, and uncomment the
+#the following properties
+#atlas.graph.storage.clustername=
+#atlas.graph.storage.port=
+
+# Gremlin Query Optimizer
+#
+# Enables rewriting gremlin queries to maximize performance. This flag is provided as
+# a possible way to work around any defects that are found in the optimizer until they
+# are resolved.
+#atlas.query.gremlinOptimizerEnabled=true
+
+# Delete handler
+#
+# This allows the default behavior of doing &amp;#34;soft&amp;#34; deletes to be changed.
+#
+# Allowed Values:
+# org.apache.atlas.repository.store.graph.v1.SoftDeleteHandlerV1 - all deletes are &amp;#34;soft&amp;#34; deletes
+# org.apache.atlas.repository.store.graph.v1.HardDeleteHandlerV1 - all deletes are &amp;#34;hard&amp;#34; deletes
+#
+#atlas.DeleteHandlerV1.impl=org.apache.atlas.repository.store.graph.v1.SoftDeleteHandlerV1
+
+# Entity audit repository
+#
+# This allows the default behavior of logging entity changes to hbase to be changed.
+#
+# Allowed Values:
+# org.apache.atlas.repository.audit.HBaseBasedAuditRepository - log entity changes to hbase
+# org.apache.atlas.repository.audit.CassandraBasedAuditRepository - log entity changes to cassandra
+# org.apache.atlas.repository.audit.NoopEntityAuditRepository - disable the audit repository
+#
+atlas.EntityAuditRepository.impl=org.apache.atlas.repository.audit.HBaseBasedAuditRepository
+
+# if Cassandra is used as a backend for audit from the above property, uncomment and set the following
+# properties appropriately. If using the embedded cassandra profile, these properties can remain
+# commented out.
+# atlas.EntityAuditRepository.keyspace=atlas_audit
+# atlas.EntityAuditRepository.replicationFactor=1
+
+# Graph Search Index
+atlas.graph.index.search.backend=solr
+
+#Solr
+#Solr cloud mode properties
+atlas.graph.index.search.solr.mode=cloud
+atlas.graph.index.search.solr.zookeeper-url=${ZOOKEEPERSERVERS}/solr
+atlas.graph.index.search.solr.zookeeper-connect-timeout=60000
+atlas.graph.index.search.solr.zookeeper-session-timeout=60000
+atlas.graph.index.search.solr.wait-searcher=true
+
+#Solr http mode properties
+#atlas.graph.index.search.solr.mode=http
+#atlas.graph.index.search.solr.http-urls=http://localhost:8983/solr
+
+# ElasticSearch support (Tech Preview)
+# Comment out above solr configuration, and uncomment the following two lines. Additionally, make sure the
+# hostname field is set to a comma delimited set of elasticsearch master nodes, or an ELB that fronts the masters.
+#
+# Elasticsearch does not provide authentication out of the box, but does provide an option with the X-Pack product
+# https://www.elastic.co/products/x-pack/security
+#
+# Alternatively, the JanusGraph documentation provides some tips on how to secure Elasticsearch without additional
+# plugins: https://docs.janusgraph.org/latest/elasticsearch.html
+#atlas.graph.index.search.hostname=dev-app111p.test2.lan:9200
+atlas.graph.index.search.elasticsearch.client-only=true
+
+# Solr-specific configuration property
+atlas.graph.index.search.max-result-set-size=150
+
+#########  Import Configs  #########
+#atlas.import.temp.directory=/temp/import
+
+#########  Notification Configs  #########
+atlas.notification.embedded=false
+atlas.kafka.zookeeper.connect=${ZOOKEEPERSERVERS}
+atlas.kafka.bootstrap.servers=${KAFKASERVERS}
+atlas.kafka.zookeeper.session.timeout.ms=60000
+atlas.kafka.zookeeper.connection.timeout.ms=60000
+atlas.kafka.zookeeper.sync.time.ms=20
+atlas.kafka.auto.commit.interval.ms=1000
+atlas.kafka.hook.group.id=atlas
+
+atlas.kafka.enable.auto.commit=true
+atlas.kafka.auto.offset.reset=earliest
+atlas.kafka.session.timeout.ms=30000
+atlas.kafka.offsets.topic.replication.factor=1
+atlas.kafka.poll.timeout.ms=1000
+
+atlas.kafka.security.protocol=SASL_PLAINTEXT
+atlas.kafka.sasl.mechanism=GSSAPI
+atlas.kafka.sasl.kerberos.service.name=kafka
+
+## Server port configuration
+#atlas.server.http.port=21000
+#atlas.server.https.port=21443
+
+#########  Security Properties  #########
+
+# SSL config
+atlas.enableTLS=true
+
+#truststore.file=/path/to/truststore.jks
+#cert.stores.credential.provider.path=jceks://file/path/to/credentialstore.jceks
+truststore.file=/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts
+cert.stores.credential.provider.path=jceks://file///opt/atlas/conf/atlas.jceks
+
+#following only required for 2-way SSL
+#keystore.file=/path/to/keystore.jks
+keystore.file=/opt/cloudera/security/pki/server.jks
+
+atlas.authentication.method.pam=false
+atlas.authentication.method.pam.service=login
+
+# Authentication config
+atlas.authentication.method=kerberos
+atlas.authentication.keytab=/opt/atlas/conf/atlas.keytab
+atlas.authentication.principal=atlas/_HOST@${REALMNAME}
+
+atlas.authentication.method.kerberos=true
+
+atlas.authentication.method.kerberos.principal=atlas/_HOST@${REALMNAME}
+atlas.authentication.method.kerberos.keytab=/opt/atlas/conf/atlas.keytab
+atlas.authentication.method.kerberos.name.rules=RULE:[2:\$1@\$0](atlas@${REALMNAME})s/.*/atlas/
+atlas.authentication.method.kerberos.token.validity=3600
+
+#### user credentials file
+atlas.authentication.method.file=false
+#atlas.authentication.method.file.filename=${sys:atlas.home}/conf/users-credentials.properties
+
+#### ldap.type= LDAP or AD
+atlas.authentication.method.ldap=true
+atlas.authentication.method.ldap.type=ldap
+
+### groups from UGI
+atlas.authentication.method.ldap.ugi-groups=true
+
+######## LDAP properties #########
+atlas.authentication.method.ldap.url=${LDAPSERVERS}
+atlas.authentication.method.ldap.userDNpattern=uid={0},cn=users,cn=accounts,${LDAPDOMAINNAME}
+#atlas.authentication.method.ldap.groupSearchBase=cn=groups,cn=accounts,${LDAPDOMAINNAME}
+#atlas.authentication.method.ldap.groupSearchFilter=(&amp;amp;(member={0})(cn=${CLNLOWER}_atlas_*))
+#atlas.authentication.method.ldap.groupRoleAttribute=cn
+#atlas.authentication.method.ldap.base.dn=cn=accounts,${LDAPDOMAINNAME} #atlas.authentication.method.ldap.bind.dn=uid=${BINDUSER},cn=sysaccounts,cn=etc,${LDAPDOMAINNAME} #atlas.authentication.method.ldap.bind.password=$(BINDPASS)
+#atlas.authentication.method.ldap.referral=follow
+#atlas.authentication.method.ldap.user.searchfilter=(uid={0})
+atlas.authentication.method.ldap.default.role=ROLE_USER
+
+#########  JAAS Configuration ########
+atlas.jaas.KafkaClient.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.KafkaClient.loginModuleControlFlag=required
+atlas.jaas.KafkaClient.option.useKeyTab=true
+atlas.jaas.KafkaClient.option.storeKey=true
+atlas.jaas.KafkaClient.option.serviceName=kafka
+atlas.jaas.KafkaClient.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.KafkaClient.option.principal=atlas/_HOST@${REALMNAME}
+
+atlas.jaas.Client.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.Client.loginModuleControlFlag=required
+atlas.jaas.Client.option.useKeyTab=true
+atlas.jaas.Client.option.storeKey=true
+atlas.jaas.Client.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.Client.option.principal=atlas/_HOST@${REALMNAME}
+
+#########  Server Properties  #########
+atlas.rest.address=${ATLASURL}:21443
+# If enabled and set to true, this will run setup steps when the server starts
+#atlas.server.run.setup.on.start=false
+
+#########  Entity Audit Configs  #########
+atlas.audit.hbase.tablename=apache_atlas_entity_audit
+atlas.audit.zookeeper.session.timeout.ms=1000
+atlas.audit.hbase.zookeeper.quorum=${ZOOKEEPERSERVERS}
+
+#########  High Availability Configuration ########
+atlas.server.ha.enabled=false
+#### Enabled the configs below as per need if HA is enabled #####
+#atlas.server.ids=id1
+#atlas.server.address.id1=localhost:21000
+#atlas.server.ha.zookeeper.connect=localhost:2181
+#atlas.server.ha.zookeeper.retry.sleeptime.ms=1000
+#atlas.server.ha.zookeeper.num.retries=3
+#atlas.server.ha.zookeeper.session.timeout.ms=20000
+## if ACLs need to be set on the created nodes, uncomment these lines and set the values ##
+#atlas.server.ha.zookeeper.acl=&amp;lt;scheme&amp;gt;:&amp;lt;id&amp;gt;
+#atlas.server.ha.zookeeper.auth=&amp;lt;scheme&amp;gt;:&amp;lt;authinfo&amp;gt;
+
+######### Atlas Authorization #########
+atlas.authorizer.impl=simple
+atlas.authorizer.simple.authz.policy.file=atlas-simple-authz-policy.json
+
+#########  Type Cache Implementation ########
+# A type cache class which implements
+# org.apache.atlas.typesystem.types.cache.TypeCache.
+# The default implementation is org.apache.atlas.typesystem.types.cache.DefaultTypeCache
+# which is a local in-memory type cache.
+#atlas.TypeCache.impl=
+
+#########  Performance Configs  #########
+#atlas.graph.storage.lock.retries=10
+#atlas.graph.storage.cache.db-cache-time=120000
+
+#########  CSRF Configs  #########
+atlas.rest-csrf.enabled=true
+atlas.rest-csrf.browser-useragents-regex=^Mozilla.*,^Opera.*,^Chrome.*
+atlas.rest-csrf.methods-to-ignore=GET,OPTIONS,HEAD,TRACE
+atlas.rest-csrf.custom-header=X-XSRF-HEADER
+
+############ KNOX Configs ################
+#atlas.sso.knox.browser.useragent=Mozilla,Chrome,Opera
+#atlas.sso.knox.enabled=true
+#atlas.sso.knox.providerurl=https://&amp;lt;knox gateway ip&amp;gt;:8443/gateway/knoxsso/api/v1/websso
+#atlas.sso.knox.publicKey=
+
+############ Atlas Metric/Stats configs ################
+# Format: atlas.metric.query.&amp;lt;key&amp;gt;.&amp;lt;name&amp;gt;
+atlas.metric.query.cache.ttlInSecs=900
+#atlas.metric.query.general.typeCount=
+#atlas.metric.query.general.typeUnusedCount=
+#atlas.metric.query.general.entityCount=
+#atlas.metric.query.general.tagCount=
+#atlas.metric.query.general.entityDeleted=
+#
+#atlas.metric.query.entity.typeEntities=
+#atlas.metric.query.entity.entityTagged=
+#
+#atlas.metric.query.tags.entityTags=
+
+#########  Compiled Query Cache Configuration  #########
+
+# The size of the compiled query cache.  Older queries will be evicted from the cache
+# when we reach the capacity.
+
+#atlas.CompiledQueryCache.capacity=1000
+
+# Allows notifications when items are evicted from the compiled query
+# cache because it has become full.  A warning will be issued when
+# the specified number of evictions have occurred.  If the eviction
+# warning threshold &amp;lt;= 0, no eviction warnings will be issued.
+
+#atlas.CompiledQueryCache.evictionWarningThrottle=0
+
+
+#########  Full Text Search Configuration  #########
+
+#Set to false to disable full text search.
+#atlas.search.fulltext.enable=true
+
+#########  Gremlin Search Configuration  #########
+
+#Set to false to disable gremlin search.
+atlas.search.gremlin.enable=false
+
+
+########## Add http headers ###########
+
+#atlas.headers.Access-Control-Allow-Origin=*
+#atlas.headers.Access-Control-Allow-Methods=GET,OPTIONS,HEAD,PUT,POST
+#atlas.headers.&amp;lt;headerName&amp;gt;=&amp;lt;headerValue&amp;gt;
+
+
+#########  UI Configuration ########
+
+atlas.ui.default.version=v1
+EOF
+
+sudo chown atlas.atlas /opt/atlas/conf/atlas-application.properties
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;43-изменения-в-файле-optatlasconfatlas-envsh&#34;&gt;4.3. Изменения в файле &amp;lsquo;/opt/atlas/conf/atlas-env.sh&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;Этот файл используется для передачи различных Java-параметров запускаемому экземпляру Atlas&amp;rsquo;а. Сгенерируем его следующим сценарием:&lt;/p&gt;
+&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/atlas-env.sh
+#!/usr/bin/env bash
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# &amp;#34;License&amp;#34;); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# The java implementation to use. If JAVA_HOME is not found we expect java and jar to be in path
+#export JAVA_HOME=
+export JAVA_HOME=&amp;#34;/usr/java/jdk1.8.0_181-cloudera&amp;#34;
+
+# any additional java opts you want to set. This will apply to both client and server operations
+#export ATLAS_OPTS=
+
+# any additional java opts that you want to set for client only
+#export ATLAS_CLIENT_OPTS=
+
+# java heap size we want to set for the client. Default is 1024MB
+#export ATLAS_CLIENT_HEAP=
+
+# any additional opts you want to set for atlas service.
+#export ATLAS_SERVER_OPTS=
+
+# indicative values for large number of metadata entities (equal or more than 10,000s)
+#export ATLAS_SERVER_OPTS=&amp;#34;-server -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+PrintTenuringDistribution -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=dumps/atlas_server.hprof -Xloggc:logs/gc-worker.log -verbose:gc -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=1m -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCTimeStamps&amp;#34;
+export ATLAS_SERVER_OPTS=&amp;#34;-server -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC \
+  -XX:+CMSParallelRemarkEnabled -XX:+PrintTenuringDistribution -XX:+HeapDumpOnOutOfMemoryError \
+  -XX:HeapDumpPath=dumps/atlas_server.hprof -Xloggc:logs/gc-worker.log -verbose:gc -XX:+UseGCLogFileRotation \
+  -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=1m -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCTimeStamps \
+  -Djava.security.krb5.conf=/etc/krb5.conf \
+  -Djava.security.auth.login.config=/opt/atlas/conf/jaas.conf&amp;#34;
+
+# java heap size we want to set for the atlas server. Default is 1024MB
+#export ATLAS_SERVER_HEAP=
+
+# indicative values for large number of metadata entities (equal or more than 10,000s) for JDK 8
+export ATLAS_SERVER_HEAP=&amp;#34;-Xms15360m -Xmx15360m -XX:MaxNewSize=5120m -XX:MetaspaceSize=100M -XX:MaxMetaspaceSize=512m&amp;#34;
+
+# What is is considered as atlas home dir. Default is the base locaion of the installed software
+#export ATLAS_HOME_DIR=
+export ATLAS_HOME_DIR=&amp;#34;/opt/atlas&amp;#34;
+
+# Where log files are stored. Defatult is logs directory under the base install location
+#export ATLAS_LOG_DIR=
+export ATLAS_LOG_DIR=&amp;#34;/opt/atlas/logs&amp;#34;
+
+# Where pid files are stored. Defatult is logs directory under the base install location
+export ATLAS_PID_DIR=&amp;#34;/opt/atlas&amp;#34;
+
+# where the atlas titan db data is stored. Defatult is logs/data directory under the base install location
+#export ATLAS_DATA_DIR=
+export ATLAS_DATA_DIR=&amp;#34;/opt/atlas/data&amp;#34;
+
+# Where do you want to expand the war file. By Default it is in /server/webapp dir under the base install dir.
+#export ATLAS_EXPANDED_WEBAPP_DIR=
+export ATLAS_EXPANDED_WEBAPP_DIR=&amp;#34;/opt/atlas/server/webapp&amp;#34;
+
+# indicates whether or not a local instance of HBase should be started for Atlas
+export MANAGE_LOCAL_HBASE=false
+
+# indicates whether or not a local instance of Solr should be started for Atlas
+export MANAGE_LOCAL_SOLR=false
+
+# indicates whether or not cassandra is the embedded backend for Atlas
+export MANAGE_EMBEDDED_CASSANDRA=false
+
+# indicates whether or not a local instance of Elasticsearch should be started for Atlas
+export MANAGE_LOCAL_ELASTICSEARCH=false
+
+export HBASE_CONF_DIR=&amp;#34;/etc/hbase/conf&amp;#34;
+EOF
+
+sudo chown atlas.atlas /opt/atlas/conf/atlas-env.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;44-добавление-jaas-файла-для-работы-с-керберизированным-apache-solr&#34;&gt;4.4. Добавление jaas-файла для работы с керберизированным Apache Solr&lt;/h3&gt;
+&lt;p&gt;В файле &lt;code&gt;/opt/apache-atlas/conf/atlas-application.properties&lt;/code&gt; есть необходимые строки для подключения приложений через jaas-конфигурацию. Но в случае работы с Apache Solr это не сработало, поэтому используем отдельный jaas-файл.&lt;/p&gt;
+&lt;p&gt;Создаём файл &lt;code&gt;/opt/atlas/conf/jaas.conf&lt;/code&gt; со следующим содержимым:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+PRINCIPAL=&amp;#34;atlas/$(hostname)@${REALMNAME}&amp;#34;
+
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/jaas.conf
+Client {
+  com.sun.security.auth.module.Krb5LoginModule required
+  useKeyTab=true
+  keyTab=&amp;#34;/opt/atlas/conf/atlas.keytab&amp;#34;
+  storeKey=true
+  principal=&amp;#34;${PRINCIPAL}&amp;#34;
+  debug=false;
+};
+EOF
+
+sudo chown atlas.atlas /opt/atlas/conf/jaas.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;5-подготовка-systemd-unitа-для-запуска-atlas&#34;&gt;5. Подготовка systemd unit&amp;rsquo;а для запуска Atlas&lt;/h2&gt;
+&lt;p&gt;Создаём файл &lt;code&gt;/etc/systemd/system/atlas.service&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/atlas.service
+[Unit]
+Description=Apache Atlas Service
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/opt/atlas/atlas.pid
+WorkingDirectory=/opt/atlas
+
+User=atlas
+Group=atlas
+
+ExecStart=/opt/atlas/bin/atlas_start.py
+ExecStop=/opt/atlas/bin/atlas_stop.py
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Обязательно обновляем конфигурацию Systemd:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl daemon-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На данный момент включать и запускать демон atlas.service не требуется.&lt;/p&gt;
+&lt;h2 id=&#34;7-список-дополнительных-способов-аутентификации-в-atlas&#34;&gt;7. Список дополнительных способов аутентификации в Atlas&lt;/h2&gt;
+&lt;p&gt;Дополнительные способы аутентификации в Atlas могут пригодиться на стадии отладки.&lt;/p&gt;
+&lt;h3 id=&#34;71-pam-аутентификация&#34;&gt;7.1. PAM-аутентификация&lt;/h3&gt;
+&lt;p&gt;Метод рабочий и очень простой, при условии, что машина в домене FreeIPA. Рекомендуется к использованию только при тестировании Atlas&amp;rsquo;а.&lt;/p&gt;
+&lt;p&gt;Изменения файла &amp;lsquo;/opt/apache-atlas/conf/atlas-application.properties&amp;rsquo;, которые позволяют использовать для аутентификации, PAM-модуль &lt;code&gt;/etc/pam.d/login&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;atlas.authentication.method.pam=true
+atlas.authentication.method.pam.service=login
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;72-аутентификация-по-уз-из-файла&#34;&gt;7.2. Аутентификация по УЗ из файла&lt;/h3&gt;
+&lt;p&gt;Изменения файла &amp;lsquo;/opt/apache-atlas/conf/atlas-application.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;atlas.authentication.method.file=true
+atlas.authentication.method.file.filename=${sys:atlas.home}/conf/users-credentials.properties
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Файл &lt;code&gt;users-credentials.properties&lt;/code&gt; имеет вид (логин/пароль: admin/admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#username=group::sha256-password
+admin=ADMIN::8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+rangertagsync=RANGER_TAG_SYNC::0afe7a1968b07d4c3ff4ed8c2d809a32ffea706c66cd795ead9048e81cfaf034
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Генерация хэша слова &amp;lsquo;admin&amp;rsquo;, без &amp;lsquo;перевода строки&amp;rsquo; и &amp;lsquo;возврата каретки&amp;rsquo; в конце строки,  выполняется, например так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;printf &amp;#34;admin&amp;#34; | sha256sum
+8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918  -
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;73-kerberos-аутентификация&#34;&gt;7.3. Kerberos-аутентификация&lt;/h3&gt;
+&lt;p&gt;Есть сомнения в данном пункте, в части правильного определения параметров, отвечающих за Kerberos-аутентификацию пользователей при входе в Atlas Web UI.&lt;/p&gt;
+&lt;p&gt;Не работает для автоматического входа, хотя браузер настроен и Kerberos-билет в наличии. Автоматический вход не происходит. При попытке ввода учётных данных высвечивается ошибка Error while authentication.&lt;/p&gt;
+&lt;p&gt;Получение keytab&amp;rsquo;а для принципала &lt;a href=&#34;mailto:HTTP/_HOST@TEST.LAN&#34;&gt;HTTP/_HOST@TEST.LAN&lt;/a&gt;, обязательно без пересоздания его (-r опция), так как перестанут работать уже настроенные роли Cloudera-кластера, вследствие чего будет необходимо выполнить перегенерацию kerberos-принципалов средствами Cloudera Manager&amp;rsquo;а:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;EXAMPLE.ORG&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+#kinit
+
+ipa service-allow-retrieve-keytab HTTP/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -r -p HTTP/$(hostname) -k /opt/atlas/conf/atlas.keytab
+ipa service-disallow-retrieve-keytab HTTP/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Изменения файла &amp;lsquo;/opt/apache-atlas/conf/atlas-application.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;atlas.authentication.method.kerberos = true
+
+atlas.authentication.method.kerberos.principal=HTTP/_HOST@${REALMNAME}
+atlas.authentication.method.kerberos.keytab = /opt/atlas/conf/atlas.keytab
+atlas.authentication.method.kerberos.name.rules = RULE:[2:$1@$0](atlas@${REALMNAME})s/.*/atlas/
+atlas.authentication.method.kerberos.token.validity = 3600
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;8-обнаруженные-проблемы&#34;&gt;8. Обнаруженные проблемы&lt;/h2&gt;
+&lt;p&gt;Solr пишет:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FieldTypePluginLoader	TokenizerFactory is using deprecated 5.0.0 emulation. You should at some point declare and reindex to at least 6.0,&amp;amp;#8203; because 5.x emulation is deprecated and will be removed in 7.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;/usr/lib/solr/atlasTemplate/solrconfig.xml&lt;/code&gt; исправил версию подходящего Solr&amp;rsquo;а с пятой на 7.4 и переинициализировал Atlas-обвязку.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 05. 🎣 Заброс Hook&#39;а в Apache Hive</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
+      <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-30&lt;/p&gt;
+&lt;h2 id=&#34;1введение&#34;&gt;1.Введение&lt;/h2&gt;
+&lt;p&gt;Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.&lt;/p&gt;
+&lt;h2 id=&#34;2-создание-atlas-папки-на-хостах-с-ролью-hiveserver2&#34;&gt;2. Создание Atlas-папки на хостах с ролью &amp;lsquo;HiveServer2&amp;rsquo;&lt;/h2&gt;
+&lt;p&gt;2.1. На хостах с ролью &amp;lsquo;HiveServer2&amp;rsquo; создаём atlas-каталоги и скачиваем с Nexus&amp;rsquo;а необходимый файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILENAME=&amp;#34;?????????????????&amp;#34;
+## Пробел нужен, чтобы пароль не попал в history
+ NXUSERPASS=&amp;#34;eugene:xxxxxxxxxxxxx&amp;#34;
+DIR=&amp;#34;apache-atlas-2.2.0_cdh6.3.2_j8.181_mvn3.8.1&amp;#34;
+
+## Скачиваем сборку с Nexus&amp;#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://10.15.61.1:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+
+sudo tar xvf ${FILENAME} -C /opt
+cd /opt
+sudo ln -s ${DIR} atlas
+
+sudo chown -R root.root ${DIR}
+sudo chmod -R u=rwX,go=rX ${DIR}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.2. Создаём файл &amp;lsquo;atlas-application.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZOOKEEPERSERVERS=&amp;#34;dev-zk110p.test2.lan:2181,dev-zk111p.test2.lan:2181,dev-zk112p.test2.lan:2181&amp;#34;
+KAFKASERVERS=&amp;#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&amp;#34;
+REALMNAME=&amp;#34;TEST2.LAN&amp;#34;
+
+sudo mkdir -p /opt/atlas/conf
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/atlas-application.properties
+#########  Notification Configs  #########
+
+atlas.kafka.zookeeper.connect=${ZOOKEEPERSERVERS}
+atlas.kafka.bootstrap.servers=${KAFKASERVERS}
+atlas.kafka.zookeeper.session.timeout.ms=60000
+atlas.kafka.zookeeper.connection.timeout.ms=60000
+atlas.kafka.zookeeper.sync.time.ms=20
+atlas.kafka.auto.commit.interval.ms=1000
+atlas.kafka.hook.group.id=atlas
+
+atlas.kafka.enable.auto.commit=true
+atlas.kafka.auto.offset.reset=earliest
+atlas.kafka.session.timeout.ms=30000
+atlas.kafka.offsets.topic.replication.factor=1
+atlas.kafka.poll.timeout.ms=1000
+
+atlas.kafka.security.protocol=SASL_PLAINTEXT
+atlas.kafka.sasl.mechanism=GSSAPI
+atlas.kafka.sasl.kerberos.service.name=kafka
+
+#########  JAAS Configuration ########
+
+atlas.jaas.KafkaClient.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.KafkaClient.loginModuleControlFlag=required
+atlas.jaas.KafkaClient.option.useKeyTab=true
+atlas.jaas.KafkaClient.option.storeKey=true
+atlas.jaas.KafkaClient.option.serviceName=kafka
+atlas.jaas.KafkaClient.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.KafkaClient.option.principal=atlas/_HOST@${REALMNAME}
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.3. Создаём, если таковой ещё не был сгененирован, и получаем новый keytab. Напомню, что &lt;span style=&#34;color:red&#34;&gt;последующие получения keytab&amp;rsquo;а необходимо выполнять с опцией &amp;lsquo;-r&amp;rsquo;, иначе вместо получения существующего keytab&amp;rsquo;а будет создан новый keytab&lt;/span&gt;, вследствие чего уже работающие сервисы Atlas&amp;rsquo;а перестанут аутентифицировать и потребуется повторить для них получение keytab&amp;rsquo;ов и перезапустить сервисы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+# Закомментировать след строку, если генерируем новый ключ для keytab&amp;#39;а.
+OPTION=&amp;#34;-r&amp;#34;
+
+# kinit ${IPAADMIN}
+ipa service-allow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-allow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -p atlas/$(hostname) -k ~/atlas.keytab ${OPTION}
+ipa service-disallow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-disallow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
+sudo mv ~/atlas.keytab /opt/atlas/conf/
+sudo chown root.root /opt/atlas/conf/atlas.keytab
+sudo setfacl -m u:hive:r /opt/atlas/conf/atlas.keytab
+
+unset OPTION
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-заброс-hookа-в-apache-hive-через-cloudera-manager&#34;&gt;3. Заброс Hook&amp;rsquo;а в Apache Hive через Cloudera Manager&lt;/h2&gt;
+&lt;p&gt;3.1. В настройках службы Hive изменяем следующие параметры:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HiveServer2 Advanced Configuration Snippet (Safety Valve) for hive-site.xml&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;b&gt;Name&lt;/b&gt;: &lt;span style=&#34;color:blue&#34;&gt;hive.exec.post.hooks&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: &lt;span style=&#34;color:blue&#34;&gt;org.apache.atlas.hive.hook.HiveHook&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Description&lt;/b&gt;:&lt;br&gt;
+&lt;hr&gt;
+&lt;span style=&#34;color:lightgrey&#34;&gt; Следующие параметры не используем. После проверки, будут удалены или активированы.
+&lt;p&gt;&lt;b&gt;Name&lt;/b&gt;: hive.reloadable.aux.jars.path&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: /opt/atlas/hook/hive&lt;br&gt;
+&lt;b&gt;Description:&lt;/b&gt;&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Name&lt;/b&gt;: atlas.cluster.name&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: primary&lt;br&gt;
+&lt;b&gt;Description&lt;/b&gt;:&lt;br&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;/td&gt;
+&lt;td&gt;
+	For advanced use only. A string to be inserted into hive-site.xml for this role only.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Java Configuration Options for HiveServer2&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;{{JAVA_GC_ARGS}} &lt;span style=&#34;color:blue&#34;&gt;-Datlas.conf=/opt/atlas/conf/&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;
+	These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HiveServer2 Environment Advanced Configuration Snippet (Safety Valve)&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color:blue&#34;&gt;HIVE_AUX_JARS_PATH=/opt/atlas/hook/hive/&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;For advanced use only, key-value pairs (one on each line) to be inserted into a role&#39;s environment. Applies to configurations of this role except client configuration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHive&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache Hive&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 06. 🎣 Заброс Hook&#39;а в Apache HBase</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D1%81-hook-%D0%B2-apache-hbase/</link>
+      <pubDate>Fri, 22 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D1%81-hook-%D0%B2-apache-hbase/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-30 / 2021-10-22&lt;/p&gt;
+&lt;h2 id=&#34;1введение&#34;&gt;1.Введение&lt;/h2&gt;
+&lt;p&gt;Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.&lt;/p&gt;
+&lt;h2 id=&#34;2-создание-atlas-папки-на-хостах-с-ролью-hbase-master&#34;&gt;2. Создание Atlas-папки на хостах с ролью &amp;lsquo;HBase Master&amp;rsquo;&lt;/h2&gt;
+&lt;p&gt;2.1. На хостах с ролью &amp;lsquo;HBase Master&amp;rsquo; создаём atlas-каталоги и скачиваем с Nexus&amp;rsquo;а необходимый файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILENAME=&amp;#34;?????????????????????????&amp;#34;
+set +o history
+NXUSERPASS=&amp;#34;eugene:xxxxxxxxxxxxx&amp;#34;
+set -o history
+DIR=&amp;#34;apache-atlas-2.2.0_cdh6.3.2_j8.181_mvn3.8.1&amp;#34;
+
+## Скачиваем сборку с Nexus&amp;#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://nexus.example.org:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+
+sudo tar xvf ${FILENAME} -C /opt
+cd /opt
+sudo ln -s ${DIR} atlas
+
+sudo chown -R root.root ${DIR}
+sudo chmod -R u=rwX,go=rX ${DIR}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.2. Залинковываем jar-библиотеки Atlas&amp;rsquo;а в каталог &lt;code&gt;/usr/lib/hbase/lib&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo ln -s /opt/atlas/hook/hbase/* /usr/lib/hbase/lib/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.3. Создаём файл &amp;lsquo;atlas-application.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZOOKEEPERSERVERS=&amp;#34;dev-zk110p.test2.lan:2181,dev-zk111p.test2.lan:2181,dev-zk112p.test2.lan:2181&amp;#34;
+KAFKASERVERS=&amp;#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&amp;#34;
+REALMNAME=&amp;#34;TEST2.LAN&amp;#34;
+
+sudo mkdir -p /opt/atlas/conf
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/atlas-application.properties
+#########  Notification Configs  #########
+
+atlas.kafka.zookeeper.connect=${ZOOKEEPERSERVERS}
+atlas.kafka.bootstrap.servers=${KAFKASERVERS}
+atlas.kafka.zookeeper.session.timeout.ms=60000
+atlas.kafka.zookeeper.connection.timeout.ms=60000
+atlas.kafka.zookeeper.sync.time.ms=20
+atlas.kafka.auto.commit.interval.ms=1000
+atlas.kafka.hook.group.id=atlas
+
+atlas.kafka.enable.auto.commit=true
+atlas.kafka.auto.offset.reset=earliest
+atlas.kafka.session.timeout.ms=30000
+atlas.kafka.offsets.topic.replication.factor=1
+atlas.kafka.poll.timeout.ms=1000
+
+atlas.kafka.security.protocol=SASL_PLAINTEXT
+atlas.kafka.sasl.mechanism=GSSAPI
+atlas.kafka.sasl.kerberos.service.name=kafka
+
+#########  JAAS Configuration ########
+
+atlas.jaas.KafkaClient.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.KafkaClient.loginModuleControlFlag=required
+atlas.jaas.KafkaClient.option.useKeyTab=true
+atlas.jaas.KafkaClient.option.storeKey=true
+atlas.jaas.KafkaClient.option.serviceName=kafka
+atlas.jaas.KafkaClient.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.KafkaClient.option.principal=atlas/_HOST@${REALMNAME}
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.4. Создаём, если таковой ещё не был сгененирован, и получаем новый keytab. Напомню, что &lt;span style=&#34;color:red&#34;&gt;последующие получения keytab&amp;rsquo;а необходимо выполнять с опцией &amp;lsquo;-r&amp;rsquo;, иначе вместо получения существующего keytab&amp;rsquo;а будет создан новый keytab&lt;/span&gt;, вследствие чего уже работающие сервисы Atlas&amp;rsquo;а перестанут аутентифицировать и потребуется повторить для них получение keytab&amp;rsquo;ов и перезапустить сервисы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+# Закомментировать след строку, если генерируем новый ключ для keytab&amp;#39;а.
+OPTION=&amp;#34;-r&amp;#34;
+
+# kinit ${IPAADMIN}
+ipa service-add atlas/$(hostname)
+
+ipa service-allow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-allow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
+ipa-getkeytab -p atlas/$(hostname) -k ~/atlas.keytab ${OPTION}
+ipa service-disallow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-disallow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
+sudo mv ~/atlas.keytab /opt/atlas/conf/
+sudo chown root.root /opt/atlas/conf/atlas.keytab
+sudo setfacl -m u:hbase:r /opt/atlas/conf/atlas.keytab
+
+unset OPTION
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Подключение Hook&amp;rsquo;а к Apache HBase&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;3.1. В настройках службы Hue изменяем следующие параметры:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;b&gt;HBase Coprocessor Master Classes&lt;/b&gt;&lt;br&gt;
+hbase.coprocessor.master.classes
+&lt;/td&gt;
+&lt;td&gt;
+- &lt;span style=&#34;color:blue&#34;&gt;org.apache.hadoop.hbase.security.access.AccessController&lt;/span&gt;&lt;br&gt;
+- &lt;span style=&#34;color:blue&#34;&gt;org.apache.atlas.hbase.hook.HBaseAtlasCoprocessor&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+При следующих установках Atlas&#39;а попытаться определить момент, когда происходит ошибка &lt;span style=&#34;color:salmon&#34;&gt;HBase. Ошибка при выполнении &#39;user_permission&#39;. ERROR: DISABLED: Security features are not available.&lt;/span&gt; Именно для её решения понадобилось добавить &#39;org.apache.hadoop.hbase.security.access.AccessController&#39;.
+&lt;/td&gt;
+&lt;td&gt;
+List of org.apache.hadoop.hbase.coprocessor.MasterObserver coprocessors that are loaded by default on the active HMaster process. For any implemented coprocessor methods, the listed classes will be called in order. After implementing your own MasterObserver, just put it in HBase&#39;s classpath and add the fully qualified class name here.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Java Configuration Options for HBase Master&lt;/td&gt;
+&lt;td&gt;
+{{JAVA_GC_ARGS}} -XX:ReservedCodeCacheSize=256m &lt;span style=&#34;color:blue&#34;&gt;-Datlas.conf=/opt/atlas/conf/&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHBase&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache HBase&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

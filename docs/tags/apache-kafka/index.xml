@@ -1,0 +1,524 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Apache Kafka</title>
+    <link>/tags/apache-kafka/</link>
+    <description>Recent content in Apache Kafka on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/apache-kafka/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: CMAK. 01. Сборка rpm-пакета для CentOS7</title>
+      <link>/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-11-25&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/yahoo/CMAK&#34;&gt;https://github.com/yahoo/CMAK&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;1-подготовка-к-сборке&#34;&gt;1. Подготовка к сборке&lt;/h2&gt;
+&lt;p&gt;Выбираем по умолчанию интерпретатор python2 и проверяем эту установку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo update-alternatives --config python
+
+There are 2 programs which provide &amp;#39;python&amp;#39;.
+
+  Selection    Command
+-----------------------------------------------
+ + 1           /usr/bin/python2.7
+*  2           /usr/bin/python3
+
+Enter to keep the current selection[+], or type selection number: 1
+
+$ python -V
+
+Python 2.7.5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В дополнение к Maven&amp;rsquo;у устанавливаем пакеты &amp;lsquo;java-11-openjdk&amp;rsquo; и &amp;lsquo;rpm-build&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo yum -y install java-11-openjdk rpm-build
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скачиваем и распаковываем исходники последней версии приложения (на данный момент CMAK 3.0.0.5):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILE=&amp;#34;3.0.0.5.tar.gz&amp;#34;
+
+mkdir ~/src &amp;amp;&amp;amp; cd ~/src
+curl -LO https://github.com/yahoo/CMAK/archive/refs/tags/${FILE}
+tar xvf ${FILE}
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-сборка-rpm-пакета&#34;&gt;2. Сборка rpm-пакета&lt;/h2&gt;
+&lt;p&gt;Переходим в каталог с распакованными исходниками и начинаем сборку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd ~/src/CMAK-3.0.0.5
+export JAVA_HOME=/usr/lib/jvm/jre-11-openjdk
+export PATH=/usr/lib/jvm/jre-11-openjdk/bin:$PATH
+./sbt rpm:packageBin
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[info] Loading settings for project cmak-3-0-0-5-build from plugins.sbt ...
+[info] Loading project definition from /data/src/CMAK-3.0.0.5/project
+[info] Loading settings for project root from build.sbt ...
+[info] Set current project to cmak (in build file:/data/src/CMAK-3.0.0.5/)
+[info] Wrote /data/src/CMAK-3.0.0.5/target/scala-2.12/cmak_2.12-3.0.0.5.pom
+[info] Building target platforms: noarch-yahoo-Linux
+[info] Building for target noarch-yahoo-Linux
+[info] Executing(%install): /bin/sh -e /tmp/sbt_cc7a974b/rpm-tmp.GgFqxU
+[info] + umask 022
+[info] + cd /data/src/CMAK-3.0.0.5/target/rpm/BUILD
+[info] + &amp;#39;[&amp;#39; /data/src/CMAK-3.0.0.5/target/rpm/buildroot &amp;#39;!=&amp;#39; / &amp;#39;]&amp;#39;
+[info] + rm -rf /data/src/CMAK-3.0.0.5/target/rpm/buildroot
+[info] ++ dirname /data/src/CMAK-3.0.0.5/target/rpm/buildroot
+[info] + mkdir -p /data/src/CMAK-3.0.0.5/target/rpm
+[info] + mkdir /data/src/CMAK-3.0.0.5/target/rpm/buildroot
+[info] + &amp;#39;[&amp;#39; -e /data/src/CMAK-3.0.0.5/target/rpm/buildroot &amp;#39;]&amp;#39;
+[info] + mv /data/src/CMAK-3.0.0.5/target/rpm/tmp-buildroot/etc /data/src/CMAK-3.0.0.5/target/rpm/tmp-buildroot/usr /dat
+a/src/CMAK-3.0.0.5/target/rpm/tmp-buildroot/var /data/src/CMAK-3.0.0.5/target/rpm/buildroot
+[info] + /usr/lib/rpm/check-buildroot
+[info] + /usr/lib/rpm/redhat/brp-compress
+[info] + /usr/lib/rpm/redhat/brp-strip /usr/bin/strip
+[info] + /usr/lib/rpm/redhat/brp-strip-comment-note /usr/bin/strip /usr/bin/objdump
+[info] + /usr/lib/rpm/redhat/brp-strip-static-archive /usr/bin/strip
+[info] + /usr/lib/rpm/brp-python-bytecompile /usr/bin/python 1
+[info] + /usr/lib/rpm/redhat/brp-python-hardlink
+[info] Processing files: cmak-3.0.0.5-1.noarch
+[info] Provides: cmak = 3.0.0.5-1 config(cmak) = 3.0.0.5-1 osgi(ch.qos.logback.classic) = 1.2.3 osgi(ch.qos.logback.core) = 1.2.3 osgi(com.fasterxml.jackson.core.jackson-annotations) = 2.10.0 osgi(com.fasterxml.jackson.core.jackson-core) = 2.10.0 osgi(com.fasterxml.jackson.core.jackson-databind) = 2.10.0 osgi(com.fasterxml.jackson.dataformat.jackson-dataformat-csv) = 2.10.0 osgi(com.fasterxml.jackson.datatype.jackson-datatype-jdk8) = 2.10.0 osgi(com.fasterxml.jackson.datatype.jackson-datatype-jsr310) = 2.8.11 osgi(com.fasterxml.jackson.module.jackson-module-paranamer) = 2.10.0 osgi(com.fasterxml.jackson.module.jackson.module.scala) = 2.10.0 osgi(com.github.ben-manes.caffeine) = 2.6.2 osgi(com.github.luben.zstd-jni) = 1.4.3 osgi(com.google.guava) = 23.6.1 osgi(com.thoughtworks.paranamer) = 2.8.0 osgi(com.typesafe.akka.actor) = 2.5.19 osgi(com.typesafe.akka.protobuf) = 2.5.19 osgi(com.typesafe.akka.slf4j) = 2.5.19 osgi(com.typesafe.akka.stream) = 2.5.19 osgi(com.typesafe.config) = 1.3.3 osgi(com.typesafe.scala-logging) = 3.9.2 osgi(com.typesafe.sslconfig) = 0.3.6 osgi(com.unboundid.ldap.sdk) = 4.0.9 osgi(curator-client) = 2.12.0 osgi(curator-framework) = 2.12.0 osgi(curator-recipes) = 2.12.0 osgi(io.jsonwebtoken.jjwt) = 0.7.0 osgi(io.netty.buffer) = 4.1.42 osgi(io.netty.codec) = 4.1.42 osgi(io.netty.common) = 4.1.42 osgi(io.netty.handler) = 4.1.42 osgi(io.netty.resolver) = 4.1.42 osgi(io.netty.transport) = 4.1.42 osgi(io.netty.transport-native-epoll) = 4.1.42 osgi(io.netty.transport-native-unix-common) = 4.1.42 osgi(javax.activation-api) = 1.2.0 osgi(jaxb-api) = 2.3.1 osgi(jcl.over.slf4j) = 1.7.25 osgi(joda-time) = 2.9.9 osgi(jul.to.slf4j) = 1.7.25 osgi(log4j.over.slf4j) = 1.7.25 osgi(lz4-java) = 0 osgi(net.sf.jopt-simple.jopt-simple) = 5.0.4 osgi(org.apache.commons.cli) = 1.4.0 osgi(org.apache.commons.codec) = 1.11.0 osgi(org.apache.commons.compress) = 1.9.0 osgi(org.apache.commons.lang3) = 3.6.0 osgi(org.jsr-305) = 3.0.2 osgi(org.reactivestreams.reactive-streams) = 1.0.2 osgi(org.scala-lang.modules.scala-collection-compat) = 2.1.2 osgi(org.scala-lang.modules.scala-parser-combinators) = 1.1.1 osgi(org.scala-lang.modules.scala-xml) = 1.0.6 osgi(org.scala-lang.scala-library) = 2.12.10 osgi(org.scala-lang.scala-reflect) = 2.12.10 osgi(org.scalaz.core) = 7.2.27 osgi(org.xerial.snappy.snappy-java) = 1.1.7 osgi(slf4j.api) = 1.7.28
+[info] Requires(interp): /bin/sh /bin/sh /bin/sh /bin/sh
+[info] Requires(rpmlib): rpmlib(CompressedFileNames) &amp;lt;= 3.0.4-1 rpmlib(FileDigests) &amp;lt;= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) &amp;lt;= 4.0-1
+[info] Requires(pre): /bin/sh
+[info] Requires(post): /bin/sh
+[info] Requires(preun): /bin/sh
+[info] Requires(postun): /bin/sh
+[info] Requires: /usr/bin/env
+[info] Checking for unpackaged file(s): /usr/lib/rpm/check-files /data/src/CMAK-3.0.0.5/target/rpm/buildroot
+[info] Wrote: /data/src/CMAK-3.0.0.5/target/rpm/RPMS/noarch/cmak-3.0.0.5-1.noarch.rpm
+[info] Executing(%clean): /bin/sh -e /tmp/sbt_cc7a974b/rpm-tmp.E6uoCQ
+[info] + umask 022
+[info] + cd /data/src/CMAK-3.0.0.5/target/rpm/BUILD
+[info] + /usr/bin/rm -rf /data/src/CMAK-3.0.0.5/target/rpm/buildroot
+[info] + exit 0
+[success] Total time: 115 s (01:55), completed Nov 25, 2021, 1:59:33 PM
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-результат&#34;&gt;3. Результат&lt;/h2&gt;
+&lt;p&gt;В каталоге &lt;code&gt;target/rpm/RPMS/noarch&lt;/code&gt; наблюдаем пакет &lt;code&gt;cmak-3.0.0.5-1.noarch.rpm&lt;/code&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Kafdrop. 01. Сборка jar-пакета</title>
+      <link>/a/kafdrop-sborka-jar-paketa/</link>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/kafdrop-sborka-jar-paketa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-11-25&lt;/p&gt;
+&lt;h2 id=&#34;1-подготовка-к-сборке&#34;&gt;1. Подготовка к сборке&lt;/h2&gt;
+&lt;p&gt;В дополнение к Maven&amp;rsquo;у устанавливаем Java11:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo yum -y install java-11-openjdk java-11-openjdk-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скачиваем последнюю версию приложения Kafdrop (на данный момент Kafdrop 3.27.0) и распаковываем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILE=&amp;#34;3.27.0.tar.gz&amp;#34;
+
+mkdir ~/src &amp;amp;&amp;amp; cd ~/src
+curl -LO https://github.com/obsidiandynamics/kafdrop/archive/refs/tags/${FILE}
+tar xvf ${FILE}
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-сборка-jar-пакета&#34;&gt;2. Сборка jar-пакета&lt;/h2&gt;
+&lt;p&gt;Запускаем сборку пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export JAVA_HOME=/usr/lib/jvm/jre-11-openjdk
+
+cd ~/src/kafdrop-3.27.0
+mvn clean package
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-результат&#34;&gt;3. Результат&lt;/h2&gt;
+&lt;p&gt;В каталоге &lt;code&gt;~/src/kafdrop-3.27.0/target&lt;/code&gt; наблюдаем пакет &lt;code&gt;kafdrop-3.27.0.jar&lt;/code&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Kafdrop. 02. Установка и настройка</title>
+      <link>/a/kafdrop-ustanovka-i-nastroika/</link>
+      <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/kafdrop-ustanovka-i-nastroika/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-11-25&lt;/p&gt;
+&lt;h2 id=&#34;1-установка&#34;&gt;1. Установка&lt;/h2&gt;
+&lt;h3 id=&#34;11-создание-локального-аккаунта&#34;&gt;1.1. Создание локального аккаунта&lt;/h3&gt;
+&lt;p&gt;Создаём локальный аккаунт &amp;lsquo;kafdrop&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ useradd -r -s /sbin/nologin -d /opt/kafdrop -M kafdrop
+
+$ kinit
+$ ipa service-add kafdrop/$(hostname)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;12-создание-рабочего-каталога&#34;&gt;1.2. Создание рабочего каталога&lt;/h3&gt;
+&lt;p&gt;Создаём каталог, где будет всё необходимое для работы Kafdrop:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir /opt/kafdrop
+chown kafdrop.kafdrop /opt/kafdrop
+chmod 2770 /opt/kafdrop
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;13-загрузка-ранее-скомпилированного-jar-файла&#34;&gt;1.3. Загрузка ранее скомпилированного jar-файла&lt;/h3&gt;
+&lt;p&gt;Важно! Тем или иным образом копируем ранее собранный пакет &lt;code&gt;kafdrop-3.27.0.jar&lt;/code&gt; в каталог &lt;code&gt;/opt/kafdrop&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;После чего делаем link с расчётом на дальнейшие обновления пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd /opt/kafdrop
+ln -s kafdrop-3.27.0.jar kafdrop.jar
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-подготовка&#34;&gt;2. Подготовка&lt;/h2&gt;
+&lt;h3 id=&#34;21-создание-во-freeipa-сервис-аккаунт-kafdrop&#34;&gt;2.1. Создание во FreeIPA сервис-аккаунт &amp;lsquo;kafdrop&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;Создаём сервис-аккаунт во FreeIPA с таким же именем, не забывая заранее получить kerberos-тикет для УЗ, обладающей правом на добавление сервис-аккаунтов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit
+$ ipa service-add kafdrop/$(hostname)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём keytab для сервисной УЗ &amp;lsquo;kafdrop&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SERVICE=&amp;#34;kafdrop&amp;#34;
+REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+ 
+## При необходимости получаем kerberos-билет
+# kinit ${IPAADMIN}
+ 
+## Если требуются права на создание ключей.
+ipa service-allow-create-keytab ${SERVICE}/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -p ${SERVICE}/$(hostname) -k ~/${SERVICE}.keytab
+ipa service-disallow-create-keytab ${SERVICE}/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+  
+sudo mv ~/${SERVICE}.keytab /opt/${SERVICE}/
+sudo chown ${SERVICE}.${SERVICE} /opt/${SERVICE}/${SERVICE}.keytab
+sudo chmod 600 /opt/${SERVICE}/${SERVICE}.keytab
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;22-настройка-kafka-в-cloudera-managent&#34;&gt;2.2. Настройка Kafka в Cloudera Managent&lt;/h3&gt;
+&lt;p&gt;Необходимо добавить имя учётной записи &amp;lsquo;kafdrop&amp;rsquo; в параметр &amp;lsquo;super.users&amp;rsquo;, в дополнение к уже существующей там записи для аккаунта &amp;lsquo;kafka&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;В результате, Apache Kafka будет запускаться со следующей строкой в `kafka.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;super.users=User:kafka;User:kafdrop
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;23-создание-systemd-юнита&#34;&gt;2.3. Создание systemd-юнита&lt;/h3&gt;
+&lt;p&gt;Добавляем юнит в systemd для автоматического запуска kafdrop:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/kafdrop.service
+[Unit]
+Description=Kafdrop Service
+After=network.target
+ 
+[Service]
+Type=simple
+RuntimeDirectory=kafdrop
+RuntimeDirectoryMode=0775
+WorkingDirectory=/opt/kafdrop
+
+User=kafdrop
+Group=kafdrop
+
+EnvironmentFile=/etc/sysconfig/kafdrop
+
+ExecStart=/usr/bin/java --add-opens=java.base/sun.nio.ch=ALL-UNNAMED \\
+  -Djava.security.auth.login.config=/opt/kafdrop/jaas.conf \\
+  -jar /opt/kafdrop/kafdrop.jar \\
+  --kafka.brokerConnect=\${KAFKABROKERS} \\
+  --server.port=\${SRVPORT} --management.server.port=\${MNGSRVPORT}
+
+TimeoutSec=30
+ 
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Делаем файл с переменными для запуска Kafdrop:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/sysconfig/kafdrop
+# List of Kafka Brokers
+KAFKABROKERS=&amp;#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&amp;#34;
+
+# Listen port
+SRVPORT=&amp;#34;8000&amp;#34;
+
+# Management Server Port
+MNGSRVPORT=&amp;#34;8001&amp;#34;
+EOF
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка&#34;&gt;Настройка&lt;/h2&gt;
+&lt;h3 id=&#34;создание-jaasconf&#34;&gt;Создание jaas.conf&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SERVICE=&amp;#34;kafdrop&amp;#34;
+REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+PRINCIPAL=&amp;#34;${SERVICE}/$(hostname)@${REALMNAME}&amp;#34;
+ 
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/${SERVICE}/jaas.conf
+KafkaClient {
+  com.sun.security.auth.module.Krb5LoginModule required
+  useKeyTab=true
+  keyTab=&amp;#34;/opt/${SERVICE}/${SERVICE}.keytab&amp;#34;
+  storeKey=true
+  principal=&amp;#34;${PRINCIPAL}&amp;#34;
+  serviceName=kafka
+  debug=false;
+};
+EOF
+ 
+sudo chown ${SERVICE}.${SERVICE} /opt/${SERVICE}/jaas.conf
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-kafkaproperties&#34;&gt;Создание kafka.properties&lt;/h3&gt;
+&lt;p&gt;Создаём основной файл &lt;code&gt;kafka.properties&lt;/code&gt;. Предполагается, что параметр &amp;lsquo;security.inter.broker.protocol&amp;rsquo; в настройках Kafka-брокеров установлен в &amp;lsquo;SASL_PLAINTEXT&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /opt/kafdrop/kafka.properties 
+#ssl.keystore.location=/opt/cloudera/security/pki/server.jks
+#ssl.keystore.password = changeit
+
+#ssl.truststore.location = /usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts
+#ssl.truststore.password = changeit
+
+#ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1
+#ssl.protocol=TLS
+security.protocol=SASL_PLAINTEXT
+
+#log4j.appender.console.threshold=DEBUG
+EOF
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-прав-на-каталог-optkafdrop&#34;&gt;Установка прав на каталог &lt;code&gt;/opt/kafdrop&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Обновляем права:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo chown -R kafdrop.kafdrop /opt/kafdrop
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;запуск-kafdrop&#34;&gt;Запуск Kafdrop&lt;/h2&gt;
+&lt;h3 id=&#34;запуск-демона&#34;&gt;Запуск демона&lt;/h3&gt;
+&lt;p&gt;Включаем и запускаем демон &amp;lsquo;kafdrop.service&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl enable --now kafdrop
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;адрес-web-ui&#34;&gt;Адрес Web UI&lt;/h3&gt;
+&lt;p&gt;Web-морда Kafdrop доступна по адресу &amp;lsquo;http://ip-address:8000/&amp;rsquo;. Необходимо помнить, что никаких встроенных средств для организации аутентификации и TLS-шифрования трафика в Kafdrop не предусмотрено. На сайте проекта &lt;a href=&#34;https://github.com/obsidiandynamics/kafdrop&#34;&gt;https://github.com/obsidiandynamics/kafdrop&lt;/a&gt; для этих целей предлагается использовать Nginx.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Запуск kafka-mirror-maker из systemd</title>
+      <link>/n/zapusk-kafka-mirror-maker-iz-systemd/</link>
+      <pubDate>Sun, 06 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/zapusk-kafka-mirror-maker-iz-systemd/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Каталог размещения: /opt/hadoop. Сюда скачиваем и распаковываем kafka_2.13-2.6.0.tgz и создаём ссылку kafka на каталог kafka_2.13-2.6.0, куда был раскапован архив:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir /opt/hadoop
+cd /opt/hadoop
+tar xvf kafka_2.13-2.6.0.tgz
+ln -s kafka_2.13-2.6.0 kafka
+mkdir kafka/logs
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём два файла для запуска и остановки kafka-mirror.
+&lt;code&gt;kafka-mirror-maker-start.sh&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/bin/bash
+echo &amp;#34;mirror maker restarted $(date)&amp;#34;&amp;gt;&amp;gt;/opt/hadoop/kafka/logs/mirrormaker.log
+cd /opt/hadoop/kafka/bin/
+./kafka-mirror-maker.sh \
+--consumer.config ../config/consumer.properties \
+--producer.config ../config/producer.properties \
+--whitelist &amp;#39;adfox_created|adfox_deleted|adfox_updated|mymoscow_created|mymoscow_deleted|mymoscow_updated&amp;#39; \
+--num.streams 3 \
+--offset.commit.interval.ms 30000 \
+--abort.on.send.failure false
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;kafka-mirror-maker-stop.sh&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/bin/sh
+SIGNAL=${SIGNAL:-TERM}
+PIDS=$(ps ax | grep -i &amp;#39;kafka.tools.Mirrormaker&amp;#39; | grep java | grep -v grep | awk &amp;#39;{print $1}&amp;#39;)if [ -z &amp;#34;$PIDS&amp;#34; ]; then
+ echo &amp;#34;No mirrormaker service to stop&amp;#34;
+ echo &amp;#34;No mirrormaker service to stop&amp;#34; &amp;gt;&amp;gt; /opt/hadoop/kafka/logs/mirrormaker.log
+ exit 1
+else
+ kill -s $SIGNAL $PIDS
+ echo &amp;#34;stopped mirrormaker service&amp;#34;
+ echo &amp;#34;stopped mirrormaker service $date&amp;#34; &amp;gt;&amp;gt; /opt/hadoop/kafka/logs/mirrormaker.log
+fi
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём системного пользователя kafka, если такового не существует:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;useradd --system --no-create-home kafka
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Задаём права и владельцев для созданных файлов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;chown -R kafka.kafka kafka_2.13-2.6.0
+chown kafka.kafka kafka-mirror-st*.sh
+chmod u+x kafka-mirror-st*.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём unit для kafka-mirror в каталоге /etc/systemd/system/&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[Unit]
+Description=KafkaMirror Daemon
+Documentation=https://kafka.apache.org/documentation/
+Requires=network.target
+After=network.target
+
+[Service]
+User=kafka
+Group=kafka
+ExecStart=/opt/hadoop/kafka-mirror-start.sh
+ExecStop=/opt/hadoop/kafka-mirror-stop.sh
+TimeoutSec=60
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запускаем юнит и смотрим результаты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl daemon-reload
+systemctl enable kafka-mirror
+systemctl start kafka-mirror
+journalctl -f
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Сборка rpm-пакета nginx c модулями для kafka</title>
+      <link>/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
+      <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-05-26&lt;/p&gt;
+&lt;p&gt;Сборку производил в свежеустановленной виртуальной машине CentOS 7 (минимальный дистр), из-под обычного пользователя имеющего беспарольное sudo.&lt;/p&gt;
+&lt;h2 id=&#34;сборка-пакета-librdkafka&#34;&gt;Сборка пакета librdkafka&lt;/h2&gt;
+&lt;p&gt;Сначала надо собрать свежий &lt;code&gt;https://github.com/edenhill/librdkafka&lt;/code&gt;, так как в репо CentOS&amp;rsquo;а librdkafka имеет версию 0.11.5, тогда как на странице разработчиков — 1.5.0.&lt;/p&gt;
+&lt;p&gt;Сборка этого пакета заняла по времени чуть больше часа, но не из-за сложности. К счастью, разработчики всё продумали и собирать этот пакет проще простого.&lt;/p&gt;
+&lt;p&gt;Сборка пакета будет производиться в песочнице, с помощью &lt;code&gt;mock&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src; cd ~/src
+git clone https://github.com/edenhill/librdkafka
+sudo yum install mock
+sudo usermod -aG mock $USER
+exit
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После повторного входа под своей учётной записью, но уже с членством в группе &lt;code&gt;mock&lt;/code&gt;, запускаем сборку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cd ~/src/librdkafka/packaging/rpm
+$ make
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd ../../ &amp;amp;&amp;amp; \
+git archive --prefix=librdkafka-1.5.0/ \
+        -o packaging/rpm/SOURCES/librdkafka-1.5.0.tar.gz HEAD
+mkdir -p pkgs-1.5.0-1-default
+rm -f pkgs-1.5.0-1-default/librdkafka*.rpm
+/usr/bin/mock \
+        -r default \
+         \
+        --define &amp;#34;__version 1.5.0&amp;#34; \
+        --define &amp;#34;__release 1&amp;#34; \
+        --enable-network \
+        --resultdir=pkgs-1.5.0-1-default \
+        --no-clean --no-cleanup-after \
+        --install epel-release \
+        --buildsrpm \
+        --spec=librdkafka.spec \
+        --sources=SOURCES || \
+(tail -n 100 pkgs-1.5.0*/*log ; false)
+INFO: mock.py version 2.2 starting (python version = 3.6.8)...
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;В песочницу будут установлены необходимые пакеты (в моём случае около трёх сотен) и произведена сборка пакета.&lt;/p&gt;
+&lt;p&gt;После окончания работ, в каталоге  &lt;code&gt;~/src/librdkafka/packaging/rpm/pkgs-1.5.0-1-default&lt;/code&gt; можно обнаружить полный набор пакетов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-rw-r--r--. 1 u mock  931281 May 20 16:16 librdkafka1-1.5.0-1.el7.x86_64.rpm
+-rw-r--r--. 1 u mock 2752290 May 20 16:06 librdkafka-1.5.0-1.el7.src.rpm
+-rw-r--r--. 1 u mock 4090554 May 20 16:16 librdkafka-debuginfo-1.5.0-1.el7.x86_64.rpm
+-rw-r--r--. 1 u mock  953416 May 20 16:16 librdkafka-devel-1.5.0-1.el7.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Позже будет необходимо установить два пакета из этих четырёх.&lt;/p&gt;
+&lt;h2 id=&#34;сборка-пакета-nginx-kafka&#34;&gt;Сборка пакета nginx-kafka&lt;/h2&gt;
+&lt;h3 id=&#34;подключение-nginx-репозитория&#34;&gt;Подключение nginx-репозитория&lt;/h3&gt;
+&lt;p&gt;Добавляем в &lt;code&gt;/etc/yum.repos.d&lt;/code&gt; файл &lt;code&gt;nginx.repo&lt;/code&gt; со следующим содержимым:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[nginx-stable]
+name=nginx stable repo
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+gpgcheck=1
+enabled=1
+gpgkey=https://nginx.org/keys/nginx_signing.key
+module_hotfixes=true
+
+[nginx-source]
+name=nginx source repo
+baseurl=http://nginx.org/packages/centos/7/SRPMS/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-необходимых-для-сборки-пакетов&#34;&gt;Установка необходимых для сборки пакетов&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum update
+sudo yum install yum-utils wget git rpmdevtools
+sudo yum install jansson jansson-devel
+cd ~/src/librdkafka/packaging/rpm/pkgs-1.5.0-1-default
+sudo yum install librdkafka1-1.5.0-1.el7.x86_64.rpm librdkafka-devel-1.5.0-1.el7.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;включение-себя-в-группу-builder&#34;&gt;Включение себя в группу builder&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo usermod -aG builder $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-структуры-каталогов-rpmbuild&#34;&gt;Создание структуры каталогов ~/rpmbuild&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rpmdev-setuptree
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;размещение-исходников-nginx-в-rpmbuild&#34;&gt;Размещение исходников nginx в ~/rpmbuild&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd ~
+yumdownloader --source nginx
+rpm -Uvh nginx-1.18.0-1.el7.ngx.src.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-зависимостей&#34;&gt;Установка зависимостей&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum-builddep nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;скачивание-модулей-для-kafka&#34;&gt;Скачивание модулей для kafka&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src; cd ~/src
+git clone https://github.com/brg-liuwei/ngx_kafka_module.git
+git clone https://github.com/kaltura/nginx-kafka-log-module
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;изменения-в-rpmbuild&#34;&gt;Изменения в ~/rpmbuild&lt;/h3&gt;
+&lt;h4 id=&#34;rpmbuildspecsnginxspec&#34;&gt;~/rpmbuild/SPECS/nginx.spec&lt;/h4&gt;
+&lt;p&gt;В файле &lt;code&gt;~/rpmbuild/SPECS/nginx.spec&lt;/code&gt;, в конец строки с передаваемыми параметрами &lt;code&gt;%define BASE_CONFIGURE_ARGS ... --with-stream_ssl_preread_module)&amp;quot;&lt;/code&gt;, добавляем два модуля, указывая абсолютные пути, и три параметра:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;--add-module=/home/user/src/ngx_kafka_module --add-module=/home/user/src/nginx-kafka-log-module --with-http_perl_module --with-http_degradation_module --with-pcre
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Без опции &lt;code&gt;Conflicts&lt;/code&gt;, наш новый пакет &amp;ldquo;nginx-kafka&amp;rdquo; может быть замещен пакетом &amp;ldquo;nginx&amp;rdquo;. А для использования последней &lt;code&gt;librdkafka-1.5.0&lt;/code&gt;, а не старой из &lt;code&gt;epel&lt;/code&gt;, используем опцию &lt;code&gt;Requires&lt;/code&gt;. Итого, изменяем две существующие строки Summary и Name и добавляем две строки Requires и Conflicts:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Summary: High performance web server with kafka modules
+Name: nginx-kafka
+Requires: librdkafka1 &amp;gt;= 1.5.0
+Conflicts: nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавляем пять путей к perl-модулю, и один путь к ману, под существующими строками &lt;code&gt;%files&lt;/code&gt; и &lt;code&gt;%defattr(-,root,root)&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;%files
+%defattr(-,root,root)
+
+%{_libdir}/perl5/perllocal.pod
+%{_libdir}/perl5/vendor_perl/auto/nginx/.packlist
+%{_libdir}/perl5/vendor_perl/auto/nginx/nginx.bs
+%{_libdir}/perl5/vendor_perl/auto/nginx/nginx.so
+%{_libdir}/perl5/vendor_perl/nginx.pm
+%{_mandir}/man3/nginx.3pm.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;rpmbuildsourcesnginx-kafka-1180targz&#34;&gt;~/rpmbuild/SOURCES/nginx-kafka-1.18.0.tar.gz&lt;/h4&gt;
+&lt;p&gt;Перепаковываем архив с исходниками, чтобы в процессе сборки, при распаковке архива c  исходниками, был создан каталог &lt;code&gt;nginx-kafka-1.18&lt;/code&gt;, а не просто &lt;code&gt;nginx-1.18&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/tmp
+mv ~/rpmbuild/SOURCES/nginx-1.18.0.tar.gz ~/tmp/
+cd ~/tmp
+tar xvf nginx-1.18.0.tar.gz
+mv nginx-1.18.0 nginx-kafka-1.18.0
+tar -zcvf nginx-kafka-1.18.0.tar.gz nginx-kafka-1.18.0
+mv nginx-kafka-1.18.0.tar.gz ~/rpmbuild/SOURCES/
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;сборка&#34;&gt;Сборка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rpmbuild -ba ~/rpmbuild/SPECS/nginx.spec
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;результат&#34;&gt;Результат&lt;/h3&gt;
+&lt;p&gt;В &lt;code&gt;~/rpmbuild/RPMS&lt;/code&gt; и &lt;code&gt;~/rpmbuild/SRPMS&lt;/code&gt; наблюдаем только что созданные пакеты.&lt;/p&gt;
+&lt;h2 id=&#34;добавление-пакетов-в-nexus-repository&#34;&gt;Добавление пакетов в Nexus Repository&lt;/h2&gt;
+&lt;p&gt;В нексусе создаём репозиторий &amp;ldquo;nginx-kafka&amp;rdquo; и загружаем в него пакеты (пакет &lt;code&gt;cyrus-sasl&lt;/code&gt;, потребовавшийся в процессе экзерсисов, предварительно скачиваем с помощью &lt;code&gt;yumdownloader&lt;/code&gt;). Итого должно получиться:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cyrus-sasl-2.1.26-23.el7.x86_64.rpm
+librdkafka1-1.5.0-1.el7.x86_64.rpm
+librdkafka-1.5.0-1.el7.src.rpm
+librdkafka-devel-1.5.0-1.el7.x86_64.rpm
+nginx-kafka-1.18.0-1.el7.ngx.src.rpm
+nginx-kafka-1.18.0-1.el7.ngx.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На целевой машине добавляем описание репозитория (вариант без авторизации на нексусе):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[nginx-kafka]
+name = Nginx kafka
+baseurl = http://10.15.61.1:8081/repository/nginx-kafka/
+gpgcheck = 0
+enabled = 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На целевом сервере, после &lt;code&gt;yum update&lt;/code&gt;, добавляем &lt;code&gt;nginx-kafka&lt;/code&gt; и видим:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Dependencies Resolved
+
+=================================================================================================
+ Package               Arch             Version                      Repository             Size
+=================================================================================================
+Installing:
+ nginx-kafka           x86_64           1:1.18.0-1.el7.ngx           nginx-kafka           778 k
+Installing for dependencies:
+ cyrus-sasl            x86_64           2.1.26-23.el7                nginx-kafka            88 k
+ librdkafka1           x86_64           1.5.0-1.el7                  nginx-kafka           909 k
+
+Transaction Summary
+=================================================================================================
+Install  1 Package (+2 Dependent packages)
+
+Total download size: 1.7 M
+Installed size: 5.2 M
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Модули:
+&lt;a href=&#34;https://github.com/edenhill/librdkafka&#34;&gt;https://github.com/edenhill/librdkafka&lt;/a&gt;
+&lt;a href=&#34;https://github.com/brg-liuwei/ngx_kafka_module&#34;&gt;https://github.com/brg-liuwei/ngx_kafka_module&lt;/a&gt;
+&lt;a href=&#34;https://github.com/kaltura/nginx-kafka-log-module&#34;&gt;https://github.com/kaltura/nginx-kafka-log-module&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Использованные материалы:
+&lt;a href=&#34;https://www.fatalerrors.org/a/nginx-integrates-kafka.html&#34;&gt;https://www.fatalerrors.org/a/nginx-integrates-kafka.html&lt;/a&gt;
+&lt;a href=&#34;https://nginx.org/ru/linux_packages.html#RHEL-CentOS&#34;&gt;https://nginx.org/ru/linux_packages.html#RHEL-CentOS&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

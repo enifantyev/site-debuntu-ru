@@ -1,0 +1,69 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – OpenSSH</title>
+    <link>/tags/openssh/</link>
+    <description>Recent content in OpenSSH on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 20 Jan 2016 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/openssh/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Усиление защиты sshd</title>
+      <link>/n/usilenie-zashchity-sshd/</link>
+      <pubDate>Wed, 20 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/n/usilenie-zashchity-sshd/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2016-01-20&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://stribika.github.io/2015/01/04/secure-secure-shell.html&#34;&gt;https://stribika.github.io/2015/01/04/secure-secure-shell.html&lt;/a&gt;
+&lt;a href=&#34;https://www.opennet.ru/tips/2877_ssh_crypt_setup_security_nsa.shtml&#34;&gt;https://www.opennet.ru/tips/2877_ssh_crypt_setup_security_nsa.shtml&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Добавить ssh-audit&lt;/p&gt;
+&lt;p&gt;При создании новых ключей использовать ED25519 или RSA с длиной ключа более 4096:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh-keygen -o -a 129 -t ed25519 -C e0_20160116_ed25519 -f ~/.ssh/id_ed25519
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh-keygen -t rsa -b 4096 -o -a 132 -C e0_20160116_rsa -f ~/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;p&gt;На сервере в &lt;code&gt;sshd_config&lt;/code&gt; добавить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Там же оставить указание только на сильные серверные ключи:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Protocol 2
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;И пересоздать два серверных ключа rsa и ed25519 и сделать заглушки для отказа в создании новых dsa и ecdsa:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /etc/ssh
+# rm ssh_host_*key*
+# ssh-keygen -t ed25519 -N &amp;#39;&amp;#39; -f ssh_host_ed25519_key &amp;lt; /dev/null
+# ssh-keygen -t rsa -b 4096 -N &amp;#39;&amp;#39; -f ssh_host_rsa_key &amp;lt; /dev/null
+# ln -s /etc/ssh/ssh_host_ecdsa_key /etc/ssh/ssh_host_ecdsa_key
+# ln -s /etc/ssh/ssh_host_key /etc/ssh/ssh_host_key
+# ln -s /etc/ssh/ssh_host_dsa_key /etc/ssh/ssh_host_dsa_key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заглушки помешают последующим обновлениям, поэтому будет достаточно закомментить соответствующие строки в файле настройки sshd.&lt;/p&gt;
+&lt;p&gt;Отредактировать &lt;code&gt;/etc/ssh/moduli&lt;/code&gt; для использования RSA с длиной ключа больше 2000.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# awk &amp;#39;$5 &amp;gt; 2000&amp;#39; moduli &amp;gt; &amp;#34;${HOME}/moduli&amp;#34;
+# wc -l &amp;#34;${HOME}/moduli&amp;#34;
+# mv &amp;#34;${HOME}/moduli&amp;#34; moduli
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На клиенте в &lt;code&gt;/etc/ssh/ssh_config&lt;/code&gt; добавить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Host *
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256
+
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

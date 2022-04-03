@@ -1,0 +1,1954 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – FreeIPA</title>
+    <link>/tags/freeipa/</link>
+    <description>Recent content in FreeIPA on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 27 Dec 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/freeipa/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Manuals: 00. Удаление реплики</title>
+      <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
+      <pubDate>Mon, 27 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-12-27&lt;/p&gt;
+&lt;h2 id=&#34;1-ссылки-на-использованные-материалы&#34;&gt;1. Ссылки на использованные материалы&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/installing_identity_management/uninstalling-an-idm-replica_installing-identity-management&#34;&gt;Chapter 20. Uninstalling an IdM replica&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2-перед-удалением&#34;&gt;2. Перед удалением&lt;/h2&gt;
+&lt;p&gt;Необходимо убедиться, что роли, назначенные на удаляемый сервер, не являются последними в домене. Если удаляемая реплика имеет роль &amp;lsquo;CA master&amp;rsquo; или ей назначена роль генератора &amp;lsquo;CRL списков&amp;rsquo;, то необходимо перевести эти роли на другой сервер.&lt;/p&gt;
+&lt;h2 id=&#34;3-неполное-удаление-для-повторного-добавления-реплики&#34;&gt;3. Неполное удаление для повторного добавления реплики&lt;/h2&gt;
+&lt;h3 id=&#34;31-операции-на-удаляемом-сервере&#34;&gt;3.1. Операции на удаляемом сервере&lt;/h3&gt;
+&lt;p&gt;3.1.1. На удаляемом сервере запускаем процедуру удаления IPA-сервера:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ipa-server-install --uninstall
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.1.2. Здесь же зачищаем логи скриптов установки/удаления IPA-сервера:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo rm -rf /var/log/ipa*.log
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.1.3. Перезагружаем хост:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;32-операции-на-остающихся-ipa-репликах&#34;&gt;3.2. Операции на остающихся IPA-репликах&lt;/h3&gt;
+&lt;p&gt;3.2.1. В случае невозможности полноценного выполнения пункта 3.1., удаляем реплику из топологии используя любую машину в домене. Для этого, из командной строки любой оставшейся в домене машины выполняем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit admin
+$ export REPLICA=&amp;#34;replica.example.org&amp;#34;
+$ ipa server-del ${REPLICA}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.2.2. Проверяем через Web UI, что упоминания об удаляемом сервере не остались в следующих местах:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Список IPA-серверов (&lt;a href=&#34;https://dev-ipa04p.test3.lan/ipa/ui/#/e/server/search)&#34;&gt;https://dev-ipa04p.test3.lan/ipa/ui/#/e/server/search)&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Список хостов (&lt;a href=&#34;https://dev-ipa04p.test3.lan/ipa/ui/#/e/host/search)&#34;&gt;https://dev-ipa04p.test3.lan/ipa/ui/#/e/host/search)&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Записи в DNS-зоне (&lt;a href=&#34;https://dev-ipa04p.test3.lan/ipa/ui/#/e/dnszone/records/test3.lan.)&#34;&gt;https://dev-ipa04p.test3.lan/ipa/ui/#/e/dnszone/records/test3.lan.)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;3.2.3. Проверяем через Apache Directory Studio, что упоминания об удаляемом сервере зачищены в следующих местах:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Убрать диапазон номеров выдаваемых сертификатов cn=20000001,ou=requests,ou=ranges,o=ipaca.&lt;/li&gt;
+&lt;li&gt;Удалить упоминания из ou=people,o=ipaca.&lt;/li&gt;
+&lt;li&gt;Удалить упоминания из ou=certificateRepository,ou=ranges,o=ipaca.&lt;/li&gt;
+&lt;li&gt;Удалить упоминания из cn=CAList,ou=Security Domain,o=ipaca.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;3.2.4. Ещё посмотреть упоминания об удалённом сервере в &amp;lsquo;o=ipaca&amp;rsquo;. Удалять выданные для этого сервера сертификаты не требуется.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;После удаления сервера потребуется восстановить содержимое файла &lt;code&gt;/etc/resolv.conf&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;4-полное-удаление&#34;&gt;4. Полное удаление&lt;/h2&gt;
+&lt;p&gt;После &amp;ldquo;неполного&amp;rdquo; удаления выполняем дополнительные шаги.&lt;/p&gt;
+&lt;p&gt;4.1. Удаляем пакеты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo dnf -y module remove idm:DL1/dns
+sudo dnf -y autoremove python3-ipaserver
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4.2. Переключаемся на поток &amp;lsquo;idm:client&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo dnf -y module enable idm:client
+sudo dnf -y module reset idm:client
+sudo dnf -y distro-sync
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4.3. Зачищаем логи и прочие каталоги, после чего перезагружаем хост:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo rm -rf /var/log/ipa*.log \
+  /var/log/custodia \
+  /var/log/dirsrv \
+  /var/log/httpd \
+  /var/log/ipa \
+  /var/log/pki \
+  /var/log/opencryptoki
+
+sudo rm -rf /etc/custodia/* \
+  /etc/dirsrv \
+  /etc/ipa \
+
+sudo rm -rf /var/lib/certmonger/* \
+  /var/lib/custodia \
+  /var/lib/dirsrv \
+  /var/lib/httpd \
+  /var/lib/ipa \
+  /var/lib/opencryptoki
+
+sudo reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4.4. После удаления сервера потребуется восстановить содержимое файла &lt;code&gt;/etc/resolv.conf&lt;/code&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 01. Подготовка хостов к установке реплик FreeIPA</title>
+      <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
+      <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-12-24&lt;/p&gt;
+&lt;h2 id=&#34;1изменение-сетевых-настроек-и-имени-хоста&#34;&gt;1. Изменение сетевых настроек и имени хоста:&lt;/h2&gt;
+&lt;p&gt;1.1. Исправляем &lt;code&gt;/etc/hosts&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.2. Обнуляем &lt;code&gt;/etc/sysconfig/network&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;&amp;#34; | sudo tee /etc/sysconfig/network
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.3. Учитывая, что обращение за rpm-пакетами к Nexus Repository Manager производится по ip-адресу, то обнуляем &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;&amp;#34; | sudo tee /etc/resolv.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.4. Задаём имя машины в нижнем регистре с указанием имени будущего домена:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;DOMAINNAME=&amp;#34;test3.lan&amp;#34;
+sudo hostnamectl set-hostname $(echo $(hostname -s) | tr &amp;#39;[:upper:]&amp;#39; &amp;#39;[:lower:]&amp;#39;).${DOMAINNAME}
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-добавление-необходимых-пакетов&#34;&gt;2. Добавление необходимых пакетов&lt;/h2&gt;
+&lt;p&gt;2.1. Смотрим список доступных потоков:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[user@host ~]$ sudo dnf module list idm
+Last metadata expiration check: 0:06:45 ago on Чт 27 янв 2022 12:04:24.
+AlmaLinux 8 - AppStream
+Name  Stream      Profiles                                  Summary                                                       
+idm   DL1         adtrust, client, common [d], dns, server  The Red Hat Enterprise Linux Identity Management system module
+idm   client [d]  common [d]                                RHEL IdM long term support client module                      
+
+Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.2. Включаем модуль, в котором находится всё необходимое для установки FreeIPA-сервера:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo dnf -y module enable idm:DL1
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Dependencies resolved.
+==========================================================================================================================
+ Package                      Architecture                Version                      Repository                    Size
+==========================================================================================================================
+Enabling module streams:
+ 389-ds                                                   1.4
+ httpd                                                    2.4
+ idm                                                      DL1                                                            
+ pki-core                                                 10.6                                                           
+ pki-deps                                                 10.6                                                           
+
+Transaction Summary
+==========================================================================================================================
+
+Complete!
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;&lt;br/&gt;
+&lt;blockquote&gt;
+&lt;p&gt;В случае возникновения ошибки:&lt;br&gt;
+&lt;em&gt;Error: It is not possible to switch enabled streams of a module unless explicitly enabled via configuration option module_
+stream_switch.
+It is recommended to rather remove all installed content from the module, and reset the module using &amp;lsquo;dnf module reset &lt;mo
+dule_name&gt;&amp;rsquo; command. After you reset the module, you can install the other stream.&lt;/em&gt;
+&lt;br&gt;
+необходимо выполнить команду:&lt;br&gt;
+&lt;code&gt;sudo dnf -y module reset idm:DL1 &amp;amp;&amp;amp; sudo dnf -y module enable idm:DL1&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;2.3. Переключаем получение необходимых для установки FreeIPA пакетов на доставку из модуля &amp;lsquo;idm:DL1&amp;rsquo;, одновременно синхронизируя уже полученные пакеты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo dnf -y distro-sync
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Dependencies resolved.
+==========================================================================================================================
+ Package                       Architecture     Version                                         Repository           Size
+==========================================================================================================================
+Upgrading:
+ ipa-client                    x86_64           4.9.6-10.module_el8.5.0+2603+92118e57           appstream           280 k
+ ipa-client-common             noarch           4.9.6-10.module_el8.5.0+2603+92118e57           appstream           183 k
+ ipa-common                    noarch           4.9.6-10.module_el8.5.0+2603+92118e57           appstream           795 k
+ ipa-selinux                   noarch           4.9.6-10.module_el8.5.0+2603+92118e57           appstream           175 k
+ python3-ipaclient             noarch           4.9.6-10.module_el8.5.0+2603+92118e57           appstream           687 k
+ python3-ipalib                noarch           4.9.6-10.module_el8.5.0+2603+92118e57           appstream           754 k
+ python3-jwcrypto              noarch           0.5.0-1.module_el8.5.0+2603+92118e57            appstream            64 k
+ python3-pyusb                 noarch           1.0.0-9.module_el8.5.0+2603+92118e57            appstream            87 k
+ python3-qrcode-core           noarch           5.1-12.module_el8.5.0+2603+92118e57             appstream            45 k
+ python3-yubico                noarch           1.3.2-9.module_el8.5.0+2603+92118e57            appstream            62 k
+
+Transaction Summary
+==========================================================================================================================
+Upgrade  10 Packages
+
+Total download size: 3.1 M
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;&lt;br&gt;
+&lt;p&gt;2.4. Добавляем в систему пакеты для последующей установки FreeIPA-сервера со встроенным DNS-резольвером:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo dnf -y module install idm:DL1/dns
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Dependencies resolved.
+==========================================================================================================================
+ Package                              Arch        Version                                            Repository      Size
+==========================================================================================================================
+Installing group/module packages:
+ ipa-healthcheck                      noarch      0.7-6.module_el8.5.0+2603+92118e57                 appstream      101 k
+ ipa-healthcheck-core                 noarch      0.7-6.module_el8.5.0+2603+92118e57                 appstream       51 k
+ ipa-server                           x86_64      4.9.6-10.module_el8.5.0+2603+92118e57              appstream      528 k
+ ipa-server-dns                       noarch      4.9.6-10.module_el8.5.0+2603+92118e57              appstream      191 k
+Installing dependencies:
+ 389-ds-base                          x86_64      1.4.3.23-10.module_el8.5.0+2538+47000435           appstream      2.5 M
+ 389-ds-base-libs                     x86_64      1.4.3.23-10.module_el8.5.0+2538+47000435           appstream      1.4 M
+ almalinux-logos-httpd                noarch      84.5-1.el8                                         appstream       29 k
+ almalinux-logos-ipa                  noarch      84.5-1.el8                                         appstream       35 k
+ alsa-lib                             x86_64      1.2.5-4.el8                                        appstream      488 k
+ ant                                  noarch      1.10.5-1.module_el8.0.0+6031+d80e135e              appstream      193 k
+ ant-lib                              noarch      1.10.5-1.module_el8.0.0+6031+d80e135e              appstream      2.0 M
+ apache-commons-cli                   noarch      1.4-4.module_el8.0.0+6035+97aff910                 appstream       74 k
+ apache-commons-codec                 noarch      1.11-3.module_el8.0.0+6035+97aff910                appstream      288 k
+ apache-commons-io                    noarch      1:2.6-3.module_el8.0.0+6035+97aff910               appstream      223 k
+ apache-commons-lang3                 noarch      3.7-3.module_el8.0.0+6035+97aff910                 appstream      482 k
+ apache-commons-logging               noarch      1.2-13.module_el8.0.0+6035+97aff910                appstream       85 k
+ apache-commons-net                   noarch      3.6-3.module_el8.5.0+2577+9e95fe00                 appstream      296 k
+ apr                                  x86_64      1.6.3-12.el8                                       appstream      128 k
+ apr-util                             x86_64      1.6.1-6.el8                                        appstream      105 k
+ atk                                  x86_64      2.28.1-1.el8                                       appstream      271 k
+ bea-stax-api                         noarch      1.2.0-16.module_el8.5.0+2577+9e95fe00              appstream       36 k
+ bind                                 x86_64      32:9.11.26-6.el8                                   appstream      2.1 M
+ bind-dyndb-ldap                      x86_64      11.6-2.module_el8.5.0+2603+92118e57                appstream      127 k
+ bind-pkcs11                          x86_64      32:9.11.26-6.el8                                   appstream      397 k
+ bind-pkcs11-libs                     x86_64      32:9.11.26-6.el8                                   appstream      1.1 M
+ bind-pkcs11-utils                    x86_64      32:9.11.26-6.el8                                   appstream      259 k
+ cairo                                x86_64      1.15.12-3.el8                                      appstream      721 k
+ copy-jdk-configs                     noarch      4.0-2.el8                                          appstream       29 k
+ custodia                             noarch      0.6.0-3.module_el8.5.0+2603+92118e57               appstream       32 k
+ cyrus-sasl-md5                       x86_64      2.1.27-5.el8                                       baseos          65 k
+ cyrus-sasl-plain                     x86_64      2.1.27-5.el8                                       baseos          47 k
+ fontawesome-fonts                    noarch      4.7.0-4.el8                                        appstream      203 k
+ fontconfig                           x86_64      2.13.1-4.el8                                       baseos         273 k
+ fontpackages-filesystem              noarch      1.44-22.el8                                        baseos          16 k
+ fribidi                              x86_64      1.0.4-8.el8                                        appstream       89 k
+ gdk-pixbuf2                          x86_64      2.36.12-5.el8                                      baseos         467 k
+ gdk-pixbuf2-modules                  x86_64      2.36.12-5.el8                                      appstream      109 k
+ giflib                               x86_64      5.1.4-3.el8                                        appstream       51 k
+ glassfish-fastinfoset                noarch      1.2.13-9.module_el8.5.0+2577+9e95fe00              appstream      353 k
+ glassfish-jaxb-api                   noarch      2.2.12-8.module_el8.5.0+2577+9e95fe00              appstream      100 k
+ glassfish-jaxb-core                  noarch      2.2.11-11.module_el8.5.0+2577+9e95fe00             appstream      157 k
+ glassfish-jaxb-runtime               noarch      2.2.11-11.module_el8.5.0+2577+9e95fe00             appstream      935 k
+ glassfish-jaxb-txw2                  noarch      2.2.11-11.module_el8.5.0+2577+9e95fe00             appstream       89 k
+ graphite2                            x86_64      1.3.10-10.el8                                      appstream      121 k
+ gtk-update-icon-cache                x86_64      3.22.30-8.el8                                      appstream       31 k
+ harfbuzz                             x86_64      1.7.5-3.el8                                        appstream      295 k
+ hicolor-icon-theme                   noarch      0.17-2.el8                                         appstream       48 k
+ httpcomponents-client                noarch      4.5.5-4.module_el8.0.0+6035+97aff910               appstream      718 k
+ httpcomponents-core                  noarch      4.4.10-3.module_el8.0.0+6035+97aff910              appstream      637 k
+ httpd                                x86_64      2.4.37-43.module_el8.5.0+2597+c4b14997.alma        appstream      1.4 M
+ httpd-filesystem                     noarch      2.4.37-43.module_el8.5.0+2597+c4b14997.alma        appstream       39 k
+ httpd-tools                          x86_64      2.4.37-43.module_el8.5.0+2597+c4b14997.alma        appstream      106 k
+ ipa-server-common                    noarch      4.9.6-10.module_el8.5.0+2603+92118e57              appstream      611 k
+ istack-commons-runtime               noarch      2.21-9.el8+7                                       appstream       43 k
+ jackson-annotations                  noarch      2.10.0-1.module_el8.5.0+2577+9e95fe00              appstream       70 k
+ jackson-core                         noarch      2.10.0-1.module_el8.5.0+2577+9e95fe00              appstream      344 k
+ jackson-databind                     noarch      2.10.0-1.module_el8.5.0+2577+9e95fe00              appstream      1.3 M
+ jackson-jaxrs-json-provider          noarch      2.9.9-1.module_el8.5.0+2577+9e95fe00               appstream       23 k
+ jackson-jaxrs-providers              noarch      2.9.9-1.module_el8.5.0+2577+9e95fe00               appstream       44 k
+ jackson-module-jaxb-annotations      noarch      2.7.6-4.module_el8.5.0+2577+9e95fe00               appstream       45 k
+ jasper-libs                          x86_64      2.0.14-5.el8                                       appstream      166 k
+ java-1.8.0-openjdk                   x86_64      1:1.8.0.312.b07-2.el8_5                            appstream      340 k
+ java-1.8.0-openjdk-devel             x86_64      1:1.8.0.312.b07-2.el8_5                            appstream      9.9 M
+ java-1.8.0-openjdk-headless          x86_64      1:1.8.0.312.b07-2.el8_5                            appstream       34 M
+ javapackages-filesystem              noarch      5.3.0-2.module_el8.0.0+6004+2fc32706               appstream       30 k
+ javapackages-tools                   noarch      5.3.0-2.module_el8.0.0+6004+2fc32706               appstream       44 k
+ jbigkit-libs                         x86_64      2.1-14.el8                                         appstream       54 k
+ jboss-annotations-1.2-api            noarch      1.0.0-4.el8                                        appstream       40 k
+ jboss-jaxrs-2.0-api                  noarch      1.0.0-6.el8                                        appstream      113 k
+ jboss-logging                        noarch      3.3.0-5.el8                                        appstream       71 k
+ jboss-logging-tools                  noarch      2.0.1-6.el8                                        appstream      174 k
+ jdeparser                            noarch      2.0.0-5.el8                                        appstream      217 k
+ jss                                  x86_64      4.9.1-1.module_el8.5.0+2592+8eb38ccc               appstream      1.2 M
+ krb5-pkinit                          x86_64      1.18.2-14.el8                                      baseos         174 k
+ krb5-server                          x86_64      1.18.2-14.el8                                      baseos         1.1 M
+ ldapjdk                              noarch      4.23.0-1.module_el8.5.0+2592+8eb38ccc              appstream      322 k
+ ldns                                 x86_64      1.7.0-21.el8                                       appstream      165 k
+ libX11                               x86_64      1.6.8-5.el8                                        appstream      610 k
+ libX11-common                        noarch      1.6.8-5.el8                                        appstream      157 k
+ libXau                               x86_64      1.0.9-3.el8                                        appstream       37 k
+ libXcomposite                        x86_64      0.4.4-14.el8                                       appstream       28 k
+ libXcursor                           x86_64      1.1.15-3.el8                                       appstream       36 k
+ libXdamage                           x86_64      1.1.4-14.el8                                       appstream       26 k
+ libXext                              x86_64      1.3.4-1.el8                                        appstream       45 k
+ libXfixes                            x86_64      5.0.3-7.el8                                        appstream       25 k
+ libXft                               x86_64      2.3.3-1.el8                                        appstream       66 k
+ libXi                                x86_64      1.7.10-1.el8                                       appstream       48 k
+ libXinerama                          x86_64      1.1.4-1.el8                                        appstream       15 k
+ libXrandr                            x86_64      1.5.2-1.el8                                        appstream       33 k
+ libXrender                           x86_64      0.9.10-7.el8                                       appstream       33 k
+ libXtst                              x86_64      1.2.3-7.el8                                        appstream       21 k
+ libdatrie                            x86_64      0.2.9-7.el8                                        appstream       33 k
+ libfontenc                           x86_64      1.1.3-8.el8                                        appstream       37 k
+ libjpeg-turbo                        x86_64      1.5.3-12.el8                                       appstream      156 k
+ libthai                              x86_64      0.1.27-2.el8                                       appstream      203 k
+ libtiff                              x86_64      4.0.9-20.el8                                       appstream      187 k
+ libxcb                               x86_64      1.13.1-1.el8                                       appstream      231 k
+ lua                                  x86_64      5.3.4-12.el8                                       appstream      191 k
+ mailcap                              noarch      2.1.48-3.el8                                       baseos          39 k
+ mod_auth_gssapi                      x86_64      1.6.1-7.1.el8                                      appstream       84 k
+ mod_http2                            x86_64      1.15.7-3.module_el8.5.0+2576+c8e0c271              appstream      153 k
+ mod_lookup_identity                  x86_64      1.0.0-4.el8                                        appstream       30 k
+ mod_session                          x86_64      2.4.37-43.module_el8.5.0+2597+c4b14997.alma        appstream       73 k
+ mod_ssl                              x86_64      1:2.4.37-43.module_el8.5.0+2597+c4b14997.alma      appstream      135 k
+ open-sans-fonts                      noarch      1.10-6.el8                                         appstream      482 k
+ opencryptoki                         x86_64      3.16.0-5.el8                                       baseos         136 k
+ opencryptoki-icsftok                 x86_64      3.16.0-5.el8                                       baseos         288 k
+ opencryptoki-libs                    x86_64      3.16.0-5.el8                                       baseos          59 k
+ opendnssec                           x86_64      2.1.7-1.module_el8.5.0+2603+92118e57               appstream      472 k
+ openldap-clients                     x86_64      2.4.46-18.el8                                      baseos         201 k
+ openssl-perl                         x86_64      1:1.1.1k-4.el8                                     baseos          80 k
+ pango                                x86_64      1.42.4-8.el8                                       appstream      296 k
+ perl-Algorithm-Diff                  noarch      1.1903-9.el8                                       baseos          51 k
+ perl-Archive-Tar                     noarch      2.30-1.el8                                         baseos          79 k
+ perl-Compress-Raw-Bzip2              x86_64      2.081-1.el8                                        baseos          40 k
+ perl-Compress-Raw-Zlib               x86_64      2.081-1.el8                                        baseos          68 k
+ perl-DB_File                         x86_64      1.842-1.el8                                        appstream       83 k
+ perl-IO-Compress                     noarch      2.081-1.el8                                        baseos         258 k
+ perl-IO-Zlib                         noarch      1:1.10-420.el8                                     baseos          79 k
+ perl-Text-Diff                       noarch      1.45-2.el8                                         baseos          45 k
+ pixman                               x86_64      0.38.4-1.el8                                       appstream      257 k
+ pki-acme                             noarch      10.11.2-2.module_el8.5.0+2592+8eb38ccc             appstream      1.0 M
+ pki-base                             noarch      10.11.2-2.module_el8.5.0+2592+8eb38ccc             appstream      294 k
+ pki-base-java                        noarch      10.11.2-2.module_el8.5.0+2592+8eb38ccc             appstream      666 k
+ pki-ca                               noarch      10.11.2-2.module_el8.5.0+2592+8eb38ccc             appstream      1.3 M
+ pki-kra                              noarch      10.11.2-2.module_el8.5.0+2592+8eb38ccc             appstream      288 k
+ pki-server                           noarch      10.11.2-2.module_el8.5.0+2592+8eb38ccc             appstream      2.6 M
+ pki-servlet-4.0-api                  noarch      1:9.0.30-3.module_el8.5.0+2577+9e95fe00            appstream      281 k
+ pki-servlet-engine                   noarch      1:9.0.30-3.module_el8.5.0+2577+9e95fe00            appstream      5.4 M
+ pki-symkey                           x86_64      10.11.2-2.module_el8.5.0+2592+8eb38ccc             appstream       56 k
+ pki-tools                            x86_64      10.11.2-2.module_el8.5.0+2592+8eb38ccc             appstream      794 k
+ publicsuffix-list                    noarch      20180723-1.el8                                     baseos          79 k
+ python3-argcomplete                  noarch      1.9.3-6.el8                                        appstream       60 k
+ python3-asn1crypto                   noarch      0.24.0-3.el8                                       baseos         181 k
+ python3-custodia                     noarch      0.6.0-3.module_el8.5.0+2603+92118e57               appstream      120 k
+ python3-distro                       noarch      1.4.0-2.module_el8.5.0+2569+5c5719bc               appstream       36 k
+ python3-ipaserver                    noarch      4.9.6-10.module_el8.5.0+2603+92118e57              appstream      1.6 M
+ python3-kdcproxy                     noarch      0.4-5.module_el8.5.0+2603+92118e57                 appstream       38 k
+ python3-lib389                       noarch      1.4.3.23-10.module_el8.5.0+2538+47000435           appstream      887 k
+ python3-lxml                         x86_64      4.2.3-3.el8                                        appstream      1.5 M
+ python3-mod_wsgi                     x86_64      4.6.4-4.el8                                        appstream      2.5 M
+ python3-pip                          noarch      9.0.3-20.el8                                       appstream       19 k
+ python3-pki                          noarch      10.11.2-2.module_el8.5.0+2592+8eb38ccc             appstream      164 k
+ python3-psutil                       x86_64      5.4.3-11.el8                                       appstream      372 k
+ python3-setuptools                   noarch      39.2.0-6.el8                                       baseos         162 k
+ python3-systemd                      x86_64      234-8.el8                                          appstream       81 k
+ python3-webencodings                 noarch      0.5.1-6.el8                                        appstream       27 k
+ python36                             x86_64      3.6.8-38.module_el8.5.0+2569+5c5719bc              appstream       18 k
+ relaxngDatatype                      noarch      2011.1-7.module_el8.5.0+2577+9e95fe00              appstream       26 k
+ resteasy                             noarch      3.0.26-6.module_el8.5.0+2577+9e95fe00              appstream      1.1 M
+ slapi-nis                            x86_64      0.56.6-4.module_el8.5.0+2603+92118e57              appstream      157 k
+ slf4j                                noarch      1.7.25-4.module_el8.5.0+2577+9e95fe00              appstream       76 k
+ slf4j-jdk14                          noarch      1.7.25-4.module_el8.5.0+2577+9e95fe00              appstream       24 k
+ softhsm                              x86_64      2.6.0-5.module_el8.5.0+2603+92118e57               appstream      430 k
+ sqlite                               x86_64      3.26.0-15.el8                                      baseos         667 k
+ sscg                                 x86_64      2.3.3-14.el8                                       appstream       49 k
+ stax-ex                              noarch      1.7.7-8.module_el8.5.0+2577+9e95fe00               appstream       54 k
+ tomcatjss                            noarch      7.7.0-1.module_el8.5.0+2592+8eb38ccc               appstream       38 k
+ ttmkfdir                             x86_64      3.0.9-54.el8                                       appstream       62 k
+ tzdata-java                          noarch      2021e-1.el8                                        appstream      190 k
+ words                                noarch      3.0-28.el8                                         baseos         1.4 M
+ xalan-j2                             noarch      2.7.1-38.module_el8.5.0+2577+9e95fe00              appstream      1.9 M
+ xerces-j2                            noarch      2.11.0-34.module_el8.5.0+2577+9e95fe00             appstream      1.2 M
+ xml-commons-apis                     noarch      1.4.01-25.module_el8.5.0+2577+9e95fe00             appstream      233 k
+ xml-commons-resolver                 noarch      1.2-26.module_el8.5.0+2577+9e95fe00                appstream      114 k
+ xmlstreambuffer                      noarch      1.5.4-8.module_el8.5.0+2577+9e95fe00               appstream       86 k
+ xorg-x11-font-utils                  x86_64      1:7.5-41.el8                                       appstream      102 k
+ xorg-x11-fonts-Type1                 noarch      7.5-19.el8                                         appstream      522 k
+ xsom                                 noarch      0-19.20110809svn.module_el8.5.0+2577+9e95fe00      appstream      398 k
+Installing weak dependencies:
+ apr-util-bdb                         x86_64      1.6.1-6.el8                                        appstream       24 k
+ apr-util-openssl                     x86_64      1.6.1-6.el8                                        appstream       27 k
+ bash-completion                      noarch      1:2.7-5.el8                                        baseos         273 k
+ gtk2                                 x86_64      2.24.32-5.el8                                      appstream      3.4 M
+ python3-beautifulsoup4               noarch      4.6.3-2.el8.1                                      epel           185 k
+ python3-cssselect                    noarch      0.9.2-10.el8                                       epel            40 k
+ python3-html5lib                     noarch      1:0.999999999-6.el8                                appstream      214 k
+ python3-nss                          x86_64      1.0.1-10.module_el8.5.0+2577+9e95fe00.alma         appstream      285 k
+Installing module profiles:
+ idm/dns
+
+Transaction Summary
+==========================================================================================================================
+Install  177 Packages
+
+Total download size: 110 M
+Installed size: 319 M
+...
+  Installing       : sqlite-3.26.0-15.el8.x86_64                                                                  137/177
+  Running scriptlet: opendnssec-2.1.7-1.module_el8.5.0+2603+92118e57.x86_64                                       138/177
+  Installing       : opendnssec-2.1.7-1.module_el8.5.0+2603+92118e57.x86_64                                       138/177
+  Running scriptlet: opendnssec-2.1.7-1.module_el8.5.0+2603+92118e57.x86_64                                       138/177
+Slot 0 has a free/uninitialized token.
+The token has been initialized and is reassigned to slot 1520725004
+*WARNING* This will erase all data in the database; are you sure? [y/N] Database setup successfully.
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA</title>
+      <link>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
+      <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-10-11&lt;/p&gt;
+&lt;h2 id=&#34;условия&#34;&gt;Условия&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Выполняем все команды на целевой машине.&lt;/li&gt;
+&lt;li&gt;Предполагается, что машина введена во FreeIPA-домен.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;установка-и-включение-cockpit&#34;&gt;Установка и включение Cockpit&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install cockpit
+sudo systemctl enable --now cockpit.service
+sudo systemctl enable --now cockpit.socket
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;изменение-номера-порта&#34;&gt;Изменение номера порта&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://cockpit-project.org/guide/latest/listen.html&#34;&gt;https://cockpit-project.org/guide/latest/listen.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;По умолчанию, cockpit слушает порт номер 9090. Перевесим его на 443-ий порт:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mkdir -p /etc/systemd/system/cockpit.socket.d/
+
+cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/cockpit.socket.d/listen.conf
+[Socket]
+ListenStream=
+ListenStream=443
+EOF
+
+sudo systemctl daemon-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;скрипт-для-запуска-после-автоматической-смены-сертификата&#34;&gt;Скрипт для запуска после автоматической смены сертификата&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/cockpit/RunAfterUpdateCert.sh 
+#!/bin/bash
+rm -f /etc/cockpit/ws-certs.d/0-self-signed.cert.1
+mv /etc/cockpit/ws-certs.d/0-self-signed.cert /etc/cockpit/ws-certs.d/0-self-signed.cert.1
+cat /etc/pki/tls/certs/HTTP_$(hostname).crt \
+    /etc/pki/tls/private/HTTP_$(hostname).key &amp;gt; \
+    /etc/cockpit/ws-certs.d/0-self-signed.cert
+
+/usr/bin/systemctl restart cockpit.service
+/usr/bin/systemctl restart cockpit.socket
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;запрос-tls-сертификата-с-автообновлением&#34;&gt;Запрос TLS-сертификата с автообновлением&lt;/h2&gt;
+&lt;p&gt;Предположим, что альтернативное имя для хоста будет &amp;lsquo;cp01.example.org&amp;rsquo;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ALIAS=&amp;#34;cp01&amp;#34;
+
+kinit
+ipa dnsrecord-add $(hostname -d) ${ALIAS} --cname-rec=&amp;#34;$(hostname).&amp;#34;
+ipa service-add HTTP/$(hostname)@$(hostname -d)|tr [:lower:] [:upper:])
+ipa service-add-principal HTTP/$(hostname) HTTP/${ALIAS}.$(hostname -d)
+
+sudo ipa-getcert request -K HTTP/$(hostname) \
+-f /etc/pki/tls/certs/HTTP_$(hostname).crt \
+-k /etc/pki/tls/private/HTTP_$(hostname).key \
+-D &amp;#34;${ALIAS}.$(hostname -d)&amp;#34; -C &amp;#34;/bin/bash -c &amp;#39;/etc/cockpit/RunAfterUpdateCert.sh&amp;#39;&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</title>
+      <link>/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
+      <pubDate>Wed, 04 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-04&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/peterpakos/checkipaconsistency&#34;&gt;https://github.com/peterpakos/checkipaconsistency&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;установка-checkipaconsistency&#34;&gt;Установка checkipaconsistency&lt;/h2&gt;
+&lt;p&gt;Предыдущую версию 2.7.10 можно установить через pip &lt;code&gt;pip install --user checkipaconsistency&lt;/code&gt;, тогда как последнюю версию придётся собирать:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ git clone https://github.com/peterpakos/checkipaconsistency.git
+$ cd checkipaconsistency
+$ pip install --user -r requirements.txt
+$ ./cipa
+Initial config saved to ~/.config/checkipaconsistency - PLEASE EDIT IT!
+IPA domain not set
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка&#34;&gt;Настройка&lt;/h2&gt;
+&lt;p&gt;Настройки находятся в файле &lt;code&gt;~/.config/checkipaconsistency&lt;/code&gt;, где укажем пароль от &amp;lsquo;cn=Directory Manager&amp;rsquo;, что не безопасно. Напомню, что этот специальный аккаунт критически важен для безопасности домена FreeIPA.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; ~/.config/checkipaconsistency
+[IPA]
+domain = test.lan
+hosts = dev-ipa01p, dev-ipa02p, dev-ipa03p
+binddn = cn=Directory Manager
+bindpw = DirectoryManagerPassWord
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;использование&#34;&gt;Использование&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ./cipa
++--------------------+--------------+--------------+--------------+-------+
+| FreeIPA servers:   | dev-ipa01p   | dev-ipa02p   | dev-ipa03p   | STATE |
++--------------------+--------------+--------------+--------------+-------+
+| Active Users       | 19           | 19           | 19           | OK    |
+| Stage Users        | 0            | 0            | 0            | OK    |
+| Preserved Users    | 1            | 1            | 1            | OK    |
+| Hosts              | 16           | 16           | 16           | OK    |
+| Services           | 65           | 65           | 65           | OK    |
+| User Groups        | 33           | 33           | 33           | OK    |
+| Host Groups        | 1            | 1            | 1            | OK    |
+| Netgroups          | 0            | 0            | 0            | OK    |
+| HBAC Rules         | 1            | 1            | 1            | OK    |
+| SUDO Rules         | 0            | 0            | 0            | OK    |
+| DNS Zones          | 2            | 2            | 2            | OK    |
+| Certificates       | 108          | 108          | 108          | OK    |
+| LDAP Conflicts     | 0            | 0            | 0            | OK    |
+| Ghost Replicas     | 0            | 0            | 0            | OK    |
+| Anonymous BIND     | ON           | ON           | ON           | OK    |
+| Microsoft ADTrust  | False        | False        | False        | OK    |
+| Replication Status | dev-ipa03p 0 | dev-ipa03p 0 | dev-ipa02p 0 | OK    |
+|                    | dev-ipa02p 0 | dev-ipa01p 0 | dev-ipa01p 0 |       |
++--------------------+--------------+--------------+--------------+-------+
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Ручное удаление реплики FreeIPA из RedOS7.2</title>
+      <link>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
+      <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-13&lt;/p&gt;
+&lt;p&gt;После неудачных опытов приходится выковыривать останки FreeIPA.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum autoremove bind bind-dyndb-ldap ipa-server*
+pip freeze | xargs pip uninstall -y
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаление большинства python-пакетов производим через поочерёдное &lt;code&gt;yum autoremove&lt;/code&gt;, &lt;code&gt;pip freeze &amp;gt; list.txt&lt;/code&gt; и &lt;code&gt;pip uninstall -y -r list.txt&lt;/code&gt;. В файле &lt;code&gt;list.txt&lt;/code&gt;, при необходимости, удаляем названия пакетов, неудаляемых через pip.&lt;/p&gt;
+&lt;p&gt;При необходимости можно выполнить полное удаление python3:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum -y autoremove python3
+rm -rf /usr/lib/python3.6 /usr/local/lib/python3.6
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf /var/log/{dirsrv,httpd,ipa}
+rm -f /var/log/{ipa*.log}
+rm -rf /var/lib/{dirsrv,certmonger,gssproxy,ipa,ipa-client}
+rm -rf /var/lib/pki/pki-tomcat
+rm -rf /var/kerberos
+rm -rf /etc/{dirsrv,httpd,gssproxy,ipa}
+rm -rf /etc/pki/pki-tomcat
+rm -f /etc/sysconfig/{dirsrv*,ipa-*,pki-tomcat,tomcat}
+rm -rf /etc/sysconfig/pki/tomcat
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Mokey - пользовательский сервис сброса/смены паролей FreeIPA</title>
+      <link>/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
+      <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-05-27&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Сервис Mokey предназачен для самообслуживания пользователей FreeIPA домена, с помощью которого предоставляется возможность смены пароля или сброса забытого пароля, с отправкой одноразовой ссылки на зарегистрированную в IPA почту пользователя. Замечу, что &lt;strong&gt;mokey, не работает с учётными записями, состоящими во встроенной IPA-группе &amp;lsquo;admins&amp;rsquo;&lt;/strong&gt;, так как роль helpdesk не сможет изменить пароль таких УЗ. Вообще, рекомендуется использовать отдельную УЗ, участницу группы &amp;lsquo;admins&amp;rsquo;, для администрирования FreeIPA.&lt;/p&gt;
+&lt;h2 id=&#34;установка-mokey&#34;&gt;Установка mokey&lt;/h2&gt;
+&lt;p&gt;Установка mokey банальна и не вызывает интереса. Скачиваем последний релиз rpm-пакет из &lt;a href=&#34;https://github.com/ubccr/mokey&#34;&gt;github.com/ubccr/mokey&lt;/a&gt; и устанавливаем обычным способом.&lt;/p&gt;
+&lt;h2 id=&#34;установка-mariadb-и-создание-базы-mokey&#34;&gt;Установка MariaDB и создание базы mokey&lt;/h2&gt;
+&lt;p&gt;Устанавливаем mariadb-server:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum install mariadb-server
+systemctl enable --now mariadb-server
+systemctl enable --now mariadb
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Далее стандартный вызов &lt;code&gt;mysql_secure_installation&lt;/code&gt; с придумыванием хорошего пароля root&amp;rsquo;а для mariadb:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mysql_secure_installation
+  Root Password:
+  Remove anonymous users? [Y/n] y
+  Disallow root login remotely? [Y/n] y
+  Remove test database and access to it? [Y/n] y
+  Reload privilege tables now? [Y/n] y
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Далее создание базы данных mokey с логином/паролем и импорт схемы таблиц:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mysql -u root -p
+  mysql&amp;gt; create database mokey;
+  mysql&amp;gt; grant all on mokey.* to [user]@localhost identified by &amp;#39;[pass]&amp;#39;
+  mysql&amp;gt; exit
+mysql -u root -p mokey &amp;lt; /usr/share/mokey/ddl/schema.sql
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;создание-сервиса-mokey-и-получение-keytabов&#34;&gt;Создание сервиса mokey и получение keytab&amp;rsquo;ов&lt;/h2&gt;
+&lt;p&gt;Выполняем создание сервиса и &lt;strong&gt;создание keytab&amp;rsquo;а&lt;/strong&gt; на первом контроллере домена с правами обычного пользователя, но с принципалом, имеющим администраторские права во FreeIPA (здесь с принципалом admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit admin
+
+# Добавляем сервис mokey
+ipa service-add mokey/ipa-selfservice.test.lan --skip-host-check --force
+
+# Даём юзеру право на создание keytab&amp;#39;а
+ipa service-allow-create-keytab mokey/ipa-selfservice.test.lan --users=admin
+
+# Создаём и сохраняем keytab в каталоге
+ipa-getkeytab -p mokey/ipa-selfservice.test.lan -k /etc/mokey/keytab/mokeyapp.keytab
+
+# Отнимаем у пользователя право на создание keytab&amp;#39;а для этого сервиса
+ipa service-disallow-create-keytab mokey/ipa-selfservice.test.lan --users=admin
+
+chmod 640 /etc/mokey/keytab/mokeyapp.keytab
+chgrp mokey /etc/mokey/keytab/mokeyapp.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На других контроллерах домена выполняем &lt;strong&gt;получение keytab&amp;rsquo;а&lt;/strong&gt; (здесь с принципалом admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit admin
+
+# Даём юзеру право на получение keytab&amp;#39;а
+ipa service-allow-retrieve-keytab mokey/ipa-selfservice.test.lan --users=admin
+
+# Создаём и сохраняем keytab в каталоге
+ipa-getkeytab -p mokey/ipa-selfservice.test.lan -k /etc/mokey/keytab/mokeyapp.keytab -r
+
+# Отнимаем у пользователя право на получение keytab&amp;#39;а для этого сервиса
+ipa service-disallow-retrieve-keytab mokey/ipa-selfservice.test.lan --users=admin
+
+chmod 640 /etc/mokey/keytab/mokeyapp.keytab
+chgrp mokey /etc/mokey/keytab/mokeyapp.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;создание-http-сервиса-для-mokey-и-получение-сертификатов&#34;&gt;Создание HTTP-сервиса для mokey и получение сертификатов&lt;/h2&gt;
+&lt;p&gt;На первом контроллере домена выполняем создание сервиса HTTP и запрос на получение сертификата (здесь с принципалом admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit admin
+
+# Создаём сервис без привязки к хосту
+ipa service-add HTTP/ipa-selfservice.test.lan --skip-host-check --force
+
+# Даём управление сервисом для всех контроллеров домена
+ipa service-add-host HTTP/ipa-selfservice.test.lan \
+    --host prod-ipa01p.test.lan \
+    --host prod-ipa02p.test.lan \
+    --host prod-ipa03p.test.lan \
+
+# Создаём ключи и запрашиваем сертификат с одновременной постановкой на отслеживание
+ipa-getcert request -w -K &amp;#34;HTTP/$(hostname)&amp;#34; \
+                          -k &amp;#34;/etc/mokey/mokey_ssl.key&amp;#34; \
+                          -f &amp;#34;/etc/mokey/mokey_ssl.crt&amp;#34; \
+                          -D $(hostname) \
+                          -D &amp;#34;ipa-selfservice.test.lan&amp;#34; \
+                          -C &amp;#34;/bin/bash -c &amp;#39;/bin/chgrp mokey /etc/mokey/mokey_ssl.* &amp;amp;&amp;amp; /bin/chmod 640 /etc/mokey/mokey_ssl.*&amp;#39;&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На других контроллерах домена выполняем только запрос на получение сертификата (здесь с принципалом admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit admin
+
+ipa-getcert request -w -K &amp;#34;HTTP/$(hostname)&amp;#34; \
+                          -k &amp;#34;/etc/mokey/mokey_ssl.key&amp;#34; \
+                          -f &amp;#34;/etc/mokey/mokey_ssl.crt&amp;#34; \
+                          -D $(hostname) \
+                          -D &amp;#34;ipa-selfservice.test.lan&amp;#34; \
+                          -C &amp;#34;/bin/bash -c &amp;#39;/bin/chgrp mokey /etc/mokey/mokey_ssl.* &amp;amp;&amp;amp; /bin/chmod 640 /etc/mokey/mokey_ssl.*&amp;#39;&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;редактируем-etcmokeymokeyyml&#34;&gt;Редактируем /etc/mokey/mokey.yml&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;vi /etc/mokey/mokey.yaml&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dsn: &amp;#34;mokey:[Соответствующий Пароль]@/mokey?parseTime=true&amp;#34;
+driver: &amp;#34;mysql&amp;#34;
+port: 8081
+bind: &amp;#34;127.0.0.1&amp;#34;
+min_passwd_len: 12
+min_passwd_classes: 2
+auth_key: &amp;lt;!-- здесь строка из 64 случайных символа из словаря 0123456789abcdef --&amp;gt;
+enc_key: &amp;lt;!-- здесь строка из 32 случайных символа из словаря 0123456789abcdef --&amp;gt;
+templates: /usr/share/mokey/templates
+ipahost: &amp;#34;prod-ipa01p.test.lan&amp;#34;
+keytab: &amp;#34;/etc/mokey/keytab/mokeyapp.keytab&amp;#34;
+ktuser: &amp;#34;mokey/ipa-selfservice.test.lan&amp;#34;
+rate_limit: false
+
+smtp_host: &amp;#34;10.0.0.1&amp;#34;
+smtp_port: 25
+smtp_tls: &amp;#34;off&amp;#34;
+
+email_from: &amp;#34;bigdata-servers@test.lan&amp;#34;
+email_sig: &amp;#34;System Administrators &amp;amp;&amp;amp; Co&amp;#34;
+
+#------------------------------------------------------------------------------
+# Base URL of mokey server. Used for links in emails
+#------------------------------------------------------------------------------
+email_link_base: &amp;#34;https://ipa-selfservice.test.lan:8095&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Стартуем mokey:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl start mokey
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В случае проблем, для отладки, запускаем &lt;code&gt;/usr/bin/mokey -c /etc/mokey/mokey.yaml -d server&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;донастройка-httpd-сервера-из-состава-freeipa&#34;&gt;Донастройка httpd-сервера из состава FreeIPA&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Listen 8085 https
+SSLSessionCache         shmcb:/run/httpd/sslcache2(512000)
+SSLSessionCacheTimeout  300
+SSLRandomSeed startup file:/dev/urandom  256
+SSLRandomSeed connect builtin
+SSLCryptoDevice builtin
+&amp;lt;VirtualHost _default_:8085&amp;gt;
+  ErrorLog logs/error_ss_log
+  TransferLog logs/access_ss_log
+  LogLevel info
+  &amp;lt;Location &amp;#34;/&amp;#34;&amp;gt;
+    ProxyPass &amp;#34;http://127.0.0.1:8081/&amp;#34;
+  &amp;lt;/Location&amp;gt;
+  SSLEngine on
+  SSLProtocol +TLSv1 +TLSv1.1 +TLSv1.2
+  SSLHonorCipherOrder on
+  SSLCipherSuite kEECDH:kRSA:kEDH:!aDSS:!EXP:!3DES:!DES:!RC4:!RC2:!IDEA:!SEED:!eNULL:!aNULL:!MD5:!SSLv2:!ADH
+  SSLProxyCipherSuite kEECDH:kRSA:kEDH:!aDSS:!EXP:!3DES:!DES:!RC4:!RC2:!IDEA:!SEED:!eNULL:!aNULL:!MD5:!SSLv2:!ADH
+  SSLCertificateFile /etc/mokey/mokey_ssl.crt
+  SSLCertificateKeyFile /etc/mokey/mokey_ssl.key
+  SSLCACertificateFile /etc/ipa/ca.crt
+  SSLVerifyDepth 5
+  BrowserMatch &amp;#34;MSIE [2-5]&amp;#34; \
+         nokeepalive ssl-unclean-shutdown \
+         downgrade-1.0 force-response-1.0
+  CustomLog logs/ssl_request_log \
+          &amp;#34;%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \&amp;#34;%r\&amp;#34; %b&amp;#34;
+&amp;lt;/VirtualHost&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Перезапускаем Apache:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl restart httpd
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;проверка&#34;&gt;Проверка&lt;/h2&gt;
+&lt;p&gt;Так как ранее мы создали TLS-сертификаты с SAN для имени ipa-selfservice.test.lan, то возможно добавить соответствующую запись в DNS и указать пользователям использовать URL &lt;a href=&#34;https://ipa-selfservice.test.lan:8085/&#34;&gt;https://ipa-selfservice.test.lan:8085/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Через браузер проверяем наличие морд на URL&amp;rsquo;ах:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://prod-ipa01p.test.lan:8085&#34;&gt;https://prod-ipa01p.test.lan:8085&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://prod-ipa02p.test.lan:8085&#34;&gt;https://prod-ipa02p.test.lan:8085&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://prod-ipa03p.test.lan:8085&#34;&gt;https://prod-ipa03p.test.lan:8085&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://ipa-selfservice.test.lan:8085/&#34;&gt;https://ipa-selfservice.test.lan:8085/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</title>
+      <link>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
+      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-05-12&lt;/p&gt;
+&lt;h2 id=&#34;симптомы&#34;&gt;Симптомы&lt;/h2&gt;
+&lt;p&gt;Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы &amp;ldquo;Сертификаты&amp;rdquo;, после долгого ожидания в виде вывески &amp;ldquo;В процессе&amp;rdquo;:
+&lt;img src=&#34;freeipa-certificates-wait.png&#34; alt=&#34;FreeIPA Certificates Wait&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Далее появляется баннер с ошибкой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;IPA Error 4301: CertificateOperationError
+Certificate operation cannot be completed: Unable to communicate with CMS (500)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;ipa_error_4301.png&#34; alt=&#34;IPA Error 4301&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Невозможно выполнение:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
+ipa: ERROR: Certificate operation cannot be completed: Unable to communicate with CMS (500)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;диагноз&#34;&gt;Диагноз&lt;/h2&gt;
+&lt;p&gt;Строки из &amp;lsquo;journalctl -u pki-tomcatd@pki-tomcat&amp;rsquo; указывают причину такого поведения:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SEVERE: Failed to start component [Connector[AJP/1.3-8009]]
+Caused by: java.lang.IllegalArgumentException: The AJP Connector is configured with secretRequired=&amp;#34;true&amp;#34; but the secret attribute is either null or &amp;#34;&amp;#34;. This combination is not valid.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Полный листинг:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# journalctl -u pki-tomcatd@pki-tomcat
+May 11 20:05:28 dev-ipa01.test.lan systemd[1]: Starting PKI Tomcat Server pki-tomcat...
+May 11 20:05:30 dev-ipa01.test.lan pki-server[1894]: ----------------------------
+May 11 20:05:30 dev-ipa01.test.lan pki-server[1894]: pki-tomcat instance migrated
+May 11 20:05:30 dev-ipa01.test.lan pki-server[1894]: ----------------------------
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: -----------------------
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: Banner is not installed
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: -----------------------
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: ----------------------
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: Enabled all subsystems
+May 11 20:05:32 dev-ipa01.test.lan pkidaemon[1923]: ----------------------
+May 11 20:05:32 dev-ipa01.test.lan systemd[1]: Started PKI Tomcat Server pki-tomcat.
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: Java virtual machine used: /usr/lib/jvm/jre-1.8.0-openjdk/bin/java
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: classpath used: /usr/share/tomcat/bin/bootstrap.jar:/usr/share/tomcat/bin
+/tomcat-juli.jar:/usr/lib/java/commons-daemon.jar
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: main class used: org.apache.catalina.startup.Bootstrap
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: flags used: -DRESTEASY_LIB=/usr/share/java/resteasy
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: options used: -Dcatalina.base=/var/lib/pki/pki-tomcat -Dcatalina.home=/us
+r/share/tomcat -Djava.endorsed.dirs= -Djava.io.tmpdir=/var/lib/pki/pki-tomcat/temp -Djava.util.logging.config.file=/var/lib/pki
+/pki-tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager     -Djava.security.manag
+er     -Djava.security.policy==/var/lib/pki/pki-tomcat/conf/catalina.policy
+May 11 20:05:32 dev-ipa01.test.lan server[2064]: arguments used: start
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: SEVERE: Failed to start component [Connector[AJP/1.3-8009]]
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: org.apache.catalina.LifecycleException: Protocol handler start failed
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.connector.Connector.startInternal(Connector.java:1
+075)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.core.StandardService.startInternal(StandardService
+.java:451)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.core.StandardServer.startInternal(StandardServer.j
+ava:930)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.startup.Catalina.start(Catalina.java:772)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.jMay 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.connector.Connector.startInternal(Connector.java:1
+075)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.core.StandardService.startInternal(StandardService
+.java:451)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.core.StandardServer.startInternal(StandardServer.j
+ava:930)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.startup.Catalina.start(Catalina.java:772)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.j
+ava:62)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at java.lang.reflect.Method.invoke(Method.java:498)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:342)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:473)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: Caused by: java.lang.IllegalArgumentException: The AJP Connector is configured with secretRequired=&amp;#34;true&amp;#34; but the secret attribute is either null or &amp;#34;&amp;#34;. This combination is not valid.
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.coyote.ajp.AbstractAjpProtocol.start(AbstractAjpProtocol.java:270)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: at org.apache.catalina.connector.Connector.startInternal(Connector.java:1072)
+May 11 20:05:40 dev-ipa01.test.lan server[2064]: ... 12 more
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверим версию установленных в систему Apache и Tomcat:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rpm -qa httpd
+httpd-2.4.29-9.el7.x86_64
+
+# rpm -qa tomcat
+tomcat-9.0.44-1.el7.noarch
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В Tomcat&amp;rsquo;е, в предыдущей установленной в системе версии 9.0.13, присутствовала потенциальная уязвимость CVE-2020-1938. Для её решения ввели передачу secret&amp;rsquo;а при использовании протокола AJP, через который в FreeIPA общаются Apache и DogTag. В результате обновления Tomcat обновился до версии 9.0.44, где предлагается использовать secret, но Apache, и его настройки, остался прежним.&lt;/p&gt;
+&lt;p&gt;Пока не будет обновлён Apache до версии 2.5, то применяем обходной маневр. Так как установленный в системе Apache имеет версию 2.4, модуль &lt;code&gt;mod_proxy_ajp&lt;/code&gt; которой не умеет передавать параметр &amp;lsquo;secret&amp;rsquo;, то необходимо в соответствующем месте Tomcat&amp;rsquo;а указать аттрибут, отключающий проверку секрета.&lt;/p&gt;
+&lt;h2 id=&#34;лечение&#34;&gt;Лечение&lt;/h2&gt;
+&lt;p&gt;Добавить в &lt;code&gt;/etc/pki/pki-tomcat/server.xml&lt;/code&gt; в строку коннектора аттрибут &amp;lsquo;secretRequired=&amp;ldquo;false&amp;rdquo;&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;    &amp;lt;!-- Define an AJP 1.3 Connector on port 8009 --&amp;gt;
+    &amp;lt;Connector port=&amp;#34;8009&amp;#34; protocol=&amp;#34;AJP/1.3&amp;#34; redirectPort=&amp;#34;8443&amp;#34; address=&amp;#34;localhost&amp;#34; secretRequired=&amp;#34;false&amp;#34;/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего перезапускаем сервис &amp;lsquo;pki-tomcatd@pki-tomcat&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart pki-tomcatd@pki-tomcat
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;freeipa_authentication_success.png&#34; alt=&#34;FreeIPA Certificates&#34;&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
+  Issuing CA: ipa
+  Certificate: MIIDgjCCAmqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAzMREwDwYDVQQKDAhURVNULkxBTjEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTIxMDUwNDE4MzYwNFoXDTQxMDUwNDE4MzYwNFowMzERMA8GA1UECgwIVEVTVC5MQU4xHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANwBn6gEBu73KL4OT/yuZNMNaL7esYVhQclx4d3lVVAFS7lXk/7Hh91MY39IL/N0teNvTnZn3I9E7VtkgATBvxXzzaLR+iMvDH1OWLIIcLuh4RfR8mVH5PRs1374aXrRRHlrQXElqm7kRt4yWQXb2ibagdnnQxdf2CvstA0HQCDg5DlNprVXu82RWomiacayyadnaZ/KKJmJAHhV4fY0I8tLn6uyVdOspfgA2ZQUaAXOuRtrbGuowegEbCurRO5egDl7GpSR6fOkxiFcnI/jEufatNe3ZQllF3ywT8rfT+oa+52BPCl9J25XrJYw0g71npocVkRi4gY86h0C2LEHeGMCAwEAAaOBoDCBnTAfBgNVHSMEGDAWgBSSy/ljEEs9wsV19d9s4SzwgaQnqjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBxjAdBgNVHQ4EFgQUksv5YxBLPcLFdfXfbOEs8IGkJ6owOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vaXBhLWNhLnRlc3QubGFuL2NhL29jc3AwDQYJKoZIhvcNAQELBQADggEBAJ5t2ZOsPPl121dmCChndCD2aPAWjDZR5FYlEZZN8pk7ApoZ1yDDqPcX/NS+h3Lsj2SqDR1YjljkU6yLdaZy9RJ6NqfDnqt6EIvX5TM6KEuU8ga78tzP0/gJESeFr4oAh1wy/YwQrl2qhaI23SrRQEQXsxdi1s9fBBpAMlszcu5YYgvMimPAoKTdfAvm/nAfH6tcP6Hfvj5aNwQLPqc+S0xrJanAs97mktp84z1rtY5hjnrYKAYGQIE51h/v+f7grnmShiM55qu+A+qxYBqUozf0pNQ/Mo5zB8WongizCYyqjnhBHhdh/E9ca9kmkz7xEdgwxxTqe958WZ/9K+PgtWs=
+  Subject: CN=Certificate Authority,O=TEST.LAN
+  Issuer: CN=Certificate Authority,O=TEST.LAN
+  Not Before: Tue May 04 18:36:04 2021 UTC
+  Not After: Sat May 04 18:36:04 2041 UTC
+  Serial number: 1
+  Serial number (hex): 0x1
+  Revoked: False
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# journalctl -u pki-tomcatd@pki-tomcat
+May 11 20:40:20 dev-ipa01.test.lan systemd[1]: Starting PKI Tomcat Server pki-tomcat...
+May 11 20:40:20 dev-ipa01.test.lan pki-server[3130]: ----------------------------
+May 11 20:40:20 dev-ipa01.test.lan pki-server[3130]: pki-tomcat instance migrated
+May 11 20:40:20 dev-ipa01.test.lan pki-server[3130]: ----------------------------
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: -----------------------
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: Banner is not installed
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: -----------------------
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: ----------------------
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: Enabled all subsystems
+May 11 20:40:20 dev-ipa01.test.lan pkidaemon[3157]: ----------------------
+May 11 20:40:20 dev-ipa01.test.lan systemd[1]: Started PKI Tomcat Server pki-tomcat.
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: Java virtual machine used: /usr/lib/jvm/jre-1.8.0-openjdk/bin/java
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: classpath used: /usr/share/tomcat/bin/bootstrap.jar:/usr/share/tomcat/bin
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: main class used: org.apache.catalina.startup.Bootstrap
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: flags used: -DRESTEASY_LIB=/usr/share/java/resteasy
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: options used: -Dcatalina.base=/var/lib/pki/pki-tomcat -Dcatalina.home=/us
+May 11 20:40:20 dev-ipa01.test.lan server[3284]: arguments used: start
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Включение во FreeIPA отслеживания последней успешной аутентификации пользовательских аккаунтов</title>
+      <link>/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</link>
+      <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-05-07&lt;/p&gt;
+&lt;p&gt;Использованные источники:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/linux_domain_identity_authentication_and_policy_guide/enabling-tracking-of-last-successful-kerberos-authentication&#34;&gt;Enabling Tracking of Last Successful Kerberos Authentication&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;отключение-плагина-через-gui&#34;&gt;Отключение плагина через GUI&lt;/h2&gt;
+&lt;p&gt;IPA Server — Configuration — Password plugin features:&lt;br&gt;
+☑ KDC:Disable Last Success&lt;/p&gt;
+&lt;h2 id=&#34;отключение-плагина-через-cli&#34;&gt;Отключение плагина через CLI&lt;/h2&gt;
+&lt;p&gt;На каждом сервере FreeIPA смотрим текущие применяемые password-плагины:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa config-show | grep &amp;#34;Password plugin features&amp;#34;
+  Password plugin features: AllowNThash, KDC:Disable Last Success
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Отключаем плагин блокирующий трэкинг последней успешной аутентификации, оставляя прочие плагины включёнными:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa config-mod --ipaconfigstring=&amp;#39;AllowNThash&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если нагрузка на сервер превысила его ресурсы, то вновь отключаем трэкинг последней успешной аутентификации:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa config-mod --ipaconfigstring=&amp;#39;AllowNThash&amp;#39; --ipaconfigstring=&amp;#39;KDC:Disable Last Success&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверю при первой возможности, обязательно ли надо перезапускать одну или все реплики, так как после выполнения команд &lt;code&gt;ipa config-mod&lt;/code&gt; изменения немедленно реплицируются на все реплики. Но, сейчас, следуя инструкциям, выполняем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipactl restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Посмотреть дата/время последней успешной аутентификации:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa user-status admin
+----------------------
+Account disabled: False
+----------------------
+  Server: prod-ipa01.example.org
+  Failed logins: 1
+  Last successful authentication: 20210505154121Z
+  Last failed authentication: 20210506113029Z
+  Time now: 2021-05-07T07:03:56Z
+
+  Server: prod-ipa03.example.org
+  Failed logins: 4
+  Last successful authentication: N/A
+  Last failed authentication: 20210210175128Z
+  Time now: 2021-05-07T07:03:56Z
+
+  Server: prod-ipa02.example.org
+  Failed logins: 1
+  Last successful authentication: N/A
+  Last failed authentication: 20210329132149Z
+  Time now: 2021-05-07T07:03:56Z
+----------------------------
+Number of entries returned 3
+----------------------------
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Отключение анонимного доступа к LDAP-каталогу FreeIPA</title>
+      <link>/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</link>
+      <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-05-07&lt;/p&gt;
+&lt;p&gt;Использованные ссылки:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://abbra.fedorapeople.org/.todo/freeipa-docs/#disabling-anon-binds&#34;&gt;Disabling Anonymous Binds&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;По умолчанию, FreeIPA позволяет просматривать LDAP-каталог анонимным пользователям:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@prod-ipa02 /]# ldapsearch -x -h localhost -p 389 -b uid=ipara,ou=People,o=ipaca description
+# extended LDIF
+#
+# LDAPv3
+# base &amp;lt;uid=ipara,ou=People,o=ipaca&amp;gt; with scope subtree
+# filter: (objectclass=*)
+# requesting: description 
+#
+
+# ipara, people, ipaca
+dn: uid=ipara,ou=people,o=ipaca
+description: 2;7;CN=Certificate Authority,O=EXAMPLE.ORG;CN=IPA RA,O=EXAMPLE.ORG
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 2
+# numEntries: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Мне неизвестна причина такого решения разработчиков. К счастью, это нежелательное явление можно пресечь добавлением, на каждой реплике FreeIPA, в нереплицируемую часть каталога, аттрибута &amp;rsquo;nsslapd-allow-anonymous-access: rootdse&amp;rsquo; (после ввода блока с командами нажимаем стандартное &amp;lsquo;Ctrl+d&amp;rsquo;):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ldapmodify -x -D &amp;#34;cn=Directory Manager&amp;#34; -W -h localhost -p 389
+
+dn: cn=config
+changetype: modify
+replace: nsslapd-allow-anonymous-access
+nsslapd-allow-anonymous-access: rootdse
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В инструкции указано, что необходимо перезапустить службу &amp;lsquo;dirsrv&amp;rsquo;, но в моём случае изменения применились немедленно:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@prod-ipa02 /]# ldapsearch -x -h localhost -p 389 -b uid=ipara,ou=People,o=ipaca description 
+# extended LDIF
+#
+# LDAPv3
+# base &amp;lt;uid=ipara,ou=People,o=ipaca&amp;gt; with scope subtree
+# filter: (objectclass=*)
+# requesting: description 
+#
+
+# search result
+search: 2
+result: 48 Inappropriate authentication
+text: Anonymous access is not allowed.
+
+# numResponses: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Применяемый аттрибут можно найти (или не найти) на каждом сервере в &lt;code&gt;/etc/dirsrv/slapd-EXAMPLE-ORG/dse.ldif&lt;/code&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Отдельная hidden replicas для безопасного full backup FreeIPA</title>
+      <link>/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</link>
+      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-04-01&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://freeipa.readthedocs.io/en/latest/designs/hidden-replicas.html&#34;&gt;Hidden replicas&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Hidden replica&lt;/em&gt; доступна с версии FreeIPA 4.9?&lt;/p&gt;
+&lt;p&gt;Создание скрытой реплики выполняется командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipa-replica-install --hidden-replica
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего необходимо назначить ей все имеющиеся в домене роли, чтобы full backup имел в себе всю информацию.&lt;/p&gt;
+&lt;p&gt;При установке скрытой реплили, в DNS отсутствуют её srv-записи, а значит клиенты ничего не знают о её присутствии. Что позволяет выполнять full backup, когда реплика временно переводится в offline-режим, без перерыва в обслуживании клиентов.&lt;/p&gt;
+&lt;p&gt;При восстановлении из такого бэкапа восстановится обычная реплика, то есть не скрытая.&lt;/p&gt;
+&lt;p&gt;Есть команда для перевода обычной реплики в скрытую и обратно. Реплика не должна нести роли &amp;ldquo;CA renewal master&amp;rdquo; or &amp;ldquo;DNSSEC key master&amp;rdquo;, иначе, перед понижением её до hidden состояния, необходимо перенестить эти роли на другие реплики.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Получение keytab-файла для сервисного принципала</title>
+      <link>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-04-01&lt;/p&gt;
+&lt;p&gt;Ссылки:
+&lt;a href=&#34;https://www.freeipa.org/page/V4/Keytab_Retrieval_Management&#34;&gt;https://www.freeipa.org/page/V4/Keytab_Retrieval_Management&lt;/a&gt;
+&lt;a href=&#34;https://www.freeipa.org/page/V4/Keytab_Retrieval&#34;&gt;https://www.freeipa.org/page/V4/Keytab_Retrieval&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Например, находясь на узле со службой, для которой нам необходимо получить keytab, сначала, если ещё не получили, то получаем тикет:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Назначаем себе право получения таблицу ключей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa service-allow-retrieve-keytab hbase/$(hostname) --users=$USER
+  Имя учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG
+  Псевдоним учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG
+  Managed by: prod-hbr01p.example.org
+  Пользователи, которым разрешено получать таблицу ключей: eugene
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Получаем таблицу ключей и сохраняем её в файле:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa-getkeytab -r -p hbase/$(hostname) -k ~/keytabs/hbase_$(hostname -s).keytab
+  Keytab successfully retrieved and stored in: /home/eugene/keytabs/hbase_prod-hbr01p.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Всё ещё имея свой персональный kerberos-билет, отнимаем у себя право получения таблицы ключей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipa service-disallow-retrieve-keytab hbase/$(hostname) --users=$USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Используем полученный keytab для выпуска билета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit -kt ~/keytabs/hbase_prod-hbr01p.keytab hbase/$(hostname)
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
+      <link>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://airflow.apache.org/docs/apache-airflow/stable/&#34;&gt;Apache Airflow Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://airflow.apache.org/docs/apache-airflow/stable/start/index.html&#34;&gt;Quick Start&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Предыдущий опыт настройки Airflow прошлых версий.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;заметки&#34;&gt;Заметки&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;В шагах инструкции пока отсутствует. Важно опроовать.
+После скачивания свежего файла с зависимостями дл apache-airflow, необходимо изменить в этом файле строку &amp;lsquo;Flask-AppBuilder==3.1.1&amp;rsquo; на &amp;lsquo;Flask-AppBuilder==3.2.0&amp;rsquo;, чтобы заработал мэппинг между пользовательскими группами в IPA и ролями в Airflow.
+Для уже установленных экземпляров Airflow, можно изменить соответствующую строку в файле &amp;lsquo;/usr/local/lib/python3.6/site-packages/apache_airflow-2.0.1.dist-info/METADATA&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;Если пользовательские DAG&amp;rsquo;и запускаются через &amp;lsquo;run_as_user&amp;rsquo;, то необходимо обеспечить чтение файла &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; этими пользователями, иначе DAG&amp;rsquo;и не будут выполнены с ошибкой &amp;lsquo;airflow.exceptions.AirflowConfigException: error: cannot use sqlite version &amp;lt; 3.15.0&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;Если в DAG&amp;rsquo;е указать &amp;lsquo;run_as_user&amp;rsquo;: &amp;rsquo;eugene&amp;rsquo;, то Airflow запускает процесс от имени пользователя командой &lt;code&gt;sudo -E -H -u eugene&lt;/code&gt;, в результате которой процесс пользователя наследует переменные родительского процесса, а переменная HOME меняется на пользовательскую директорию в /home.&lt;/li&gt;
+&lt;li&gt;Надо дать права на подпапки в рабочей папке airflow для группы пользователей prod_airflow_airf1, так как запускаемый дочерний run_as процесс от имени пользователя, должен иметь право на запись в рабочую папку Airflow.&lt;/li&gt;
+&lt;li&gt;Установку python-пакетов производить под учётной записью пользователя. Лишь пакеты airflow должны быть установлены под системной учётной записью.&lt;/li&gt;
+&lt;li&gt;Разграничение DAG&amp;rsquo;ов между пользователями задаётся внутри DAG&amp;rsquo;а строкой: &amp;lsquo;owner&amp;rsquo;: &amp;rsquo;eugene&amp;rsquo;. Это не работает во второй версии Airflow?&lt;/li&gt;
+&lt;li&gt;В /etc/pip.conf необходимо добавить python-репо в Nexus&amp;rsquo;е с пользовательскими библиотеками, чтобы пользователь мог вызвать pip install прямо из своего кода, без дополнительных операций?&lt;/li&gt;
+&lt;li&gt;Для сборки некоторых python-пакетов (найти где я это делал), pydoop, и ещё один пакет, &amp;hellip;., требуется установить компилятор gcc-c++, полный пакет явы с инструментами разработчика.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;создание-необходимых-групп-во-freeipa-для-аутентификации-в-airflow&#34;&gt;Создание необходимых групп во FreeIPA для аутентификации в Airflow&lt;/h2&gt;
+&lt;p&gt;Во второй версии Airflow изменился способ аутентификации и авторизации пользователей. Теперь из коробки активирован режим RBAC, то есть аутентификация и авторизация выполняется силами Flask App Builder (FAB).&lt;/p&gt;
+&lt;p&gt;Для аутентификации создаём одну POSIX-группу &amp;lsquo;prod_airflow_airf1&amp;rsquo;, участники которой, будут иметь доступ к Web UI интерфейсу Airflow, а также эта группа будет особым образом назначена на каталог /data/airflow для того, чтобы участники имели доступ к своим DAGам и логам в подпапках этого каталога, но не имели доступа к конфигурационным файлам Airflow.&lt;/p&gt;
+&lt;p&gt;Управление авторизацией будет происходить через роли в Airflow отображённые во вложенные группы IPA. По умолчанию, новому пользователю назначается роль &amp;lsquo;Viewer&amp;rsquo; в дополнение к роли, полученной из соответствующей группы IPA.&lt;/p&gt;
+&lt;h2 id=&#34;установка-по&#34;&gt;Установка ПО&lt;/h2&gt;
+&lt;p&gt;Предполагается, что на машине уже установлены пакеты &amp;lsquo;python3&amp;rsquo; и &amp;lsquo;python3-pip&amp;rsquo;.&lt;/p&gt;
+&lt;h3 id=&#34;установка-postgresql&#34;&gt;Установка PostgreSQL&lt;/h3&gt;
+&lt;p&gt;Для работы Airflow в prod-режиме рекомендуется использовать PostgreSQL, вместо используемого по умолчанию SQLite. Ничего сложного в этом этапе нет.&lt;/p&gt;
+&lt;p&gt;Добавляем в /etc/yum.repos.d/ подготовленный файл из статьи по Nexus&amp;rsquo;у pub_postgresql_yum:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;USERNAME=&amp;#34;nx-pubrepo-reader&amp;#34;
+PASSWORD=&amp;#34;xxxxxxxxxxx&amp;#34;
+
+cat &amp;lt;&amp;lt; EOF | tee -a /etc/yum.repos.d/pgdg-redhat-all.repo
+#######################################################
+# PGDG Red Hat Enterprise Linux / CentOS repositories #
+#######################################################
+
+# PGDG Red Hat Enterprise Linux / CentOS stable common repository for all PostgreSQL versions
+
+[pgdg-common]
+username=$USERNAME
+password=$PASSWORD
+name=PostgreSQL common RPMs for RHEL/CentOS \$releasever - \$basearch
+baseurl=http://nexus.example.org:8081/repository/all_postgresql_yum/common/redhat/rhel-\$releasever-\$basearch
+enabled=1
+gpgcheck=0
+gpgkey=http://nexus.example.org:8081/repository/all_postgresql_yum/RPM-GPG-KEY-PGDG-AARCH64
+
+# PGDG Red Hat Enterprise Linux / CentOS stable repositories:
+
+[pgdg13]
+username=$USERNAME
+password=$PASSWORD
+name=PostgreSQL 13 for RHEL/CentOS \$releasever - \$basearch
+baseurl=http://nexus.example.org:8081/repository/all_postgresql_yum/13/redhat/rhel-\$releasever-\$basearch
+enabled=1
+gpgcheck=0
+gpgkey=http://nexus.example.org:8081/repository/all_postgresql_yum/RPM-GPG-KEY-PGDG-AARCH64
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем актуальную версию PosgreSQL:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum update
+
+# Install PostgreSQL:
+sudo yum -y install postgresql13-server
+
+# Optionally initialize the database and enable automatic start:
+sudo /usr/pgsql-13/bin/postgresql-13-setup initdb
+sudo systemctl enable --now postgresql-13
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-дополнительных-пакетов&#34;&gt;Установка дополнительных пакетов&lt;/h3&gt;
+&lt;p&gt;Устанавливаем пакеты для разработки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y groupinstall &amp;#34;Development Tools&amp;#34;
+sudo yum -y install python3-devel cyrus-sasl cyrus-sasl-devel libffi-devel krb5-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для работы LDAP-аутентификации в FAB требуется установка пакета python-ldap, который не соберётся, если не установить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum -y install openldap-devel python-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;создание-системного-локального-пользователя-airflow&#34;&gt;Создание системного локального пользователя airflow&lt;/h2&gt;
+&lt;p&gt;Создаём системного пользователя airflow и разрешаем ему беспарольное sudo для имперсонации, то есть запуска скриптов от имени владельца:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo useradd -r airflow -s /sbin/nologin
+echo &amp;#34;airflow ALL=(ALL) NOPASSWD: ALL&amp;#34; | sudo tee /etc/sudoers.d/airflow
+sudo chmod 440 /etc/sudoers.d/airflow
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;подготовка-к-запуску-airflow&#34;&gt;Подготовка к запуску Airflow&lt;/h2&gt;
+&lt;p&gt;Необходимо ввести машину в Cloudera-кластер, иначе каталог &amp;lsquo;/etc/hadoop&amp;rsquo; и важные переменные будут отсутствовать на машине.&lt;/p&gt;
+&lt;h3 id=&#34;создание-каталогов-и-конфигурационных-файлов-для-работы-airflow&#34;&gt;Создание каталогов и конфигурационных файлов для работы Airflow&lt;/h3&gt;
+&lt;p&gt;Создаём в IPA POSIX-группу для аутентификации в Airflow и, одновременно, для доступа пользователей к каталогам dags,logs,plugins. И сразу создадим вложенные Non-POSIX группы для авторизации в Airflow. Чуть позже настроим их отображение на локальные Airflow-роли. Важно поменять переменные перед использованием этого скрипта:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Если требуется kerberos-тикет, то  не забываем:
+# kinit
+
+# Номер Jira-задачи
+JIRA=&amp;#34;SDK-2198&amp;#34;
+
+# Название ИС
+IS=&amp;#34;prod&amp;#34;
+#IS=&amp;#34;dev&amp;#34;
+#IS=&amp;#34;devdmz&amp;#34;
+
+# Название сервиса:
+SERVICE=&amp;#34;airflow&amp;#34;
+
+# Псевдоним экземпляра Airflow
+ALIAS=&amp;#34;airf1&amp;#34;
+
+# Группа администраторов в IPA
+ADMINSGROUP=&amp;#34;admins&amp;#34;
+
+# Составляем название группы:
+GROUPNAME=&amp;#34;${IS}_${SERVICE}_${ALIAS}&amp;#34;
+
+ipa group-add ${GROUPNAME} --desc=&amp;#34;Пользователи имеющие право для аутентификации в ${ALIAS}. Авторизация настраивается через вложенные группы. Это POSIX-группа, потому что она же назначена на каталоги {dags,logs,plugins} для доступа юзеров к их дагам и логам. ${JIRA}.&amp;#34;
+ipa group-add ${GROUPNAME}_admins --desc=&amp;#34;Группа отображается в роль Admin сервиса $SERVICE на ${ALIAS}. ${JIRA}.&amp;#34; --nonposix
+ipa group-add ${GROUPNAME}_ops --desc=&amp;#34;Группа отображается в роль Op сервиса $SERVICE на ${ALIAS}. ${JIRA}.&amp;#34; --nonposix
+ipa group-add ${GROUPNAME}_users --desc=&amp;#34;Группа отображается в роль User сервиса $SERVICE на ${ALIAS}. ${JIRA}.&amp;#34; --nonposix
+ipa group-add ${GROUPNAME}_viewers --desc=&amp;#34;Группа отображается в роль Viewer сервиса $SERVICE на ${ALIAS}. ${JIRA}.&amp;#34; --nonposix
+
+ipa group-add-member ${GROUPNAME} --groups=${GROUPNAME}_admins --groups=${GROUPNAME}_ops --groups=${GROUPNAME}_users --groups=${GROUPNAME}_viewers
+
+ipa group-add-member ${GROUPNAME}_admins --groups=${ADMINSGROUP}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Сейчас же создаём каталог для работы Apache Airflow и назначаем права:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# POSIX-группа предназачена для доступа пользователей к нужным папкам.
+export POSIXGROUP=${GROUPNAME}
+
+export DIR=&amp;#34;/data/airflow&amp;#34;
+
+sudo mkdir -p $DIR/{dags,logs,plugins}
+sudo chmod -R 750 $DIR
+sudo chmod 2750 $DIR/{dags,plugins}
+sudo chown -R airflow.airflow $DIR
+sudo setfacl -m d:g:${POSIXGROUP}:rwx $DIR/{dags,logs,plugins}
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;В последней команде мы назначаем default-права на каталог общей POSIX-группе prod_airflow_airf1 из FreeIPA, чтобы все наследуемые пользователи из вложенных групп имели доступ к папкам dags, logs и plugins. Эти права будут наследоваться с режимом 770 для поддиректорий и 660 для файлов.&lt;/li&gt;
+&lt;li&gt;Заметка: POSIX ACL не работает с MemberOf-группами из FreeIPA, но работает с  POSIX-группами.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Создаём файл &lt;code&gt;/etc/sysconfig/airflow&lt;/code&gt; с переменными, использующимися airflow при запуске из systemd-юнитов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILE=&amp;#34;/etc/sysconfig/airflow&amp;#34;
+echo &amp;#34;AIRFLOW_HOME=/data/airflow&amp;#34; | sudo tee $FILE
+echo &amp;#34;AIRFLOW_CONFIG=/etc/airflow/airflow.cfg&amp;#34; | sudo tee -a $FILE
+echo &amp;#34;HADOOP_CONF_DIR=/etc/hadoop/conf&amp;#34; | sudo tee -a $FILE
+echo &amp;#34;HIVE_CONF_DIR=/etc/hive/conf&amp;#34; | sudo tee -a $FILE
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Без переменных &amp;lsquo;HADOOP_CONF_DIR&amp;rsquo; и &amp;lsquo;HIVE_CONF_DIR&amp;rsquo;, в Airflow не будет работать SparkSubmitOperator, так как он использует файлы &lt;code&gt;hive_site.xml&lt;/code&gt; и &lt;code&gt;yarn-site.xml&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Создаём каталог &lt;code&gt;/etc/airflow&lt;/code&gt; для хранения &lt;code&gt;airflow.cfg&lt;/code&gt;, сертификатов, keytab&amp;rsquo;ов и прочих подобных файлов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;DIR=&amp;#34;/etc/airflow&amp;#34;
+sudo mkdir $DIR
+sudo chmod 2770 $DIR
+sudo chown airflow.airflow $DIR
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-systemd-юнитов&#34;&gt;Создание systemd-юнитов&lt;/h3&gt;
+&lt;p&gt;Взято из &lt;a href=&#34;https://github.com/apache/airflow/tree/master/scripts/systemd&#34;&gt;https://github.com/apache/airflow/tree/master/scripts/systemd&lt;/a&gt;. При появлении других зависимостей для запуска сервисов Airflow, добавляем их в строки After и Wants. Примеры можно посмотреть в &lt;a href=&#34;https://github.com/apache/airflow/tree/master/scripts/systemd&#34;&gt;https://github.com/apache/airflow/tree/master/scripts/systemd&lt;/a&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/airflow-scheduler.service
+[Unit]
+Description=Airflow scheduler daemon
+After=network.target postgresql-13.service
+Wants=postgresql-13.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/usr/local/bin/airflow scheduler
+Restart=always
+RestartSec=5s
+SyslogIdentifier=airf-sched
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/airflow-webserver.service
+[Unit]
+Description=Airflow webserver daemon
+After=network.target postgresql-13.service
+Wants=postgresql-13.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+RuntimeDirectory=airflow
+RuntimeDirectoryMode=0775
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/usr/local/bin/airflow webserver -p 8080 --pid /run/airflow/airflow-webserver.pid
+Restart=on-failure
+RestartSec=5s
+PrivateTmp=true
+SyslogIdentifier=airf-web
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-логгирования&#34;&gt;Настройка логгирования&lt;/h3&gt;
+&lt;p&gt;Настраиваем сразу с заделом на включение Kerberos (airf-krb), каковое включение описано ниже и производится по желанию, потому что пока не понятно работоспособен ли Kerberos с Airflow на Python 3:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mkdir /var/log/airflow
+sudo chmod 750 /var/log/airflow
+
+echo &amp;#39;if $programname == &amp;#34;airf-sched&amp;#34; then /var/log/airflow/airf-sched.log
+&amp;amp; stop&amp;#39; | sudo tee /etc/rsyslog.d/airf-sched.conf
+echo &amp;#39;if $programname == &amp;#34;airf-web&amp;#34; then /var/log/airflow/airf-web.log
+&amp;amp; stop&amp;#39; | sudo tee /etc/rsyslog.d/airf-web.conf
+echo &amp;#39;if $programname == &amp;#34;airf-krb&amp;#34; then /var/log/airflow/airf-krb.log
+&amp;amp; stop&amp;#39; | sudo tee /etc/rsyslog.d/airf-krb.conf
+sudo systemctl restart rsyslog
+
+sudo sed -i &amp;#39;1i /var/log/airflow/airf-sched.log\n/var/log/airflow/airf-web.log\n/var/log/airflow/airf-krb.log&amp;#39; /etc/logrotate.d/syslog
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-базы-данных-airflow-в-postgresql&#34;&gt;Создание базы данных airflow в PostgreSQL&lt;/h3&gt;
+&lt;p&gt;Далее приведены команды в psql для создания базы данных:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;DBNAME=&amp;#34;airf_metadata&amp;#34;
+DBUSER=&amp;#34;airf_user&amp;#34;
+AIRFPASS=$(cat /dev/urandom | tr -dc A-Za-z0-9 | head -c15)
+
+sudo -u postgres psql -c &amp;#34;CREATE DATABASE ${DBNAME};&amp;#34;
+sudo -u postgres psql -c &amp;#34;CREATE USER ${DBUSER} WITH password &amp;#39;${AIRFPASS}&amp;#39;;&amp;#34;
+sudo -u postgres psql -c &amp;#34;GRANT ALL PRIVILEGES ON DATABASE ${DBNAME} TO ${DBUSER};&amp;#34;
+echo &amp;#34;${DBUSER}:${AIRFPASS}&amp;#34; | sudo tee /etc/airflow/psql-pass.txt
+echo &amp;#34;${DBNAME}&amp;#34; | sudo tee /etc/airflow/psql-db.txt
+sudo chmod 400 /etc/airflow/psql-pass.txt /etc/airflow/psql-db.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;создание-сертификата-для-работы-https&#34;&gt;Создание сертификата для работы HTTPS&lt;/h2&gt;
+&lt;p&gt;Подготавливаем ключ и сертификат для Web UI Airflow. Чтобы было удобней, выбираем короткое имя для URL: &amp;lsquo;prod-airf1.example.org&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Если требуется, то сначала получаем kerberos-билет:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего получаем сертификат, который будет действителен для двух dns-имени, prod-airf01p.example.org и airf1.example.org. Важно поменять переменные перед использованием этого скрипта:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Меняем на требуемое короткий псевдоним:
+export ALIAS=&amp;#34;prod-airf1&amp;#34;
+#export ALIAS=&amp;#34;dev-airf1&amp;#34;
+#export ALIAS=&amp;#34;devdmz-airf1&amp;#34;
+
+export SHORTHOSTNAME=$(hostname -s)
+export DOMAIN=$(hostname -d)
+export ALIASHOSTNAME=&amp;#34;${ALIAS}.${DOMAIN}&amp;#34;
+export DOMAINCAPS=$(echo $(hostname -d)|tr [:lower:] [:upper:])
+
+# Добавляем CNAME-запись для текущей машины в DNS-зону...
+ipa dnsrecord-add $DOMAIN $ALIAS --cname-rec=&amp;#34;${HOSTNAME}.&amp;#34;
+
+# Добавляем сервис-принципал для текущей машины...
+ipa service-add HTTP/${HOSTNAME}@${DOMAINCAPS}
+
+# Добавляем alias для созданного ранее сервис-принципала...
+ipa service-add-principal HTTP/${HOSTNAME} HTTP/${ALIASHOSTNAME}
+
+# С помощью локального certmonger&amp;#39;а генерируруем приватный ключ и
+# сертификат к нему, чтобы airflow web ui смог работать через https.
+# Certmonger будет следить за сертификатом и за 28 дней до окончания срока действия,
+# автоматически подаст запрос к FreeIPA на новый сертификат.
+# Заметим, что сертификат во FreeIPA прикреплен к сервис-принципалу, а не к хосту.
+sudo ipa-getcert request -K HTTP/${HOSTNAME} \
+-f /etc/airflow/${ALIAS}_${SHORTHOSTNAME}.crt \
+-k /etc/airflow/${ALIAS}_${SHORTHOSTNAME}.key \
+-D ${ALIASHOSTNAME} \
+-C &amp;#34;/bin/bash -c &amp;#39;/usr/bin/systemctl restart airflow-webserver &amp;amp;&amp;amp; /bin/chmod 640 /etc/airflow/${ALIAS}_${SHORTHOSTNAME}.{crt,key}&amp;#39;&amp;#34;
+
+# Выставляем права на файлы ключа и сертификата...
+# sudo chmod 640 /etc/airflow/${ALIAS}_${SHORTHOSTNAME}.{crt,key}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если понадобится, то отслеживаемые сертификаты выводим командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Выводим список отслеживаемых сертификатов...
+$ sudo getcert list
+  Number of certificates and requests being tracked: 1.
+  Request ID &amp;#39;20210129140146&amp;#39;:
+        status: MONITORING
+        stuck: no
+        key pair storage: type=FILE,location=&amp;#39;/etc/airflow/airf1_prod-airf01p.key&amp;#39;
+        certificate: type=FILE,location=&amp;#39;/etc/airflow/airf1_prod-airf01p.crt&amp;#39;
+        CA: IPA
+        issuer: CN=Certificate Authority,O=example.org
+        subject: CN=prod-airf01p.example.org,O=example.org
+        expires: 2023-01-30 14:01:46 UTC
+        dns: prod-airf1.example.org,prod-airf01p.example.org
+        principal name: HTTP/prod-airf01p.example.org@example.org
+        key usage: digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment
+        eku: id-kp-serverAuth,id-kp-clientAuth
+        pre-save command:
+        post-save command:
+        track: yes
+        auto-renew: yes
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если понадобится снять сертификат с отслеживания, то выполняем &amp;lsquo;getcert list&amp;rsquo;, выбираем сертификат и даём команду снятия с отслеживания:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ipa-getcert stop-tracking -i 20210129140146
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если нужно вновь поставить сертификат на автообновление, то выполняем, например:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ipa-getcert start-tracking -f /etc/airflow/prod-airf1_prod-airf01p.crt -k /etc/airflow/prod-airf1_prod-airf01p.key
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;установка-airflow-пакетов&#34;&gt;Установка Airflow-пакетов&lt;/h2&gt;
+&lt;h3 id=&#34;как-правильно-удалить-все-установленные-пакеты&#34;&gt;Как правильно удалить все установленные пакеты&lt;/h3&gt;
+&lt;p&gt;Установку Airflow производим под root для, что сделает airflow доступным под любым аккаунтом, так как исполняемые файлы Airflow будут устанавливаться в &lt;code&gt;/usr/local/bin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;На свежей машине установлены только два python-пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip list
+Package    Version
+---------- -------
+pip        21.0
+setuptools 39.2.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если необходимо удалить все python-пакеты, то сначала создаём файл со списком установленных пакетов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip freeze &amp;gt; requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего удаляем все пакеты, используя их список из ранее созданного файла:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip uninstall -y -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;установка&#34;&gt;Установка&lt;/h2&gt;
+&lt;p&gt;Так как на целевой машине используется python 3.6, то перед установкой airflow скачиваем свежий ограничительный файл, это &lt;a href=&#34;https://raw.githubusercontent.com/apache/airflow/constraints-2.0.1/constraints-3.6.txt&#34;&gt;constraints-3.6.txt для Airflow 2.0.1&lt;/a&gt;, и переносим на машину.&lt;/p&gt;
+&lt;p&gt;Так как версия установленного pip &amp;gt; 20.2.4, то устанавливаем Airflow указывая опцию &lt;code&gt;--use-deprecated legacy-resolver&lt;/code&gt; и актуальный файл &lt;code&gt;constraints.txt&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Обновляем pip
+$ sudo pip3 install --upgrade pip
+
+# Устанавливаем wheel
+$ sudo pip3 install wheel
+
+$ sudo pip3 install apache-airflow==2.0.1 --use-deprecated legacy-resolver --constraint constraints-3.6.txt
+Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Collecting apache-airflow==2.0.1
+  Downloading http://10.15.61.1:8081/repository/pypi/packages/apache-airflow/2.0.1/apache_airflow-2.0.1-py3-none-any.whl (4.5 MB)
+     |████████████████████████████████| 4.5 MB 61.9 MB/s
+Collecting cached-property==1.5.2
+  Downloading http://10.15.61.1:8081/repository/pypi/packages/cached-property/1.5.2/cached_property-1.5.2-py2.py3-none-any.whl (7.6 kB)
+Collecting iso8601==0.1.14
+  Downloading http://10.15.61.1:8081/repository/pypi/packages/iso8601/0.1.14/iso8601-0.1.14-py2.py3-none-any.whl (9.5 kB)
+Collecting psutil==5.8.0
+  Downloading http://10.15.61.1:8081/repository/pypi/packages/psutil/5.8.0/psutil-5.8.0-cp36-cp36m-manylinux2010_x86_64.whl (291 kB)
+     |████████████████████████████████| 291 kB 75.9 MB/s
+Collecting pendulum==2.1.2
+...
+Successfully installed Babel-2.9.0 Flask-1.1.2 Flask-AppBuilder-3.1.1 Flask-Babel-1.0.0 Flask-Caching-1.9.0 Flask-JWT-Extended-3.25.1 Flask-Login-0.4.1 Flask-OpenID-1.2.5 Flask-SQLAlchemy-2.4.4 Flask-WTF-0.14.3 Jinja2-2.11.3 Mako-1.1.4 Markdown-3.3.3 MarkupSafe-1.1.1 PyJWT-1.7.1 PyYAML-5.4.1 Pygments-2.8.0 SQLAlchemy-1.3.23 SQLAlchemy-JSONField-1.0.0 SQLAlchemy-Utils-0.36.8 WTForms-2.3.3 Werkzeug-1.0.1 alembic-1.5.4 apache-airflow-2.0.1 apache-airflow-providers-ftp-1.0.1 apache-airflow-providers-http-1.1.0 apache-airflow-providers-imap-1.0.1 apache-airflow-providers-sqlite-1.0.1 apispec-3.3.2 argcomplete-1.12.2 attrs-20.3.0 cached-property-1.5.2 cattrs-1.0.0 certifi-2020.12.5 cffi-1.14.5 chardet-3.0.4 click-7.1.2 clickclick-20.10.2 colorama-0.4.4 colorlog-4.7.2 commonmark-0.9.1 connexion-2.7.0 croniter-0.3.37 cryptography-3.4.5 dataclasses-0.7 defusedxml-0.6.0 dill-0.3.3 dnspython-1.16.0 docutils-0.16 email-validator-1.1.2 graphviz-0.16 gunicorn-19.10.0 idna-2.10 importlib-metadata-1.7.0 importlib-resources-1.5.0 inflection-0.5.1 iso8601-0.1.14 itsdangerous-1.1.0 jsonschema-3.2.0 lazy-object-proxy-1.4.3 lockfile-0.12.2 marshmallow-3.10.0 marshmallow-enum-1.5.1 marshmallow-oneofschema-2.1.0 marshmallow-sqlalchemy-0.23.1 natsort-7.1.1 numpy-1.19.5 openapi-spec-validator-0.2.9 pandas-1.1.5 pendulum-2.1.2 pep562-1.0 prison-0.1.3 psutil-5.8.0 pycparser-2.20 pyrsistent-0.17.3 python-daemon-2.2.4 python-dateutil-2.8.1 python-editor-1.0.4 python-nvd3-0.15.0 python-slugify-4.0.1 python3-openid-3.2.0 pytz-2020.5 pytzdata-2020.1 requests-2.25.1 rich-9.2.0 setproctitle-1.2.2 six-1.15.0 swagger-ui-bundle-0.0.8 tabulate-0.8.7 tenacity-6.2.0 termcolor-1.1.0 text-unidecode-1.3 typing-3.7.4.3 typing-extensions-3.7.4.3 unicodecsv-0.14.1 urllib3-1.25.11 zipp-3.4.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем дополнительные airflow-пакеты для работы с Hadoop:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip3 install apache-airflow[async,celery,crypto,jdbc,jenkins,hdfs,hive,ldap,password,postgres,rabbitmq,vertica] --use-deprecated legacy-resolver --constraint constraints-3.6.txt
+Looking in indexes: http://nx-pubrepo-reader:****@nexus.example.org:8081/repository/pypi/simple
+Requirement already satisfied: apache-airflow[async,celery,crypto,hdfs,hive,jdbc,jenkins,ldap,password,pig,p
+ostgres,rabbitmq,spark,sqoop,vertica] in /usr/local/lib/python3.6/site-packages (2.0.1)
+Requirement already satisfied: requests==2.25.1 in /usr/local/lib/python3.6/site-packages (from -c constrain
+ts-3.6.txt (line 409)) (2.25.1)  
+Requirement already satisfied: Flask-Caching==1.9.0 in /usr/local/lib/python3.6/site-packages (from -c const
+raints-3.6.txt (line 7)) (1.9.0)
+Requirement already satisfied: termcolor==1.1.0 in /usr/local/lib/python3.6/site-packages (from -c constrain
+ts-3.6.txt (line 458)) (1.1.0)
+Requirement already satisfied: apache-airflow-providers-sqlite==1.0.1 in /usr/local/lib/python3.6/site-packa
+ges (from -c constraints-3.6.txt (line 98)) (1.0.1)
+Requirement already satisfied: Flask==1.1.2 in /usr/local/lib/python3.6/site-packages (from -c constraints-3.6.txt (line 14)) (1.1.2)
+Requirement already satisfied: tenacity==6.2.0 in /usr/local/lib/python3.6/site-packages (from -c constraints-3.6.txt (line 457)) (6.2.0)...
+Successfully installed Flask-Bcrypt-0.7.1 JPype1-1.2.1 JayDeBeApi-1.2.3 PyHive-0.6.3 amqp-2.6.1 apache-airflow-providers-apache-hdfs-1.0.1 apache-airflow-providers-apache-hive-1.0.1 apache-airflow-providers-apache-spark-1.0.1 apache-airflow-providers-celery-1.0.1 apache-airflow-providers-jdbc-1.0.1 apache-airflow-providers-jenkins-1.0.1 apache-airflow-providers-postgres-1.0.1 apache-airflow-providers-vertica-1.0.1 argparse-1.4.0 bcrypt-3.2.0 billiard-3.6.3.0 celery-4.4.7 eventlet-0.30.1 flower-0.9.7 future-0.18.2 gevent-21.1.2 greenlet-1.0.0 hmsclient-0.1.1 humanize-3.2.0 kombu-4.6.11 ldap3-2.9 multi-key-dict-2.0.3 pbr-5.5.1 prometheus-client-0.8.0 protobuf-3.14.0 psycopg2-binary-2.8.6 py4j-0.10.9 pyasn1-0.4.8 pyasn1-modules-0.2.8 pyspark-3.0.1 python-jenkins-1.7.0 python-ldap-3.3.1 sasl-0.2.1 snakebite-py3-3.0.5 thrift-0.13.0 thrift-sasl-0.4.2 tornado-6.1 vertica-python-1.0.1 vine-1.3.0 zope.event-4.5.0 zope.interface-5.2.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Попробуем установить пакет &amp;lsquo;apache-airflow[kerberos]&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip install apache-airflow[kerberos] --use-deprecated legacy-resolver --constraint constraints-3.6.txt
+Looking in indexes: http://centos-main-reader:****@10.15.61.1:8081/repository/pypi/simple
+Requirement already satisfied: apache-airflow[kerberos] in /usr/local/lib/python3.6/site-packages (2.0.0)
+Requirement already satisfied: croniter==0.3.36 in /usr/local/lib/python3.6/site-packages (from -c constrain
+ts-3.6.txt (line 109)) (0.3.36)
+Requirement already satisfied: cryptography==3.2.1 in /usr/local/lib64/python3.6/site-packages (from -c cons
+traints-3.6.txt (line 110)) (3.2.1)
+Requirement already satisfied: iso8601==0.1.13 in /usr/local/lib/python3.6/site-packages (from -c constraints-3.6.txt (line 211)) (0.1.13)
+...
+Building wheels for collected packages: pykerberos
+  Building wheel for pykerberos (setup.py) ... done
+  Created wheel for pykerberos: filename=pykerberos-1.2.1-cp36-cp36m-linux_x86_64.whl size=58013 sha256=54044550e3499adf6034c02788de75da7513b0d3f267c4088345e20062a79c57
+  Stored in directory: /root/.cache/pip/wheels/3f/67/bb/d23671c8719076ca13dd216b491ed5cea1b0494891aa9e7dba
+Successfully built pykerberos
+Installing collected packages: pykerberos, requests-kerberos
+Successfully installed pykerberos-1.2.1 requests-kerberos-0.12.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем пакет &amp;lsquo;python-ldap&amp;rsquo; для возможности LDAP-аутентификации в FAB:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip install python-ldap
+Installing collected packages: python-ldap
+    Running setup.py install for python-ldap ... done
+Successfully installed python-ldap-3.3.1
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;2021-02-18 при установке очередного экземпляра Airflow, выяснилось, что &amp;lsquo;python-ldap&amp;rsquo; устанавливается на одном из предыдущих этапах. Видимо разработчики внесли этот пакет в зависимости. Но пока установку этого пакета не убираю.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Для организации мэппинга между группами в IPA и ролями в Airflow устанавливаем свежий модуль &amp;lsquo;Flask-AppBuilder 3.2.0&amp;rsquo;, в котором это реализовано. Не обращаем внимания на предупреждения о нарушении зависимостей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo pip install Flask-AppBuilder==3.2.0
+...
+Installing collected packages: Flask-AppBuilder
+  Attempting uninstall: Flask-AppBuilder
+    Found existing installation: Flask-AppBuilder 3.1.1
+    Uninstalling Flask-AppBuilder-3.1.1:
+      Successfully uninstalled Flask-AppBuilder-3.1.1
+ERROR: pip&amp;#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+apache-airflow 2.0.1 requires flask-appbuilder~=3.1.1, but you have flask-appbuilder 3.2.0 which is incompatible.
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка-airflow&#34;&gt;Настройка Airflow&lt;/h2&gt;
+&lt;h3 id=&#34;создание-типового-файла-airflowcfg&#34;&gt;Создание типового файла &lt;code&gt;airflow.cfg&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Одноразово запускаем airflow для создания типового файла &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export AIRFLOW_HOME=/data/airflow
+export AIRFLOW_CONFIG=/etc/airflow/airflow.cfg
+sudo -E -u airflow /usr/local/bin/airflow webserver -p 8080
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Первый запуск Apache Airflow должен закончиться какой-нибудь ошибкой, например:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[2021-01-28 18:39:48,191] {cli_action_loggers.py:105} WARNING - Failed to log action with (sqlite3.Operation
+alError) no such table: log
+[SQL: INSERT INTO log (dttm, dag_id, task_id, event, execution_date, owner, extra) VALUES (?, ?, ?, ?, ?, ?,
+ ?)]
+[parameters: (&amp;#39;2021-01-28 15:39:48.187080&amp;#39;, None, None, &amp;#39;cli_webserver&amp;#39;, None, &amp;#39;airflow&amp;#39;, &amp;#39;{&amp;#34;host_name&amp;#34;: &amp;#34;ud
+rvs-airf01p.example.org&amp;#34;, &amp;#34;full_command&amp;#34;: &amp;#34;[\&amp;#39;/usr/local/bin/airflow\&amp;#39;, \&amp;#39;webserver\&amp;#39;, \&amp;#39;-p\&amp;#39;, \&amp;#39;********\&amp;#39;]&amp;#34;}
+&amp;#39;)]
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+  ____________       _____________
+ ____    |__( )_________  __/__  /________      __
+____  /| |_  /__  ___/_  /_ __  /_  __ \_ | /| / /
+___  ___ |  / _  /   _  __/ _  / / /_/ /_ |/ |/ /
+ _/_/  |_/_/  /_/    /_/    /_/  \____/____/|__/
+[2021-01-28 18:39:48,223] {dagbag.py:440} INFO - Filling up the DagBag from /dev/null
+[2021-01-28 18:39:48,309] {manager.py:727} WARNING - No user yet created, use flask fab command to do it.
+Traceback (most recent call last):
+...
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: dag
+[SQL: SELECT dag.dag_id AS dag_dag_id, dag.root_dag_id AS dag_root_dag_id, dag.is_paused AS dag_is_paused, dag.is_subdag AS dag_is_subdag, dag.is_active AS dag_is_active, dag.last_scheduler_run AS dag_last_scheduler_run, dag.last_pickled AS dag_last_pickled, dag.last_expired AS dag_last_expired, dag.scheduler_lock AS dag_scheduler_lock, dag.pickle_id AS dag_pickle_id, dag.fileloc AS dag_fileloc, dag.owners AS dag_owners, dag.description AS dag_description, dag.default_view AS dag_default_view, dag.schedule_interval AS dag_schedule_interval, dag.concurrency AS dag_concurrency, dag.has_task_concurrency_limits AS dag_has_task_concurrency_limits, dag.next_dagrun AS dag_next_dagrun, dag.next_dagrun_create_after AS dag_next_dagrun_create_after
+FROM dag
+WHERE dag.is_active = 1 OR dag.is_paused = 1]
+(Background on this error at: http://sqlalche.me/e/13/e3q8)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Но в каталоге &amp;lsquo;/etc/airflow&amp;rsquo; должен появиться типовой файл &amp;lsquo;airflow.cfg&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ls -al /etc/airflow
+total 112
+drwxr-s---    2 airflow airflow   185 Feb 18 13:17 .
+drwxr-xr-x. 122 root    root     8192 Feb 18 11:37 ..
+-rw-r-----    1 airflow airflow 38914 Feb 18 13:17 airflow.cfg
+-rw-r-----    1 root    airflow  1720 Feb 18 12:06 prod-airf1_prod-airf01p.crt
+-rw-r-----    1 root    airflow  1708 Feb 18 12:06 prod-airf1_prod-airf01p.key
+-r--------    1 root    airflow    15 Jan 28 22:51 psql-db.txt
+-r--------    1 root    airflow    27 Jan 28 22:51 psql-pass.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В каталоге &lt;code&gt;/data/airflow&lt;/code&gt; должен появиться типовой файл &lt;code&gt;webserver_config.py&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo ls -al /data/airflow
+total 12
+drwxr-x---  5 airflow airflow   93 Feb 18 13:06 .
+drwxr-xr-x. 3 root    root      21 Feb 18 11:54 ..
+drwxr-s---+ 2 airflow airflow    6 Feb 18 11:54 dags
+drwxr-x---+ 3 airflow airflow   23 Feb 18 13:09 logs
+drwxr-s---+ 2 airflow airflow    6 Feb 18 11:54 plugins
+-rw-r--r--  1 airflow airflow 2564 Feb 18 13:03 unittests.cfg
+-rw-r--r--  1 airflow airflow 4700 Feb 18 13:03 webserver_config.py
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;переключение-airflow-на-использование-postgresql&#34;&gt;Переключение Airflow на использование PostgreSQL&lt;/h3&gt;
+&lt;p&gt;Делаем бэкап &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt;, исправляем права на эти файлы, и исправляем/добавляем строки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo cp /etc/airflow/airflow.cfg /etc/airflow/airflow.cfg.origin
+sudo chmod 640 /etc/airflow/airflow.cfg /etc/airflow/airflow.cfg.origin
+
+sudo sed -i &amp;#39;s/^executor.*/executor = LocalExecutor/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^sql_alchemy_conn.*/sql_alchemy_conn = postgres+psycopg2:\/\/$(sudo cat /etc/airflow/psql-pass.txt)@127.0.0.1\/$(sudo cat /etc/airflow/psql-db.txt)/&amp;#34; /etc/airflow/airflow.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате приведённой выше команды, в файле &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; будут исправлены две строки. Вторая строка, отвечающая за подключение к PostgreSQL, будет содержать пароль взятый из ранее созданного файла, и не похожий на тот, что можно наблюдать в следующем примере:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[core]
+executor = LocalExecutor
+
+sql_alchemy_conn = postgres+psycopg2://airf-user:xxxxxxxxx@127.0.0.1/airf_metadata
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Отключение загрузки example DAGs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo sed -i &amp;#39;s/^load_examples = True/load_examples = False/&amp;#39; /etc/airflow/airflow.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Однократная инициализация базы данных Airflow:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export AIRFLOW_HOME=/data/airflow
+export AIRFLOW_CONFIG=/etc/airflow/airflow.cfg
+sudo -E -u airflow airflow db init
+
+DB: postgres+psycopg2://airf_user:***@127.0.0.1/airf_metadata
+[2021-01-28 19:11:07,021] {db.py:678} INFO - Creating tables
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -&amp;gt; e3a246e0dc1, current schema
+INFO  [alembic.runtime.migration] Running upgrade e3a246e0dc1 -&amp;gt; 1507a7289a2f, create is_encrypted
+INFO  [alembic.runtime.migration] Running upgrade 1507a7289a2f -&amp;gt; 13eb55f81627, maintain history for compati
+bility with earlier migrations
+INFO  [alembic.runtime.migration] Running upgrade 13eb55f81627 -&amp;gt; 338e90f54d61, More logging into task_instance
+...
+[2021-01-28 19:11:09,165] {manager.py:727} WARNING - No user yet created, use flask fab command to do it.
+[2021-01-28 19:11:12,349] {migration.py:517} INFO - Running upgrade 2c6edca13270 -&amp;gt; 61ec73d9401f, Add description field to connection
+[2021-01-28 19:11:12,351] {migration.py:517} INFO - Running upgrade 61ec73d9401f -&amp;gt; 64a7d6477aae, fix description field in connection to be text
+[2021-01-28 19:11:12,353] {migration.py:517} INFO - Running upgrade 64a7d6477aae -&amp;gt; e959f08ac86c, Change field in DagCode to MEDIUMTEXT for MySql
+[2021-01-28 19:11:12,524] {dagbag.py:440} INFO - Filling up the DagBag from /data/airflow/dags
+[2021-01-28 19:11:12,554] {example_kubernetes_executor_config.py:174} WARNING - Could not import DAGs in example_kubernetes_executor_config.py: No module named &amp;#39;kubernetes&amp;#39;
+[2021-01-28 19:11:12,554] {example_kubernetes_executor_config.py:175} WARNING - Install kubernetes dependencies with: pip install apache-airflow[&amp;#39;cncf.kubernetes&amp;#39;]
+...
+[2021-01-28 19:11:12,706] {dag.py:2266} INFO - Setting next_dagrun for example_subdag_operator.section-1 to None
+[2021-01-28 19:11:12,707] {dag.py:2266} INFO - Setting next_dagrun for example_subdag_operator.section-2 to None
+Initialization done
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-https-для-web-ui&#34;&gt;Настройка HTTPS для Web UI&lt;/h3&gt;
+&lt;p&gt;В &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; добавляем строки, указывающие использовать https и ранее созданные ключ и сертификат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[webserver]
+base_url = https://prod-airf1.example.org:8080
+web_server_port = 8080
+web_server_ssl_cert = /etc/airflow/prod-airf1_prod-airf01p.crt
+web_server_ssl_key = /etc/airflow/prod-airf1_prod-airf01p.key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для этого выполняем следующий скрипт, но &lt;strong&gt;важно помнить, что переменную URL мы берём из переменной ALIASHOSTNAME, которая была определена на этапе добавления сервисов в IPA&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;URL=${ALIASHOSTNAME}
+
+CRT=$(ls *.crt)
+KEY=$(ls *.key)
+sudo sed -i &amp;#34;s/^base_url.*/base_url=https:\/\/${URL}\:8080/&amp;#34; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^web_server_ssl_cert.*/web_server_ssl_cert = \/etc\/airflow\/${CRT}/&amp;#34; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^web_server_ssl_key.*/web_server_ssl_key = \/etc\/airflow\/${KEY}/&amp;#34; /etc/airflow/airflow.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-ldap-аутентификации&#34;&gt;Настройка LDAP-аутентификации&lt;/h3&gt;
+&lt;p&gt;После создания в Каталоге отдельного системного пользователя для подключения к LDAP и всех необходимых групп пользователей, заполняем в &lt;code&gt;/data/airflow/webserver_config.py&lt;/code&gt; следующей информацией. &lt;strong&gt;Важно помнить, что некоторые переменные в этом скрипте берутся из ранее проделанных этапов этой инструкции, а некоторые необходимо переопределить&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Сохраняем оригинальный конфиг.
+mv /data/airflow/webserver_config.py /data/airflow/webserver_config.py.origin
+
+# Эта переменная берётся из переменной GROUPNAME, которую
+# определили на этапе создания групп в IPA:
+IPA_AIRFLOW_GROUP=${GROUPNAME}
+
+# Переменные определяющие системную УЗ для подключения к LDAP.
+BIND_USER=&amp;#34;uid=binddn_airflow,cn=sysaccounts,cn=etc,dc=example,dc=org&amp;#34;
+BIND_PASSWORD=&amp;#34;xxxxxxxxxxxxxxxx&amp;#34;
+
+# Заполняем новый конфиг данными.
+cat &amp;lt;&amp;lt; EOF &amp;gt; /data/airflow/webserver_config.py
+
+import os
+
+from flask_appbuilder.security.manager import AUTH_LDAP
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+WTF_CSRF_ENABLED = True
+
+AUTH_TYPE = AUTH_LDAP
+
+# Uncomment to setup Full admin role name
+AUTH_ROLE_ADMIN = &amp;#39;Admin&amp;#39;
+
+# Uncomment to setup Public role name, no authentication needed
+#AUTH_ROLE_PUBLIC = &amp;#39;Public&amp;#39;
+
+# Will allow user self registration
+AUTH_USER_REGISTRATION = True
+
+# The default user self registration role
+AUTH_USER_REGISTRATION_ROLE = &amp;#34;Viewer&amp;#34;
+
+AUTH_LDAP_SERVER = &amp;#39;ldaps://prod-ipa01.example.org ldaps://prod-ipa02.example.org ldaps://prod-ipa03.example.org&amp;#39;
+AUTH_LDAP_SEARCH = &amp;#39;cn=users,cn=accounts,dc=example,dc=org&amp;#39;
+AUTH_LDAP_GROUP_FIELD = &amp;#39;memberOf&amp;#39;
+AUTH_LDAP_SEARCH_FILTER = &amp;#39;(memberOf=cn=${IPA_AIRFLOW_GROUP},cn=groups,cn=accounts,dc=example,dc=org)&amp;#39;
+AUTH_LDAP_BIND_USER = &amp;#39;$BIND_USER&amp;#39;
+AUTH_LDAP_BIND_PASSWORD = &amp;#39;$BIND_PASSWORD&amp;#39;
+AUTH_LDAP_UID_FIELD = &amp;#39;uid&amp;#39;
+#AUTH_LDAP_USE_TLS = True
+AUTH_LDAP_ALLOW_SELF_SIGNED = True
+AUTH_LDAP_TLS_CACERTFILE = &amp;#39;/etc/ipa/ca.crt&amp;#39;
+
+AUTH_ROLES_SYNC_AT_LOGIN = True
+AUTH_ROLES_MAPPING = {
+  &amp;#34;cn=${IPA_AIRFLOW_GROUP}_viewers,cn=groups,cn=accounts,dc=example,dc=org&amp;#34;: [&amp;#34;Viewer&amp;#34;],
+  &amp;#34;cn=${IPA_AIRFLOW_GROUP}_users,cn=groups,cn=accounts,dc=example,dc=org&amp;#34;: [&amp;#34;User&amp;#34;],
+  &amp;#34;cn=${IPA_AIRFLOW_GROUP}_ops,cn=groups,cn=accounts,dc=example,dc=org&amp;#34;: [&amp;#34;Op&amp;#34;],
+  &amp;#34;cn=${IPA_AIRFLOW_GROUP}_admin,cn=groups,cn=accounts,dc=example,dc=org&amp;#34;: [&amp;#34;Admin&amp;#34;],
+}
+PERMANENT_SESSION_LIFETIME = 1800
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Логгирование работы LDAP во Flask&amp;rsquo;е можно включить через изменение опции &amp;lsquo;fab_logging_level = WARN&amp;rsquo; в /etc/airflow/airflow.cfg. Включение уровня DEBUG поможет отладке.&lt;/p&gt;
+&lt;p&gt;Некоторые моменты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Попытавшись использовать для одной УЗ роль &amp;lsquo;Public&amp;rsquo; я столкнулся с тем, что пользователь с этой ролью не может войти в Airflow. Web-браузер показывает ошибку перенаправления на самого себя (или как там правильно). Именно поэтому &amp;lsquo;AUTH_USER_REGISTRATION_ROLE = &amp;ldquo;Viewer&amp;rdquo;&amp;rsquo;, а не &amp;ldquo;Public&amp;rdquo;, чтобы свежезарегистрировавшийся пользователь смог войти в Airflow.&lt;/li&gt;
+&lt;li&gt;С другой стороны, возможно, вообще выключить эту опцию, так как роли берутся из IPA.&lt;/li&gt;
+&lt;li&gt;Попробовал отключить эту опцию и новым пользователям, кроме роли из IPA, стала назначаться роль &amp;lsquo;Public&amp;rsquo;, что в общем не критично. В общем, нет особой разницы между включением и отключением этой опции при подключённой LDAP-авторизации.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;попытка-настройки-kerberos&#34;&gt;Попытка настройки Kerberos&lt;/h3&gt;
+&lt;p&gt;Добавляем systemd unit:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/airflow-kerberos.service
+[Unit]
+Description=Airflow kerberos ticket renewer
+After=network.target airflow-webserver.service
+#Wants=postgresql-13.service mysql.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+User=airflow
+Group=airflow
+Type=simple
+ExecStart=/usr/local/bin/airflow kerberos
+Restart=on-failure
+RestartSec=5s
+SyslogIdentifier=airf-krb
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Не забываем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl daemon-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Получаем Kerberos keytab-файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# При необходимости получаем kerbros-билет:
+#kinit
+
+ipa service-add airflow/$(hostname)
+sudo ipa-getkeytab -s prod-ipa01p.example.org -p airflow/$(hostname) -k /etc/airflow/airflow_$(hostname -s).keytab
+sudo chmod 660 /etc/airflow/airflow_$(hostname -s).keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Забыл проверить, надо ли получать для себя в IPA разрешения для только что созданного сервиса: &amp;ldquo;Разрешено создавать таблицу ключей&amp;rdquo; и &amp;ldquo;Разрешено получать таблицу ключей&amp;rdquo;. Или я, как админ, смог получить keytab без таковых.&lt;/p&gt;
+&lt;p&gt;В файле &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; добавляем/изменяем строки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo sed -i &amp;#39;s/^security.*/security = kerberos/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#39;s/^ccache.*/ccache = \/tmp\/airflow_krb5_ccache/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^principal.*/principal = airflow\/$(hostname)/&amp;#34; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#39;s/^reinit_frequency.*/reinit_frequency = 3600/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#39;s/^kinit_path.*/kinit_path = kinit/&amp;#39; /etc/airflow/airflow.cfg
+sudo sed -i &amp;#34;s/^keytab.*/keytab = \/etc\/airflow\/airflow_$(hostname -s).keytab/&amp;#34; /etc/airflow/airflow.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Перезапускаем и проверяем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl start airflow-kerberos
+sudo klist -c /tmp/airflow_krb5_ccache
+  Ticket cache: FILE:/tmp/airflow_krb5_ccache
+  Default principal: airflow/prod-airf01p.example.org@example.org
+
+  Valid starting       Expires              Service principal
+  02/16/2021 13:37:08  02/17/2021 13:37:08  krbtgt/example.org@example.org
+          renew until 02/19/2021 01:37:06
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Из-за установленного в &lt;code&gt;/etc/airflow/airflow.cfg&lt;/code&gt; параметра &amp;lsquo;reinit_frequency = 3600&amp;rsquo;, через один час тикет будет обновлён.&lt;/p&gt;
+&lt;p&gt;Далее надо разобраться с добавлением строк в &amp;lsquo;core-site.xml&amp;rsquo;, как описано в &lt;a href=&#34;https://airflow.apache.org/docs/apache-airflow/stable/security/kerberos.html#hadoop&#34;&gt;https://airflow.apache.org/docs/apache-airflow/stable/security/kerberos.html#hadoop&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;завершение&#34;&gt;Завершение&lt;/h2&gt;
+&lt;p&gt;Запуск Airflow:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl daemon-reload # На всякий случай
+systemctl enable --now airflow-{webserver,scheduler,kerberos}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В течении пары минут должен подняться Web-интерфейс по ранее определённому адресу &lt;a href=&#34;https://prod-airf1.example.org:8080&#34;&gt;https://prod-airf1.example.org:8080&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Закидываем один тестовый DAG:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo cp /usr/local/lib/python3.6/site-packages/airflow/example_dags/example_bash_operator.py /data/airflow/dags/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;По умолчанию, сканирование каталога с DAG&amp;rsquo;ами выполняется каждые пять минут, поэтому придётся немного подождать момента появления нового DAG&amp;rsquo;а в списке DAG&amp;rsquo;ов, или переопределить этот параметр &amp;lsquo;dag_dir_list_interval&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;После появления тестового DAG&amp;rsquo;а, его необходимо включить, а потом запустить. Успешное выполнение выглядит так:
+&lt;img src=&#34;airflowexampletask.png&#34; alt=&#34;AirfowExampleTask&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Можно считать, что Airflow установлен.&lt;/p&gt;
+&lt;h2 id=&#34;почти-полное-удаление-если-потребуется&#34;&gt;Почти полное удаление, если потребуется&lt;/h2&gt;
+&lt;p&gt;Выполняем под &lt;code&gt;sudo su&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl disable --now airflow-{webserver,scheduler,kerberos}
+rm -f /etc/systemd/system/airflow-*.service
+systemctl daemon-reload
+
+ID=$(getcert list|grep -3 &amp;#39;/etc/airflow&amp;#39; | grep ID | grep -o &amp;#39;[[:digit:]]*&amp;#39;)
+ipa-getcert stop-tracking -i ${ID}
+
+rm -rf /etc/airflow /data/airflow /var/log/airflow
+rm -f /etc/sysconfig/airflow /etc/rsyslog.d/airf-*.conf /etc/sudoers.d/airflow
+sed -i &amp;#39;/airflow/d&amp;#39; /etc/logrotate.d/syslog
+
+pip freeze &amp;gt; requirements.txt
+pip uninstall -y -r requirements.txt
+rm -f requirements.txt
+rsync -av /usr/local/lib/python3.6/site-packages/pip* /root/tmp/
+rm -rf /usr/local/lib/python3.6/site-packages/*
+rsync -av /root/tmp/pip* /usr/local/lib/python3.6/site-packages/
+rm -rf /root/tmp/pip*
+rm -rf /root/.cache/pip
+
+userdel -r airflow
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаление PostgreSQL базы и пользователя:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;DBNAME=&amp;#34;airf_metadata&amp;#34;
+DBUSER=&amp;#34;airf_user&amp;#34;
+sudo -u postgres psql -c &amp;#34;DROP DATABASE ${DBNAME};&amp;#34;
+sudo -u postgres psql -c &amp;#34;DROP USER ${DBUSER};&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаление объектов из FreeIPA из-под обычного пользователя. &lt;strong&gt;Важно помнить, что необходимо поменять некоторые переменные перед использованием этого скрипта&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# При необходимости получаем kerberos-тикет:
+#kinit
+
+# Меняем значение переменных:
+ALIAS=&amp;#34;airf1&amp;#34;
+IPAGROUP=&amp;#34;prod_airflow_airf1&amp;#34;
+
+ALIASHOSTNAME=&amp;#34;${ALIAS}.${DOMAIN}&amp;#34;
+SHORTHOSTNAME=$(hostname -s)
+DOMAIN=$(hostname -d)
+DOMAINCAPS=$(echo $(hostname -d)|tr [:lower:] [:upper:])
+
+ipa dnsrecord-del $DOMAIN $ALIAS --cname-rec=&amp;#34;${HOSTNAME}.&amp;#34;
+
+ipa service-del HTTP/${HOSTNAME}@${DOMAINCAPS}
+
+ipa service-del airflow/${HOSTNAME}@${DOMAINCAPS}
+
+# Удаляем группы из IPA:
+ipa group-del ${IPAGROUP}_admins
+ipa group-del ${IPAGROUP}_ops
+ipa group-del ${IPAGROUP}_users
+ipa group-del ${IPAGROUP}_viewers
+ipa group-del ${IPAGROUP}
+
+# Вручную отозвать во FreeIPA сертификат из host-объекта.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Остались не удалены:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;TLS-сертификат из host-объекта IPA.&lt;/li&gt;
+&lt;li&gt;Установленный PostgreSQL.&lt;/li&gt;
+&lt;li&gt;Некоторое количество yum-пакетов установленных через:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sudo yum -y groupinstall &amp;quot;Development Tools&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sudo yum -y install python3-devel cyrus-sasl cyrus-sasl-devel libffi-devel krb5-devel&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Создание keytab-файла для пользовательского принципала</title>
+      <link>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
+      <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-01-30&lt;/p&gt;
+&lt;p&gt;При получении keytab&amp;rsquo;а из FreeIPA, для пользователя потребуется сменить пароль.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В домашнем каталоге пользователя запускаем утилиту &amp;lsquo;ipa-getkeytab&amp;rsquo; для генерации keytab-файла для пользователя;&lt;/li&gt;
+&lt;li&gt;на запрос пароля, дважды вводим НОВЫЙ пароль, который с этого момента станет актуальным для пользовательского УЗ;&lt;/li&gt;
+&lt;li&gt;одновременно, все прочие keytab&amp;rsquo;ы, сгенерированные ранее, станут недействительными.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa-getkeytab -p username -k username.keytab -P
+New Principal Password:
+Verify Principal Password:
+Keytab successfully retrieved and stored in: username.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяем, что в созданном keytab-файле присутствует информация:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ klist -kte username.keytab
+Keytab name: FILE:username.keytab
+KVNO Timestamp           Principal
+---- ------------------- ------------------------------------------------------
+  33 01/16/2021 11:52:00 username@EXAMPLE.ORG (aes256-cts-hmac-sha1-96)
+  33 01/16/2021 11:52:00 username@EXAMPLE.ORG (aes128-cts-hmac-sha1-96)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Получение kerberos-билета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit -kt username.keytab username
+$ klist
+Ticket cache: FILE:/tmp/krb5cc_192800004_g8LRFe
+Default principal: username@EXAMPLE.ORG
+ 
+Valid starting       Expires              Service principal
+01/16/2021 12:00:20  01/17/2021 12:00:20  krbtgt/EXAMPLE.ORG@EXAMPLE.ORG
+        renew until 01/23/2021 12:00:20
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если полученная информация напоминает вышеприведённую, то можно считать, что keytab-файл успешно создан.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Срипт для добавления PTR-записей по списку из файла в обратную DNS-зону FreeIPA</title>
+      <link>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
+      <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-01-25&lt;/p&gt;
+&lt;p&gt;Образец файла со списком узлов в формате hosts:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cat ip.hosts
+10.15.195.1 is01-airf01p.example.org
+10.15.195.3 is01-app01p.example.org
+10.15.195.4 is01-app02p.example.org
+10.15.112.52 is02-app208p.example.org
+10.15.112.53 is02-app209p.example.org
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скрипт для добавления PTR-записей в соответствующие обратные зоны:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;add_dns_record.sh
+#!/bin/bash
+LIST=&amp;#34;ip.hosts&amp;#34;
+ 
+while read line; do
+  echo &amp;#34;&amp;#34;
+  echo $line     # &amp;#34;10.15.195.1 is01-airf01p.example.org&amp;#34;
+  arr1=($line)   # конвертируем переменную в массив из двух элементов
+  ip1=${arr1[0]} # &amp;#34;10.15.195.1&amp;#34;
+  IFS=&amp;#34;.&amp;#34;        # разделитель пробел меняем на точку для bash substring
+  arr2=($ip1)    # конвертируем ip-адрес в массив &amp;#34;10 15 195 1&amp;#34;
+  IFS=&amp;#34; &amp;#34;        # возвращаем разделить
+ 
+  ZONE=&amp;#34;${arr2[2]}.${arr2[1]}.${arr2[0]}.in-addr.arpa&amp;#34;
+  IPN=${arr2[3]}
+  NAME=${arr1[1]}&amp;#34;.&amp;#34;
+  echo &amp;#34;$IPN $NAME&amp;#34;
+  echo &amp;#34;ipa dnsrecord-add $ZONE $IPN --ptr-rec $NAME&amp;#34;
+  ipa dnsrecord-add $ZONE $IP --ptr-rec $NAME
+done &amp;lt; $LIST
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Создание system account для подключения LDAP-клиента к FreeIPA</title>
+      <link>/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
+      <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-11-26&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Для подключения некоторых сервисов к FreeIPA по протоколу LDAP, требуется указать учётные данные какого-либо пользователя. Для этих целей мы будем использовать специальный тип аккаунта &amp;lsquo;system account&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Преимущества данного типа аккаунта в том, что у него отсутствуют все атрибуты пользователя, кроме логина и пароля. &amp;lsquo;System account&amp;rsquo; не имеет возможности:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;получить kerberos-билет;&lt;/li&gt;
+&lt;li&gt;выполнить вход на хост или сервис;&lt;/li&gt;
+&lt;li&gt;возобладать каким-либо объектом;&lt;/li&gt;
+&lt;li&gt;записать или изменить в LDAP какую-либо информацию.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Также на &amp;lsquo;system account&amp;rsquo; не распространяются пользовательские политики. Например, политика периодической смены пароля.&lt;/p&gt;
+&lt;p&gt;Информация о &amp;ldquo;системных аккаунтах&amp;rdquo; хранится в отдельной от остальных пользователей ветке &amp;lsquo;cn=sysaccounts,cn=etc,dc=example,dc=org&amp;rsquo;. Для добавления &amp;lsquo;system account&amp;rsquo; можно использовать обычный ldif-файл, но более удобным способом является использование &lt;a href=&#34;https://github.com/noahbliss/freeipa-sam&#34;&gt;sh-скрипта freeipa-sam&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;работа-со-скриптом-freeipa-sam&#34;&gt;Работа со скриптом freeipa-sam&lt;/h2&gt;
+&lt;p&gt;Любым способом, даже через copy/paste, копируем &lt;a href=&#34;https://raw.githubusercontent.com/noahbliss/freeipa-sam/master/freeipa-sam.sh&#34;&gt;скрипт&lt;/a&gt; на, например, свою рабочую машину, которая имеет доступ к FreeIPA-домену.&lt;/p&gt;
+&lt;p&gt;Запускаем скрипт &amp;lsquo;/bin/bash freeipa-sam.sh&amp;rsquo; и видим:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;### FreeIPA - System Account Manager ###
+1.) ldapserver=
+2.) domain= (ldapdomain=)
+3.) binduser=
+4.) bindpass=UNSET!
+5.) ssl=true
+
+Actions (conditions not yet met):
+  add | rm | ls | info | passwd
+
+---   Results   ---
+
+--- End Results ---
+
+&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Набирая цифру, соответствующую параметру, заполняем:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Вводим адрес LDAP-сервера:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ldap.example.org&lt;/code&gt; или &lt;code&gt;ldap.example.org:636&lt;/code&gt;, если требуется указать нестандартный порт.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Самозаполнится, взяв имя домена из адреса сервера:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;example.org&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Вводим имя своей или, если такая предусмотрена регламентом, другой учётной записи с правами администратора:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;eugene&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Вводим пароль.&lt;/li&gt;
+&lt;li&gt;Оставляем без изменений.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Результат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;### FreeIPA - System Account Manager ###
+1.) ldapserver=ldap.example.org
+2.) domain=example.org (ldapdomain=dc=example,dc=org)
+3.) binduser=uid=eugene,cn=users,cn=accounts,dc=example,dc=org
+4.) bindpass=SET!
+5.) ssl=true
+
+Actions (ready):
+  add | rm | ls | info | passwd
+
+---   Results   ---
+
+--- End Results ---
+
+&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Переходим к выполнению операций над &amp;ldquo;системными аккаунтами&amp;rdquo;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;add&lt;/code&gt; — добавить &amp;lsquo;system account&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rm&lt;/code&gt; — удалить аккаунт.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ls&lt;/code&gt; — вывести краткий список существующих аккаунтов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;info&lt;/code&gt; — вывести расширенную информацию по всем или одному из существующих аккаунтов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;passwd&lt;/code&gt; — изменить пароль определённого аккаунта.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;добавление-аккаунта&#34;&gt;Добавление аккаунта&lt;/h2&gt;
+&lt;p&gt;Выполняя добавление &amp;lsquo;system account&amp;rsquo;, поочерёдно вводим логин и пароль. Запрос &amp;lsquo;password expiration date YYYYMMDD (blank for 20380119)&amp;rsquo; оставляем незаполненным, что автоматически назначит аккаунту дату &lt;code&gt;20380119031407Z&lt;/code&gt;, означающую бессрочное время действия пароля.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;gt; add
+uid of new user=binddn_test
+password of new user=
+password expiration date YYYYMMDD (blank for 20380119)=
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;По команде &lt;code&gt;ls&lt;/code&gt; можно убедиться в наличии созданного аккаунта:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;---   Results   ---
+dn: uid=sudo,cn=sysaccounts,cn=etc,dc=example,dc=org
+dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
+--- End Results ---
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Командой &lt;code&gt;rm binddn_test&lt;/code&gt; удаляем наш тестовый аккаунт.&lt;/p&gt;
+&lt;p&gt;Через &lt;code&gt;exit&lt;/code&gt; завершаем работу со скриптом.&lt;/p&gt;
+&lt;h2 id=&#34;рекомендации-к-именованию-новых-system-accounts&#34;&gt;Рекомендации к именованию новых system accounts&lt;/h2&gt;
+&lt;p&gt;Пример: binddn_airflow, binddn_hue, binddn_hive.&lt;/p&gt;
+&lt;p&gt;Все сервисы в отдельной Информационной Системе, подключаемые к LDAP, имеют один &amp;lsquo;system account&amp;rsquo;. В этом случае, при подозрении на компрометацию пароля с его последующей сменой, понадобится ввести новый пароль лишь в нескольких экземплярах сервиса, тогда как при использовании одного &amp;lsquo;system account&amp;rsquo; для всех сервисов организации, объём работы по вводу нового пароля резко увеличивается.&lt;/p&gt;
+&lt;p&gt;К тому же, периодическая смена пароля, если будет введён такой регламент, может быть растянут по времени, когда пароль от &amp;lsquo;system account&amp;rsquo; для каждого сервиса меняется в свой отдельный день. В этом случае, миграция производится безболезненно, потому что изменить пароль в трёх местах проще, чем одновременно в сотне мест.&lt;/p&gt;
+&lt;p&gt;Но замечу, что ничто не мешает создать новый &amp;lsquo;system account&amp;rsquo; с чуть изменённым логином и уникальным паролем и переводить сервисы на его использование постепенно.&lt;/p&gt;
+&lt;h2 id=&#34;ссылки-на-использованные-материалы&#34;&gt;Ссылки на использованные материалы&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.freeipa.org/page/HowTo/LDAP#System_Accounts&#34;&gt;https://www.freeipa.org/page/HowTo/LDAP#System_Accounts&lt;/a&gt;
+&lt;a href=&#34;https://github.com/noahbliss/freeipa-sam&#34;&gt;https://github.com/noahbliss/freeipa-sam&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: LDAP binding во FreeIPA</title>
+      <link>/n/ldap-binding-vo-freeipa/</link>
+      <pubDate>Sun, 15 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ldap-binding-vo-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-11-15&lt;/p&gt;
+&lt;p&gt;Во FreeIPA существует специальный тип учётных записей, называемый &amp;ldquo;system account&amp;rdquo;. Прямое предназначение &amp;lsquo;system account&amp;rsquo;, это организация безопасного подключения различных сервисов к LDAP, то есть LDAP binding.&lt;/p&gt;
+&lt;p&gt;Аккаунт этого типа создаётся в отдельном специальном LDAP-контейнере вручную или с помощью утилит, облегчающих эту задачу. &amp;lsquo;System account&amp;rsquo; не имеет права записи в LDAP и полностью ограничен в возможности входа куда-либо и владении чем-либо, но имеет право чтения некоторой информации из LDAP. Политики паролей не применяются к &amp;ldquo;системным аккаунтам&amp;rdquo; и назначенный им пароль не имеет срока действия. Информация о &amp;ldquo;системных аккаунтах&amp;rdquo; скрыта от пользователей.&lt;/p&gt;
+&lt;p&gt;Проведённые на скорую руку испытания видимого горизонта для &amp;ldquo;системного аккаунта&amp;rdquo; показали, что, по умолчанию, для &amp;lsquo;system account&amp;rsquo; доступно чтение не только содержимого контейнера &amp;lsquo;accounts&amp;rsquo; с пользователями, группами, хостами, и т.д., но и содержимое некоторых других контейнеров. Конечно, такая ситуация не может беспокоить любого здравомыслящего ипат-внедренца и, к счастью, во FreeIPA присутствует возможность сужения видимого пространства LDAP-каталога до минимально необходимого диапазона, с помощью написания для &amp;lsquo;system account&amp;rsquo; правил ACI.&lt;/p&gt;
+&lt;p&gt;Утилиты для создания &amp;lsquo;system account&amp;rsquo;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/noahbliss/freeipa-sam&#34;&gt;freeipa-sam&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Использованные ссылки:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.freeipa.org/page/HowTo/LDAP#System_Accounts&#34;&gt;FreeIPA HowTo/LDAP System Account&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Настройка LDAP-аутентификации в Nexus Repository Manager</title>
+      <link>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
+      <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;факты&#34;&gt;Факты&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Исполняемое Java-ядро лежит в &lt;code&gt;/data/Nexus/nexus&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Изменяемая часть, включая репозитории, лежат в &lt;code&gt;/data/Nexus/sonatype-work&lt;/code&gt;. Примерный размер каталога ~265GB. Для бэкапа достаточно сделать копию этого каталога.&lt;/li&gt;
+&lt;li&gt;Автозапуск организован ручным созданием простой ссылкой &lt;code&gt;/etc.init.d/nexus → /data/Nexus/nexus/bin/nexus&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Настройка аккаунтов локальных пользователей и подключение по LDAP разнесены в меню.&lt;/li&gt;
+&lt;li&gt;Нет необходимости делать бэкап Nexus&amp;rsquo;а, так как локальная база пользователей и получение пользователей из LDAP мирно сосуществуют рядом, не мешая друг другу.&lt;/li&gt;
+&lt;li&gt;Пользователи подключающиеся через LDAP не заносятся в локальную базу, в отличии от GrayLog, например.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;настройка-аутентификации-security--ldap&#34;&gt;Настройка аутентификации (Security – LDAP)&lt;/h2&gt;
+&lt;h3 id=&#34;вкладка-connection&#34;&gt;Вкладка Connection&lt;/h3&gt;
+&lt;p&gt;Самоподписанный сертификат контроллера домена добавляется в NXRM через кнопку &amp;ldquo;View certificate&amp;rdquo;, где доступна операция &amp;ldquo;Add certificate to truststore&amp;rdquo;. После чего, добавленный сертификат можно наблюдать в разделе Security – SSL Certificates.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;вкладка-user-and-group&#34;&gt;Вкладка User and group&lt;/h3&gt;
+&lt;p&gt;Select template: Generic Ldap Server (делаем это в первый и единственный раз при настройке подключения).&lt;/p&gt;
+&lt;p&gt;User relative DN: cn=users&lt;/p&gt;
+&lt;p&gt;User subtree: не активируем, так как все пользователи во FreeIPA находятся в cn=users,cn=accounts,dc=example,dc=org, и нет нужды искать их во вложенных контейнерах.&lt;/p&gt;
+&lt;p&gt;Object class: inetOrgPerson&lt;/p&gt;
+&lt;p&gt;User filter: memberOf=cn=_nxrm,cn=groups,cn=accounts,dc=example,dc=org (проверяем наличие доступа к NXRM у  пользователя, через его наследуемое членство в центральной группе _nxrm, в каковую группу вложены подгруппы для авторизации – _nxrm_admins, _nxrm_ubic-users, etc.)&lt;/p&gt;
+&lt;p&gt;User ID attribute: uid&lt;/p&gt;
+&lt;p&gt;Real name attribute: cn&lt;/p&gt;
+&lt;p&gt;Email attribute: mail&lt;/p&gt;
+&lt;p&gt;Password attribute: оставляем пустым.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Ниже настраиваем отображение групп пользователей из IPA в соответствующие роли NXRM.&lt;/p&gt;
+&lt;p&gt;Map LDAP groups as roles: устанавливаем галку.&lt;/p&gt;
+&lt;p&gt;Group type: Static Groups&lt;/p&gt;
+&lt;p&gt;Group relative DN: cn=groups&lt;/p&gt;
+&lt;p&gt;Group subtree: оставляем без активации, так как все необходимые группы в IPA хранятся в cn=groups,cn=accounts,dc=example,dc=org.&lt;/p&gt;
+&lt;p&gt;Group object class: groupOfNames&lt;/p&gt;
+&lt;p&gt;Group ID attribute: cn&lt;/p&gt;
+&lt;p&gt;Group member attribute: member&lt;/p&gt;
+&lt;p&gt;Group member format: uid=${username},cn=users,cn=accounts,dc=example,dc=org&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;После чего появляется возможность добавить внешнюю роль, имя которой берётся из LDAP.&lt;/p&gt;
+&lt;h2 id=&#34;настройка-авторизации&#34;&gt;Настройка авторизации&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;включение-ldap&#34;&gt;Включение LDAP&lt;/h2&gt;
+&lt;p&gt;Добавляем в активные LDAP realms.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Предположим, что в локальной базе есть пользователь с совпадающим логином, как в IPA, но с разными паролями. Логика работы аутентификации будет следующей:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Сначала nxrm найдёт пользователя в локальной базе, но так как пароль не подойдёт, то будет просмотрены и другие Realms.&lt;/li&gt;
+&lt;li&gt;Наконец в LDAP Realms совпадут и логин и пароль. И пользователь будет аутентифицирован.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

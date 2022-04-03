@@ -1,0 +1,537 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Plone</title>
+    <link>/tags/plone/</link>
+    <description>Recent content in Plone on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 21 Oct 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/plone/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Установка Plone CMS</title>
+      <link>/a/ustanovka-plone-cms/</link>
+      <pubDate>Mon, 21 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-plone-cms/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-10-21&lt;/p&gt;
+&lt;p&gt;Пытаясь найти замену Drupal для своих сайтов я набрёл на &lt;a href=&#34;https://plone.org/&#34;&gt;Plone&lt;/a&gt;. После прочтения материалов о данной CMS с воодушевлением принялся за работу.&lt;/p&gt;
+&lt;p&gt;Для работы Drupal необходимо устанавливать много дополнительного ПО, вследствии чего вся друпаловская программная обвязка поглощает много оперативной памяти. При попытке перейти с седьмого на восьмой Drupal я столкнулся с нехваткой памяти для работы Composer. Доплатил за увеличение RAM до 1GB и вновь неудача. На vps на базе kvm можно было бы создать swap-файл, но на текущем openvz это делать запрещено. Тогда я развернул Drupal с помощью Composer на домашней машине и скопировал эту готовую инсталляцию на vps. Начал добавлять модули и вновь проблемы с зависимостями модуля Markdown&amp;hellip; И так как я уже и раньше задумывался о расставании с Drupal, то эти проблемы переполнили мою чашу терпения.&lt;/p&gt;
+&lt;p&gt;В отличии от Drupal, для работы Plone нужен лишь Python и Nginx, что не требует много оперативной памяти. Устанавливать Plone буду на vps openvz Ubuntu Server с 1GB RAM без swap. Забегая вперёд скажу, что Plone по сравнению с Drupal мне кажется просто ракетой. Markdown здесь присутствует прямо из коробки. Для бэкапа сайта достаточно заархивировать директорию, куда был развёрнут Plone. Язык программирования Python, на котором сделан Plone, мне очень интересен. А так как знакомство моё с Python поверхностное и есть желание знакомство это углубить, то в этом CMS я вижу для себя много приятного и полезного.&lt;/p&gt;
+&lt;p&gt;Требования для установки Plone описаны здесь:
+&lt;a href=&#34;https://docs.plone.org/manage/installing/requirements.html&#34;&gt;Plone Installation Requirements&lt;/a&gt;
+Процесс установки описан здесь:
+&lt;a href=&#34;https://docs.plone.org/manage/installing/installation.html&#34;&gt;Installation&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;оглавление&#34;&gt;Оглавление&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#PREPARING&#34;&gt;Подготовка ОС&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#INSTALLATION&#34;&gt;Установка Plone&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#AFTER_INSTALLATION&#34;&gt;Действия после установки Plone&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#INSTALLATION_P_D_TOOLS&#34;&gt;Установка инструментов разработчика, если необходимо&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#START_PLONE&#34;&gt;Запуск Plone&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#CHANGE_CONFIGURATION&#34;&gt;Изменение конфигурации&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#UNIT_FOR_SYSTEMD&#34;&gt;Модуль для запуска Plone через systemd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#FIRST_LOGON&#34;&gt;Первый вход в web-management Plone&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ADDING_NEXT_SITE&#34;&gt;Добавление следующего сайта в Plone&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#CHANGE_ADMIN_PASSWORD&#34;&gt;Смена пароля администратора Plone&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#NGINX_SERVER_BLOCK&#34;&gt;Настройка Nginx&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a name=&#34;PREPARING&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;подготовка&#34;&gt;Подготовка&lt;/h3&gt;
+&lt;p&gt;Разработчики Plone рекомендуют использовать &lt;em&gt;унифицированный инсталлер&lt;/em&gt;, который необходимо скачать, распаковать и запустить установку Plone:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apt install python2.7 python2.7-dev python-setuptools python-dev build-essential libssl-dev libxml2-dev libxslt1-dev libbz2-dev libjpeg62-dev zlib1g-dev
+# wget https://launchpad.net/plone/5.1/5.1.5/+download/Plone-5.1.5-UnifiedInstaller.tgz
+# tar xvf Plone-5.1.5-UnifiedInstaller.tgz
+# cd Plone-5.1.5-UnifiedInstaller
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Выпуск обновлений для Python 2.7 прекратится в январе 2020 года, поэтому идёт работа по переводу Plone на третий Пайтон. Plone 5.2, который должен выйти 30 июня, будет поддерживать третий Python. Следующая версия Plone 6.0 пишется исключительно на третьей версии Пайтона и должна выйти через год, то есть весной 2020 года.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a name=&#34;INSTALLATION&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;установка&#34;&gt;Установка&lt;/h3&gt;
+&lt;p&gt;Установка проста до безобразия:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;# ./install.sh standalone --target=&amp;quot;/srv/plone&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Testing /usr/bin/python2.7 for Zope/Plone requirements....
+/usr/bin/python2.7 looks OK. We will use it.
+
+Root install method chosen. Will install for use by users:
+  ZEO &amp;amp; Client Daemons:      plone_daemon
+  Code Resources &amp;amp; buildout: plone_buildout
+
+Detailed installation log being written to /srv/Plone-5.1.5-UnifiedInstaller/install.log
+Installing Plone 5.1.5 at /srv/plone
+
+Using useradd and groupadd to create users and groups.
+Creating Python virtual environment.
+New python executable in /srv/plone/zinstance/bin/python2.7
+Also creating executable in /srv/plone/zinstance/bin/python
+Installing setuptools, pip, wheel...
+done.
+Installing zc.buildout in virtual environment.
+Unpacking buildout cache to /srv/plone/buildout-cache
+Copying buildout skeleton
+Building Zope/Plone; this takes a while...
+Buildout completed
+
+#####################################################################
+
+######################  Installation Complete  ######################
+
+Plone successfully installed at /srv/plone
+See /srv/plone/zinstance/README.html
+for startup instructions.
+
+Use the account information below to log into the Zope Management Interface
+The account has full &amp;#39;Manager&amp;#39; privileges.
+
+  Username: admin
+  Password: HUMKuSRDS882
+
+This account is created when the object database is initialized. If you change
+the password later (which you should!), you&amp;#39;ll need to use the new password.
+
+Use this account only to create Plone sites and initial users. Do not use it
+for routine login or maintenance.- If you need help, ask in IRC channel #plone
+ on irc.freenode.net.
+- The live support channel also exists at http://plone.org/chat
+- You can also ask for help on https://community.plone.org
+- Submit feedback and report errors at https://github.com/plone/Products.CMFPlone/issues
+(For install problems, https://github.com/plone/Installers-UnifiedInstaller/issues)
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;&lt;a name=&#34;AFTER_INSTALLATION&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;после-установки&#34;&gt;После установки&lt;/h3&gt;
+&lt;p&gt;Читаем &lt;code&gt;lynx /srv/plone/zinstance/README.html&lt;/code&gt; и запоминаем:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;надо заглянуть в &lt;code&gt;/srv/plone/zinstance/buildout.cfg&lt;/code&gt; и кое-что подправить. Я добавлю строку &lt;code&gt;ip-address = 127.0.0.1&lt;/code&gt;, чтобы Plone слушал только по localhost-адресу &lt;code&gt;127.0.0.1:8080&lt;/code&gt;, а nginx проксировал этот порт наружу. Для применения новой конфигурации останавливаем Plone, делаем бэкап папки &lt;code&gt;/srv/plone&lt;/code&gt;, и из директории &lt;code&gt;/srv/plone/zinstance&lt;/code&gt; запускаем &lt;code&gt;sudo -u plone_buildout bin/buildout&lt;/code&gt;. После обновления конфигурации нам возможно понадобится &amp;ldquo;Check portal_migration in the ZMI after update to perform version migration if necessary. You may also need to visit the product installer to update product versions.&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;также запоминаем, что вручную запускаем/останавливаем plone командами:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;sudo -u plone_daemon /srv/plone/zinstance/bin/plonectl start&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sudo -u plone_daemon /srv/plone/zinstance/bin/plonectl stop&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;ещё помним о том, что необходимо поменять предоставленный admin пароль (можно найти в &lt;code&gt;/srv/plone/zinstance/adminPassword.txt&lt;/code&gt;). Смену пароля можно произвести по адресу &lt;code&gt;http://localhost:8080/acl_users/users/manage_users&lt;/code&gt;. После этого действия информация указанная в &lt;code&gt;adminPassword.txt&lt;/code&gt; перестанет иметь значение.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Так как установку я производил из-под рута, то исправляю права:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# chown plone_buildout:plone_group /srv/plone -R
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name=&#34;INSTALLATION_P_D_TOOLS&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;install-plone-developer-tools&#34;&gt;Install Plone Developer Tools&lt;/h3&gt;
+&lt;p&gt;Если вы будете использовать установленный Plone для разработки, тогда добавьте общий набор инструментов разработчика нижеследующей командой. Вам необходимо добавлять &amp;ldquo;-c develop.cfg&amp;rdquo; каждый раз при запуске &lt;code&gt;bin/buildout&lt;/code&gt;, иначе вы лишитесь инструментов разработчика до следующего использования &amp;ldquo;-c develop.cfg&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /srv/plone/zinstance
+# sudo -u plone_buildout bin/buildout -c develop.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+Generated script &amp;#39;/srv/plone/zinstance/bin/fullrelease&amp;#39;.
+Generated script &amp;#39;/srv/plone/zinstance/bin/postrelease&amp;#39;.
+Generated script &amp;#39;/srv/plone/zinstance/bin/lasttagdiff&amp;#39;.
+Generated script &amp;#39;/srv/plone/zinstance/bin/addchangelogentry&amp;#39;.
+Generated script &amp;#39;/srv/plone/zinstance/bin/bumpversion&amp;#39;.
+Generated script &amp;#39;/srv/plone/zinstance/bin/prerelease&amp;#39;.
+Generated script &amp;#39;/srv/plone/zinstance/bin/release&amp;#39;.
+Generated script &amp;#39;/srv/plone/zinstance/bin/longtest&amp;#39;.
+Generated script &amp;#39;/srv/plone/zinstance/bin/lasttaglog&amp;#39;.
+Generated script &amp;#39;/srv/plone/zinstance/bin/pocompile&amp;#39;.
+Installing i18ndude.
+Getting distribution for &amp;#39;i18ndude==4.4.0&amp;#39;.
+Got i18ndude 4.4.0.
+Getting distribution for &amp;#39;ordereddict==1.1&amp;#39;.
+zip_safe flag not set; analyzing archive contents...
+Got ordereddict 1.1.
+Generated script &amp;#39;/srv/plone/zinstance/bin/i18ndude&amp;#39;.
+Versions had to be automatically picked.
+The following part definition lists the versions picked:
+[versions]
+MarkupSafe = 1.1.1
+Products.DocFinderTab = 1.0.5
+bobtemplates.plone = 4.0.2
+chardet = 3.0.4
+collective.checkdocs = 0.2
+idna = 2.6
+mr.bob = 0.1.2
+pkginfo = 1.5.0.1
+plone.recipe.command = 1.1
+plone.recipe.precompiler = 0.6
+regex = 2019.3.12
+requests-toolbelt = 0.9.1
+zest.pocompile = 1.4
+
+# Required by:
+# bobtemplates.plone==4.0.2
+case-conversion = 2.1.0
+
+# Required by:
+# bobtemplates.plone==4.0.2
+# zest.releaser==6.15.0
+colorama = 0.4.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;&lt;a name=&#34;START_PLONE&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;запуск-plone&#34;&gt;Запуск Plone&lt;/h3&gt;
+&lt;p&gt;Ранее мы уже выяснили из &lt;code&gt;/srv/plone/zinstance/README.html&lt;/code&gt; способы запуска и остановки Plone. Вот ещё один способ запуска удобный при разработке:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# sudo -u plone_daemon /srv/plone/zinstance/bin/plonectl fg
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;instance: 2019-04-04 16:59:55 INFO ZServer HTTP server started at Thu Apr  4 16:59:55 2019
+        Hostname: 0.0.0.0
+        Port: 8080
+2019-04-04 16:59:58 INFO DocFinderTab Applied patch version 1.0.5.
+2019-04-04 16:59:59 INFO ZODB.blob (857) Blob directory `/srv/plone/zinstance/var/blobstorage` is unused and has no layout marker set. Selected `bushy` layout.
+2019-04-04 16:59:59 INFO ZODB.blob (857) Blob temporary directory &amp;#39;/srv/plone/zinstance/var/blobstorage/tmp&amp;#39; does not exist. Created new directory.
+/srv/plone/buildout-cache/eggs/plone.app.blob-1.7.4-py2.7.egg/plone/app/blob/content.py:23: DeprecationWarning: MimeTypeException is deprecated. Import from Products.MimetypesRegistry.interfaces instead
+  from Products.MimetypesRegistry.common import MimeTypeException
+/srv/plone/buildout-cache/eggs/plone.portlet.collection-3.3.1-py2.7.egg/plone/portlet/collection/collection.py:2: DeprecationWarning: isDefaultPage is deprecated. Import from Products.CMFPlone instead
+  from plone.app.layout.navigation.defaultpage import isDefaultPage
+/srv/plone/buildout-cache/eggs/Products.CMFPlone-5.1.5-py2.7.egg/Products/CMFPlone/browser/syndication/views.py:17: DeprecationWarning: wrap_form is deprecated. Import from plone.z3cform.layout instead.
+  from plone.app.z3cform.layout import wrap_form
+/srv/plone/buildout-cache/eggs/Zope2-2.13.27-py2.7.egg/OFS/Application.py:102: DeprecationWarning: Expected text
+  transaction.get().note(&amp;#34;Created Zope Application&amp;#34;)
+/srv/plone/buildout-cache/eggs/Zope2-2.13.27-py2.7.egg/OFS/Application.py:267: DeprecationWarning: Expected text
+  transaction.get().note(note)
+/srv/plone/buildout-cache/eggs/Zope2-2.13.27-py2.7.egg/OFS/Application.py:523: DeprecationWarning: Expected text
+  transaction.get().note(&amp;#39;Prior to product installs&amp;#39;)
+/srv/plone/buildout-cache/eggs/Zope2-2.13.27-py2.7.egg/OFS/Application.py:777: DeprecationWarning: Expected text
+  transaction.get().note(&amp;#39;Installed standard objects&amp;#39;)
+2019-04-04 17:00:10 INFO Zope Ready to handle requests
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+Для остановки нажимаем `Ctrl+c`.
+&lt;p&gt;&lt;a name=&#34;CHANGE_CONFIGURATION&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;изменение-конфигурации-plone&#34;&gt;Изменение конфигурации Plone&lt;/h3&gt;
+&lt;p&gt;В файле &lt;code&gt;buildout.cfg&lt;/code&gt; добавляем строку &lt;code&gt;ip-address = 127.0.0.1&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[instance]
+&amp;lt;= instance_base
+recipe = plone.recipe.zope2instance
+ip-address = 127.0.0.1
+http-address = 8080
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;В plone 5.2 я использую одну строку: &lt;code&gt;http-address = 127.0.0.1:8080&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Запускаем скрипт для обновления конфигурации и перезапускаем Plone. Не забываем добавить &lt;code&gt;-c develop.cfg&lt;/code&gt;, если в конфигурацию необходимо добавить инструменты разработчика. В данный момент они не нужны, поэтому делаем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# sudo -u plone_buildout bin/buildout
+# sudo -u plone_daemon /srv/plone/zinstance/bin/plonectl restart
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Updating instance.
+Updating repozo.
+Updating backup.
+Updating zopepy.
+Updating unifiedinstaller.
+Updating precompiler.
+Compiling Python files.
+  File &amp;#34;/srv/plone/buildout-cache/eggs/zodbpickle-0.7.0-py2.7-linux-x86_64.egg/zodbpickle/pickle_3.py&amp;#34;, line 178
+    def __init__(self, file, protocol=None, *, fix_imports=True):
+                                             ^
+SyntaxError: invalid syntax
+
+  File &amp;#34;/srv/plone/buildout-cache/eggs/zodbpickle-0.7.0-py2.7-linux-x86_64.egg/zodbpickle/pickletools_3.py&amp;#34;, line 2049
+    print(&amp;#34;%5d:&amp;#34; % pos, end=&amp;#39; &amp;#39;, file=out)
+                           ^
+SyntaxError: invalid syntax
+
+  File &amp;#34;/srv/plone/buildout-cache/eggs/zodbpickle-0.7.0-py2.7-linux-x86_64.egg/zodbpickle/tests/pickletester_3.py&amp;#34;, line 145
+    class use_metaclass(object, metaclass=metaclass):
+                                         ^
+SyntaxError: invalid syntax
+
+Compiling locale files.
+Error while compiling /srv/plone/buildout-cache/eggs/python_gettext-3.0-py2.7.egg/pythongettext/tests/test5.po
+Error while compiling /srv/plone/buildout-cache/eggs/python_gettext-3.0-py2.7.egg/pythongettext/tests/test_escape.po
+Updating setpermissions.
+setpermissions: Running # Dummy references to force this to execute after referenced parts
+echo /srv/plone/zinstance/var/backups yes &amp;gt; /dev/null
+chmod 600 .installed.cfg
+# Make sure anything we&amp;#39;ve created in var is r/w by our group
+find /srv/plone/zinstance/var -type d -exec chmod 770 {} \; 2&amp;gt; /dev/null
+find /srv/plone/zinstance/var -type f -exec chmod 660 {} \; 2&amp;gt; /dev/null
+find /srv/plone/zinstance/var -type d -exec chmod 770 {} \; 2&amp;gt; /dev/null
+find /srv/plone/zinstance/var -type f -exec chmod 660 {} \; 2&amp;gt; /dev/null
+chmod 754 /srv/plone/zinstance/bin/*
+Versions had to be automatically picked.
+The following part definition lists the versions picked:
+[versions]
+plone.recipe.command = 1.1
+plone.recipe.precompiler = 0.6
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;Видно, что на содержимое директории &lt;code&gt;/srv/plone/zinstance/var&lt;/code&gt; применяются особые права без доступа &lt;em&gt;Другим&lt;/em&gt;. Дело в том, что именно в этой папке будут содержаться загруженные материалы, база данных и логи сайта. Для бэкапа всего проекта достаточно остановить Plone и скопировать директорию &lt;code&gt;/srv/plone&lt;/code&gt; в другое место.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;UNIT_FOR_SYSTEMD&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;модуль-для-запуска-plone-через-systemd&#34;&gt;Модуль для запуска Plone через systemd&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.plone.org/manage/deploying/production/restarts.html&#34;&gt;Automatic Plone (re)starts&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Напомню, что ручного запуска Plone используем &lt;code&gt;sudo -u plone_daemon bin/plonectl start&lt;/code&gt;. (Поправка: при ручном запуске &lt;code&gt;bin/plonectl start&lt;/code&gt; запускается первый экземпляр &lt;code&gt;python&lt;/code&gt; из-под рута, который запускает второй экземпляр &lt;code&gt;python&lt;/code&gt; из-под plone_daemon.) Для автоматического запуска я создам unit для systemd.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;# cat &amp;gt; /etc/systemd/system/plone.service&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[Unit]
+Description=Plone content management system
+After=network.target
+
+[Service]
+User=plone_daemon
+Type=forking
+ExecStart=/srv/plone/zinstance/bin/plonectl start
+ExecStop=/srv/plone/zinstance/bin/plonectl stop
+ExecReload=/srv/plone/zinstance/bin/plonectl restart
+
+[Install]
+WantedBy=multi-user.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;Ctrl+d&lt;/code&gt; для посыла &lt;code&gt;End Of File&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Далее стандартные команды:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# systemctl daemon-reload
+# systemctl enable plone
+# systemctl start plone
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;И в результате мы видим:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ps aux|grep plone
+
+root      8604  0.0  1.3 129780 14260 ?        Ssl  13:40   0:00 /srv/plone/zinstance/bin/python2.7 /srv/plone/zinstance/parts/instance/bin/interpreter /srv/plone/buildout-cache/eggs/zdaemon-4.2.0-py2.7.egg/zdaemon/zdrun.py -S /srv/plone/buildout-cache/eggs/Zope2-2.13.27-py2.7.egg/Zope2/Startup/zopeschema.xml -b 10 -d -s /srv/plone/zinstance/var/instance/zopectlsock -x 0,2 -z /srv/plone/zinstance/parts/instance /srv/plone/zinstance/bin/python2.7 /srv/plone/zinstance/parts/instance/bin/interpreter /srv/plone/buildout-cache/eggs/Zope2-2.13.27-py2.7.egg/Zope2/Startup/run.py -C /srv/plone/zinstance/parts/instance/etc/zope.conf
+
+plone_d+  8606  5.5 19.3 548316 202864 ?       Sl   13:40   0:09 /srv/plone/zinstance/bin/python2.7 /srv/plone/zinstance/parts/instance/bin/interpreter /srv/plone/buildout-cache/eggs/Zope2-2.13.27-py2.7.egg/Zope2/Startup/run.py -C /srv/plone/zinstance/parts/instance/etc/zope.conf
+
+# netstat -natup|grep 8080
+tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN      8606/python2.7
+
+# free -h
+              total        used        free      shared  buff/cache   available
+Mem:           1.0G        248M        167M        7.6M        607M        531M
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name=&#34;FIRST_LOGON&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;первый-вход-в-web-management-plone&#34;&gt;Первый вход в web-management Plone&lt;/h3&gt;
+&lt;p&gt;Пока у нас нет настроенного Apache или Nginx, то прокидываем удалённый &lt;code&gt;127.0.0.1:8080&lt;/code&gt; порт на локальную машину:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ ssh -L8080:127.0.0.1:8080 root@plone.example.com&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Заходим через любой веб-браузер на адрес &lt;code&gt;http://127.0.0.1:8080&lt;/code&gt; и видим приглашение к созданию нового Plone-сайта:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;plone_install_window_create_new_plone_site_1.png&#34; alt=&#34;Create new Plone site&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Страница после нажатия единственной кнопки и ввода логина/пароля:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;plone_install_window_create_new_plone_site_2.png&#34; alt=&#34;Create first Plone site&#34;&gt;&lt;/p&gt;
+&lt;p&gt;В поле &amp;ldquo;Path identifier&amp;rdquo;, вместо &amp;ldquo;Plone&amp;rdquo;, я введу придуманный короткий ID моего первого сайта на Plone. Для второго сайта, использую другой ID. Если же новый сайт будет единственным в этом plone-сервере, то можно оставить ID по умолчанию. Этот ID будет светиться в URL сайта, типа &lt;code&gt;http://127.0.0.1:8080/id1&lt;/code&gt; или &lt;code&gt;http://127.0.0.1:8080/plone&lt;/code&gt;. В дальнейшем при настройке nginx для проксирования новых сайтов, мы уберём этот ID из URL и обращение к сайтам будет производиться через нормальные URL, типа &lt;code&gt;https://www.example.com&lt;/code&gt;, &lt;code&gt;https://dbg.example.com&lt;/code&gt; и т.п.&lt;/p&gt;
+&lt;p&gt;После заполнения прочих полей и применения мы увидим:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;plone_install_window_create_new_plone_site_3.png&#34; alt=&#34;Create first Plone site&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Собственно это уже полноценный сайт. Необходимо настроить, например, nginx и заниматься наполнением сайта.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;ADDING_NEXT_SITE&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;добавление-следующего-сайта-в-plone&#34;&gt;Добавление следующего сайта в Plone&lt;/h3&gt;
+&lt;p&gt;Добавление следующего сайта в Plone производится вновь через &lt;code&gt;http://127.0.0.1:8080&lt;/code&gt;. Новый сайт будет иметь свой набор материалов, пользователей, своё оформление и будет независим от первого сайта.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;CHANGE_ADMIN_PASSWORD&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;необходимо-вспомнить-о-смене-пароля-для-admin&#34;&gt;Необходимо вспомнить о смене пароля для admin&lt;/h3&gt;
+&lt;p&gt;Надо поменять не только пароль, но и логин. Это центральная учётная запись к серверу приложений, а значит она имеет доступ ко всем сайтам хостящимся на нём. Смену логина/пароля делаем через этот прямой URL: &lt;code&gt;http://localhost:8080/acl_users/users/manage_users&lt;/code&gt;. После смены логина и пароля может появиться желание выйти из этого сеанса работы под администраторским аккаунтом. Для этого переходим по адресу &lt;code&gt;http://localhost:8080/manage&lt;/code&gt; и здесь будет доступна возможность выхода из сеанса.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;NGINX_SERVER_BLOCK&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;настройка-nginx&#34;&gt;Настройка Nginx&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.plone.org/manage/deploying/front-end/nginx.html#minimal-nginx-front-end-configuration-for-plone-on-ubuntu-debian-linux&#34;&gt;Minimal Nginx front end configuration for Plone on Ubuntu/Debian Linux&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Создаём файл &lt;code&gt;/etc/nginx/sites-available/example.com&lt;/code&gt; со следующим содержимым, указывающим на наш первый сайт &lt;code&gt;http://127.0.0.1:8080/id1&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# This adds security headers
+add_header X-Frame-Options &amp;#34;SAMEORIGIN&amp;#34;;
+add_header Strict-Transport-Security &amp;#34;max-age=15768000; includeSubDomains&amp;#34;;
+add_header X-XSS-Protection &amp;#34;1; mode=block&amp;#34;;
+add_header X-Content-Type-Options &amp;#34;nosniff&amp;#34;;
+#add_header Content-Security-Policy &amp;#34;default-src &amp;#39;self&amp;#39;; img-src *; style-src &amp;#39;self&amp;#39; &amp;#39;unsafe-inline&amp;#39;; script-src &amp;#39;self&amp;#39; &amp;#39;unsafe-inline&amp;#39; &amp;#39;unsafe-eval&amp;#39;&amp;#34;;
+add_header Content-Security-Policy-Report-Only &amp;#34;default-src &amp;#39;self&amp;#39;; img-src *; style-src &amp;#39;self&amp;#39; &amp;#39;unsafe-inline&amp;#39;; script-src &amp;#39;self&amp;#39; &amp;#39;unsafe-inline&amp;#39; &amp;#39;unsafe-eval&amp;#39;&amp;#34;;
+
+# This specifies which IP and port Plone is running on.
+# The default is 127.0.0.1:8080
+upstream plone {
+   server 127.0.0.1:8080;
+}
+
+# Redirect all www-less traffic to the www.site.com domain
+# (you could also do the opposite www -&amp;gt; non-www domain)
+server {
+   listen 80;
+   server_name example.com;
+   return 301 http://www.example.com$request_uri;
+}
+
+server {
+   listen 80;
+   server_name www.example.com;
+   access_log /var/log/nginx/example.com.access.log;
+   error_log /var/log/nginx/example.com.error.log;
+
+   # Note that domain name spelling in VirtualHostBase URL matters
+   # -&amp;gt; this is what Plone sees as the &amp;#34;real&amp;#34; HTTP request URL.
+   # &amp;#34;Plone&amp;#34; in the URL is your site id (case sensitive)
+   location / {
+         proxy_pass http://plone/VirtualHostBase/http/example.com:80/id1/VirtualHostRoot/;
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Резервное копирование Plone</title>
+      <link>/a/rezervnoe-kopirovanie-plone/</link>
+      <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/rezervnoe-kopirovanie-plone/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-15&lt;/p&gt;
+&lt;h2 id=&#34;backing-up-your-plone-deployment&#34;&gt;Backing up your Plone deployment&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Стратегии резервного копирования действующих Plone установок.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Эта инструкция расскажет что копировать, как копировать и как безопасно восстановить.&lt;/p&gt;
+&lt;h3 id=&#34;введение&#34;&gt;Введение&lt;/h3&gt;
+&lt;p&gt;Ключевые правила резервного копирования работающей системы возможно следующие:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Бэкапируй всё&lt;/li&gt;
+&lt;li&gt;Делай несколько версий бэкапа&lt;/li&gt;
+&lt;li&gt;Тестируй бэкапы на предмет восстановления&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;dialog-warning.png&#34; alt=&#34;&#34;&gt; Эта инструкция допускает, что вы уже делаете это для всей вашей системы, и будет рассматривать только те вещи, которые касаются Plone. Когда мы говорим, что мы предполагаем, что вы уже делаете это для всей системы, мы имеем в виду, что механизмы резервного копирования вашей системы — rsync, bacula и т.д. — уже выполняют резервное копирование директории, в которую вы установили Plone.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ваш buildout и его кэши уже забэкапированы, и вы протестировали процесс восстановления.&lt;/p&gt;
+&lt;p&gt;Вам осталось поразмышлять об адекватном бэкапе и восстановлении базы данных Plone.&lt;/p&gt;
+&lt;h3 id=&#34;объекты-в-движении&#34;&gt;Объекты в движении&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Здесь витиевато описывается сложность создания бэкап-копии открытого на запись файла, в который постоянно происходит дозапись информации. Другими словами, невозможно создать бэкап, например, работающей базы данных простым копированием её директории.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Объекты в движении имеют тенденцию оставаться в движении. Объекты, которые движутся, сложно или невозможно аккуратно бэкапить.&lt;/p&gt;
+&lt;p&gt;Расшифровка: Plone является долгоживущим процессом, который постоянно изменяет содержимое базы данных. Наибольший из этих файлов, это Data.fs, который содержит всё, кроме &amp;ldquo;Двоичных Больших Объектов&amp;rdquo; Binary Large OBjects (BLOBs), и этот файл постоянно открыт для записи. Хранилище BLOB&amp;rsquo;ов — это директория с множеством вложенных папок и со сложной файловая иерархией, которая постоянно изменяется и должна быть синхронизирована с Filestorage.&lt;/p&gt;
+&lt;p&gt;Это означает, что большинство схем резервного копирования всей системы — rsync, bacula и т.д. — не могут создавать пригодные бэкапы работающей базы данных. Мы предполагаем, что вы не хотите останавливать свой сайт Plone для бэкапа, поэтому вам необходимо добавить процедуры для создания пригодных резервных копий Plone. (Мы предполагаем, что вы знаете, что то же самое относится и к хранилищу вашей реляционной базы данных, типа mysql.)&lt;/p&gt;
+&lt;h3 id=&#34;где-мои-данные&#34;&gt;Где мои данные&lt;/h3&gt;
+&lt;p&gt;Директория с вашим экземпляром Plone будет содержать папку &lt;code&gt;./var&lt;/code&gt; (это в той же папке, где лежит и buildout.cfg), которая содержит часто меняющиеся файлы данных для Plone. Тем не менее, многое из того, что есть в &lt;code&gt;./var&lt;/code&gt;, не является вашей реальной базой данных контента. Скорее, это журнал, идентификатор процесса и файлы сокетов.(?)&lt;/p&gt;
+&lt;p&gt;Директории, которые на самом деле содержат данные контента:&lt;/p&gt;
+&lt;h4 id=&#34;filestorage&#34;&gt;Filestorage&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;./var/filestorage&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Здесь содержится файловое хранилище Zope Object Database. Если у вас нет нескольких хранилищ или если вы не меняли имя, то ключевой файл — &lt;code&gt;Data.fs&lt;/code&gt;. Обычно это большой файл, содержащий всё, кроме BLOB&amp;rsquo;ов.&lt;/p&gt;
+&lt;p&gt;Другие файлы в Filestorage с такими расширениями, как &lt;code&gt;.index&lt;/code&gt;, &lt;code&gt;.lock&lt;/code&gt;, &lt;code&gt;.old&lt;/code&gt;, &lt;code&gt;.tmp&lt;/code&gt; являются эфемерными и будут воссозданы Zope в случае их отсутствия.&lt;/p&gt;
+&lt;h4 id=&#34;blobstorage&#34;&gt;Blobstorage&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;./var/blobstorage&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Этот каталог содержит глубоко вложенную иерархию папок, которые, в свою очередь, содержат большие двоичные объекты (BLOB&amp;rsquo;ы) вашей базы данных: PDF-файлы, файлы изображений, файлы автоматизации делопроизводства и тому подобное.&lt;/p&gt;
+&lt;p&gt;Главное, что нужно знать о Filestorage и Blobstorage, это то, что они поддерживаются синхронно. В Filestorage есть ссылки на BLOB-объекты в Blobstorage. Если два хранилища не синхронизированы, вы получите ошибки.&lt;/p&gt;
+&lt;h3 id=&#34;collectiverecipebackup&#34;&gt;collective.recipe.backup&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://pypi.python.org/pypi/collective.recipe.backup&#34;&gt;collective.recipe.backup&lt;/a&gt; — это отлично обслуживаемый с отличной поддержкой &amp;ldquo;recipe&amp;rdquo;, решающий проблему &amp;ldquo;объекта в движении&amp;rdquo; для базы данных Plone. Он делает лёгким и копирование и восстановление базы данных. &amp;ldquo;Recipe&amp;rdquo; представляет собой сложную оболочку вокруг &lt;code&gt;repozo&lt;/code&gt; — инструмента бэкапа базы данных Zope, и &lt;code&gt;rsync&lt;/code&gt; — обычного инструмента для синхронизации файлов.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Большое спасибо Reinout van Rees, Maurits van Rees и всем помощникам сообщества за создание и поддержку community.recipe.backup.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Если вы используете любой из установочных комплектов Plone, в вашем варианте установки уже входит &amp;ldquo;collective.recipe.backup&amp;rdquo;. Если нет, вы всегда можете включить его в сборку, добавив &amp;lsquo;backup&amp;rsquo; часть:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[buildout]
+parts =
+    ...
+    backup
+    ...
+
+[backup]
+recipe = collective.recipe.backup
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Есть несколько полезных опций настройки этого &amp;ldquo;recipe&amp;rdquo;. Все они описаны на странице &lt;a href=&#34;https://pypi.python.org/pypi/collective.recipe.backup&#34;&gt;PyPI&lt;/a&gt;. Возможно, наиболее полезным является опция &amp;rsquo;location&amp;rsquo;, которая указывает место хранения файлов резервных копий:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[backup]
+recipe = collective.recipe.backup
+location = /path/to/reliably/attached/storage/filestorage
+blobbackuplocation =  /path/to/reliably/attached/storage/blobstorage
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если опция не указана, то местом назначения резервной копии является каталог &lt;code&gt;var&lt;/code&gt;. И тем не менее, местом назначения бэкапов может быть любое надежно подключенное место, включая другой раздел, диск или сетевое хранилище.&lt;/p&gt;
+&lt;h3 id=&#34;работа&#34;&gt;Работа&lt;/h3&gt;
+&lt;p&gt;После того, как вы запустите &lt;code&gt;buildout&lt;/code&gt;, в вашей сборке Plone появятся скрипты &lt;code&gt;bin/backup&lt;/code&gt; и &lt;code&gt;bin/restore&lt;/code&gt;. Поскольку все параметры задаются через buildout, с помощью малого количества опций, то работа, как правило, заключается в простом запуске этих скриптов. Для &lt;code&gt;bin/restore&lt;/code&gt;, в случае наличия нескольких резервных копий, может указываться дата и время любого из сохранённых бэкапов. Смотрите документацию для дополнительной информации.&lt;/p&gt;
+&lt;p&gt;Бэкап может выполняться без остановки Plone. Но операция восстановления требует остановки Plone, а после завершения восстановления повторного запуска Plone.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;bin/backup&lt;/code&gt; обычно добавляется в cron для регулярного выполнения бэкапов. Убедитесь, что вы протестировали бэкап и восстановление из бэкапа, прежде чем полагаться на него.&lt;/p&gt;
+&lt;h3 id=&#34;инкрементные-бэкапы&#34;&gt;Инкрементные бэкапы&lt;/h3&gt;
+&lt;p&gt;collective.recipe.backup предлагает как инкрементное, так и полное резервное копирование и будет поддерживать несколько поколений резервных копий. Настройте их в соответствии с вашими потребностями.&lt;/p&gt;
+&lt;p&gt;Если включено инкрементное резервное копирование, выполнение операции упаковки базы данных автоматически приведёт к тому, что следующая резервная копия будет полной резервной копией.&lt;/p&gt;
+&lt;p&gt;Если ваши требования к непрерывности резервного копирования крайне велики, то добавочное резервное копирование может быть в равной степени экстремальным. Существуют установки Plone, в которых инкрементные бэкап-процедуры запускаются каждые несколько минут.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Создание копии сайта Plone</title>
+      <link>/a/ozdanie-kopii-saita-plone/</link>
+      <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ozdanie-kopii-saita-plone/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-10&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Краткая инструкция о том, как создать копию Plone-инсталляции.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;введение&#34;&gt;Введение&lt;/h3&gt;
+&lt;p&gt;Эта инструкция расскажет вам основы создания дубля Plone-сайта для тестирования или бэкапа.&lt;/p&gt;
+&lt;h3 id=&#34;необходимые-условия&#34;&gt;Необходимые условия&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Возможность копирования файлов из/в удалённый сервер&lt;/li&gt;
+&lt;li&gt;Возможность использования командной строки&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;содержимое-plone-сайта&#34;&gt;Содержимое Plone-сайта&lt;/h3&gt;
+&lt;p&gt;Что должно быть скопировано:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;buildout.cfg&lt;/code&gt; - определяет конфигурацию вашего сайта&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src folder&lt;/code&gt; - содержит аддоны разработанные вами&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var/filestorage/Data.fs&lt;/code&gt; - ZODB база данных вашего сайта&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var/blobstorage folder&lt;/code&gt; - содержит объекты типа &amp;ldquo;файл&amp;rdquo; базы данных ZODB (BLOBы)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Другие папки (eggs, downloads, parts и т.д.) генерируются утилитой buildout и могут оставаться пустыми.&lt;/p&gt;
+&lt;h3 id=&#34;копирование-и-подготовка-к-первому-старту-plone-сайта&#34;&gt;Копирование и подготовка к первому старту Plone-сайта&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Создайте новый сайт в новом месте с помощью &lt;em&gt;Унифицированного Plone Установщика&lt;/em&gt; и убедитесь, что можете войти в admin-аккаунт с его временным паролем.&lt;/li&gt;
+&lt;li&gt;Удалите содержимое папки &lt;code&gt;var/filestorage/&lt;/code&gt; на новой системе.&lt;/li&gt;
+&lt;li&gt;Скопируйте файл &lt;code&gt;var/filestorage/Data.fs&lt;/code&gt; из старой системы в новую систему и заметьте, что пароль админа сохраняется в этом копируемом файле, поэтому временный пароль, полученный во время установки нового сайта более недействителен.&lt;/li&gt;
+&lt;li&gt;Удалите содержимое папки &lt;code&gt;var/blobstorage&lt;/code&gt; на новой системе.&lt;/li&gt;
+&lt;li&gt;Скопируйте папку &lt;code&gt;var/blobstorage&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Скопируйте папку &lt;code&gt;src&lt;/code&gt;, если у вас есть свои разработки для сайта.&lt;/li&gt;
+&lt;li&gt;Скопируйте &lt;code&gt;buildout.cfg&lt;/code&gt; и другие &lt;code&gt;.cfg&lt;/code&gt; файлы.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Перезапустите &lt;code&gt;sudo -u plone_buildout bin/buildout&lt;/code&gt; для автоматической загрузки и настройки всех Python-пакетов необходимых для запуска нового сайта&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Теперь можно запустить сайт &lt;code&gt;sudo -u plone_daemon /srv/plone/zinstance/bin/plonectl fg&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;По какой-то причине я не смог увидеть содержимое моего скопированного сайта по адресу &lt;code&gt;http://127.0.0.1:8080/id1&lt;/code&gt;. Отображалась пустая страница, хотя в HTML-код содержал полную страницу скопированного сайта.  Рабочим адресом является &lt;code&gt;http://localhost:8080/id1&lt;/code&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Добавление reCAPTCHA в Plone</title>
+      <link>/a/dobavlenie-recaptcha-v-plone/</link>
+      <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/dobavlenie-recaptcha-v-plone/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-09&lt;/p&gt;
+&lt;p&gt;Частичный перевод и компиляция информации из статей:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.plone.org/working-with-content/managing-content/ploneformgen/captcha.html&#34;&gt;Adding CAPTCHA Support&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.plone.org/develop/plone/forms/ploneformgen.html&#34;&gt;PloneFormGen&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.plone.org/develop/plone/content/archetypes/index.html&#34;&gt;Archetypes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.plone.org/develop/plone/content/dexterity.html&#34;&gt;Dexterity&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PloneFormGen имеет встроенную поддержку Re-Captcha. Здесь рассказано как включить её.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;ploneformgen-и-поля-captcha&#34;&gt;PloneFormGen и поля Captcha&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;PloneFormGen&lt;/strong&gt; — аддон, добавляющий в Plone генератор форм с полями, виджетами и &lt;em&gt;валидаторами&lt;/em&gt; из Archetypes. Используется при создании простых однородных вебформ для сохранения вводимых данных или форм для отправки электронной почты.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Archetypes&lt;/strong&gt; — это подсистема (фреймворк) для создания &lt;em&gt;типов контента&lt;/em&gt; в Plone версий 2.x, 3.x и 4.x. &lt;em&gt;&lt;strong&gt;Dexterity&lt;/strong&gt;&lt;/em&gt; заменяет её с версии 4.1+ и становится подсистемой по умолчанию в Plone 5. &lt;em&gt;&lt;strong&gt;Archetypes&lt;/strong&gt;&lt;/em&gt; остаётся доступной в пятой версии Plone.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dexterity&lt;/strong&gt; — стандратная контент-подсистема для Plone 5 и последующих версий.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validator&lt;/strong&gt; — описывает тип поля из &lt;em&gt;Archetypes&lt;/em&gt;. Возвращает &amp;ldquo;True&amp;rdquo;, если проверка пройдена, или возвращает строку с описанием ошибки, если проверка провалена.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Когда PFG установлен в Plone через &amp;ldquo;добавление/удаление продуктов&amp;rdquo; (&lt;em&gt;видимо через &lt;a href=&#34;https://example.com/prefs_install_products_form&#34;&gt;https://example.com/prefs_install_products_form&lt;/a&gt;&lt;/em&gt;), он будет искать наличие аддона &lt;em&gt;collective.captcha&lt;/em&gt; или &lt;em&gt;collective.recaptcha&lt;/em&gt;. Если они найдены, то в список доступных полей будет добавлено поле &amp;ldquo;CAPTCHA&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;Если вы используете &lt;em&gt;collective.recaptcha&lt;/em&gt;, то вам будет необходимо добавить свою &lt;em&gt;ключевую пару&lt;/em&gt;, полученную в вами созданном бесплатном аккаунте сервиса &lt;a href=&#34;https://www.google.com/recaptcha&#34;&gt;reCAPTCHA&lt;/a&gt;. Добавление ключевой пары происходит в PFG-конфиглете в настройках сайта Plone.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Если вы добавили аддон &lt;em&gt;captcha&lt;/em&gt; после установки PFG, то необходимо переустановить PFG (через &amp;ldquo;добавление/удаление продуктов&amp;rdquo;) для включения поддержки captcha.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;установка-collectiverecaptcha&#34;&gt;Установка collective.recaptcha&lt;/h3&gt;
+&lt;p&gt;Добавьте нижеследующий код в ваш buildout.cfg для установки двух аддонов &lt;em&gt;collective.recaptcha&lt;/em&gt; и &lt;em&gt;Products.PloneformGen&lt;/em&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[buildout]
+...
+eggs =
+    Plone
+    ...
+    collective.recaptcha
+    Products.PloneFormGen
+    ...
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Стандартно выполните &lt;code&gt;bin/buildout&lt;/code&gt; и перезапустите ваш экземпляр Plone.&lt;/li&gt;
+&lt;li&gt;Откройте &lt;em&gt;PortalQuickinstaller&lt;/em&gt; или контрольную панель Plone и установите (или переустановите при необходимости) PloneFormGen.&lt;/li&gt;
+&lt;li&gt;Откройте PFG-конфиглет в настройках сайта Plone и заполните необходимые поля для ввода полученных из &lt;a href=&#34;https://www.google.com/recaptcha&#34;&gt;reCAPTCHA&lt;/a&gt; &lt;em&gt;публичного и приватного ключа&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Осталось понять как прикрутить проверку CAPTCHA к формам входа на сайт и страницы обратной связи&amp;hellip;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

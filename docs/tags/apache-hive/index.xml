@@ -1,0 +1,284 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Apache Hive</title>
+    <link>/tags/apache-hive/</link>
+    <description>Recent content in Apache Hive on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 30 Aug 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/apache-hive/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Manuals: 05. 🎣 Заброс Hook&#39;а в Apache Hive</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
+      <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-30&lt;/p&gt;
+&lt;h2 id=&#34;1введение&#34;&gt;1.Введение&lt;/h2&gt;
+&lt;p&gt;Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.&lt;/p&gt;
+&lt;h2 id=&#34;2-создание-atlas-папки-на-хостах-с-ролью-hiveserver2&#34;&gt;2. Создание Atlas-папки на хостах с ролью &amp;lsquo;HiveServer2&amp;rsquo;&lt;/h2&gt;
+&lt;p&gt;2.1. На хостах с ролью &amp;lsquo;HiveServer2&amp;rsquo; создаём atlas-каталоги и скачиваем с Nexus&amp;rsquo;а необходимый файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILENAME=&amp;#34;?????????????????&amp;#34;
+## Пробел нужен, чтобы пароль не попал в history
+ NXUSERPASS=&amp;#34;eugene:xxxxxxxxxxxxx&amp;#34;
+DIR=&amp;#34;apache-atlas-2.2.0_cdh6.3.2_j8.181_mvn3.8.1&amp;#34;
+
+## Скачиваем сборку с Nexus&amp;#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://10.15.61.1:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+
+sudo tar xvf ${FILENAME} -C /opt
+cd /opt
+sudo ln -s ${DIR} atlas
+
+sudo chown -R root.root ${DIR}
+sudo chmod -R u=rwX,go=rX ${DIR}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.2. Создаём файл &amp;lsquo;atlas-application.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZOOKEEPERSERVERS=&amp;#34;dev-zk110p.test2.lan:2181,dev-zk111p.test2.lan:2181,dev-zk112p.test2.lan:2181&amp;#34;
+KAFKASERVERS=&amp;#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&amp;#34;
+REALMNAME=&amp;#34;TEST2.LAN&amp;#34;
+
+sudo mkdir -p /opt/atlas/conf
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/atlas-application.properties
+#########  Notification Configs  #########
+
+atlas.kafka.zookeeper.connect=${ZOOKEEPERSERVERS}
+atlas.kafka.bootstrap.servers=${KAFKASERVERS}
+atlas.kafka.zookeeper.session.timeout.ms=60000
+atlas.kafka.zookeeper.connection.timeout.ms=60000
+atlas.kafka.zookeeper.sync.time.ms=20
+atlas.kafka.auto.commit.interval.ms=1000
+atlas.kafka.hook.group.id=atlas
+
+atlas.kafka.enable.auto.commit=true
+atlas.kafka.auto.offset.reset=earliest
+atlas.kafka.session.timeout.ms=30000
+atlas.kafka.offsets.topic.replication.factor=1
+atlas.kafka.poll.timeout.ms=1000
+
+atlas.kafka.security.protocol=SASL_PLAINTEXT
+atlas.kafka.sasl.mechanism=GSSAPI
+atlas.kafka.sasl.kerberos.service.name=kafka
+
+#########  JAAS Configuration ########
+
+atlas.jaas.KafkaClient.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.KafkaClient.loginModuleControlFlag=required
+atlas.jaas.KafkaClient.option.useKeyTab=true
+atlas.jaas.KafkaClient.option.storeKey=true
+atlas.jaas.KafkaClient.option.serviceName=kafka
+atlas.jaas.KafkaClient.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.KafkaClient.option.principal=atlas/_HOST@${REALMNAME}
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.3. Создаём, если таковой ещё не был сгененирован, и получаем новый keytab. Напомню, что &lt;span style=&#34;color:red&#34;&gt;последующие получения keytab&amp;rsquo;а необходимо выполнять с опцией &amp;lsquo;-r&amp;rsquo;, иначе вместо получения существующего keytab&amp;rsquo;а будет создан новый keytab&lt;/span&gt;, вследствие чего уже работающие сервисы Atlas&amp;rsquo;а перестанут аутентифицировать и потребуется повторить для них получение keytab&amp;rsquo;ов и перезапустить сервисы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+# Закомментировать след строку, если генерируем новый ключ для keytab&amp;#39;а.
+OPTION=&amp;#34;-r&amp;#34;
+
+# kinit ${IPAADMIN}
+ipa service-allow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-allow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -p atlas/$(hostname) -k ~/atlas.keytab ${OPTION}
+ipa service-disallow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-disallow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
+sudo mv ~/atlas.keytab /opt/atlas/conf/
+sudo chown root.root /opt/atlas/conf/atlas.keytab
+sudo setfacl -m u:hive:r /opt/atlas/conf/atlas.keytab
+
+unset OPTION
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-заброс-hookа-в-apache-hive-через-cloudera-manager&#34;&gt;3. Заброс Hook&amp;rsquo;а в Apache Hive через Cloudera Manager&lt;/h2&gt;
+&lt;p&gt;3.1. В настройках службы Hive изменяем следующие параметры:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HiveServer2 Advanced Configuration Snippet (Safety Valve) for hive-site.xml&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;b&gt;Name&lt;/b&gt;: &lt;span style=&#34;color:blue&#34;&gt;hive.exec.post.hooks&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: &lt;span style=&#34;color:blue&#34;&gt;org.apache.atlas.hive.hook.HiveHook&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Description&lt;/b&gt;:&lt;br&gt;
+&lt;hr&gt;
+&lt;span style=&#34;color:lightgrey&#34;&gt; Следующие параметры не используем. После проверки, будут удалены или активированы.
+&lt;p&gt;&lt;b&gt;Name&lt;/b&gt;: hive.reloadable.aux.jars.path&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: /opt/atlas/hook/hive&lt;br&gt;
+&lt;b&gt;Description:&lt;/b&gt;&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Name&lt;/b&gt;: atlas.cluster.name&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: primary&lt;br&gt;
+&lt;b&gt;Description&lt;/b&gt;:&lt;br&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;/td&gt;
+&lt;td&gt;
+	For advanced use only. A string to be inserted into hive-site.xml for this role only.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Java Configuration Options for HiveServer2&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;{{JAVA_GC_ARGS}} &lt;span style=&#34;color:blue&#34;&gt;-Datlas.conf=/opt/atlas/conf/&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;
+	These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HiveServer2 Environment Advanced Configuration Snippet (Safety Valve)&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color:blue&#34;&gt;HIVE_AUX_JARS_PATH=/opt/atlas/hook/hive/&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;For advanced use only, key-value pairs (one on each line) to be inserted into a role&#39;s environment. Applies to configurations of this role except client configuration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHive&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache Hive&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Блокирование доступа внешних программ к Hive metastore</title>
+      <link>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
+      <pubDate>Mon, 19 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-19&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/sg_sentry_service_config.html#concept_z5b_42s_p4__section_lvc_4g4_rp&#34;&gt;Before Enabling the Sentry Service&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Hive, используя фильтр &#39;Hive Metastore Access Control and Proxy User Groups Override&#39;, изменяем следующие параметры:&lt;/li&gt;
+&lt;table&gt;
+&lt;thead style=&#34;background: lightgray&#34;&gt;&lt;tr&gt;
+&lt;td&gt;Property&lt;/td&gt;
+&lt;td&gt;Value&lt;/td&gt;
+&lt;td&gt;Description&lt;/td&gt;
+&lt;/tr&gt;&lt;/thead&gt;
+&lt;tr&gt;&lt;td&gt;&lt;b&gt;Hive Metastore Access Control and Proxy User Groups Override&lt;/b&gt;
+&lt;i&gt;hadoop.proxyuser.hive.groups&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;span style=&#34;color:blue&#34;&gt;&lt;ul&gt;&lt;li&gt;hive&lt;/li&gt;
+&lt;li&gt;hue&lt;/li&gt;
+&lt;li&gt;sentry&lt;/li&gt;
+&lt;/ul&gt;&lt;/span&gt;
+&lt;p&gt;Могут быть указаны дополнительные пользовательские группы.&lt;/p&gt;
+&lt;/td&gt;
+&lt;td&gt;
+This configuration &lt;b&gt;overrides&lt;/b&gt; the value set for Hive Proxy User Groups configuration in HDFS service for use by Hive Metastore Server. Specify a comma-delimited list of groups that you want to &lt;b&gt;allow access to Hive Metastore metadata&lt;/b&gt; and allow the Hive user to impersonate. A value of &#39;*&#39; allows all groups. The default value of empty inherits the value set for Hive Proxy User Groups configuration in the HDFS service.
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;li&gt;Нажимаем &lt;b&gt;Save Changes&lt;/b&gt;.&lt;/li&gt;
+&lt;li&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</title>
+      <link>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
+      <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-06-09&lt;/p&gt;
+&lt;p&gt;Использованные ссылки:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/latest/topics/cdh_ig_hiveserver2_start_stop.html#topic_18_8_1&#34;&gt;Using the Beeline CLI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/sg_hive_sql.html&#34;&gt;Hive SQL Syntax for Use with Sentry&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Запрашиваем kerberos-билет на машине с установленной ролью Hive, запускаем &lt;code&gt;beeline&lt;/code&gt; и подключаемся к Hive:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit /run/cloudera-scm-agent/process/.../hive.keytab hive/prod-aux02p.example.org
+$ beeline
+beeline&amp;gt; !connect jdbc:hive2://prod-aux02p.example.org:10000/;principal=hive/prod-aux02p.example.org@EXAMPLE.ORG;ssl=true;sslTrustStore=/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts
+0: jdbc:hive2://prod-aux02p.example.org:1000&amp;gt; _
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Без указания ssl-настроек в строке подключения, в логах HiveServer2 будут видны ошибки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;TThreadPoolServer	
+[HiveServer2-Handler-Pool: Thread-47]: Error occurred during processing of message.
+java.lang.RuntimeException: org.apache.thrift.transport.TTransportException: javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавление роли для администрирования Hive (server1) и назначение этой роли на группу администраторов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;CREATE ROLE admin_role;
+GRANT ALL ON SERVER server1 TO ROLE admin_role WITH GRANT OPTION;
+GRANT ROLE admin_role TO GROUP prod_hue_admins;
+GRANT ROLE admin_role TO GROUP prod_sentry_admins;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На всякий случай, привожу различные операции. Кстати, команды можно набирать буквами в нижнем регистре.&lt;/p&gt;
+&lt;p&gt;Список существующих ролей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;show roles;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаление ошибочно созданного назначения роли на группу:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;GRANT ROLE admin_role TO GROUP admin_group;
+REVOKE ROLE admin_role FROM GROUP admin_group;
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2</title>
+      <link>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;ссылки&#34;&gt;Ссылки&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/latest/topics/cdh_sg_hiveserver2_security.html&#34;&gt;HiveServer2 Security Configuration&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;настройка-ldap-аутентификации&#34;&gt;Настройка LDAP-аутентификации&lt;/h2&gt;
+&lt;p&gt;На странице Configurations для Hive, используем фильтр ldap, и:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Включаем LDAP
+&lt;strong&gt;Enable LDAP Authentication  Hive (Service-Wide)&lt;/strong&gt;: ☑&lt;/li&gt;
+&lt;li&gt;Указываем адрес LDAP-сервера
+&lt;strong&gt;LDAP URL&lt;/strong&gt;
+hive.server2.authentication.ldap.url: &lt;code&gt;ldaps://ldap.example.org:636&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Указываем контейнер поиска пользователей
+&lt;strong&gt;LDAP BaseDN&lt;/strong&gt;
+hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=example,dc=org&lt;/code&gt;
+&lt;img src=&#34;cloudera_hive_ldap.png&#34; alt=&#34;Cloudera Hive LDAP&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Disabling Hive CLI</title>
+      <link>/n/disabling-hive-cli/</link>
+      <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/disabling-hive-cli/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Перед выполнением этой инструкции, необходимо ознакомиться с &lt;a href=&#34;/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore&#34;&gt;Блокирование доступа внешних программ к Hive metastore&lt;/a&gt;, где описано более централизованный способ блокирования доступа к Metastore Hive.&lt;/p&gt;
+&lt;p&gt;После активации Cloudera Sentry, необходимо предотвратить возможность использования консольной утилиты &lt;code&gt;hive&lt;/code&gt; пользователями. Вместо &lt;code&gt;hive&lt;/code&gt;, пользователи должны использовать утилиту &lt;code&gt;beeline&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Каталог HIVE_HOME можно найти из-под root командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME
+HIVE_HOME=/usr/lib/hive
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Таким образом, отключение Hive CLI производим следующими командами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HIVE_HOME=$(hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME|awk -F&amp;#39;=&amp;#39; &amp;#39;{print $2}&amp;#39;)
+setfacl -m u:hive:rx $HIVE_HOME/bin/hive
+chmod 754 $HIVE_HOME/bin/hive
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Разъяснение: Hive не будет стартовать, если не оставить ему доступ к этому файлу.&lt;/p&gt;
+&lt;p&gt;При необходимости, снимаем запрет командами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HIVE_HOME=$(hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME|awk -F&amp;#39;=&amp;#39; &amp;#39;{print $2}&amp;#39;)
+setfacl -b $HIVE_HOME/bin/hive
+chmod 755 $HIVE_HOME/bin/hive
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

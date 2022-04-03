@@ -1,0 +1,162 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – DNS</title>
+    <link>/tags/dns/</link>
+    <description>Recent content in DNS on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 14 Jul 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/dns/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Тестирование псевдо HA и LB dns-настроек в /etc/resolv.conf</title>
+      <link>/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
+      <pubDate>Wed, 14 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-14&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Псевдо High Availability и Load Balancing достигается поочерёдным опросом всех указанных в файле &lt;code&gt;/etc/resolv.conf&lt;/code&gt; dns-серверов, даже в том случае, если какой-нибудь из dns-серверов находится в офлайне.&lt;/p&gt;
+&lt;p&gt;Сразу приведу пример такого HA и LB &amp;lsquo;resolv.conf&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;options rotate timeout:1 attempts:1
+search test.lan
+nameserver 10.15.120.146
+nameserver 10.15.120.147
+nameserver 10.15.120.148
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Замечу, что использование локальных кэширующих dns-прослоек, типа dnsmasq, умеющих обращаться сразу ко всем dns-серверами, может несколько увеличить HA и LB.&lt;/p&gt;
+&lt;h2 id=&#34;подготовка-к-тестированию&#34;&gt;Подготовка к тестированию&lt;/h2&gt;
+&lt;p&gt;Создадим следующий python-файл и сделаем его исполняемым:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt; EOF &amp;gt; test.py
+#!/usr/bin/python3
+import socket
+for x in range(6):
+   print(socket.getaddrinfo(&amp;#39;dev-ipa01p.test.lan&amp;#39;, 80));
+EOF
+
+$ chmod u+x test.py
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;тестирование-со-стандартным-resolvconf&#34;&gt;Тестирование со стандартным resolv.conf&lt;/h2&gt;
+&lt;p&gt;Создадим стандартный &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/resolv.conf
+search test.lan
+nameserver 10.15.120.146
+nameserver 10.15.120.147
+nameserver 10.15.120.148
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;первый-dns-сервер-в-онлайне&#34;&gt;Первый dns-сервер в онлайне&lt;/h3&gt;
+&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
+
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы идут только к первому dns-серверу.&lt;/p&gt;
+&lt;h3 id=&#34;все-dns-серверы-в-офлайне&#34;&gt;Все dns-серверы в офлайне&lt;/h3&gt;
+&lt;p&gt;Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo sed -i &amp;#39;s/nameserver 10.15.120.146/nameserver 10.15.120.140/&amp;#39; /etc/resolv.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
+
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы идут только к первому и, после некоторой задержки, ко второму dns-серверу.&lt;/p&gt;
+&lt;h2 id=&#34;тестирование-с-отказоустойчивым-resolvconf&#34;&gt;Тестирование с отказоустойчивым resolv.conf&lt;/h2&gt;
+&lt;p&gt;Создадим отказоустойчивый &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/resolv.conf
+options rotate timeout:1 attempts:1
+search test.lan
+nameserver 10.15.120.146
+nameserver 10.15.120.147
+nameserver 10.15.120.148
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь добавлены опции:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;опция &amp;lsquo;rotate&amp;rsquo; заставляет отправлять dns-запросы по очереди к каждому dns-серверу по кругу;&lt;/li&gt;
+&lt;li&gt;опция &amp;rsquo;timeout:1&amp;rsquo; уменьшает ожидание ответа dns-сервера с дефолтных трёх секунд до одной секунды;&lt;/li&gt;
+&lt;li&gt;опция &amp;lsquo;attempts:1&amp;rsquo; разрешает только один запрос к каждому DNS-серверу;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;все-dns-серверы-в-онлайне&#34;&gt;Все dns-серверы в онлайне&lt;/h3&gt;
+&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
+
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.146&amp;#34;)}, 16) = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы идут к каждому dns-серверу по кругу.&lt;/p&gt;
+&lt;h3 id=&#34;первый-dns-сервер-в-офлайне&#34;&gt;Первый dns-сервер в офлайне&lt;/h3&gt;
+&lt;p&gt;Чтобы не выключать первый dns-сервер, просто поменяем ip-адрес для соответствующей записи в &lt;code&gt;/etc/resolv.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo sed -i &amp;#39;s/nameserver 10.15.120.146/nameserver 10.15.120.140/&amp;#39; /etc/resolv.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверим работу настроек:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ strace -e connect ./test.py 2&amp;gt;&amp;amp;1 | grep 53
+
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.140&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.147&amp;#34;)}, 16) = 0
+connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;10.15.120.148&amp;#34;)}, 16) = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь мы видим, что запросы так и продолжают выполняться к каждому dns-серверу по кругу, но с одним малозначимым отличием. После попытки резольвинга от неотвечающего dns-сервера, к следующему работающему dns-серверу производится два запроса. На данный момент я не знаю причин такого поведения, тем более, что не вижу здесь проблемы. Чтение исходников могло бы пролить свет.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Срипт для добавления PTR-записей по списку из файла в обратную DNS-зону FreeIPA</title>
+      <link>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
+      <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-01-25&lt;/p&gt;
+&lt;p&gt;Образец файла со списком узлов в формате hosts:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cat ip.hosts
+10.15.195.1 is01-airf01p.example.org
+10.15.195.3 is01-app01p.example.org
+10.15.195.4 is01-app02p.example.org
+10.15.112.52 is02-app208p.example.org
+10.15.112.53 is02-app209p.example.org
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скрипт для добавления PTR-записей в соответствующие обратные зоны:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;add_dns_record.sh
+#!/bin/bash
+LIST=&amp;#34;ip.hosts&amp;#34;
+ 
+while read line; do
+  echo &amp;#34;&amp;#34;
+  echo $line     # &amp;#34;10.15.195.1 is01-airf01p.example.org&amp;#34;
+  arr1=($line)   # конвертируем переменную в массив из двух элементов
+  ip1=${arr1[0]} # &amp;#34;10.15.195.1&amp;#34;
+  IFS=&amp;#34;.&amp;#34;        # разделитель пробел меняем на точку для bash substring
+  arr2=($ip1)    # конвертируем ip-адрес в массив &amp;#34;10 15 195 1&amp;#34;
+  IFS=&amp;#34; &amp;#34;        # возвращаем разделить
+ 
+  ZONE=&amp;#34;${arr2[2]}.${arr2[1]}.${arr2[0]}.in-addr.arpa&amp;#34;
+  IPN=${arr2[3]}
+  NAME=${arr1[1]}&amp;#34;.&amp;#34;
+  echo &amp;#34;$IPN $NAME&amp;#34;
+  echo &amp;#34;ipa dnsrecord-add $ZONE $IPN --ptr-rec $NAME&amp;#34;
+  ipa dnsrecord-add $ZONE $IP --ptr-rec $NAME
+done &amp;lt; $LIST
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

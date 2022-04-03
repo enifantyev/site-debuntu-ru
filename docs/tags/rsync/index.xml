@@ -1,0 +1,93 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – rsync</title>
+    <link>/tags/rsync/</link>
+    <description>Recent content in rsync on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 12 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/rsync/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Chroot rsync для безопасного сбора бэкапов с удалённых хостов</title>
+      <link>/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
+      <pubDate>Sun, 12 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-12&lt;/p&gt;
+&lt;p&gt;Один из способов использования &lt;a href=&#34;https://rsync.samba.org/&#34;&gt;Rsync&lt;/a&gt; для синхронизации файлов между машинами, это подключение &lt;strong&gt;rsync-клиента&lt;/strong&gt; к &lt;strong&gt;rsync-серверу&lt;/strong&gt; через ssh-сеанс.&lt;/p&gt;
+&lt;p&gt;Здесь я описал следующий сценарий выкачивания файлов из удалённого хоста &lt;code&gt;site01.example.com&lt;/code&gt; на &lt;em&gt;бэкап-хост&lt;/em&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;На &lt;em&gt;клиенте&lt;/em&gt;, которым выступает &lt;em&gt;бэкап-хост&lt;/em&gt;, запускаем &lt;strong&gt;rsync-клиент&lt;/strong&gt;:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rsync -avP rbkp@site01.example.com:/backup/ /backup/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Клиент&lt;/em&gt; стучится на ssh-порт &lt;em&gt;сервера&lt;/em&gt; &lt;code&gt;site01.example.com&lt;/code&gt; от имени пользователя &lt;em&gt;rbkp&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;На &lt;em&gt;сервере&lt;/em&gt; служба &lt;code&gt;sshd&lt;/code&gt; создаёт сеанс для &lt;em&gt;rbkp&lt;/em&gt; в подготовленной песочнице.&lt;/li&gt;
+&lt;li&gt;В контексте сеанса &lt;em&gt;rbkp&lt;/em&gt; через &lt;code&gt;/bin/sh&lt;/code&gt; начинает выполняться &lt;strong&gt;rsync-сервер&lt;/strong&gt;:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rsync --server --sender -vlogDtpre.iLsf . /backup/&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Происходит синхронизация между &lt;strong&gt;rsync-клиентом&lt;/strong&gt; и &lt;strong&gt;rsync-сервером&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;подготавливаем-песочницу-на-удалённом-хосте&#34;&gt;Подготавливаем песочницу на удалённом хосте&lt;/h3&gt;
+&lt;p&gt;Создаём скелет песочницы для &lt;strong&gt;rsync-сервера&lt;/strong&gt;, то есть создаём отдельную директорию с небольшим количеством файлов. Подключившийся пользователь, от имени которого запустится &lt;code&gt;rsync --server ...&lt;/code&gt;, будет иметь доступ только к содержимому этой директории.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir -p /mnt/rbkp/{.ssh,backup,bin}
+# chmod g+s /mnt/rbkp/backup
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;В директории &lt;code&gt;.ssh&lt;/code&gt; создадим  файл &lt;code&gt;authorized_keys&lt;/code&gt; со строкой идентификатора публичного ключа для ssh-сеанса.&lt;/li&gt;
+&lt;li&gt;В директории &lt;code&gt;backup&lt;/code&gt; складируем бэкапы, предназначенные для передачи в архив.&lt;/li&gt;
+&lt;li&gt;В папке &lt;code&gt;bin&lt;/code&gt; лежат бинарники, необходимые для работы &lt;strong&gt;rsync-сервера&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;В процессе подготовки песочницы появятся ещё две или три директории (&lt;code&gt;lib, lib64, usr/lib&lt;/code&gt; и т.д.) с библиотеками, необходимыми для работы бинарников.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Копируем бинарники:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cp /bin/sh /usr/bin/rsync /mnt/rbkp/bin/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Ищем библиотеки необходимые для работы бинарников и копируем их в соответствующие папки. Для &lt;code&gt;/bin/sh&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# for f in $(ldd /bin/sh | awk &amp;#39;{print $1&amp;#34;\n&amp;#34;$3}&amp;#39; | grep ^/); do echo $f &amp;amp;&amp;amp; rsync -aRL $f /mnt/rbkp; done
+/lib/x86_64-linux-gnu/libc.so.6
+/lib64/ld-linux-x86-64.so.2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для &lt;code&gt;/usr/bin/rsync&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# for f in $(ldd /usr/bin/rsync | awk &amp;#39;{print $1&amp;#34;\n&amp;#34;$3}&amp;#39; | grep ^/); do echo $f &amp;amp;&amp;amp; rsync -aRL $f /mnt/rbkp; done
+/lib/x86_64-linux-gnu/libattr.so.1
+/lib/x86_64-linux-gnu/libacl.so.1
+/lib/x86_64-linux-gnu/libpopt.so.0
+/lib/x86_64-linux-gnu/libc.so.6
+/lib64/ld-linux-x86-64.so.2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате выполнения этих команд в песочнице появятся библиотеки, необходимые для работы бинарников.&lt;/p&gt;
+&lt;h3 id=&#34;создаём-пользователя-для-работы-rsync-сервера-на-удалённом-хосте&#34;&gt;Создаём пользователя для работы &lt;strong&gt;rsync-сервера&lt;/strong&gt; на удалённом хосте&lt;/h3&gt;
+&lt;p&gt;Создаём пользователя без домашней папки, пароля и с минималистическим командной оболочкой &lt;code&gt;sh&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# adduser --home /mnt/rbkp --no-create-home --disabled-password --shell /bin/sh rbkp
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;назначим-правильных-владельцев-на-песочницу&#34;&gt;Назначим правильных владельцев на песочницу&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# chown -R root:root /mnt/rbkp
+# chown -R rbkp:rbkp /mnt/rbkp/.ssh /mnt/rbkp/backup
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настраиваем-sshd-на-удалённом-хосте&#34;&gt;Настраиваем sshd на удалённом хосте&lt;/h3&gt;
+&lt;p&gt;Подразумевается, что sshd уже настроен на подключение с помощью открытых ключей.&lt;/p&gt;
+&lt;p&gt;В файл &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; добавляем блок отвечающий за перемещение пользователя rbkp в песочницу. Перемещение выполняется после проверки ключа ssh.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Match User rbkp
+    ChrootDirectory /mnt/rbkp
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;генерируем-ssh-ключи-и-настраиваем-свойства-подключения&#34;&gt;Генерируем ssh-ключи и настраиваем свойства подключения&lt;/h3&gt;
+&lt;p&gt;На &lt;em&gt;бэкап-хосте&lt;/em&gt;, в директории для бэкапов, генерируем новые безпарольные ssh-ключи:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh-keygen -t ed25519 -a 256 -C rbkp_ed25519_$(date +%Y%m%d) -f rbkp_ed25519_$(date +%Y%m%d)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На удалённом хосте в файл &lt;code&gt;/mnt/rbkp/.ssh/authorized_keys&lt;/code&gt; добавляем публичную часть нового ssh-ключа и указываем опции ужесточающие политику подключения:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cat /mnt/rbkp/.ssh/authorized_keys
+command=&amp;#34;/bin/rsync --server --sender -vlogDtpre.iLsf . /backup/&amp;#34;,no-port-forwarding,no-X11-forwarding,no-user-rc,no-agent-forwarding,no-pty ssh-ed25519 AAAAC3Nza...fDWFH rbkp_ed25519_20190331
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;итоги&#34;&gt;Итоги&lt;/h3&gt;
+&lt;p&gt;На бэкап-сервере ставим в крон задачу:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rsync -avP -e&amp;#39;ssh -p22 -irbkp_ed25519_20190331 -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no&amp;#39; --bwlimit=1M rbkp@site01.example.com:/backup/ /mnt/backup/example.com/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В случае кражи ssh-ключей и информации о параметрах для подключения к удалённому хосту, злоумышленнику будет доступен удалённый просмотр папки &lt;code&gt;/mnt/rbkp/backup&lt;/code&gt; (посредством &lt;code&gt;rsync --list-only&lt;/code&gt;) и её выкачивание на свою машину. Если права на папку допускают удаление, то информация в этой папке может быть уничтожена.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

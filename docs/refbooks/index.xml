@@ -1,0 +1,167 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Справочники</title>
+    <link>/refbooks/</link>
+    <description>Recent content in Справочники on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 01 Jan 1970 03:00:02 +0300</lastBuildDate>
+    
+	  <atom:link href="/refbooks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Refbooks: Краткий список утилит и команд оболочки для работы с процессами</title>
+      <link>/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
+      <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
+      
+      <guid>/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-03-29&lt;/p&gt;
+&lt;h2 id=&#34;обозреть-работающие-процессы&#34;&gt;Обозреть работающие процессы&lt;/h2&gt;
+&lt;h3 id=&#34;ps&#34;&gt;&lt;code&gt;ps&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ps&lt;/code&gt; — process status.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ ps aux
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Linux Minit:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ ps 1
+    PID TTY      STAT   TIME COMMAND
+      1 ?        Ss     0:08 /sbin/init
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;CentOS:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@srv01 ~]$ ps 1
+  PID TTY      STAT   TIME COMMAND
+    1 ?        Ss     0:55 /usr/lib/systemd/systemd --switched-root --system --deserialize 22
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;ptree&#34;&gt;&lt;code&gt;ptree&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ptree&lt;/code&gt; — process tree. Выводит дерево процессов.&lt;/p&gt;
+&lt;h3 id=&#34;top-htop&#34;&gt;&lt;code&gt;top&lt;/code&gt;, &lt;code&gt;htop&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Информация обо всех процессах в режиме реального времени.&lt;/p&gt;
+&lt;h2 id=&#34;получить-информацию-о-процессе&#34;&gt;Получить информацию о процессе&lt;/h2&gt;
+&lt;h3 id=&#34;pidoff&#34;&gt;&lt;code&gt;pidoff&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;pidoff&lt;/code&gt; — find the process ID of a running program.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ pidof mc
+146747 45720 12313 7516
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;pgrep&#34;&gt;&lt;code&gt;pgrep&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;pgrep&lt;/code&gt; — process grep.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ pgrep -l fire
+10900 firefox-bin
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;pwdx&#34;&gt;&lt;code&gt;pwdx&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;pwdx&lt;/code&gt; — print working dir process.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ pwdx 12313
+12313: /home/user
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;lsof&#34;&gt;&lt;code&gt;lsof&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;lsof&lt;/code&gt; — list open files.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@home-ipa05 ~]# lsof -i -n -P
+COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+rpcbind 2610     rpc    6u  IPv4  15059      0t0  UDP *:111
+rpcbind 2610     rpc    7u  IPv4  15064      0t0  TCP *:111 (LISTEN)
+rpcbind 2610     rpc    8u  IPv6  15065      0t0  UDP *:111
+rpcbind 2610     rpc    9u  IPv6  15066      0t0  TCP *:111 (LISTEN)
+chronyd 2647 _chrony    5u  IPv4  15253      0t0  UDP 127.0.0.1:323
+chronyd 2647 _chrony    6u  IPv6  15254      0t0  UDP [::1]:323
+sshd    2888    root    3u  IPv4  16102      0t0  TCP *:22 (LISTEN)
+sshd    2888    root    4u  IPv6  16104      0t0  TCP *:22 (LISTEN)
+sshd    2914    root    3u  IPv4  16110      0t0  TCP 172.16.14.10:22-&amp;gt;172.16.14.1:45098 (ESTABLISHED)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;fuser&#34;&gt;&lt;code&gt;fuser&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;fuser&lt;/code&gt; — identify processes using files or sockets.&lt;/p&gt;
+&lt;p&gt;Какой процесс используется порт 22000 в пространстве имён «tcp»:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt; user@wks01:~$ sudo fuser -v -n tcp 22000
+                     USER        PID ACCESS COMMAND
+22000/tcp:           eugene    221135 F.... syncthing
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;убить-выбранный-процесс&#34;&gt;Убить выбранный процесс&lt;/h2&gt;
+&lt;h3 id=&#34;kill-pkill-killall&#34;&gt;&lt;code&gt;kill&lt;/code&gt;, &lt;code&gt;pkill&lt;/code&gt;, &lt;code&gt;killall&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;kill&lt;/code&gt;, &lt;code&gt;pkill&lt;/code&gt;, &lt;code&gt;killall&lt;/code&gt; — process kill.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ kill 221135
+user@wks01:~$ pkill -9 firefox
+user@wks01:~$ sudo killall -u eugene
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;изменить-приоритет-процесса&#34;&gt;Изменить приоритет процесса&lt;/h2&gt;
+&lt;h3 id=&#34;nice-renice&#34;&gt;&lt;code&gt;nice&lt;/code&gt;, &lt;code&gt;renice&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;nice&lt;/code&gt;, &lt;code&gt;renice&lt;/code&gt; — запуск процесса с заданным приоритетом «nice» или изменение приоритета «nice» работающего процесса.&lt;/p&gt;
+&lt;p&gt;Приоритет «nice» нельзя путать с действительный приоритетом процесса, выданным «планировщиком».&lt;/p&gt;
+&lt;p&gt;Текущее значение «nice» при использовании утилиты &lt;code&gt;top&lt;/code&gt; — столбец «NI», тогда как действительный приоритет — столбец «PR».&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;−20 — самый высокий приоритет «nice» выполнения процесса.&lt;/li&gt;
+&lt;li&gt;+20 — самый низкий приоритет «nice».&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;bg-fg&#34;&gt;&lt;code&gt;bg&lt;/code&gt;, &lt;code&gt;fg&lt;/code&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;bg&lt;/code&gt; — запуск приложения из командной строки в фоновом режиме.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fg&lt;/code&gt; — вывод приложенияиз фонового режима.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;изучить-работающий-процесс&#34;&gt;Изучить работающий процесс&lt;/h2&gt;
+&lt;h3 id=&#34;strace&#34;&gt;&lt;code&gt;strace&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;strace&lt;/code&gt; — system call tracer.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Refbooks: Управление пакетами в Python</title>
+      <link>/refbooks/python/upravleniye-paketami-v-payton/</link>
+      <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
+      
+      <guid>/refbooks/python/upravleniye-paketami-v-payton/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;способы-установки-python-пакетов&#34;&gt;Способы установки python-пакетов&lt;/h2&gt;
+&lt;h3 id=&#34;с-помощью-системного-менеджера-пакетов-apt-или-yum&#34;&gt;С помощью системного менеджера пакетов APT или YUM&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install python3-requests
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;с-помощью-python-модуля-pip&#34;&gt;С помощью python-модуля pip&lt;/h3&gt;
+&lt;p&gt;Если на машине установлена только одна версия python, или установка производится в активированном виртуальном окружении, то можно установить пакет/ы следующим образом:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install wheel requests
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Узнать к какой версии Python принадлежит &lt;code&gt;pip&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@wks1 ~]$ pip -V
+pip 20.3.4 from /usr/lib/python2.7/site-packages/pip (python 2.7)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Исключающее ошибку в версии Python установка пакетов с использованием &lt;code&gt;pip&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3.8 -m pip install airflow
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;ручная-сборка-python-пакета&#34;&gt;Ручная сборка python-пакета&lt;/h3&gt;
+&lt;h3 id=&#34;установка-пакетов-в-виртуальное-окружение&#34;&gt;Установка пакетов в виртуальное окружение&lt;/h3&gt;
+&lt;p&gt;Создадим каталог для Python-проекта, где развернём виртуальное окружение, активируем его, после чего установим пакет wheel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@wks1 ~]$ mkdir -p ~/pythonprojects/airflow
+[eugene@wks1 ~]$ cd ~/pythonprojects/airflow
+[eugene@wks1 ~]$ python3.6 -m venv .
+[eugene@wks1 ~]$ source bin/activate
+(airflow) [eugene@wks1 ~]$ pip -V
+pip 18.1 from /root/pythonprojects/airflow/lib64/python3.6/site-packages/pip (python 3.6)
+(airflow) [eugene@wks1 ~]$ pip install wheel
+Collecting wheel
+  Using cached wheel-0.37.1-py2.py3-none-any.whl (35 kB)
+Installing collected packages: wheel
+Successfully installed wheel-0.37.1
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;адреса-директорий-с-установленными-пакетами&#34;&gt;Адреса директорий с установленными пакетами&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;yum&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;/usr/lib/python3.6&lt;/code&gt; и доступны для всей системы.&lt;/li&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;sudo pip install&lt;/code&gt;, размещаются там же, как в примере выше.&lt;/li&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;sudo pip install --user&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;/root/.local/lib/python3.8&lt;/code&gt;, и доступны только для аккаунта &lt;code&gt;root&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;pip install&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;~/.local/lib/python3.8&lt;/code&gt;, то есть в домашний каталог пользователя и доступны только пользователю.&lt;/li&gt;
+&lt;li&gt;Пакеты, устанавливаемые в виртуальном окружении, размещаются в этом же каталоге, где развёрнут &amp;lsquo;venv&amp;rsquo;, точнее в подкаталоге &lt;code&gt;./lib/python3.8&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;способы-обновления-пакетов&#34;&gt;Способы обновления пакетов&lt;/h2&gt;
+&lt;h3 id=&#34;обновление-pip&#34;&gt;Обновление pip&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install --upgrade pip
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;принудительное-обновление-пакета-который-установлен-через-yum&#34;&gt;Принудительное обновление пакета, который установлен через yum&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ERROR: Cannot uninstall &amp;#39;systemd-python&amp;#39;. It is a distutils installed project
+and thus we cannot accurately determine which files belong to it which would
+lead to only a partial uninstall.
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install --ignore-installed systemd-python
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;способы-удаления-всех-пакетов&#34;&gt;Способы удаления всех пакетов&lt;/h2&gt;
+&lt;h3 id=&#34;способ-с-сохранением-списка-пакетов&#34;&gt;Способ с сохранением списка пакетов&lt;/h3&gt;
+&lt;p&gt;Остаётся возможность восстановления всех пакетов из списка. Сохраняем список, удаляем пакеты, устанавливаем пакеты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip freeze &amp;gt; requirements.txt
+pip uninstall -r requirements.txt -y
+pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-всех-пакетов-без-сохранения-списка&#34;&gt;Удаление всех пакетов без сохранения списка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip uninstall -y -r &amp;lt;(pip freeze)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip freeze | xargs pip uninstall -y
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

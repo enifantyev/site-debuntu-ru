@@ -1,0 +1,50 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Cloudera Inspect Network Performance</title>
+    <link>/tags/cloudera-inspect-network-performance/</link>
+    <description>Recent content in Cloudera Inspect Network Performance on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 08 Nov 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/cloudera-inspect-network-performance/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Неудачный запуск &#39;Inspect Network Performance&#39;: Failed running performance inspector on cluster</title>
+      <link>/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</link>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;проблема&#34;&gt;Проблема&lt;/h2&gt;
+&lt;p&gt;В результате запуска на кластере проверки &amp;ldquo;Inspect Network Performance&amp;rdquo; мы можем наблюдать картину:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Failed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+&lt;p&gt;В логах &lt;code&gt;/var/log/cloudera-scm-agent/cloudera-scm-agent.log&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Thread-17 supervisor WARNING Failed while getting process info. Retrying. (&amp;lt;Fault
+10: &amp;#39;BAD_NAME: 3050-host-perf-inspector&amp;#39;&amp;gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В &lt;code&gt;/var/run/cloudera-scm-agent/process/3050-host-perf-inspector/logs&lt;/code&gt; присутствует пустой файл &lt;code&gt;stdout.log&lt;/code&gt;, а в файле &lt;code&gt;stderr.log&lt;/code&gt; видна ошибка &amp;ldquo;SyntaxError: invalid syntax&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[21/Oct/2020 14:56:56 +0000] 105531 MainThread redactor     INFO     Started launcher: /opt/cloudera/cm-agent/service/perf/host_perf_diag.py input.json logs/result.json
+[21/Oct/2020 14:56:56 +0000] 105531 MainThread redactor     ERROR    Redaction rules file doesn&amp;#39;t exist, not redacting logs. file: redaction-rules.json, directory: /run/cloudera-scm-agent/process/3050-host-perf-inspector
+[21/Oct/2020 14:56:56 +0000] 105531 MainThread redactor     INFO     Re-exec watcher: /opt/cloudera/cm-agent/bin/cm proc_watcher 105541
+  File &amp;#34;/opt/cloudera/cm-agent/service/perf/host_perf_diag.py&amp;#34;, line 156
+    except RuntimeError, rte:
+                       ^
+SyntaxError: invalid syntax
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
+&lt;p&gt;На наших машинах с CentOS7 на борту по умолчанию запускается &amp;lsquo;python3&amp;rsquo;. Поэтому для того, чтобы в кластере заработал &amp;ldquo;network-inspector&amp;rdquo; необходимо поменять шебанг у файла &lt;code&gt;/opt/cloudera/cm-agent/service/perf/host_perf_diag.py&lt;/code&gt;. Добавить цифру &amp;lsquo;2&amp;rsquo; к &amp;lsquo;#!/usr/bin/python&amp;rsquo;, чтобы было так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/usr/bin/python2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После применения решения можем наблюдать успешное выполнения теста:
+&lt;img src=&#34;/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Successfully completed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,214 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Drupal</title>
+    <link>/tags/drupal/</link>
+    <description>Recent content in Drupal on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 25 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/drupal/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Использование Composer для установки и управления зависимостями Drupal 8</title>
+      <link>/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</link>
+      <pubDate>Mon, 25 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-03-25
+Использованные источники:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies&#34;&gt;Using Composer to Install Drupal and Manage Dependencies&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://getcomposer.org/doc/00-intro.md&#34;&gt;Introduction - Composer&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Composer может быть использован для загрузки Drupal, его модулей и тем оформления, а также всех появившихся зависимостей. Эти инструкции могут быть гибко подстроены под ваши методы управления экземпляром Drupal.&lt;/p&gt;
+&lt;h2 id=&#34;установка-composer&#34;&gt;Установка Composer&lt;/h2&gt;
+&lt;p&gt;Вам нужно установить Composer на вашу локальную машину перед выполнением любых composer-команд. Пожалуйста, ознакомтесь с &lt;a href=&#34;https://getcomposer.org/doc/00-intro.md&#34;&gt;Getting Started on getcomposer.org&lt;/a&gt; для установки Composer. Если вам разрешено устанавливать Composer глобально, так и сделайте, так как нет никакой выгоды от множества установленных на компьютере копий Composer для каждого пользователя или проекта.&lt;/p&gt;
+&lt;p&gt;Скачиваем последнюю версию Composer, проверяем хэш и устанавливаем глобально:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ php -r &amp;#34;copy(&amp;#39;https://getcomposer.org/installer&amp;#39;, &amp;#39;composer-setup.php&amp;#39;);&amp;#34;
+$ php -r &amp;#34;if (hash_file(&amp;#39;sha384&amp;#39;, &amp;#39;composer-setup.php&amp;#39;) === &amp;#39;48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5&amp;#39;) { echo &amp;#39;Installer verified&amp;#39;; } else { echo &amp;#39;Installer corrupt&amp;#39;; unlink(&amp;#39;composer-setup.php&amp;#39;); } echo PHP_EOL;&amp;#34;
+Installer verified
+$ sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Замечу, что для &lt;code&gt;composer create-project drupal...&lt;/code&gt; потребовалось 1.5-2.0GB. На маленьком vps с 512MB RAM и 1024MB swapfile, я не смог использовать &lt;code&gt;composer&lt;/code&gt; из-за появляющихся ошибок про невозможность выделения памяти. Для решения проблемы я создал новый swapfile на 2048MB:&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;swapoff -a
+rm /swapfile
+dd if=/dev/zero of=/swapfile bs=1M count=2048 status=progress
+chmod 0600 /swapfile
+mkswap /swapfile
+swapon -a
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;em&gt;И ещё заметка. Арендуя vps на OpenVZ с 1GB RAM, у меня не получилось развернуть Drupal через Composer. Всё затыкалось на это моменте:&lt;/em&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Reading /root/.composer/cache/repo/https---repo.packagist.org/provider-guzzle$stream.json from cache
+Reading /root/.composer/cache/repo/https---repo.packagist.org/provider-guzzlehttp$streams.json from cache
+Reading /root/.composer/cache/repo/https---repo.packagist.org/provider-justinrainbow$json-schema.json from cache
+Killed
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;em&gt;При этом было видно через &lt;code&gt;top&lt;/code&gt;, что размер свободной памяти приближался к нулю. Создание swap-файла запрещено на OpenVZ, поэтому разворачивал проект на домашней машине и делал &lt;code&gt;rsync&lt;/code&gt; директорию проекта на этот vps.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;загрузка-drupal-через-composer&#34;&gt;Загрузка Drupal через Composer&lt;/h2&gt;
+&lt;p&gt;Есть несколько путей установки Drupal через Composer, однако рекомендованным методом (особенно для начинающих пользователей Composer) является использование шаблона из &lt;a href=&#34;https://github.com/drupal-composer/drupal-project&#34;&gt;drupal-composer/drupal-project&lt;/a&gt;.
+Это open-source проект, предлагающий пустой стартовый Drupal-сайт, уже обеспеченный composer-конфигурацией по умолчанию, которую иначе пришлось бы устанавливать вручную.&lt;/p&gt;
+&lt;p&gt;Вот некоторые из вещей, которые этот проект занимается:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Установка Drupal-сайта в поддиректорию &lt;strong&gt;web/&lt;/strong&gt; папки проекта.&lt;/li&gt;
+&lt;li&gt;Настройка репозитория Drupal composer.&lt;/li&gt;
+&lt;li&gt;Настройка установочных путей, по которым composer будет размещать модули, темы, библиотеки и прочее.&lt;/li&gt;
+&lt;li&gt;Установка &lt;a href=&#34;https://www.drush.org/&#34;&gt;Drush&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Установка &lt;a href=&#34;https://drupalconsole.com/&#34;&gt;Drupal Console&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Поддержка и разработка этого composer-проекта размещается по адресу &lt;a href=&#34;https://github.com/drupal-composer/drupal-project/issues&#34;&gt;drupal-composer/drupal-project GitHub
+&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;использование-drupal-composerdrupal-project&#34;&gt;Использование drupal-composer/drupal-project&lt;/h3&gt;
+&lt;h3 id=&#34;установка-по-умолчанию&#34;&gt;Установка по умолчанию&lt;/h3&gt;
+&lt;p&gt;Запускаем &lt;code&gt;composer create-project drupal-composer/drupal-project:8.x-dev my_site_name_dir --no-interaction&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Это загрузит &amp;lsquo;drupal-composer/drupal-project&amp;rsquo; в папку с именем &amp;lsquo;my_site_name_dir&amp;rsquo; и автоматически выполнит команду &amp;lsquo;composer install&amp;rsquo;, которая загрузит Drupal 8 и все его зависимости.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/srv/www/my_site_name_dir$ ls -l
+total 352
+drwxrwxr-x 1 user      user         318 Mar 25 20:33 ./
+drwxrwxr-x 1 www-data  www-data     168 Mar 25 14:05 ../
+-rw-rw-r-- 1 user      user         357 Mar 25 20:33 .editorconfig
+-rw-rw-r-- 1 user      user         746 Mar 25 14:39 .env.example
+-rw-rw-r-- 1 user      user        3858 Mar 25 20:33 .gitattributes
+-rw-rw-r-- 1 user      user         466 Mar 25 14:39 .gitignore
+-rw-rw-r-- 1 user      user        1875 Mar 25 14:39 .travis.yml
+-rw-rw-r-- 1 user      user       18046 Mar 25 14:39 LICENSE
+-rw-rw-r-- 1 user      user        6495 Mar 25 14:39 README.md
+-rw-rw-r-- 1 user      user        2474 Mar 25 14:39 composer.json
+-rw-rw-r-- 1 user      user      297472 Mar 25 20:33 composer.lock
+drwxrwxr-x 1 user      user          62 Mar 25 14:39 drush/
+-rw-rw-r-- 1 user      user         414 Mar 25 14:39 load.environment.php
+-rw-rw-r-- 1 user      user         481 Mar 25 14:39 phpunit.xml.dist
+drwxrwxr-x 1 user      user          16 Mar 25 14:39 scripts/
+drwxrwxr-x 1 user      user         836 Mar 25 20:33 vendor/
+drwxrwxr-x 1 user      user         336 Mar 25 20:33 web/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Обратите внимание на директорию &lt;strong&gt;&lt;code&gt;web/&lt;/code&gt;&lt;/strong&gt;. Именно в ней находится корень нового сайта, который мы указываем в настройках http-сервера.&lt;/p&gt;
+&lt;h3 id=&#34;установка-не-по-умолчанию&#34;&gt;Установка не по умолчанию&lt;/h3&gt;
+&lt;p&gt;Если вы хотите изменить некоторые настройки в загружаемом файле composer.json перед выполнением &amp;lsquo;composer install&amp;rsquo;, используйте флаг &lt;code&gt;--no-install&lt;/code&gt; в команде &amp;lsquo;composer create-project&amp;rsquo;. Для примера, вероятно вы захотите переименовать поддиректорию &lt;strong&gt;&lt;code&gt;web/&lt;/code&gt;&lt;/strong&gt; как-либо иначе.
+Для этого:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Запускаем &amp;lsquo;composer create-project drupal-composer/drupal-project:8.x-dev my_site_name_dir &amp;ndash;stability dev &amp;ndash;no-interaction &amp;ndash;no-install&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;Переходим в папку my_site_name_dir и меняем необходимые настройки в файле composer.json&lt;/li&gt;
+&lt;li&gt;Запускаем &amp;lsquo;composer install&amp;rsquo; для загрузки Drupal 8 и всех зависимостей.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Ознакомтесь с README в &lt;a href=&#34;https://github.com/drupal-composer/drupal-project&#34;&gt;drupal-composer/drupal-project&lt;/a&gt; для более глубокого изучения особенностей проекта и его использования. Если вы используете строительство Drupal-сайта посредством Drush, то обратитесь к &lt;a href=&#34;https://www.drupal.org/docs/develop/using-composer/using-composer-template-for-drupal-projects#faq&#34;&gt;FAQs in Drupal&amp;rsquo;s Composer template documentation&lt;/a&gt; для изучения различий между composer-вариантом и drush make.&lt;/p&gt;
+&lt;h2 id=&#34;загрузка-дополнительных-модулей-тем-оформления-и-других-зависимостей-используя-composer&#34;&gt;Загрузка дополнительных модулей, тем оформления и других зависимостей, используя Composer&lt;/h2&gt;
+&lt;p&gt;Распространённое явление, когда дополнительные Drupal-модули имеют зависимости от сторонних библиотек. Некоторые из этих модулей могут быть установлены только с помощью Composer. Если вы загрузили Drupal 8 с помощью Composer, то вы возможно захотите использовать Composer для загрузки всех модулей и тем.&lt;/p&gt;
+&lt;p&gt;Этот раздел делится на две части:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Загрузка дополнительных модулей и тем с помощью Composer&lt;/li&gt;
+&lt;li&gt;Указание директорий для размещения Drupal-проектов, если такое необходимо&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;загрузка-дополнительных-модулей-и-тем-с-помощью-composer&#34;&gt;Загрузка дополнительных модулей и тем с помощью Composer&lt;/h3&gt;
+&lt;p&gt;Для загрузки дополнительных модулей и тем с помощью Composer:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Выполняем &lt;code&gt;composer require drupal/&amp;lt;modulename&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Для примера: &lt;code&gt;composer require drupal/token&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Это необходимо выполнять в папке, являющейся корнем вашего Drupal-проекта (где размещён файл composer.json), a не на том уровне, где находится Drupal-сайт (по умолчанию директория &lt;strong&gt;web/&lt;/strong&gt; в папке проекта).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Composer автоматически добавит строчку запроса модуля &amp;ldquo;drupal/token&amp;rdquo; в список требуемых модулей в файле composer.json, наподобие следующего:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;{
+    &amp;#34;require&amp;#34;: {
+        &amp;#34;drupal/core&amp;#34;: &amp;#34;^8.6.0&amp;#34;,
+...
+        &amp;#34;drupal/token&amp;#34;: &amp;#34;^1.5&amp;#34;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Composer загрузит модуль и все необходимые для его работы зависимости, но не включит его.&lt;/p&gt;
+&lt;p&gt;Вы можете включить Drupal-модуль двумя способами:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Используя стандратный Drupal web-интерфейс.&lt;/li&gt;
+&lt;li&gt;Используя командную строку через &lt;strong&gt;Drush&lt;/strong&gt; или &lt;strong&gt;Drupal Console&lt;/strong&gt; - смотри &lt;a href=&#34;https://www.drupal.org/docs/8/extending-drupal-8/installing-modules-from-the-command-line&#34;&gt;Installing Modules from the Command Line&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Для запроса модулей, вы можете использовать либо название проекта, либо конкретное название модуля:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;В первом случае Composer загрузит весь проект, содержащий данный модуль.&lt;/li&gt;
+&lt;li&gt;Во втором случае, для примера, если вам нужен модуль &amp;ldquo;fe_block&amp;rdquo; из проекта &amp;ldquo;&lt;a href=&#34;https://drupal.org/project/features_extra&#34;&gt;features_extra&lt;/a&gt;&amp;rdquo; вы можете загрузить его любым из следующих способов:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;composer require drupal/features_extra&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;composer require drupal/fe_block&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;указание-версии-модуля&#34;&gt;Указание версии модуля&lt;/h3&gt;
+&lt;p&gt;Вы можете указать определённую версию скачиваемого модуля или темы:
+&lt;code&gt;composer require &#39;drupal/&amp;lt;modulename&amp;gt;:&amp;lt;version&amp;gt;&#39;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Для примера:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;composer require &amp;#39;drupal/token:^1.5&amp;#39;
+composer require &amp;#39;drupal/simple_fb_connect:~3.0&amp;#39;
+composer require &amp;#39;drupal/ctools:3.0.0-alpha26&amp;#39;
+composer require &amp;#39;drupal/token:1.x-dev&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;дальнейшая-установка-через-web-интерфейс&#34;&gt;Дальнейшая установка через web-интерфейс&lt;/h2&gt;
+&lt;p&gt;Во время первичной инициализации Drupal-сайта через web-интерфейс может произойти ошибка:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Обнаружены ошибки
+КОНФИГУРАЦИОННЫЙ КАТАЛОГ: SYNC
+An automated attempt to create the directory ../config/sync failed, possibly due to a permissions problem.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для её исправления, в папке проекта (где находится файл composer.json) необходимо создать подпапку с вложенной папкой: &lt;code&gt;mkdir -p config/sync&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;drush&#34;&gt;Drush&lt;/h2&gt;
+&lt;p&gt;Drush запускаем из корневой папки проекта (где находится файл composer.json).&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ drush sset system.maintenance_mode 1
+$ drush drupal:directory                # или &amp;#34;drush dd&amp;#34;
+/srv/www/my_site_name_dir/web
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Вообще рекомендовано, с помощью &lt;code&gt;composer&lt;/code&gt; добавлять/убирать модули, а с помощью &lt;code&gt;drush&lt;/code&gt; (или через администраторский web-интерфейс) включать/выключать модули.&lt;/p&gt;
+&lt;h2 id=&#34;backup-и-обновление-drupal-проекта&#34;&gt;Backup и обновление Drupal-проекта&lt;/h2&gt;
+&lt;p&gt;Из девятой версии drush выбросили возможность бэкапа базы sql и директории сайта с помощью одной команды, поэтому процессы разделяем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ drush sset system.maintenance_mode 1
+$ drush cache:rebuild                   # или &amp;#34;drush cr&amp;#34;
+  [success] Cache rebuild complete.
+$ drush sql-dump |bzip2  &amp;gt; ../backup/my_site_name_dir_sql_$(date &amp;#34;+%Y%m%d-%H%M%S&amp;#34;).bz2
+$ tar -cvjf ../backup/my_site_name_dir_files_$(date &amp;#34;+%Y%m%d-%H%M%S&amp;#34;).tar.bz2 ../my_site_name_dir
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В вышеуказанных строках произойдёт:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Перевод сайта в режим обслуживания.&lt;/li&gt;
+&lt;li&gt;Сброс кэша.&lt;/li&gt;
+&lt;li&gt;Дамп базы данных с добавлением текущих даты/времени к имени файла.&lt;/li&gt;
+&lt;li&gt;Архивирование всей директории проекта с добавлением текущих даты/времени к имени файла.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Необходимые модули для Drupal 7.0</title>
+      <link>/n/neobhodimye-moduli-dlya-drupal-7.0/</link>
+      <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/neobhodimye-moduli-dlya-drupal-7.0/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2011-03-30
+&lt;a href=&#34;http://drupal.org/project/ckeditor&#34;&gt;CKEditor&lt;/a&gt; — wysiwyg редактор для редактирования текста.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/imce&#34;&gt;IMCE&lt;/a&gt; — управление загрузкой, удалением изображения в wysiwyg редакторе. Надо чуток донастроить.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/pathauto&#34;&gt;Pathauto&lt;/a&gt; (для работы нужен &lt;a href=&#34;http://drupal.org/project/token&#34;&gt;Token&lt;/a&gt;) + &lt;a href=&#34;http://drupal.org/project/transliteration&#34;&gt;Transliteration&lt;/a&gt;  — Эта связка позволит автоматически назначать статье URL с удобочитаемым видом в англоязычной кодировке. То есть вместо &lt;code&gt;https://www.example.com/node/45&lt;/code&gt;будет &lt;code&gt;https://www.example.com/eta-statia-pro-elochku&lt;/code&gt;, что приятно поисковым движкам и людям. Для настройки надо зайти в &lt;strong&gt;Настройки&lt;/strong&gt; - &lt;strong&gt;Адреса&lt;/strong&gt;. Тут выбрать вкладку &lt;strong&gt;Настройки&lt;/strong&gt; и включить:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Transliterate prior to creating alias&amp;rdquo; для автоматического преобразования национальных символов в латинские;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Reduce strings to letters and numbers&amp;rdquo; - для приведения строк к виду, состоящему только из латинских букв и арабских цифр;&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;Create a new alias. Leave the existing alias functioning.&amp;rdquo; - для отключения потери старого URL при смене заголовка статьи. Тут надо подумать и почитать про Global Redirect. Не будет ли дубликатов страниц.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/globalredirect&#34;&gt;Global Redirect&lt;/a&gt; — Эта штука склеивает различные URL одного материала. Например, обратившись к странице этого сайта по drupal&amp;rsquo;овскому URL&amp;rsquo;у &lt;a href=&#34;http://debuntu.ru/node/5&#34;&gt;http://debuntu.ru/node/5&lt;/a&gt;  — нас перекинет на хуман-читабельное URL &lt;a href=&#34;http://debuntu.ru/content/neobhodimye-moduli-dlya-drupal-70&#34;&gt;http://debuntu.ru/content/neobhodimye-moduli-dlya-drupal-70&lt;/a&gt;
+Для дополнительной настройки надо зайти в Настройки - Global Redirect и включить:
+&amp;ldquo;Add Canonical Link&amp;rdquo; -&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/redirect&#34;&gt;Redirect&lt;/a&gt; (бывший Path Redirect) — автоматическое, а при необходимости и ручное, добавление к старым URL  &amp;ldquo;Redirect 301&amp;rdquo;  на новые страницы. Я расчитывал, что при настройке Pathauto в режим &amp;ldquo;Create a new alias. Leave the existing alias functioning&amp;rdquo; модуль Redirect будет автоматически добавлять к старым URL &amp;ldquo;Redirect 301&amp;rdquo; на новые созданные URL. Но, к сожалению, это работает лишь при ручном изменении URL! Надо выяснить - не помогает ли в этом неприятном случае модуль Global Redirect.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/page_title&#34;&gt;Page Title&lt;/a&gt; — Управление заголовками по шаблону и вручную. Поставил dev версию и пропатчил.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/spamspan&#34;&gt;SpamSpan&lt;/a&gt; — для маскировки почтовых адресов в ноде. Необходимо включать в Настройки - Форматы ввода. В каждом шаблоне включить &amp;ldquo;Фильтр SpamSpan для шифрования электронных адресов&amp;rdquo;. И там же, ниже, на горизонтальной закладке &amp;ldquo;Фильтр SpamSpan для шифрования электронных адресов&amp;rdquo; включить &amp;lt;Use a graphical replacement for &amp;ldquo;@&amp;rdquo;&amp;quot;&amp;gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/xmlsitemap&#34;&gt;XML Sitemap&lt;/a&gt; — ну это понятно.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/insert&#34;&gt;Insert&lt;/a&gt; — добавление к ноде дополнительного поля с типом &amp;ldquo;Изображение&amp;rdquo; для вывода картинки к тексту. При удалении ноды, привязанные к ноде изображения, автоматически удаляются.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/colorbox&#34;&gt;Colorbox&lt;/a&gt; — умеет создавать галереи и показывает увеличенные версии изображений в наложенном на страницу полупрозрачном слое.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/google_analytics&#34;&gt;Google Analytics&lt;/a&gt; — ну это понятно.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/views&#34;&gt;Views&lt;/a&gt; (для работы необходим &lt;a href=&#34;http://drupal.org/project/ctools&#34;&gt;Chaos tools&lt;/a&gt;) — архиважный элемент для построения различных списков с выводом на отдельные страницы или блоки.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/smtp&#34;&gt;SMTP Authentication Support&lt;/a&gt; — для отправки писем с сайта.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://drupal.org/project/captcha&#34;&gt;CAPTCHA&lt;/a&gt; — модуль защиты от спамботов для форм отправки почты и т.п.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

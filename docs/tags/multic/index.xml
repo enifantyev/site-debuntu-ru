@@ -1,0 +1,160 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Multic</title>
+    <link>/tags/multic/</link>
+    <description>Recent content in Multic on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 04 Sep 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/multic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Traditional Unix permissions и Access Control Lists</title>
+      <link>/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
+      <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-09-04&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;The term &lt;em&gt;user&lt;/em&gt; is used in two different ways. We often speak of a logged-in person as a user, and, sometimes, use the term to refer to the process which the user is controlling from his terminal. Especially in the context of user control, however, we apply the term &lt;em&gt;user&lt;/em&gt; to any member of the set of users (in the first sense) who could log in. In other words, we speak of a user as a registered identity.&amp;rdquo;&lt;br&gt;
+&lt;em&gt;Multics System Administrators Manual
+January 9, 1973
+This manual was written by Thomas H. Van Vleck of the Programming Development Office of the Massachusetts Institute of Technology.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;введение&#34;&gt;Введение&lt;/h3&gt;
+&lt;p&gt;Насколько я понял из чтения &lt;a href=&#34;https://multicians.org/features.html&#34;&gt;Multics Features&lt;/a&gt;, а также и другого материала по системам Multics/Unix, именно в Multics, предшественнике Unix, уже присутствовала древовидная иерархическая файловая система в виде каталогов с файлами (называемыми в Multics &lt;em&gt;сегментами&lt;/em&gt;), а также
+использовались развитые &lt;em&gt;ACLs&lt;/em&gt; и &lt;em&gt;режимы доступа&lt;/em&gt; в виде rwx-записей для &lt;em&gt;чтения&lt;/em&gt;, &lt;em&gt;записи&lt;/em&gt; и &lt;em&gt;выполнения&lt;/em&gt;. Так что не удивительно, что один из разработчиков Multics, Кен Томпсон (Ken Thompson), перенёс эти идеи в свою новую однопользовательскую операционную систему Unics (в дальнейшем Unix), упростив их до приемлемого уровня. Необходимо вспомнить, что ОС Multics изначально разрабатывалась для работы на серьёзных многопользовательских составных сложных (MULTiplex Information and Computing Service) системах, тогда как Unics писалась в виде баловства для работы на слабом устаревшем компьютере &lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Pdp7-oslo-2005.jpeg/1024px-Pdp7-oslo-2005.jpeg&#34;&gt;PDP-7&lt;/a&gt;, пылившемся в углу.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Впоследствии еще один исследователь лаборатории Bell Labs, Брайан Керниган (Brian Kernighan), как-то в шутку назвал эту систему UNICS (UNiplexed Information and Computing Service — примитивная информационная и вычислительная служба).&lt;br&gt;
+&lt;em&gt;Танненбаум. Современные Операционные Системы. 4-е издание.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;в-мире-unix-всё-является-файлом&#34;&gt;В мире Unix всё является файлом&lt;/h3&gt;
+&lt;p&gt;Всё в Unix/Linux/POSIX-системе является файлом. Процесс, любое устройство, жёсткий диск, раздел на жёстком диске, etc. Даже каталог, содержащий в себе файлы, является не более чем файлом, в котором перечислены имена жёстких ссылок на другие файлы. Файл определяется номером в &lt;em&gt;inode&lt;/em&gt; и не имеет имени. Именем файла является, по минимуму, одна &lt;em&gt;жёсткая ссылка&lt;/em&gt; на файл, указанная в файле-каталоге.&lt;/p&gt;
+&lt;p&gt;Все файлы представлены в файловой системе &lt;em&gt;Операционной Системы&lt;/em&gt; (ОС) в виде древовидной структуры, называемой &lt;em&gt;Деревом Каталогов&lt;/em&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Одни ветви-каталоги этого дерева представляют собой отображение реальных файлов на внутренних и внешних накопителях. Здесь можно найти файлы, обеспечивающие работу самой ОС; временные файлы, появляющиеся и пропадающие во время работы ОС; файлы созданные пользователями на этом компьютере или принесённые на флэшке.&lt;/li&gt;
+&lt;li&gt;Другие ветви-каталоги отображают подключенные к системе устройства. Вставленная в USB-порт флэшка появится в этом каталоге в виде файла и, через чтение/запись в этот файл, с флэшкой можно производить низкоуровневые операции, например, чтобы восстановить случайно удалённые файлы.&lt;/li&gt;
+&lt;li&gt;Третьи ветви-каталоги являются динамическим представлением оперативной памяти ОС и процессов, работающих в ней, где каждый файл представляет отдельную работающую программу-процесс в ОЗУ. Здесь также можно найти массу информации по работающим процессам и операционной системе; читать и даже менять какие-либо параметры, оперативно влияя на работу процессов и ОС.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;uid-gid&#34;&gt;&lt;em&gt;UID&lt;/em&gt;, &lt;em&gt;GID&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;Каждый файл в &lt;em&gt;Дереве Каталогов&lt;/em&gt; принадлежит определённому пользователю и определённой группе пользователей. Эта информация записывается в область метаданных файла и представлена там полями &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt;, с числовым значением от 0 до 32767 в ранних Unix, от 0 до 65535 в Linux. Аббревиатура &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; означает &lt;em&gt;User ID&lt;/em&gt; и &lt;em&gt;Group ID&lt;/em&gt;. Подавляющее большинство файлов, созданных на момент установки ОС, имеют &lt;em&gt;UID&lt;/em&gt;=0 и &lt;em&gt;GID&lt;/em&gt;=0, то есть принадлежат пользователю &lt;em&gt;root&lt;/em&gt; и группе &lt;em&gt;root&lt;/em&gt;. Видимо по причине того, что установка новой системы происходит из-под &lt;em&gt;рута&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Назначение файлу &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; происходит на этапе создания файла. Работающая программа-процесс, принадлежащая какому-либо пользователю и группе, создаёт в файловой системе новый файл и этому файлу, если не указаны иные значения, автоматически назначаются &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; создавшего файл процесса. И в соответствии с установками &lt;code&gt;umask&lt;/code&gt;, для &lt;em&gt;UID&lt;/em&gt;, &lt;em&gt;GID&lt;/em&gt; и &lt;em&gt;Other&lt;/em&gt; устанавливаются флаги прав доступа (чтение, запись, исполнение).&lt;/p&gt;
+&lt;p&gt;При попытке программой-процессом получить доступ к какому-либо файлу через соответствующий системный вызов, ядром системы производится сравнение &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; процесса с &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; требуемого файла. При совпадении значений процессу представляется доступ (чтение, запись, исполнение) к файлу в соответствии с установленными флагами прав доступа. Подробнее этот алгоритм проверки разобран ниже.&lt;/p&gt;
+&lt;h3 id=&#34;получение-пользователем-uid-и-gid&#34;&gt;Получение пользователем &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;Системный администратор первых Unix добавлял в систему новых пользователей ручным редактирование файла &lt;code&gt;/etc/passwd&lt;/code&gt; (&lt;a href=&#34;https://s3.amazonaws.com/plan9-bell-labs/7thEdMan/v7vol2b.pdf&#34;&gt;Из седьмой редакции UNIX PROGRAMMER’S MANUAL, январь 1979&lt;/a&gt;):&lt;/p&gt;
+&lt;details&gt;&lt;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Install new users by editing the password file /etc/passwd (passwd(5)). This procedure should be done once multi-user mode is entered (see init(8)). You’ll have to make a current directory for each new user and change its owner to the newly installed name. Login as each user to make  sure the password file is correctly edited. For example:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ed /etc/passwd
+$a
+joe::10:1::/usr/joe:
+w
+q
+mkdir /usr/joe
+chown joe /usr/joe
+login joe
+ls -la
+login root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This will make a new login entry for joe, who should be encouraged to use passwd(1) to give himself a password. His default current directory is&lt;code&gt; /usr/joe&lt;/code&gt; which has been created. The delivered password file has the user &lt;em&gt;bin&lt;/em&gt; in it to be used as a prototype.&lt;/p&gt;
+&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;Видно, что пользователю &lt;em&gt;joe&lt;/em&gt; назначен &lt;em&gt;UID&lt;/em&gt; = 10 и &lt;em&gt;GID&lt;/em&gt; = 1. Далее видно, что системному администратору предписывалось создать домашнюю папку нового пользователя и проверить корректность введённых сведений простым входом под логином нового пользователя.&lt;/p&gt;
+&lt;p&gt;Итак, каждый пользователь получал от системного администратора &lt;em&gt;имя пользователя&lt;/em&gt; и телефонный номер, на который можно было позвонить с &amp;ldquo;подходящего терминала, если только это не постоянно подключенный терминал&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;После установления связи с Unix, начиналась процедура входа в систему:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Пользователь видит приглашение &lt;code&gt;login:&lt;/code&gt;, вводит свой логин и нажимает &lt;em&gt;enter&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;getty&lt;/code&gt; вызывает &lt;code&gt;login&lt;/code&gt; с аргументом — введённым ранее именем пользователя.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;login&lt;/code&gt; сверяет введённое имя пользователя с информацией из файла &lt;code&gt;/etc/passwd&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Запрашивает пароль, если таковой был установлен.&lt;/li&gt;
+&lt;li&gt;Меняет текущую директорию на пользовательскую, меняет свой &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; на пользовательский и запускает оболочку, обычно, &lt;code&gt;/bin/sh&lt;/code&gt; или другую, указанную в &lt;code&gt;/etc/passwd&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Естественно, с этого момента все процессы, запускаемые из оболочки пользователя, наследовали &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; пользователя. Отсюда следует, что все файлы, созданные этим пользователем в рамках своего сеанса, наследовали его &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Интересно, что &amp;ldquo;The easiest way to log out is&amp;rdquo; было &amp;ldquo;to &lt;strong&gt;hang up&lt;/strong&gt; the phone.&amp;rdquo; Мы уже давно не &lt;em&gt;вешаем трубку&lt;/em&gt; для разрыва соединения и посылки соответствующего сигнала процессам. &lt;em&gt;Трубка&lt;/em&gt;, которую можно &lt;em&gt;повесить&lt;/em&gt;, исчезла, а сигнал остался.&lt;/p&gt;
+&lt;p&gt;Сейчас кое-что изменилось. Для добавления нового пользователя в систему используется специальные команды &lt;code&gt;adduser&lt;/code&gt; или &lt;code&gt;useradd&lt;/code&gt;. Пароли, после &lt;em&gt;червя Морриса&lt;/em&gt;, переместились в файл &lt;code&gt;/etc/shadow&lt;/code&gt;. Но, в принципе, мало что поменялось.&lt;/p&gt;
+&lt;h3 id=&#34;флаги-прав-доступа-к-файлу&#34;&gt;Флаги прав доступа к файлу&lt;/h3&gt;
+&lt;p&gt;Судя по первой редакции &lt;a href=&#34;https://www.bell-labs.com/usr/dmr/www/1stEdman.html&#34;&gt;UNIX PROGRAMMER’S MANUAL. K. Thompson, D. M. Ritchie. November 3, 1971&lt;/a&gt;, в частности &lt;a href=&#34;https://www.bell-labs.com/usr/dmr/www/man51.pdf&#34;&gt;File formats&lt;/a&gt;, изначально в Unix для файла предусматривались только следующие флаги доступа:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;executable (то есть &amp;ldquo;исполняемый&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;set user ID on execution (SETUID)&lt;/li&gt;
+&lt;li&gt;read, write (owner) (&amp;ldquo;чтение&amp;rdquo;, &amp;ldquo;запись&amp;rdquo; для &lt;em&gt;владельца&lt;/em&gt; файла)&lt;/li&gt;
+&lt;li&gt;read, write (non-owner) (&amp;ldquo;чтение&amp;rdquo;, &amp;ldquo;запись&amp;rdquo; для &lt;em&gt;остальных&lt;/em&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;В четвёртой редакции от ноября 1973 года &lt;a href=&#34;https://dspinellis.github.io/unix-v4man/v4man.pdf&#34;&gt;UNIX PROGRAMMER’S MANUAL, Fourth Edition&lt;/a&gt;, появились группы пользователей и биты прав доступа к файлу стали более привычными:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;setuser-ID on execution (SETUID)&lt;/li&gt;
+&lt;li&gt;setgroup-ID on execution (SETGID)&lt;/li&gt;
+&lt;li&gt;read, write, execute (owner)&lt;/li&gt;
+&lt;li&gt;read, write, execute (group)&lt;/li&gt;
+&lt;li&gt;read, write, execute (others)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;В шестой редакции упомянут &lt;em&gt;Sticky&lt;/em&gt; бит. А в седьмой редакции от января 1979 года &lt;a href=&#34;https://s3.amazonaws.com/plan9-bell-labs/7thEdMan/v7vol1.pdf&#34;&gt;UNIX PROGRAMMER’S MANUAL. Seventh Edition, Volume 1. January, 1979&lt;/a&gt; команда &lt;code&gt;chmod&lt;/code&gt; стала такой, какой мы знаем её сейчас.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;v7vol1_chmod-1.jpg&#34;&gt;CHMOD(1)    UNIX Programmer’s Manual&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;где-хранятся-uid-gid-файла-и-биты-прав-доступа&#34;&gt;Где хранятся &lt;em&gt;UID&lt;/em&gt;, &lt;em&gt;GID&lt;/em&gt; файла и биты прав доступа&lt;/h3&gt;
+&lt;p&gt;При создании файловой системы, кроме места хранения файлов с данными, выделяется место для хранения метаданных о файлах. Метаданные файла представлены структурой, которая называется &lt;em&gt;inode&lt;/em&gt; (индексный узел). В &lt;em&gt;inode&lt;/em&gt; хранится информация о файле, например:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;число жёстких ссылок на файл (имя файла здесь не хранится, так как на этот inode может ссылаться произвольное количество ссылок с различными именами, поэтому если количество ссылок уменьшится до нуля, тогда inode удаляется и блоки файла помечаются свободными);&lt;/li&gt;
+&lt;li&gt;тип файла;&lt;/li&gt;
+&lt;li&gt;время создания файла;&lt;/li&gt;
+&lt;li&gt;время последнего изменения файла;&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;UID&lt;/strong&gt;&lt;/em&gt; — идентификатор владельца файла;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;GID&lt;/strong&gt;&lt;/em&gt; — идентификатор группы;&lt;/li&gt;
+&lt;li&gt;режим доступа к файлу:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ownerModes -- rwx------&lt;/code&gt; (для &lt;em&gt;владельца&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;groupModes -- ---rwx---&lt;/code&gt; (для &lt;em&gt;группы&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;otherModes -- ------rwx&lt;/code&gt; (для &lt;em&gt;остальных&lt;/em&gt;, в случае несовпадения UID/GID вызывающего процесса с UID/GID вызываемого файла)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;acl&#34;&gt;&lt;em&gt;ACL&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;В 2002 году в ядро Linux была добавлена поддержка &lt;em&gt;Access Control Lists&lt;/em&gt;, которая добавила больше гибкости к управлению доступа к файлам, что приблизило Linux 2000-x к Multics 1960-x. Если ранее доступ к файлу назначался только одному пользователю и одной группе пользователей, то теперь появилась возможность назначать доступ к файлу нескольким пользователям и группам.&lt;/p&gt;
+&lt;h3 id=&#34;сравнение-traditional-unix-permissions-vs-acl&#34;&gt;Сравнение &lt;em&gt;Traditional Unix Permissions&lt;/em&gt; vs &lt;em&gt;ACL&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Традиционные права доступа Unix&lt;/em&gt;, в отличии от &lt;em&gt;ACL&lt;/em&gt;, доступны в ФС любой *nix-системы по умолчанию. Несмотря на то, что &lt;em&gt;Traditional Unix Permissions&lt;/em&gt;, по сравнению с &lt;em&gt;ACL&lt;/em&gt;, довольно примитивны, их достаточно для работы подавляющего большинства систем. Лично я применял &lt;em&gt;ACL&lt;/em&gt; на тех серверах, точнее, на тех томах, к информации на которых необходимо было обеспечить доступ некоторого количества пользователей, объединённых в несколько групп с различными правами доступа. Вдобавок к этому могу вспомнить ещё несколько случаев, где мне понадобилась поддержка &lt;em&gt;ACL&lt;/em&gt;. На тысяче других систем, мне &lt;em&gt;ACL&lt;/em&gt; не понадобилась.&lt;/p&gt;
+&lt;p&gt;Для некоторых файловых систем (ext3, ext4), при монтировании необходимо вручную включать поддержку ACL. В других (xfs, btrfs), поддержка ACL включена по умолчанию, но её можно отключить при монтировании.&lt;/p&gt;
+&lt;p&gt;Для обработки &lt;em&gt;ACL&lt;/em&gt; требуются ресурсы системы, поэтому включать поддержку &lt;em&gt;ACL&lt;/em&gt; без необходимости не рационально. С другой стороны, не помню, чтобы на томах xfs или btrfs я намеренно применял опцию &lt;code&gt;noacl&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;При использовании &lt;em&gt;ACL&lt;/em&gt; надо держать в уме, что при некоторых файловых операциях можно потерять эти настройки. Например:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Копировать файл с &lt;em&gt;ACL&lt;/em&gt; необходимо с опцией &lt;code&gt;cp -p file.txt ~/&lt;/code&gt;, но &lt;code&gt;mv file.txt ~/&lt;/code&gt; и без дополнительных опций сохранит &lt;em&gt;ACL&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;При копировании файла с тома, смонтированного с опцией &lt;code&gt;acl&lt;/code&gt;, на том &lt;code&gt;noacl&lt;/code&gt;, установленные &lt;em&gt;ACL&lt;/em&gt; потеряются.&lt;/li&gt;
+&lt;li&gt;Потерять &lt;em&gt;ACL&lt;/em&gt; можно при бэкапировании средствами, не умеющими работать с &lt;em&gt;ACL&lt;/em&gt;. Для обхода этих ограничений можно сохранять настройки &lt;em&gt;ACL&lt;/em&gt; в отдельный файл с помощью &lt;code&gt;getfacl&lt;/code&gt;, с последующим &lt;code&gt;setfacl&lt;/code&gt; из файла при операции восстановления их архива.&lt;/li&gt;
+&lt;li&gt;не все утилиты командной строки поддерживают &lt;em&gt;ACL&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;совместная-работа-traditional-unix-permissions--acl&#34;&gt;Совместная работа &lt;em&gt;Traditional Unix Permissions&lt;/em&gt; &amp;amp; &lt;em&gt;ACL&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;ACL&lt;/em&gt; дополняет &lt;em&gt;обычные права доступа&lt;/em&gt;, а не замещает их. В дополнении к традиционным правам доступа для &lt;em&gt;владельца&lt;/em&gt;, &lt;em&gt;группы&lt;/em&gt; и &lt;em&gt;остальные&lt;/em&gt;, появляется возможность добавить произвольное число пользователей и групп, которым необходимо добавить права на файл. Также можно установить &lt;em&gt;права по умолчанию&lt;/em&gt; на каталог, для автоматической установки некоторого набора прав на копируемые или создаваемые в этом каталоге файлы/папки. Это удобней стандартного &lt;code&gt;umask&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;алгоритм-проверки-прав-пользователя-при-обращении-к-файлу&#34;&gt;Алгоритм проверки прав пользователя при обращении к файлу&lt;/h3&gt;
+&lt;p&gt;(Перепроверить)
+Попробую описать алгоритм проверки прав пользователя при обращении к файлу. Процесс, например, &lt;em&gt;bash&lt;/em&gt;, в котором я ввожу команду &lt;code&gt;$ cat filename.txt&lt;/code&gt;, выполнит &lt;em&gt;системный вызов&lt;/em&gt; &lt;em&gt;open()&lt;/em&gt; к ядру с целью вывода &lt;em&gt;данных&lt;/em&gt; из файла на экран.&lt;/p&gt;
+&lt;p&gt;При системном вызове будут произведены проверки:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Сравнивается &lt;em&gt;UID&lt;/em&gt; процесса с &lt;em&gt;UID&lt;/em&gt; файла. При совпадении используются права доступа &lt;em&gt;владельца&lt;/em&gt;. Иначе \&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;GID&lt;/em&gt; процесса сравнивается с &lt;em&gt;GID&lt;/em&gt; файла. При совпадении используются права доступа &lt;em&gt;группы&lt;/em&gt;. Иначе \&lt;/li&gt;
+&lt;li&gt;Используются права доступа для &lt;em&gt;Остальных&lt;/em&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;После определения принадлежности, соответствующие биты &lt;em&gt;режима доступа&lt;/em&gt; разрешают, что может сделать процесс с файлом, то есть &lt;em&gt;чтение&lt;/em&gt;, &lt;em&gt;запись&lt;/em&gt;, &lt;em&gt;выполнение&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Алгоритм проверки доступа к файлу, защищённого &lt;em&gt;ACL&lt;/em&gt; описан в &lt;code&gt;man 5 acl&lt;/code&gt; и отличается от вышеприведённого только проверкой &lt;em&gt;маски&lt;/em&gt;, которая определяет максимальный уровень прав для всех, кроме владельца.&lt;/p&gt;
+&lt;h3 id=&#34;команды-для-работы-с-традиционными-правами-доступа-unix&#34;&gt;Команды для работы с &lt;em&gt;традиционными правами доступа Unix&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ls -al&lt;/code&gt; — команда позволяет увидеть установленные права на файлы и каталоги.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;chown&lt;/code&gt; — команда для изменения &lt;em&gt;владельца:группы&lt;/em&gt; файла. Можно изменять отдельно &lt;em&gt;владельца&lt;/em&gt; или &lt;em&gt;группу&lt;/em&gt;. Интересно, что в Unix, до седьмой редакции включительно, &lt;code&gt;chown&lt;/code&gt; предназначалась только для смены владельца. Для смены группы использовалась команда &lt;code&gt;chgrp&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;chgrp&lt;/code&gt; — редко используемая мной команда для изменения только &lt;em&gt;группы&lt;/em&gt; файла.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;chmod&lt;/code&gt; — изменение прав доступа для &lt;em&gt;владельца&lt;/em&gt;, &lt;em&gt;группы&lt;/em&gt; файла, а также для &lt;em&gt;остальных&lt;/em&gt;. Кроме того, &lt;code&gt;chmod&lt;/code&gt; используется для установки &lt;em&gt;SETUID&lt;/em&gt;, &lt;em&gt;SETGID&lt;/em&gt; И &lt;em&gt;STICKY&lt;/em&gt; атрибутов на файлы и каталоги.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;umask&lt;/code&gt; — команда для установки прав по умолчанию при создании новых файлов и каталогов.&lt;/p&gt;
+&lt;h3 id=&#34;команды-для-работы-с-acl&#34;&gt;Команды для работы с &lt;em&gt;ACL&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;getfacl&lt;/code&gt; — команда для вывода текущих настроек &lt;em&gt;ACL&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;setfacl&lt;/code&gt; — команда для установки &lt;em&gt;ACL&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

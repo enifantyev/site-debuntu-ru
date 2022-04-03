@@ -1,0 +1,307 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Alpine Linux</title>
+    <link>/tags/alpine-linux/</link>
+    <description>Recent content in Alpine Linux on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 14 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/alpine-linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Установка Monitorix в Alpine Linux</title>
+      <link>/n/ustanovka-monitorix-v-alpine-linux/</link>
+      <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ustanovka-monitorix-v-alpine-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-04-14&lt;/p&gt;
+&lt;h2 id=&#34;подготовка&#34;&gt;Подготовка&lt;/h2&gt;
+&lt;p&gt;Скачиваем, и распаковываем куда-нибудь, актуальную версию monitorix:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ wget https://www.monitorix.org/monitorix-3.12.0.tar.gz
+$ tar xvf monitorix-3.12.0.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Содержимое распакованного каталога раскидываем по папкам. Схема размещения приведена ниже:&lt;/p&gt;
+&lt;details&gt;&lt;p&gt;
+```
+$ tree monitorix-3.12.0
+monitorix-3.12.0
+├── Changes
+├── COPYING
+├── docs
+│   ├── debian.conf
+│   ├── htpasswd.pl
+│   ├── monitorix-alert.sh
+│   ├── monitorix-apache.conf
+│   ├── monitorix-deb.init
+│   ├── monitorix.init
+│   ├── monitorix-lighttpd.conf
+│   ├── monitorix.logrotate     --&gt; /etc/logrotate.d/monitorix
+│   ├── monitorix.nanorc
+│   ├── monitorix.service
+│   ├── monitorix.spec
+│   ├── monitorix.sysconfig     --&gt; /etc/conf.d/monitorix
+│   └── monitorix.upstart
+├── lib                         --&gt; /usr/lib/monitorix/
+│   ├── ambsens.pm              --&gt; /usr/lib/monitorix/ambsens.pm
+│   ├── apache.pm               --&gt; /usr/lib/monitorix/apache.pm
+│   ├── apcupsd.pm              --&gt; ...
+│   ├── bind.pm                 ...
+│   ├── chrony.pm
+│   ├── disk.pm
+│   ├── du.pm
+│   ├── emailreports.pm
+│   ├── fail2ban.pm
+│   ├── fs.pm
+│   ├── ftp.pm
+│   ├── gensens.pm
+│   ├── hptemp.pm
+│   ├── HTTPServer.pm
+│   ├── icecast.pm
+│   ├── int.pm
+│   ├── ipmi.pm
+│   ├── kern.pm
+│   ├── libvirt.pm
+│   ├── lighttpd.pm
+│   ├── lmsens.pm
+│   ├── mail.pm
+│   ├── memcached.pm
+│   ├── mongodb.pm
+│   ├── Monitorix.pm
+│   ├── mysql.pm
+│   ├── net.pm
+│   ├── netstat.pm
+│   ├── nfsc.pm
+│   ├── nfss.pm
+│   ├── nginx.pm
+│   ├── ntp.pm
+│   ├── nut.pm
+│   ├── nvidia.pm
+│   ├── pagespeed.pm
+│   ├── phpapc.pm
+│   ├── phpfpm.pm
+│   ├── port.pm
+│   ├── process.pm
+│   ├── proc.pm
+│   ├── raspberrypi.pm
+│   ├── serv.pm
+│   ├── squid.pm
+│   ├── system.pm
+│   ├── tc.pm
+│   ├── traffacct.pm
+│   ├── unbound.pm
+│   ├── user.pm
+│   ├── varnish.pm
+│   ├── verlihub.pm
+│   ├── wowza.pm
+│   └── zfs.pm
+├── logo_bot.png        --&gt; /var/lib/monitorix/www/
+├── logo_top.png        --&gt; /var/lib/monitorix/www/
+├── Makefile
+├── man
+│   ├── man5
+│   │   └── monitorix.conf.5
+│   └── man8
+│       └── monitorix.8
+├── monitorix           --&gt; /usr/bin/
+├── monitorix.cgi       --&gt; /var/lib/monitorix/www/cgi/
+├── monitorix.conf      --&gt; /etc/monitorix/
+├── monitorixico.png    --&gt; /var/lib/monitorix/www/
+├── README
+├── README.FreeBSD
+├── README.md
+├── README.NetBSD
+├── README.nginx
+├── README.OpenBSD
+└── reports             --&gt; /var/lib/monitorix/www/
+    ├── ca.html         --&gt; /var/lib/monitorix/www/reports/
+    ├── de.html         --&gt; /var/lib/monitorix/www/reports/
+    ├── en.html         --&gt; ...
+    ├── fr.html         ...
+    ├── it.html
+    ├── nl_NL.html
+    ├── pl.html
+    ├── sk.html
+    └── zh_CN.html
+```
+&lt;/p&gt;&lt;/details&gt;&lt;br&gt;
+&lt;p&gt;Перед раскидыванием файлов мониторикса по соответствующим каталогам, зададим им правильного владельца:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd monitorix-3.12.0 &amp;amp;&amp;amp; chown root:root * -R
+&lt;/code&gt;&lt;/pre&gt;&lt;!-- Перепроверить при случае.
+Создание каталогов и копирование файлов. Не забыть выставить правильные права:
+```
+mkdir -p /etc/monitorix/conf.d /var/lib/monitorix/www/cgi /var/lib/monitorix/www/imgs
+
+cp monitorix /usr/bin/
+cp monitorix.conf /etc/monitorix/
+cp monitorix.cgi /var/lib/monitorix/www/cgi/
+cp logo_bot.png /var/lib/monitorix/www/
+cp logo_top.png /var/lib/monitorix/www/
+cp monitorixico.png /var/lib/monitorix/www/
+cp lib/* /usr/lib/monitorix/
+cp -r reports /var/lib/monitorix/www/
+```
+--&gt;
+&lt;h2 id=&#34;добавление-в-систему-необходимых-пакетов&#34;&gt;Добавление в систему необходимых пакетов&lt;/h2&gt;
+&lt;p&gt;Установка perl-пакетов, необходимых для работы monitorix:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apk add perl perl-cgi perl-libwww perl-mailtools perl-mime-lite perl-dbi perl-xml-simple perl-xml-libxml perl-http-server-simple perl-io-socket-ssl rrdtool perl-rrd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пакет perl-config-general отсутствует в репозиториях Alpine Linux, поэтому скачал General.pm из metacpan.org в каталог &lt;code&gt;/usr/share/perl5/vendor_perl/Config&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir -p /usr/share/perl5/vendor_perl/Config/
+# wget -O /usr/share/perl5/vendor_perl/Config/General.pm https://metacpan.org/release/Bundle-PBib/source/lib/Config/General.pm?raw=1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Необходимо установит шрифт ttf-dejavu, ttf-freefont или font-noto, иначе вместо символов, на графиках будут видны квадраты.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apk add ttf-dejavu
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;включение-автозапуска&#34;&gt;Включение автозапуска&lt;/h2&gt;
+&lt;p&gt;Готовый скрипт для openrc взял из генту &lt;code&gt;https://gitweb.gentoo.org/repo/gentoo.git/tree/www-misc/monitorix/files/monitorix&lt;/code&gt; слегка подредактировав строку &lt;code&gt;command=/usr/sbin/monitorix&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/sbin/openrc-run
+# Copyright 1999-2019 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name=&amp;#34;Monitorix&amp;#34;
+description=&amp;#34;Monitorix is a lightweight system monitoring tool&amp;#34;
+command=/usr/bin/monitorix
+command_args=&amp;#34;-c /etc/monitorix/monitorix.conf -p /var/run/$name.pid&amp;#34;
+pidfile=/var/run/monitorix.pid
+
+checkconfig() {
+    if [[ ! -e /etc/monitorix/monitorix.conf ]]; then
+        eerror &amp;#34;Please check that the configuration file exists.&amp;#34;
+        return 1
+    fi
+}
+
+start() {
+    checkconfig || return 1
+    ebegin &amp;#34;Starting $name&amp;#34;
+    start-stop-daemon --start --name $name --pidfile /var/run/$name.pid --exec $command -- $command_args
+    eend $?
+}
+
+stop() {
+    ebegin &amp;#34;Stopping $name&amp;#34;
+    start-stop-daemon --stop --pidfile /var/run/$name.pid
+    eend $?
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавляем в автозагрузку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rc-update add monitorix default
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;замечено&#34;&gt;Замечено&lt;/h2&gt;
+&lt;h3 id=&#34;users-using-the-system-userpm&#34;&gt;Users using the system (user.pm)&lt;/h3&gt;
+&lt;p&gt;В musl нет реализации wtmp, utmp, lastlog. По этой причине модуль &lt;code&gt;user.pm&lt;/code&gt; не работает.&lt;/p&gt;
+&lt;h3 id=&#34;process-statistics-processpm&#34;&gt;Process statistics (process.pm)&lt;/h3&gt;
+&lt;p&gt;Для правильно отображения &lt;em&gt;Process statistics&lt;/em&gt;, добавляем полноценную версию утилиты &lt;code&gt;ps&lt;/code&gt;, вместо встроенной в busybox:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apk add procps
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;netstat-statistics-netstatpm&#34;&gt;Netstat statistics (netstat.pm)&lt;/h3&gt;
+&lt;p&gt;Требует установки утилиты &lt;code&gt;ss&lt;/code&gt; или некастрированной &lt;code&gt;netstat&lt;/code&gt; (вместо кастрированной из busybox, которая присутствует в Alpine Linux по умолчанию):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk add net-tools
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Избавляемся от root&#39;а в Alpine Linux</title>
+      <link>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-12-23&lt;/p&gt;
+&lt;h3 id=&#34;добавляем-нового-пользователя&#34;&gt;Добавляем нового пользователя&lt;/h3&gt;
+&lt;p&gt;Устанавливаем &lt;code&gt;sudo&lt;/code&gt; в систему и добавляем нового пользователя &lt;code&gt;newuser&lt;/code&gt;. Назначаем его участником группы &lt;code&gt;wheel&lt;/code&gt;. Пользователям из этой группы позволяется &lt;em&gt;рулить&lt;/em&gt; системой через &lt;code&gt;sudo&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk update
+apk add sudo bash
+adduser -s /bin/bash newuser
+addgroup newuser wheel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Раскомментируем строку в файле &lt;code&gt;/etc/sudoers&lt;/code&gt;, которая позволит группе &lt;code&gt;wheel&lt;/code&gt; использовать &lt;code&gt;sudo&lt;/code&gt;. Одной командой с помощью замечательного &lt;code&gt;sed&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^#.%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/&amp;#34; /etc/sudoers
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Или вручную с помощью команды &lt;code&gt;visudo&lt;/code&gt; раскомментируем строку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;%wheel ALL=(ALL) ALL
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;после-входа-под-новым-пользователем&#34;&gt;После входа под новым пользователем&lt;/h3&gt;
+&lt;p&gt;Блокируем root&amp;rsquo;а:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;passwd -l root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запрещаем вход для root по ssh с помощью &lt;code&gt;sed&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^PermitRootLogin.*$/PermitRootLogin no/&amp;#34; /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Или вручную меняем соответствующую строку в файле &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;PermitRootLogin no
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Рестарт &lt;code&gt;sshd&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/etc/init.d/sshd restart
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Установка Alpine Linux в подтом btrfs</title>
+      <link>/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
+      <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-12-22&lt;/p&gt;
+&lt;h3 id=&#34;установка-alpine-linux&#34;&gt;Установка Alpine Linux&lt;/h3&gt;
+&lt;p&gt;Устанавливаем Alpine Linux 3.11 обычным порядком, но с указанием &lt;code&gt;lvmsys&lt;/code&gt; для размещения системного раздела в lvm-томе.&lt;/p&gt;
+&lt;p&gt;После завершения процедуры &lt;code&gt;setup-alpine&lt;/code&gt;, но до перезагрузки, будет удобно дать себе возможность войти в этот работающий экземпляр установки через ssh:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^#PermitRootLogin.*$/PermitRootLogin yes/&amp;#34; /etc/ssh/sshd_config
+/etc/init.d/sshd restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заходим в работающий экземпляр установки alpine linux через ssh под root&amp;rsquo;ом и продолжаем работать.&lt;/p&gt;
+&lt;h3 id=&#34;работаем-с-экземпляром-через-ssh&#34;&gt;Работаем с экземпляром через ssh&lt;/h3&gt;
+&lt;p&gt;Устанавливаем необходимые пакеты, уменьшаем системный раздел и конвертируем его из &lt;code&gt;ext4&lt;/code&gt; в &lt;code&gt;btrfs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk update &amp;amp;&amp;amp; apk add btrfs-progs btrfs-progs-extra lvm2 lvm2-extra device-mapper e2fsprogs e2fsprogs-extra util-linux
+lvchange -ay /dev/vg0/lv_root
+lvresize -r -L50G /dev/vg0/lv_root
+btrfs-convert /dev/vg0/lv_root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём снимок системного раздела в подтом &lt;code&gt;@&lt;/code&gt; с целью использовать его в дальнейшем как системный. Удаляем корневую систему и монтируем подтом &lt;code&gt;@&lt;/code&gt;, как актуальный системный раздел, в каталог &lt;code&gt;/mnt/&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount -t btrfs /dev/vg0/lv_root /mnt
+btrfs subvolume delete /mnt/ext2_saved
+btrfs subvolume snapshot /mnt /mnt/@
+cd /mnt
+find -maxdepth 1 ! -name @ -exec rm -rf {} \;
+cd /
+umount /mnt
+mount -t btrfs -o subvol=@ /dev/vg0/lv_root /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Подготавливаем песочницу и входим в неё через &lt;code&gt;chroot&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount /dev/sda1 /mnt/boot
+mount --bind /proc /mnt/proc
+mount --bind /dev /mnt/dev
+mount --bind /sys /mnt/sys
+mount --bind /run /mnt/run
+chroot /mnt
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;работа-в-песочнице&#34;&gt;Работа в песочнице&lt;/h3&gt;
+&lt;p&gt;Добавляем в будущую систему пакеты btrfs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk update
+apk add btrfs-progs btrfs-progs-extra
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Оказалось, что новая система загрузится и без корректировки этого файла, но для порядка изменяем строку в файле &lt;code&gt;/etc/fstab&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-/dev/vg0/lv_root        /       ext4    rw,relatime 0 1
++/dev/vg0/lv_root        /       btrfs    subvol=@,rw,relatime 0 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файл &lt;code&gt;/etc/mkinitfs/mkinitfs.conf&lt;/code&gt; добавляем запись о модуле &lt;code&gt;btrfs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-features=&amp;#34;ata base ide scsi usb virtio ext4 lvm&amp;#34;
++features=&amp;#34;ata base ide scsi usb virtio ext4 lvm btrfs&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;и пересоздаём initrd командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkinitfs
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Изменяем строки в файле &lt;code&gt;/etc/update-extlinux.conf&lt;/code&gt;, для подгрузки модуля btrfs и монтирования &lt;code&gt;/dev/vg0/lv_root&lt;/code&gt; в &lt;code&gt;/sysroot&lt;/code&gt; во время запуска initramfs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-modules=sd-mod,usb-storage,ext4
++modules=sd-mod,usb-storage,ext4,btrfs
+-default_kernel_opts=&amp;#34;nomodeset quiet rootfstype=ext4&amp;#34;
++default_kernel_opts=&amp;#34;nomodeset rootflags=subvol=@&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пересоздаём &lt;code&gt;/boot/extlinux.cfg&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;update-extlinux
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;С настройкой загрузки системы в подтом &lt;code&gt;@&lt;/code&gt; btrfs-раздела закончено. Сейчас можно настроить sshd, чтобы после перезагрузки была возможность сразу войти в новую систему через сеть, не дотрагиваясь до консоли. Минимально мы вновь можем изменить &lt;code&gt;PermitRootLogin&lt;/code&gt;, но уже для будущей системы, пока работающей в песочнице:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^#PermitRootLogin.*$/PermitRootLogin yes/&amp;#34; /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;выход-из-песочницы-и-перезагрузка&#34;&gt;Выход из песочницы и перезагрузка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;exit
+sync
+reboot
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

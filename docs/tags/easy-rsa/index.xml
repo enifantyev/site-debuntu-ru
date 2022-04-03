@@ -1,0 +1,86 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Easy-RSA</title>
+    <link>/tags/easy-rsa/</link>
+    <description>Recent content in Easy-RSA on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 22 Oct 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/easy-rsa/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Перевод Easy-RSA 3 Quickstart README</title>
+      <link>/a/perevod-easy-rsa-3-quickstart-readme/</link>
+      <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-10-22&lt;/p&gt;
+&lt;h3 id=&#34;предисловие-от-меня&#34;&gt;Предисловие от меня&lt;/h3&gt;
+&lt;p&gt;В статье задействован &lt;em&gt;правильный&lt;/em&gt; способ использования &lt;em&gt;PKI&lt;/em&gt; для OpenVPN, когда операция создания &lt;em&gt;приватных ключей&lt;/em&gt; с последующим &lt;em&gt;запросом на сертификацию&lt;/em&gt; и операция выпуска &lt;em&gt;сертификата ключа&lt;/em&gt; на основе &lt;em&gt;запроса&lt;/em&gt;, выполняются на разных системах.&lt;/p&gt;
+&lt;h2 id=&#34;easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA 3 Quickstart README&lt;/h2&gt;
+&lt;p&gt;Это инструкция как быстро начать использовать Easy-RSA версии 3. Детальный хэлп по использованию и описанию команд может быть найден по команде &lt;code&gt;./easyrsa -h&lt;/code&gt;. Дополнительная документация может быть найдена в директории &lt;code&gt;doc/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Если вы сделали апгрейд с версии Easy-RSA 2.x, то в той же папке &lt;code&gt;doc/&lt;/code&gt; лежат заметки по апгрейду.&lt;/p&gt;
+&lt;h3 id=&#34;установка-и-процедура-подписи-первого-запроса&#34;&gt;Установка и процедура подписи первого запроса&lt;/h3&gt;
+&lt;p&gt;Здесь в быстром темпе описано, что нужно сделать, чтобы развернуть новую &lt;strong&gt;PKI&lt;/strong&gt; (&lt;em&gt;Инфраструктура Открытых Ключей&lt;/em&gt;) и выпустить свой первый &lt;em&gt;подписанный сертификат&lt;/em&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Выберите систему, которая будет вашим &lt;strong&gt;Центром Сертификации&lt;/strong&gt; (&lt;em&gt;CA&lt;/em&gt;), где создайте структуру каталогов для новой &lt;em&gt;PKI&lt;/em&gt; и сгенерируйте ключи для этого &lt;strong&gt;CA&lt;/strong&gt; следующими командами:
+&lt;code&gt;./easyrsa init-pki&lt;/code&gt;
+&lt;code&gt;./easyrsa build-ca&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;На другой системе нуждающейся в &lt;em&gt;сертификате&lt;/em&gt;, будущем сервере или клиенте, инициализируйте собственный &lt;em&gt;PKI&lt;/em&gt; для генерации &lt;em&gt;ключевой пары&lt;/em&gt; и &lt;em&gt;запроса на сертификацию&lt;/em&gt;. Заметьте, что &lt;em&gt;&lt;strong&gt;рекомендованной процедурой&lt;/strong&gt;&lt;/em&gt; является инициализация этого PKI (&lt;code&gt;init-pki&lt;/code&gt;) на &lt;em&gt;&lt;strong&gt;отдельной системе&lt;/strong&gt;&lt;/em&gt; от первой (или хотя бы в отдельном каталоге). Если вы не придерживаетесь рекомендованной процедуры и используете один и тот же каталог для выпуска и подписания сертификатов, то пропустите этот &lt;code&gt;init-pki&lt;/code&gt;, а так же следующий шаг с описанием &lt;em&gt;импорта запроса&lt;/em&gt; &lt;code&gt;import-req&lt;/code&gt;.&lt;br&gt;
+&lt;code&gt;./easyrsa init-pki&lt;/code&gt;
+&lt;code&gt;./easyrsa gen-req EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Скопируйте &lt;em&gt;файл запроса&lt;/em&gt; (&lt;code&gt;.req&lt;/code&gt;) , например, на флэшку для передачи его на систему с &lt;em&gt;CA&lt;/em&gt; и там его &lt;em&gt;импортируйте&lt;/em&gt;. &lt;em&gt;Имя EntityName&lt;/em&gt;, заданное здесь, является произвольным и используется только для именования файла запроса.&lt;br&gt;
+&lt;code&gt;./easyrsa import-req /tmp/path/to/import.req EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Подпишите запрос с заданием правильного типа, &lt;code&gt;server&lt;/code&gt; или &lt;code&gt;client&lt;/code&gt;. Здесь пример для типа &lt;em&gt;client&lt;/em&gt;:
+&lt;code&gt;./easyrsa sign-req client EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Совершите обратный перенос нового &lt;em&gt;подписанного сертификата&lt;/em&gt; на систему, нуждавшейся в сертификате. Так же может понадобится перенести сертификат &lt;em&gt;Центра Сертификации&lt;/em&gt; (&lt;code&gt;ca.crt&lt;/code&gt;), если конечно, ранее уже не было произведено его копирование.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Теперь нуждавшаяся система имеет свою &lt;em&gt;ключевую пару&lt;/em&gt;, &lt;em&gt;подписанный сертификат&lt;/em&gt;, и &lt;em&gt;сертификат CA&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;подписание-следующих-запросов&#34;&gt;Подписание следующих запросов&lt;/h3&gt;
+&lt;p&gt;Выполняйте пункты со второго до шестого, чтобы генерировать &lt;em&gt;ключевые пары&lt;/em&gt; и получать &lt;em&gt;подписанные сертификаты&lt;/em&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;отзыв-сертификатов-и-создание-crl&#34;&gt;Отзыв сертификатов и создание CRL&lt;/h3&gt;
+&lt;p&gt;Эта задача производится только на &lt;em&gt;CA&lt;/em&gt;-системе.&lt;/p&gt;
+&lt;p&gt;Для отзыва ранее выданного сертификата используйте имя сертификата, использованное в процессе импорта:
+&lt;code&gt;./easyrsa revoke EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Для создания обновлённого &lt;em&gt;Списка Отозванных Сертификатов&lt;/em&gt; (&lt;em&gt;CRL&lt;/em&gt;), который содержит все отозванные сертификаты, выполните:
+&lt;code&gt;./easyrsa gen-crl&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;После процедуры генерации, обновлённый &lt;em&gt;CRL&lt;/em&gt; необходимо разослать всем заинтересованным лицам.&lt;/p&gt;
+&lt;h3 id=&#34;генерация-diffie-hellman-dh-params&#34;&gt;Генерация Diffie-Hellman (DH) params&lt;/h3&gt;
+&lt;p&gt;Операция генерации &lt;em&gt;DH-параметра&lt;/em&gt;, используемого, кстати, только на стороне сервера в режиме TLS, очень ресурсоёмкая и на неё может быть затрачено несколько минут или даже десятков минут. Поэтому разумнее генерировать &lt;em&gt;DH-param&lt;/em&gt; прямо на целевых серверах, дабы избежать бессмысленной траты ресурсов &lt;em&gt;CA&lt;/em&gt;-системы. Выполните на целевом сервере &lt;code&gt;openssl dhparam -out dh.pem 2048&lt;/code&gt;. В противном случае можете использовать Easy-RSA, где DH-параметр генерируется командой:
+&lt;code&gt;./easyrsa gen-dh&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;просмотр-информации-о-запросе-или-сертификате&#34;&gt;Просмотр информации о запросе или сертификате&lt;/h3&gt;
+&lt;p&gt;Просмотр детальной информации о &lt;em&gt;запросе&lt;/em&gt; или &lt;em&gt;сертификате&lt;/em&gt; производится нижеследующими командами, которым на вход подаём короткие имена объектов. Очевидно, что без наличия соответствующих файлов запрос информации вызовет ошибку.
+&lt;code&gt;./easyrsa show-req EntityName&lt;/code&gt;
+&lt;code&gt;./easyrsa show-cert EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;изменение-пароля-приватного-ключа&#34;&gt;Изменение пароля приватного ключа&lt;/h3&gt;
+&lt;p&gt;RSA и EC приватные ключи могут быть повторно зашифрованы с новым паролем с помощью одной из следующих команд в зависимости от типа ключа:
+&lt;code&gt;./easyrsa set-rsa-pass EntityName&lt;/code&gt;
+&lt;code&gt;./easyrsa set-ec-pass EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;По выбору, пароль может быть вообще убран из ключа с помощью опции &lt;code&gt;nopass&lt;/code&gt;. Смотрите документацию по команде.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

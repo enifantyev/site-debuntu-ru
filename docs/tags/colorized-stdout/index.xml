@@ -1,0 +1,44 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – colorized stdout</title>
+    <link>/tags/colorized-stdout/</link>
+    <description>Recent content in colorized stdout on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 19 Oct 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/colorized-stdout/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Как сохранить расцвеченный выхлоп stdout в файл</title>
+      <link>/n/kak-sohranit-rascvechennyi-stdout-v-fail/</link>
+      <pubDate>Tue, 19 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/kak-sohranit-rascvechennyi-stdout-v-fail/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-10-19&lt;/p&gt;
+&lt;p&gt;Использованные ссылки:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://superuser.com/questions/352697/preserve-colors-while-piping-to-tee&#34;&gt;https://superuser.com/questions/352697/preserve-colors-while-piping-to-tee&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Установка необходимого пакета, который содержим &lt;code&gt;unbuffer&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt install expect-dev
+# or
+yum install expect-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запускам, например, сборку maven-приложения через &lt;code&gt;unbuffer&lt;/code&gt; и сохраняем расцвеченный вывод &lt;code&gt;mvn&lt;/code&gt; в файл &lt;code&gt;install_1.log&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;unbuffer mvn clean -DskipTests package -Pdist -X -T 4 2&amp;gt;&amp;amp;1 | tee install_1.log
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Смотрим ранее сохраннёный лог-файл с ESC-кодами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;less -r install_1.log
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

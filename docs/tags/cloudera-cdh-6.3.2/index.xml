@@ -1,0 +1,2512 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Cloudera CDH 6.3.2</title>
+    <link>/tags/cloudera-cdh-6.3.2/</link>
+    <description>Recent content in Cloudera CDH 6.3.2 on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 03 Nov 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/cloudera-cdh-6.3.2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Manuals: Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</title>
+      <link>/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</link>
+      <pubDate>Tue, 28 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</guid>
+      <description>
+        
+        
+        &lt;blockquote&gt;
+&lt;p&gt;⚠ Важное сообщение. Сборка проходит успешно только после комментирования строк с константами MATERIALIZED_VIEW. В исходниках предыдущей версии Apache Atlas 2.1.0 такие константы не применялись. MATERIALIZED_VIEW относится к таблицам Hive 3.x версии, тогда как в CDH 6.3.2 используется Hive 2.1.1.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠ В этой сборке предусмотривается возможность работы Apache Atlas с Elasticsearch 6.8.20, в расчёте на дальнейшее внедрение Amundsen. В мануале по Amundsen указано, что поддерживается работа только с Elasticsearch 6.x.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;1-подготовка-хоста&#34;&gt;1. Подготовка хоста&lt;/h2&gt;
+&lt;p&gt;Если запуск Apache Atlas&amp;rsquo;а будем производить на этой же машине, то:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Хост добавляем в Cloudera-кластер, чтобы при установке Cloudera CDH были корректно добавлены локальные аккаунты и группы.&lt;/li&gt;
+&lt;li&gt;В процессе добавления в кластер, перед включением TLS-аутентификации для Cloudera Agent, добавляем хост в домен.&lt;/li&gt;
+&lt;li&gt;На хост устанавливаем шлюзы для YARN, HBase, Hive, Kafka, Solr.&lt;/li&gt;
+&lt;li&gt;Лучше смотреть соответствующую инструкцию опубликованную здесь же.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;11-установка-maven&#34;&gt;1.1. Установка Maven&lt;/h3&gt;
+&lt;p&gt;Сначала устанавливаем maven 3.0.5-17.el7 из стандартных репо для CentOS7:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install maven
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Click here to expand...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+Dependencies Resolved
+
+=====================================================================================================================
+ Package                                   Arch            Version                           Repository        Size
+=====================================================================================================================
+Installing:
+ maven                                     noarch          3.0.5-17.el7                      bases             1.3 M
+Installing for dependencies:
+ aether-api                                noarch          1.13.1-13.el7                     bases              89 k
+ aether-connector-wagon                    noarch          1.13.1-13.el7                     bases              34 k
+ aether-impl                               noarch          1.13.1-13.el7                     bases             124 k
+ aether-spi                                noarch          1.13.1-13.el7                     bases              19 k
+ aether-util                               noarch          1.13.1-13.el7                     bases             119 k
+ aopalliance                               noarch          1.0-8.el7                         bases              11 k
+ apache-commons-cli                        noarch          1.2-13.el7                        bases              50 k
+ apache-commons-codec                      noarch          1.8-7.el7                         bases             223 k
+ apache-commons-io                         noarch          1:2.4-12.el7                      bases             189 k
+ apache-commons-lang                       noarch          2.6-15.el7                        bases             276 k
+ apache-commons-logging                    noarch          1.1.2-7.el7                       bases              78 k
+ apache-commons-net                        noarch          3.2-8.el7.centos                  bases             261 k
+ atinject                                  noarch          1-13.20100611svn86.el7            bases              13 k
+ atk                                       x86_64          2.28.1-2.el7                      bases             263 k
+ avalon-framework                          noarch          4.3-10.el7                        bases              88 k
+ avalon-logkit                             noarch          2.1-14.el7                        bases              87 k
+ bcel                                      noarch          5.2-18.el7                        bases             469 k
+ cairo                                     x86_64          1.15.12-4.el7                     bases             741 k
+ cal10n                                    noarch          0.7.7-4.el7                       bases              36 k
+ cdi-api                                   noarch          1.0-11.SP4.el7                    bases              41 k
+ cglib                                     noarch          2.2-18.el7                        bases             255 k
+ copy-jdk-configs                          noarch          3.3-10.el7_5                      bases              21 k
+ dejavu-fonts-common                       noarch          2.33-6.el7                        bases              64 k
+ dejavu-sans-fonts                         noarch          2.33-6.el7                        bases             1.4 M
+ easymock2                                 noarch          2.5.2-12.el7                      bases              92 k
+ felix-framework                           noarch          4.2.1-5.el7                       bases             481 k
+ fontconfig                                x86_64          2.13.0-4.3.el7                    bases             254 k
+ fontpackages-filesystem                   noarch          1.44-8.el7                        bases             9.9 k
+ fribidi                                   x86_64          1.0.2-1.el7_7.1                   bases              79 k
+ gdk-pixbuf2                               x86_64          2.36.12-3.el7                     bases             570 k
+ geronimo-annotation                       noarch          1.0-15.el7                        bases              23 k
+ geronimo-jms                              noarch          1.1.1-19.el7                      bases              31 k
+ giflib                                    x86_64          4.1.6-9.el7                       bases              40 k
+ google-guice                              noarch          3.1.3-9.el7                       bases             385 k
+ graphite2                                 x86_64          1.3.10-1.el7_3                    bases             115 k
+ gtk-update-icon-cache                     x86_64          3.22.30-6.el7                     updates           27 k
+ gtk2                                      x86_64          2.24.31-1.el7                     bases             3.4 M
+ guava                                     noarch          13.0-6.el7                        bases             1.6 M
+ hamcrest                                  noarch          1.3-6.el7                         bases             124 k
+ harfbuzz                                  x86_64          1.7.5-2.el7                       bases             267 k
+ hicolor-icon-theme                        noarch          0.12-7.el7                        bases              42 k
+ httpcomponents-client                     noarch          4.2.5-5.el7_0                     bases             425 k
+ httpcomponents-core                       noarch          4.2.4-6.el7                       bases             466 k
+ jakarta-commons-httpclient                noarch          1:3.1-16.el7_0                    bases             241 k
+ jasper-libs                               x86_64          1.900.1-33.el7                    bases             150 k
+ java-1.8.0-openjdk                        x86_64          1:1.8.0.292.b10-1.el7_9           updates          310 k
+ java-1.8.0-openjdk-devel                  x86_64          1:1.8.0.292.b10-1.el7_9           updates          9.8 M
+ java-1.8.0-openjdk-headless               x86_64          1:1.8.0.292.b10-1.el7_9           updates           33 M
+ javamail                                  noarch          1.4.6-8.el7                       bases             758 k
+ javapackages-tools                        noarch          3.4.1-11.el7                      bases              73 k
+ javassist                                 noarch          3.16.1-10.el7                     bases             627 k
+ jbigkit-libs                              x86_64          2.0-11.el7                        bases              46 k
+ jboss-ejb-3.1-api                         noarch          1.0.2-10.el7                      bases              54 k
+ jboss-el-2.2-api                          noarch          1.0.1-0.7.20120212git2fabd8.el7   bases              44 k
+ jboss-interceptors-1.1-api                noarch          1.0.2-0.9.20120319git49a904.el7   bases              27 k
+ jboss-jaxrpc-1.1-api                      noarch          1.0.1-7.el7                       bases              44 k
+ jboss-servlet-3.0-api                     noarch          1.0.1-9.el7                       bases              82 k
+ jboss-transaction-1.1-api                 noarch          1.0.1-8.el7                       bases              40 k
+ jline                                     noarch          1.0-8.el7                         bases              69 k
+ jsch                                      noarch          0.1.50-5.el7                      bases             239 k
+ jsoup                                     noarch          1.6.1-10.el7                      bases             263 k
+ junit                                     noarch          4.11-8.el7                        bases             261 k
+ jzlib                                     noarch          1.1.1-6.el7                       bases              72 k
+ libICE                                    x86_64          1.0.9-9.el7                       bases              66 k
+ libSM                                     x86_64          1.2.2-2.el7                       bases              39 k
+ libX11                                    x86_64          1.6.7-3.el7_9                     updates          607 k
+ libX11-common                             noarch          1.6.7-3.el7_9                     updates          164 k
+ libXau                                    x86_64          1.0.8-2.1.el7                     bases              29 k
+ libXcomposite                             x86_64          0.4.4-4.1.el7                     bases              22 k
+ libXcursor                                x86_64          1.1.15-1.el7                      bases              30 k
+ libXdamage                                x86_64          1.1.4-4.1.el7                     bases              20 k
+ libXext                                   x86_64          1.3.3-3.el7                       bases              39 k
+ libXfixes                                 x86_64          5.0.3-1.el7                       bases              18 k
+ libXft                                    x86_64          2.3.2-2.el7                       bases              58 k
+ libXi                                     x86_64          1.7.9-1.el7                       bases              40 k
+ libXinerama                               x86_64          1.1.3-2.1.el7                     bases              14 k
+ libXrandr                                 x86_64          1.5.1-2.el7                       bases              27 k
+ libXrender                                x86_64          0.9.10-1.el7                      bases              26 k
+ libXtst                                   x86_64          1.2.3-1.el7                       bases              20 k
+ libXxf86vm                                x86_64          1.1.4-1.el7                       bases              18 k
+ libfontenc                                x86_64          1.1.3-3.el7                       bases              31 k
+ libglvnd                                  x86_64          1:1.0.1-0.8.git5baa1e5.el7        bases              89 k
+ libglvnd-egl                              x86_64          1:1.0.1-0.8.git5baa1e5.el7        bases              44 k
+ libglvnd-glx                              x86_64          1:1.0.1-0.8.git5baa1e5.el7        bases             125 k
+ libjpeg-turbo                             x86_64          1.2.90-8.el7                      bases             135 k
+ libthai                                   x86_64          0.1.14-9.el7                      bases             187 k
+ libtiff                                   x86_64          4.0.3-35.el7                      bases             172 k
+ libwayland-client                         x86_64          1.15.0-1.el7                      bases              33 k
+ libwayland-server                         x86_64          1.15.0-1.el7                      bases              39 k
+ libxcb                                    x86_64          1.13-1.el7                        bases             214 k
+ libxshmfence                              x86_64          1.2-1.el7                         bases             7.2 k
+ libxslt                                   x86_64          1.1.28-6.el7                      bases             242 k
+ lksctp-tools                              x86_64          1.0.17-2.el7                      bases              88 k
+ log4j                                     noarch          1.2.17-16.el7_4                   bases             444 k
+ maven-wagon                               noarch          2.4-3.el7                         bases             187 k
+ mesa-libEGL                               x86_64          18.3.4-12.el7_9                   updates          110 k
+ mesa-libGL                                x86_64          18.3.4-12.el7_9                   updates          166 k
+ mesa-libgbm                               x86_64          18.3.4-12.el7_9                   updates           39 k
+ mesa-libglapi                             x86_64          18.3.4-12.el7_9                   updates           46 k
+ nekohtml                                  noarch          1.9.14-13.el7                     bases             152 k
+ objectweb-asm                             noarch          3.3.1-9.el7                       bases             197 k
+ pango                                     x86_64          1.42.4-4.el7_7                    bases             280 k
+ pcsc-lite-libs                            x86_64          1.8.8-8.el7                       bases              34 k
+ pixman                                    x86_64          0.34.0-1.el7                      bases             248 k
+ plexus-cipher                             noarch          1.7-5.el7                         bases              22 k
+ plexus-classworlds                        noarch          2.4.2-8.el7                       bases              54 k
+ plexus-component-api                      noarch          1.0-0.16.alpha15.el7              bases              27 k
+ plexus-containers-component-annotations   noarch          1.5.5-14.el7                      bases              11 k
+ plexus-containers-container-default       noarch          1.5.5-14.el7                      bases             183 k
+ plexus-interactivity                      noarch          1.0-0.14.alpha6.el7               bases              17 k
+ plexus-interpolation                      noarch          1.15-8.el7                        bases              57 k
+ plexus-sec-dispatcher                     noarch          1.4-13.el7                        bases              29 k
+ plexus-utils                              noarch          3.0.9-9.el7                       bases             225 k
+ python-javapackages                       noarch          3.4.1-11.el7                      bases              31 k
+ python-lxml                               x86_64          3.2.1-4.el7                       bases             758 k
+ qdox                                      noarch          1.12.1-10.el7                     bases             170 k
+ regexp                                    noarch          1.5-13.el7                        bases              47 k
+ sisu-inject-bean                          noarch          2.3.0-11.el7                      bases             181 k
+ sisu-inject-plexus                        noarch          2.3.0-11.el7                      bases             179 k
+ slf4j                                     noarch          1.7.4-4.el7_4                     bases             170 k
+ tomcat-servlet-3.0-api                    noarch          7.0.76-16.el7_9                   updates          214 k
+ ttmkfdir                                  x86_64          3.0.9-42.el7                      bases              48 k
+ tzdata-java                               noarch          2021a-1.el7                       updates          191 k
+ xalan-j2                                  noarch          2.7.1-23.el7                      bases             1.9 M
+ xbean                                     noarch          3.13-6.el7                        bases             376 k
+ xerces-j2                                 noarch          2.11.0-17.el7_0                   bases             1.1 M
+ xml-commons-apis                          noarch          1.4.01-16.el7                     bases             227 k
+ xml-commons-resolver                      noarch          1.2-15.el7                        bases             108 k
+ xorg-x11-font-utils                       x86_64          1:7.5-21.el7                      bases             104 k
+ xorg-x11-fonts-Type1                      noarch          7.5-9.el7                         bases             521 k
+
+Transaction Summary
+====================================================================================================================
+Install  1 Package (+130 Dependent packages)
+
+Total download size: 72 M
+Installed size: 214 M
+Is this ok [y/d/N]: y
+...
+Complete!
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;На данный момент последняя версия maven равна 3.8.1, но с этой версией сборка Atlas&amp;rsquo;а 2.1.0 прерывалась ошибками, тогда как Atlas 2.2.0 собирался без ошибок. Поэтому для сборки Atlas&amp;rsquo;а 2.1.0 выбираем Maven 3.6.3, а для Atlas 2.2.0 выбираем версию Maven 3.8.1.&lt;/p&gt;
+&lt;p&gt;Скачиваем и устанавливаем переменные:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;MVNVER=&amp;#34;3.8.1&amp;#34;
+curl -LO https://archive.apache.org/dist/maven/maven-3/${MVNVER}/binaries/apache-maven-${MVNVER}-bin.tar.gz
+sudo tar -xvf apache-maven-${MVNVER}-bin.tar.gz -C /opt
+
+sudo ln -s /opt/apache-maven-${MVNVER} /opt/maven
+
+cat &amp;lt;&amp;lt; EOF | sudo tee /etc/profile.d/maven.sh
+# Apache Maven Environmental Variables
+# MAVEN_HOME for Maven 1 - M2_HOME for Maven 2
+
+#export JAVA_HOME=/usr/lib/jvm/jre-openjdk
+export JAVA_HOME=usr/java/jdk1.8.0_181-cloudera
+
+export M2_HOME=/opt/maven
+export MAVEN_HOME=/opt/maven
+export PATH=\${M2_HOME}/bin:\${PATH}
+EOF
+
+sudo chmod +x /etc/profile.d/maven.sh
+
+source /etc/profile.d/maven.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяем версию Maven&amp;rsquo;а и используемую версию Java:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ mvn --version
+
+Apache Maven 3.8.1 (05c21c65bdfed0f71a2f2ada8b84da59348c4c5d)
+Maven home: /opt/maven
+Java version: 1.8.0_181, vendor: Oracle Corporation, runtime: /usr/java/jdk1.8.0_181-cloudera/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: &amp;#34;linux&amp;#34;, version: &amp;#34;3.10.0-1160.36.2.el7.x86_64&amp;#34;, arch: &amp;#34;amd64&amp;#34;, family: &amp;#34;unix&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;12-установка-nodejs&#34;&gt;1.2. Установка NodeJS&lt;/h3&gt;
+&lt;p&gt;Добавляем репо:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;USERNAME=nx-pubrepo-r
+PASSWORD=xSAR1zZi7dQzs3QBx2vthdyk2qQrXv
+
+cat &amp;lt;&amp;lt; EOF | sudo tee /etc/yum.repos.d/nodejs-el7.repo
+[nodejs16]
+username=$USERNAME
+password=$PASSWORD
+name=Node.js Packages for Enterprise Linux 7 - \$basearch
+baseurl=http://nexus.example.org:8081/repository/all_nodejs_yum/pub_16.x/el/7/\$basearch
+failovermethod=priority
+enabled=0
+gpgcheck=0
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем NodeJS:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install -y --enablerepo=nodejs16 nodejs
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-подготовка-к-сборке&#34;&gt;2. Подготовка к сборке&lt;/h2&gt;
+&lt;h3 id=&#34;21-скачивание-и-распаковка-исходников&#34;&gt;2.1. Скачивание и распаковка исходников&lt;/h3&gt;
+&lt;p&gt;Сайт проекта находится здесь &lt;a href=&#34;https://atlas.apache.org/&#34;&gt;https://atlas.apache.org/&lt;/a&gt;. Находим и скачиваем исходники Apache Atlas:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src &amp;amp;&amp;amp; cd ~/src
+curl -LO https://mirror.linux-ia64.org/apache/atlas/2.2.0/apache-atlas-2.2.0-sources.tar.gz
+tar -xvf apache-atlas-2.2.0-sources.tar.gz
+cd ~/src/apache-atlas-sources-2.2.0
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;22-изменения-в-файле-pomxml&#34;&gt;2.2. Изменения в файле &lt;code&gt;pom.xml&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;В файл &amp;lsquo;pom.xml&amp;rsquo;, в раздел &lt;repository&gt;, добавляем клаудеровский репозиторий с maven-артефактами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;repository&amp;gt;
+    &amp;lt;id&amp;gt;cloudera&amp;lt;/id&amp;gt;
+    &amp;lt;url&amp;gt;https://repository.cloudera.com/artifactory/cloudera-repos&amp;lt;/url&amp;gt;
+    &amp;lt;releases&amp;gt;
+        &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
+    &amp;lt;/releases&amp;gt;
+    &amp;lt;snapshots&amp;gt;
+        &amp;lt;enabled&amp;gt;false&amp;lt;/enabled&amp;gt;
+    &amp;lt;/snapshots&amp;gt;
+&amp;lt;/repository&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В этом же файле находим и меняем версии продуктов на следующие:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;elasticsearch.version&amp;gt;6.8.20&amp;lt;/elasticsearch.version&amp;gt;
+&amp;lt;hadoop.version&amp;gt;3.0.0-cdh6.3.2&amp;lt;/hadoop.version&amp;gt;
+&amp;lt;hbase.version&amp;gt;2.1.0-cdh6.3.2&amp;lt;/hbase.version&amp;gt;
+&amp;lt;hive.version&amp;gt;2.1.1-cdh6.3.2&amp;lt;/hive.version&amp;gt;
+&amp;lt;kafka.scala.binary.version&amp;gt;2.11&amp;lt;/kafka.scala.binary.version&amp;gt;
+&amp;lt;kafka.version&amp;gt;2.2.1-cdh6.3.2&amp;lt;/kafka.version&amp;gt;
+&amp;lt;lucene-solr.version&amp;gt;7.4.0&amp;lt;/lucene-solr.version&amp;gt;
+&amp;lt;solr.version&amp;gt;7.4.0-cdh6.3.2&amp;lt;/solr.version&amp;gt;
+&amp;lt;sqoop.version&amp;gt;1.4.7-cdh6.3.2&amp;lt;/sqoop.version&amp;gt;
+&amp;lt;zookeeper.version&amp;gt;3.4.5-cdh6.3.2&amp;lt;/zookeeper.version&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В этом же файле меняем версию артефакта &amp;lsquo;atlas-buildtools&amp;rsquo; cо значения &amp;lsquo;1.0&amp;rsquo; на значение &amp;lsquo;0.8.1&amp;rsquo;, так как артефакт &amp;lsquo;atlas-buildtools-1.0&amp;rsquo; не может быть найден. Но можно попробовать версию  &amp;lsquo;1.0.0-alpha&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;artifactId&amp;gt;maven-checkstyle-plugin&amp;lt;/artifactId&amp;gt;
+    &amp;lt;dependencies&amp;gt;
+        &amp;lt;dependency&amp;gt;
+            &amp;lt;groupId&amp;gt;org.apache.atlas&amp;lt;/groupId&amp;gt;
+            &amp;lt;artifactId&amp;gt;atlas-buildtools&amp;lt;/artifactId&amp;gt;
+            &amp;lt;version&amp;gt;1.0.0-alpha&amp;lt;/version&amp;gt;
+        &amp;lt;/dependency&amp;gt;
+    &amp;lt;/dependencies&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;23-изменения-в-других-файлах&#34;&gt;2.3. Изменения в других файлах&lt;/h3&gt;
+&lt;p&gt;В файле &amp;lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/bridge/HiveMetaStoreBridge.java&amp;rsquo; переходим на 577 строку, комментируем &amp;ldquo;String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;&amp;rdquo; и добавляем &amp;ldquo;String catalogName = null;&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;public static String getDatabaseName(Database hiveDB) {
+    String dbName      = hiveDB.getName().toLowerCase();
+    //String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;
+    String catalogName = null;
+
+    if (StringUtils.isNotEmpty(catalogName) &amp;amp;&amp;amp; !StringUtils.equals(catalogName, DEFAULT_METASTORE_CATALOG)) {
+        dbName = catalogName + SEP + dbName;
+    }
+
+    return dbName;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &amp;lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/AtlasHiveHookContext.java&amp;rsquo; переходим на 81 строку &amp;ldquo;this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;&amp;rdquo;, комментируем её и добавляем &amp;ldquo;this.metastoreHandler = null;&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;public AtlasHiveHookContext(HiveHook hook, HiveOperation hiveOperation, HookContext hiveContext, HiveHookObjectNamesCache knownObjects,
+                            HiveMetastoreHook metastoreHook, ListenerEvent listenerEvent) throws Exception {
+    this.hook             = hook;
+    this.hiveOperation    = hiveOperation;
+    this.hiveContext      = hiveContext;
+    this.hive             = hiveContext != null ? Hive.get(hiveContext.getConf()) : null;
+    this.knownObjects     = knownObjects;
+    this.metastoreHook    = metastoreHook;
+    this.metastoreEvent   = listenerEvent;
+    //this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;
+    this.metastoreHandler = null;
+
+
+    init();
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/events/CreateHiveProcess.java&lt;/code&gt; комментируем строку 263 с упоминанием &amp;lsquo;MATERIALIZED_VIEW&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;private boolean isDdlOperation(AtlasEntity entity) {
+    return entity != null &amp;amp;&amp;amp; !context.isMetastoreHook()
+        &amp;amp;&amp;amp; (context.getHiveOperation().equals(HiveOperation.CREATETABLE_AS_SELECT)
+         || context.getHiveOperation().equals(HiveOperation.CREATEVIEW)
+         || context.getHiveOperation().equals(HiveOperation.ALTERVIEW_AS));
+         //|| context.getHiveOperation().equals(HiveOperation.CREATE_MATERIALIZED_VIEW));
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/HiveHook.java&lt;/code&gt; комментируем строки 212 и 217  с упоминанием &amp;lsquo;MATERIALIZED_VIEW&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;case DROPTABLE:
+case DROPVIEW:
+//case DROP_MATERIALIZED_VIEW:
+    event = new DropTable(context);
+break;
+
+case CREATETABLE_AS_SELECT:
+//case CREATE_MATERIALIZED_VIEW:
+case CREATEVIEW:
+case ALTERVIEW_AS:
+case LOAD:
+case EXPORT:
+case IMPORT:
+case QUERY:
+    event = new CreateHiveProcess(context);
+break;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заготовка bash-скрипта для автоматизации изменений в файлах:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed &amp;#39;s|&amp;lt;elasticsearch.version&amp;gt;6.8.15|&amp;lt;elasticsearch.version&amp;gt;6.8.20|&amp;#39;  pom.xml
+sed &amp;#39;s|&amp;lt;hadoop.version&amp;gt;3.3.0|&amp;lt;hadoop.version&amp;gt;3.0.0-cdh6.3.2|&amp;#39; pom.xml
+sed &amp;#39;s|&amp;lt;hbase.version&amp;gt;2.3.3|&amp;lt;hbase.version&amp;gt;2.1.0-cdh6.3.2|&amp;#39; pom.xml
+sed &amp;#39;s|&amp;lt;hive.version&amp;gt;3.1.0|&amp;lt;hive.version&amp;gt;2.1.1-cdh6.3.2|&amp;#39; pom.xml
+sed &amp;#39;s|&amp;lt;kafka.scala.binary.version&amp;gt;2.12|&amp;lt;kafka.scala.binary.version&amp;gt;2.11|&amp;#39; pom.xml
+sed &amp;#39;s|&amp;lt;kafka.version&amp;gt;2.5.0|&amp;lt;kafka.version&amp;gt;2.2.1-cdh6.3.2|&amp;#39; pom.xml
+sed &amp;#39;s|&amp;lt;lucene-solr.version&amp;gt;8.6.3|&amp;lt;lucene-solr.version&amp;gt;7.4.0|&amp;#39; pom.xml
+sed &amp;#39;|&amp;lt;solr.version&amp;gt;8.6.3|&amp;lt;solr.version&amp;gt;7.4.0-cdh6.3.2|&amp;#39; pom.xml
+sed &amp;#39;|&amp;lt;sqoop.version&amp;gt;1.4.6.2.3.99.0-195|&amp;lt;sqoop.version&amp;gt;1.4.7-cdh6.3.2|&amp;#39; pom.xml
+sed &amp;#39;|&amp;lt;zookeeper.version&amp;gt;3.5.7|&amp;lt;zookeeper.version&amp;gt;3.4.5-cdh6.3.2|&amp;#39; pom.xml
+sed -i &amp;#39;/&amp;lt;artifactId&amp;gt;atlas-buildtools|{n;s/&amp;lt;version&amp;gt;1.0/&amp;lt;version&amp;gt;1.0.0-alpha/}&amp;#39; pom.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-сборка-apache-atlas&#34;&gt;3. Сборка Apache Atlas&lt;/h2&gt;
+&lt;p&gt;Переходим в каталог с исходниками и собираем пакеты с сохранением цветного stderr и stdout в файл &lt;code&gt;install.log&lt;/code&gt; (X — debug, T — количество потоков):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd ~/src/apache-atlas-sources-2.2.0
+unbuffer mvn clean -DskipTests package -Pdist -X -T 4 2&amp;gt;&amp;amp;1 | tee install.log
+
+# Посмотреть лог-файл в цвете.
+less -r install.log
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Click here to expand...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[DEBUG] Adding file-set in: /data/src/apache-atlas-sources-2.2.0_elastic-6.8.20/distro/../addons/hbase-bridge/target/dependency/hook
+to archive location: apache-atlas-hbase-hook-2.2.0/hook/
+[DEBUG] Cannot find ArtifactResolver with hint: project-cache-aware
+org.codehaus.plexus.component.repository.exception.ComponentLookupException: java.util.NoSuchElementException
+      role: org.apache.maven.artifact.resolver.ArtifactResolver
+  roleHint: project-cache-aware
+    at org.codehaus.plexus.DefaultPlexusContainer.lookup (DefaultPlexusContainer.java:267)
+    at org.codehaus.plexus.DefaultPlexusContainer.lookup (DefaultPlexusContainer.java:243)
+    at org.apache.maven.shared.repository.DefaultRepositoryAssembler.contextualize (DefaultRepositoryAssembler.java:721)
+    at org.eclipse.sisu.plexus.PlexusLifecycleManager.contextualize (PlexusLifecycleManager.java:282)
+    at org.eclipse.sisu.plexus.PlexusLifecycleManager.activate (PlexusLifecycleManager.java:203)
+    at org.eclipse.sisu.bean.BeanScheduler.schedule (BeanScheduler.java:151)
+    at org.eclipse.sisu.plexus.PlexusLifecycleManager.manage (PlexusLifecycleManager.java:147)
+    at org.eclipse.sisu.plexus.PlexusBeanBinder.afterInjection (PlexusBeanBinder.java:72)
+    at com.google.inject.internal.MembersInjectorImpl.notifyListeners (MembersInjectorImpl.java:131)
+    at com.google.inject.internal.ConstructorInjector.provision (ConstructorInjector.java:125)
+    at com.google.inject.internal.ConstructorInjector.access$000 (ConstructorInjector.java:32)
+    at com.google.inject.internal.ConstructorInjector$1.call (ConstructorInjector.java:98)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ConstructorInjector.construct (ConstructorInjector.java:93)
+    at com.google.inject.internal.ConstructorBindingImpl$Factory.get (ConstructorBindingImpl.java:306)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
+    at com.google.inject.internal.InjectorImpl.getInstance (InjectorImpl.java:1086)
+    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:48)
+    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:85)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
+    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:66)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:61)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
+    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
+    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:168)
+    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:39)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
+    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:81)
+    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:51)
+    at org.eclipse.sisu.plexus.PlexusRequirements$RequirementProvider.get (PlexusRequirements.java:250)
+    at org.eclipse.sisu.plexus.ProvidedPropertyBinding.injectProperty (ProvidedPropertyBinding.java:48)
+    at org.eclipse.sisu.bean.BeanInjector.injectMembers (BeanInjector.java:52)
+    at com.google.inject.internal.MembersInjectorImpl.injectMembers (MembersInjectorImpl.java:160)
+    at com.google.inject.internal.ConstructorInjector.provision (ConstructorInjector.java:124)
+    at com.google.inject.internal.ConstructorInjector.access$000 (ConstructorInjector.java:32)
+    at com.google.inject.internal.ConstructorInjector$1.call (ConstructorInjector.java:98)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ConstructorInjector.construct (ConstructorInjector.java:93)
+    at com.google.inject.internal.ConstructorBindingImpl$Factory.get (ConstructorBindingImpl.java:306)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
+    at com.google.inject.internal.InjectorImpl.getInstance (InjectorImpl.java:1086)
+    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:48)
+    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:85)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
+    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:66)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
+    at org.eclipse.sisu.bean.BeanScheduler$CycleActivator.onProvision (BeanScheduler.java:230)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:120)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:61)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
+    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
+    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:168)
+    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:39)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
+    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:81)
+    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:51)
+    at org.eclipse.sisu.wire.EntryListAdapter$ValueIterator.next (EntryListAdapter.java:111)
+    at org.apache.maven.plugin.assembly.archive.DefaultAssemblyArchiver.createArchive (DefaultAssemblyArchiver.java:179)
+    at org.apache.maven.plugin.assembly.mojos.AbstractAssemblyMojo.execute (AbstractAssemblyMojo.java:429)
+    at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:137)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:210)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:156)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:148)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:117)
+    at org.apache.maven.lifecycle.internal.builder.multithreaded.MultiThreadedBuilder$1.call (MultiThreadedBuilder.java:190)
+    at org.apache.maven.lifecycle.internal.builder.multithreaded.MultiThreadedBuilder$1.call (MultiThreadedBuilder.java:186)
+    at java.util.concurrent.FutureTask.run (FutureTask.java:266)
+    at java.util.concurrent.Executors$RunnableAdapter.call (Executors.java:511)
+    at java.util.concurrent.FutureTask.run (FutureTask.java:266)
+    at java.util.concurrent.ThreadPoolExecutor.runWorker (ThreadPoolExecutor.java:1149)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run (ThreadPoolExecutor.java:624)
+    at java.lang.Thread.run (Thread.java:748)
+Caused by: java.util.NoSuchElementException
+    at java.util.Collections$EmptyIterator.next (Collections.java:4191)
+    at org.codehaus.plexus.DefaultPlexusContainer.lookup (DefaultPlexusContainer.java:263)
+    at org.codehaus.plexus.DefaultPlexusContainer.lookup (DefaultPlexusContainer.java:243)
+    at org.apache.maven.shared.repository.DefaultRepositoryAssembler.contextualize (DefaultRepositoryAssembler.java:721)
+    at org.eclipse.sisu.plexus.PlexusLifecycleManager.contextualize (PlexusLifecycleManager.java:282)
+    at org.eclipse.sisu.plexus.PlexusLifecycleManager.activate (PlexusLifecycleManager.java:203)
+    at org.eclipse.sisu.bean.BeanScheduler.schedule (BeanScheduler.java:151)
+    at org.eclipse.sisu.plexus.PlexusLifecycleManager.manage (PlexusLifecycleManager.java:147)
+    at org.eclipse.sisu.plexus.PlexusBeanBinder.afterInjection (PlexusBeanBinder.java:72)
+    at com.google.inject.internal.MembersInjectorImpl.notifyListeners (MembersInjectorImpl.java:131)
+    at com.google.inject.internal.ConstructorInjector.provision (ConstructorInjector.java:125)
+    at com.google.inject.internal.ConstructorInjector.access$000 (ConstructorInjector.java:32)
+    at com.google.inject.internal.ConstructorInjector$1.call (ConstructorInjector.java:98)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ConstructorInjector.construct (ConstructorInjector.java:93)
+    at com.google.inject.internal.ConstructorBindingImpl$Factory.get (ConstructorBindingImpl.java:306)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
+    at com.google.inject.internal.InjectorImpl.getInstance (InjectorImpl.java:1086)
+    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:48)
+    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:85)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
+    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:66)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:61)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
+    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
+    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:168)
+    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:39)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
+    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:81)
+    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:51)
+    at org.eclipse.sisu.plexus.PlexusRequirements$RequirementProvider.get (PlexusRequirements.java:250)
+    at org.eclipse.sisu.plexus.ProvidedPropertyBinding.injectProperty (ProvidedPropertyBinding.java:48)
+    at org.eclipse.sisu.bean.BeanInjector.injectMembers (BeanInjector.java:52)
+    at com.google.inject.internal.MembersInjectorImpl.injectMembers (MembersInjectorImpl.java:160)
+    at com.google.inject.internal.ConstructorInjector.provision (ConstructorInjector.java:124)
+    at com.google.inject.internal.ConstructorInjector.access$000 (ConstructorInjector.java:32)
+    at com.google.inject.internal.ConstructorInjector$1.call (ConstructorInjector.java:98)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:127)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ConstructorInjector.construct (ConstructorInjector.java:93)
+    at com.google.inject.internal.ConstructorBindingImpl$Factory.get (ConstructorBindingImpl.java:306)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
+    at com.google.inject.internal.InjectorImpl.getInstance (InjectorImpl.java:1086)
+    at org.eclipse.sisu.space.AbstractDeferredClass.get (AbstractDeferredClass.java:48)
+    at com.google.inject.internal.ProviderInternalFactory.provision (ProviderInternalFactory.java:85)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.provision (InternalFactoryToInitializableAdapter.java:57)
+    at com.google.inject.internal.ProviderInternalFactory$1.call (ProviderInternalFactory.java:66)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:112)
+    at org.eclipse.sisu.bean.BeanScheduler$CycleActivator.onProvision (BeanScheduler.java:230)
+    at com.google.inject.internal.ProvisionListenerStackCallback$Provision.provision (ProvisionListenerStackCallback.java:120)
+    at com.google.inject.internal.ProvisionListenerStackCallback.provision (ProvisionListenerStackCallback.java:66)
+    at com.google.inject.internal.ProviderInternalFactory.circularGet (ProviderInternalFactory.java:61)
+    at com.google.inject.internal.InternalFactoryToInitializableAdapter.get (InternalFactoryToInitializableAdapter.java:47)
+    at com.google.inject.internal.ProviderToInternalFactoryAdapter.get (ProviderToInternalFactoryAdapter.java:40)
+    at com.google.inject.internal.SingletonScope$1.get (SingletonScope.java:168)
+    at com.google.inject.internal.InternalFactoryToProviderAdapter.get (InternalFactoryToProviderAdapter.java:39)
+    at com.google.inject.internal.InjectorImpl$1.get (InjectorImpl.java:1050)
+    at org.eclipse.sisu.inject.LazyBeanEntry.getValue (LazyBeanEntry.java:81)
+    at org.eclipse.sisu.plexus.LazyPlexusBean.getValue (LazyPlexusBean.java:51)
+    at org.eclipse.sisu.wire.EntryListAdapter$ValueIterator.next (EntryListAdapter.java:111)
+    at org.apache.maven.plugin.assembly.archive.DefaultAssemblyArchiver.createArchive (DefaultAssemblyArchiver.java:179)
+    at org.apache.maven.plugin.assembly.mojos.AbstractAssemblyMojo.execute (AbstractAssemblyMojo.java:429)
+    at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo (DefaultBuildPluginManager.java:137)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:210)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:156)
+    at org.apache.maven.lifecycle.internal.MojoExecutor.execute (MojoExecutor.java:148)
+    at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject (LifecycleModuleBuilder.java:117)
+    at org.apache.maven.lifecycle.internal.builder.multithreaded.MultiThreadedBuilder$1.call (MultiThreadedBuilder.java:190)
+    at org.apache.maven.lifecycle.internal.builder.multithreaded.MultiThreadedBuilder$1.call (MultiThreadedBuilder.java:186)
+    at java.util.concurrent.FutureTask.run (FutureTask.java:266)
+    at java.util.concurrent.Executors$RunnableAdapter.call (Executors.java:511)
+    at java.util.concurrent.FutureTask.run (FutureTask.java:266)
+    at java.util.concurrent.ThreadPoolExecutor.runWorker (ThreadPoolExecutor.java:1149)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run (ThreadPoolExecutor.java:624)
+    at java.lang.Thread.run (Thread.java:748)
+[DEBUG] No dependency sets specified.
+[INFO] Building tar: /data/src/apache-atlas-sources-2.2.0_elastic-6.8.20/distro/target/apache-atlas-2.2.0-hbase-hook.tar.gz
+...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for apache-atlas 2.2.0:
+[INFO]
+[INFO] Apache Atlas Server Build Tools .................... SUCCESS [  1.431 s]
+[INFO] apache-atlas ....................................... SUCCESS [  9.142 s]
+[INFO] Apache Atlas Integration ........................... SUCCESS [ 12.408 s]
+[INFO] Apache Atlas Test Utility Tools .................... SUCCESS [  5.650 s]
+[INFO] Apache Atlas Common ................................ SUCCESS [  4.045 s]
+[INFO] Apache Atlas Client ................................ SUCCESS [  0.938 s]
+[INFO] atlas-client-common ................................ SUCCESS [  1.985 s]
+[INFO] atlas-client-v1 .................................... SUCCESS [  2.526 s]
+[INFO] Apache Atlas Server API ............................ SUCCESS [  2.291 s]
+[INFO] Apache Atlas Notification .......................... SUCCESS [  5.322 s]
+[INFO] atlas-client-v2 .................................... SUCCESS [  2.052 s]
+[INFO] Apache Atlas Graph Database Projects ............... SUCCESS [  0.913 s]
+[INFO] Apache Atlas Graph Database API .................... SUCCESS [  2.444 s]
+[INFO] Graph Database Common Code ......................... SUCCESS [  2.190 s]
+[INFO] Apache Atlas JanusGraph-HBase2 Module .............. SUCCESS [  2.468 s]
+[INFO] Apache Atlas JanusGraph DB Impl .................... SUCCESS [ 14.401 s]
+[INFO] Apache Atlas Graph DB Dependencies ................. SUCCESS [  2.486 s]
+[INFO] Apache Atlas Authorization ......................... SUCCESS [  2.550 s]
+[INFO] Apache Atlas Repository ............................ SUCCESS [  9.921 s]
+[INFO] Apache Atlas UI .................................... SUCCESS [01:02 min]
+[INFO] Apache Atlas New UI ................................ SUCCESS [01:01 min]
+[INFO] Apache Atlas Web Application ....................... SUCCESS [01:03 min]
+[INFO] Apache Atlas Documentation ......................... SUCCESS [  4.470 s]
+[INFO] Apache Atlas FileSystem Model ...................... SUCCESS [  3.347 s]
+[INFO] Apache Atlas Plugin Classloader .................... SUCCESS [  2.106 s]
+[INFO] Apache Atlas Hive Bridge Shim ...................... SUCCESS [  4.490 s]
+[INFO] Apache Atlas Hive Bridge ........................... SUCCESS [  8.053 s]
+[INFO] Apache Atlas Falcon Bridge Shim .................... SUCCESS [  3.415 s]
+[INFO] Apache Atlas Falcon Bridge ......................... SUCCESS [  4.600 s]
+[INFO] Apache Atlas Sqoop Bridge Shim ..................... SUCCESS [  8.715 s]
+[INFO] Apache Atlas Sqoop Bridge .......................... SUCCESS [  9.089 s]
+[INFO] Apache Atlas Storm Bridge Shim ..................... SUCCESS [  6.424 s]
+[INFO] Apache Atlas Storm Bridge .......................... SUCCESS [  5.730 s]
+[INFO] Apache Atlas Hbase Bridge Shim ..................... SUCCESS [  4.726 s]
+[INFO] Apache Atlas Hbase Bridge .......................... SUCCESS [  7.642 s]
+[INFO] Apache HBase - Testing Util ........................ SUCCESS [ 22.674 s]
+[INFO] Apache Atlas Kafka Bridge .......................... SUCCESS [  3.511 s]
+[INFO] Apache Atlas classification updater ................ SUCCESS [  2.244 s]
+[INFO] Apache Atlas index repair tool ..................... SUCCESS [  4.034 s]
+[INFO] Apache Atlas Impala Hook API ....................... SUCCESS [  0.872 s]
+[INFO] Apache Atlas Impala Bridge Shim .................... SUCCESS [  0.498 s]
+[INFO] Apache Atlas Impala Bridge ......................... SUCCESS [  7.789 s]
+[INFO] Apache Atlas Distribution .......................... SUCCESS [ 52.828 s]
+[INFO] atlas-examples ..................................... SUCCESS [  0.456 s]
+[INFO] sample-app ......................................... SUCCESS [  2.279 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  03:36 min (Wall Clock)
+[INFO] Finished at: 2021-10-18T18:22:49+03:00
+[INFO] ------------------------------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;p&gt;Собранные пакеты находятся в каталоге &lt;code&gt;~/src/apache-atlas-sources-2.2.0/distro/target&lt;/code&gt;. В файле &lt;code&gt;apache-atlas-2.2.0-bin.tar.gz&lt;/code&gt; можно найти всё необходимое для дальнейшей работы по развёртыванию Atlas&amp;rsquo;а.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 01. Подготовительные работы для установки Atlas&#39;а</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</link>
+      <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Везде, где выполняется работа с керберизированными сервисами, помним о предварительном получении Kerberos-билета, если таковой не был получен ранее.&lt;/p&gt;
+&lt;p&gt;Подавляющее число операций производим на Atlas-машине, иначе специально указывается иное.&lt;/p&gt;
+&lt;h2 id=&#34;1-введение-выделенного-для-atlas-хоста-в-домен&#34;&gt;1. Введение выделенного для Atlas хоста в домен&lt;/h2&gt;
+&lt;p&gt;Выполняется с помощью  стандартных процедур.&lt;/p&gt;
+&lt;h2 id=&#34;2-добавление-хоста-к-hadoop-кластеру&#34;&gt;2. Добавление хоста к Hadoop-кластеру&lt;/h2&gt;
+&lt;p&gt;Выполняется с помощью  стандартных процедур.&lt;/p&gt;
+&lt;h2 id=&#34;3-добавление-учётных-записей&#34;&gt;3. Добавление учётных записей&lt;/h2&gt;
+&lt;h3 id=&#34;31-добавление-локальной-уз-atlas&#34;&gt;3.1. Добавление локальной УЗ &amp;lsquo;atlas&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;На все машины кластера добавляем локальную УЗ &amp;lsquo;atlas&amp;rsquo;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo useradd -r -s /sbin/nologin -d /opt/atlas -M atlas
+sudo usermod -aG hadoop atlas
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;32-добавление-сервисной-уз-во-freeipa&#34;&gt;3.2. Добавление сервисной УЗ во FreeIPA&lt;/h3&gt;
+&lt;p&gt;Находясь на Atlas-машине, добавляем в IPA сервисную УЗ для Atlas-машины. Необходимо иметь права на добавление сервиса во FreeIPA.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ATLASSERVER=&amp;#34;$(hostname)&amp;#34;
+
+# При необходимости получаем kerberos-билет
+# kinit
+
+ipa service-add atlas/${ATLASSERVER}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;33-добавление-в-freeipa-пользовательских-групп-для-авторизации-в-atlas&#34;&gt;3.3. Добавление в FreeIPA пользовательских групп для авторизации в Atlas&lt;/h3&gt;
+&lt;p&gt;Создаём по минимуму две группы, &amp;lsquo;clustername_atlas_admin&amp;rsquo; и &amp;lsquo;clustername_atlas_user&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;В переменной CLUSTERNAME требуется указать правильное имя кластера!&lt;/p&gt;
+&lt;p&gt;В переменной JIRA требуется указать правильный номер задачи!&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;CLUSTERNAME=&amp;#34;TEST2&amp;#34;
+JIRA=&amp;#34;SDK-2198&amp;#34;
+
+CLNLOWER=$(echo $CLUSTERNAME | tr [:upper:] [:lower:])
+CLNUPPER=$(echo $CLUSTERNAME | tr [:lower:] [:upper:])
+ipa group-add --desc=&amp;#34;Группа для роли ROLE_ADMIN в Atlas&amp;#39;е в кластере ${CLNUPPER}. ${JIRA}.&amp;#34; ${CLNLOWER}_atlas_admins
+ipa group-add --desc=&amp;#34;Группа для роли DATA_SCIENTIST в Atlas&amp;#39;е в кластере ${CLNUPPER}. ${JIRA}.&amp;#34; ${CLNLOWER}_atlas_users
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;4-добавление-необходимых-ролей-на-машину-с-atlasом&#34;&gt;4. Добавление необходимых ролей на машину с Atlas&amp;rsquo;ом&lt;/h2&gt;
+&lt;p&gt;На машину с Atlas&amp;rsquo;ом, через Cloudera Manager, устанавливаем роли, которые требуются для следующего:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HDFS Gateway — для получения и обновления информации о принадлежности какого-либо аккаунта к группам (UGI — User Group Information), используемым Hadoop&amp;rsquo;ом. Полезно при отладке.&lt;/li&gt;
+&lt;li&gt;HBase Gateway — для первоначального импорта содержимого HBase и здесь Atlas хранит свою базу данных Janus, поэтому требуется постоянный доступ к двум таблицам в сервисе Apache HBase.&lt;/li&gt;
+&lt;li&gt;Hive Gateway — только для первоначального импорта содержимого Hive.&lt;/li&gt;
+&lt;li&gt;Kafka Gateway — похоже, что исключительно для настройки Sentry через утилиту &lt;code&gt;kafka-sentry&lt;/code&gt;, работающей только с  Kafka-привилегиями.&lt;/li&gt;
+&lt;li&gt;Solr Gateway — похоже, что исключительно для настройки Sentry через утилиту &lt;code&gt;soltctl&lt;/code&gt;, работающей только с  Solr-привилегиями.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 02. Подготовка служб Hadoop-кластера к развёртыванию Atlas&#39;а</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</link>
+      <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-10 – 2021-11-03&lt;/p&gt;
+&lt;h2 id=&#34;1-apache-hbase&#34;&gt;1. Apache HBase&lt;/h2&gt;
+&lt;p&gt;Apache HBase используется Atlas&amp;rsquo;ом для хранения своей Janus базы данных. Бла-бла-бла&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;11-настройка-apache-hbase&#34;&gt;1.1. Настройка Apache HBase&lt;/h3&gt;
+&lt;p&gt;Настройка HBase в тестовом кластере была выполнена в соответствии с инструкцией 16. HBase. Установка и настройка.&lt;/p&gt;
+&lt;h3 id=&#34;12-создание-необходимых-таблиц-в-hbase&#34;&gt;1.2. Создание необходимых таблиц в HBase&lt;/h3&gt;
+&lt;p&gt;1.2.1. На Atlas-машине, или на любой машине с установленной ролью &amp;lsquo;HBase Gateway&amp;rsquo;, создаём необходимые таблицы и даём на них все права для УЗ &amp;lsquo;atlas&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Названия таблиц по умолчанию:
+TABLE1=&amp;#34;apache_atlas_entity_audit&amp;#34;
+TABLE2=&amp;#34;apache_atlas_janus&amp;#34;
+
+echo &amp;#34;create &amp;#39;${TABLE1}&amp;#39;, &amp;#39;dt&amp;#39;; grant &amp;#39;atlas&amp;#39;, &amp;#39;RWXCA&amp;#39;, &amp;#39;${TABLE1}&amp;#39;&amp;#34;  | hbase shell
+echo &amp;#34;create &amp;#39;${TABLE2}&amp;#39;, &amp;#39;s&amp;#39;; grant &amp;#39;atlas&amp;#39;, &amp;#39;RWXCA&amp;#39;, &amp;#39;${TABLE2}&amp;#39;&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;В случае внесения УЗ &amp;lsquo;atlas&amp;rsquo; в параметр &amp;lsquo;hbase.superuser&amp;rsquo;, или в IPA-группу &amp;rsquo;test2_hbase_su&amp;rsquo; (в случае прямого подключения Hadoop&amp;rsquo;а к LDAP), или назначении всех прав на HBase для УЗ &amp;lsquo;atlas&amp;rsquo; — &lt;code&gt;echo &amp;quot;grant &#39;atlas&#39;, &#39;RWXCA&#39;&amp;quot; | hbase shell&lt;/code&gt;, Atlas самостоятельно создаст необходимые базы и назначит для УЗ &amp;lsquo;atlas&amp;rsquo; права на них. Это иногда удобно, например, для исследовательских целей.&lt;br&gt;
+Замечу, что с Atlas 2.2.0 такое не получилось в случае добавления &amp;lsquo;atlas&amp;rsquo; в &amp;lsquo;hbase.superuser&amp;rsquo;. В след раз попробую &lt;code&gt;echo &amp;quot;grant &#39;atlas&#39;, &#39;RWXCA&#39;&amp;quot; | hbase shell&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;13-проверяем-назначенные-на-таблицы-права&#34;&gt;1.3. Проверяем назначенные на таблицы права&lt;/h3&gt;
+&lt;p&gt;1.3.1. На Atlas-машине, или на любой машине с установленной ролью &amp;lsquo;HBase Gateway&amp;rsquo;, выполняем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;user_permission &amp;#39;apache_atlas_.*&amp;#39;&amp;#34; | hbase shell
+
+user_permission &amp;#39;apache_atlas_.*&amp;#39;
+User                               Namespace,Table,Family,Qualifier:Permission                                                      
+ atlas                             default,apache_atlas_entity_audit,,: [Permission: actions=READ,WRITE,EXEC,CREATE,ADMIN]          
+ atlas                             default,apache_atlas_janus,,: [Permission: actions=READ,WRITE,EXEC,CREATE,ADMIN]                 
+2 row(s)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-apache-hive&#34;&gt;2. Apache Hive&lt;/h2&gt;
+&lt;p&gt;Установка и настройка Apache Hive выполняется по инструкции &amp;lsquo;18. Hive. Установка и настройка&amp;rsquo;.&lt;/p&gt;
+&lt;h2 id=&#34;3-apache-kafka&#34;&gt;3. Apache Kafka&lt;/h2&gt;
+&lt;p&gt;Apache Kafka используется Atlas&amp;rsquo;ом для получения сообщений о произошедших событиях в сервисах Hadoop&amp;rsquo;а. Сообщения отправляются с помощью специальных библиотек из состава Atlas&amp;rsquo;а, внедрённых в определённые сервисы. На данный момент Atlas читает сообщения о таких событиях в Hbase и Hive, как создание и удаление таблиц, добавления столбцов, бла-бла-бла&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;31-установка-apache-kafka&#34;&gt;3.1. Установка Apache Kafka&lt;/h3&gt;
+&lt;p&gt;3.1.1. Установка и настройка Kafka выполняется по инструкции &amp;lsquo;22. Kafka. Установка и настройка&amp;rsquo;.&lt;/p&gt;
+&lt;h3 id=&#34;32-добавление-в-kafka-необходимых-топиков&#34;&gt;3.2. Добавление в Kafka необходимых топиков&lt;/h3&gt;
+&lt;p&gt;3.2.1 Для работы Apache Atlas требуется наличие трёх топиков в Apache Kafka. Создаём их на любой машине с ролью &amp;lsquo;Kafka Gateway&amp;rsquo; командами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVERS=&amp;#34;dev-zk110p.test2.lan,dev-zk111p.test2.lan,dev-zk112p.test2.lan/kafka&amp;#34;
+# Список имён топиков по умолчанию:
+TOPIC1=&amp;#34;_HOATLASOK&amp;#34;
+TOPIC2=&amp;#34;ATLAS_ENTITIES&amp;#34;
+TOPIC3=&amp;#34;ATLAS_HOOK&amp;#34;
+
+kafka-topics --zookeeper ${ZKSERVERS} --create --replication-factor 2 --partitions 2 --topic ${TOPIC1}
+kafka-topics --zookeeper ${ZKSERVERS} --create --replication-factor 2 --partitions 2 --topic ${TOPIC2}
+kafka-topics --zookeeper ${ZKSERVERS} --create --replication-factor 2 --partitions 2 --topic ${TOPIC3}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;33-проверка-наличия-топиков&#34;&gt;3.3. Проверка наличия топиков&lt;/h3&gt;
+&lt;p&gt;3.3.1. Здесь же проверим наличие информации о топиках через &lt;code&gt;kafka-topics&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kafka-topics --zookeeper ${ZKSERVERS} --list
+...
+ATLAS_ENTITIES
+ATLAS_HOOK
+_HOATLASOK
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.3.2. И/или на любом хосте кластера даём команду:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVER=&amp;#34;dev-zk110p.test2.lan&amp;#34;
+
+echo &amp;#34;ls /kafka/brokers/topics&amp;#34; | zookeeper-client -server ${ZKSERVER}
+...
+ment complete on server localhost/127.0.0.1:2181, sessionid = 0x37c9e0ee4460070, negotiated timeout = 30000
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:None path:null
+[zk: localhost:2181(CONNECTED) 0] ls /kafka/brokers/topics
+[ATLAS_HOOK, ATLAS_ENTITIES, _HOATLASOK]
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;34-настройка-роли-в-sentry-для-доступа-atlasа-к-топикам-в-kafka&#34;&gt;3.4. Настройка роли в Sentry для доступа Atlas&amp;rsquo;а к топикам в Kafka&lt;/h3&gt;
+&lt;p&gt;3.4.1. На машине с ролью &amp;lsquo;Kafka Gateway&amp;rsquo; создаём в Sentry роль &amp;lsquo;kafka4atlas_role:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;KROLE=&amp;#34;kafka4atlas_role&amp;#34;
+
+kafka-sentry -cr -r ${KROLE}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.4.2. Назначаем созданную роль на группу atlas:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kafka-sentry -arg -r ${KROLE} -g atlas
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.4.3. Назначаем привилегии для потребителя:
+&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kafka_security.html#concept_s4z_nlh_znb__section_elp_rph_znb&#34;&gt;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kafka_security.html#concept_s4z_nlh_znb__section_elp_rph_znb&lt;/a&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Список имён топиков по умолчанию:
+TOPIC1=&amp;#34;_HOATLASOK&amp;#34;
+TOPIC2=&amp;#34;ATLAS_ENTITIES&amp;#34;
+TOPIC3=&amp;#34;ATLAS_HOOK&amp;#34;
+
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;Host=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=read&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;Host=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=describe&amp;#34;
+
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC1}-&amp;gt;action=read&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC2}-&amp;gt;action=read&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC3}-&amp;gt;action=read&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC1}-&amp;gt;action=describe&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC2}-&amp;gt;action=describe&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC3}-&amp;gt;action=describe&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.4.4. Назначаем привилегии для продюсера:
+&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kafka_security.html#concept_s4z_nlh_znb__section_jn2_sph_znb&#34;&gt;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/kafka_security.html#concept_s4z_nlh_znb__section_jn2_sph_znb&lt;/a&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC1}-&amp;gt;action=write&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC2}-&amp;gt;action=write&amp;#34;
+kafka-sentry -gpr -r ${KROLE} -p &amp;#34;HOST=*-&amp;gt;TOPIC=${TOPIC3}-&amp;gt;action=write&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;35-проверка-настроек-sentry-для-kafka&#34;&gt;3.5. Проверка настроек Sentry для Kafka&lt;/h3&gt;
+&lt;p&gt;3.5.1. Выводим список существующих ролей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kafka-sentry -lr
+....
+solradm_role
+kafka4atlas_role
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.5.2. Выводим список групп с назначенными им ролями:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kafka-sentry -lg
+...
+atlas = kafka4atlas_role
+test2_solr_admins = solradm_role
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.5.3. Выводим список привилегий:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kafka-sentry -lp -r kafka4atlas_role
+...
+HOST=*-&amp;gt;TOPIC=_HOATLASOK-&amp;gt;action=read
+HOST=*-&amp;gt;TOPIC=_HOATLASOK-&amp;gt;action=describe
+HOST=*-&amp;gt;TOPIC=ATLAS_HOOK-&amp;gt;action=read
+HOST=*-&amp;gt;TOPIC=ATLAS_ENTITIES-&amp;gt;action=describe
+HOST=*-&amp;gt;TOPIC=ATLAS_HOOK-&amp;gt;action=describe
+HOST=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=describe
+HOST=*-&amp;gt;TOPIC=_HOATLASOK-&amp;gt;action=write
+HOST=*-&amp;gt;TOPIC=ATLAS_ENTITIES-&amp;gt;action=write
+HOST=*-&amp;gt;TOPIC=ATLAS_HOOK-&amp;gt;action=write
+HOST=*-&amp;gt;TOPIC=ATLAS_ENTITIES-&amp;gt;action=read
+HOST=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=read
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;Если наблюдаем лишние привилегии, то удаляем их командой, например:&lt;br&gt;
+&lt;code&gt;  $ kafka-sentry -r kafka4atlas_role -rpr -p &#39;HOST=*-&amp;gt;TOPIC=*-&amp;gt;action=all&#39;&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</link>
+      <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-10 – 2021-11-03&lt;/p&gt;
+&lt;h2 id=&#34;1-выбор-поискового-движка-apache-solr-or-elasticsearch&#34;&gt;1. Выбор поискового движка: Apache Solr or Elasticsearch&lt;/h2&gt;
+&lt;p&gt;1.1. Стандартно используется Apache Solr.&lt;/p&gt;
+&lt;p&gt;1.2. В расчёте на дальнейшую установку Amundsen&amp;rsquo;а, необходимо выбрать ElsaticSarch. На данный момент находится в разработке.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Я попробую установить оба Index-сервиса с двумя экземплярами Atlas&amp;rsquo;а. Первый экземпляр Atlas&amp;rsquo;а будет использовать Apache Solr, а второй экземпляр Atlas&amp;rsquo;а, соответственно, Elasticsearch.&lt;br&gt;
+&lt;br&gt;
+Мысли под запись:&lt;br&gt;
+УЗ &amp;lsquo;atlas&amp;rsquo;, как локальная, так и сервисная УЗ &amp;lsquo;atlas/_HOST&amp;rsquo;, будут использоваться обоими экземплярами Atlas&amp;rsquo;а.
+Apache Kafka — один сервис, который будет обслуживать оба Atlas&amp;rsquo;а.
+Apache HBase — создадим два набора таблиц для хранения сущностей.
+У Atlas&amp;rsquo;а есть параметр &amp;lsquo;atlas.cluster.name=primary&amp;rsquo;. Для второго экземпляра выбрать &amp;lsquo;secondary&amp;rsquo;?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;2-apache-solr&#34;&gt;2. Apache Solr&lt;/h2&gt;
+&lt;p&gt;На тестовом кластере использовалась четыре узла Apache Solr. В общем случае, рекомендуется использовать не менее двух узлов.&lt;/p&gt;
+&lt;h3 id=&#34;21-установка-и-настройка-apache-solr&#34;&gt;2.1. Установка и настройка Apache Solr&lt;/h3&gt;
+&lt;p&gt;Установка и настройка Apache Solr выполняется по инструкции &amp;lsquo;21. Solr. Установка и настройка&amp;rsquo;.&lt;/p&gt;
+&lt;h3 id=&#34;22-добавление-нового-шаблона-в-solr&#34;&gt;2.2. Добавление нового шаблона в Solr&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/2.1.0/index.html#/Installation&#34;&gt;Configuring Apache Solr as the indexing backend for the Graph Repository&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2.2.1. Проверяем в Zookeeper&amp;rsquo;е текущий список конфигов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVER=&amp;#34;dev-zk110p.test2.lan&amp;#34;
+
+echo &amp;#34;ls /solr/configs&amp;#34; | zookeeper-client -server ${ZKSERVER}
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Пример stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+[zk: localhost:2181(CONNECTED) 17] ls /solr/configs
+[managedTemplate, schemalessTemplate, _default, managedTemplateSecure, schemalessTemplateSecure]
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;2.2.2. Добавляем atlas-конфиг в Apache Solr.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;В переменной NXUSERPASS требуется указать правильный логин/пароль!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;set +o history
+NXUSERPASS=&amp;#34;eugene:xxxxxxxxxxxxx&amp;#34;
+set -o history
+# Файл конфиг для Solr
+FILENAME=&amp;#34;atlasSolrConfig.zip&amp;#34;
+
+SOLRSERVER=&amp;#34;https://dev-app111p.test2.lan&amp;#34;
+
+# Скачиваем сборку с Nexus&amp;#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://nexus.example.org:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+
+# Отправляем конфиг в Solr через любой Solr-хост
+curl --negotiate -u : -X POST --header &amp;#34;Content-Type:application/octet-stream&amp;#34; --data-binary @${FILENAME} &amp;#34;${SOLRSERVER}:8985/solr/admin/configs?action=UPLOAD&amp;amp;name=atlasTemplate&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.2.3. Проверяем факт, что конфиг появился в Zookeeper&amp;rsquo;е.&lt;/p&gt;
+&lt;p&gt;Сначала выводим список кофигов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVER=&amp;#34;dev-zk110p.test2.lan&amp;#34;
+
+echo &amp;#34;ls /solr/configs&amp;#34; | zookeeper-client -server ${ZKSERVER}
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Пример stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+[zk: dev-zk111p(CONNECTED) 0] ls /solr/configs
+[managedTemplate, schemalessTemplate, _default, managedTemplateSecure, atlasTemplate, schemalessTemplateSecure]
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;Потом, убедившись в наличии конфига &amp;lsquo;atlasTemplate&amp;rsquo;, выводим его содержимое:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZKSERVER=&amp;#34;dev-zk110p.test2.lan&amp;#34;
+
+echo &amp;#34;ls /solr/configs/atlasTemplate&amp;#34; | zookeeper-client -server ${ZKSERVER}
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Пример stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
+[zk: dev-zk110p.test2.lan(CONNECTED) 0] ls /solr/configs/atlasTemplate
+[currency.xml, protwords.txt, solrconfig.xml, synonyms.txt, stopwords.txt, schema.xml, lang]
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;После появления нового шаблона, создаём в Apache Solr три коллекции:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SOLRSERVER=&amp;#34;dev-app111p.test2.lan&amp;#34;
+# Названия коллекций по умолчанию:
+COLLECTION1=&amp;#34;fulltext_index&amp;#34;
+COLLECTION2=&amp;#34;edge_index&amp;#34;
+COLLECTION3=&amp;#34;vertex_index&amp;#34;
+
+curl --negotiate -u : &amp;#34;https://${SOLRSERVER}:8985/solr/admin/collections?action=CREATE&amp;amp;name=${COLLECTION1}&amp;amp;collection.configName=atlasTemplate&amp;amp;numShards=2&amp;amp;replicationFactor=2&amp;#34;
+curl --negotiate -u : &amp;#34;https://${SOLRSERVER}:8985/solr/admin/collections?action=CREATE&amp;amp;name=${COLLECTION2}&amp;amp;collection.configName=atlasTemplate&amp;amp;numShards=2&amp;amp;replicationFactor=2&amp;#34;
+curl --negotiate -u : &amp;#34;https://${SOLRSERVER}:8985/solr/admin/collections?action=CREATE&amp;amp;name=${COLLECTION3}&amp;amp;collection.configName=atlasTemplate&amp;amp;numShards=2&amp;amp;replicationFactor=2&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;summary&gt;Пример stdout...&lt;/summary&gt;
+&lt;p&gt;{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:3663},
+&amp;ldquo;success&amp;rdquo;:{
+&amp;ldquo;dev-zk112p.test2.lan:8985_solr&amp;rdquo;:{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:1477},
+&amp;ldquo;core&amp;rdquo;:&amp;ldquo;edge_index_shard1_replica_n1&amp;rdquo;},
+&amp;ldquo;dev-zk110p.test2.lan:8985_solr&amp;rdquo;:{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:1962},
+&amp;ldquo;core&amp;rdquo;:&amp;ldquo;edge_index_shard2_replica_n4&amp;rdquo;},
+&amp;ldquo;dev-app111p.test2.lan:8985_solr&amp;rdquo;:{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:2289},
+&amp;ldquo;core&amp;rdquo;:&amp;ldquo;edge_index_shard2_replica_n6&amp;rdquo;},
+&amp;ldquo;dev-zk111p.test2.lan:8985_solr&amp;rdquo;:{
+&amp;ldquo;responseHeader&amp;rdquo;:{
+&amp;ldquo;status&amp;rdquo;:0,
+&amp;ldquo;QTime&amp;rdquo;:2291},&lt;/p&gt;
+&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;Через Web UI Solr&amp;rsquo;а наблюдаем три ранее добавленные коллекции:
+&lt;img src=&#34;/img/ustanovka-apache-atlas-2.2.0/solr-collections.png&#34; alt=&#34;Solr collections&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;23-добавление-роли-в-sentry-для-доступа-atlasа-в-solr&#34;&gt;2.3. Добавление роли в Sentry для доступа Atlas&amp;rsquo;а в Solr&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_iw1_5dp_wk&#34;&gt;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_iw1_5dp_wk&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Аккаунт, под которым производится добавление ролей в Sentry, должен быть упомянут (напрямую или через членство в группу)  в следующих параметрах Sentry-сервиса:&lt;br&gt;
+sentry.service.admin.group&lt;br&gt;
+sentry.service.allow.connect&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;2.3.1. Создаём роль &amp;lsquo;solr4atlas_role&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SROLE=&amp;#34;solr4atlas_role&amp;#34;
+# Названия коллекций по умолчанию:
+COLLECTION1=&amp;#34;fulltext_index&amp;#34;
+COLLECTION2=&amp;#34;edge_index&amp;#34;
+COLLECTION3=&amp;#34;vertex_index&amp;#34;
+
+solrctl sentry --create-role ${SROLE}
+
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;collection=${COLLECTION1}-&amp;gt;action=*&amp;#34;
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;collection=${COLLECTION2}-&amp;gt;action=*&amp;#34;
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;collection=${COLLECTION3}-&amp;gt;action=*&amp;#34;
+
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;Config=${COLLECTION1}-&amp;gt;action=*&amp;#34;
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;Config=${COLLECTION2}-&amp;gt;action=*&amp;#34;
+solrctl sentry --grant-privilege ${SROLE} &amp;#34;Config=${COLLECTION3}-&amp;gt;action=*&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.3.2. Назначим роль на группу &amp;lsquo;atlas&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;solrctl sentry --add-role-group ${SROLE} atlas
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;24-проверка-настроек-sentry-для-solr&#34;&gt;2.4. Проверка настроек Sentry для Solr&lt;/h3&gt;
+&lt;p&gt;2.4.1. Список существующих ролей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ solrctl sentry --list-roles
+...
+solr_adm_role
+kafka4atlas_role
+hive_admins
+solr4atlas_role
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.4.2. Вывод назначенных ролей на группу &amp;lsquo;atlas&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ solrctl sentry --list-roles -g atlas
+...
+solr4atlas_role
+kafka4atlas_role
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.4.3. Вывод списка привилегий:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ solrctl sentry --list-privileges solr4atlas_role
+..
+Config=vertex_index-&amp;gt;action=*
+Collection=edge_index-&amp;gt;action=*
+Collection=fulltext_index-&amp;gt;action=*
+Config=edge_index-&amp;gt;action=*
+Config=fulltext_index-&amp;gt;action=*
+Collection=vertex_index-&amp;gt;action=*
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.4.4. При необходимости удаляем лишние привилегии командой, пример:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ solrctl sentry --revoke-privilege solr4atlas_role &amp;#39;Config=${collection1}-&amp;gt;action=*&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;Продолжение инструкции находится в стадии разработки и не требует выполнения!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;3-установка-elasticsearch-6x-на-стадии-разработки&#34;&gt;3. Установка Elasticsearch 6.x (на стадии разработки)&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Здесь рассмотрена бесплатная версия Elasticsearch, которая не имеет какого-либо способа аутентификации?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;В расчёте на последующие попытки подключения Amundsen, устанавливаем Elasticsearch 6-ой версии, а не 7-ой. Elasticsearch 6.x указана, как поддерживаемая в требованиях Amundsen.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;31-добавление-репо-файла&#34;&gt;3.1. Добавление репо-файла&lt;/h3&gt;
+&lt;p&gt;3.1.1. Выполняем из-под &amp;lsquo;root&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;USERNAME=nx-pubrepo-r
+PASSWORD=eu6yWX6jfzUebShTwF1Qa434hovhm4
+
+cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/yum.repos.d/elasticsearch.repo
+[elasticsearch7]
+username=$USERNAME
+password=$PASSWORD
+name=Elasticsearch repository for 7.x packages
+baseurl=http://nexus.example.org:8081/repository/all_elasticsearch_yum/packages/7.x/yum
+gpgcheck=1
+gpgkey=http://nexus.example.org:8081/repository/all_elasticsearch_yum/GPG-KEY-elasticsearch
+enabled=0
+autorefresh=1
+type=rpm-md
+
+[elasticsearch6]
+username=$USERNAME
+password=$PASSWORD
+name=Elastic repository for 6.x packages
+baseurl=http://nexus.example.org:8081/repository/all_elasticsearch_yum/packages/6.x/yum
+gpgcheck=1
+gpgkey=http://nexus.example.org:8081/repository/all_elasticsearch_yum/GPG-KEY-elasticsearch
+enabled=0
+autorefresh=1
+type=rpm-md
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;32-устанавливаем-elasticsearch&#34;&gt;3.2. Устанавливаем Elasticsearch&lt;/h3&gt;
+&lt;p&gt;3.2.1. Включаем репо для Elasticsearch 6.x и выполняем установку пакета определённой версии, с которым производилась сборка Atlas&amp;rsquo;а (не знаю, насколько критично точное совпадение используемых версий):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum install -y --enablerepo=elasticsearch6 elasticsearch-6.8.20-1
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;33-настройка-конфигурации&#34;&gt;3.3. Настройка конфигурации&lt;/h3&gt;
+&lt;p&gt;3.3.1. Изменяем следующие параметры:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;path.data: /data/elasticsearch
+
+path.logs: /data/log/elasticsearch
+
+# По умолчанию, Elasticsearch привязывается только в 127.0.0.1
+network.host: 10.15.137.11
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;34-запуск&#34;&gt;3.4. Запуск&lt;/h3&gt;
+&lt;p&gt;3.4.1. Запускаем Elasticsearch:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl start elasticsearch
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 04. Распаковка и настройка Apache Atlas</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</link>
+      <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-10-20 – 2021-11-02&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Везде, где выполняется работа с керберизированными сервисами, помним о предварительном получении Kerberos-билета, если таковой не был получен ранее.
+&lt;br&gt;&lt;br&gt;
+Подавляющее число операций производим на Atlas-машине, иначе специально указывается иное.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;1скачивание-и-распаковка-собранного-приложения-apache-atlas&#34;&gt;1. Скачивание и распаковка собранного приложения Apache Atlas&lt;/h2&gt;
+&lt;p&gt;Стандартное размещение Atlas&amp;rsquo;а находится в каталоге &lt;code&gt;/opt/atlas&lt;/code&gt;. Для удобства работы с множеством версий, мы разместим эту и последующие сборки Atlas&amp;rsquo;а, каждую в своём каталоге, например &lt;code&gt;/opt/apache-atlas-2.2.0&lt;/code&gt;. После чего создадим линк &lt;code&gt;/opt/atlas&lt;/code&gt; для текущей актуальной сборки. Все пути в конфиг-файлах унифицированы и указывают на &lt;code&gt;/opt/atlas&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;1.1. На машине, предназначенной для работы Apache Atlas&amp;rsquo;а, скачиваем и распаковываем файл с уже собранным Atlas&amp;rsquo;ом (описываемая версия 2.2.0) в каталог &lt;code&gt;/opt/apache-atlas-2.2.0&lt;/code&gt;, после чего делаем ссылку &lt;code&gt;/opt/atlas&lt;/code&gt; на этот каталога.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;В переменной NXUSERPASS требуется указать правильный логин/пароль!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ATLASDIR=&amp;#34;apache-atlas-2.2.0_rs-api-2.1.1&amp;#34;
+FILENAME=&amp;#34;apache-atlas-2.2.0_rs-api-2.1.1.tar.bz2&amp;#34;
+
+set +o history
+NXUSERPASS=&amp;#34;eugene:xxxxxxxxxxxxx&amp;#34;
+set -o history
+
+## Скачиваем сборку с Nexus&amp;#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://nexus.example.org:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+
+# Распаковываем в /opt и делаем символическую ссылку
+sudo tar -xvf ${FILENAME} -C /opt
+sudo chown -R atlas.atlas /opt/${ATLASDIR}
+
+sudo ln -s /opt/${ATLASDIR} /opt/atlas
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-создание-keytabа-для-atlas&#34;&gt;2. Создание keytab&amp;rsquo;а для atlas&lt;/h2&gt;
+&lt;p&gt;Так как Hadoop-кластер, с которым мы работает, керберизирован, то каждый участник кластера обязан иметь свой kerberos-принципал с ключами.&lt;/p&gt;
+&lt;h3 id=&#34;21-получение-kerberos-ключа-для-принципала-atlashostname&#34;&gt;2.1.  Получение Kerberos-ключа для принципала atlas/$(hostname)&lt;/h3&gt;
+&lt;p&gt;Этот принципал — &amp;lsquo;atlas/$(hostname)&amp;rsquo; — используется для Kerberos-аутентификации Atlas&amp;rsquo;а в различных Hadoop-сервисах.&lt;/p&gt;
+&lt;p&gt;2.1.1. Напомню, что последующие получения ключей необходимо выполнять с опцией &amp;lsquo;-r&amp;rsquo;, иначе вместо получения keytab&amp;rsquo;а с существующим kerberos-ключём, будет создан новый ключ с новым номером KVNO (key version number), вследствие чего уже работающие сервисы Atlas&amp;rsquo;а перестанут аутентифицироваться и потребуется повторить для них получение ключей с последующим перезапуском сервиса:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+
+## При необходимости получаем kerberos-билет
+# kinit ${IPAADMIN}
+
+## Если требуются права на создание ключей.
+ipa service-allow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+## Если требуются права на получение ключей, ранее уже созданных.
+ipa service-allow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -p atlas/$(hostname) -k ~/atlas.keytab
+ipa service-disallow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-disallow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
+sudo mv ~/atlas.keytab /opt/atlas/conf/
+sudo chown atlas.atlas /opt/atlas/conf/atlas.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;22-получение-kerberos-ключа-для-принципала-httphostname&#34;&gt;2.2. Получение Kerberos-ключа для принципала HTTP/$(hostname)&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Пересмотреть данный пункт.&lt;br&gt;
+&lt;br&gt;
+Необходимо локализовать параметры, отвечающие за kerberos-аутентификацию пользователей в Atlas Web UI. Существуют сомнения в части использования этого принципала для упомянутых целей.
+Выяснить, для каких целей используются принципалы HTTP в Hadoop-кластере.&lt;br&gt;
+&lt;br&gt;
+Выполнение этого пункта не наносит вреда, но этот принципал, на данный момент, нигде не используется.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Этот принципал используется для Kerberos-аутентификации пользователей в Atlas Web UI.&lt;/p&gt;
+&lt;p&gt;2.2.1. Есть большая вероятность, что при добавлении машины к Hadoop-кластеру и добавления на машину какой-либо роли, Cloudera Manager уже сгенерировал для машины этот keytab, поэтому запрашиваем его с опцией &amp;lsquo;-r&amp;rsquo;, иначе создаём новый keytab по аналогии с предыдущим пунктом &amp;ldquo;Keytab для atlas/_HOST&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipa service-allow-retrieve-keytab HTTP/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -p HTTP/$(hostname) -k /opt/atlas/conf/atlas.keytab -r
+ipa service-disallow-retrieve-keytab HTTP/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;23-проверяем-наличие-ключей-в-созданном-keytab-файле&#34;&gt;2.3. Проверяем наличие ключей в созданном keytab-файле&lt;/h3&gt;
+&lt;p&gt;2.3.1. Выполняем:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ klist -kte /opt/atlas/conf/atlas.keytab
+
+Keytab name: FILE:/opt/atlas/conf/atlas.keytab
+KVNO Timestamp           Principal
+---- ------------------- ------------------------------------------------------
+   1 03.11.2021 14:28:59 atlas/dev-app111p.test2.lan@TEST2.LAN (aes256-cts-hmac-sha1-96)
+   1 03.11.2021 14:35:11 HTTP/dev-app111p.test2.lan@TEST2.LAN (aes256-cts-hmac-sha1-96)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-создание-хранилища-для-безопасного-хранения-паролей&#34;&gt;3. Создание хранилища для безопасного хранения паролей&lt;/h2&gt;
+&lt;p&gt;Atlas поддерживает новый способ хранения паролей для jks-хранилищ. Если раньше пароли указывались в открытом виде в conf-файла, то теперь пароли от хранилищ скрываются от глаз в отдельном хранилище.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Напомню, что дефолтным паролем для java-хранилищ является &amp;lsquo;changeit&amp;rsquo;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;3.1. Добавляем jceks-файла &lt;code&gt;/opt/atlas/conf/atlas.jceks&lt;/code&gt; с паролями от хранилищ. Запускаем Atlas-утилиту &lt;code&gt;cputil.py&lt;/code&gt; и на её запросы вводим:&lt;br&gt;
+путь к хранилищу: jceks:///opt/atlas/conf/atlas.jceks;&lt;br&gt;
+пароли для хранилищ: changeit.&lt;br&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export JAVA_HOME=&amp;#34;/usr/java/jdk1.8.0_181-cloudera/&amp;#34;
+sudo -E /opt/atlas/bin/cputil.py
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Please enter the full path to the credential provider: jceks:///opt/atlas/conf/atlas.jceks
+Please enter the password value for keystore.password: changeit
+Please enter the password value for keystore.password again: changeit
+Please enter the password value for truststore.password: changeit
+Please enter the password value for truststore.password again: changeit
+Please enter the password value for password: changeit
+Please enter the password value for password again: changeit
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;p&gt;3.2. Исправляем права на созданный файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo chown atlas.atlas /opt/atlas/conf/atlas.jceks
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;4-настройка-apache-atlas&#34;&gt;4. Настройка Apache Atlas&lt;/h2&gt;
+&lt;h3 id=&#34;41-подготовка-ролей-atlasа-для-adminов-и-userов&#34;&gt;4.1. Подготовка ролей Atlas&amp;rsquo;а для Admin&amp;rsquo;ов и User&amp;rsquo;ов&lt;/h3&gt;
+&lt;p&gt;На одном из предыдущих этапов, во FreeIPA были подготовлены две группы — &amp;rsquo;test2_atlas_admins&amp;rsquo; и &amp;rsquo;test2_atlas_users&amp;rsquo; — для авторизации в Atlas. Используем их для назначения ролей авторизующимся в Atlas пользователям.&lt;/p&gt;
+&lt;p&gt;В конце файла &lt;code&gt;/opt/atlas/conf/atlas-simple-authz-policy.json&lt;/code&gt; добавляем (или исправляем сущестующие)  сопоставления, ранее созданных LDAP-групп с ролями Atlas&amp;rsquo;а, как показано здесь:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;При получении названий групп через UGI (предпочтительней):&lt;/th&gt;
+&lt;th&gt;При получении названий групп напрямую из LDAP-каталога:&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;
+  &#34;groupRoles&#34;: {
+    &#34;test2_atlas_admins&#34;: [ &#34;ROLE_ADMIN&#34; ],
+    &#34;test2_atlas_users&#34;: [ &#34;ROLE_SCIENTIST&#34; ],
+    &#34;RANGER_TAG_SYNC&#34;: [ &#34;DATA_SCIENTIST&#34; ]
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;pre&gt;&lt;code&gt;
+  &#34;groupRoles&#34;: {
+    &#34;ROLE_TEST2_ATLAS_ADMINS&#34;: [ &#34;ROLE_ADMIN&#34; ],
+    &#34;ROLE_TEST2_ATLAS_USERS&#34;: [ &#34;ROLE_SCIENTIST&#34; ],
+    &#34;RANGER_TAG_SYNC&#34;: [ &#34;DATA_SCIENTIST&#34; ]
+  }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;42-изменения-файла-optatlasconfatlas-applicationproperties&#34;&gt;4.2. Изменения файла &amp;lsquo;/opt/atlas/conf/atlas-application.properties&amp;rsquo;&lt;/h2&gt;
+&lt;p&gt;В данном примере показан способ получения пользовательских групп, необходимых для авторизации пользователя в Atlas Web UI, через Hadoop UGI (UserGroupInformation), а не через  LDAP. Преимущество этого способа в том, что с ним работают вложенные группы. То есть достаточно добавлять отдельные пользовательские группы в группу &amp;rsquo;test2_atlas_admin&amp;rsquo;, вместо добавления отдельных пользовательских аккаунтов.&lt;/p&gt;
+&lt;p&gt;Если этот способ не сработает, выполняем полную настройку LDAP-подключения с настройкой фильтров для получения информации о членстве УЗ, соответствующей введённому логину. Для этого необходимо расскомментировать соответствующие строки.&lt;/p&gt;
+&lt;p&gt;Основной файл настроек Atlas&amp;rsquo;а сгенерируем следующим кодом. Перед запуском этого сценария приводим переменные к актуальным значениям:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;В тех местах настроек, где наблюдаются словосочетания &amp;lsquo;&lt;a href=&#34;mailto:atlas/_HOST@TEST2.LAN&#34;&gt;atlas/_HOST@TEST2.LAN&lt;/a&gt;&amp;rsquo;, Atlas автоматически вставляет вместо &amp;lsquo;_HOST&amp;rsquo; полное имя локальной машины.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;CLUSTERNAME=&amp;#34;TEST2&amp;#34;
+REALMNAME=&amp;#34;TEST2.LAN&amp;#34;
+LDAPDOMAINNAME=&amp;#34;dc=test2,dc=lan&amp;#34;
+LDAPSERVERS=&amp;#34;ldaps://dev-ipa110p.test2.lan ldaps://dev-ipa111p.test2.lan ldaps://dev-ipa112p.test2.lan&amp;#34;
+ZOOKEEPERSERVERS=&amp;#34;dev-zk110p.test2.lan:2181,dev-zk111p.test2.lan:2181,dev-zk112p.test2.lan:2181&amp;#34;
+KAFKASERVERS=&amp;#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&amp;#34;
+ATLASURL=&amp;#34;https://$(hostname)&amp;#34;
+
+CLNLOWER=$(echo $CLUSTERNAME | tr [:upper:] [:lower:])
+
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/atlas-application.properties
+ #
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# &amp;#34;License&amp;#34;); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+#########  Graph Database Configs  #########
+
+# Graph Database
+
+#Configures the graph database to use.  Defaults to JanusGraph
+#atlas.graphdb.backend=org.apache.atlas.repository.graphdb.janus.AtlasJanusGraphDatabase
+
+# Graph Storage
+# Set atlas.graph.storage.backend to the correct value for your desired storage
+# backend. Possible values:
+#
+# hbase
+# cassandra
+# embeddedcassandra - Should only be set by building Atlas with  -Pdist,embedded-cassandra-solr
+# berkeleyje
+#
+# See the configuration documentation for more information about configuring the various  storage backends.
+#
+atlas.graph.storage.backend=hbase2
+atlas.graph.storage.hbase.table=apache_atlas_janus
+
+#Hbase
+#For standalone mode , specify localhost
+#for distributed mode, specify zookeeper quorum here
+atlas.graph.storage.hostname=${ZOOKEEPERSERVERS}
+atlas.graph.storage.hbase.regions-per-server=1
+atlas.graph.storage.lock.wait-time=10000
+
+#In order to use Cassandra as a backend, comment out the hbase specific properties above, and uncomment the
+#the following properties
+#atlas.graph.storage.clustername=
+#atlas.graph.storage.port=
+
+# Gremlin Query Optimizer
+#
+# Enables rewriting gremlin queries to maximize performance. This flag is provided as
+# a possible way to work around any defects that are found in the optimizer until they
+# are resolved.
+#atlas.query.gremlinOptimizerEnabled=true
+
+# Delete handler
+#
+# This allows the default behavior of doing &amp;#34;soft&amp;#34; deletes to be changed.
+#
+# Allowed Values:
+# org.apache.atlas.repository.store.graph.v1.SoftDeleteHandlerV1 - all deletes are &amp;#34;soft&amp;#34; deletes
+# org.apache.atlas.repository.store.graph.v1.HardDeleteHandlerV1 - all deletes are &amp;#34;hard&amp;#34; deletes
+#
+#atlas.DeleteHandlerV1.impl=org.apache.atlas.repository.store.graph.v1.SoftDeleteHandlerV1
+
+# Entity audit repository
+#
+# This allows the default behavior of logging entity changes to hbase to be changed.
+#
+# Allowed Values:
+# org.apache.atlas.repository.audit.HBaseBasedAuditRepository - log entity changes to hbase
+# org.apache.atlas.repository.audit.CassandraBasedAuditRepository - log entity changes to cassandra
+# org.apache.atlas.repository.audit.NoopEntityAuditRepository - disable the audit repository
+#
+atlas.EntityAuditRepository.impl=org.apache.atlas.repository.audit.HBaseBasedAuditRepository
+
+# if Cassandra is used as a backend for audit from the above property, uncomment and set the following
+# properties appropriately. If using the embedded cassandra profile, these properties can remain
+# commented out.
+# atlas.EntityAuditRepository.keyspace=atlas_audit
+# atlas.EntityAuditRepository.replicationFactor=1
+
+# Graph Search Index
+atlas.graph.index.search.backend=solr
+
+#Solr
+#Solr cloud mode properties
+atlas.graph.index.search.solr.mode=cloud
+atlas.graph.index.search.solr.zookeeper-url=${ZOOKEEPERSERVERS}/solr
+atlas.graph.index.search.solr.zookeeper-connect-timeout=60000
+atlas.graph.index.search.solr.zookeeper-session-timeout=60000
+atlas.graph.index.search.solr.wait-searcher=true
+
+#Solr http mode properties
+#atlas.graph.index.search.solr.mode=http
+#atlas.graph.index.search.solr.http-urls=http://localhost:8983/solr
+
+# ElasticSearch support (Tech Preview)
+# Comment out above solr configuration, and uncomment the following two lines. Additionally, make sure the
+# hostname field is set to a comma delimited set of elasticsearch master nodes, or an ELB that fronts the masters.
+#
+# Elasticsearch does not provide authentication out of the box, but does provide an option with the X-Pack product
+# https://www.elastic.co/products/x-pack/security
+#
+# Alternatively, the JanusGraph documentation provides some tips on how to secure Elasticsearch without additional
+# plugins: https://docs.janusgraph.org/latest/elasticsearch.html
+#atlas.graph.index.search.hostname=dev-app111p.test2.lan:9200
+atlas.graph.index.search.elasticsearch.client-only=true
+
+# Solr-specific configuration property
+atlas.graph.index.search.max-result-set-size=150
+
+#########  Import Configs  #########
+#atlas.import.temp.directory=/temp/import
+
+#########  Notification Configs  #########
+atlas.notification.embedded=false
+atlas.kafka.zookeeper.connect=${ZOOKEEPERSERVERS}
+atlas.kafka.bootstrap.servers=${KAFKASERVERS}
+atlas.kafka.zookeeper.session.timeout.ms=60000
+atlas.kafka.zookeeper.connection.timeout.ms=60000
+atlas.kafka.zookeeper.sync.time.ms=20
+atlas.kafka.auto.commit.interval.ms=1000
+atlas.kafka.hook.group.id=atlas
+
+atlas.kafka.enable.auto.commit=true
+atlas.kafka.auto.offset.reset=earliest
+atlas.kafka.session.timeout.ms=30000
+atlas.kafka.offsets.topic.replication.factor=1
+atlas.kafka.poll.timeout.ms=1000
+
+atlas.kafka.security.protocol=SASL_PLAINTEXT
+atlas.kafka.sasl.mechanism=GSSAPI
+atlas.kafka.sasl.kerberos.service.name=kafka
+
+## Server port configuration
+#atlas.server.http.port=21000
+#atlas.server.https.port=21443
+
+#########  Security Properties  #########
+
+# SSL config
+atlas.enableTLS=true
+
+#truststore.file=/path/to/truststore.jks
+#cert.stores.credential.provider.path=jceks://file/path/to/credentialstore.jceks
+truststore.file=/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts
+cert.stores.credential.provider.path=jceks://file///opt/atlas/conf/atlas.jceks
+
+#following only required for 2-way SSL
+#keystore.file=/path/to/keystore.jks
+keystore.file=/opt/cloudera/security/pki/server.jks
+
+atlas.authentication.method.pam=false
+atlas.authentication.method.pam.service=login
+
+# Authentication config
+atlas.authentication.method=kerberos
+atlas.authentication.keytab=/opt/atlas/conf/atlas.keytab
+atlas.authentication.principal=atlas/_HOST@${REALMNAME}
+
+atlas.authentication.method.kerberos=true
+
+atlas.authentication.method.kerberos.principal=atlas/_HOST@${REALMNAME}
+atlas.authentication.method.kerberos.keytab=/opt/atlas/conf/atlas.keytab
+atlas.authentication.method.kerberos.name.rules=RULE:[2:\$1@\$0](atlas@${REALMNAME})s/.*/atlas/
+atlas.authentication.method.kerberos.token.validity=3600
+
+#### user credentials file
+atlas.authentication.method.file=false
+#atlas.authentication.method.file.filename=${sys:atlas.home}/conf/users-credentials.properties
+
+#### ldap.type= LDAP or AD
+atlas.authentication.method.ldap=true
+atlas.authentication.method.ldap.type=ldap
+
+### groups from UGI
+atlas.authentication.method.ldap.ugi-groups=true
+
+######## LDAP properties #########
+atlas.authentication.method.ldap.url=${LDAPSERVERS}
+atlas.authentication.method.ldap.userDNpattern=uid={0},cn=users,cn=accounts,${LDAPDOMAINNAME}
+#atlas.authentication.method.ldap.groupSearchBase=cn=groups,cn=accounts,${LDAPDOMAINNAME}
+#atlas.authentication.method.ldap.groupSearchFilter=(&amp;amp;(member={0})(cn=${CLNLOWER}_atlas_*))
+#atlas.authentication.method.ldap.groupRoleAttribute=cn
+#atlas.authentication.method.ldap.base.dn=cn=accounts,${LDAPDOMAINNAME} #atlas.authentication.method.ldap.bind.dn=uid=${BINDUSER},cn=sysaccounts,cn=etc,${LDAPDOMAINNAME} #atlas.authentication.method.ldap.bind.password=$(BINDPASS)
+#atlas.authentication.method.ldap.referral=follow
+#atlas.authentication.method.ldap.user.searchfilter=(uid={0})
+atlas.authentication.method.ldap.default.role=ROLE_USER
+
+#########  JAAS Configuration ########
+atlas.jaas.KafkaClient.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.KafkaClient.loginModuleControlFlag=required
+atlas.jaas.KafkaClient.option.useKeyTab=true
+atlas.jaas.KafkaClient.option.storeKey=true
+atlas.jaas.KafkaClient.option.serviceName=kafka
+atlas.jaas.KafkaClient.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.KafkaClient.option.principal=atlas/_HOST@${REALMNAME}
+
+atlas.jaas.Client.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.Client.loginModuleControlFlag=required
+atlas.jaas.Client.option.useKeyTab=true
+atlas.jaas.Client.option.storeKey=true
+atlas.jaas.Client.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.Client.option.principal=atlas/_HOST@${REALMNAME}
+
+#########  Server Properties  #########
+atlas.rest.address=${ATLASURL}:21443
+# If enabled and set to true, this will run setup steps when the server starts
+#atlas.server.run.setup.on.start=false
+
+#########  Entity Audit Configs  #########
+atlas.audit.hbase.tablename=apache_atlas_entity_audit
+atlas.audit.zookeeper.session.timeout.ms=1000
+atlas.audit.hbase.zookeeper.quorum=${ZOOKEEPERSERVERS}
+
+#########  High Availability Configuration ########
+atlas.server.ha.enabled=false
+#### Enabled the configs below as per need if HA is enabled #####
+#atlas.server.ids=id1
+#atlas.server.address.id1=localhost:21000
+#atlas.server.ha.zookeeper.connect=localhost:2181
+#atlas.server.ha.zookeeper.retry.sleeptime.ms=1000
+#atlas.server.ha.zookeeper.num.retries=3
+#atlas.server.ha.zookeeper.session.timeout.ms=20000
+## if ACLs need to be set on the created nodes, uncomment these lines and set the values ##
+#atlas.server.ha.zookeeper.acl=&amp;lt;scheme&amp;gt;:&amp;lt;id&amp;gt;
+#atlas.server.ha.zookeeper.auth=&amp;lt;scheme&amp;gt;:&amp;lt;authinfo&amp;gt;
+
+######### Atlas Authorization #########
+atlas.authorizer.impl=simple
+atlas.authorizer.simple.authz.policy.file=atlas-simple-authz-policy.json
+
+#########  Type Cache Implementation ########
+# A type cache class which implements
+# org.apache.atlas.typesystem.types.cache.TypeCache.
+# The default implementation is org.apache.atlas.typesystem.types.cache.DefaultTypeCache
+# which is a local in-memory type cache.
+#atlas.TypeCache.impl=
+
+#########  Performance Configs  #########
+#atlas.graph.storage.lock.retries=10
+#atlas.graph.storage.cache.db-cache-time=120000
+
+#########  CSRF Configs  #########
+atlas.rest-csrf.enabled=true
+atlas.rest-csrf.browser-useragents-regex=^Mozilla.*,^Opera.*,^Chrome.*
+atlas.rest-csrf.methods-to-ignore=GET,OPTIONS,HEAD,TRACE
+atlas.rest-csrf.custom-header=X-XSRF-HEADER
+
+############ KNOX Configs ################
+#atlas.sso.knox.browser.useragent=Mozilla,Chrome,Opera
+#atlas.sso.knox.enabled=true
+#atlas.sso.knox.providerurl=https://&amp;lt;knox gateway ip&amp;gt;:8443/gateway/knoxsso/api/v1/websso
+#atlas.sso.knox.publicKey=
+
+############ Atlas Metric/Stats configs ################
+# Format: atlas.metric.query.&amp;lt;key&amp;gt;.&amp;lt;name&amp;gt;
+atlas.metric.query.cache.ttlInSecs=900
+#atlas.metric.query.general.typeCount=
+#atlas.metric.query.general.typeUnusedCount=
+#atlas.metric.query.general.entityCount=
+#atlas.metric.query.general.tagCount=
+#atlas.metric.query.general.entityDeleted=
+#
+#atlas.metric.query.entity.typeEntities=
+#atlas.metric.query.entity.entityTagged=
+#
+#atlas.metric.query.tags.entityTags=
+
+#########  Compiled Query Cache Configuration  #########
+
+# The size of the compiled query cache.  Older queries will be evicted from the cache
+# when we reach the capacity.
+
+#atlas.CompiledQueryCache.capacity=1000
+
+# Allows notifications when items are evicted from the compiled query
+# cache because it has become full.  A warning will be issued when
+# the specified number of evictions have occurred.  If the eviction
+# warning threshold &amp;lt;= 0, no eviction warnings will be issued.
+
+#atlas.CompiledQueryCache.evictionWarningThrottle=0
+
+
+#########  Full Text Search Configuration  #########
+
+#Set to false to disable full text search.
+#atlas.search.fulltext.enable=true
+
+#########  Gremlin Search Configuration  #########
+
+#Set to false to disable gremlin search.
+atlas.search.gremlin.enable=false
+
+
+########## Add http headers ###########
+
+#atlas.headers.Access-Control-Allow-Origin=*
+#atlas.headers.Access-Control-Allow-Methods=GET,OPTIONS,HEAD,PUT,POST
+#atlas.headers.&amp;lt;headerName&amp;gt;=&amp;lt;headerValue&amp;gt;
+
+
+#########  UI Configuration ########
+
+atlas.ui.default.version=v1
+EOF
+
+sudo chown atlas.atlas /opt/atlas/conf/atlas-application.properties
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;43-изменения-в-файле-optatlasconfatlas-envsh&#34;&gt;4.3. Изменения в файле &amp;lsquo;/opt/atlas/conf/atlas-env.sh&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;Этот файл используется для передачи различных Java-параметров запускаемому экземпляру Atlas&amp;rsquo;а. Сгенерируем его следующим сценарием:&lt;/p&gt;
+&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/atlas-env.sh
+#!/usr/bin/env bash
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# &amp;#34;License&amp;#34;); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# The java implementation to use. If JAVA_HOME is not found we expect java and jar to be in path
+#export JAVA_HOME=
+export JAVA_HOME=&amp;#34;/usr/java/jdk1.8.0_181-cloudera&amp;#34;
+
+# any additional java opts you want to set. This will apply to both client and server operations
+#export ATLAS_OPTS=
+
+# any additional java opts that you want to set for client only
+#export ATLAS_CLIENT_OPTS=
+
+# java heap size we want to set for the client. Default is 1024MB
+#export ATLAS_CLIENT_HEAP=
+
+# any additional opts you want to set for atlas service.
+#export ATLAS_SERVER_OPTS=
+
+# indicative values for large number of metadata entities (equal or more than 10,000s)
+#export ATLAS_SERVER_OPTS=&amp;#34;-server -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+PrintTenuringDistribution -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=dumps/atlas_server.hprof -Xloggc:logs/gc-worker.log -verbose:gc -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=1m -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCTimeStamps&amp;#34;
+export ATLAS_SERVER_OPTS=&amp;#34;-server -XX:SoftRefLRUPolicyMSPerMB=0 -XX:+CMSClassUnloadingEnabled -XX:+UseConcMarkSweepGC \
+  -XX:+CMSParallelRemarkEnabled -XX:+PrintTenuringDistribution -XX:+HeapDumpOnOutOfMemoryError \
+  -XX:HeapDumpPath=dumps/atlas_server.hprof -Xloggc:logs/gc-worker.log -verbose:gc -XX:+UseGCLogFileRotation \
+  -XX:NumberOfGCLogFiles=10 -XX:GCLogFileSize=1m -XX:+PrintGCDetails -XX:+PrintHeapAtGC -XX:+PrintGCTimeStamps \
+  -Djava.security.krb5.conf=/etc/krb5.conf \
+  -Djava.security.auth.login.config=/opt/atlas/conf/jaas.conf&amp;#34;
+
+# java heap size we want to set for the atlas server. Default is 1024MB
+#export ATLAS_SERVER_HEAP=
+
+# indicative values for large number of metadata entities (equal or more than 10,000s) for JDK 8
+export ATLAS_SERVER_HEAP=&amp;#34;-Xms15360m -Xmx15360m -XX:MaxNewSize=5120m -XX:MetaspaceSize=100M -XX:MaxMetaspaceSize=512m&amp;#34;
+
+# What is is considered as atlas home dir. Default is the base locaion of the installed software
+#export ATLAS_HOME_DIR=
+export ATLAS_HOME_DIR=&amp;#34;/opt/atlas&amp;#34;
+
+# Where log files are stored. Defatult is logs directory under the base install location
+#export ATLAS_LOG_DIR=
+export ATLAS_LOG_DIR=&amp;#34;/opt/atlas/logs&amp;#34;
+
+# Where pid files are stored. Defatult is logs directory under the base install location
+export ATLAS_PID_DIR=&amp;#34;/opt/atlas&amp;#34;
+
+# where the atlas titan db data is stored. Defatult is logs/data directory under the base install location
+#export ATLAS_DATA_DIR=
+export ATLAS_DATA_DIR=&amp;#34;/opt/atlas/data&amp;#34;
+
+# Where do you want to expand the war file. By Default it is in /server/webapp dir under the base install dir.
+#export ATLAS_EXPANDED_WEBAPP_DIR=
+export ATLAS_EXPANDED_WEBAPP_DIR=&amp;#34;/opt/atlas/server/webapp&amp;#34;
+
+# indicates whether or not a local instance of HBase should be started for Atlas
+export MANAGE_LOCAL_HBASE=false
+
+# indicates whether or not a local instance of Solr should be started for Atlas
+export MANAGE_LOCAL_SOLR=false
+
+# indicates whether or not cassandra is the embedded backend for Atlas
+export MANAGE_EMBEDDED_CASSANDRA=false
+
+# indicates whether or not a local instance of Elasticsearch should be started for Atlas
+export MANAGE_LOCAL_ELASTICSEARCH=false
+
+export HBASE_CONF_DIR=&amp;#34;/etc/hbase/conf&amp;#34;
+EOF
+
+sudo chown atlas.atlas /opt/atlas/conf/atlas-env.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;br&gt;
+&lt;h3 id=&#34;44-добавление-jaas-файла-для-работы-с-керберизированным-apache-solr&#34;&gt;4.4. Добавление jaas-файла для работы с керберизированным Apache Solr&lt;/h3&gt;
+&lt;p&gt;В файле &lt;code&gt;/opt/apache-atlas/conf/atlas-application.properties&lt;/code&gt; есть необходимые строки для подключения приложений через jaas-конфигурацию. Но в случае работы с Apache Solr это не сработало, поэтому используем отдельный jaas-файл.&lt;/p&gt;
+&lt;p&gt;Создаём файл &lt;code&gt;/opt/atlas/conf/jaas.conf&lt;/code&gt; со следующим содержимым:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+PRINCIPAL=&amp;#34;atlas/$(hostname)@${REALMNAME}&amp;#34;
+
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/jaas.conf
+Client {
+  com.sun.security.auth.module.Krb5LoginModule required
+  useKeyTab=true
+  keyTab=&amp;#34;/opt/atlas/conf/atlas.keytab&amp;#34;
+  storeKey=true
+  principal=&amp;#34;${PRINCIPAL}&amp;#34;
+  debug=false;
+};
+EOF
+
+sudo chown atlas.atlas /opt/atlas/conf/jaas.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;5-подготовка-systemd-unitа-для-запуска-atlas&#34;&gt;5. Подготовка systemd unit&amp;rsquo;а для запуска Atlas&lt;/h2&gt;
+&lt;p&gt;Создаём файл &lt;code&gt;/etc/systemd/system/atlas.service&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/atlas.service
+[Unit]
+Description=Apache Atlas Service
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/opt/atlas/atlas.pid
+WorkingDirectory=/opt/atlas
+
+User=atlas
+Group=atlas
+
+ExecStart=/opt/atlas/bin/atlas_start.py
+ExecStop=/opt/atlas/bin/atlas_stop.py
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Обязательно обновляем конфигурацию Systemd:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl daemon-reload
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На данный момент включать и запускать демон atlas.service не требуется.&lt;/p&gt;
+&lt;h2 id=&#34;7-список-дополнительных-способов-аутентификации-в-atlas&#34;&gt;7. Список дополнительных способов аутентификации в Atlas&lt;/h2&gt;
+&lt;p&gt;Дополнительные способы аутентификации в Atlas могут пригодиться на стадии отладки.&lt;/p&gt;
+&lt;h3 id=&#34;71-pam-аутентификация&#34;&gt;7.1. PAM-аутентификация&lt;/h3&gt;
+&lt;p&gt;Метод рабочий и очень простой, при условии, что машина в домене FreeIPA. Рекомендуется к использованию только при тестировании Atlas&amp;rsquo;а.&lt;/p&gt;
+&lt;p&gt;Изменения файла &amp;lsquo;/opt/apache-atlas/conf/atlas-application.properties&amp;rsquo;, которые позволяют использовать для аутентификации, PAM-модуль &lt;code&gt;/etc/pam.d/login&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;atlas.authentication.method.pam=true
+atlas.authentication.method.pam.service=login
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;72-аутентификация-по-уз-из-файла&#34;&gt;7.2. Аутентификация по УЗ из файла&lt;/h3&gt;
+&lt;p&gt;Изменения файла &amp;lsquo;/opt/apache-atlas/conf/atlas-application.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;atlas.authentication.method.file=true
+atlas.authentication.method.file.filename=${sys:atlas.home}/conf/users-credentials.properties
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Файл &lt;code&gt;users-credentials.properties&lt;/code&gt; имеет вид (логин/пароль: admin/admin):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#username=group::sha256-password
+admin=ADMIN::8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+rangertagsync=RANGER_TAG_SYNC::0afe7a1968b07d4c3ff4ed8c2d809a32ffea706c66cd795ead9048e81cfaf034
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Генерация хэша слова &amp;lsquo;admin&amp;rsquo;, без &amp;lsquo;перевода строки&amp;rsquo; и &amp;lsquo;возврата каретки&amp;rsquo; в конце строки,  выполняется, например так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;printf &amp;#34;admin&amp;#34; | sha256sum
+8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918  -
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;73-kerberos-аутентификация&#34;&gt;7.3. Kerberos-аутентификация&lt;/h3&gt;
+&lt;p&gt;Есть сомнения в данном пункте, в части правильного определения параметров, отвечающих за Kerberos-аутентификацию пользователей при входе в Atlas Web UI.&lt;/p&gt;
+&lt;p&gt;Не работает для автоматического входа, хотя браузер настроен и Kerberos-билет в наличии. Автоматический вход не происходит. При попытке ввода учётных данных высвечивается ошибка Error while authentication.&lt;/p&gt;
+&lt;p&gt;Получение keytab&amp;rsquo;а для принципала &lt;a href=&#34;mailto:HTTP/_HOST@TEST.LAN&#34;&gt;HTTP/_HOST@TEST.LAN&lt;/a&gt;, обязательно без пересоздания его (-r опция), так как перестанут работать уже настроенные роли Cloudera-кластера, вследствие чего будет необходимо выполнить перегенерацию kerberos-принципалов средствами Cloudera Manager&amp;rsquo;а:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;EXAMPLE.ORG&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+#kinit
+
+ipa service-allow-retrieve-keytab HTTP/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -r -p HTTP/$(hostname) -k /opt/atlas/conf/atlas.keytab
+ipa service-disallow-retrieve-keytab HTTP/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Изменения файла &amp;lsquo;/opt/apache-atlas/conf/atlas-application.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;atlas.authentication.method.kerberos = true
+
+atlas.authentication.method.kerberos.principal=HTTP/_HOST@${REALMNAME}
+atlas.authentication.method.kerberos.keytab = /opt/atlas/conf/atlas.keytab
+atlas.authentication.method.kerberos.name.rules = RULE:[2:$1@$0](atlas@${REALMNAME})s/.*/atlas/
+atlas.authentication.method.kerberos.token.validity = 3600
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;8-обнаруженные-проблемы&#34;&gt;8. Обнаруженные проблемы&lt;/h2&gt;
+&lt;p&gt;Solr пишет:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FieldTypePluginLoader	TokenizerFactory is using deprecated 5.0.0 emulation. You should at some point declare and reindex to at least 6.0,&amp;amp;#8203; because 5.x emulation is deprecated and will be removed in 7.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;/usr/lib/solr/atlasTemplate/solrconfig.xml&lt;/code&gt; исправил версию подходящего Solr&amp;rsquo;а с пятой на 7.4 и переинициализировал Atlas-обвязку.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 05. 🎣 Заброс Hook&#39;а в Apache Hive</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
+      <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-30&lt;/p&gt;
+&lt;h2 id=&#34;1введение&#34;&gt;1.Введение&lt;/h2&gt;
+&lt;p&gt;Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.&lt;/p&gt;
+&lt;h2 id=&#34;2-создание-atlas-папки-на-хостах-с-ролью-hiveserver2&#34;&gt;2. Создание Atlas-папки на хостах с ролью &amp;lsquo;HiveServer2&amp;rsquo;&lt;/h2&gt;
+&lt;p&gt;2.1. На хостах с ролью &amp;lsquo;HiveServer2&amp;rsquo; создаём atlas-каталоги и скачиваем с Nexus&amp;rsquo;а необходимый файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILENAME=&amp;#34;?????????????????&amp;#34;
+## Пробел нужен, чтобы пароль не попал в history
+ NXUSERPASS=&amp;#34;eugene:xxxxxxxxxxxxx&amp;#34;
+DIR=&amp;#34;apache-atlas-2.2.0_cdh6.3.2_j8.181_mvn3.8.1&amp;#34;
+
+## Скачиваем сборку с Nexus&amp;#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://10.15.61.1:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+
+sudo tar xvf ${FILENAME} -C /opt
+cd /opt
+sudo ln -s ${DIR} atlas
+
+sudo chown -R root.root ${DIR}
+sudo chmod -R u=rwX,go=rX ${DIR}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.2. Создаём файл &amp;lsquo;atlas-application.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZOOKEEPERSERVERS=&amp;#34;dev-zk110p.test2.lan:2181,dev-zk111p.test2.lan:2181,dev-zk112p.test2.lan:2181&amp;#34;
+KAFKASERVERS=&amp;#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&amp;#34;
+REALMNAME=&amp;#34;TEST2.LAN&amp;#34;
+
+sudo mkdir -p /opt/atlas/conf
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/atlas-application.properties
+#########  Notification Configs  #########
+
+atlas.kafka.zookeeper.connect=${ZOOKEEPERSERVERS}
+atlas.kafka.bootstrap.servers=${KAFKASERVERS}
+atlas.kafka.zookeeper.session.timeout.ms=60000
+atlas.kafka.zookeeper.connection.timeout.ms=60000
+atlas.kafka.zookeeper.sync.time.ms=20
+atlas.kafka.auto.commit.interval.ms=1000
+atlas.kafka.hook.group.id=atlas
+
+atlas.kafka.enable.auto.commit=true
+atlas.kafka.auto.offset.reset=earliest
+atlas.kafka.session.timeout.ms=30000
+atlas.kafka.offsets.topic.replication.factor=1
+atlas.kafka.poll.timeout.ms=1000
+
+atlas.kafka.security.protocol=SASL_PLAINTEXT
+atlas.kafka.sasl.mechanism=GSSAPI
+atlas.kafka.sasl.kerberos.service.name=kafka
+
+#########  JAAS Configuration ########
+
+atlas.jaas.KafkaClient.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.KafkaClient.loginModuleControlFlag=required
+atlas.jaas.KafkaClient.option.useKeyTab=true
+atlas.jaas.KafkaClient.option.storeKey=true
+atlas.jaas.KafkaClient.option.serviceName=kafka
+atlas.jaas.KafkaClient.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.KafkaClient.option.principal=atlas/_HOST@${REALMNAME}
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.3. Создаём, если таковой ещё не был сгененирован, и получаем новый keytab. Напомню, что &lt;span style=&#34;color:red&#34;&gt;последующие получения keytab&amp;rsquo;а необходимо выполнять с опцией &amp;lsquo;-r&amp;rsquo;, иначе вместо получения существующего keytab&amp;rsquo;а будет создан новый keytab&lt;/span&gt;, вследствие чего уже работающие сервисы Atlas&amp;rsquo;а перестанут аутентифицировать и потребуется повторить для них получение keytab&amp;rsquo;ов и перезапустить сервисы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+# Закомментировать след строку, если генерируем новый ключ для keytab&amp;#39;а.
+OPTION=&amp;#34;-r&amp;#34;
+
+# kinit ${IPAADMIN}
+ipa service-allow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-allow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa-getkeytab -p atlas/$(hostname) -k ~/atlas.keytab ${OPTION}
+ipa service-disallow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-disallow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
+sudo mv ~/atlas.keytab /opt/atlas/conf/
+sudo chown root.root /opt/atlas/conf/atlas.keytab
+sudo setfacl -m u:hive:r /opt/atlas/conf/atlas.keytab
+
+unset OPTION
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-заброс-hookа-в-apache-hive-через-cloudera-manager&#34;&gt;3. Заброс Hook&amp;rsquo;а в Apache Hive через Cloudera Manager&lt;/h2&gt;
+&lt;p&gt;3.1. В настройках службы Hive изменяем следующие параметры:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HiveServer2 Advanced Configuration Snippet (Safety Valve) for hive-site.xml&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;b&gt;Name&lt;/b&gt;: &lt;span style=&#34;color:blue&#34;&gt;hive.exec.post.hooks&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: &lt;span style=&#34;color:blue&#34;&gt;org.apache.atlas.hive.hook.HiveHook&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Description&lt;/b&gt;:&lt;br&gt;
+&lt;hr&gt;
+&lt;span style=&#34;color:lightgrey&#34;&gt; Следующие параметры не используем. После проверки, будут удалены или активированы.
+&lt;p&gt;&lt;b&gt;Name&lt;/b&gt;: hive.reloadable.aux.jars.path&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: /opt/atlas/hook/hive&lt;br&gt;
+&lt;b&gt;Description:&lt;/b&gt;&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Name&lt;/b&gt;: atlas.cluster.name&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: primary&lt;br&gt;
+&lt;b&gt;Description&lt;/b&gt;:&lt;br&gt;
+&lt;/span&gt;&lt;/p&gt;
+&lt;/td&gt;
+&lt;td&gt;
+	For advanced use only. A string to be inserted into hive-site.xml for this role only.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Java Configuration Options for HiveServer2&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;{{JAVA_GC_ARGS}} &lt;span style=&#34;color:blue&#34;&gt;-Datlas.conf=/opt/atlas/conf/&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;
+	These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HiveServer2 Environment Advanced Configuration Snippet (Safety Valve)&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color:blue&#34;&gt;HIVE_AUX_JARS_PATH=/opt/atlas/hook/hive/&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;For advanced use only, key-value pairs (one on each line) to be inserted into a role&#39;s environment. Applies to configurations of this role except client configuration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHive&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache Hive&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)</title>
+      <link>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
+      <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-05&lt;/p&gt;
+&lt;h2 id=&#34;1подготовка-хоста&#34;&gt;1. Подготовка хоста&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Сначала хост добавляем в Cloudera-кластер, чтобы при установке Cloudera CDH были корректно добавлены локальные аккаунты и группы.&lt;/li&gt;
+&lt;li&gt;В процессе добавления в кластер, перед включением TLS-аутентификации для Cloudera Agent, добавляем хост в домен.&lt;/li&gt;
+&lt;li&gt;На хост установлены шлюзы для YARN, HBase, Hive, Kafka, Solr.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;2-установка-maven&#34;&gt;2. Установка Maven&lt;/h2&gt;
+&lt;p&gt;Сначала устанавливаем maven 3.0.5-17.el7 из стандартных репо для CentOS7:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo yum install maven
+...
+Dependencies Resolved
+
+=====================================================================================================================
+ Package                                   Arch            Version                           Repository        Size
+=====================================================================================================================
+Installing:
+ maven                                     noarch          3.0.5-17.el7                      bases             1.3 M
+Installing for dependencies:
+ aether-api                                noarch          1.13.1-13.el7                     bases              89 k
+ aether-connector-wagon                    noarch          1.13.1-13.el7                     bases              34 k
+ aether-impl                               noarch          1.13.1-13.el7                     bases             124 k
+ aether-spi                                noarch          1.13.1-13.el7                     bases              19 k
+ aether-util                               noarch          1.13.1-13.el7                     bases             119 k
+ aopalliance                               noarch          1.0-8.el7                         bases              11 k
+ apache-commons-cli                        noarch          1.2-13.el7                        bases              50 k
+ apache-commons-codec                      noarch          1.8-7.el7                         bases             223 k
+ apache-commons-io                         noarch          1:2.4-12.el7                      bases             189 k
+ apache-commons-lang                       noarch          2.6-15.el7                        bases             276 k
+ apache-commons-logging                    noarch          1.1.2-7.el7                       bases              78 k
+ apache-commons-net                        noarch          3.2-8.el7.centos                  bases             261 k
+ atinject                                  noarch          1-13.20100611svn86.el7            bases              13 k
+ atk                                       x86_64          2.28.1-2.el7                      bases             263 k
+ avalon-framework                          noarch          4.3-10.el7                        bases              88 k
+ avalon-logkit                             noarch          2.1-14.el7                        bases              87 k
+ bcel                                      noarch          5.2-18.el7                        bases             469 k
+ cairo                                     x86_64          1.15.12-4.el7                     bases             741 k
+ cal10n                                    noarch          0.7.7-4.el7                       bases              36 k
+ cdi-api                                   noarch          1.0-11.SP4.el7                    bases              41 k
+ cglib                                     noarch          2.2-18.el7                        bases             255 k
+ copy-jdk-configs                          noarch          3.3-10.el7_5                      bases              21 k
+ dejavu-fonts-common                       noarch          2.33-6.el7                        bases              64 k
+ dejavu-sans-fonts                         noarch          2.33-6.el7                        bases             1.4 M
+ easymock2                                 noarch          2.5.2-12.el7                      bases              92 k
+ felix-framework                           noarch          4.2.1-5.el7                       bases             481 k
+ fontconfig                                x86_64          2.13.0-4.3.el7                    bases             254 k
+ fontpackages-filesystem                   noarch          1.44-8.el7                        bases             9.9 k
+ fribidi                                   x86_64          1.0.2-1.el7_7.1                   bases              79 k
+ gdk-pixbuf2                               x86_64          2.36.12-3.el7                     bases             570 k
+ geronimo-annotation                       noarch          1.0-15.el7                        bases              23 k
+ geronimo-jms                              noarch          1.1.1-19.el7                      bases              31 k
+ giflib                                    x86_64          4.1.6-9.el7                       bases              40 k
+ google-guice                              noarch          3.1.3-9.el7                       bases             385 k
+ graphite2                                 x86_64          1.3.10-1.el7_3                    bases             115 k
+ gtk-update-icon-cache                     x86_64          3.22.30-6.el7                     updates           27 k
+ gtk2                                      x86_64          2.24.31-1.el7                     bases             3.4 M
+ guava                                     noarch          13.0-6.el7                        bases             1.6 M
+ hamcrest                                  noarch          1.3-6.el7                         bases             124 k
+ harfbuzz                                  x86_64          1.7.5-2.el7                       bases             267 k
+ hicolor-icon-theme                        noarch          0.12-7.el7                        bases              42 k
+ httpcomponents-client                     noarch          4.2.5-5.el7_0                     bases             425 k
+ httpcomponents-core                       noarch          4.2.4-6.el7                       bases             466 k
+ jakarta-commons-httpclient                noarch          1:3.1-16.el7_0                    bases             241 k
+ jasper-libs                               x86_64          1.900.1-33.el7                    bases             150 k
+ java-1.8.0-openjdk                        x86_64          1:1.8.0.292.b10-1.el7_9           updates          310 k
+ java-1.8.0-openjdk-devel                  x86_64          1:1.8.0.292.b10-1.el7_9           updates          9.8 M
+ java-1.8.0-openjdk-headless               x86_64          1:1.8.0.292.b10-1.el7_9           updates           33 M
+ javamail                                  noarch          1.4.6-8.el7                       bases             758 k
+ javapackages-tools                        noarch          3.4.1-11.el7                      bases              73 k
+ javassist                                 noarch          3.16.1-10.el7                     bases             627 k
+ jbigkit-libs                              x86_64          2.0-11.el7                        bases              46 k
+ jboss-ejb-3.1-api                         noarch          1.0.2-10.el7                      bases              54 k
+ jboss-el-2.2-api                          noarch          1.0.1-0.7.20120212git2fabd8.el7   bases              44 k
+ jboss-interceptors-1.1-api                noarch          1.0.2-0.9.20120319git49a904.el7   bases              27 k
+ jboss-jaxrpc-1.1-api                      noarch          1.0.1-7.el7                       bases              44 k
+ jboss-servlet-3.0-api                     noarch          1.0.1-9.el7                       bases              82 k
+ jboss-transaction-1.1-api                 noarch          1.0.1-8.el7                       bases              40 k
+ jline                                     noarch          1.0-8.el7                         bases              69 k
+ jsch                                      noarch          0.1.50-5.el7                      bases             239 k
+ jsoup                                     noarch          1.6.1-10.el7                      bases             263 k
+ junit                                     noarch          4.11-8.el7                        bases             261 k
+ jzlib                                     noarch          1.1.1-6.el7                       bases              72 k
+ libICE                                    x86_64          1.0.9-9.el7                       bases              66 k
+ libSM                                     x86_64          1.2.2-2.el7                       bases              39 k
+ libX11                                    x86_64          1.6.7-3.el7_9                     updates          607 k
+ libX11-common                             noarch          1.6.7-3.el7_9                     updates          164 k
+ libXau                                    x86_64          1.0.8-2.1.el7                     bases              29 k
+ libXcomposite                             x86_64          0.4.4-4.1.el7                     bases              22 k
+ libXcursor                                x86_64          1.1.15-1.el7                      bases              30 k
+ libXdamage                                x86_64          1.1.4-4.1.el7                     bases              20 k
+ libXext                                   x86_64          1.3.3-3.el7                       bases              39 k
+ libXfixes                                 x86_64          5.0.3-1.el7                       bases              18 k
+ libXft                                    x86_64          2.3.2-2.el7                       bases              58 k
+ libXi                                     x86_64          1.7.9-1.el7                       bases              40 k
+ libXinerama                               x86_64          1.1.3-2.1.el7                     bases              14 k
+ libXrandr                                 x86_64          1.5.1-2.el7                       bases              27 k
+ libXrender                                x86_64          0.9.10-1.el7                      bases              26 k
+ libXtst                                   x86_64          1.2.3-1.el7                       bases              20 k
+ libXxf86vm                                x86_64          1.1.4-1.el7                       bases              18 k
+ libfontenc                                x86_64          1.1.3-3.el7                       bases              31 k
+ libglvnd                                  x86_64          1:1.0.1-0.8.git5baa1e5.el7        bases              89 k
+ libglvnd-egl                              x86_64          1:1.0.1-0.8.git5baa1e5.el7        bases              44 k
+ libglvnd-glx                              x86_64          1:1.0.1-0.8.git5baa1e5.el7        bases             125 k
+ libjpeg-turbo                             x86_64          1.2.90-8.el7                      bases             135 k
+ libthai                                   x86_64          0.1.14-9.el7                      bases             187 k
+ libtiff                                   x86_64          4.0.3-35.el7                      bases             172 k
+ libwayland-client                         x86_64          1.15.0-1.el7                      bases              33 k
+ libwayland-server                         x86_64          1.15.0-1.el7                      bases              39 k
+ libxcb                                    x86_64          1.13-1.el7                        bases             214 k
+ libxshmfence                              x86_64          1.2-1.el7                         bases             7.2 k
+ libxslt                                   x86_64          1.1.28-6.el7                      bases             242 k
+ lksctp-tools                              x86_64          1.0.17-2.el7                      bases              88 k
+ log4j                                     noarch          1.2.17-16.el7_4                   bases             444 k
+ maven-wagon                               noarch          2.4-3.el7                         bases             187 k
+ mesa-libEGL                               x86_64          18.3.4-12.el7_9                   updates          110 k
+ mesa-libGL                                x86_64          18.3.4-12.el7_9                   updates          166 k
+ mesa-libgbm                               x86_64          18.3.4-12.el7_9                   updates           39 k
+ mesa-libglapi                             x86_64          18.3.4-12.el7_9                   updates           46 k
+ nekohtml                                  noarch          1.9.14-13.el7                     bases             152 k
+ objectweb-asm                             noarch          3.3.1-9.el7                       bases             197 k
+ pango                                     x86_64          1.42.4-4.el7_7                    bases             280 k
+ pcsc-lite-libs                            x86_64          1.8.8-8.el7                       bases              34 k
+ pixman                                    x86_64          0.34.0-1.el7                      bases             248 k
+ plexus-cipher                             noarch          1.7-5.el7                         bases              22 k
+ plexus-classworlds                        noarch          2.4.2-8.el7                       bases              54 k
+ plexus-component-api                      noarch          1.0-0.16.alpha15.el7              bases              27 k
+ plexus-containers-component-annotations   noarch          1.5.5-14.el7                      bases              11 k
+ plexus-containers-container-default       noarch          1.5.5-14.el7                      bases             183 k
+ plexus-interactivity                      noarch          1.0-0.14.alpha6.el7               bases              17 k
+ plexus-interpolation                      noarch          1.15-8.el7                        bases              57 k
+ plexus-sec-dispatcher                     noarch          1.4-13.el7                        bases              29 k
+ plexus-utils                              noarch          3.0.9-9.el7                       bases             225 k
+ python-javapackages                       noarch          3.4.1-11.el7                      bases              31 k
+ python-lxml                               x86_64          3.2.1-4.el7                       bases             758 k
+ qdox                                      noarch          1.12.1-10.el7                     bases             170 k
+ regexp                                    noarch          1.5-13.el7                        bases              47 k
+ sisu-inject-bean                          noarch          2.3.0-11.el7                      bases             181 k
+ sisu-inject-plexus                        noarch          2.3.0-11.el7                      bases             179 k
+ slf4j                                     noarch          1.7.4-4.el7_4                     bases             170 k
+ tomcat-servlet-3.0-api                    noarch          7.0.76-16.el7_9                   updates          214 k
+ ttmkfdir                                  x86_64          3.0.9-42.el7                      bases              48 k
+ tzdata-java                               noarch          2021a-1.el7                       updates          191 k
+ xalan-j2                                  noarch          2.7.1-23.el7                      bases             1.9 M
+ xbean                                     noarch          3.13-6.el7                        bases             376 k
+ xerces-j2                                 noarch          2.11.0-17.el7_0                   bases             1.1 M
+ xml-commons-apis                          noarch          1.4.01-16.el7                     bases             227 k
+ xml-commons-resolver                      noarch          1.2-15.el7                        bases             108 k
+ xorg-x11-font-utils                       x86_64          1:7.5-21.el7                      bases             104 k
+ xorg-x11-fonts-Type1                      noarch          7.5-9.el7                         bases             521 k
+
+Transaction Summary
+====================================================================================================================
+Install  1 Package (+130 Dependent packages)
+
+Total download size: 72 M
+Installed size: 214 M
+Is this ok [y/d/N]: y
+...
+Complete!
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На данный момент последняя версия maven равна 3.8.1, но с этой версией сборка Atlas&amp;rsquo;а прерывалась ошибками. Поэтому выбираем версию 3.6.3. Скачиваем и устанавливаем переменные:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;curl -LO https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz  sudo tar -xvf apache-maven-3.8.1-bin.tar.gz -C /opt
+
+sudo ln -s /opt/apache-maven-3.6.3 /opt/maven
+
+cat &amp;lt;&amp;lt; EOF | sudo tee /etc/profile.d/maven.sh
+# Apache Maven Environmental Variables
+# MAVEN_HOME for Maven 1 - M2_HOME for Maven 2
+export JAVA_HOME=/usr/lib/jvm/jre-openjdk
+export M2_HOME=/opt/maven
+export MAVEN_HOME=/opt/maven
+export PATH=\${M2_HOME}/bin:\${PATH}
+EOF
+
+sudo chmod +x /etc/profile.d/maven.sh
+
+source /etc/profile.d/maven.sh
+
+#
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяем версию Maven&amp;rsquo;а:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ mvn --version
+
+Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+Maven home: /opt/maven
+Java version: 1.8.0_292, vendor: Red Hat, Inc., runtime: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.292.b10-1.el7_9.x86_64/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: &amp;#34;linux&amp;#34;, version: &amp;#34;3.10.0-1160.36.2.el7.x86_64&amp;#34;, arch: &amp;#34;amd64&amp;#34;, family: &amp;#34;unix&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-скачивание-исходников&#34;&gt;3. Скачивание исходников&lt;/h2&gt;
+&lt;p&gt;Сайт проекта находится здесь &lt;a href=&#34;https://atlas.apache.org/&#34;&gt;https://atlas.apache.org/&lt;/a&gt;. Находим и скачиваем исходники Apache Atlas:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src &amp;amp;&amp;amp; cd ~/src
+curl -LO https://mirror.linux-ia64.org/apache/atlas/2.1.0/apache-atlas-2.1.0-sources.tar.gz
+tar -xvf apache-atlas-2.1.0-sources.tar.gz
+cd ~/src/apache-atlas-sources-2.1.0
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;4-подготовка-к-сборке&#34;&gt;4. Подготовка к сборке&lt;/h2&gt;
+&lt;p&gt;В файл &amp;lsquo;pom.xml&amp;rsquo;, в раздел &amp;lsquo;repository&amp;rsquo;, добавляем клаудеровский репозиторий с maven-артефактами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;        &amp;lt;repository&amp;gt;
+            &amp;lt;id&amp;gt;cloudera&amp;lt;/id&amp;gt;
+            &amp;lt;url&amp;gt;https://repository.cloudera.com/artifactory/cloudera-repos&amp;lt;/url&amp;gt;
+            &amp;lt;releases&amp;gt;
+                &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
+            &amp;lt;/releases&amp;gt;
+            &amp;lt;snapshots&amp;gt;
+                &amp;lt;enabled&amp;gt;false&amp;lt;/enabled&amp;gt;
+            &amp;lt;/snapshots&amp;gt;
+        &amp;lt;/repository&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В этом же файле находим и меняем версии продуктов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;hadoop.version&amp;gt;3.0.0-cdh6.3.2&amp;lt;/hadoop.version&amp;gt;
+&amp;lt;hbase.version&amp;gt;2.1.0-cdh6.3.2&amp;lt;/hbase.version&amp;gt;
+&amp;lt;hive.version&amp;gt;2.1.1-cdh6.3.2&amp;lt;/hive.version&amp;gt;
+&amp;lt;kafka.scala.binary.version&amp;gt;2.11&amp;lt;/kafka.scala.binary.version&amp;gt;
+&amp;lt;kafka.version&amp;gt;2.2.1-cdh6.3.2&amp;lt;/kafka.version&amp;gt;
+&amp;lt;lucene-solr.version&amp;gt;7.4.0&amp;lt;/lucene-solr.version&amp;gt;
+&amp;lt;solr.version&amp;gt;7.4.0-cdh6.3.2&amp;lt;/solr.version&amp;gt;
+&amp;lt;sqoop.version&amp;gt;1.4.7-cdh6.3.2&amp;lt;/sqoop.version&amp;gt;
+&amp;lt;zookeeper.version&amp;gt;3.4.5-cdh6.3.2&amp;lt;/zookeeper.version&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;~/src/apache-atlas-sources-2.1.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/bridge/HiveMetaStoreBridge.java&lt;/code&gt; переходим на 577 строку, комментируем &amp;ldquo;String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;&amp;rdquo; и добавляем &amp;ldquo;String catalogName = null;&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;    public static String getDatabaseName(Database hiveDB) {
+        String dbName      = hiveDB.getName().toLowerCase();
+        /*String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;*/
+        String catalogName = null;
+
+        if (StringUtils.isNotEmpty(catalogName) &amp;amp;&amp;amp; !StringUtils.equals(catalogName, DEFAULT_METASTORE_CATALOG)) {
+            dbName = catalogName + SEP + dbName;
+        }
+
+        return dbName;
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;~/src/apache-atlas-sources-2.1.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/AtlasHiveHookContext.java&lt;/code&gt; переходим на 81 строку &amp;ldquo;this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;&amp;rdquo;, комментируем её и добавляем &amp;ldquo;this.metastoreHandler = null;&amp;rdquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;    public AtlasHiveHookContext(HiveHook hook, HiveOperation hiveOperation, HookContext hiveContext, HiveHookObjectNamesCache knownObjects,
+                                HiveMetastoreHook metastoreHook, ListenerEvent listenerEvent) throws Exception {
+        this.hook             = hook;
+        this.hiveOperation    = hiveOperation;
+        this.hiveContext      = hiveContext;
+        this.hive             = hiveContext != null ? Hive.get(hiveContext.getConf()) : null;
+        this.knownObjects     = knownObjects;
+        this.metastoreHook    = metastoreHook;
+        this.metastoreEvent   = listenerEvent;
+        /*this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;*/
+        this.metastoreHandler = null;
+
+
+        init();
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;5-сборка-apache-atlas&#34;&gt;5. Сборка Apache Atlas&lt;/h2&gt;
+&lt;p&gt;Переходим в каталог с исходниками и собираем пакеты командой (X — debug, T — количество потоков):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd ~/src/apache-atlas-sources-2.1.0
+mvn clean -DskipTests package -Pdist -X -T 4
+...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] Apache Atlas Server Build Tools 1.0 ................ SUCCESS [  0.673 s]
+[INFO] apache-atlas 2.1.0 ................................. SUCCESS [  8.714 s]
+[INFO] Apache Atlas Test Utility Tools 2.1.0 .............. SUCCESS [ 43.160 s]
+[INFO] Apache Atlas Integration 2.1.0 ..................... SUCCESS [ 16.049 s]
+[INFO] Apache Atlas Common 2.1.0 .......................... SUCCESS [ 10.399 s]
+[INFO] Apache Atlas Client 2.1.0 .......................... SUCCESS [  2.532 s]
+[INFO] atlas-client-common 2.1.0 .......................... SUCCESS [  5.335 s]
+[INFO] atlas-client-v1 2.1.0 .............................. SUCCESS [  4.889 s]
+[INFO] Apache Atlas Server API 2.1.0 ...................... SUCCESS [  2.784 s]
+[INFO] Apache Atlas Notification 2.1.0 .................... SUCCESS [ 39.912 s]
+[INFO] atlas-client-v2 2.1.0 .............................. SUCCESS [  3.519 s]
+[INFO] Apache Atlas Graph Database Projects 2.1.0 ......... SUCCESS [  2.214 s]
+[INFO] Apache Atlas Graph Database API 2.1.0 .............. SUCCESS [  4.018 s]
+[INFO] Graph Database Common Code 2.1.0 ................... SUCCESS [  5.220 s]
+[INFO] Apache Atlas JanusGraph-HBase2 Module 2.1.0 ........ SUCCESS [  9.821 s]
+[INFO] Apache Atlas JanusGraph DB Impl 2.1.0 .............. SUCCESS [01:55 min]
+[INFO] Apache Atlas Graph DB Dependencies 2.1.0 ........... SUCCESS [  1.697 s]
+[INFO] Apache Atlas Authorization 2.1.0 ................... SUCCESS [  8.347 s]
+[INFO] Apache Atlas Repository 2.1.0 ...................... SUCCESS [ 57.224 s]
+[INFO] Apache Atlas UI 2.1.0 .............................. SUCCESS [01:16 min]
+[INFO] Apache Atlas New UI 2.1.0 .......................... SUCCESS [01:16 min]
+[INFO] Apache Atlas Web Application 2.1.0 ................. SUCCESS [01:52 min]
+[INFO] Apache Atlas Documentation 2.1.0 ................... SUCCESS [  5.600 s]
+[INFO] Apache Atlas FileSystem Model 2.1.0 ................ SUCCESS [  3.727 s]
+[INFO] Apache Atlas Plugin Classloader 2.1.0 .............. SUCCESS [  4.856 s]
+[INFO] Apache Atlas Hive Bridge Shim 2.1.0 ................ SUCCESS [ 13.029 s]
+[INFO] Apache Atlas Hive Bridge 2.1.0 ..................... SUCCESS [ 11.428 s]
+[INFO] Apache Atlas Falcon Bridge Shim 2.1.0 .............. SUCCESS [  9.584 s]
+[INFO] Apache Atlas Falcon Bridge 2.1.0 ................... SUCCESS [  7.693 s]
+[INFO] Apache Atlas Sqoop Bridge Shim 2.1.0 ............... SUCCESS [01:32 min]
+[INFO] Apache Atlas Sqoop Bridge 2.1.0 .................... SUCCESS [ 12.755 s]
+[INFO] Apache Atlas Storm Bridge Shim 2.1.0 ............... SUCCESS [ 29.657 s]
+[INFO] Apache Atlas Storm Bridge 2.1.0 .................... SUCCESS [ 10.355 s]
+[INFO] Apache Atlas Hbase Bridge Shim 2.1.0 ............... SUCCESS [  7.741 s]
+[INFO] Apache Atlas Hbase Bridge 2.1.0 .................... SUCCESS [ 14.665 s]
+[INFO] Apache HBase - Testing Util 2.1.0 .................. SUCCESS [ 23.073 s]
+[INFO] Apache Atlas Kafka Bridge 2.1.0 .................... SUCCESS [ 22.792 s]
+[INFO] Apache Atlas classification updater 2.1.0 .......... SUCCESS [  6.567 s]
+[INFO] Apache Atlas Impala Hook API 2.1.0 ................. SUCCESS [  2.240 s]
+[INFO] Apache Atlas Impala Bridge Shim 2.1.0 .............. SUCCESS [  1.660 s]
+[INFO] Apache Atlas Impala Bridge 2.1.0 ................... SUCCESS [ 13.788 s]
+[INFO] Apache Atlas Distribution 2.1.0 .................... SUCCESS [ 57.715 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  07:00 min (Wall Clock)
+[INFO] Finished at: 2021-08-07T14:21:40+03:00
+[INFO] ------------------------------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Собранные пакеты находятся в каталоге &lt;code&gt;~/src/apache-atlas-sources-2.1.0/distro/target&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;6-использованные-источники&#34;&gt;6. Использованные источники&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cnblogs.com/ttzzyy/p/14143508.html&#34;&gt;环境篇：Atlas2.1.0兼容CDH6.3.2部署&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Блокирование доступа внешних программ к Hive metastore</title>
+      <link>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
+      <pubDate>Mon, 19 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-19&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/sg_sentry_service_config.html#concept_z5b_42s_p4__section_lvc_4g4_rp&#34;&gt;Before Enabling the Sentry Service&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Hive, используя фильтр &#39;Hive Metastore Access Control and Proxy User Groups Override&#39;, изменяем следующие параметры:&lt;/li&gt;
+&lt;table&gt;
+&lt;thead style=&#34;background: lightgray&#34;&gt;&lt;tr&gt;
+&lt;td&gt;Property&lt;/td&gt;
+&lt;td&gt;Value&lt;/td&gt;
+&lt;td&gt;Description&lt;/td&gt;
+&lt;/tr&gt;&lt;/thead&gt;
+&lt;tr&gt;&lt;td&gt;&lt;b&gt;Hive Metastore Access Control and Proxy User Groups Override&lt;/b&gt;
+&lt;i&gt;hadoop.proxyuser.hive.groups&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;
+&lt;span style=&#34;color:blue&#34;&gt;&lt;ul&gt;&lt;li&gt;hive&lt;/li&gt;
+&lt;li&gt;hue&lt;/li&gt;
+&lt;li&gt;sentry&lt;/li&gt;
+&lt;/ul&gt;&lt;/span&gt;
+&lt;p&gt;Могут быть указаны дополнительные пользовательские группы.&lt;/p&gt;
+&lt;/td&gt;
+&lt;td&gt;
+This configuration &lt;b&gt;overrides&lt;/b&gt; the value set for Hive Proxy User Groups configuration in HDFS service for use by Hive Metastore Server. Specify a comma-delimited list of groups that you want to &lt;b&gt;allow access to Hive Metastore metadata&lt;/b&gt; and allow the Hive user to impersonate. A value of &#39;*&#39; allows all groups. The default value of empty inherits the value set for Hive Proxy User Groups configuration in the HDFS service.
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;li&gt;Нажимаем &lt;b&gt;Save Changes&lt;/b&gt;.&lt;/li&gt;
+&lt;li&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: 01. Установка Cloudera Manager 6.3.1</title>
+      <link>/a/ustanovka-cloudera-manager-6-3.1/</link>
+      <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-cloudera-manager-6-3.1/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-06-16&lt;/p&gt;
+&lt;h2 id=&#34;1-введение&#34;&gt;1. Введение&lt;/h2&gt;
+&lt;p&gt;Номер последней версии Cloudera Manager, которая может работать без лицензии, это 6.3.1.&lt;/p&gt;
+&lt;p&gt;После преднастроек и проверок приступаем к установке Cloudera Manager на один из хостов будущего кластера. То есть сначала установим Cloudera Manager на машину управления, с помощью которого, позже, установим сервисы Zookeeper, HDFS, YARN, и далее по списку.&lt;/p&gt;
+&lt;p&gt;Все операции выполняем на командной машине с помощью ансибла из ранее подготовленного каталога &lt;code&gt;hadoop&lt;/code&gt;, где созданы все необходимые файлы.&lt;/p&gt;
+&lt;h2 id=&#34;2-выделение-машины-управления-кластером&#34;&gt;2. Выделение машины управления кластером&lt;/h2&gt;
+&lt;p&gt;Машина управления кластером имеет название, которое включает в себя буквы &amp;lsquo;mgm&amp;rsquo;. Определив ip-адрес этой машины, добавим новые строки в инвентори файл ансибла:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;printf &amp;#39;\n[mgm]\n10.15.4.6\n&amp;#39; &amp;gt;&amp;gt; cluster.inv
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-добавление-файлов-repo-на-машину-управления&#34;&gt;3. Добавление файлов repo на машину управления&lt;/h2&gt;
+&lt;p&gt;При установке компонента Hue, потребуется пакет &lt;code&gt;libtidy&lt;/code&gt;, который находится в EPEL-репозитории. Поэтому подготавливаем не только файлы репозиториев cloudera, но и epel. Файлы Cloudera-репо будут заброшены на машину управления кластером, тогда как epel-репо на все машины кластера:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd hadoop
+ 
+cat &amp;lt;&amp;lt; EOF &amp;gt; cloudera-manager.repo
+[cloudera-manager]
+USERNAME=nx-pubrepo-reader
+PASSWORD=xxxxxxxxxxxxxxxxx
+name = Cloudera Manager, Version cloudera-cm-6.3.1-hosted
+baseurl = http://10.15.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
+gpgcheck = 0
+EOF
+ 
+cat &amp;lt;&amp;lt; EOF &amp;gt; cloudera-cdh.repo
+[cloudera-cdh]
+USERNAME=nx-pubrepo-reader
+PASSWORD=xxxxxxxxxxxxxxxxx
+name = Cloudera Manager, Version cloudera-cdh-6.3.2-hosted
+baseurl = http://10.15.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
+gpgcheck = 0
+EOF
+ 
+cat &amp;lt;&amp;lt; EOF &amp;gt; epel.repo
+[epel7]
+USERNAME=nx-pubrepo-reader
+PASSWORD=xxxxxxxxxxxxxxxxx
+name=Extra Packages for Enterprise Linux \$releasever - \$basearch
+baseurl=http://10.15.1.1:8081/repository/all_epel/\$releasever/\$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=0
+gpgkey=http://10.15.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Копируем CM репо-файл на машину cloudera server и epel repo-файл на все машины:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible mgm -i cluster.inv -m copy -a &amp;#34;src=cloudera-manager.repo dest=&amp;#39;/etc/yum.repos.d/&amp;#39;&amp;#34; --become
+ansible all -i cluster.inv -m copy -a &amp;#34;src=epel.repo dest=&amp;#39;/etc/yum.repos.d/&amp;#39;&amp;#34; --become
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;4-установка-jdk-и-cloudera-manager&#34;&gt;4. Установка JDK и Cloudera Manager&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible mgm -i cluster.inv -m yum -a &amp;#34;name=oracle-j2sdk1.8 state=latest&amp;#34; --become
+ansible mgm -i cluster.inv -m yum -a &amp;#34;name=cloudera-manager-daemons,cloudera-manager-agent,cloudera-manager-server,cloudera-manager-server-db-2 state=latest&amp;#34; --become
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;5-установка-дополнительных-пакетов&#34;&gt;5. Установка дополнительных пакетов&lt;/h2&gt;
+&lt;p&gt;Дополнительно устанавливаем свежие версии python-пакета &lt;code&gt;psycopg2-binary&lt;/code&gt; и &lt;code&gt;python-snappy&lt;/code&gt;, которые используется Hue-компонентом. Так как неизвестно точно на каких хостах будут добавлены экземпляры Hue, то устанавливаем пакеты на все хосты.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m pip -a &amp;#34;name=psycopg2-binary,python-snappy state=latest&amp;#34; --become
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;6-запуск-postgresql-и-cloudera-manager&#34;&gt;6. Запуск PostgreSQL и Cloudera Manager&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible mgm -i cluster.inv -m systemd -a &amp;#34;name=cloudera-scm-server-db enabled=yes state=started&amp;#34; --become
+ansible mgm -i cluster.inv -m systemd -a &amp;#34;name=cloudera-scm-server enabled=yes state=started&amp;#34; --become
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Web-интерфейс доступен по адресу:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://dev-mgm01p.example.org:7180/&#34;&gt;http://dev-mgm01p.example.org:7180/&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Получение keytab-файла для сервисного принципала</title>
+      <link>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-04-01&lt;/p&gt;
+&lt;p&gt;Ссылки:
+&lt;a href=&#34;https://www.freeipa.org/page/V4/Keytab_Retrieval_Management&#34;&gt;https://www.freeipa.org/page/V4/Keytab_Retrieval_Management&lt;/a&gt;
+&lt;a href=&#34;https://www.freeipa.org/page/V4/Keytab_Retrieval&#34;&gt;https://www.freeipa.org/page/V4/Keytab_Retrieval&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Например, находясь на узле со службой, для которой нам необходимо получить keytab, сначала, если ещё не получили, то получаем тикет:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit $USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Назначаем себе право получения таблицу ключей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa service-allow-retrieve-keytab hbase/$(hostname) --users=$USER
+  Имя учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG
+  Псевдоним учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG
+  Managed by: prod-hbr01p.example.org
+  Пользователи, которым разрешено получать таблицу ключей: eugene
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Получаем таблицу ключей и сохраняем её в файле:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ipa-getkeytab -r -p hbase/$(hostname) -k ~/keytabs/hbase_$(hostname -s).keytab
+  Keytab successfully retrieved and stored in: /home/eugene/keytabs/hbase_prod-hbr01p.keytab
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Всё ещё имея свой персональный kerberos-билет, отнимаем у себя право получения таблицы ключей:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipa service-disallow-retrieve-keytab hbase/$(hostname) --users=$USER
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Используем полученный keytab для выпуска билета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ kinit -kt ~/keytabs/hbase_prod-hbr01p.keytab hbase/$(hostname)
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2</title>
+      <link>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
+      <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;ссылки&#34;&gt;Ссылки&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/latest/topics/cdh_sg_hiveserver2_security.html&#34;&gt;HiveServer2 Security Configuration&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;настройка-ldap-аутентификации&#34;&gt;Настройка LDAP-аутентификации&lt;/h2&gt;
+&lt;p&gt;На странице Configurations для Hive, используем фильтр ldap, и:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Включаем LDAP
+&lt;strong&gt;Enable LDAP Authentication  Hive (Service-Wide)&lt;/strong&gt;: ☑&lt;/li&gt;
+&lt;li&gt;Указываем адрес LDAP-сервера
+&lt;strong&gt;LDAP URL&lt;/strong&gt;
+hive.server2.authentication.ldap.url: &lt;code&gt;ldaps://ldap.example.org:636&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Указываем контейнер поиска пользователей
+&lt;strong&gt;LDAP BaseDN&lt;/strong&gt;
+hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=example,dc=org&lt;/code&gt;
+&lt;img src=&#34;cloudera_hive_ldap.png&#34; alt=&#34;Cloudera Hive LDAP&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Перенос кластера Cloudera CDH 6.3.2 в другой vlan</title>
+      <link>/n/perenos-klastera-cloudera-cdh-6-3-2-v-drugoi-vlan/</link>
+      <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/perenos-klastera-cloudera-cdh-6-3-2-v-drugoi-vlan/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-10-21&lt;/p&gt;
+&lt;p&gt;Работа производилась на Cloudera CDH 6.3.2. Используется встроенный PostgreSQL.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Остановить кластер.&lt;/li&gt;
+&lt;li&gt;Остановить Cloudera Service Management.&lt;/li&gt;
+&lt;li&gt;На всех хостах остановить агенты:&lt;br&gt;
+&lt;code&gt;systemctl stop cloudera-scm-agent&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl disable cloudera-scm-agent&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;На управляющем хосте остановить службы Cloudera Server и встроенный PostgreSQL:&lt;br&gt;
+&lt;code&gt;systemctl stop cloudera-scm-server&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl disable cloudera-scm-server&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl stop cloudera-scm-server-db&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl disable cloudera-scm-server-db&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;br&gt;
+После переезда кластера в новый vlan и назначении на сетевые интерфейсы новых ip-адресов проделать:
+&lt;ol&gt;
+&lt;li&gt;На всех узлах привести записи в /etc/hosts к актуальному состоянию.&lt;/li&gt;
+&lt;li&gt;Если кластер в домене IPA, а автоматическое обновление DNS-записей не произошло, то добавить в файл /etc/sssd/sssd.conf опцию &lt;code&gt;ipa_dyndns_update = True&lt;/code&gt; и перезапустить демон &lt;code&gt;systemctl restart sssd&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;На всех хостах в файле /etc/cloudera-scm-agent/config.ini указать новый адрес CM-сервера, пример: &lt;code&gt;server_host=10.0.0.1&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Включить на всех хостах агенты:&lt;br&gt;
+&lt;code&gt; systemctl enable --now cloudera-scm-agent&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Включить на mgm-хосте встроенный PostgreSQL и Cloudera Server:&lt;br&gt;
+&lt;code&gt;systemctl enable cloudera-scm-server-db&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl start cloudera-scm-server-db&lt;/code&gt;&lt;br&gt;
+&lt;code&gt;systemctl enable --now cloudera-scm-server&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;br&gt;
+Переходим к WEB-интерфейсу, где:
+&lt;ol&gt;
+&lt;li&gt;запустить &amp;ldquo;Cloudera Management Service&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;применить изменения в конфигурациях сервисов;&lt;/li&gt;
+&lt;li&gt;запустить тесты &amp;ldquo;Inspect All Hosts&amp;rdquo; и &amp;ldquo;Inspect Network Performance&amp;rdquo;;&lt;/li&gt;
+&lt;li&gt;запустить кластер.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Disabling Hive CLI</title>
+      <link>/n/disabling-hive-cli/</link>
+      <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/disabling-hive-cli/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Перед выполнением этой инструкции, необходимо ознакомиться с &lt;a href=&#34;/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore&#34;&gt;Блокирование доступа внешних программ к Hive metastore&lt;/a&gt;, где описано более централизованный способ блокирования доступа к Metastore Hive.&lt;/p&gt;
+&lt;p&gt;После активации Cloudera Sentry, необходимо предотвратить возможность использования консольной утилиты &lt;code&gt;hive&lt;/code&gt; пользователями. Вместо &lt;code&gt;hive&lt;/code&gt;, пользователи должны использовать утилиту &lt;code&gt;beeline&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Каталог HIVE_HOME можно найти из-под root командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME
+HIVE_HOME=/usr/lib/hive
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Таким образом, отключение Hive CLI производим следующими командами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HIVE_HOME=$(hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME|awk -F&amp;#39;=&amp;#39; &amp;#39;{print $2}&amp;#39;)
+setfacl -m u:hive:rx $HIVE_HOME/bin/hive
+chmod 754 $HIVE_HOME/bin/hive
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Разъяснение: Hive не будет стартовать, если не оставить ему доступ к этому файлу.&lt;/p&gt;
+&lt;p&gt;При необходимости, снимаем запрет командами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HIVE_HOME=$(hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME|awk -F&amp;#39;=&amp;#39; &amp;#39;{print $2}&amp;#39;)
+setfacl -b $HIVE_HOME/bin/hive
+chmod 755 $HIVE_HOME/bin/hive
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Исправление застрявшего статуса у роли в Cloudera CDH</title>
+      <link>/n/ispravlenie-zastryavshego-statusa-u-roli-v-cloudera-hadoop/</link>
+      <pubDate>Sat, 26 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ispravlenie-zastryavshego-statusa-u-roli-v-cloudera-hadoop/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-09-26&lt;/p&gt;
+&lt;p&gt;Из-за поспешной перезагрузки агентов или management service, статус роли, которую перегружали, может застрять в RUNNING или STOPPING. В результате, с ролью ничего нельзя сделать.&lt;/p&gt;
+&lt;h2 id=&#34;исправление&#34;&gt;Исправление&lt;/h2&gt;
+&lt;p&gt;Заходим в клаудеровскую базу данных PostgreSQL.&lt;/p&gt;
+&lt;p&gt;В случае использования встроенной БД, находим автоматический созданный пароль так:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat /var/lib/cloudera-scm-server-db/data/generated_password.txt
+
+MnPwGeWaip
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заходим в CLI:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;psql -U cloudera-scm -p 7432 -h localhost -d postgres
+Password for user cloudera-scm: MnPwGeWaip
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Переходим в базу scm и выполняем поиск застрявшего статуса, например STOPPING, и его замену:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# \c scm
+
+# select role_id, name, configured_status from ROLES where configured_status = &amp;#39;STOPPING&amp;#39;;
+ role_id |                               name                               | configured_status
+---------+------------------------------------------------------------------+-------------------
+      25 | mgmt-SERVICEMONITOR-edbf339a77d8be878f36462f131bc862             | RUNNING
+      58 | hbase-HBASETHRIFTSERVER-cd4fc95f13f38837f08699095a260ef7         | STOPPING
+      33 | hdfs-DATANODE-b7b6861c2160c74fd2362f9919c9331b                   | RUNNING
+
+# update roles set configured_status = &amp;#39;STOPPED&amp;#39; where role_id = 58;
+UPDATE 1
+
+# select role_id, name, configured_status from ROLES where configured_status = &amp;#39;STOPPED&amp;#39;;
+ role_id |                           name                           | configured_status
+---------+----------------------------------------------------------+-------------------
+      58 | hbase-HBASETHRIFTSERVER-cd4fc95f13f38837f08699095a260ef7 | STOPPED
+(1 строка)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для обновления статуса, необходимо перезапустить cloudera-scm-server.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://community.cloudera.com/t5/Support-Questions/Custom-add-on-service-stuck-in-starting-state-and-now-cannot/m-p/83958&#34;&gt;Custom add on service stuck in starting state, and now cannot start,stop,delete this service.&lt;/a&gt;
+&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/latest/topics/cm_ig_embed_pstgrs.html&#34;&gt;Managing the Embedded PostgreSQL Database&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 06. 🎣 Заброс Hook&#39;а в Apache HBase</title>
+      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D1%81-hook-%D0%B2-apache-hbase/</link>
+      <pubDate>Fri, 22 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/%D0%B7%D0%B0%D0%B1%D1%80%D0%BE%D1%81-hook-%D0%B2-apache-hbase/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-30 / 2021-10-22&lt;/p&gt;
+&lt;h2 id=&#34;1введение&#34;&gt;1.Введение&lt;/h2&gt;
+&lt;p&gt;Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.&lt;/p&gt;
+&lt;h2 id=&#34;2-создание-atlas-папки-на-хостах-с-ролью-hbase-master&#34;&gt;2. Создание Atlas-папки на хостах с ролью &amp;lsquo;HBase Master&amp;rsquo;&lt;/h2&gt;
+&lt;p&gt;2.1. На хостах с ролью &amp;lsquo;HBase Master&amp;rsquo; создаём atlas-каталоги и скачиваем с Nexus&amp;rsquo;а необходимый файл:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FILENAME=&amp;#34;?????????????????????????&amp;#34;
+set +o history
+NXUSERPASS=&amp;#34;eugene:xxxxxxxxxxxxx&amp;#34;
+set -o history
+DIR=&amp;#34;apache-atlas-2.2.0_cdh6.3.2_j8.181_mvn3.8.1&amp;#34;
+
+## Скачиваем сборку с Nexus&amp;#39;а
+mkdir -p ~/tmp
+cd ~/tmp
+curl -LO -u ${NXUSERPASS} http://nexus.example.org:8081/repository/dud_evolut_raw/atlas/${FILENAME}
+
+sudo tar xvf ${FILENAME} -C /opt
+cd /opt
+sudo ln -s ${DIR} atlas
+
+sudo chown -R root.root ${DIR}
+sudo chmod -R u=rwX,go=rX ${DIR}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.2. Залинковываем jar-библиотеки Atlas&amp;rsquo;а в каталог &lt;code&gt;/usr/lib/hbase/lib&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo ln -s /opt/atlas/hook/hbase/* /usr/lib/hbase/lib/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.3. Создаём файл &amp;lsquo;atlas-application.properties&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ZOOKEEPERSERVERS=&amp;#34;dev-zk110p.test2.lan:2181,dev-zk111p.test2.lan:2181,dev-zk112p.test2.lan:2181&amp;#34;
+KAFKASERVERS=&amp;#34;dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092&amp;#34;
+REALMNAME=&amp;#34;TEST2.LAN&amp;#34;
+
+sudo mkdir -p /opt/atlas/conf
+cat &amp;lt;&amp;lt; EOF | sudo tee /opt/atlas/conf/atlas-application.properties
+#########  Notification Configs  #########
+
+atlas.kafka.zookeeper.connect=${ZOOKEEPERSERVERS}
+atlas.kafka.bootstrap.servers=${KAFKASERVERS}
+atlas.kafka.zookeeper.session.timeout.ms=60000
+atlas.kafka.zookeeper.connection.timeout.ms=60000
+atlas.kafka.zookeeper.sync.time.ms=20
+atlas.kafka.auto.commit.interval.ms=1000
+atlas.kafka.hook.group.id=atlas
+
+atlas.kafka.enable.auto.commit=true
+atlas.kafka.auto.offset.reset=earliest
+atlas.kafka.session.timeout.ms=30000
+atlas.kafka.offsets.topic.replication.factor=1
+atlas.kafka.poll.timeout.ms=1000
+
+atlas.kafka.security.protocol=SASL_PLAINTEXT
+atlas.kafka.sasl.mechanism=GSSAPI
+atlas.kafka.sasl.kerberos.service.name=kafka
+
+#########  JAAS Configuration ########
+
+atlas.jaas.KafkaClient.loginModuleName=com.sun.security.auth.module.Krb5LoginModule
+atlas.jaas.KafkaClient.loginModuleControlFlag=required
+atlas.jaas.KafkaClient.option.useKeyTab=true
+atlas.jaas.KafkaClient.option.storeKey=true
+atlas.jaas.KafkaClient.option.serviceName=kafka
+atlas.jaas.KafkaClient.option.keyTab=/opt/atlas/conf/atlas.keytab
+atlas.jaas.KafkaClient.option.principal=atlas/_HOST@${REALMNAME}
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.4. Создаём, если таковой ещё не был сгененирован, и получаем новый keytab. Напомню, что &lt;span style=&#34;color:red&#34;&gt;последующие получения keytab&amp;rsquo;а необходимо выполнять с опцией &amp;lsquo;-r&amp;rsquo;, иначе вместо получения существующего keytab&amp;rsquo;а будет создан новый keytab&lt;/span&gt;, вследствие чего уже работающие сервисы Atlas&amp;rsquo;а перестанут аутентифицировать и потребуется повторить для них получение keytab&amp;rsquo;ов и перезапустить сервисы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REALMNAME=&amp;#34;$(hostname -d | tr [:lower:] [:upper:])&amp;#34;
+IPAADMIN=&amp;#34;eugene&amp;#34;
+# Закомментировать след строку, если генерируем новый ключ для keytab&amp;#39;а.
+OPTION=&amp;#34;-r&amp;#34;
+
+# kinit ${IPAADMIN}
+ipa service-add atlas/$(hostname)
+
+ipa service-allow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-allow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
+ipa-getkeytab -p atlas/$(hostname) -k ~/atlas.keytab ${OPTION}
+ipa service-disallow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+ipa service-disallow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
+sudo mv ~/atlas.keytab /opt/atlas/conf/
+sudo chown root.root /opt/atlas/conf/atlas.keytab
+sudo setfacl -m u:hbase:r /opt/atlas/conf/atlas.keytab
+
+unset OPTION
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Подключение Hook&amp;rsquo;а к Apache HBase&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;3.1. В настройках службы Hue изменяем следующие параметры:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;b&gt;HBase Coprocessor Master Classes&lt;/b&gt;&lt;br&gt;
+hbase.coprocessor.master.classes
+&lt;/td&gt;
+&lt;td&gt;
+- &lt;span style=&#34;color:blue&#34;&gt;org.apache.hadoop.hbase.security.access.AccessController&lt;/span&gt;&lt;br&gt;
+- &lt;span style=&#34;color:blue&#34;&gt;org.apache.atlas.hbase.hook.HBaseAtlasCoprocessor&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+При следующих установках Atlas&#39;а попытаться определить момент, когда происходит ошибка &lt;span style=&#34;color:salmon&#34;&gt;HBase. Ошибка при выполнении &#39;user_permission&#39;. ERROR: DISABLED: Security features are not available.&lt;/span&gt; Именно для её решения понадобилось добавить &#39;org.apache.hadoop.hbase.security.access.AccessController&#39;.
+&lt;/td&gt;
+&lt;td&gt;
+List of org.apache.hadoop.hbase.coprocessor.MasterObserver coprocessors that are loaded by default on the active HMaster process. For any implemented coprocessor methods, the listed classes will be called in order. After implementing your own MasterObserver, just put it in HBase&#39;s classpath and add the fully qualified class name here.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Java Configuration Options for HBase Master&lt;/td&gt;
+&lt;td&gt;
+{{JAVA_GC_ARGS}} -XX:ReservedCodeCacheSize=256m &lt;span style=&#34;color:blue&#34;&gt;-Datlas.conf=/opt/atlas/conf/&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHBase&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache HBase&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,140 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Approx</title>
+    <link>/tags/approx/</link>
+    <description>Recent content in Approx on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/approx/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Использование прокси-сервер Approx для локального кэширования APT-репозиториев</title>
+      <link>/n/ispolzovanie-approx/</link>
+      <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ispolzovanie-approx/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2011-03-30
+&lt;code&gt;Approx&lt;/code&gt; &amp;ndash; это кэширующий прокси-сервер, установленный на одном компьютере и слушающий 9999 порт. На всех компьютерах настроены &lt;code&gt;/etc/apt/sources.list&lt;/code&gt; на использование этого approx&amp;rsquo;а.&lt;/p&gt;
+&lt;p&gt;Вот фрагмент клиентского sources.list:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;deb http://approx.local.net:9999/debian1 stable main
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;А вот фрагмент настройки аппрокса &lt;code&gt;/etc/approx/approx.conf&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;debian1 http://ftp.debian.org/debian
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате, когда клиент обращается на &lt;code&gt;http://approx.local.net:9999/debian1 stable main&lt;/code&gt;, то Approx сервер видит ключевое слово &lt;em&gt;&lt;strong&gt;debian1&lt;/strong&gt;&lt;/em&gt; и подставляет вместо него &lt;code&gt;http://ftp.debian.org/debian&lt;/code&gt; (получается &lt;code&gt;http://ftp.debian.org/debian stable main&lt;/code&gt;) и скачивает необходимый пакет в свой кэш. После чего выдаёт его всем запросившим.&lt;/p&gt;
+&lt;p&gt;На одной машине в сетке устанавливаем Approx:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# aptitude install approx
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В отдельной папке &lt;code&gt;/var/cache/approx&lt;/code&gt; будут храниться скаченные
+пакеты.&lt;/p&gt;
+&lt;p&gt;Перенастраиваем &lt;code&gt;/etc/approx/approx.conf&lt;/code&gt; на обслуживание локальных дебианов и убунт и перенастраиваем клиентов. Радуемся.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Была проблема. Создал раздел на винте для кэша аппрокса. Перенёс туда существующие директории кэша (для дебиана) и прописал в &lt;code&gt;/etc/fstab&lt;/code&gt; автоматическое подцепление этого раздела в каталог &lt;code&gt;/var/cache/approx&lt;/code&gt;. Создал машину на Ubuntu и не смог её обновить через Approx. Включил в Approx дебаггинг и увидел, что Approx не мог создать новые каталоги в кэше для клиента убунты. Не хватало прав. Назначил права и всё заработало.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h6 id=&#34;содержимое-etcapproxapproxconf-на-сервере&#34;&gt;Содержимое &lt;code&gt;/etc/approx/approx.conf&lt;/code&gt; на сервере:&lt;/h6&gt;
+&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Here are some examples of remote repository mappings.
+# See http://www.debian.org/mirror/list for mirror sites.
+
+debian http://ftp.debian.org/debian
+debian-security http://security.debian.org/debian-security
+debian-volatile http://volatile.debian.org/debian-volatile
+
+ubuntu http://ru.archive.ubuntu.com/ubuntu
+ubuntu-canonical http://archive.canonical.com/ubuntu
+ubuntu-security http://security.ubuntu.com/ubuntu
+ubuntu-extras http://extras.ubuntu.com/ubuntu
+
+ppa http://ppa.launchpad.net
+
+# The following are the default parameter values, so there is
+# no need to uncomment them unless you want a different value.
+# See approx.conf(5) for details.
+
+#$cache /var/cache/approx
+#$max_rate unlimited
+#$max_redirects 5
+#$user approx
+#$group approx
+#$syslog daemon
+#$pdiffs true
+#$offline false
+#$max_wait 10
+#$verbose false
+#$debug false
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;h6 id=&#34;содержимое-etcaptsourceslist-на-клиенте-ubuntu-1010&#34;&gt;Содержимое &lt;code&gt;/etc/apt/sources.list&lt;/code&gt; на клиенте ubuntu 10.10:&lt;/h6&gt;
+&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# deb cdrom:[Ubuntu 10.10 _Maverick Meerkat_ - Release amd64 (20101007)]/ maverick main restricted
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+
+deb http://approx.domain.com:9999/ubuntu/ maverick main restricted
+deb-src http://approx.domain.com:9999/ubuntu/ maverick main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://approx.domain.com:9999/ubuntu/ maverick-updates main restricted
+deb-src http://approx.domain.com:9999/ubuntu/ maverick-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://approx.domain.com:9999/ubuntu/ maverick universe
+deb-src http://approx.domain.com:9999/ubuntu/ maverick universe
+deb http://approx.domain.com:9999/ubuntu/ maverick-updates universe
+deb-src http://approx.domain.com:9999/ubuntu/ maverick-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team, and may not be under a free licence. Please satisfy yourself as to
+## your rights to use the software. Also, please note that software in
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://approx.domain.com:9999/ubuntu/ maverick multiverse
+deb-src http://approx.domain.com:9999/ubuntu/ maverick multiverse
+deb http://approx.domain.com:9999/ubuntu/ maverick-updates multiverse
+deb-src http://approx.domain.com:9999/ubuntu/ maverick-updates multiverse
+
+## Uncomment the following two lines to add software from the &amp;#39;backports&amp;#39;
+## repository.
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://approx.domain.com:9999/ubuntu/ maverick-backports main restricted universe multiverse
+deb-src http://approx.domain.com:9999/ubuntu/ maverick-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical&amp;#39;s
+## &amp;#39;partner&amp;#39; repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+deb http://approx.domain.com:9999/ubuntu-canonical maverick partner
+deb-src http://approx.domain.com:9999/ubuntu-canonical maverick partner
+
+## This software is not part of Ubuntu, but is offered by third-party
+## developers who want to ship their latest software.
+deb http://approx.domain.com:9999/ubuntu-extras maverick main
+deb-src http://approx.domain.com:9999/ubuntu-extras maverick main
+
+deb http://approx.domain.com:9999/ubuntu-security maverick-security main restricted
+deb-src http://approx.domain.com:9999/ubuntu-security maverick-security main restricted
+deb http://approx.domain.com:9999/ubuntu-security maverick-security universe
+deb-src http://approx.domain.com:9999/ubuntu-security maverick-security universe
+deb http://approx.domain.com:9999/ubuntu-security maverick-security multiverse
+deb-src http://approx.domain.com:9999/ubuntu-security maverick-security multiverse
+deb http://archive.ubuntu.com/ubuntu maverick restricted multiverse universe main
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

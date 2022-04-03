@@ -1,0 +1,278 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Monitorix</title>
+    <link>/tags/monitorix/</link>
+    <description>Recent content in Monitorix on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 14 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/monitorix/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Установка Monitorix в Alpine Linux</title>
+      <link>/n/ustanovka-monitorix-v-alpine-linux/</link>
+      <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ustanovka-monitorix-v-alpine-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-04-14&lt;/p&gt;
+&lt;h2 id=&#34;подготовка&#34;&gt;Подготовка&lt;/h2&gt;
+&lt;p&gt;Скачиваем, и распаковываем куда-нибудь, актуальную версию monitorix:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ wget https://www.monitorix.org/monitorix-3.12.0.tar.gz
+$ tar xvf monitorix-3.12.0.tar.gz
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Содержимое распакованного каталога раскидываем по папкам. Схема размещения приведена ниже:&lt;/p&gt;
+&lt;details&gt;&lt;p&gt;
+```
+$ tree monitorix-3.12.0
+monitorix-3.12.0
+├── Changes
+├── COPYING
+├── docs
+│   ├── debian.conf
+│   ├── htpasswd.pl
+│   ├── monitorix-alert.sh
+│   ├── monitorix-apache.conf
+│   ├── monitorix-deb.init
+│   ├── monitorix.init
+│   ├── monitorix-lighttpd.conf
+│   ├── monitorix.logrotate     --&gt; /etc/logrotate.d/monitorix
+│   ├── monitorix.nanorc
+│   ├── monitorix.service
+│   ├── monitorix.spec
+│   ├── monitorix.sysconfig     --&gt; /etc/conf.d/monitorix
+│   └── monitorix.upstart
+├── lib                         --&gt; /usr/lib/monitorix/
+│   ├── ambsens.pm              --&gt; /usr/lib/monitorix/ambsens.pm
+│   ├── apache.pm               --&gt; /usr/lib/monitorix/apache.pm
+│   ├── apcupsd.pm              --&gt; ...
+│   ├── bind.pm                 ...
+│   ├── chrony.pm
+│   ├── disk.pm
+│   ├── du.pm
+│   ├── emailreports.pm
+│   ├── fail2ban.pm
+│   ├── fs.pm
+│   ├── ftp.pm
+│   ├── gensens.pm
+│   ├── hptemp.pm
+│   ├── HTTPServer.pm
+│   ├── icecast.pm
+│   ├── int.pm
+│   ├── ipmi.pm
+│   ├── kern.pm
+│   ├── libvirt.pm
+│   ├── lighttpd.pm
+│   ├── lmsens.pm
+│   ├── mail.pm
+│   ├── memcached.pm
+│   ├── mongodb.pm
+│   ├── Monitorix.pm
+│   ├── mysql.pm
+│   ├── net.pm
+│   ├── netstat.pm
+│   ├── nfsc.pm
+│   ├── nfss.pm
+│   ├── nginx.pm
+│   ├── ntp.pm
+│   ├── nut.pm
+│   ├── nvidia.pm
+│   ├── pagespeed.pm
+│   ├── phpapc.pm
+│   ├── phpfpm.pm
+│   ├── port.pm
+│   ├── process.pm
+│   ├── proc.pm
+│   ├── raspberrypi.pm
+│   ├── serv.pm
+│   ├── squid.pm
+│   ├── system.pm
+│   ├── tc.pm
+│   ├── traffacct.pm
+│   ├── unbound.pm
+│   ├── user.pm
+│   ├── varnish.pm
+│   ├── verlihub.pm
+│   ├── wowza.pm
+│   └── zfs.pm
+├── logo_bot.png        --&gt; /var/lib/monitorix/www/
+├── logo_top.png        --&gt; /var/lib/monitorix/www/
+├── Makefile
+├── man
+│   ├── man5
+│   │   └── monitorix.conf.5
+│   └── man8
+│       └── monitorix.8
+├── monitorix           --&gt; /usr/bin/
+├── monitorix.cgi       --&gt; /var/lib/monitorix/www/cgi/
+├── monitorix.conf      --&gt; /etc/monitorix/
+├── monitorixico.png    --&gt; /var/lib/monitorix/www/
+├── README
+├── README.FreeBSD
+├── README.md
+├── README.NetBSD
+├── README.nginx
+├── README.OpenBSD
+└── reports             --&gt; /var/lib/monitorix/www/
+    ├── ca.html         --&gt; /var/lib/monitorix/www/reports/
+    ├── de.html         --&gt; /var/lib/monitorix/www/reports/
+    ├── en.html         --&gt; ...
+    ├── fr.html         ...
+    ├── it.html
+    ├── nl_NL.html
+    ├── pl.html
+    ├── sk.html
+    └── zh_CN.html
+```
+&lt;/p&gt;&lt;/details&gt;&lt;br&gt;
+&lt;p&gt;Перед раскидыванием файлов мониторикса по соответствующим каталогам, зададим им правильного владельца:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd monitorix-3.12.0 &amp;amp;&amp;amp; chown root:root * -R
+&lt;/code&gt;&lt;/pre&gt;&lt;!-- Перепроверить при случае.
+Создание каталогов и копирование файлов. Не забыть выставить правильные права:
+```
+mkdir -p /etc/monitorix/conf.d /var/lib/monitorix/www/cgi /var/lib/monitorix/www/imgs
+
+cp monitorix /usr/bin/
+cp monitorix.conf /etc/monitorix/
+cp monitorix.cgi /var/lib/monitorix/www/cgi/
+cp logo_bot.png /var/lib/monitorix/www/
+cp logo_top.png /var/lib/monitorix/www/
+cp monitorixico.png /var/lib/monitorix/www/
+cp lib/* /usr/lib/monitorix/
+cp -r reports /var/lib/monitorix/www/
+```
+--&gt;
+&lt;h2 id=&#34;добавление-в-систему-необходимых-пакетов&#34;&gt;Добавление в систему необходимых пакетов&lt;/h2&gt;
+&lt;p&gt;Установка perl-пакетов, необходимых для работы monitorix:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apk add perl perl-cgi perl-libwww perl-mailtools perl-mime-lite perl-dbi perl-xml-simple perl-xml-libxml perl-http-server-simple perl-io-socket-ssl rrdtool perl-rrd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пакет perl-config-general отсутствует в репозиториях Alpine Linux, поэтому скачал General.pm из metacpan.org в каталог &lt;code&gt;/usr/share/perl5/vendor_perl/Config&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir -p /usr/share/perl5/vendor_perl/Config/
+# wget -O /usr/share/perl5/vendor_perl/Config/General.pm https://metacpan.org/release/Bundle-PBib/source/lib/Config/General.pm?raw=1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Необходимо установит шрифт ttf-dejavu, ttf-freefont или font-noto, иначе вместо символов, на графиках будут видны квадраты.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apk add ttf-dejavu
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;включение-автозапуска&#34;&gt;Включение автозапуска&lt;/h2&gt;
+&lt;p&gt;Готовый скрипт для openrc взял из генту &lt;code&gt;https://gitweb.gentoo.org/repo/gentoo.git/tree/www-misc/monitorix/files/monitorix&lt;/code&gt; слегка подредактировав строку &lt;code&gt;command=/usr/sbin/monitorix&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/sbin/openrc-run
+# Copyright 1999-2019 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name=&amp;#34;Monitorix&amp;#34;
+description=&amp;#34;Monitorix is a lightweight system monitoring tool&amp;#34;
+command=/usr/bin/monitorix
+command_args=&amp;#34;-c /etc/monitorix/monitorix.conf -p /var/run/$name.pid&amp;#34;
+pidfile=/var/run/monitorix.pid
+
+checkconfig() {
+    if [[ ! -e /etc/monitorix/monitorix.conf ]]; then
+        eerror &amp;#34;Please check that the configuration file exists.&amp;#34;
+        return 1
+    fi
+}
+
+start() {
+    checkconfig || return 1
+    ebegin &amp;#34;Starting $name&amp;#34;
+    start-stop-daemon --start --name $name --pidfile /var/run/$name.pid --exec $command -- $command_args
+    eend $?
+}
+
+stop() {
+    ebegin &amp;#34;Stopping $name&amp;#34;
+    start-stop-daemon --stop --pidfile /var/run/$name.pid
+    eend $?
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавляем в автозагрузку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rc-update add monitorix default
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;замечено&#34;&gt;Замечено&lt;/h2&gt;
+&lt;h3 id=&#34;users-using-the-system-userpm&#34;&gt;Users using the system (user.pm)&lt;/h3&gt;
+&lt;p&gt;В musl нет реализации wtmp, utmp, lastlog. По этой причине модуль &lt;code&gt;user.pm&lt;/code&gt; не работает.&lt;/p&gt;
+&lt;h3 id=&#34;process-statistics-processpm&#34;&gt;Process statistics (process.pm)&lt;/h3&gt;
+&lt;p&gt;Для правильно отображения &lt;em&gt;Process statistics&lt;/em&gt;, добавляем полноценную версию утилиты &lt;code&gt;ps&lt;/code&gt;, вместо встроенной в busybox:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apk add procps
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;netstat-statistics-netstatpm&#34;&gt;Netstat statistics (netstat.pm)&lt;/h3&gt;
+&lt;p&gt;Требует установки утилиты &lt;code&gt;ss&lt;/code&gt; или некастрированной &lt;code&gt;netstat&lt;/code&gt; (вместо кастрированной из busybox, которая присутствует в Alpine Linux по умолчанию):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk add net-tools
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Краткое описание Monitorix</title>
+      <link>/n/kratkoe-opisanie-monitorix/</link>
+      <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
+      
+      <guid>/n/kratkoe-opisanie-monitorix/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-02-22&lt;/p&gt;
+&lt;p&gt;Перевод пары страниц из &lt;a href=&#34;https://www.monitorix.org/&#34;&gt;Monitorix :: a free, open source, lightweight system monitoring tool&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;monitorix&#34;&gt;Monitorix&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Monitorix — это свободный, легковесный, и с открытыми исходниками, инструмент наблюдения за системой&lt;/strong&gt;, спроектированный для слежки за стольким количеством служб и системных ресурсов, насколько это возможно. Он создан для использования &lt;strong&gt;в Linux/UNIX серверах&lt;/strong&gt;, но из-за своей простоты и малого размера также хорош и &lt;strong&gt;для встраиваемых устройств&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Он состоит из двух программ: коллектора, называемого &lt;code&gt;monitorix&lt;/code&gt;, являющегося Perl-демоном, который автоматически запускается, как любая другая служба системы; и CGI-скрипт &lt;code&gt;monitorix.cgi&lt;/code&gt;. Начиная с третьей версии, Monitorix включает в себя встроенный HTTP-сервер, так что нет нужды устанавливать какой-либо иной WEB-сервер.&lt;/p&gt;
+&lt;p&gt;Изначально инструмент создавался для мониторинга Red Hat, Fedora and CentOS систем, поэтому разработка происходила с оглядкой на эти типы дистрибутивов. Сегодня он работает на различных GNU/Linux дистрибутивах и даже на некоторых Unix системах, типа FreeBSD, OpenBSD и NetBSD.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;Мы просто торчим от Monitix, из-за его дружелюбности и легковесности. Его в обязательном порядке должны попробовать те, кто ищет свободный и лёгкий в использовании инструмент мониторига.&amp;quot; — &lt;a href=&#34;https://www.webhostingsecretrevealed.net/&#34;&gt;Jerry, Web Hosting Secret Revealed (WHSR)&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;На данный момент Monitorix находится в активной разработке, добавляются новые фичи, новые графики, исправляются ошибки, в попытке предложить системным администраторам великолепный инструмент на каждый день.&lt;/p&gt;
+&lt;p&gt;Monitorix - это проект с открытым исходным кодом, и, как и любой другой проект с открытым исходным кодом, каждый может учавствовать в его разработке.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.monitorix.org/imgs/mail.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;релиз-версии-3120-2020-02-21&#34;&gt;Релиз версии 3.12.0 (2020-02-21)&lt;/h2&gt;
+&lt;p&gt;В этой версии представлены два новых модуля: &lt;code&gt;phpfpm.pm&lt;/code&gt; и &lt;code&gt;unbound.pm&lt;/code&gt;. Первый из них позволяет собирать PHPFPM-статистику и отслеживать неограниченное число сайтов. Второй модуль &lt;code&gt;unbound.pm&lt;/code&gt; собирает множество данных о DNS-службе Unbound, запущенном на локальном сервере. Нет возможности собирать статистику о Unbound на удалённых серверах. Оба модуля поставляются с довольно полным комплектом графиков статистики.&lt;/p&gt;
+&lt;p&gt;Далее примеры этих двух новых графиков:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.monitorix.org/imgs/phpfpm.png&#34; alt=&#34;&#34;&gt;
+&lt;img src=&#34;https://www.monitorix.org/imgs/unbound.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Кроме этих двух новых модулей, в эту версию включены некоторые новые интересные функции. Это наконец пофиксенный модуль &lt;code&gt;bind.pm&lt;/code&gt; для поддержки новых версий BIND. Теперь этот модуль использует Perl XML::LibXML для разбора вывода BIND (вместо использования Perl XML::Simple). Также, модуль &lt;code&gt;gensens.pm&lt;/code&gt; теперь включает третий сенсор &lt;em&gt;Battery&lt;/em&gt;. Плюс есть некоторые улучшения в NFS-графиках для FreeBSD.&lt;/p&gt;
+&lt;p&gt;Модуль &lt;code&gt;fail2ban.pm&lt;/code&gt; имеет изменения в способах представления значений. С этой версии вы можете выбирать между &lt;code&gt;absolute&lt;/code&gt; и &lt;code&gt;rate&lt;/code&gt; значениями, первое из них является значением по умолчанию.&lt;/p&gt;
+&lt;p&gt;Далее примеры графиков для &lt;code&gt;rate&lt;/code&gt; и &lt;code&gt;absolute&lt;/code&gt; режимов:
+&lt;img src=&#34;https://www.monitorix.org/imgs/new_fail2ban.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;График ZFS также имеет изменения в способах предоставления в Operations and Bandwidth graphs.&lt;/p&gt;
+&lt;p&gt;Смотрим отличия:
+&lt;img src=&#34;https://www.monitorix.org/imgs/new_zfs.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Остальные новые функции, исправленные ошибки и исправления, как всегда, отражены в файле &lt;code&gt;changes&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Пожалуйста, гляньте в ман о &lt;code&gt;monitorix.conf(5)&lt;/code&gt; для всех подробностей.&lt;/p&gt;
+&lt;p&gt;ВАЖНО: Файл конфы &lt;code&gt;monitorix.conf&lt;/code&gt; был расширен из-за важных изменений.&lt;/p&gt;
+&lt;p&gt;Всем пользователям, все еще использующим более старые версии, рекомендуется выполнить обновление до этой версии.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Выпуск Monitorix версии 3.12.0 (2020-02-21)</title>
+      <link>/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-02-22&lt;/p&gt;
+&lt;p&gt;Перевод &lt;a href=&#34;https://www.monitorix.org/news.html#N20200221&#34;&gt;3.12.0 version released&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;В этой версии представлены два новых модуля: &lt;code&gt;phpfpm.pm&lt;/code&gt; и &lt;code&gt;unbound.pm&lt;/code&gt;. Первый из них позволяет собирать PHPFPM-статистику и отслеживать неограниченное число сайтов. Второй модуль &lt;code&gt;unbound.pm&lt;/code&gt; собирает множество данных о DNS-службе Unbound, запущенном на локальном сервере. Нет возможности собирать статистику о Unbound на удалённых серверах. Оба модуля поставляются с довольно полным комплектом графиков статистики.&lt;/p&gt;
+&lt;p&gt;Далее примеры этих двух новых графиков:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.monitorix.org/imgs/phpfpm.png&#34; alt=&#34;&#34;&gt;
+&lt;img src=&#34;https://www.monitorix.org/imgs/unbound.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Кроме этих двух новых модулей, в эту версию включены некоторые новые интересные функции. Это наконец пофиксенный модуль &lt;code&gt;bind.pm&lt;/code&gt; для поддержки новых версий BIND. Теперь этот модуль использует Perl XML::LibXML для разбора вывода BIND (вместо использования Perl XML::Simple). Также, модуль &lt;code&gt;gensens.pm&lt;/code&gt; теперь включает третий сенсор &lt;em&gt;Battery&lt;/em&gt;. Плюс есть некоторые улучшения в NFS-графиках для FreeBSD.&lt;/p&gt;
+&lt;p&gt;Модуль &lt;code&gt;fail2ban.pm&lt;/code&gt; имеет изменения в способах представления значений. С этой версии вы можете выбирать между &lt;code&gt;absolute&lt;/code&gt; и &lt;code&gt;rate&lt;/code&gt; значениями, первое из них является значением по умолчанию.&lt;/p&gt;
+&lt;p&gt;Далее примеры графиков для &lt;code&gt;rate&lt;/code&gt; и &lt;code&gt;absolute&lt;/code&gt; режимов:
+&lt;img src=&#34;https://www.monitorix.org/imgs/new_fail2ban.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;График ZFS также имеет изменения в способах предоставления в Operations and Bandwidth graphs.&lt;/p&gt;
+&lt;p&gt;Смотрим отличия:
+&lt;img src=&#34;https://www.monitorix.org/imgs/new_zfs.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Остальные новые функции, исправленные ошибки и исправления, как всегда, отражены в файле &lt;code&gt;changes&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Пожалуйста, гляньте в ман о &lt;code&gt;monitorix.conf(5)&lt;/code&gt; для всех подробностей.&lt;/p&gt;
+&lt;p&gt;ВАЖНО: Файл конфы &lt;code&gt;monitorix.conf&lt;/code&gt; был расширен из-за важных изменений.&lt;/p&gt;
+&lt;p&gt;Всем пользователям, все еще использующим более старые версии, рекомендуется выполнить обновление до этой версии.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

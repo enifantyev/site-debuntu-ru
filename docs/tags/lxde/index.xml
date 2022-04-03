@@ -1,0 +1,40 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – LXDE</title>
+    <link>/tags/lxde/</link>
+    <description>Recent content in LXDE on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    
+	  <atom:link href="/tags/lxde/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: В LXDE нет русской раскладки</title>
+      <link>/n/v-lxde-net-russkoi-raskladki/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/n/v-lxde-net-russkoi-raskladki/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Устал от тормозов гнома и кде. Поставил lxde. Порадовался скорости, но огорчился при попытке переключиться на русскую раскладку.&lt;/p&gt;
+&lt;div&gt;Обнаружил &lt;a href=&#34;http://smartnik.livejournal.com/189931.html&#34;&gt;http://smartnik.livejournal.com/189931.html&lt;/a&gt;:&lt;/div&gt;
+&lt;div&gt;&lt;em&gt;Добиться русской раскладки клавиатуры в lxde графическими средствами у меня не получилось, поэтому запускаем&lt;/em&gt;
+&lt;p&gt;&lt;em&gt;setxkbmap -option grp:switch,grp:alt_shift_toggle us,ru&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;После этого клавиатура переключается по Alt+Shift (это поведение можно менять, меняя alt_shift_toggle на то, что вам нравится) между русской и английской (естественно, вместо us,ru можно написать те варианты, которые вам нужны). Чтобы запускать эту команду каждый раз при запуске lxde, нужно добавить в конец файла&lt;/p&gt;
+&lt;p&gt;/etc/xdg/lxsession/LXDE/autostart&lt;/p&gt;
+&lt;p&gt;строчку&lt;/p&gt;
+&lt;p&gt;@setxkbmap -option grp:switch,grp:alt_shift_toggle,grp_led:scroll us,ru&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

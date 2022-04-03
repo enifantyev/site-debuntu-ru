@@ -1,0 +1,72 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – aptitude</title>
+    <link>/tags/aptitude/</link>
+    <description>Recent content in aptitude on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 14 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/aptitude/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: apt vs apt-get/apt-cache vs aptitude</title>
+      <link>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</link>
+      <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</guid>
+      <description>
+        
+        
+        &lt;p&gt;&lt;a href=&#34;https://www.debian.org/doc/manuals/debian-reference/ch02.en.html#_literal_apt_literal_vs_literal_apt_get_literal_literal_apt_cache_literal_vs_literal_aptitude_literal&#34;&gt;Debian Reference&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2.2.1. apt vs. apt-get / apt-cache vs. aptitude
+Хотя &lt;code&gt;aptitude&lt;/code&gt; чрезвычайно удобный интерактивный инструмент, которым автор Debian Reference преимущественно пользуется, вам надо знать некоторые предупреждающие моменты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Команда &lt;code&gt;aptitude&lt;/code&gt; не рекомендуется для обновления работающего Debian stable релиза  до нового выпущенного stable релиза.
+&lt;ul&gt;
+&lt;li&gt;Рекомендуется для этого случая использовать &lt;code&gt;apt full-upgrade&lt;/code&gt; или &lt;code&gt;apt-get dist-upgrade&lt;/code&gt;. Смотри &lt;a href=&#34;https://bugs.debian.org/411280&#34;&gt;Bug #411280&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Команда &lt;code&gt;aptitude&lt;/code&gt; иногда предлагает удалить большое количество пакетов, что случается при апгрейде системы на работающих Debian testing или unstable системах.
+&lt;ul&gt;
+&lt;li&gt;Этой ситуации опасаются множество системных администраторов. Без паники.&lt;/li&gt;
+&lt;li&gt;Похоже, что в большинстве случае причиной этому является перекос версий в пакетах, зависящих или рекомендованных мета-пакетами, такими как gnome-core.&lt;/li&gt;
+&lt;li&gt;Эту ситуацию можно разрулить через запуск &lt;code&gt;aptitude&lt;/code&gt; и выбор в меню пункта &amp;ldquo;Cancel pending actions&amp;rdquo;, выхода из &lt;code&gt;aptitude&lt;/code&gt; и использования команды &lt;code&gt;apt full-upgrade&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Основными инструментами являются &lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt;.
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt; предоставляют только интерфейс командной строки.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; наиболее подходит для обновления системы до другого релиза.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; предлагает надёжный способ разрешения зависимостей пакетов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; наименее требователен к ресурсам железа, то есть жрёт мало памяти и быстро работает.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-cache&lt;/code&gt; предлагает стандартный, основанный на регулярных выражениях, поиск по именам и описаниям пакетов.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt; может управлять множеством версий пакетов используя &lt;code&gt;/etc/apt/preferences&lt;/code&gt;, но это довольно громоздко.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Команда &lt;code&gt;apt&lt;/code&gt; предлагает высокоуровневой интерфейс командной строки для управления пакетами. По большому счёту это обёртка для &lt;code&gt;apt-get&lt;/code&gt;, &lt;code&gt;apt-cache&lt;/code&gt; и других подходящих программ, изначально задумывавшийся, как &amp;ldquo;end-user&amp;rdquo; интерфейс и включает некоторые опции, по умолчанию наиболее подходящие для интерактивного использования.
+- &lt;code&gt;apt&lt;/code&gt; показывает дружественную &amp;ldquo;строку прогресса&amp;rdquo;, когда устанавливаются пакеты командой &lt;code&gt;apt install&lt;/code&gt;.
+- &lt;code&gt;apt&lt;/code&gt; по умолчанию удаляет кэшированные &lt;code&gt;.deb&lt;/code&gt; пакеты после успешной установки загруженных пакетов.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Tip
+Пользователям рекомендуется использовать новую &lt;code&gt;apt&lt;/code&gt; команду для интерактивного использования. Для использования же в скриптах предлагается применять &lt;code&gt;apt-get&lt;/code&gt; и &lt;code&gt;apt-cache&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Команда &lt;code&gt;aptitude&lt;/code&gt; – наиболее универсальный инструмент управления пакетами.
+- &lt;code&gt;aptitude&lt;/code&gt; предоставляет полноэкранный интерактивный пользовательский интерфейс.
+- &lt;code&gt;aptitude&lt;/code&gt; также предоставляет и обычный интерфейс командной строки.
+- &lt;code&gt;aptitude&lt;/code&gt; наиболее подходит для ежедневного интерактивного управления пакетами, такого как инспектирования установленных пакетов и поиск свободных пакетов.
+- &lt;code&gt;aptitude&lt;/code&gt; наиболее требователен к ресурсам железа, то есть жрёт много памяти и медленно работает.
+- &lt;code&gt;aptitude&lt;/code&gt; предлагает расширенный &amp;ldquo;регэксп&amp;rdquo; поиск по всем метаданным, указанным для пакетов.
+- &lt;code&gt;aptitude&lt;/code&gt; может управлять множеством версий пакетов без использования &lt;code&gt;/etc/apt/preferences&lt;/code&gt; и интуитивно понятно.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

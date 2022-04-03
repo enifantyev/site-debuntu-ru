@@ -1,0 +1,984 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – VPN</title>
+    <link>/tags/vpn/</link>
+    <description>Recent content in VPN on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 31 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/vpn/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Развёртывание сети OpenVPN</title>
+      <link>/a/razvyortyvanie-seti-openvpn/</link>
+      <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/razvyortyvanie-seti-openvpn/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-03-31&lt;/p&gt;
+&lt;p&gt;Статья в процессе написания!&lt;/p&gt;
+&lt;p&gt;Я перерабатываю свою &lt;a href=&#34;/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov&#34;&gt;статью от 2014 года&lt;/a&gt; в соответствии с новыми стандартами и релизами OpenVPN.&lt;/p&gt;
+&lt;p&gt;Если лень много читать и хочется сразу запустить простую OpenVPN-сеть, то переходите к статье &lt;a href=&#34;/a/openvpn-eto-prosto&#34;&gt;OpenVPN — это просто&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://openvpn.net/community-resources/reference-manual-for-openvpn-2-4/&#34;&gt;Reference manual for OpenVPN 2.4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Рекомендую полезную книгу для понимания симметричного, ассиметричного шифрования и много другого по этой темы: &lt;a href=&#34;https://www.ozon.ru/context/detail/id/3217966/&#34;&gt;Саймон Сингх. Книга шифров: Тайная история шифров и их расшифровки&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha&#34;&gt;Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Изначально OpenVPN был разработан by James Yonan.&lt;/p&gt;
+&lt;h3 id=&#34;описание-из-референс-мануала&#34;&gt;Описание из референс мануала&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OpenVPN надёжный и чрезвычайно гибкий VPN демон. OpenVPN поддерживает SSL/TLS безопасность, ethernet-мосты, TCP или UDP транспортные туннели сквозь прокси или NAT, имеет поддержку собственного динамического назначения IP-адресов или через DHCP, масштабируется до сотен или тысяч подключений, и портирован на большинство из основных операционных систем.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OpenVPN тесно связан с OpenSSL библиотекой и наследует из неё множество криптографических возможностей.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OpenVPN поддерживает как обычное шифрование с использованием единственного секретного ключа (Static Key mode), так и шифрование на основе открытых ключей (SSL/TSL режим), с использованием клиентских и серверных сертификатов. OpenVPN поддерживает также и незашифрованные TCP/UDP туннели.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;OpenVPN разработан для работы с TUN/TAP виртуальными сетевыми интерфейсами, которые доступны на большинстве платформ.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Overall, OpenVPN aims to offer many of the key features of IPSec but with a relatively lightweight footprint. (В общем, OpenVPN стремится предложить многое из ключевых функций IPSec, но с относительно lightweight footprint).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;краткое-описание-из-моего-личного-опыта&#34;&gt;Краткое описание из моего личного опыта&lt;/h3&gt;
+&lt;p&gt;OpenVPN — замечательный пакет, позволяющий прокинуть зашифрованный туннель к серверу из самых неудобных мест.&lt;/p&gt;
+&lt;p&gt;На мой взгляд, для шифрования трафика между серверами, находящимися в одном или различных дата-центрах, удобней использовать IPsec over IPv6.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Многих пугает создание сертификатов для работы OpenVPN, хотя эта часть налаживания работы OpenVPN до невозможности элементарна, благодаря проекту &lt;a href=&#34;https://github.com/OpenVPN/easy-rsa&#34;&gt;Easy-RSA&lt;/a&gt;.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Здесь я буду описывать настройку OpenVPN-сети на основе шифрования с открытыми ключами в том варианте, когда каждому серверу и клиенту выпускается уникальный сертификат с ограничением срока действия.&lt;/p&gt;
+&lt;h3 id=&#34;описание-работы&#34;&gt;Описание работы&lt;/h3&gt;
+&lt;p&gt;В описываемом варианте openvpn работает по схеме шифрования с открытыми ключами. Каждый участник openvpn-сети имеет закрытый (private) и, соответствующий ему, открытый (public) ключ-сертификат. Открытый ключ часто можно найти в файле-сертификате с расширением &lt;code&gt;.crt&lt;/code&gt;, а закрытый (private) ключ обычно лежит в файле с расширением &lt;code&gt;.key&lt;/code&gt;. Но сейчас я нередко использую способ, когда ключи описаны прямо в файле конфигурации.&lt;/p&gt;
+&lt;p&gt;Очень упрощённо схему работы OpenVPN можно описать так:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Сначала сервер и клиент обмениваются своими публичными ключами. Кстати, они несекретны и могут храниться открыто.&lt;/li&gt;
+&lt;li&gt;Потом обеими сторонами проводится проверка полученных ключей на предмет легитимности, то есть: срок действия, проверка подписи CA, проверка в списке отозванных ключей и т.д.&lt;/li&gt;
+&lt;li&gt;Если стороны договорились, то начинается обмен данными:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;отправитель зашифровывает отправляемый пакет с помощью открытого ключа получателя;&lt;/li&gt;
+&lt;li&gt;отправитель подписывает своим закрытым ключом зашифрованный пакет;&lt;/li&gt;
+&lt;li&gt;пакет отправляется получателю;&lt;/li&gt;
+&lt;li&gt;получатель проверяет подпись у полученного пакета с помощью открытого ключа отправителя;&lt;/li&gt;
+&lt;li&gt;получатель расшифровывает пакет с помощью своего закрытого ключа, если подпись верна.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Третья сторона, имея на руках закрытые ключи обеих сторон, может вычислить из них соответствующие открытые ключи, и на лету просматривать закриптованный трафик. Именно поэтому закрытый ключ чрезвычайно секретен и при подозрении на его кражу, должен быть &lt;em&gt;отозван&lt;/em&gt;, то есть запрещён к приёму в OpenVPN-сети. Процедура &lt;em&gt;отзыва&lt;/em&gt; описана ниже.&lt;/p&gt;
+&lt;p&gt;Важной частью OpenVPN-сети является Центр Сертификации. Центр Сертификации Easy-RSA, который будет описан в этой статье, представляет собой самый обычный каталог с файлами, в котором лежат скрипты и, выпускаемые ими, файлы ключей и сертификатов.&lt;/p&gt;
+&lt;p&gt;В идеальной конфигурации, для организации Центра Сертификации, необходимо иметь отдельный сервер, максимально защищённый от вторжений/не подключённый к интернету. Доступ к нему предоставлен ограниченному числу лиц, операторов CA.&lt;/p&gt;
+&lt;p&gt;В моём случае нецелесообразно организовывать отдельный CA-сервер для редких генераций сертификатов и ключей новых openvpn-серверов и клиентов. Поэтому папку центра сертификации я храню в секретном месте и, по мере необходимости, раскрываю криптоконтейнер на свободной надёжной машине, чтобы произвести необходимые процедуры.&lt;/p&gt;
+&lt;h3 id=&#34;технические-детали&#34;&gt;Технические детали&lt;/h3&gt;
+&lt;p&gt;При поднятии OpenVPN-сервиса на машине, не важно, будет ли это сервер или клиент, список сетевых интерфейсов дополнится виртуальным сетевым дивайсом &lt;em&gt;tun&lt;/em&gt;. Ему будет назначен частный ip-адрес в соответствии с параметрами, заданными в файле конфигурации (например, &amp;ldquo;192.168.2.1/24&amp;rdquo;).&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lo
+enp2s0
+enp2s1
+tun0 192.168.2.1/24
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Именно через этот сетевой интерфейс будет проходить локальный &lt;strong&gt;незашифрованный&lt;/strong&gt; трафик, и прослушивая его &lt;code&gt;tcpdump&lt;/code&gt;&amp;lsquo;ом мы увидим привычные пакеты, например &lt;em&gt;icmp request/echo&lt;/em&gt;, с номерами частных ip-адресов в полях источника и назначения. Одновременно с этим, прослушивая соответствующий физический интерфейс, мы увидим пакеты с internet ip-адресами в заголовке, но с криптомешаниной в поле для данных, в каковом поле находится инкапсулированный icmp-пакет, который мы и наблюдаем на устройстве &lt;em&gt;tun&lt;/em&gt;. Естественно, что из-за инкапсуляции размер MTU уменьшен, поэтому не забываем обеспечивать клиенту посылку &lt;a href=&#34;/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;&lt;em&gt;Path MTU Discovery&lt;/em&gt;&lt;/a&gt; к требуемому серверу с помощью соответствующих правил внутри туннеля и вне его.&lt;/p&gt;
+&lt;p&gt;Максимальное количество устройств &lt;strong&gt;tun&lt;/strong&gt; равняется &lt;strong&gt;1024&lt;/strong&gt;, судя по &lt;a href=&#34;https://github.com/torvalds/linux/blob/master/drivers/net/tun.c&#34;&gt;linux/tun.c&lt;/a&gt;. То есть, если специально не указывать в конфигурационных файлах номер &lt;em&gt;tun&lt;/em&gt; (tun0&amp;hellip;tun1023), то для следующего запускаемого виртуального интерфейса, будет назначен порядковый незанятый номер, начиная с &lt;em&gt;tun0&lt;/em&gt;. В правилах iptables, для выборки &lt;em&gt;всех&lt;/em&gt; tun-devices, надлежит использовать параметр &lt;em&gt;tun+&lt;/em&gt; (&lt;code&gt;iptables -A INPUT -i tun+ -j REJECT&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;Использование отдельного сетевого устройства &lt;em&gt;tun&lt;/em&gt; позволяет ограничивать трафик между локальными узлами простыми правилами &lt;code&gt;iptables&lt;/code&gt;, задаваемыми для интерфейса &lt;code&gt;tun&lt;/code&gt;. Например, &lt;code&gt;iptables -A INPUT -i tun1 -p icmp --icmp-type echo-request -j ACCEPT -m conntrack --ctstate NEW&lt;/code&gt; разрешит пинг хоста по его частному ip-адресу. Опять напомню для тех, кто фильтрует ICMP о &lt;a href=&#34;/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;Path MTU Discovery и прочее связанное с этим&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;описание-сетевого-протокола-openvpn&#34;&gt;Описание сетевого протокола OpenVPN&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://build.openvpn.net/doxygen/network_protocol.html&#34;&gt;OpenVPN&amp;rsquo;s network protocol&lt;/a&gt;. Из описания понятно, что обмен информацией происходит по двум каналам, один из которых для управления, а другой для передачи данных. То есть датаграмма может содержать два типа полезной нагрузки (payload): либо управляющую информацию, либо передаваемые данные.&lt;/p&gt;
+&lt;h3 id=&#34;измененения-по-сравнению-со-статьёй-2014-года&#34;&gt;Измененения по сравнению со статьёй 2014 года&lt;/h3&gt;
+&lt;p&gt;Вместо долгой, иногда многоминутной, генерации dh-параметра для каждого сервера, теперь используется ecdh-curve, который не требует статичного файла. Новая опция самостоятельно и, благодаря курвам, быстро генерирует необходимую информацию, и видимо, каждый раз новую, при запуске openvpn.&lt;/p&gt;
+&lt;p&gt;Для шифрования выбирается современный AEAD-шифр AES-256-GCM, который обеспечивает не только конфиденциальность, но и целостность информации.&lt;/p&gt;
+&lt;p&gt;Относительно новая опция &lt;code&gt;topology subnet&lt;/code&gt;, в отличии от старых &lt;code&gt;net30&lt;/code&gt; и &lt;code&gt;p2p&lt;/code&gt;, позволяет эффективней раздавать ip-адреса из пула. Один клиент — один адрес.&lt;/p&gt;
+&lt;h3 id=&#34;faq&#34;&gt;FAQ&lt;/h3&gt;
+&lt;p&gt;Почему в этой статье описано использование в OpenVPN tun-интерфейса (работает на третьем уровне OSI)?&lt;br&gt;Потому что tap-интерфейс, работающий на втором уровне OSI, за многие годы использования OpenVPN, мне ни разу для него не понадобился. Естественно, если, например, нужен мост, то необходимо использовать tap-интерфейс.&lt;/p&gt;
+&lt;p&gt;Почему выбран UDP для туннеля?&lt;br&gt;&lt;em&gt;UDP-протокол обеспечивает лучшую защиту для DoS-атак и сканирования портов, чем TCP-протокол.&lt;/em&gt; К тому же, внутри UDP-туннеля будут ходить TCP-пакеты, а значит, в случае потери одного внутреннего TCP-пакета, автоматически будет инициирована отправка нового UDP-пакета, содержащего отсутствующий внутренний TCP-пакет. При использовании же TCP-туннеля, в вышеописанном случае, произойдёт избыточная повторная отправка двух пакетов:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;копия потерянного внешнего туннельного TCP-пакета;&lt;/li&gt;
+&lt;li&gt;новый туннельный TCP-пакет, содержащий потерянный внутренний TCP-пакет.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;В каких случаях выбирать &lt;code&gt;proto tcp&lt;/code&gt;?&lt;br&gt;В некоторых сетях можно встретить запрет на хождение UDP. Или для маскировки под трафик https на 443 порт. Также Mikrotik до сих пор не имеет поддержки udp для OVPN.&lt;/p&gt;
+&lt;h1 id=&#34;развёртывание-сети-openvpn&#34;&gt;Развёртывание сети OpenVPN&lt;/h1&gt;
+&lt;p&gt;Мне кажется, я подобрал правильную последовательность действий для развёртывания сети. Сначала, на подходящем компьютере, создадим Центр Сертификации и выпустим необходимое количество ключей и сертификатов для &lt;em&gt;серверов&lt;/em&gt; и &lt;em&gt;клиентов&lt;/em&gt;. Потом займёмся установкой программного обеспечения и проверкой работы.&lt;/p&gt;
+&lt;h2 id=&#34;создание-ca-выпуск-ключей-и-сертификатов&#34;&gt;Создание CA, выпуск ключей и сертификатов&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Для создания ключей и сертификатов достаточно прав обычного пользователя.&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;1-клонирование-easy-rsa&#34;&gt;1. Клонирование easy-rsa&lt;/h3&gt;
+&lt;p&gt;В выделенном для &lt;em&gt;CA&lt;/em&gt; каталоге клонируем текущую мастер-ветку Easy-RSA и подготавливаем файл с переменными &lt;code&gt;vars&lt;/code&gt;, изменяющими настройки генерации ключей по умолчанию:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;git clone https://github.com/OpenVPN/easy-rsa.git
+cd easy-rsa/easyrsa3
+cp vars.example vars
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;2-установка-переменных-vars&#34;&gt;2. Установка переменных vars&lt;/h3&gt;
+&lt;p&gt;Данный файл, как понятно из его названия, содержит переменные, которые достаточно установить один раз.&lt;/p&gt;
+&lt;p&gt;Редактируем файл &lt;code&gt;vars&lt;/code&gt; для усиления криптографии создаваемых сертификатов.&lt;/p&gt;
+&lt;p&gt;На мой взгляд шифрование на основе эллиптических кривых отвечает современным веяниям. Оно быстрее классических при, примерно, такой же надёжности. Поэтому и здесь выбран &lt;code&gt;EASYRSA_ALGO ec&lt;/code&gt;, плюс обязательное уточнение протокола &lt;code&gt;EASYRSA_CURVE secp384r1&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Усилим хэш-функцию &lt;code&gt;EASYRSA_DIGEST &amp;quot;sha512&amp;quot;&lt;/code&gt;, используемую для проверки сертификата на целостность.&lt;/p&gt;
+&lt;p&gt;Срок действия сертификата ЦА равняется десяти годам, что более чем достаточно. Иначе можно применить в настройках сервера опцию для добавления нового сертификата CA до истечения срока действия текущего сертификата.&lt;/p&gt;
+&lt;p&gt;По умолчанию срок действия выданных сертификатов 825 дней, то есть два года и три месяца. Раньше было 720 дней,&lt;/p&gt;
+&lt;h3 id=&#34;3-первичная-инициализация-pki&#34;&gt;3. Первичная инициализация PKI&lt;/h3&gt;
+&lt;p&gt;Первоначальная инициализация PKI:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ./easyrsa init-pki
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;4-создание-секретного-ключа-и-сертификата-центра-сертификации&#34;&gt;4. Создание секретного ключа и сертификата Центра Сертификации&lt;/h3&gt;
+&lt;p&gt;Будем использовать секретный ключ, защищённый паролем. Это означает, что при каждом подписывании новых сертификатов, потребуется вводить пароль.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ./easyrsa build-ca
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В случае, если кража ключей CA с последующим несанкционированным выпуском ключей не принципиальна, то существует способ отказаться от установки пароля на секретный ключ CA:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ./easyrsa build-ca nopass
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;5-разделяемый-секрет-takey&#34;&gt;5. Разделяемый секрет ta.key&lt;/h3&gt;
+&lt;p&gt;Будет удобно здесь же создать разделяемый секрет, использующийся и серверами, и клиентами. Все участники сети обязаны иметь одинаковый &lt;code&gt;ta.key&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Ключ из файла &lt;code&gt;ta.key&lt;/code&gt; используется в директиве &lt;code&gt;--tls-crypt&lt;/code&gt; для шифрования и аутентификации всех пакетов канала управления. &lt;em&gt;Это усилит безопасность сокрытием сертификатов, используемых для TLS соединения. Также усложняется идентификация трафика, как принадлежащего OpenVPN. Provides “poor-man’s” post-quantum security, against attackers who will never know the pre-shared key (i.e. no forward secrecy).&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Новая опция &lt;code&gt;--tls-crypt&lt;/code&gt; не требует использования &lt;code&gt;--key-direction&lt;/code&gt;, в отличии от &lt;code&gt;--tls-auth&lt;/code&gt; с обязательным указанием &lt;em&gt;направления&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Если следовать мануалу OpenVPN, то разделяемый секрет правильно генерировать командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;openvpn --genkey --secret pki/ta.key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если же пакет &lt;code&gt;openvpn&lt;/code&gt; не установлен, то я, на скорую руку, подобрал менее безопасный способ:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#39;-----BEGIN OpenVPN Static key V1-----&amp;#39; &amp;gt; pki/ta.key; \
+head -c 256 /dev/urandom | hexdump -e &amp;#39;16/1 &amp;#34;%02x&amp;#34; &amp;#34;\n&amp;#34;&amp;#39; &amp;gt;&amp;gt; pki/ta.key; \
+echo &amp;#39;-----END OpenVPN Static key V1-----&amp;#39; &amp;gt;&amp;gt; pki/ta.key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Во втором, небезопасном способе, отсутствует возможность проконтролировать качество секрета, но, как мне кажется, вероятность отсутствия приемлемой информации в &lt;code&gt;/dev/urandom&lt;/code&gt; исчезающе мала. Если есть подозрения, то стоит заглянуть в файл &lt;code&gt;ta.key&lt;/code&gt; и убедиться, что в нём наблюдается мешанина подобная этой:&lt;/p&gt;
+&lt;p&gt;&lt;details&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-----BEGIN OpenVPN Static key V1-----
+5c39a91bc38d7fb094f7539ac0e8bcf8
+489408ec8206387c2b8e430c8ceb7219
+56f1f083edc774d2388347d8648aecdf
+91b6d0b6e55156b678c4f4cd1248eab5
+8567796acbd170862848e827ebefca98
+111efc575d61dfe67e1bed7cc1c61675
+af5e5fd6b4684b07b3f6ee6578a35807
+0e60f568698d0988c8c0f3ebbec6932f
+1c95b4c52ace5ac21992ab22b63fc587
+da3ce8f3845dd08f75ab603d65d02e4d
+2e58aa24815dd2ddf73ebe7e4fb435c7
+0d498a9a126cad36d0b3ea2a1812ba64
+471bd745acba7b698bde5b2a43c2de76
+84793548b1520379051b720af685a577
+c1be42ab32b428f4661414a7d73527d3
+a262b611478c658828f6f18bf8833e09
+-----END OpenVPN Static key V1-----
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;&lt;/p&gt;
+&lt;p&gt;Для очистки совести можно проверить &lt;code&gt;openvpn --test-crypto --secret ta.key&lt;/code&gt; или &lt;code&gt;openvpn --test-crypto --secret ta.key --verb9&lt;/code&gt;, но эта проверка даст плохой результат только при наличии одних нулей в файле &lt;code&gt;ta.key&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;что-дальше&#34;&gt;Что дальше&lt;/h3&gt;
+&lt;p&gt;Переходим к созданию файлов конфигураций, ключей и сертификатов. Имена для новых сертификатов выбираем произвольные. Совпадение с именем хоста не обязательно. Для серверного сертификата выберем имя &lt;code&gt;srv1&lt;/code&gt; и т.д., а для клиентского сертификата &lt;code&gt;cln1&lt;/code&gt; и т.д.&lt;/p&gt;
+&lt;p&gt;Невозможно выпустить несколько сертификатов под одним именем. Вместо выпуска нового сертификата, необходимо за 30 дней (переменная EASYRSA_CERT_RENEW в &lt;code&gt;vars&lt;/code&gt;) до окончания срока действия сертификата, произвести перевыпуск сертификата. В этом случае будет сгенерирован новый приватный ключ и новый сертификат для этого ключа. Старые сертификаты не попадут в &lt;em&gt;отозванные&lt;/em&gt;, так как необходимо успеть заменить ключ и сертификат на сервере до окончания срока действия предыдущего сертификата.&lt;/p&gt;
+&lt;h2 id=&#34;создание-файла-конфигурации-для-openvpn-сервера&#34;&gt;Создание файла конфигурации для OpenVPN-сервера&lt;/h2&gt;
+&lt;h3 id=&#34;разжёвывание&#34;&gt;Разжёвывание&lt;/h3&gt;
+&lt;p&gt;В идеале, как указано в &lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;, создание ключей и их сертификация производится в несколько этапов и на разных компьютерах. Но здесь мы сократим эти этапы (генерирование секретного ключа и создание запроса на сертификат на одной системе, сертификация открытого ключа на другой) до одной команды &lt;code&gt;easyrsa build-server-full nopass inline&lt;/code&gt;. Опция &lt;code&gt;nopass&lt;/code&gt; позволяет сгенерировать беспарольный приватный ключ, что удобно для использования на серверах. Опция &lt;code&gt;inline&lt;/code&gt; подготовит единственный файл &lt;code&gt;.creds&lt;/code&gt; со встроенными ключами и сертификатами для удобного добавления к файлу конфигурации.&lt;/p&gt;
+&lt;p&gt;Подготовим отдельный скрипт для генерирования единственного файла &lt;code&gt;.conf&lt;/code&gt;, содержащего почти всё необходимое.&lt;/p&gt;
+&lt;p&gt;В скрипте, к имени файла ключа и сертификата будет добавляться дата истечения их срока действия. Естественно, термин &amp;ldquo;срок действия&amp;rdquo; касается только сертификата, но мне показалось удобным и к ключу добавить эту информацию. В принципе нет необходимости менять приватный ключ, если только он не был скомпрометирован, тогда как есть команда &lt;code&gt;easyrsa renew&lt;/code&gt; для перевыпуска нового сертификата на основе старого приватного ключа.&lt;/p&gt;
+&lt;p&gt;!!! Нет необходимости хранить в Центре Сертификации приватные ключи. Даже неприемлимо. Достаточно хранить только сертификаты по той причине, что они могут понадобиться при процедуре отзыва скомпрометированных ключей. В случае отсутствия копии сертификата, который необходимо добавить в список отозванных, есть способ отловить его во время подключения. Но я не помню как это делается.&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color:green&#34;&gt;!!! Вывод: в папку &lt;code&gt;kits&lt;/code&gt; достаточно кидать единственный файл &lt;code&gt;srv1.conf&lt;/code&gt; со всем необходимым внутри. После передачи подготовленного файла конфигурации на целевой компьютер, его необходимо удалить из центра сертификации. Проверить, что в центре сертификации не остались приватные ключи и запросы на сертификацию. Достаточно иметь сертификаты для создания списков отзыва.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Минимально необходимый конфигурационный файл для сервера имеет вид (знак &amp;ldquo;точка с запятой&amp;rdquo; в начале строки отмечает неактивную опцию):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;;local #.#.#.#
+;multihome
+
+dev tun
+;dev tun200
+port 9216
+proto udp
+
+server 10.0.0.1 255.255.255.0
+;server 192.168.200.0 255.255.255.0
+topology subnet
+;push &amp;#34;redirect-gateway def1 bypass-dhcp&amp;#34;
+;push &amp;#34;dhcp-option DNS 1.1.1.1&amp;#34;
+client-config-dir ccd
+
+cipher AES-256-GCM
+ecdh-curve secp384r1
+dh none
+;compress lz4
+keepalive 10 60
+
+max-clients 252
+float
+;tun-mtu 1300
+;fragment 1300
+;mssfix
+
+chroot jail
+user nobody
+group nogroup
+persist-key
+persist-tun
+
+status-version 2
+;verb 3
+mute 20
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Необходимо дополнить файл конфигурации индивидуальными строками:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;;ifconfig-pool-persist srv1-ipp.txt
+status srv1-status.log
+log srv1.log
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Плюс встроить в файл конфигурации ключи и сертификаты из файла &lt;code&gt;.creds&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;cert&amp;gt;
+-----BEGIN CERTIFICATE-----
+MIICHzCCAaWgAwIBAgIQWz71AIR7P0KwleHrcT9cfzAKBggqhkjOPQQDBDATMREw
+................................................................
+-----END CERTIFICATE-----
+&amp;lt;/cert&amp;gt;
+&amp;lt;key&amp;gt;
+-----BEGIN PRIVATE KEY-----
+MIG2AgEAMBAGByqGSM49AgEGBSuBBAAiBIGeMIGbAgEBBDCzHouw2FY0pAes3l9h
+................................................................
+-----END PRIVATE KEY-----
+&amp;lt;/key&amp;gt;
+&amp;lt;ca&amp;gt;
+-----BEGIN CERTIFICATE-----
+MIIB3DCCAWKgAwIBAgIJAMgvGpBBFuF9MAoGCCqGSM49BAMEMBMxETAPBgNVBAMM
+................................................................
+-----END CERTIFICATE-----
+&amp;lt;/ca&amp;gt;
+&amp;lt;tls-crypt&amp;gt;
+-----BEGIN OpenVPN Static key V1-----
+d87c829b654879b7cd16469089354840
+................................
+-----END OpenVPN Static key V1-----
+&amp;lt;/tls-crypt&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;цимес&#34;&gt;Цимес&lt;/h3&gt;
+&lt;!--
+Для автоматизации всего вышеуказанного, в каталоге с файлом `./easyrsa`, создадим скрипт `newsrv.sh`:
+```
+#!/bin/bash
+# Example for use: ./gensrv.sh srv1
+SRVNAME=$1
+FILECONF=${SRVNAME}.conf
+
+# Computing a expire date of certificate.
+EXPDATECERT=${SRVNAME}&#34;-&#34;$(date -u +%Y%m%d \
+-d &#34;+$(grep &#39;^set_var EASYRSA_CERT_EXPIRE&#39; vars \
+|awk &#39;{print $3}&#39;) days&#34;)-$(date -u +%H%M)
+
+# Making needed keys and certificates.
+./easyrsa build-server-full ${SRVNAME} nopass inline
+
+# Adding the &#39;ta.key&#39; to the file &#39;.creds&#39;.
+echo &#39;&lt;tls-crypt&gt;&#39; &gt;&gt; pki/${SRVNAME}.creds
+cat pki/ta.key &gt;&gt; pki/${SRVNAME}.creds
+echo &#39;&lt;/tls-crypt&gt;&#39; &gt;&gt; pki/${SRVNAME}.creds
+# Now in file &#39;.creds&#39; are all needed keys and certificates.
+
+# Preparing &#39;.conf&#39;
+
+
+# Renaming &#39;srv1.crt&#39; to &#39;srv1-20220322-1232.crt&#39; for convenient use.
+# Revoke производится по номеру сертификата и имени.
+# mv pki/issued/${SRVNAME}.crt pki/issued/${SRVNAME}-${EXPDATECERT}.crt
+
+# Shredding all the private files and unneeded the `request file`.
+shred -u pki/${SRVNAME}.creds
+shred -u pki/private/${SRVNAME}.key
+shred -u pki/reqs/${SRVNAME}.req
+```
+--&gt;
+&lt;h3 id=&#34;разъяснение-некоторых-опций&#34;&gt;Разъяснение некоторых опций&lt;/h3&gt;
+&lt;h4 id=&#34;local&#34;&gt;local&lt;/h4&gt;
+&lt;p&gt;При наличии нескольких сетевых интерфейсов, этот параметр позволит указать тот интерфейс, на котором openvpn должен принимать запросы.&lt;/p&gt;
+&lt;h4 id=&#34;multihome&#34;&gt;multihome&lt;/h4&gt;
+&lt;p&gt;Эту опцию необходимо активировать в случае присутствия на сервере нескольких сетевых интерфейсов и отсутствующего параметра &lt;code&gt;local&lt;/code&gt;. Так как openvpn будет слушать все интерфейсы, то есть вероятность, что клиент будет получать ответ от сервера с другого ip-адреса, что не позволит установить коннект. Эта опция заставит openvpn отправлять пакеты с того интерфейса, на который они пришли.&lt;/p&gt;
+&lt;h4 id=&#34;server-1921682000-2552552550&#34;&gt;server 192.168.200.0 255.255.255.0&lt;/h4&gt;
+&lt;p&gt;Использование этой опции автоматически применит следующие опции:
+&lt;code&gt;mode server&lt;/code&gt;
+&lt;code&gt;tls-server&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&#34;topology-subnet&#34;&gt;topology subnet&lt;/h4&gt;
+&lt;p&gt;В отличии от устаревших &lt;code&gt;net30&lt;/code&gt; и &lt;code&gt;p2p&lt;/code&gt;, эта опция, в сочетании с вышеуказанными в конфиге &lt;code&gt;dev tun200&lt;/code&gt; и &lt;code&gt;server 192.168.200.0 255.255.255.0&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;на сервере сетевому интерфейсу &lt;code&gt;tun200&lt;/code&gt; назначается ip-адрес 192.168.200.1/24&lt;/li&gt;
+&lt;li&gt;клиентам раздаются ip-адреса из пула 192.168.200.2/24 – 192.168.200.253/24&lt;/li&gt;
+&lt;li&gt;клиентам, командой &lt;code&gt;push &amp;quot;route-gateway 192.168.200.1&amp;quot;&lt;/code&gt;, проталкивает маршрут к шлюзу 192.168.200.1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;client-config-dir-ccd&#34;&gt;client-config-dir ccd&lt;/h4&gt;
+&lt;p&gt;Опция полезна в тех случаях, когда определённый клиент является шлюзом в какие-либо сети. В каталоге &lt;code&gt;/etc/openvpn/ccd&lt;/code&gt; размещаются файлы (имя файла = CommonName клиента) для описания сетей за клиентами. В файле описывается маршрут &lt;code&gt;iroute 192.168.0.0 255.255.254.0&lt;/code&gt;, который доступен через подключившегося клиента. В этом же файле могут указываться индивидуальные &lt;code&gt;push &amp;quot;route ...&lt;/code&gt; отправляемые клиенту, в дополнение к общим, указываемых в серверном файле &lt;code&gt;.conf&lt;/code&gt;. Также нельзя забыть указать уже в серверном файле &lt;code&gt;.conf&lt;/code&gt; такой же маршрут от клиента, но строкой &lt;code&gt;route 192.168.0.0 255.255.254.0 192.168.200.1 0&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;ecdh-curve-secp384r1&#34;&gt;ecdh-curve secp384r1&lt;/h4&gt;
+&lt;p&gt;Опция используется для создания Diffie Hellman параметра, необходимого для первичного безопасного обмена ключами. Ранее использовалась опция &lt;code&gt;dh file.pem&lt;/code&gt;, для которого приходилось выполнять ресурсоёмкую и долгую процедуру по генерированию параметра, например для 2048 бита, командой &lt;code&gt;openssl dhparam -out dh2048.pem 2048&lt;/code&gt;.&lt;/p&gt;
+&lt;h4 id=&#34;keepalive-10-60&#34;&gt;keepalive 10 60&lt;/h4&gt;
+&lt;p&gt;Если применяется на сервере, то эта опция на клиенте (если таковая присутствует) будет заменена посылкой &lt;code&gt;push &amp;quot;ping 10&amp;quot;&lt;/code&gt; и &lt;code&gt;push &amp;quot;ping-restart 60&amp;quot;&lt;/code&gt;. Сервер сбросит соединение, если клиент перестанет отвечать.  Клиент за NAT&amp;rsquo;ом периодически посылая пакеты, поддерживает связь с сервером, что не позволит NAT&amp;rsquo;у преждевременно сбросить соединение. На мобильных аппаратах не всегда полезна для заряда батареи.&lt;/p&gt;
+&lt;h2 id=&#34;создание-файла-конфигурации-для-openvpn-клиента&#34;&gt;Создание файла конфигурации для OpenVPN-клиента&lt;/h2&gt;
+&lt;p&gt;Аналогично серверному &lt;code&gt;easyrsa build-server-full&lt;/code&gt;, для клиента используем &lt;code&gt;easyrsa build-client-full&lt;/code&gt;, чтобы одной командой пройти путь от генерации ключа с созданием запроса на сертификацию, до выпуска сертификата.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: OpenVPN — это просто</title>
+      <link>/a/openvpn-eto-prosto/</link>
+      <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/openvpn-eto-prosto/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-03-22&lt;/p&gt;
+&lt;p&gt;Читая сейчас &lt;a href=&#34;https://openvpn.net/community-resources/reference-manual-for-openvpn-2-4/&#34;&gt;Reference manual for OpenVPN 2.4&lt;/a&gt;, я постарался привести свои слегка устаревшие знания по настройке OpenVPN-сети к современным реалиям. В настоящей инструкции, вместо RSA-сертификатов используется криптография на эллиптических кривых. Для шифрования канала выбран протокол с добавочной информацией, позволяющей контролировать целостность пакетов. &lt;code&gt;tls-auth&lt;/code&gt;+&lt;code&gt;key-direction&lt;/code&gt; заменены на &lt;code&gt;tls-crypt&lt;/code&gt;. CBC -&amp;gt; GCM. SHA1 -&amp;gt; SHA512, dh -&amp;gt; ecdh-curve.&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;OpenVPN прекрасный продукт для подключения&amp;hellip; (потом допишу).&lt;/p&gt;
+&lt;p&gt;Для использования OpenVPN сети в минимальной конфигурации необходимо всего три вещи:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Центр авторизации.&lt;/li&gt;
+&lt;li&gt;Один OpenVPN-сервер.&lt;/li&gt;
+&lt;li&gt;Один OpenVPN-клиент.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Здесь приведена простая конфигурация для выхода &lt;em&gt;клиента&lt;/em&gt; в интернет через VPN-сервер. Стороннему наблюдателю будут видны зашифрованные udp-пакеты, которыми обменивается клиент со случайного порта выше 1024-го на порт UDP 9216 удалённого хоста. То есть враг будет знать сам факт использования VPN, но без соответствующих ключей и сертификатов не сможет наблюдать содержимое зашифрованного VPN-туннеля. Маскировка OpenVPN-трафика под HTTPS-протокол реализуется пакетом &lt;code&gt;obfsproxy&lt;/code&gt;, но о нём я напишу в другой статье.&lt;/p&gt;
+&lt;h2 id=&#34;1-центр-сертификации&#34;&gt;1. Центр Сертификации&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Для создания ключей и сертификатов достаточно прав обычного пользователя.&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;11-развёртывание-центра-сертификации&#34;&gt;1.1 Развёртывание &amp;ldquo;Центра Сертификации&amp;rdquo;&lt;/h3&gt;
+&lt;h4 id=&#34;111-клонирование-easy-rsa&#34;&gt;1.1.1. Клонирование easy-rsa&lt;/h4&gt;
+&lt;p&gt;В выделенном для &lt;em&gt;CA&lt;/em&gt; каталоге клонируем текущий Easy-RSA и подготавливаем файл с переменными, изменяющими настройки генерации ключей по умолчанию:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo apt-get install git
+git clone https://github.com/OpenVPN/easy-rsa.git
+cd easy-rsa/easyrsa3
+cp vars.example vars
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;112-установка-переменных-vars&#34;&gt;1.1.2. Установка переменных vars&lt;/h4&gt;
+&lt;p&gt;Редактируем файл &lt;code&gt;vars&lt;/code&gt; для усиления криптографии создаваемых сертификатов (&lt;code&gt;EASYRSA_ALGO ec&lt;/code&gt;, &lt;code&gt;EASYRSA_CURVE secp384r1&lt;/code&gt;, &lt;code&gt;EASYRSA_DIGEST &amp;quot;sha512&amp;quot;&lt;/code&gt;) и увеличения срока действия выданных сертификатов до 1095 дней (&lt;code&gt;EASYRSA_CERT_EXPIRE 1095&lt;/code&gt;):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export DAYSEXP=1095; \
+sed -i -e &amp;#39;s/^#set_var EASYRSA_ALGO.*$/set_var EASYRSA_ALGO ec/&amp;#39; vars; \
+sed -i -e &amp;#39;s/^#set_var EASYRSA_CURVE.*$/set_var EASYRSA_CURVE secp384r1/&amp;#39; vars; \
+sed -i -e &amp;#39;s/^#set_var EASYRSA_DIGEST.*$/set_var EASYRSA_DIGEST &amp;#34;sha512&amp;#34;/&amp;#39; vars; \
+sed -i -e &amp;#34;s/^#set_var EASYRSA_CERT_EXPIRE.*$/set_var EASYRSA_CERT_EXPIRE $DAYSEXP/&amp;#34; vars
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;113-первичная-инициализация-pki&#34;&gt;1.1.3. Первичная инициализация PKI&lt;/h4&gt;
+&lt;p&gt;Для создания &lt;em&gt;Центра Сертификации&lt;/em&gt; выполняем несколько команд:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./easyrsa init-pki; \
+./easyrsa --batch build-ca nopass
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;114-разделяемый-секрет-takey&#34;&gt;1.1.4. Разделяемый секрет ta.key&lt;/h4&gt;
+&lt;p&gt;Будет удобно если здесь же создадим разделяемый секрет для сервера и клиента. Если следовать мануалу OpenVPN, то разделяемый секрет правильно генерировать командой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;openvpn --genkey --secret pki/ta.key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если пакет &lt;code&gt;openvpn&lt;/code&gt; не установлен, то я пользуюсь менее безопасным способом:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#39;-----BEGIN OpenVPN Static key V1-----&amp;#39; &amp;gt; pki/ta.key; \
+head -c 256 /dev/urandom | hexdump -e &amp;#39;16/1 &amp;#34;%02x&amp;#34; &amp;#34;\n&amp;#34;&amp;#39; &amp;gt;&amp;gt; pki/ta.key; \
+echo &amp;#39;-----END OpenVPN Static key V1-----&amp;#39; &amp;gt;&amp;gt; pki/ta.key
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;115-что-дальше&#34;&gt;1.1.5. Что дальше&lt;/h4&gt;
+&lt;p&gt;Переходим к созданию файлов конфигураций, ключей и сертификатов. Имена для новых сертификатов выбираем произвольное. Совпадение с именем хоста не обязательно. Для серверного сертификата выберем имя &lt;code&gt;srv1&lt;/code&gt;, а для клиентского сертификата &lt;code&gt;cln1&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;12-создание-файла-конфигурации-для-openvpn-сервера&#34;&gt;1.2. Создание файла конфигурации для OpenVPN-сервера&lt;/h3&gt;
+&lt;p&gt;Для нашего первого OpenVPN-сервера генерируем беспарольный ключ и сертификат командой &lt;code&gt;easyrsa build-server-full&lt;/code&gt;. Комплект сгенерированных файлов для соответствующего сервера копируем в отдельный каталог &lt;code&gt;kits/srv1&lt;/code&gt; и создаём &lt;strong&gt;единственный файл конфигурации &lt;code&gt;srv1.conf&lt;/code&gt; со встроенными ключём, сертификатом и разделяемым секретом&lt;/strong&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export DN=srv1; \
+export DNEXPDATE=$DN&amp;#34;-&amp;#34;$(date -u +%Y%m%d -d &amp;#34;+$(grep &amp;#39;^set_var EASYRSA_CERT_EXPIRE&amp;#39; vars|awk &amp;#39;{print $3}&amp;#39;) days&amp;#34;)-$(date -u +%H%M); \
+export DIR=kits/$DN; export FILECONF=$DIR/$DN.conf; \
+./easyrsa build-server-full $DNEXPDATE nopass; \
+mkdir -p kits/$DN; \
+cp pki/private/$DNEXPDATE.key kits/$DN; \
+cp pki/issued/$DNEXPDATE.crt kits/$DN; \
+cp pki/ca.crt kits/$DN; \
+cp pki/ta.key kits/$DN; \
+echo -e &amp;#39;;local #.#.#.#\n;multihome&amp;#39; &amp;gt; $FILECONF; \
+echo -e &amp;#39;port 9216\nproto udp\ndev tun200&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#39;\nserver 192.168.200.0 255.255.255.0\ntopology subnet&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#39;push &amp;#34;redirect-gateway def1 bypass-dhcp&amp;#34;&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#39;push &amp;#34;dhcp-option DNS 1.1.1.1&amp;#34;&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#39;\ncipher AES-256-GCM\necdh-curve secp384r1\ndh none\nkeepalive 10 60&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#39;\nmax-clients 10\nfloat\n;tun-mtu 1300\n;fragment 1300\n;mssfix&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#39;\nchroot jail\nuser nobody\ngroup nogroup\npersist-key\npersist-tun&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#34;\n;ifconfig-pool-persist $DN-ipp.txt\nstatus $DN-status.log&amp;#34; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#34;log $DN.log\n;verb 3\nmute 20\n&amp;#34; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#34;# Expired date $DNEXPDATE UTC&amp;#34; &amp;gt;&amp;gt; $FILECONF; \
+echo &amp;#39;&amp;lt;cert&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; sed -n &amp;#39;/BEGIN/,$p&amp;#39; $DIR/$DNEXPDATE.crt  &amp;gt;&amp;gt; $FILECONF; echo &amp;#39;&amp;lt;/cert&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo &amp;#39;&amp;lt;key&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; cat $DIR/$DNEXPDATE.key  &amp;gt;&amp;gt; $FILECONF; echo &amp;#39;&amp;lt;/key&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo &amp;#39;&amp;lt;ca&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; cat pki/ca.crt &amp;gt;&amp;gt; $FILECONF; echo &amp;#39;&amp;lt;/ca&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo &amp;#39;&amp;lt;tls-crypt&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; sed -n &amp;#39;/BEGIN/,$p&amp;#39; pki/ta.key &amp;gt;&amp;gt; $FILECONF; echo &amp;#39;&amp;lt;/tls-crypt&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;13-создание-файла-конфигурации-для-openvpn-клиента&#34;&gt;1.3. Создание файла конфигурации для OpenVPN-клиента&lt;/h3&gt;
+&lt;p&gt;Для генерации клиентских ключей предназначена команда &lt;code&gt;easyrsa build-client-full nopass&lt;/code&gt;. Для первого клиента генерируем беспарольный ключ и сертификат, с копированием набора файлов в каталог &lt;code&gt;kits/cln1&lt;/code&gt;. Здесь же создаём &lt;strong&gt;файл конфигурации &lt;code&gt;cln1.ovpn&lt;/code&gt; со встроенными ключём, сертификатом и разделяемым секретом для подключения к серверу&lt;/strong&gt;. Будет удобно скопировать только этот файл в OpenVPN клиент.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Обязательно меняем переменную VPNHOST на актуальный ip-адрес или доменное имя, с портом VPN-сервера, не трогая кавычек.&lt;/li&gt;
+&lt;li&gt;Изменив значение переменной REQPASS на отличное от &lt;strong&gt;nopass&lt;/strong&gt;, получим запрос ввода пароля для клиентского ключа. Иногда полезно, когда &lt;em&gt;клиент&lt;/em&gt; будет запрашивать пароль от ключа, при попытке подключиться к серверу.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export DN=cln1; \
+export REQPASS=nopass; \
+export VPNHOST=&amp;#34;203.0.113.1 9216&amp;#34;; \
+export DIR=kits/$DN; export FILECONF=$DIR/$DN.ovpn; \
+export DNEXPDATE=$DN&amp;#34;-&amp;#34;$(date -u +%Y%m%d -d &amp;#34;+$(grep &amp;#39;^set_var EASYRSA_CERT_EXPIRE&amp;#39; vars|awk &amp;#39;{print $3}&amp;#39;) days&amp;#34;)-$(date -u +%H%M); \
+./easyrsa build-client-full $DNEXPDATE $REQPASS; \
+mkdir -p $DIR; \
+cp pki/private/$DNEXPDATE.key $DIR; \
+cp pki/issued/$DNEXPDATE.crt $DIR; \
+cp pki/ca.crt $DIR; \
+cp pki/ta.key $DIR; \
+echo -e &amp;#39;client\ndev tun\nproto udp&amp;#39; &amp;gt; $FILECONF; \
+echo -e &amp;#39;auth SHA512&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#34;remote $VPNHOST\nresolv-retry infinite&amp;#34; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#39;nobind\npersist-key\npersist-tun&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#39;mute-replay-warnings\nremote-cert-tls server&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#39;verb 1\nmute 20&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo -e &amp;#34;# Expired date $DNEXPDATE UTC&amp;#34; &amp;gt;&amp;gt; $FILECONF; \
+echo &amp;#39;&amp;lt;cert&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; sed -n &amp;#39;/BEGIN/,$p&amp;#39; $DIR/$DNEXPDATE.crt  &amp;gt;&amp;gt; $FILECONF; echo &amp;#39;&amp;lt;/cert&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo &amp;#39;&amp;lt;key&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; cat $DIR/$DNEXPDATE.key  &amp;gt;&amp;gt; $FILECONF; echo &amp;#39;&amp;lt;/key&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo &amp;#39;&amp;lt;ca&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; cat pki/ca.crt &amp;gt;&amp;gt; $FILECONF; echo &amp;#39;&amp;lt;/ca&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; \
+echo &amp;#39;&amp;lt;tls-crypt&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; sed -n &amp;#39;/BEGIN/,$p&amp;#39; pki/ta.key &amp;gt;&amp;gt; $FILECONF; echo &amp;#39;&amp;lt;/tls-crypt&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-настройка-клиентов-openvpn&#34;&gt;2. Настройка клиентов OpenVPN&lt;/h2&gt;
+&lt;h3 id=&#34;21-настройка-openvpn-клиента-windows&#34;&gt;2.1. Настройка OpenVPN-клиента Windows&lt;/h3&gt;
+&lt;p&gt;После установки &lt;a href=&#34;https://openvpn.net/community-downloads/&#34;&gt;OpenVPN клиента для Windows&lt;/a&gt;, в каталог &lt;code&gt;C:/Program Files/Openvpn/Config&lt;/code&gt; копируем файл &lt;code&gt;kits/cln1/cln1.ovpn&lt;/code&gt;. На рабочем столе находим и запускаем GUI OpenVPN. В области уведомлений на панели задач рядом с часами, должен появиться значок OpenVPN. Правой мышкой на нём вызываем меню и выбираем &amp;ldquo;Подключение&amp;rdquo;. Естественно, делаем это после настройки сервера. Проверил, что работает.&lt;/p&gt;
+&lt;h3 id=&#34;22-настройка-android&#34;&gt;2.2. Настройка Android&lt;/h3&gt;
+&lt;p&gt;Устанавливаем &lt;a href=&#34;https://play.google.com/store/apps/details?id=net.openvpn.openvpn&#34;&gt;официальный клиент OpenVPN в Google Store&lt;/a&gt;. С текущими настройками OpenVPN-клиент работает. Проверял на Android 5.1, 7.1.&lt;/p&gt;
+&lt;h3 id=&#34;23-настройка-яблока&#34;&gt;2.3. Настройка &amp;ldquo;Яблока&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://apps.apple.com/us/app/openvpn-connect/id590379981#?platform=iphone&#34;&gt;Официальный клиент для Apple в Apple Store&lt;/a&gt;. Сейчас под рукой нет эппла. Я помню, что настройка клиента не вызвала затруднений. Подсовываем клиенту файл &lt;code&gt;cln1.ovpn&lt;/code&gt; и всё работает. При случае проверю и напишу.&lt;/p&gt;
+&lt;h3 id=&#34;24-настройка-gnome-networkmanager&#34;&gt;2.4. Настройка Gnome NetworkManager&lt;/h3&gt;
+&lt;p&gt;Устанавливаем пакет &lt;code&gt;NetworkManager-openvpn&lt;/code&gt;, например для Ubuntu командой &lt;code&gt;sudo apt-get install NetworkManager-openvpn&lt;/code&gt;, или в Void Linux команда &lt;code&gt;sudo xbps-install -Su NetworkManager-openvpn&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;В настройках NetworkManager&amp;rsquo;а &amp;ldquo;VPN Connections -&amp;gt; Configure VPN -&amp;gt; + -&amp;gt; Import a saved VPN connection&amp;hellip;&amp;rdquo;&amp;quot;, импортируем файл &lt;code&gt;cln1.ovpn&lt;/code&gt;. При импорте, встроенные в файл конфигурации ключи и сертификаты экспортируются в отдельные файлы &lt;code&gt;.pem&lt;/code&gt; в каталоге &lt;code&gt;~/.cert&lt;/code&gt;. Проверил, что работает.&lt;/p&gt;
+&lt;h2 id=&#34;3-создание-openvpn-сервера&#34;&gt;3. Создание OpenVPN-сервера&lt;/h2&gt;
+&lt;p&gt;Предполагается, что в &lt;a href=&#34;https://aws.amazon.com/ru/lightsail/&#34;&gt;AWS Lightsail&lt;/a&gt;, &lt;a href=&#34;https://www.digitalocean.com/&#34;&gt;DigitalOcean&lt;/a&gt;, &lt;a href=&#34;https://www.vultr.com/&#34;&gt;Vultr&lt;/a&gt;, &lt;a href=&#34;https://pulseheberg.com/&#34;&gt;PulseHeberg&lt;/a&gt;&amp;hellip; был арендован VPS за несколько долларов, и с Ubuntu 18.04 на борту. Демон SSH слушает 22-ой порт и &lt;strong&gt;имеет запрет на использование паролей&lt;/strong&gt;. Файрвол не настроен. Произведен апгрейд системы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo apt-get -y update &amp;amp;&amp;amp; sudo apt-get -y dist-upgrade &amp;amp;&amp;amp; sudo apt-get -y --purge autoremove
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;31-конфигурирование-демона-openvpn&#34;&gt;3.1. Конфигурирование демона OpenVPN&lt;/h3&gt;
+&lt;h4 id=&#34;311-установка-openvpn-на-сервер&#34;&gt;3.1.1. Установка openvpn на сервер&lt;/h4&gt;
+&lt;p&gt;Переходим в контекст root&amp;rsquo;а, устанавливаем пакет &lt;code&gt;openvpn&lt;/code&gt; и создаём поддерево каталогов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo su
+apt-get install openvpn
+cd /etc/openvpnl \
+mkdir -p /etc/openvpn/jail /etc/openvpn/jail/tmp
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;312-копирование-файла-конфигурации-из-ca-на-сервер&#34;&gt;3.1.2. Копирование файла конфигурации из CA на сервер&lt;/h4&gt;
+&lt;p&gt;В каталог &lt;code&gt;/etc/openvpn&lt;/code&gt; копируем тем или иным способом файл &lt;code&gt;srv1.conf&lt;/code&gt; для сервера, подготовленный нами ранее в &lt;em&gt;Центре Сертификации&lt;/em&gt;, и размещённый в папке &lt;code&gt;kits/srv1&lt;/code&gt;. Например, с помощью &lt;code&gt;rsync&lt;/code&gt; и при наличии на сервере ssh-демона на порте &lt;code&gt;22&lt;/code&gt; с &lt;code&gt;PermitRootLogin yes&lt;/code&gt;, делаем так, естественно изменив первые три переменные на актуальные значения:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export FILENAME=kits/srv1/srv1.conf; \
+export SSHADDRESS=203.0.113.1; \
+export SSHPORT=22; \
+rsync -avP -e &amp;#34;ssh -p $SSHPORT&amp;#34; $FILENAME root@$SSHADDRESS:/etc/openvpn/
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;313-проверка-прав-на-каталог-openvpn&#34;&gt;3.1.3. Проверка прав на каталог openvpn&lt;/h4&gt;
+&lt;p&gt;На всякий случай устанавливаем необходимые права и атрубуты для скопированного набора файлов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;chown root:root /etc/openvpn/*.conf
+chmod 600 /etc/openvpn/*.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;314-запуск-демона&#34;&gt;3.1.4. Запуск демона&lt;/h4&gt;
+&lt;p&gt;Включаем и запускаем демон:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl enable openvpn@srv1
+systemctl start openvpn@srv1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Замечу что из-за опций &lt;code&gt;persist-tun&lt;/code&gt; и &lt;code&gt;persist-key&lt;/code&gt;, вместо команды &lt;code&gt;systemctl restart openvpn@srv1&lt;/code&gt;, перезапуск демона выполняется двумя командами:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl stop openvpn@srv1 &amp;amp;&amp;amp; systemctl start openvpn@srv1
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;32-настройка-файрвола&#34;&gt;3.2. Настройка файрвола&lt;/h3&gt;
+&lt;p&gt;Сначала временно, то есть до ближайшей перезагрузки сервера, включаем &amp;ldquo;форвардинг&amp;rdquo; и добавляем правила файрвола:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sysctl -w net.ipv4.ip_forward=1
+
+export GW=$(ip r |awk &amp;#39;/default/{print $5}&amp;#39;)
+export IP=$(ip a sh dev ens3 |sed -En &amp;#39;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p&amp;#39;)
+export SSHPORT=22
+export VPNPORT=9216; export VPNPROTO=udp
+
+iptables -t nat -F
+iptables -t mangle -F
+iptables -F
+iptables -X
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
+iptables -A INPUT -i lo -j ACCEPT
+
+iptables -A INPUT -p tcp -m tcp --dport $SSHPORT -m conntrack --ctstate NEW -j ACCEPT
+iptables -A INPUT -p $VPNPROTO -m $VPNPROTO --dport $VPNPORT -m conntrack --ctstate NEW -j ACCEPT
+iptables -A INPUT -i tun+ -p icmp -m icmp --icmp-type echo-request -m conntrack --ctstate NEW -j ACCEPT
+iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -m conntrack --ctstate INVALID -j DROP
+iptables -A FORWARD -i tun200 -o $GW -j ACCEPT
+iptables -A FORWARD -j REJECT --reject-with icmp-net-unreachable
+iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $IP
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В случае возникновения проблем на сервере после применения вышеуказанных команд, просто перегружаем сервер через личный кабинет VPS-провайдера.&lt;/p&gt;
+&lt;h2 id=&#34;4-проверка-маршрутизации&#34;&gt;4. Проверка маршрутизации&lt;/h2&gt;
+&lt;p&gt;Проверяем правильность настроек с помощью ранее настроенного OpenVPN-клиента. Подключаемся к серверу и в любом браузере вводим URL &lt;code&gt;https://www.google.com/search?q=ip&lt;/code&gt;. Гугл ответит адресом ip. Если адрес совпадает с адресом OpenVPN-сервера, то настройка сервера верна и переходим к закреплению текущей конфигурации сервера на постоянной основе.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Перевод Easy-RSA 3 Quickstart README</title>
+      <link>/a/perevod-easy-rsa-3-quickstart-readme/</link>
+      <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-10-22&lt;/p&gt;
+&lt;h3 id=&#34;предисловие-от-меня&#34;&gt;Предисловие от меня&lt;/h3&gt;
+&lt;p&gt;В статье задействован &lt;em&gt;правильный&lt;/em&gt; способ использования &lt;em&gt;PKI&lt;/em&gt; для OpenVPN, когда операция создания &lt;em&gt;приватных ключей&lt;/em&gt; с последующим &lt;em&gt;запросом на сертификацию&lt;/em&gt; и операция выпуска &lt;em&gt;сертификата ключа&lt;/em&gt; на основе &lt;em&gt;запроса&lt;/em&gt;, выполняются на разных системах.&lt;/p&gt;
+&lt;h2 id=&#34;easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA 3 Quickstart README&lt;/h2&gt;
+&lt;p&gt;Это инструкция как быстро начать использовать Easy-RSA версии 3. Детальный хэлп по использованию и описанию команд может быть найден по команде &lt;code&gt;./easyrsa -h&lt;/code&gt;. Дополнительная документация может быть найдена в директории &lt;code&gt;doc/&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Если вы сделали апгрейд с версии Easy-RSA 2.x, то в той же папке &lt;code&gt;doc/&lt;/code&gt; лежат заметки по апгрейду.&lt;/p&gt;
+&lt;h3 id=&#34;установка-и-процедура-подписи-первого-запроса&#34;&gt;Установка и процедура подписи первого запроса&lt;/h3&gt;
+&lt;p&gt;Здесь в быстром темпе описано, что нужно сделать, чтобы развернуть новую &lt;strong&gt;PKI&lt;/strong&gt; (&lt;em&gt;Инфраструктура Открытых Ключей&lt;/em&gt;) и выпустить свой первый &lt;em&gt;подписанный сертификат&lt;/em&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Выберите систему, которая будет вашим &lt;strong&gt;Центром Сертификации&lt;/strong&gt; (&lt;em&gt;CA&lt;/em&gt;), где создайте структуру каталогов для новой &lt;em&gt;PKI&lt;/em&gt; и сгенерируйте ключи для этого &lt;strong&gt;CA&lt;/strong&gt; следующими командами:
+&lt;code&gt;./easyrsa init-pki&lt;/code&gt;
+&lt;code&gt;./easyrsa build-ca&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;На другой системе нуждающейся в &lt;em&gt;сертификате&lt;/em&gt;, будущем сервере или клиенте, инициализируйте собственный &lt;em&gt;PKI&lt;/em&gt; для генерации &lt;em&gt;ключевой пары&lt;/em&gt; и &lt;em&gt;запроса на сертификацию&lt;/em&gt;. Заметьте, что &lt;em&gt;&lt;strong&gt;рекомендованной процедурой&lt;/strong&gt;&lt;/em&gt; является инициализация этого PKI (&lt;code&gt;init-pki&lt;/code&gt;) на &lt;em&gt;&lt;strong&gt;отдельной системе&lt;/strong&gt;&lt;/em&gt; от первой (или хотя бы в отдельном каталоге). Если вы не придерживаетесь рекомендованной процедуры и используете один и тот же каталог для выпуска и подписания сертификатов, то пропустите этот &lt;code&gt;init-pki&lt;/code&gt;, а так же следующий шаг с описанием &lt;em&gt;импорта запроса&lt;/em&gt; &lt;code&gt;import-req&lt;/code&gt;.&lt;br&gt;
+&lt;code&gt;./easyrsa init-pki&lt;/code&gt;
+&lt;code&gt;./easyrsa gen-req EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Скопируйте &lt;em&gt;файл запроса&lt;/em&gt; (&lt;code&gt;.req&lt;/code&gt;) , например, на флэшку для передачи его на систему с &lt;em&gt;CA&lt;/em&gt; и там его &lt;em&gt;импортируйте&lt;/em&gt;. &lt;em&gt;Имя EntityName&lt;/em&gt;, заданное здесь, является произвольным и используется только для именования файла запроса.&lt;br&gt;
+&lt;code&gt;./easyrsa import-req /tmp/path/to/import.req EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Подпишите запрос с заданием правильного типа, &lt;code&gt;server&lt;/code&gt; или &lt;code&gt;client&lt;/code&gt;. Здесь пример для типа &lt;em&gt;client&lt;/em&gt;:
+&lt;code&gt;./easyrsa sign-req client EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Совершите обратный перенос нового &lt;em&gt;подписанного сертификата&lt;/em&gt; на систему, нуждавшейся в сертификате. Так же может понадобится перенести сертификат &lt;em&gt;Центра Сертификации&lt;/em&gt; (&lt;code&gt;ca.crt&lt;/code&gt;), если конечно, ранее уже не было произведено его копирование.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Теперь нуждавшаяся система имеет свою &lt;em&gt;ключевую пару&lt;/em&gt;, &lt;em&gt;подписанный сертификат&lt;/em&gt;, и &lt;em&gt;сертификат CA&lt;/em&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;подписание-следующих-запросов&#34;&gt;Подписание следующих запросов&lt;/h3&gt;
+&lt;p&gt;Выполняйте пункты со второго до шестого, чтобы генерировать &lt;em&gt;ключевые пары&lt;/em&gt; и получать &lt;em&gt;подписанные сертификаты&lt;/em&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;отзыв-сертификатов-и-создание-crl&#34;&gt;Отзыв сертификатов и создание CRL&lt;/h3&gt;
+&lt;p&gt;Эта задача производится только на &lt;em&gt;CA&lt;/em&gt;-системе.&lt;/p&gt;
+&lt;p&gt;Для отзыва ранее выданного сертификата используйте имя сертификата, использованное в процессе импорта:
+&lt;code&gt;./easyrsa revoke EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Для создания обновлённого &lt;em&gt;Списка Отозванных Сертификатов&lt;/em&gt; (&lt;em&gt;CRL&lt;/em&gt;), который содержит все отозванные сертификаты, выполните:
+&lt;code&gt;./easyrsa gen-crl&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;После процедуры генерации, обновлённый &lt;em&gt;CRL&lt;/em&gt; необходимо разослать всем заинтересованным лицам.&lt;/p&gt;
+&lt;h3 id=&#34;генерация-diffie-hellman-dh-params&#34;&gt;Генерация Diffie-Hellman (DH) params&lt;/h3&gt;
+&lt;p&gt;Операция генерации &lt;em&gt;DH-параметра&lt;/em&gt;, используемого, кстати, только на стороне сервера в режиме TLS, очень ресурсоёмкая и на неё может быть затрачено несколько минут или даже десятков минут. Поэтому разумнее генерировать &lt;em&gt;DH-param&lt;/em&gt; прямо на целевых серверах, дабы избежать бессмысленной траты ресурсов &lt;em&gt;CA&lt;/em&gt;-системы. Выполните на целевом сервере &lt;code&gt;openssl dhparam -out dh.pem 2048&lt;/code&gt;. В противном случае можете использовать Easy-RSA, где DH-параметр генерируется командой:
+&lt;code&gt;./easyrsa gen-dh&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;просмотр-информации-о-запросе-или-сертификате&#34;&gt;Просмотр информации о запросе или сертификате&lt;/h3&gt;
+&lt;p&gt;Просмотр детальной информации о &lt;em&gt;запросе&lt;/em&gt; или &lt;em&gt;сертификате&lt;/em&gt; производится нижеследующими командами, которым на вход подаём короткие имена объектов. Очевидно, что без наличия соответствующих файлов запрос информации вызовет ошибку.
+&lt;code&gt;./easyrsa show-req EntityName&lt;/code&gt;
+&lt;code&gt;./easyrsa show-cert EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;изменение-пароля-приватного-ключа&#34;&gt;Изменение пароля приватного ключа&lt;/h3&gt;
+&lt;p&gt;RSA и EC приватные ключи могут быть повторно зашифрованы с новым паролем с помощью одной из следующих команд в зависимости от типа ключа:
+&lt;code&gt;./easyrsa set-rsa-pass EntityName&lt;/code&gt;
+&lt;code&gt;./easyrsa set-ec-pass EntityName&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;По выбору, пароль может быть вообще убран из ключа с помощью опции &lt;code&gt;nopass&lt;/code&gt;. Смотрите документацию по команде.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Простой Центр Сертификации для strongSwan IPsec</title>
+      <link>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-04-22&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Начиная с версии strongswan 5.1.1 использование префикса &lt;em&gt;ipsec&lt;/em&gt; перед &lt;code&gt;pki&lt;/code&gt; является опциональным.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://wiki.strongswan.org/projects/strongswan/wiki/SimpleCA&#34;&gt;Setting-up a Simple CA Using the strongSwan PKI Tool&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Для работы PKI необходимо установить пакеты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;strongswan-starter&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;strongswan-pki&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;libcharon-extra-plugins&lt;/code&gt; # для поддержки &lt;em&gt;ed25519&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Используемые сокращения и термины:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CA&lt;/strong&gt;, &lt;strong&gt;Certification Authority&lt;/strong&gt;, &lt;strong&gt;Центр Сертификации&lt;/strong&gt;. Здесь оформлен в виде директории, в которой лежат два файла: &lt;em&gt;приватный ключ Центра Сертификации&lt;/em&gt; и &lt;em&gt;самоподписанный сертификат Центра Сертификации&lt;/em&gt;. В этой же папке создаются пары (&lt;em&gt;приватный ключ&lt;/em&gt; и соответствующий ему &lt;em&gt;сертификат открытого ключа&lt;/em&gt;) файлов-ключей для удостоверения каждого члена IPsec-сети организации.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CRL&lt;/strong&gt;, &lt;strong&gt;Certificate Revocation List&lt;/strong&gt;, &lt;strong&gt;Список Отозванных Сертификатов&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;private key&lt;/strong&gt;, &lt;strong&gt;приватный ключ&lt;/strong&gt;, &lt;strong&gt;закрытый ключ&lt;/strong&gt;. Здесь оформлен в виде файла с уникальной последовательностью бит. Из &lt;em&gt;приватного ключа&lt;/em&gt; всегда можно вычислить парный ему уникальный &lt;em&gt;публичный ключ&lt;/em&gt;, тогда как обратная операция математически невозможна.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;public key&lt;/strong&gt;, &lt;strong&gt;публичный ключ&lt;/strong&gt;, &lt;strong&gt;открытый ключ&lt;/strong&gt;. Всегда может быть вычислен из &lt;em&gt;приватного ключа&lt;/em&gt; и записан в отдельный файл, но в таком виде не используется. Вместо этого используется &lt;em&gt;сертификат открытого ключа&lt;/em&gt;. Часто под понятием &lt;em&gt;публичный ключ&lt;/em&gt; имеется ввиду &lt;em&gt;сертификат открытого ключа&lt;/em&gt; выданный каким-либо &lt;em&gt;Центром Сертификации&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;сертификат открытого ключа&lt;/strong&gt;. Здесь оформлен в виде файла, содержащего &lt;em&gt;публичный ключ&lt;/em&gt; и &lt;em&gt;подпись Центра Сертификации&lt;/em&gt;. Только &lt;em&gt;подписанный публичный ключ&lt;/em&gt; может использоваться в IPsec-сети организации, так как при подключении узла к IPsec-сети проверяется наличие &lt;em&gt;подписи Центра Сертификации&lt;/em&gt; организации.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;выпуск-ключевой-пары-центра-сертификации&#34;&gt;Выпуск ключевой пары Центра Сертификации&lt;/h3&gt;
+&lt;p&gt;В отдельной директории, которая выделена для работы &lt;strong&gt;CA&lt;/strong&gt; выполняется генерация &lt;strong&gt;приватного ключа Центра Сертификации&lt;/strong&gt;:
+для ключа Ed25519 (длина всегда 256 бит)&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --gen --type ed25519 &amp;gt; caKey.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;для RSA используется длина 4096 бит&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --gen --type rsa --size 4096 &amp;gt; caKey.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При малой заполненности &lt;code&gt;/dev/random&lt;/code&gt; неизбежно долгое ожидание завершения генерирования RSA-ключа. В этом случае рекомендуется использовать &lt;code&gt;openssl&lt;/code&gt;, который при пустом &lt;code&gt;/dev/random&lt;/code&gt; использует информацию из &lt;code&gt;/dev/urandom&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# openssl genrsa -out caKey.pem 4096
+# openssl rsa -inform pem -outform der -in caKey.pem -out caKey.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Из этого &lt;em&gt;приватного ключа&lt;/em&gt; вычисляется парный ему уникальный &lt;em&gt;публичный ключ&lt;/em&gt; и к нему выпускается &lt;strong&gt;самоподписанный сертификат публичного ключа Центра Сертификации&lt;/strong&gt; действительный три года начиная с момента выпуска:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --self --in caKey.der --dn &amp;#34;C=RU, O=ExampleOrg, CN=ExampleOrg CA&amp;#34; --ca &amp;gt; caCert.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате этих действий в директории &lt;em&gt;CA&lt;/em&gt; находятся два файла:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;caKey.der&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;caCert.der&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;С помощью первого файла производится &lt;em&gt;подписание&lt;/em&gt;, с последующим выпуском &lt;em&gt;сертификатов открытых ключей&lt;/em&gt; для узлов IPsec-сети организации. Вследствие очевидной важности файла, он обязан храниться в секретном месте.&lt;/p&gt;
+&lt;h3 id=&#34;создание-ключевой-пары-для-каждого-узла-в-ipsec-сети&#34;&gt;Создание ключевой пары для каждого узла в IPsec-сети&lt;/h3&gt;
+&lt;p&gt;Для каждого узла генерируетс &lt;strong&gt;приватный ключ&lt;/strong&gt; Ed25519 или RSA:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --gen --type rsa --size 4096 &amp;gt; srv0Key.der
+# ipsec pki --gen --type rsa --size 4096 &amp;gt; srv1Key.der
+# ipsec pki --gen --type rsa --size 4096 &amp;gt; usr0Key.der
+# ipsec pki --gen --type rsa --size 4096 &amp;gt; usr1Key.der
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;если не хватает энтропии из &lt;code&gt;/dev/random&lt;/code&gt; для создания RSA-ключа, то вновь применяем &lt;code&gt;openssl&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;На основе каждого &lt;em&gt;приватного ключа&lt;/em&gt; необходимо сгенерировать &lt;strong&gt;запрос на сертификацию публичного ключа&lt;/strong&gt; и направить в &lt;em&gt;CA&lt;/em&gt; организации, где на основе &lt;em&gt;запроса&lt;/em&gt; выпускается &lt;strong&gt;сертификат публичного ключа&lt;/strong&gt; подписанный &lt;em&gt;CA&lt;/em&gt;, то есть утверждённый к работе в IPsec-сети организации.&lt;/p&gt;
+&lt;p&gt;Так как работа &lt;em&gt;CA&lt;/em&gt; и выпуск &lt;em&gt;приватных ключей&lt;/em&gt; находится под нашим полным контролем, то всё вышесказанное можно организовать единственной командой для каждого ключа:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --issue --in sv0Key.der --type priv --cacert caCert.der --cakey caKey.der \
+--dn &amp;#34;C=RU, O=ExampleOrg, CN=srv0&amp;#34; --san srv0 &amp;gt; srv0Cert.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;и так далее для каждого ключа.&lt;/p&gt;
+&lt;h3 id=&#34;список-отозванных-сертификатов&#34;&gt;Список Отозванных сертификатов&lt;/h3&gt;
+&lt;p&gt;Для отзыва сертификата &lt;code&gt;usr1Cert.der&lt;/code&gt; выполняется:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipsec pki --signcrl --cacert caCert.der --cakey caKey.der --reason superseded --cert usr1Cert.der &amp;gt; crl.der
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Файл &lt;code&gt;crl.der&lt;/code&gt; распространяется на все узлы IPsec-сети организации.&lt;/p&gt;
+&lt;h3 id=&#34;размещение-ключей-и-сертификатов-на-узлах-ipsec-сети&#34;&gt;Размещение ключей и сертификатов на узлах IPsec-сети&lt;/h3&gt;
+&lt;p&gt;Ключи и сертификаты сохраняются в директории &lt;code&gt;/etc/ipsec.d/&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/private/srv0Key.der&lt;/code&gt; содержит &lt;em&gt;приватный ключ&lt;/em&gt; узла. Необходимо прописать его загрузку в &lt;code&gt;ipsec.secrets&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/certs/srv0Cert.der&lt;/code&gt; содержит &lt;em&gt;сертификат открытого ключа&lt;/em&gt; узла. Для его использования необходимо прописать его в &lt;code&gt;ipsec.conf&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/cacerts/caCert.der&lt;/code&gt; подгружается автоматически и используется для проверки всех подключающихся узлов.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Опционально размещается &lt;em&gt;CRL&lt;/em&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/etc/ipsec.d/crls/crl.der&lt;/code&gt; содержит &lt;em&gt;список отозванных сертификатов&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Настраиваем OpenVPN сервер на подключение клиентов</title>
+      <link>/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
+      <pubDate>Mon, 04 Aug 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-12-23 Опубликована свежая статья с упрощённым изложением &lt;a href=&#34;/a/openvpn-eto-prosto&#34;&gt;OpenVPN - это просто&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2014-08-04
+Статья в процессе переделки и дополнений по мере освоения.&lt;/p&gt;
+&lt;p&gt;Дописать:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Использовать на одном сервере tun0 для объединения серверов и tun1 для подключения клиентов. Соответственно для серверов: iptables forward прозрачный для tun0 и запреты только на INPUT для соответствующих подсетей. Для рядовых клиентов tun1 запреты уже при входе в сеть. Например, только 3389 порт. Для админа пока отдельный gw.&lt;/li&gt;
+&lt;li&gt;TLS и DH индивидуальны для разных openvpn-серверов и подключающихся к ним клиентов. Ещё лучше TLS и DH разные для демона подключений серверов и демона подключений клиентов.&lt;/li&gt;
+&lt;li&gt;Для объединения серверов указывать исходящий порт?&lt;/li&gt;
+&lt;li&gt;Песочница для openvpn демона.&lt;/li&gt;
+&lt;li&gt;Разобраться с автоматическим mtu.&lt;/li&gt;
+&lt;li&gt;float для серверов из сетей с меняющимся ip.&lt;/li&gt;
+&lt;li&gt;Единая система именования выданных файлов: Орг-ca.crt (.key), ОргСрв-ta.key, ОргСрв-dh2048.pem, ОргСрв.crt (.key), ОргКлн.crt (.key). Маршруты проталкивать только клиентам. На серверах маршруты настраиваются без openvpn push.&lt;/li&gt;
+&lt;li&gt;Переделать всю статью. Может так: Центр сертификации отдельно. Генерация и настройка сервера отдельно. Генерация и настройка клиента отдельно.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;оглавление&#34;&gt;Оглавление&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#INTRO&#34;&gt;Введение&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#INSTALL&#34;&gt;Установка openvpn сервера&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#PREPAR&#34;&gt;Подготовка&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#GEN-CA&#34;&gt;Генерация файлов центра сертификации&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#GEN-TLS&#34;&gt;Генерация TLS ключа&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#GEN-SRV&#34;&gt;Генерация ключа и сертификата openvpn сервера&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#GEN-DH&#34;&gt;Генерация файл DH&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#GEN-CLN&#34;&gt;Генерация сертификата и личного ключа клиента&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#CONF-SRV&#34;&gt;Настройка openvpn сервера&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#MERGE&#34;&gt;Объединение сетей&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#REVOKE-CLN&#34;&gt;Отзыв сертификата openvpn-клиента&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#REVOKE-SRV&#34;&gt;Отзыв сертификата openvpn-сервера&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#FWL&#34;&gt;Настройка файрвола для работы openvpn сервера&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#PROBLEMS&#34;&gt;Возникшие проблемы и пути их решения&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a name=&#34;INTRO&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Openvpn работает по схеме шифрования с открытыми ключами. Каждый участник openvpn-сети имеет открытый (public) и закрытый (private) ключ. Открытый ключ можно найти в файле-сертификате с расширением &lt;code&gt;.crt&lt;/code&gt;. Закрытый (private) ключ лежит в файле с расширением &lt;code&gt;.key&lt;/code&gt;. Я несколько лет назад прочитал отличную книгу по истории криптографии, поэтому тема мне знакома и здесь разжёвывать её сейчас не буду. (Найти книгу и привести название. &amp;ldquo;Книга шифров&amp;rdquo;?) Саймон Сингх: Книга шифров: Тайная история шифров и их расшифровки.&lt;/p&gt;
+&lt;p&gt;Если кратко, то сначала сервер и клиент обмениваются своими публичными ключами. Кстати, они несекретны и могут храниться открыто. Потом обеими сторонами проводится проверка полученных ключей на предмет легитимности, то есть срок действия, проверка подписи CA, проверка в списке отозванных ключей и т.д. Если всё отлично, то начинается обмен данными:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;отправляемый пакет шифруется с помощью открытого ключа получателя;&lt;/li&gt;
+&lt;li&gt;потом пакет подписывается закрытым ключом отправителя;
+пакет улетает на другую сторону;&lt;/li&gt;
+&lt;li&gt;у получаемого пакета проверяется подпись с помощью открытого ключа отправителя;&lt;/li&gt;
+&lt;li&gt;если подпись верна, то пакет расшифровывается с помощью закрытого ключа получателя.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Третья сторона, имея на руках закрытые ключи обеих сторон, может на лету просматривать закриптованный трафик. Именно поэтому закрытый ключ чрезвычайно секретен и при подозрении на его кражу, должен быть отозван.&lt;/p&gt;
+&lt;p&gt;В идеальной конфигурации, для организации openvpn-сетки необходимо минимум два сервера. Один сервер, максимально защищённый от вторжений/не подключённый к интернету, имеет роль центра сертификации (CA) и не учавствует в организации удалённого доступа. Второй сервер (а при необходимости их может быть несколько) является openvpn-сервером и обеспечивает возможность подключения удалённых клиентов.&lt;/p&gt;
+&lt;p&gt;Центр сертификации представляет собой отдельную папку на винчестере, в которой лежат:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;пара файликов &lt;code&gt;ca.key&lt;/code&gt; и &lt;code&gt;ca.crt&lt;/code&gt; – ключ и сертификат центра сертификации;&lt;/li&gt;
+&lt;li&gt;простейшая база данных из двух файлов:
+&lt;ul&gt;
+&lt;li&gt;файл &lt;code&gt;serial&lt;/code&gt; – счётчик,&lt;/li&gt;
+&lt;li&gt;файл &lt;code&gt;index.txt&lt;/code&gt; – список выданных сертификатов.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;файлы уже выданных сертификатов (&lt;code&gt;*.crt&lt;/code&gt;) для возможности их отзыва;&lt;/li&gt;
+&lt;li&gt;файл &lt;code&gt;crl.pem&lt;/code&gt;, в котором накапливается информация об отозванных ключах;&lt;/li&gt;
+&lt;li&gt;несколько скриптов для генерации новых ключей и сертификатов.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;При необходимости автоматизации выдачи ключей и сертификатов, к этой папке прикручивают web-морду (в инете я видел готовые конструкции различной степени сложности). Обычный человек изредка сталкивается с этими конструкциями, например, при работе с банк-клиентами, так как шифрование с открытыми ключами широко используется в ИТ.&lt;/p&gt;
+&lt;p&gt;В моём случае нецелесообразно организовывать отдельный сервер-CA для редких генераций сертификатов и ключей для новых openvpn-серверов и клиентов. Поэтому папку центра сертификации я храню в секретном месте и, по мере необходимости, раскрываю крипто-контейнер на свободной машине, чтобы произвести необходимые процедуры.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;INSTALL&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;установка-openvpn-сервера&#34;&gt;Установка openvpn-сервера&lt;/h2&gt;
+&lt;p&gt;Устанавливаем openvpn:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# aptitude install openvpn
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Теперь надо сгенерировать несколько файлов, которые позволят нам быстро ввести в строй первый openvpn-сервер.&lt;/p&gt;
+&lt;p&gt;Одноразово создаём два файла центра сертификации, с помощью которых мы будем выдавать все прочие сертификаты и ключи для openvpn-серверов и клиентов:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;ca.crt&lt;/code&gt; – главный CA сертификат, этот файл нужен всем клиентам и всем openvpn-серверам (и центру сертификации? Ясен пень. Хотя бы для последующей раздачи клиентам.). С помощью него договаривающиеся стороны (сервер и клиент) проверяют подписи полученных публичных ключей на предмет принадлежности нашей организации;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ca.key&lt;/code&gt; – главный CA ключ. Этот файл нужен только центру сертификации, так как им подписываются все публичные ключи-сертификаты организации. Он не учавствует в обеспечении безопасного канала. Он нужен эпизодически только для выпуска ключей (шибко СЕКРЕТНЫЙ файл). Хочу заметить, что открытое хранение этого файла на openvpn-сервере позволит вероятному злоумышленнику украсть этот файл и выпустить произвольное количество ключей, с помощью которых можно будет беспрепятственно подключаться к нашим openvpn-серверам.
+Одноразово делаем файл для дополнительной безопасности openvpn-канала:&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ta.key&lt;/code&gt; – TLS-ключ, который нужен и openvpn-клиентам и openvpn-серверам для пущей безопасности. Можно и без него, но он помогает блокировать DoS атаки и UDP флудинг на открытый порт сервера.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ещё сделаем три файла для конкретного openvpn-сервера. Эти файлы необходимо сгенерировать для каждого openvpn-сервера в нашей сетке. В принципе, можно изменить имена этих файлов в соответствии с сетевыми именами openvpn-серверов. Но, как мне кажется, в целях унификации конфигурационного файла и прочих настроек, которые мы можем централизованно распространять на все openvpn-сервера, будет удобней не изменять имена этих файлов:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;server.crt&lt;/code&gt; – сертификат сервера, нужен только серверу;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;server.key&lt;/code&gt; – ключ сервера, нужен только серверу (СЕКРЕТНЫЙ файл);&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dh1024.pem&lt;/code&gt; – ключ имени Диффи и Хельмана. Этот файл нужен только серверу. Наверное, используется на этапе предварительного обмена открытыми ключами (сертификатами).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;И ещё надо сгенерировать пару файлов для первого клиента. Обычно, имена этих файлов соответствуют имени клиента, указанному при генерации. Поэтому для удобства идентификации клиента, необходимо выработать систему присвоения имён, чтобы потом было проще ориентироваться в логах и прочих моментах. Например, в моём случае, я раздаю людям готовые openvpn-комплекты для каждого из их компьютеров. Поэтому придумываю имя исходя из такого правила – &lt;code&gt;idорганизации-idклиента-idмашины&lt;/code&gt;. И когда приходит время отозвать ключи определённого юзера, то в папке с выданными сертификатами, при обычной сортировке по имени файла, я увижу все сертификаты юзера идущими по порядку. Ну а в данном опусе, не заморачиваясь, укажу:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;client.crt&lt;/code&gt; – сертификат клиента. Этот файл нужен клиенту для установки соединения с openvpn-сервером;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;client.key&lt;/code&gt; – ключ клиента, нужен только клиенту (СЕКРЕТНЫЙ файл).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Надо поподробней почитать мануал и выяснить конкретную роль каждого файла и этапы установки и работы канала.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;PREPAR&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;подготовка-центра-сертификации&#34;&gt;Подготовка центра сертификации&lt;/h2&gt;
+&lt;p&gt;Создаём необходимые папки и копируем сюда скрипты для генерации ключей, которые идут вместе с установленным комплектом openvpn. Замечу, что на FreeBSD я столкнулся с отсутствием скриптов в установленном пакете последней доступной версии программы openvpn. Следуя разъяснению на сайте openvpn.net, скрипты можно взять здесь – https://github.com/OpenVPN/easy-rsa/releases.&lt;/p&gt;
+&lt;p&gt;В общем случае, папка &lt;code&gt;easy-rsa&lt;/code&gt; и является центром сертификации:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir /etc/openvpn/easy-rsa
+# mkdir /etc/openvpn/easy-rsa/keys
+# touch /etc/openvpn/easy-rsa/keys/index.txt
+# echo &amp;#34;00&amp;#34;&amp;gt;/etc/openvpn/easy-rsa/keys/serial
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В этих двух файлах – &lt;code&gt;index.txt&lt;/code&gt; и &lt;code&gt;serial&lt;/code&gt; – будет накапливаться статистика по выданным ключам. И без этих файлов не будет работать выдача и аннулирование сертификатов и ключей.&lt;/p&gt;
+&lt;p&gt;Собственно копирование всего необходимого для дальнейшей работы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cp /usr/share/doc/openvpn/examples/easy-rsa/2.0/* /etc/openvpn/easy-rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Редактируем соответствующие строки в конце файла &lt;code&gt;/etc/openvpn/easy-rsa/vars&lt;/code&gt;, содержащего различные переменные, которые будут загружаться в командную оболочку перед каждым сеансом генерации сертификатов и ключей. По желанию меняем страну, город и прочее. Или оставляем всё, как есть, так как при генерации сертификатов всё равно будет запрос на изменение этих полей.&lt;/p&gt;
+&lt;p&gt;Для себя я ещё не решил по каким правилам заполнять эти поля. Вероятно проще будет указывать RU, Moscow, чем выяснять в каком городе чужой страны находится сервер. Да и данные эти не несут, в моём случае, полезной информации.&lt;/p&gt;
+&lt;p&gt;Переходим в папку &lt;code&gt;/etc/openvpn/easy-rsa&lt;/code&gt; и смотрим наличие файла &lt;code&gt;openssl.cnf&lt;/code&gt;, так как без этого файла, в некоторых случаях, генерация ключей невозможна.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Несколько раз я наблюдал четыре разных файла: &lt;code&gt;openssl-0.9.6.cnf&lt;/code&gt; &lt;code&gt;openssl-0.9.8.cnf&lt;/code&gt; &lt;code&gt;openssl-1.0.0.cnf&lt;/code&gt; &lt;code&gt;openssl-1.0.0.cnf-old-copy&lt;/code&gt;. Проверив командой &lt;code&gt;aptitude show openssl&lt;/code&gt; версию установленной у меня библиотеки &lt;code&gt;openssl&lt;/code&gt;, я сделал копию нужной версии файла: &lt;code&gt;# cp openssl-1.0.0.cnf openssl.cnf&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Интересно, что во FreeBSD 9 произошёл автоматический выбор правильного файла &lt;code&gt;openssl*.cnf&lt;/code&gt;, вследствии отработки скрипта &lt;code&gt;whichopensslcnf&lt;/code&gt;, без необходимости переименовывания! Вероятно, надо брать последнюю версию &lt;code&gt;easy-rsa&lt;/code&gt; по ссылке с сайта openvpn?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Всё готово для генерации различных ключей и сертификатов.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;GEN-CA&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;генерация-файлов-центра&#34;&gt;Генерация файлов центра&lt;/h2&gt;
+&lt;p&gt;Загружаем переменные &lt;code&gt;source ./vars&lt;/code&gt; (или &lt;code&gt;. ./vars&lt;/code&gt; — символ &lt;em&gt;&lt;strong&gt;точка&lt;/strong&gt;&lt;/em&gt; – синоним команды &lt;code&gt;source&lt;/code&gt;, которая выполняет указанный файл сценария.)&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(разобраться с правами на файлы и папки и написать подробно)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Создаём приватный ключ и сертификат центра сертификации, на основе которых будут сертифицироваться прочие выдаваемые ключи:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ./build-ca
+Generating a 1024 bit RSA private key
+............................................................++++++
+.........++++++
+writing new private key to &amp;#39;ca.key&amp;#39;
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter &amp;#39;.&amp;#39;, the field will be left blank.
+-----
+Country Name (2 letter code) [RU]:
+State or Province Name (full name) [MO]:
+Locality Name (eg, city) [Moscow]:
+Organization Name (eg, company) [M]:
+Organizational Unit Name (eg, section) []:
+Common Name (eg, your name or your server&amp;#39;s hostname) [L CA]:server-ca
+Email Address [me ar) myhost [dot] mydomain]:
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Поле &amp;ldquo;Common Name&amp;rdquo; обязательно к заполнению. &lt;/p&gt;
+&lt;p&gt;В &lt;code&gt;/etc/openvpn/easy-rsa/keys&lt;/code&gt; теперь лежат &lt;strong&gt;сертификат центра сертификации &lt;code&gt;ca.crt&lt;/code&gt;&lt;/strong&gt; и &lt;strong&gt;приватный ключ центра сертификации &lt;code&gt;ca.key&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Сертификат центра сертификации&lt;/strong&gt; находится как на стороне сервера, так и на стороне клиента и учавствует в создании туннеля. &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Приватный ключ центра сертификации&lt;/strong&gt; чрезвычайно секретный и не должен попасть в чужие руки. В создании туннеля он не используется. Если я правильно понимаю, то &lt;strong&gt;приватным ключом центра сертификации&lt;/strong&gt; подписываются ключи новых клиентов, поэтому файл &lt;code&gt;ca.key&lt;/code&gt; желательно изымать из этой папки после окончания генерации ключей, затирая убитую копию shred&amp;rsquo;ом. Или же папку &lt;code&gt;easy-rsa&lt;/code&gt; размещать в секретном криптохранилище, где и производить по необходимости эпизодические работы по выпуску ключей. Или отдельный компьютер для выпуска ключей. Кто во что горазд.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;GEN-TLS&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;генерация-tls-ключа&#34;&gt;Генерация TLS ключа&lt;/h3&gt;
+&lt;p&gt;Генерируем TLS ключ:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# openvpn --genkey --secret /etc/openvpn/easy-rsa/keys/ta.key
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name=&#34;GEN-SRV&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;генерация-ключа-и-сертификата-openvpn-сервера&#34;&gt;Генерация ключа и сертификата openvpn сервера&lt;/h2&gt;
+&lt;p&gt;Генерация ключей происходит в папке &lt;code&gt;/etc/openvpn/easy-rsa&lt;/code&gt;. В дальнейшем, перед каждым сеансом генерации ключей не забываем загружать переменные в текущую командную оболочку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# source ./vars
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Генерируем ключ сервера:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ./build-key-server server1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Придумываем пароль и соглашаемся на подпись. Пароль не пригодится. Он используется, если я правильно понимаю, при использовании автоматизированного web-портала для запроса, генерации и выдачи ключей самими пользователями.&lt;/p&gt;
+&lt;p&gt;Может произойти ошибка &lt;code&gt;wrong number of fields on line 1 (looking for field 6, got 1, &#39;&#39; left)&lt;/code&gt;. Причина в не пустом файле &lt;code&gt;/etc/openvpn/easy-rsa/keys/index.txt&lt;/code&gt;. Решение: &lt;code&gt;cat /dev/null &amp;gt; /etc/openvpn/easy-rsa/keys/index.txt&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Ключи для сервера сгенерированы. В директории &lt;code&gt;keys&lt;/code&gt; появились новые файлы с запросом на сертификат, сертификатом и приватным ключом сервера.&lt;/p&gt;
+&lt;p&gt;В файле &lt;code&gt;keys/index.txt&lt;/code&gt; появилась строка с описанием нашего выданного ключа. В &lt;code&gt;keys/serial&lt;/code&gt; номер увеличился на единицу.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;GEN-DH&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;генерация-файл-dh&#34;&gt;Генерация файл DH&lt;/h2&gt;
+&lt;p&gt;Создаём параметр DH (Алгоритм Диффи — Хеллмана):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ./build-dh
+Generating DH parameters, 1024 bit long safe prime, generator 2
+This is going to take a long time
+..................................
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name=&#34;GEN-CLN&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;генерация-сертификата-и-личного-ключа-клиента&#34;&gt;Генерация сертификата и личного ключа клиента&lt;/h2&gt;
+&lt;p&gt;Генерация ключей происходит в папке &lt;code&gt;/etc/openvpn/easy-rsa&lt;/code&gt;. Перед каждым сеансом генерации ключей не забываем загружать переменные в память:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# source ./vars
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Генерируем безпарольный ключ клиента:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ./build-key wks-1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или ключ с парольной защитой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ./build-key-pass ivan
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или ключ в формате pkcs12 (таким пока не пользовался, но по слухам, его можно хранить в электронных хранилищах, например, в USB-токенах):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ./build-key-pkcs12 sterva-on-wks-home
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После данной процедуры клиенту передаются файлы:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Сертификат сервера &lt;code&gt;ca.crt&lt;/code&gt;;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Приватный ключ клиента &lt;code&gt;wks-1.key&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;Сертификат клиента (или правильнее сертификат к приватному ключу клиента?) &lt;code&gt;wks-1.crt&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;TLS-ключ сервера &lt;code&gt;ta.key&lt;/code&gt;;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Файл настройки клиента, где должны быть указаны:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;адрес сервера;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;порт, который слушает openvpn сервер;&lt;/li&gt;
+&lt;li&gt;использующийся шифр: BF-CBC или, например, AES-512-CBC.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Важно сохранить сертификаты клиентов (но не приватные ключи! клиентов) для возможности их последующего отзыва. Не забываем, что имя файла содержащего сертификат и имя сертификата могут отличаться. Естественно, проверить это соответствие можно простым просмотром файла. Проверить последствия ручного редактирования файла сертификата с целью изменения имени сертификата, чтобы ввести в заблуждение администратора. &lt;em&gt;Как узнать реальное имя сертификата?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Приватный ключ клиента&lt;/strong&gt; должен держаться в секрете и быть, в идеале, в единственном экземпляре, так как им подписываются пакеты бегущие от клиента к серверу и тем самым удостоверяющие (&lt;em&gt;поправка: подпись этих пакетов производится с помощью сертификата сервера&lt;/em&gt;), что к нашему серверу подсоединяется наш человек. Если есть подозрение, что &lt;em&gt;приватный ключ&lt;/em&gt; попал в чужие руки, то необходимо провести процедуру отзыва скомпрометированных ключей с помощью сохранённых сертификатов.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;CONF-SRV&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;настройка-openvpn&#34;&gt;Настройка openvpn&lt;/h2&gt;
+&lt;p&gt;Делаем отдельную папку &lt;code&gt;keys&lt;/code&gt; в папке openvpn и копируем туда необходимые для работы сервера файлы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir /etc/openvpn/keys
+# cd /etc/openvpn/easy-rsa/keys/
+# cp ca.crt ca.key /etc/openvpn/keys/
+# mv server1.crt server1.key dh1024.pem ta.key /etc/openvpn/keys/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запросы на генерацию сертификата можно удалить:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rm server1.csr
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Копируем примерный файл настройки сервера openvpn:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# gzip -cd /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz &amp;gt; /etc/openvpn/server.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В принципе, внутри этого файла всё описано. Если не знаешь английский, то смотри http://www.lissyara.su/doc/man/safety/openvpn/.&lt;/p&gt;
+&lt;p&gt;Естественно, можно сделать два или больше одновременно работающих openvpn-сервера добавлением конфигурационных файлов с разными именами. Надо только не забывать развешивать их по разным портам, использовать разные внутренние ip-подсети и файлы статуса.&lt;/p&gt;
+&lt;p&gt;Редактируем те опции, которые нам нужны. Будем использовать TUN-интерфейс, который умеет маршрутизировать ip-пакеты. TAP-интерфейс используется для маршрутизации не ip-протоколов или при необходимости рассылки широковещательных запросов, но TAP для своей работы требует больше ресурсов, чем TUN.&lt;/p&gt;
+&lt;p&gt;Вот мой пример:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# адрес на котором слушать входящие запросы.
+# закомментированно, значит на всех
+;local a.b.c.d
+port 11194
+proto udp
+dev tun0
+ca keys/ca.crt
+cert keys/server1.crt
+key keys/server1.key
+dh keys/dh1024.pem
+# Из этой сети – 192.168.1.0/24 – сервер возьмёт для своих нужд два ip-адреса
+# 192.168.1.1 и 192.168.1.2, а оставшийся диапазон поделит на
+# подсетки по 4 ip-адреса и будет отдавать клиентам.
+# Первому клиенту будет отдана подсеть 192.168.1.4/30
+# и назначен ip-адрес 192.168.1.6.
+# Второму – 192.168.1.8/30 и назначен ip-адрес 192.168.1.10
+server 192.168.1.0 255.255.255.0
+# В этом файлике хранятся пары: имя клиента, ip-подсеть назначенная клиенту.
+# Перед ручным вмешательством надо остановить демон.
+ifconfig-pool-persist ipp.txt
+# Тут мы проталкиваем клиенту маршрут в нашу внутреннюю подсеть:
+push &amp;#34;route 192.168.0.0 255.255.255.0&amp;#34;
+keepalive 10 120
+tls-auth keys/ta.key 0
+cipher BF-CBC
+comp-lzo
+max-clients 30
+user nobody
+group nogroup
+persist-key
+persist-tun
+# В этом файлике мы будем видеть текущую картину подключений:
+status openvpn-status.log
+verb 3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На этом установка и настройка openvpn-сервера закончена и можно перезапустить сервис:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# service openvpn restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;a name=&#34;MERGE&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;объединение-сетей&#34;&gt;Объединение сетей&lt;/h2&gt;
+&lt;p&gt;Исходная диспозиция:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Внешний ip-адрес неважен;&lt;/li&gt;
+&lt;li&gt;Наша внутренняя сеть – 192.168.0.0/24;&lt;/li&gt;
+&lt;li&gt;Наша openvpn-подсетка, из которой выделяются ip-адреса обычным openvpn-клиентам – 192.168.1.0/24;&lt;/li&gt;
+&lt;li&gt;К нашему серверу должен подключаться шлюз, который маршрутизирует пакеты в 192.168.10.0/24&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Создаём папку, где будут храниться конфигурации для подключающихся серверов-шлюзов, за которыми есть подсети:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mkdir /etc/openvpn/ccd
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файл конфигурации нашего сервера &lt;code&gt;/etc/openvpn/server.conf&lt;/code&gt; добавляем директиву, включающую способность назначать клиентам определённый ip-адрес из нашей openvpn-подсети  и определять для клиента целую подсеть: &lt;code&gt;client-config-dir-ccd&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Добавляем директивы, отвечающие за объявление клиентам списка сетей, которые подключаются к нашему openvpn-сервер:
+&lt;code&gt;route 192.168.10.0 255.255.255.0&lt;/code&gt;
+Этот раздел в процессе написания&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;REVOKE-CLN&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;отзыв-сертификата-openvpn-клиента&#34;&gt;Отзыв сертификата openvpn-клиента&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://openvpn.net/index.php/open-source/documentation/howto.html#revoke&#34;&gt;http://openvpn.net/index.php/open-source/documentation/howto.html#revoke&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Так как на предварительном этапе установления связи, стороны обмениваются своими открытыми ключами (сертификатами), то существует возможность заблокировать скомпрометированные ключи и недопустить их использование.&lt;/p&gt;
+&lt;p&gt;Например, человека уволили и надо аннулировать его ключи. Приватный ключ &lt;code&gt;wks1.key&lt;/code&gt; остался у юзера, но он нам и не нужен. У нас, в центре сертификации, в наличии есть открытый ключ-сертификат. Сертификат клиента &lt;code&gt;wks1.crt&lt;/code&gt; лежит в  /etc/openvpn/easy-rsa/keys.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /etc/openvpn/easy-rsa
+# source ./vars
+# ./revoke-full wks-1
+Using configuration from /etc/openvpn/easy-rsa/openssl.cnf
+Revoking Certificate 01.
+Data Base Updated
+Using configuration from /etc/openvpn/easy-rsa/openssl.cnf
+wks1.crt: /C=RU/ST=MO/L=Moscow/O=L/CN=wks1/name=wks1/emailAddress=wks1@ru.ru
+error 23 at 0 depth lookup:certificate revoked
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Последняя строка с ошибкой означает успешный отзыв сертификата (проверка на легитимность вызвала ошибку). В файле &lt;code&gt;/etc/openvpn/easy-rsa/keys/index.txt&lt;/code&gt; можно увидеть, что соответствующая строка видоизменилась.&lt;/p&gt;
+&lt;p&gt;Было:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;V 210525072904Z 01 unknown /C=RU/ST=MO/L=Moscow/O=L/CN=wks1/name=wks1/emailAddress=wks1@ru.ru
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Стало:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;R 210525072904Z 120531133006Z 01 unknown /C=RU/ST=MO/L=Moscow/O=L/CN=wks1/name=wks1/emailAddress=wks1@ru.ru
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В папке &lt;code&gt;/etc/openvpn/easy-rsa/keys&lt;/code&gt; появился файлик &lt;code&gt;crl.pem&lt;/code&gt;. В дальнейшем в этом файле будет накапливаться информация. Этот файл необходимо скопировать в:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cp /etc/openvpn/easy-rsa/keys/crl.pem /etc/openvpn/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для включения на сервере проверки клиентов на благонадёжность, добавляем опцию &lt;code&gt;crl-verify crl.pem&lt;/code&gt; в конфигурационный файл &lt;code&gt;server.conf&lt;/code&gt;. Перезапускаем демон:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# service openvpn restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После включения опции проверки сертификатов на отзыв, уже не нужно перезапускать демон при изменении файла &lt;code&gt;crl.pem&lt;/code&gt;, так как демон читает этот файл при каждом подключении клиента и, по умолчанию, один раз в час при установленной связи с клиентом? Естественно, если надо немедленно отключить ревокнутого клиента от сервера, то придётся перезапустить демон.&lt;/p&gt;
+&lt;p&gt;Краем глаза где-то зацепил, что если сертификата отключаемого клиента нет в наличии, то существует способ получить его на этапе аутентификации клиента на openvpn-сервере, запустив демон openvpn со специальными параметрами.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;REVOKE-SRV&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;отзыв-сертификата-openvpn-сервера&#34;&gt;Отзыв сертификата openvpn-сервера&lt;/h2&gt;
+&lt;p&gt;Отзыв сертификата сервера производится по аналогии с отзывом сертификата клиента. Ничего сложного нет, за исключением проблемы распространения файла &lt;code&gt;crl.pem&lt;/code&gt; по клиентам и соответствующей настройки их конфигурационных файлов. В принципе, сам файл &lt;code&gt;crl.pem&lt;/code&gt;, содержащий информацию об отозванных серверных и клиентских сертификатах, не секретный. Его можно разместить в публичном месте, откуда он может скачиваться каким-нибудь скриптом при запуске openvpn-программы на клиентском компьютере. Естественно, необходимо ещё на этапе раздачи клиентских настроечных пакетов предусмотреть использование этого файла в файле конфигурации.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;FWL&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;настройка-файрвола-для-работы-openvpn-сервера&#34;&gt;Настройка файрвола для работы openvpn сервера&lt;/h2&gt;
+&lt;p&gt;Далее настраиваем iptables для приёма входящих запросов и форвардинга во внутреннюю сеть. Например:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# eth0 - внутренний интерфейс 192.168.0.0/24
+# tun  - сетка 192.168.1.0/24 для openvpn-клиентов
+iptables -A INPUT  -p udp -m udp --dport 11194 -j ACCEPT
+iptables -A OUTPUT -p udp -m udp --sport 11194 -j ACCEPT -m conntrack --ctstate ESTABLISHED,RELATED
+iptables -A FORWARD -s 192.168.1.0/24 -d 192.168.0.0/24 -i tun+ -o eth0 -p icmp -j ACCEPT
+iptables -A FORWARD -s 192.168.0.0/24 -d 192.168.1.0/24 -i eth0 -o tun+ -p icmp -j ACCEPT
+iptables -A FORWARD -s 192.168.1.0/24 -d 192.168.0.0/24 -i tun+ -o eth0 -p tcp -m tcp -m multiport --dports 22,3389 -j ACCEPT
+iptables -A FORWARD -s 192.168.0.0/24 -d 192.168.1.0/24 -i eth0 -o tun+ -p tcp -m tcp -m multiport --sports 22,3389 -j ACCEPT -m conntrack --ctstate ESTABLISHED,RELATED
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавить ремарки для прозрачности, так как уже не помню зачем icmp из внутренней сетки, когда лучше разрешить icmp для определения максимального mtu из сетки tun? И насколько помню, то ныне, для правил с icmp необходимо указывать тип и код.&lt;/p&gt;
+&lt;p&gt;Клиента настраивать легко по аналогии&amp;hellip;&lt;/p&gt;
+&lt;p&gt;Если в настроечном файле openvpn мы указали определённое название интерфейса tun (например, я, при использовании нескольких openvpn-демонов на одном сервере, присваиваю имя по номеру назначаемой сети: tun32 – 192.168.32.0/24), то и в iptables мы можем манипулировать этим именем, без использования tun+, подразумевающего под собой все интерфейсы, начинающиеся на tun. Это можно использовать, как один из способов разграничения подключающихся клиентов.&lt;/p&gt;
+&lt;p&gt;Я пока не заморачивался с запросами логинов/паролей при подключении openvpn-клиента и динамическом назначении для него определённых файрвольных правил.&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;PROBLEMS&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;возникшие-проблемы-и-пути-их-решения&#34;&gt;Возникшие проблемы и пути их решения&lt;/h2&gt;
+&lt;p&gt;На windows xp и windows server 2003 использовал http://openvpn.se/. На вин-сервере установил режим запуска службы openvpn в авто и после перезагрузки системы, windows 2003 автоматом присоединилась к дебиану. Выдёргивал кабели для проверки и через минуту или две связь восстанавливалась.&lt;/p&gt;
+&lt;p&gt;А в некоторых случаях вин2003 сервер конкретно подвисала и я попробовал:&lt;/p&gt;
+&lt;p&gt;Проблема при установленном RRAS на сервере:
+&lt;a href=&#34;http://itdoc.com.ua/showthread.php?t=5&#34;&gt;http://itdoc.com.ua/showthread.php?t=5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Не происходит добавление маршрута в таблицу маршрутизации, вероятно при включенной службе RRAS (чаще всего возникает на серверных ОС, например, Windows Server 2003, но встречал и на XP) - ошибка:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;#34;NOTE: FlushIpNetTable failed on interface [2] {427E6BDF-F41F-4E7A-B8C4-4F12B25A6C11} (status=1413) : Invalid index.&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Похоже дело в Win-довом глюке, по API-команде windows должна добавить маршрут, при этом если в конфиг OpenVPN вставить show-net-up, то OpenVPN запросит windows через API всю таблицу маршрутизации и выведет её в лог, там нужный маршрут будет. А если сделать &lt;code&gt;route print&lt;/code&gt;, то маршрута не будет&amp;hellip;
+Решение: &lt;code&gt;route-method exe&lt;/code&gt; в конфиг.файле - это указывает OpenVPN-у, что добавление маршрута надо делать не через API, а через &lt;code&gt;route.exe&lt;/code&gt;. Кроме того, может потребоваться небольшая задержка перед добавлением маршрута через &lt;code&gt;route.exe&lt;/code&gt; (встречалось, что без задержки &lt;code&gt;route.exe&lt;/code&gt; ещё не видит только что появившийся интерфейс и не добавляет маршрут), это делается route-delay 10 (на серверах лично меня &amp;ldquo;не напрягает&amp;rdquo; задержка 10 секунд, на клиентах можно уменьшить до экспериментально вычисленного предела)&lt;/p&gt;
+&lt;p&gt;Но это не помогло. Поэтому сделал левого юзера и из под него запускается батник с такой строкой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;openvpn --config &amp;#34;C:\Program Files\OpenVPN\config\client.ovpn&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Задача поставлена на запуск при загрузке системы. ОпенВПН сам переподключится при разрыве связи.&lt;/p&gt;
+&lt;p&gt;OpenVPN-клиент находящийся за NAT
+Один из openvpn-клиентов недоступен через openvpn-канал.&lt;/p&gt;
+&lt;p&gt;На шлюзе, через который клиент выходит в инет, если упрощённо, следующие правила iptables:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;iptables -t nat -A POSTROUTING -s 192.168.10.0/24 -o eth1 -j SNAT --to-source 192.168.1.2 #1.2 - внешний ip-адрес
+iptables -A FORWARD -m state --state INVALID -j DROP
+iptables -A FORWARD -i eth0 -o eth1 -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+```
+Добавил правило для ip-адреса этого клиента:
+```
+iptables -A FORWARD -d 192.168.10.2/32 -i eth1 -o eth0 -j ACCEPT
+```
+Клиент тут же запинговался и стал доступен. Видимо ``-m conntrack --ctstate RELATED,ESTABLISHED` отрубало необходимые пакеты.
+
+Для безопасности в добавленном правиле надо прописать ip-адрес и шлюз openvpn-сервера:
+```
+iptables -A FORWARD -p udp -m udp -i eth1 -s 192.168.254.254 --sport 1194 -o eth0 -d 192.168.10.2 -j ACCEPT
+```
+Надо сниффер запустить и посмотреть что отсекалось, чтобы внести ясность в этот вопрос.
+
+Для заметки:
+- Можно использовать ключи для клиентов с запросом пароля.
+- Можно использовать ключи в формате pkcs12 для usb-хранилищ.
+
+Смотрел поток wireshark&amp;#39;ом. Внешне обычные udp-пакеты с мешаниной в дата-сегменте. Если смотреть tun интерфейс, то тут уже видим человеческие пакеты.
+
+---
+&amp;gt;Private-key -- это личный закрытый секретный ключ, а public-key -- это открытый ключ, строго соотносящийся с закрытым ключом. Сертификат -- это подписанный каким-либо центром сертификации публичный ключ. CA - центр сертификации.
+
+&amp;gt;Если я правильно понимаю, то процесс создания клиентских ключа и сертификата, так и ключа и сертификата для сервера, состоит из нескольких этапов:
+
+&amp;gt;клиент с помощью математических операций генерирует закрытый файл-ключ (key);
+на основании этого приватного ключа (и публичного ключа центра сертификации?) клиент создаёт файл-запрос (csr), содержащий публичный ключ, к центру сертификации на выдачу сертификата;
+файл-запрос (csr) отправляется в центр сертификации;
+на основании полученного запроса центр сертификации создаёт файл-сертификат (crt) и подписывает его своим приватным ключом (тоже математика?);
+файл-сертификат (crt), содержащий открытый ключ, подписанный центром сертификации, отправляется клиенту.
+А значит, чисто гипотетически, достаточно иметь один неизвлекаемый приватный ключ в каком-нибудь рутокене. А открытый ключ, от этого закрытого ключа, направлять на подпись к различным центрам сертификации и, получив соответствующие сертификаты, подключаться к своему банку, к своему vpn-серверу, заходить в личный кабинет на госуслугах и т.д.
+
+&amp;gt;Гипотетически потому, что к разным &amp;#34;дверям&amp;#34; лучше иметь разные закрытые ключи. И ещё мне пока непонятно с алгоритмами шифрования. Можно ли подписать ГОСТовским закрытым ключом публичный ключ RSA.
+
+.......статья в процессе написания
+
+Ссылки:
+http://www.lissyara.su/articles/freebsd/security/openvpn/
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

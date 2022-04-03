@@ -1,0 +1,68 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – IDE</title>
+    <link>/tags/ide/</link>
+    <description>Recent content in IDE on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 15 Apr 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/ide/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Исправление проблемы с переключением раскладки клавиатуры в Visual Studio Code</title>
+      <link>/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</link>
+      <pubDate>Thu, 15 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Причина кроется в обработке нажатия клавиши &amp;lsquo;Alt&amp;rsquo;, даже в составе комбинации, что приводит к вызову меню.&lt;/p&gt;
+&lt;p&gt;Решение найдено здесь: &lt;a href=&#34;https://github.com/microsoft/vscode/issues/85405#issuecomment-656659452&#34;&gt;https://github.com/microsoft/vscode/issues/85405#issuecomment-656659452&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;В настройках Visual Studio Code ищем опцию &amp;lsquo;window.titleBarStyle&amp;rsquo;, которая по умолчанию установлена в &amp;rsquo;native&amp;rsquo;. После смены значения на &amp;lsquo;custom&amp;rsquo;, нажатие клавиши &amp;lsquo;Alt&amp;rsquo; перестаёт вызывать меню.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Установка Eclipse 3.6 (Helios) в Ubuntu</title>
+      <link>/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</link>
+      <pubDate>Fri, 19 Feb 2010 00:00:00 +0000</pubDate>
+      
+      <guid>/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2010-02-19&lt;/p&gt;
+&lt;p&gt;Ссылки: &lt;a href=&#34;http://www.eclipse.org/&#34;&gt;www.eclipse.org&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;&lt;a id=&#34;Описание&#34; name=&#34;Описание&#34;&gt;&lt;/a&gt;Описание&lt;/h2&gt;
+&lt;h3&gt;&lt;a id=&#34;Установка приложения без использования репозитория&#34; name=&#34;Установка приложения без использования репозитория&#34;&gt;&lt;/a&gt;Установка приложения без использования репозитория&lt;/h3&gt;
+&lt;p&gt;Скачиваем с &lt;a href=&#34;http://www.eclipse.org/downloads/&#34;&gt;http://www.eclipse.org/downloads/&lt;/a&gt; дистрибутив. Я выбрал Eclipse Classic 3.6.1, 169 MB для Linux 64 bit, так как у меня 64-битная Ubuntu. Полученный файл распаковал в /opt. Добавил ссылку на рабочий стол /opt/eclipse/eclipse.&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Включение функциональности классического обновления&#34; name=&#34;Включение функциональности классического обновления&#34;&gt;&lt;/a&gt;Включение функциональности классического обновления&lt;/h3&gt;
+&lt;p&gt;Ставим галку в меню Window - Preferences - General - Capabilities - Classic Update.&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Подключение некоторых репозиториев&#34; name=&#34;Подключение некоторых репозиториев&#34;&gt;&lt;/a&gt;Подключение некоторых репозиториев&lt;/h3&gt;
+&lt;p&gt;Установка дополнений, как и русификация, производится через меню Help - Install New Software. В появившемся окне “Install” нажимаем кнопку Add..., вызывая окно “Add repository”. В этом окне заполняем поле Name произвольным названием репозитория. А в поле Location: вставляем путь к репозиторию. После заполнения нажимаем Ok.&lt;br /&gt;Окно “Add repository” исчезнет, а в нижележащем окне “Install” появится слово Pending. Ждём. Если с сетью всё в порядке, то через какое-то время появится список дополнений, которые можно установить из добавленного репозитория.&lt;br /&gt;В дальнейшем в окне “Install” можно оперировать добавлением plugin’ов простым выбором необходимого репозитория из выпадающего меню.&lt;/p&gt;
+&lt;h5&gt;&lt;a id=&#34;Русификация&#34; name=&#34;Русификация&#34;&gt;&lt;/a&gt;Русификация&lt;/h5&gt;
+&lt;p&gt;Ставим пакет Babel &lt;a href=&#34;http://www.eclipse.org/babel/downloads.php&#34;&gt;http://www.eclipse.org/babel/downloads.php&lt;/a&gt;.&lt;br /&gt;Name: Babel&lt;br /&gt;Location: &lt;a href=&#34;http://download.eclipse.org/technology/babel/update-site/R0.8.1/helios&#34;&gt;http://download.eclipse.org/technology/babel/update-site/R0.8.1/helios&lt;/a&gt;&lt;/p&gt;
+&lt;h5&gt;&lt;a id=&#34;Пакет для разработки динамических web-приложений &#34; name=&#34;Пакет для разработки динамических web-приложений &#34;&gt;&lt;/a&gt;Пакет для разработки динамических web-приложений&lt;/h5&gt;
+&lt;p&gt;Aptana Studio 2.0.5 &lt;a href=&#34;http://aptana.com/&#34;&gt;http://aptana.com&lt;/a&gt;&lt;br /&gt;Name: Aptana&lt;br /&gt;Location: &lt;a href=&#34;http://download.aptana.com/tools/studio/plugin/install/studio&#34;&gt;http://download.aptana.com/tools/studio/plugin/install/studio&lt;/a&gt;&lt;br /&gt;После установки и перезагрузки Eclipse идём в Help - Install Aptana Features и устанавливаем дополнения к пакету.&lt;/p&gt;
+&lt;h5&gt;&lt;a id=&#34;Google Apps Engine plugin for Eclipse&#34; name=&#34;Google Apps Engine plugin for Eclipse&#34;&gt;&lt;/a&gt;Google Apps Engine plugin for Eclipse&lt;/h5&gt;
+&lt;p&gt;&lt;a href=&#34;http://code.google.com/intl/ru/appengine/docs/java/tools/eclipse.html&#34;&gt;http://code.google.com/intl/ru/appengine/docs/java/tools/eclipse.html&lt;/a&gt;&lt;br /&gt;Name: Google Apps Engine&lt;br /&gt;Location: &lt;a href=&#34;http://dl.google.com/eclipse/plugin/3.6&#34;&gt;http://dl.google.com/eclipse/plugin/3.6&lt;/a&gt;&lt;br /&gt;Если при попытке добавления происходит ошибка&lt;br /&gt;&#39;org.eclipse.wst.xml.core 0.0.0&#39; but it could not be found,&lt;br /&gt;то надо добавить репозиторий Eclipse plugins - &lt;a href=&#34;http://download.eclipse.org/releases/helios&#34;&gt;http://download.eclipse.org/releases/helios&lt;/a&gt;.&lt;/p&gt;
+&lt;h5&gt;&lt;a id=&#34;Пакет для программирования на C/C++&#34; name=&#34;Пакет для программирования на C/C++&#34;&gt;&lt;/a&gt;Пакет для программирования на C/C++&lt;/h5&gt;
+&lt;p&gt;Name: CDT&lt;br /&gt;Location: : &lt;a href=&#34;http://download.eclipse.org/tools/cdt/releases/helios&#34;&gt;http://download.eclipse.org/tools/cdt/releases/helios&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Добавление репозитория ppa и установка Eclipse&#34; name=&#34;Добавление репозитория ppa и установка Eclipse&#34;&gt;&lt;/a&gt;Добавление репозитория ppa и установка Eclipse&lt;/h3&gt;
+&lt;p&gt;Даю команды:&lt;br /&gt;$ sudo add-apt-repository ppa:eclipse-team/debian-package&lt;br /&gt;$ sudo apt-get update&lt;br /&gt;Далее для обновления установленного eclipse’а:&lt;br /&gt;$ sudo apt-get upgrade&lt;br /&gt;Или для установки в систему без установленного eclipse’а:&lt;br /&gt;$ sudo apt-get install eclipse&lt;/p&gt;
+&lt;h3&gt;&lt;a id=&#34;Результат&#34; name=&#34;Результат&#34;&gt;&lt;/a&gt;Результат&lt;/h3&gt;
+&lt;p&gt;Из коробки не завёлся. Появляется окно с надписью продукта и исчезает.&lt;br /&gt;В ~/.eclipse/ и далее в подпапках можно найти логи с ошибками.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

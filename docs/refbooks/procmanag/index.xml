@@ -1,0 +1,103 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Управление процессами</title>
+    <link>/refbooks/procmanag/</link>
+    <description>Recent content in Управление процессами on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 01 Jan 1970 03:00:02 +0300</lastBuildDate>
+    
+	  <atom:link href="/refbooks/procmanag/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Refbooks: Краткий список утилит и команд оболочки для работы с процессами</title>
+      <link>/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
+      <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
+      
+      <guid>/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-03-29&lt;/p&gt;
+&lt;h2 id=&#34;обозреть-работающие-процессы&#34;&gt;Обозреть работающие процессы&lt;/h2&gt;
+&lt;h3 id=&#34;ps&#34;&gt;&lt;code&gt;ps&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ps&lt;/code&gt; — process status.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ ps aux
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Linux Minit:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ ps 1
+    PID TTY      STAT   TIME COMMAND
+      1 ?        Ss     0:08 /sbin/init
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;CentOS:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@srv01 ~]$ ps 1
+  PID TTY      STAT   TIME COMMAND
+    1 ?        Ss     0:55 /usr/lib/systemd/systemd --switched-root --system --deserialize 22
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;ptree&#34;&gt;&lt;code&gt;ptree&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ptree&lt;/code&gt; — process tree. Выводит дерево процессов.&lt;/p&gt;
+&lt;h3 id=&#34;top-htop&#34;&gt;&lt;code&gt;top&lt;/code&gt;, &lt;code&gt;htop&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Информация обо всех процессах в режиме реального времени.&lt;/p&gt;
+&lt;h2 id=&#34;получить-информацию-о-процессе&#34;&gt;Получить информацию о процессе&lt;/h2&gt;
+&lt;h3 id=&#34;pidoff&#34;&gt;&lt;code&gt;pidoff&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;pidoff&lt;/code&gt; — find the process ID of a running program.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ pidof mc
+146747 45720 12313 7516
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;pgrep&#34;&gt;&lt;code&gt;pgrep&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;pgrep&lt;/code&gt; — process grep.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ pgrep -l fire
+10900 firefox-bin
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;pwdx&#34;&gt;&lt;code&gt;pwdx&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;pwdx&lt;/code&gt; — print working dir process.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ pwdx 12313
+12313: /home/user
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;lsof&#34;&gt;&lt;code&gt;lsof&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;lsof&lt;/code&gt; — list open files.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[root@home-ipa05 ~]# lsof -i -n -P
+COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+rpcbind 2610     rpc    6u  IPv4  15059      0t0  UDP *:111
+rpcbind 2610     rpc    7u  IPv4  15064      0t0  TCP *:111 (LISTEN)
+rpcbind 2610     rpc    8u  IPv6  15065      0t0  UDP *:111
+rpcbind 2610     rpc    9u  IPv6  15066      0t0  TCP *:111 (LISTEN)
+chronyd 2647 _chrony    5u  IPv4  15253      0t0  UDP 127.0.0.1:323
+chronyd 2647 _chrony    6u  IPv6  15254      0t0  UDP [::1]:323
+sshd    2888    root    3u  IPv4  16102      0t0  TCP *:22 (LISTEN)
+sshd    2888    root    4u  IPv6  16104      0t0  TCP *:22 (LISTEN)
+sshd    2914    root    3u  IPv4  16110      0t0  TCP 172.16.14.10:22-&amp;gt;172.16.14.1:45098 (ESTABLISHED)
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;fuser&#34;&gt;&lt;code&gt;fuser&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;fuser&lt;/code&gt; — identify processes using files or sockets.&lt;/p&gt;
+&lt;p&gt;Какой процесс используется порт 22000 в пространстве имён «tcp»:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt; user@wks01:~$ sudo fuser -v -n tcp 22000
+                     USER        PID ACCESS COMMAND
+22000/tcp:           eugene    221135 F.... syncthing
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;убить-выбранный-процесс&#34;&gt;Убить выбранный процесс&lt;/h2&gt;
+&lt;h3 id=&#34;kill-pkill-killall&#34;&gt;&lt;code&gt;kill&lt;/code&gt;, &lt;code&gt;pkill&lt;/code&gt;, &lt;code&gt;killall&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;kill&lt;/code&gt;, &lt;code&gt;pkill&lt;/code&gt;, &lt;code&gt;killall&lt;/code&gt; — process kill.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user@wks01:~$ kill 221135
+user@wks01:~$ pkill -9 firefox
+user@wks01:~$ sudo killall -u eugene
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;изменить-приоритет-процесса&#34;&gt;Изменить приоритет процесса&lt;/h2&gt;
+&lt;h3 id=&#34;nice-renice&#34;&gt;&lt;code&gt;nice&lt;/code&gt;, &lt;code&gt;renice&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;nice&lt;/code&gt;, &lt;code&gt;renice&lt;/code&gt; — запуск процесса с заданным приоритетом «nice» или изменение приоритета «nice» работающего процесса.&lt;/p&gt;
+&lt;p&gt;Приоритет «nice» нельзя путать с действительный приоритетом процесса, выданным «планировщиком».&lt;/p&gt;
+&lt;p&gt;Текущее значение «nice» при использовании утилиты &lt;code&gt;top&lt;/code&gt; — столбец «NI», тогда как действительный приоритет — столбец «PR».&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;−20 — самый высокий приоритет «nice» выполнения процесса.&lt;/li&gt;
+&lt;li&gt;+20 — самый низкий приоритет «nice».&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;bg-fg&#34;&gt;&lt;code&gt;bg&lt;/code&gt;, &lt;code&gt;fg&lt;/code&gt;&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;bg&lt;/code&gt; — запуск приложения из командной строки в фоновом режиме.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fg&lt;/code&gt; — вывод приложенияиз фонового режима.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;изучить-работающий-процесс&#34;&gt;Изучить работающий процесс&lt;/h2&gt;
+&lt;h3 id=&#34;strace&#34;&gt;&lt;code&gt;strace&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;strace&lt;/code&gt; — system call tracer.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

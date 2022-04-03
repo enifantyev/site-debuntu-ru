@@ -1,0 +1,99 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Mikrotik</title>
+    <link>/tags/mikrotik/</link>
+    <description>Recent content in Mikrotik on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 05 Oct 2018 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/mikrotik/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Mikrotik: Wireless WDS Mesh With Mesh Interface</title>
+      <link>/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</link>
+      <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2018-10-05&lt;/p&gt;
+&lt;h4 id=&#34;предварительная-настройка-mikrotik-routers&#34;&gt;Предварительная настройка mikrotik routers&lt;/h4&gt;
+&lt;p&gt;Рабочая частота, имя сети, безопасность wireless-интерфейсов должны быть одинаковыми на всех точках.&lt;/p&gt;
+&lt;h4 id=&#34;на-каждом-mesh-узле-произвести-следующие-одинаковые-действия&#34;&gt;На каждом mesh-узле произвести следующие одинаковые действия.&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Добавление mesh-интерфейса:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;interface mesh add name=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Добавление wireless-интерфейса с указанием автоматического добавления порта для wds-моста:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;interface wireless add wlan4 master-interface=wlan1 ssid=MESHNET mode=ap-bridge wds-mode=dynamic-mesh wds-default-bridge=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Добавление порта mesh для возможности подключения клиентов:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;interface mesh port add interface=wlan4 mesh=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;на-каждом-mesh-узле-указываем-разные-локальные-ip-адреса&#34;&gt;На каждом mesh-узле указываем разные локальные ip-адреса.&lt;/h4&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Указание адреса на mesh-интерфейсе первого узла:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ip address add address=192.168.65.1/24 interface=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Указание адреса на mesh-интерфейсе второго узла:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ip address add address=192.168.65.2/24 interface=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Указание адреса на mesh-интерфейсе третьего узла:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ip address add address=192.168.65.3/24 interface=mesh4&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;ускоренное-отключение-клиентов-со-слабым-сигналом&#34;&gt;Ускоренное отключение клиентов со слабым сигналом&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/interface wireless access-list
+add authentication=yes comment=«Accept strong clients» signal-range=-71..120
+add authentication=no comment=«Block weak clients» signal-range=-120..-70
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;только-хорошее-качество-сигнала-для-построения-wds&#34;&gt;Только хорошее качество сигнала для построения WDS&lt;/h4&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/interface wireless connect-list
+add comment=«Block weak wds» interface=mesh4 connect=no \
+security-profile=default signal-range=-120..-60
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;на-первом-шлюзе&#34;&gt;На первом шлюзе&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Добавление пула адресов:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/ip pooladd name=dhcp_meshnet ranges=192.168.65.65-192.168.65.249&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Добавление dhcp-сервера:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/ip dhcp-server add add-arp=yes address-pool=dhcp_meshnet interface=mesh4 lease-time=8h name=dhcp&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;дополнительные-заметки&#34;&gt;Дополнительные заметки&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Нет нужды на рядовых mesh-узлах добавлять relay dhcp-запросов, или настраивать файрвол, или ещё каким-либо образом администрировать пакеты от клиентов, так как mesh-технология прозрачно передаёт пакеты внутри mesh-моста на выходной узел.&lt;/li&gt;
+&lt;li&gt;На выходном узле необходимо добавить правило в файрвол для пропуска пакетов из/в новую mesh-сеть.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://mum.mikrotik.com//presentations/RU15/presentation_2573_1443518501.pdf&#34;&gt;https://mum.mikrotik.com//presentations/RU15/presentation_2573_1443518501.pdf&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,43 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – AltLinux 9</title>
+    <link>/tags/altlinux-9/</link>
+    <description>Recent content in AltLinux 9 on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 31 Mar 2022 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/altlinux-9/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Manuals: 11. Установка BorgBackup в AltLinux 9</title>
+      <link>/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</link>
+      <pubDate>Thu, 31 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-03-31&lt;/p&gt;
+&lt;h3 id=&#34;установка-из-apt&#34;&gt;Установка из APT&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install borg
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-из-pip&#34;&gt;Установка из pip&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install python3-module-pkgconfig python3-module-setuptools \
+python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
+libacl-devel libacl libssl-devel liblz4-devel libzstd-devel \
+libxxhash-devel gcc-c++ python3-module-setuptools_scm
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install --upgrade pip
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install borgbackup
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg -V
+borg 1.1.17
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

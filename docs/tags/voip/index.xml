@@ -1,0 +1,87 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – VoIP</title>
+    <link>/tags/voip/</link>
+    <description>Recent content in VoIP on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 01 Apr 2011 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/voip/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Настройка VoIP на Nokia E52</title>
+      <link>/n/nastroika-voip-na-nokia-e52/</link>
+      <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/nastroika-voip-na-nokia-e52/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Скачиваем отсюда &lt;a href=&#34;http://www.forum.nokia.com/info/sw.nokia.com/id/d476061e-90ca-42e9-b3ea-1a852f3808ec/SIP_VoIP_Settings.html&#34;&gt;http://www.forum.nokia.com/info/sw.nokia.com/id/d476061e-90ca-42e9-b3ea-1a852f3808ec/SIP_VoIP_Settings.html&lt;/a&gt; SIP VoIP 3.x Settings (164 kB) и устанавливаем на телефон эту приблуду, которая позволит нам настроить профили для sip провайдеров.&lt;/p&gt;
+&lt;div&gt;
+&lt;h3&gt;&lt;a id=&#34;астраиваем sipnet.ru&#34; name=&#34;астраиваем sipnet.ru&#34;&gt;&lt;/a&gt;Настраиваем sipnet.ru&lt;/h3&gt;
+&lt;div&gt;Меню - Панель управления - Параметры сети - Advanced VoIP settings&lt;/div&gt;
+&lt;div&gt;&lt;strong&gt;SIP settings&lt;/strong&gt;&lt;/div&gt;
+&lt;div&gt;Функции - Новый профиль SIP - Исп. проф. по умолч.&lt;/div&gt;
+&lt;div&gt;Для sipnet.ru:&lt;/div&gt;
+&lt;div&gt;Имя профиля:             Sipnet&lt;/div&gt;
+&lt;div&gt;Профиль услуги:          IETF&lt;/div&gt;
+&lt;div&gt;Назначание по умолч.:    Интернет&lt;/div&gt;
+&lt;div&gt;Открыт. имя польз.:      000000@sipnet.ru (свой номер в сипнете)&lt;/div&gt;
+&lt;div&gt;Использовать сжатие:     нет&lt;/div&gt;
+&lt;div&gt;Регистрация:             Всегда&lt;/div&gt;
+&lt;div&gt;Использовать защиту:     Нет&lt;/div&gt;
+&lt;div&gt;Прокси-сервер:           не заполняем&lt;/div&gt;
+&lt;div&gt;Сервер регистрации:&lt;/div&gt;
+&lt;div&gt;        Адрес сервера рег:    sipnet.ru&lt;/div&gt;
+&lt;div&gt;        Область:              нет&lt;/div&gt;
+&lt;div&gt;        Имя пользователя:     000000 (свой номер в сипнете)&lt;/div&gt;
+&lt;div&gt;        Пароль:               ****   (свой пароль в сипнете)&lt;/div&gt;
+&lt;div&gt;        Тип передачи:         UDP&lt;/div&gt;
+&lt;div&gt;        Порт:                 5060&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt; &lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;Поднимаемся до Параметры сети - Advanced VoIP settings и заходим в&lt;/div&gt;
+&lt;div&gt;&lt;strong&gt;VoIP services&lt;/strong&gt;&lt;/div&gt;
+&lt;div&gt;options - new service - Use default profile - Sipnet (его мы только что делали)&lt;/div&gt;
+&lt;div&gt;аппарат зависнет на несколько секунд и...&lt;/div&gt;
+&lt;div&gt;Вкл. услугу&lt;/div&gt;
+&lt;div&gt;Можно юзать. Надо только помнить, что сипнет.ру берёт за звонки на сотовые телефоны дороже, чем звонить с сотового на сотовый.&lt;/div&gt;
+&lt;div&gt;
+&lt;h3&gt;&lt;a id=&#34;Настраиваем webcalldirect.com&#34; name=&#34;Настраиваем webcalldirect.com&#34;&gt;&lt;/a&gt;Настраиваем webcalldirect.com&lt;/h3&gt;
+&lt;div&gt;Для webcalldirect.com (Voipdiscount.com настраивается аналогично. Думаю, что и прочие, из линейки бетамакса, настраиваются также) :&lt;/div&gt;
+&lt;div&gt;Имя профиля:             Webcalldirect.com&lt;/div&gt;
+&lt;div&gt;Профиль услуги:          IETF&lt;/div&gt;
+&lt;div&gt;Назначание по умолч.:    Интернет&lt;/div&gt;
+&lt;div&gt;Открыт. имя польз.:      user@webcalldirect.com (своё имя в webcalldirect.com)&lt;/div&gt;
+&lt;div&gt;Использовать сжатие:     нет&lt;/div&gt;
+&lt;div&gt;Регистрация:             Всегда&lt;/div&gt;
+&lt;div&gt;Использовать защиту:     Нет&lt;/div&gt;
+&lt;div&gt;Прокси-сервер:           не заполняем&lt;/div&gt;
+&lt;div&gt;Сервер регистрации:&lt;/div&gt;
+&lt;div&gt;        Адрес сервера рег:    sip.webcalldirect.com&lt;/div&gt;
+&lt;div&gt;        Область:              нет&lt;/div&gt;
+&lt;div&gt;        Имя пользователя:     user (своё имя в webcalldirect.com)&lt;/div&gt;
+&lt;div&gt;        Пароль:               ****   (свой пароль в webcalldirect.com)&lt;/div&gt;
+&lt;div&gt;        Тип передачи:         UDP&lt;/div&gt;
+&lt;div&gt;        Порт:                 5060&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt; &lt;/div&gt;
+&lt;div&gt;Оплачиваю бетамакс через paypal, через Qiwi или Visa/Mastercard&#39;ом напрямую.&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

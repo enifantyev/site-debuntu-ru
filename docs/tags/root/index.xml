@@ -1,0 +1,51 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – root</title>
+    <link>/tags/root/</link>
+    <description>Recent content in root on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/root/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Избавляемся от root&#39;а в Alpine Linux</title>
+      <link>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-12-23&lt;/p&gt;
+&lt;h3 id=&#34;добавляем-нового-пользователя&#34;&gt;Добавляем нового пользователя&lt;/h3&gt;
+&lt;p&gt;Устанавливаем &lt;code&gt;sudo&lt;/code&gt; в систему и добавляем нового пользователя &lt;code&gt;newuser&lt;/code&gt;. Назначаем его участником группы &lt;code&gt;wheel&lt;/code&gt;. Пользователям из этой группы позволяется &lt;em&gt;рулить&lt;/em&gt; системой через &lt;code&gt;sudo&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apk update
+apk add sudo bash
+adduser -s /bin/bash newuser
+addgroup newuser wheel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Раскомментируем строку в файле &lt;code&gt;/etc/sudoers&lt;/code&gt;, которая позволит группе &lt;code&gt;wheel&lt;/code&gt; использовать &lt;code&gt;sudo&lt;/code&gt;. Одной командой с помощью замечательного &lt;code&gt;sed&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^#.%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/&amp;#34; /etc/sudoers
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Или вручную с помощью команды &lt;code&gt;visudo&lt;/code&gt; раскомментируем строку:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;%wheel ALL=(ALL) ALL
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;после-входа-под-новым-пользователем&#34;&gt;После входа под новым пользователем&lt;/h3&gt;
+&lt;p&gt;Блокируем root&amp;rsquo;а:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;passwd -l root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запрещаем вход для root по ssh с помощью &lt;code&gt;sed&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i -e &amp;#34;s/^PermitRootLogin.*$/PermitRootLogin no/&amp;#34; /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Или вручную меняем соответствующую строку в файле &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;PermitRootLogin no
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Рестарт &lt;code&gt;sshd&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/etc/init.d/sshd restart
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

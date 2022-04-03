@@ -1,0 +1,89 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – kafka-mirror-maker</title>
+    <link>/tags/kafka-mirror-maker/</link>
+    <description>Recent content in kafka-mirror-maker on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 06 Sep 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/kafka-mirror-maker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Запуск kafka-mirror-maker из systemd</title>
+      <link>/n/zapusk-kafka-mirror-maker-iz-systemd/</link>
+      <pubDate>Sun, 06 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/n/zapusk-kafka-mirror-maker-iz-systemd/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Каталог размещения: /opt/hadoop. Сюда скачиваем и распаковываем kafka_2.13-2.6.0.tgz и создаём ссылку kafka на каталог kafka_2.13-2.6.0, куда был раскапован архив:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir /opt/hadoop
+cd /opt/hadoop
+tar xvf kafka_2.13-2.6.0.tgz
+ln -s kafka_2.13-2.6.0 kafka
+mkdir kafka/logs
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём два файла для запуска и остановки kafka-mirror.
+&lt;code&gt;kafka-mirror-maker-start.sh&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/bin/bash
+echo &amp;#34;mirror maker restarted $(date)&amp;#34;&amp;gt;&amp;gt;/opt/hadoop/kafka/logs/mirrormaker.log
+cd /opt/hadoop/kafka/bin/
+./kafka-mirror-maker.sh \
+--consumer.config ../config/consumer.properties \
+--producer.config ../config/producer.properties \
+--whitelist &amp;#39;adfox_created|adfox_deleted|adfox_updated|mymoscow_created|mymoscow_deleted|mymoscow_updated&amp;#39; \
+--num.streams 3 \
+--offset.commit.interval.ms 30000 \
+--abort.on.send.failure false
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;kafka-mirror-maker-stop.sh&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/bin/sh
+SIGNAL=${SIGNAL:-TERM}
+PIDS=$(ps ax | grep -i &amp;#39;kafka.tools.Mirrormaker&amp;#39; | grep java | grep -v grep | awk &amp;#39;{print $1}&amp;#39;)if [ -z &amp;#34;$PIDS&amp;#34; ]; then
+ echo &amp;#34;No mirrormaker service to stop&amp;#34;
+ echo &amp;#34;No mirrormaker service to stop&amp;#34; &amp;gt;&amp;gt; /opt/hadoop/kafka/logs/mirrormaker.log
+ exit 1
+else
+ kill -s $SIGNAL $PIDS
+ echo &amp;#34;stopped mirrormaker service&amp;#34;
+ echo &amp;#34;stopped mirrormaker service $date&amp;#34; &amp;gt;&amp;gt; /opt/hadoop/kafka/logs/mirrormaker.log
+fi
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём системного пользователя kafka, если такового не существует:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;useradd --system --no-create-home kafka
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Задаём права и владельцев для созданных файлов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;chown -R kafka.kafka kafka_2.13-2.6.0
+chown kafka.kafka kafka-mirror-st*.sh
+chmod u+x kafka-mirror-st*.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём unit для kafka-mirror в каталоге /etc/systemd/system/&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[Unit]
+Description=KafkaMirror Daemon
+Documentation=https://kafka.apache.org/documentation/
+Requires=network.target
+After=network.target
+
+[Service]
+User=kafka
+Group=kafka
+ExecStart=/opt/hadoop/kafka-mirror-start.sh
+ExecStop=/opt/hadoop/kafka-mirror-stop.sh
+TimeoutSec=60
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запускаем юнит и смотрим результаты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl daemon-reload
+systemctl enable kafka-mirror
+systemctl start kafka-mirror
+journalctl -f
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

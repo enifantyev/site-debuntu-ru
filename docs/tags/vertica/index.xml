@@ -1,0 +1,72 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Vertica</title>
+    <link>/tags/vertica/</link>
+    <description>Recent content in Vertica on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 03 Jul 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/vertica/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Best Practices for Using LDAP Link with Vertica (перевод)</title>
+      <link>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
+      <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-07-03&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&#34;&gt;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Итак, вы настроили и включили LDAP Link и работаете с Vertica, что позволяет синхронизировать пользователей и группы LDAP с соответствующими пользователями и ролями Vertica. Но вы по прежнему должны управлять пользователями и ролями в Vertica, которые вы не создавали с помощью LDAP Link. На следующем рисунке показано, как может выглядеть ваша конфигурация.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;VerticaLDAPLinkSync.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Но есть несколько рекомендаций, которым вы должны следовать, чтобы убедиться, что вы случайно не потеряете ни пользователей, ни данные. В этом блоге объясняется, как обеспечить бесперебойную работу службы LDAP Link.&lt;/p&gt;
+&lt;h3 id=&#34;перед-включением-ldap-link-выполните-тестовый-прогон-всухую&#34;&gt;Перед включением LDAP Link выполните тестовый &amp;ldquo;прогон всухую&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Параметр &amp;ldquo;LDAPLinkDryRun&amp;rdquo; определяет, должна ли Vertica выполнить тесты между LDAP-сервером и Vertica. &amp;ldquo;Прогон всухую&amp;rdquo; проверяет:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;что соединение работает;&lt;/li&gt;
+&lt;li&gt;параметры установлены корректно;&lt;/li&gt;
+&lt;li&gt;запросы к LDAP-серверу возвращает правильные результаты, записываемые в файл ldap_server_response.log.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;ldquo;Прогон всухую&amp;rdquo; не производит никаких изменений в Базе Данных Vertica.&lt;/p&gt;
+&lt;p&gt;Для лучшего результата, установить параметр &amp;ldquo;LDAPLinkDryRun&amp;rdquo; в 1 и выполните &amp;ldquo;прогон всухую&amp;rdquo; в тестовом окружении. Выполение этого увеличит шансы, что вы останетесь без синхронизации в тот момент, когда подключите LDAP Link в вашем прод-окружении.&lt;/p&gt;
+&lt;h3 id=&#34;предотвратите-потерю-объектов-в-базе-данных&#34;&gt;Предотвратите потерю объектов в Базе Данных&lt;/h3&gt;
+&lt;p&gt;При удалении пользователя из LDAP-каталога, Vertica, при следующей синхронизации LDAP, удалит пользователя из Vertica-пользователей, а с ним удалит из Базы Данных все объекты (таблицы, виды, и т.д.), принадлежавшие пользователю. Эти объекты будут потеряны без возможности восстановления.&lt;/p&gt;
+&lt;p&gt;Для сохранения в Базе Данных объектов, принадлежащих удаляемому пользователю, используйте параметр &amp;ldquo;GlobalHeirUserName&amp;rdquo;. Этот параметр определяет, что произойдёт с объектами, когда их владелец исчезнет:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AUTO (по умолчанию) – Vertica назначит новым родителем объектов пользователя dbadmin.&lt;/li&gt;
+&lt;li&gt;&lt;username&gt; – Vertica назначит определённого пользователя, как нового родителя этих объектов.&lt;/li&gt;
+&lt;li&gt;Empty – Vertica не будет назначать объектам какого-либо пользователя. В этом случае объекты будут потеряны без возможности восстановления. Этот параметр сродни выполнению операции =&amp;gt; DROP USER user_name CASCADE;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;избегайте-случайного-удаления-пользователей&#34;&gt;Избегайте случайного удаления пользователей&lt;/h3&gt;
+&lt;p&gt;Допустим, что LDAP Link синхронизируется, но не найдёт пользователей в LDAP-сервере. В этой ситуации, LDAP Link удалит из Vertica только тех пользователей , которые были созданы с помощью LDAP Link. (LDAP Link никогда не удалит из Vertica не-LDAP пользователей.)&lt;/p&gt;
+&lt;p&gt;Чтобы изменить такое поведение, установите параметр LDAPLinkStopIfZeroUsers в 1. Этот параметр указывает, что при неудачной синхронизации, когда возвращается пустой список пользователей в LDAP-каталоге, LDAP Link синхронизация должна вызывать ошибку. Это предотвратит случайное удаление легитимных LDAP-пользователей из Vertica.&lt;/p&gt;
+&lt;p&gt;Когда происходит ошибка синхронизации, запись о ней заносится в vertica.log, а также добавляется запись в системную таблицу LDAP_LINK_EVENTS.&lt;/p&gt;
+&lt;p&gt;После выяснения и исправления ситуации с отсутствием пользователей в LDAP-каталоге, установите параметр LDAPLinkStopIfZeroUsers в 0 и перезапустите синхронизацию.&lt;/p&gt;
+&lt;h3 id=&#34;кратко&#34;&gt;Кратко&lt;/h3&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Параметр&lt;/th&gt;&lt;th&gt;Рекомендованное значение&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkDryRun&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkURL&lt;/td&gt;&lt;td&gt;Без изменений&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkSearchBase&lt;/td&gt;&lt;td&gt;Без изменений&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;GlobalHeirUserName&lt;/td&gt;&lt;td&gt;&lt;b&gt;AUTO&lt;/b&gt;&amp;nbsp;&amp;mdash; автоназначение объектам пользователя dbadmin только в тех случаях, когда Vertica удаляет LDAP-пользователей.&lt;br&gt;
+&lt;b&gt;username&lt;/b&gt;&amp;nbsp;&amp;mdash; в тех случаях, когда могут быть удалены любые пользователи, а не только LDAP.&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;LDAPLinkStopIfZeroUsers&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;доп-информация&#34;&gt;Доп информация&lt;/h3&gt;
+&lt;p&gt;Если вы будете следовать этим процедурам, вы сможете управлять своими Vertica-пользователями с помощью подключения к LDAP, без потерь пользователей или данных. Для полной информации о LDAP Link смотрите LDAP Link Service в документации к Vertica.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

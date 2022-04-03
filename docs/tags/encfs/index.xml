@@ -1,0 +1,110 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – EncFS</title>
+    <link>/tags/encfs/</link>
+    <description>Recent content in EncFS on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 13 Oct 2019 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/encfs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Сборка deb-пакета свежего EncFS</title>
+      <link>/n/sborka-deb-paketa-svezhego-encfs/</link>
+      <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/n/sborka-deb-paketa-svezhego-encfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-10-13&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apt-get install checkinstall
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Скачал свежий EncFS 1.9.5&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo screen
+# cd /usr/src
+# wget https://github.com/vgough/encfs/releases/download/v1.9.5/encfs-1.9.5.tar.gz
+# tar -xvf encfs-1.9.5.tar.gz
+# cd encfs-1.9.5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Установил галку &amp;ldquo;Source code repositories&amp;rdquo; в &amp;ldquo;Update manager&amp;rdquo;-&amp;ldquo;Software Sources&amp;rdquo; для включения &lt;code&gt;deb-src&lt;/code&gt; и установил зависимости пакета encfs:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# apt-get update
+# apt-get build-dep encfs
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  autoconf automake autopoint autotools-dev cmake cmake-data debhelper dh-autoreconf dh-strip-nondeterminism dwz
+  libfile-stripnondeterminism-perl libfuse-dev libjsoncpp1 librhash0 libselinux1-dev libsepol1-dev libtinyxml2-6 libtinyxml2-dev libtool
+  libuv1 po-debconf
+0 upgraded, 21 newly installed, 0 to remove and 1 not upgraded.
+Need to get 8 024 kB/8 052 kB of archives.
+After this operation, 35,9 MB of additional disk space will be used.
+Do you want to continue? [Y/n]
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;Запустил для сборки пакета:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ./create-dev-pkg.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;&lt;p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-- The C compiler identification is GNU 7.4.0
+-- The CXX compiler identification is GNU 7.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found FUSE: /usr/include/fuse
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version &amp;#34;1.1.1&amp;#34;)
+...
+
+...
+======================== Installation successful ==========================
+
+Some of the files created by the installation are inside the build
+directory: /usr/src/encfs-1.9.5/build
+
+You probably don&amp;#39;t want them to be included in the package,
+especially if they are inside your home directory.
+Do you want me to list them?  [n]:
+Should I exclude them from the package? (Saying yes is a good idea)  [y]:
+Copying files to the temporary directory...OK
+Stripping ELF binaries and libraries...OK
+Compressing man pages...OK
+Building file list...OK
+Building Debian package...OK
+NOTE: The package will not be installed
+Erasing temporary files...OK
+Writing backup package...OK
+OK
+Deleting temp dir...OK
+
+**********************************************************************
+
+ Done. The new package has been saved to
+
+ /usr/src/encfs-1.9.5/build/encfs_20191011-1_amd64.deb
+ You can install it in your system anytime using:
+
+      dpkg -i encfs_20191011-1_amd64.deb
+
+**********************************************************************
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;В папке build нашёл deb-пакет и установил его:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# dpkg -i encfs_20191011-1_amd64.deb
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

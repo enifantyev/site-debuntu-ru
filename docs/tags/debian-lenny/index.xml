@@ -1,0 +1,53 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Debian Lenny</title>
+    <link>/tags/debian-lenny/</link>
+    <description>Recent content in Debian Lenny on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/debian-lenny/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Установка VMWare Server на Debian Lenny</title>
+      <link>/n/ustanovka-vmware-server-na-debian-lenny/</link>
+      <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ustanovka-vmware-server-na-debian-lenny/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2011-03-30&lt;/p&gt;
+&lt;h2 id=&#34;установка-vmware-server&#34;&gt;Установка VMWare Server&lt;/h2&gt;
+&lt;p&gt;Установка VMWare Server проста, если в системе уже установлены необходимые пакеты:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# aptitude install linux-headers-`uname -r`
+# aptitude install kernel-package libncurses5-dev fakeroot wget bzip2 build-essential
+# aptitude install rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Регистрируемся на сайте &lt;a href=&#34;https://www.vmware.com&#34;&gt;www.vmware.com&lt;/a&gt; и cкачиваем rpm дистрибутив vmware сервера. Не забываем записать serial number. Устанавливаем vmware сервер командой: &lt;code&gt;rpm -i --nodeps vmware-server.rpm&lt;/code&gt;. Опция &lt;code&gt;--nodep&lt;/code&gt;s нужна для отключения проверки зависимостей устанавливаемого пакета, иначе vmware сервер откажется устанавливаться, ругаясь на отсутствие чего-либо.&lt;/p&gt;
+&lt;p&gt;При установке возможно будет ругань на счёт не той версии компилятора &lt;code&gt;gcc&lt;/code&gt; и отказ в установке. В этом случае идём в &lt;code&gt;/usr/bin&lt;/code&gt; и видим там два файла &lt;code&gt;gcc-4.1&lt;/code&gt; и &lt;code&gt;gcc-4.3&lt;/code&gt; и одну ссылку &lt;code&gt;gcc&lt;/code&gt;, указывающую на &lt;code&gt;gcc-4.3&lt;/code&gt;. Удаляем &lt;code&gt;gcc&lt;/code&gt; и создаём новую ссылку &lt;code&gt;gcc&lt;/code&gt;, но уже на &lt;code&gt;gcc-4.1&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ln -s gcc-4.1 gcc  #Теперь должно устанавливаться без ругани.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На каком-то этапе установщик vmware server предложит установить поддержку сети. Соглашаемся, а дальше выбираем то, что нам нужно. Всего есть три типа сетевой поддержки в VMWare Server:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;NAT - когда виртуальные машины будут использовать ip-адрес физической машины. В результате достучаться до машин из вне не получится, но на машинах появится инет без лишних сетевых настроек.&lt;/li&gt;
+&lt;li&gt;Host-only сеть - когда на физической машине будет назначен ещё один виртуальный интерфейс, в дополнении к физическим, и виртуальные машины будут иметь ip-адреса из этой виртуальной сетки. Инет на виртуальных машинах не будет доступен, если только не настроить на хост-машине маршрутизацию и т.д. для host-only сети. Удобно для тестирования. &lt;/li&gt;
+&lt;li&gt;Bridged сетка - когда виртуальные машины настроены на использования реальных ip-адресов. В данном случае виртуальную машину невозможно будет отличить от реальной машины, сидящей в реальной сетке.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Ещё одна засада будет после обновления ядра линукса. VMWare Server откажется запускаться и попросит запустить свой сценарий установки. Ничего страшного. Запускаем предложенный сценарий. Вновь проходим все вопросы и ответы и вновь всё заработало. Замечу, что на этапе установки сетевой поддержки, сценарий предложит оставить предыдущие настройки. Я согласился, но VMWare Server опять не запустился. Выполнив сценарий по полной программе  я получил работающий VMWare Server.&lt;/p&gt;
+&lt;p&gt;Ссылки для использования:
+&lt;a href=&#34;/n/kak-sobrat-novoe-yadro-linux&#34;&gt;Как собрать новое ядро linux&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;удаление-vmware-server&#34;&gt;Удаление VMware Server:&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rpm -qa | grep VM
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&amp;hellip; тут вылезет &amp;ldquo;имя пакета&amp;rdquo;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rpm -e &amp;#34;имя пакета&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

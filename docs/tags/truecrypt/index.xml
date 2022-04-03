@@ -1,0 +1,57 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – TrueCrypt</title>
+    <link>/tags/truecrypt/</link>
+    <description>Recent content in TrueCrypt on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/truecrypt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Установка и использование Truecrypt</title>
+      <link>/n/ustanovka-i-ispolzovanie-truecrypt/</link>
+      <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ustanovka-i-ispolzovanie-truecrypt/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;&lt;a id=&#34;Установка Truecrypt&#34; name=&#34;Установка Truecrypt&#34;&gt;&lt;/a&gt;Установка Truecrypt&lt;/h2&gt;
+&lt;p&gt;Установка truecrypt проста.&lt;/p&gt;
+&lt;p&gt;Устанавливаем необходимые пакеты для установки трукрипта:&lt;br /&gt;# aptitude install libfuse2 fuse-utils dmsetup libsm6 libgtk2.0-0 sudo&lt;/p&gt;
+&lt;p&gt;Скачиваем с www.truecrypt.org соответствующий архив:&lt;br /&gt;# lynx www.truecrypt.org&lt;/p&gt;
+&lt;p&gt;На сайте переходим на страницу downloads. Потом выбираем соответствующий архив и скачиваем его к себе. На текущий момент truecrypt-6.2a-ubuntu-x86.tar.gz.&lt;/p&gt;
+&lt;p&gt;Распаковываем его:&lt;br /&gt;# tar -xvf truecrypt*.&lt;/p&gt;
+&lt;p&gt;Запускаем распакованный скрипт truecrypt-6.2a-setup-ubuntu-x86 и отвечаем на вопросы:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Инсталлировать трукрипт или только распаковать? Выбираем 1 - инсталлировать.&lt;/li&gt;
+&lt;li&gt;Читаем лицензию, нажимая пробел&lt;/li&gt;
+&lt;li&gt;Согласен с написанным? Согласен.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Установка завершена.&lt;/p&gt;
+&lt;p&gt;Можно добавить репозиторий &lt;a href=&#34;http://notesalexp.blogspot.com/p/blog-page.html&#34;&gt;http://notesalexp.blogspot.com/p/blog-page.html&lt;/a&gt;:&lt;br /&gt;deb http://notesalexp.org/debian/lucid/ lucid main&lt;/p&gt;
+&lt;p&gt;Но, возможно, надёжней юзать версию с сайта truecrypt.org.&lt;/p&gt;
+&lt;h2&gt;&lt;a id=&#34;Создание контейнера из командной строки&#34; name=&#34;Создание контейнера из командной строки&#34;&gt;&lt;/a&gt;Создание контейнера из командной строки:&lt;/h2&gt;
+&lt;p&gt;# truecrypt -t -c my_cont.vmdk&lt;br /&gt;Отвечаем на вопросы. Файловую систему выбираем none.&lt;/p&gt;
+&lt;p&gt;Монтируем созданный контейнер на какую-нибудь созданную папку:&lt;br /&gt;# truecrypt -t --filesystem=none /path/my_cont.vmdk /home/folder&lt;/p&gt;
+&lt;p&gt;Смотрим, как обзывается наш контейнер в системе:&lt;br /&gt;# truecrypt -t -l&lt;br /&gt;Вылезло: 1: /path/my_cont.vmdk /dev/mapper/truecrypt1&lt;/p&gt;
+&lt;p&gt;Форматируем наш контейнер:&lt;br /&gt;# mkfs.ext3 /dev/mapper/truecrypt1&lt;/p&gt;
+&lt;p&gt;Размонтируем наш контейнер:&lt;br /&gt;# truecrypt -t -d /path/my_cont.vmdk или truecrypt -t -d (размонтирование всех контейнеров)&lt;/p&gt;
+&lt;p&gt;Теперь опять монтируем и пользуемся:&lt;br /&gt;# truecrypt -t /path/my_cont.vmdk /home/folder&lt;/p&gt;
+&lt;p&gt;Таким же макаром можно зашифровать раздел или винчестер:&lt;br /&gt;# truecrypt -t -c /dev/sda5&lt;/p&gt;
+&lt;p&gt;Зашифровать системный раздел или весь системный винчестер не получится под Linux&#39;ом, но реально под Windows.&lt;/p&gt;
+&lt;p&gt;У трукрипта есть и GUI.&lt;/p&gt;
+&lt;p&gt;Полезные ссылки:&lt;br /&gt;&lt;a href=&#34;http://www.cgsecurity.org/wiki/Recover_a_TrueCrypt_Volume&#34; rel=&#34;noopener&#34; target=&#34;_blank&#34;&gt;Recover a TrueCrypt Volume&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,101 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Development</title>
+    <link>/categories/development/</link>
+    <description>Recent content in Development on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 07 Jul 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/categories/development/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub</title>
+      <link>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
+      <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-07&lt;/p&gt;
+&lt;p&gt;После установки JupyterHub наблюдается недачный запуск systemd-юнита &amp;lsquo;jupyterhub.service&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Здесь приведён фрагмент из syslog&amp;rsquo;а с ошибками после запуска jupyterhub.service:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;jupyterhub: [I 2021-07-07 15:05:40.359 JupyterHub proxy:703] Starting proxy @ http://0.0.0.0:8000/
+jupyterhub: /usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/lib/registry.js:25
+jupyterhub: async getMetricAsPrometheusString(metric) {
+jupyterhub: ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+jupyterhub: SyntaxError: Unexpected identifier
+jupyterhub: at createScript (vm.js:56:10)
+jupyterhub: at Object.runInThisContext (vm.js:97:10)
+jupyterhub: at Module._compile (module.js:549:28)
+jupyterhub: at Object.Module._extensions..js (module.js:586:10)
+jupyterhub: at Module.load (module.js:494:32)
+jupyterhub: at tryModuleLoad (module.js:453:12)
+jupyterhub: at Function.Module._load (module.js:445:3)
+jupyterhub: at Module.require (module.js:504:17)
+jupyterhub: at require (internal/module.js:20:19)
+jupyterhub: at Object.&amp;lt;anonymous&amp;gt; (/usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/index.js:8:20)
+jupyterhub: [C 2021-07-07 15:05:41.436 JupyterHub app:2739] Failed to start proxy
+jupyterhub: Traceback (most recent call last):
+jupyterhub: File &amp;#34;/opt/jupyterhub/lib64/python3.6/site-packages/jupyterhub/app.py&amp;#34;, line 2737, in start
+jupyterhub: await self.proxy.start()
+jupyterhub: File &amp;#34;/opt/jupyterhub/lib64/python3.6/site-packages/jupyterhub/proxy.py&amp;#34;, line 730, in start
+jupyterhub: _check_process()
+jupyterhub: File &amp;#34;/opt/jupyterhub/lib64/python3.6/site-packages/jupyterhub/proxy.py&amp;#34;, line 726, in _check_process
+jupyterhub: raise e from None
+jupyterhub: RuntimeError: Proxy failed to start with exit code 1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Повторяем ошибку ручным запуском &lt;code&gt;configurable-http-proxy&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ configurable-http-proxy
+/usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/lib/registry.js:25
+        async getMetricAsPrometheusString(metric) {
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+SyntaxError: Unexpected identifier
+    at createScript (vm.js:56:10)
+    at Object.runInThisContext (vm.js:97:10)
+    at Module._compile (module.js:549:28)
+    at Object.Module._extensions..js (module.js:586:10)
+    at Module.load (module.js:494:32)
+    at tryModuleLoad (module.js:453:12)
+    at Function.Module._load (module.js:445:3)
+    at Module.require (module.js:504:17)
+    at require (internal/module.js:20:19)
+    at Object.&amp;lt;anonymous&amp;gt; (/usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/index.js:8:20)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Узнал версию установленного пакета &lt;code&gt;configurable-http-proxy&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ configurable-http-proxy -V
+4.4.0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В &lt;a href=&#34;https://github.com/jupyterhub/configurable-http-proxy/releases&#34;&gt;репозитории домашнего сайта пакета&lt;/a&gt; определил предыдущую версию пакета: 4.3.2 и попробовал установить её:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ npm install -g configurable-http-proxy@4.3.2
+/usr/bin/configurable-http-proxy -&amp;gt; /usr/lib/node_modules/configurable-http-proxy/bin/configurable-http-proxy
+- bintrees@1.0.1 node_modules/configurable-http-proxy/node_modules/bintrees
+- tdigest@0.1.1 node_modules/configurable-http-proxy/node_modules/tdigest
+- prom-client@13.1.0 node_modules/configurable-http-proxy/node_modules/prom-client
+/usr/lib
+└─┬ configurable-http-proxy@4.3.2
+  └─┬ lynx@0.2.0
+    ├── mersenne@0.0.4
+    └── statsd-parser@0.0.4
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Для проверки запустил &lt;code&gt;configurable-http-proxy&lt;/code&gt; и убедился в отсутствии ошибок:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;15:49:41.655 [ConfigProxy] warn: REST API is not authenticated.
+15:49:41.668 [ConfigProxy] info: Proxying http://*:8000 to (no default)
+15:49:41.669 [ConfigProxy] info: Proxy API at http://localhost:8001/api/routes
+^C15:49:46.740 [ConfigProxy] warn: Interrupted
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Повторил запуск &amp;lsquo;jupyterhub.service&amp;rsquo;, на этот раз успешный:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@localhost ~]$ sudo systemctl start jupyterhub.service
+[eugene@localhost ~]$ sudo systemctl status jupyterhub.service
+● jupyterhub.service - JupyterHub
+   Loaded: loaded (/opt/jupyterhub/etc/systemd/jupyterhub.service; enabled; vendor preset: disabled)
+   Active: active (running) since Wed 2021-07-07 16:08:58 MSK;
+...
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

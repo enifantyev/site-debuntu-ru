@@ -1,0 +1,150 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – RedOS 7.2</title>
+    <link>/tags/redos-7.2/</link>
+    <description>Recent content in RedOS 7.2 on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 17 Mar 2022 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/redos-7.2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Ручное удаление реплики FreeIPA из RedOS7.2</title>
+      <link>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
+      <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-13&lt;/p&gt;
+&lt;p&gt;После неудачных опытов приходится выковыривать останки FreeIPA.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum autoremove bind bind-dyndb-ldap ipa-server*
+pip freeze | xargs pip uninstall -y
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Удаление большинства python-пакетов производим через поочерёдное &lt;code&gt;yum autoremove&lt;/code&gt;, &lt;code&gt;pip freeze &amp;gt; list.txt&lt;/code&gt; и &lt;code&gt;pip uninstall -y -r list.txt&lt;/code&gt;. В файле &lt;code&gt;list.txt&lt;/code&gt;, при необходимости, удаляем названия пакетов, неудаляемых через pip.&lt;/p&gt;
+&lt;p&gt;При необходимости можно выполнить полное удаление python3:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum -y autoremove python3
+rm -rf /usr/lib/python3.6 /usr/local/lib/python3.6
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf /var/log/{dirsrv,httpd,ipa}
+rm -f /var/log/{ipa*.log}
+rm -rf /var/lib/{dirsrv,certmonger,gssproxy,ipa,ipa-client}
+rm -rf /var/lib/pki/pki-tomcat
+rm -rf /var/kerberos
+rm -rf /etc/{dirsrv,httpd,gssproxy,ipa}
+rm -rf /etc/pki/pki-tomcat
+rm -f /etc/sysconfig/{dirsrv*,ipa-*,pki-tomcat,tomcat}
+rm -rf /etc/sysconfig/pki/tomcat
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62</title>
+      <link>/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-03-01&lt;/p&gt;
+&lt;h2 id=&#34;анамнез&#34;&gt;Анамнез&lt;/h2&gt;
+&lt;p&gt;Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62&amp;hellip; бла-бла&lt;/p&gt;
+&lt;h2 id=&#34;диагноз&#34;&gt;Диагноз&lt;/h2&gt;
+&lt;p&gt;Файл &lt;code&gt;sudo.rpm&lt;/code&gt;, скачиваемый с sudo.ws, подписан цифровой подписью. Пакетный менеджер, устанавливаемый с RedOS7.2, не может обработать rpm-пакет подписанный gpg-подписью.&lt;/p&gt;
+&lt;h2 id=&#34;лечение&#34;&gt;Лечение&lt;/h2&gt;
+&lt;p&gt;Решил перепаковать rpm-файл sudo. В этом случае подпись будет утеряна, после чего установка на RedOS7.2 становится возможной.&lt;/p&gt;
+&lt;p&gt;Перепаковка выполняется под root&amp;rsquo;ом:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# В CentOS 7 я установил:
+yum install rpmrebuild
+ 
+# Скачал свежий sudo:
+curl -LO https://github.com/sudo-project/sudo/releases/download/SUDO_1_9_5p2/sudo-1.9.5-3.el7.x86_64.rpm
+ 
+# Запустил пересборку:
+rpmrebuild -enp sudo-1.9.5-3.el7.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запустился &lt;code&gt;vi&lt;/code&gt; со списком изменяемых опций. В числе прочих опций, увидел опцию &amp;lsquo;Release: 3.el7&amp;rsquo;, которую изменил на:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Release:       3.el7.nogpg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего, стандартным способом, записал изменения и вышел из &lt;code&gt;vi&lt;/code&gt;. Согласился на продолжение и получил результат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;result: /root/rpmbuild/RPMS/x86_64/sudo-1.9.5-3.el7.nogpg.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Этот пакет закинул на RedOS7.2 и установил стандартным:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum install sudo-1.9.5-3.el7.nogpg.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 13. Установка BorgBackup в RedOS 7.2</title>
+      <link>/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</link>
+      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-03-17&lt;/p&gt;
+&lt;h2 id=&#34;установка-пакетов-необходимых-для-сборки-borgbackup&#34;&gt;Установка пакетов, необходимых для сборки borgbackup&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum -y install openssl-devel python3-devel libacl-devel libacl lz4-devel \
+libzstd-devel libxxhash-devel gcc-c++
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;обновляем-pip&#34;&gt;Обновляем pip&lt;/h2&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install -U pip
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;добавляем-borgbackup-в-roolocalbin&#34;&gt;Добавляем borgbackup в /roo/.local/bin&lt;/h2&gt;
+&lt;h3 id=&#34;пакеты-pkgconfig-setuptools-wheel-msgpack&#34;&gt;Пакеты pkgconfig setuptools wheel msgpack&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install --user pkgconfig setuptools wheel msgpack
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;WARNING: Running pip install with root privileges is generally not a good idea. Try `__main__.py install --user` instead.
+Collecting pip
+  Downloading https://files.pythonhosted.org/packages/a4/6d/6463d49a933f547439d6b5b98b46af8742cc03ae83543e4d7688c2420f8b/pip-21.3.1-py3-none-any.whl (1.7MB)
+    100% |████████████████████████████████| 1.7MB 814kB/s
+Installing collected packages: pip
+  Found existing installation: pip 9.0.3
+    Uninstalling pip-9.0.3:
+      Successfully uninstalled pip-9.0.3
+Successfully installed pip-21.3.1
+[root@home-ipa01 ~]# python3 -m pip install --user pkgconfig setuptools wheel msgpack
+Collecting pkgconfig
+  Downloading pkgconfig-1.5.5-py3-none-any.whl (6.7 kB)
+Requirement already satisfied: setuptools in /usr/lib/python3.6/site-packages (39.2.0)
+Collecting wheel
+  Downloading wheel-0.37.1-py2.py3-none-any.whl (35 kB)
+Collecting msgpack
+  Downloading msgpack-1.0.3-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (299 kB)
+     |████████████████████████████████| 299 kB 1.6 MB/s            
+Installing collected packages: wheel, pkgconfig, msgpack
+  WARNING: The script wheel is installed in &amp;#39;/root/.local/bin&amp;#39; which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed msgpack-1.0.3 pkgconfig-1.5.5 wheel-0.37.1
+WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-утилиты-borgbackup&#34;&gt;Установка утилиты borgbackup&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install borgbackup
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Collecting borgbackup
+  Downloading borgbackup-1.1.17.tar.gz (3.8 MB)
+     |████████████████████████████████| 3.8 MB 59 kB/s             
+  Preparing metadata (setup.py) ... done
+Collecting packaging
+  Downloading packaging-21.3-py3-none-any.whl (40 kB)
+     |████████████████████████████████| 40 kB 4.0 MB/s            
+Collecting pyparsing!=3.0.5,&amp;gt;=2.0.2
+  Downloading pyparsing-3.0.7-py3-none-any.whl (98 kB)
+     |████████████████████████████████| 98 kB 4.4 MB/s            
+Building wheels for collected packages: borgbackup
+  Building wheel for borgbackup (setup.py) ... done
+  Created wheel for borgbackup: filename=borgbackup-1.1.17-cp36-cp36m-linux_x86_64.whl size=2173525 sha256=74d5e8b324dbae08ff8db8e30174eae00d66b6eab3ea3490d9e30fe496e41f26
+  Stored in directory: /root/.cache/pip/wheels/e5/f0/fb/7226f7782c8d1ffefb17b8e351006868ea3feb28ac7175223f
+Successfully built borgbackup
+Installing collected packages: pyparsing, packaging, borgbackup
+Successfully installed borgbackup-1.1.17 packaging-21.3 pyparsing-3.0.7
+WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

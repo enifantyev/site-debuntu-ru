@@ -1,0 +1,614 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – FileSystem</title>
+    <link>/tags/filesystem/</link>
+    <description>Recent content in FileSystem on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 18 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/filesystem/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Описание VFS Виртуальной Файловой Системы Linux</title>
+      <link>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Мой неполный перевод &lt;a href=&#34;https://www.kernel.org/doc/html/latest/filesystems/vfs.html&#34;&gt;Overview of the Linux Virtual File System&lt;/a&gt;. Некоторые моменты, по различным причинам, я пока не понимаю, поэтому кое-что привожу в оригинале, как повод для дальнейших размышлений. Другие же моменты, как мне кажется, я понимаю, поэтому дополнил их некоторой информацией.&lt;/p&gt;
+&lt;p&gt;2020-01-18&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Виртуальная Файловая Система (называемая также Коммутатором Виртуальной Файловой Системы) является программным слоем, который предоставляет программам, выполняющимся в &lt;em&gt;пользовательском пространстве&lt;/em&gt;, интерфейс взаимодействия с файловой системой. VFS-коммутатор также реализует в ядре Linux уровень абстракции для унификации подключения к нему разнообразных файловых систем.&lt;/p&gt;
+&lt;p&gt;Системные вызовы VFS &lt;code&gt;open(2)&lt;/code&gt;, &lt;code&gt;stat(2)&lt;/code&gt;, &lt;code&gt;read(2)&lt;/code&gt;, &lt;code&gt;write(2)&lt;/code&gt;, &lt;code&gt;chmod(2)&lt;/code&gt; и так далее, вызываются из контекста работающего процесса. &lt;em&gt;Filesystem locking&lt;/em&gt; описана в &lt;code&gt;Documentation/filesystems/locking.rst&lt;/code&gt;. (&lt;em&gt;VFS system calls open(2), stat(2), read(2), write(2), chmod(2) and so on are called from a process context. Filesystem locking is described in the document Documentation/filesystems/locking.rst.&lt;/em&gt;)&lt;/p&gt;
+&lt;h3 id=&#34;кэш-записей-каталога--directory-entry-cache-dcache&#34;&gt;Кэш записей каталога / Directory Entry Cache (dcache)&lt;/h3&gt;
+&lt;p&gt;VFS обеспечивает системные вызовы &lt;code&gt;open(2)&lt;/code&gt;, &lt;code&gt;stat(2)&lt;/code&gt;, &lt;code&gt;chmod(2)&lt;/code&gt; и другие похожие. Аргумент &lt;code&gt;pathname&lt;/code&gt;, который передаётся на вход этим системным вызовам, используется VFS-системой для поиска вхождений в &lt;em&gt;кэше записей каталога&lt;/em&gt; (называемым также &lt;em&gt;dentry cache&lt;/em&gt;, или ещё короче &lt;em&gt;dcache&lt;/em&gt;). Это обеспечивает сверхбыстрый механизм трансляции &lt;code&gt;pathname&lt;/code&gt; (filename) в определённый &lt;code&gt;dentry&lt;/code&gt;. &lt;em&gt;Кэш записей каталога&lt;/em&gt; необходим только для увеличения производительности, поэтому он хранится в оперативной памяти и никогда не записывается на диск.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Dentry-кэш&lt;/em&gt; предназначен для обзора всего файлового пространства. А так как большинство компьютеров не могут вместить все записи dentry в оперативную память, то некоторое количество записей в &lt;em&gt;dentry-кэше&lt;/em&gt; может отсутствовать. Поэтому, иногда в процессе сопоставления частей &lt;em&gt;pathname&lt;/em&gt; с соответствующими dentry, VFS-коммутатору, возможно, придётся заодно создать некоторое количество dentry, и только после этого загрузить требуемый inode.&lt;/p&gt;
+&lt;h3 id=&#34;объект-inode--the-inode-object&#34;&gt;Объект Inode / The Inode Object&lt;/h3&gt;
+&lt;p&gt;Отдельный dentry обычно указывает на &lt;strong&gt;inode&lt;/strong&gt;, который является специальной структурой файловой системы, описывающей её файлы-объекты. Объект inode предоставляет различные сведения о файле (&lt;code&gt;man 2 stat&lt;/code&gt;). В частности:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;st_dev&lt;/code&gt; – &lt;em&gt;id&lt;/em&gt; устройства, содержащего файл;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;st_ino&lt;/code&gt; – номер этой inode в таблице inodes;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;st_mode&lt;/code&gt; – тип объекта (&lt;code&gt;man 7 inode&lt;/code&gt;):
+&lt;ul&gt;
+&lt;li&gt;обычный файл с данными;&lt;/li&gt;
+&lt;li&gt;directory;&lt;/li&gt;
+&lt;li&gt;block device;&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;st_nlink&lt;/code&gt; – количество жёстких ссылок (имён файлов) на этот &lt;em&gt;inode&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Объект &lt;code&gt;inode&lt;/code&gt; не содержит имени файла! Так как в пределах одной файловой системы (POSIX) на один файл может ссылаться больше одной именованной &lt;em&gt;жёсткой ссылки&lt;/em&gt;, то имя файла не сохраняется в &lt;code&gt;inode&lt;/code&gt;. Вместо этого, в файлах-каталогах (тип directory), в списке содержимого данного каталога, создаётся запись: &lt;strong&gt;имя файла&lt;/strong&gt; (то есть имя жёсткой ссылки) — &lt;strong&gt;номер inode&lt;/strong&gt;. Отсюда следует, что при обнулении поля &lt;code&gt;st_nlink&lt;/code&gt; в структуре какого-либо &lt;code&gt;inode&lt;/code&gt;, соответствующие блоки файловой системы будут помечены свободными и файл можно считать удалённым.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;Inodes&lt;/em&gt; могут находиться на дисках (на файловых системах блочных устройств), либо в оперативной памяти (на псевдо-файловых системах). &lt;em&gt;Inodes&lt;/em&gt;, находящиеся на дисках, при необходимости копируются в оперативную память, а при каких-либо в них изменениях, обновлённая копия записывается обратно на диск. Несколько &lt;em&gt;dentry&lt;/em&gt; могут указывать на один &lt;em&gt;inode&lt;/em&gt; (в случае жёстких ссылок и тому подобное).&lt;/p&gt;
+&lt;p&gt;Для поиска какого-либо &lt;em&gt;inode&lt;/em&gt; необходимо, чтобы для его родительского inode-каталога, VFS вызвала метод &lt;code&gt;lookup()&lt;/code&gt;. Этот метод установлен конкретной реализацией ФС, к которой относится требуемый &lt;em&gt;inode&lt;/em&gt;. (&lt;em&gt;This method is installed by the specific filesystem implementation that the inode lives in.&lt;/em&gt;) С момента получения VFS-коммутатором &lt;em&gt;dentry&lt;/em&gt; (а следовательно и соответствующего &lt;em&gt;inode&lt;/em&gt;), мы можем делать с ним всякие скучные вещи, типа открыть файл посредством системного вызова &lt;code&gt;open(2)&lt;/code&gt;, или получить данные inode через &lt;code&gt;stat(2)&lt;/code&gt;. Из пользовательского пространства системный вызов &lt;code&gt;stat(2)&lt;/code&gt; работает довольно просто: как только VFS заимел соответствующий &lt;em&gt;dentry&lt;/em&gt;, он передаёт данные из &lt;em&gt;inode&lt;/em&gt; обратно в &lt;em&gt;userspace&lt;/em&gt; (&lt;em&gt;The stat(2) operation is fairly simple: once the VFS has the dentry, it peeks at the inode data and passes some of it back to userspace.&lt;/em&gt;).&lt;/p&gt;
+&lt;h3 id=&#34;объект-file--the-file-object&#34;&gt;Объект File / The File Object&lt;/h3&gt;
+&lt;p&gt;Открытие какого-либо файла требует ещё одной операции: выделение &lt;em&gt;файловой структуры&lt;/em&gt; (это реализация &lt;em&gt;файловых дескрипторов&lt;/em&gt; на стороне ядра). Свеже выделенная &lt;em&gt;файловая структура&lt;/em&gt; инициализируется с указателем на соответствующий dentry и на набор файловых операций функций-членов. (&lt;em&gt;The freshly allocated file structure is initialized with a pointer to the dentry and a set of file operation member functions.&lt;/em&gt;) Они берутся из сведений, содержащихся в соответствующей inode. Применяемый к файлу метод &lt;code&gt;open()&lt;/code&gt; вызывается тогда, как только конкретная реализация файловой системы сможет сделать это. Вы можете видеть, что это ещё одна функция выполняемая VFS-коммутатором. &lt;em&gt;Файловая структура&lt;/em&gt; помещается в &lt;em&gt;таблицу дескрипторов файлов&lt;/em&gt; для вызывающего процесса.&lt;/p&gt;
+&lt;p&gt;Чтение, запись и закрытие файла (и другие подобные операции VFS) осуществляются с помощью соответствующих методов, перечисленных в подходящей к требуемому файлу &lt;em&gt;файловой структуре&lt;/em&gt;, каковая структура становится доступной из &lt;em&gt;пространства пользователя&lt;/em&gt; через использование конкретного &lt;em&gt;файлового дескриптора&lt;/em&gt;. &lt;em&gt;Dentry&lt;/em&gt; остаётся в использовании, пока файл открыт, что, в свою очередь, означает, что VFS inode остаётся в использовании.&lt;/p&gt;
+&lt;h2 id=&#34;регистрация-и-монтирование-файловой-системы&#34;&gt;Регистрация и монтирование файловой системы&lt;/h2&gt;
+&lt;p&gt;Процедура регистрации типа файловой системы в ядре Linux, и процедура отмены регистрации, используют следующие функции API:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#include &amp;lt;linux/fs.h&amp;gt;
+
+extern int register_filesystem(struct file_system_type *);
+extern int unregister_filesystem(struct file_system_type *);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Передающийся &lt;code&gt;struct file_system_type&lt;/code&gt; описывает вашу ФС. Когда запрашивается монтирование тома какой-либо ФС к каталогу в вашем &lt;em&gt;пространстве имён&lt;/em&gt;, то VFS вызывет подходящий метод монтирования для конкретной ФС. Новый vfsmount, ссылающийся на дерево, возвращаемое -&amp;gt;mount(), будет подсоединён к точке монтирования, так что когда в процессе разбора &lt;em&gt;pathname&lt;/em&gt; будет достигнута точка монтирования, то будет совершён переход внутрь vfsmount, на его корень.&lt;/p&gt;
+&lt;p&gt;Вы можете узнать о всех зарегистрированных в ядре типах файловых систем в файле &lt;code&gt;/proc/filesystems&lt;/code&gt;/&lt;/p&gt;
+&lt;h3 id=&#34;struct-file_system_type&#34;&gt;struct file_system_type&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает файловую систему. Начиная с kernel 2.6.39, определены следующие элементы &lt;code&gt;struct&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct file_system_operations {
+        const char *name;
+        int fs_flags;
+        struct dentry *(*mount) (struct file_system_type *, int,
+                                 const char *, void *);
+        void (*kill_sb) (struct super_block *);
+        struct module *owner;
+        struct file_system_type * next;
+        struct list_head fs_supers;
+        struct lock_class_key s_lock_key;
+        struct lock_class_key s_umount_key;
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;name&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;наименование типа файловой системы, например как &amp;ldquo;ext2&amp;rdquo;, &amp;ldquo;iso9660&amp;rdquo;, &amp;ldquo;msdos&amp;rdquo; и прочее.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;fs_flags&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;различные флаги (то есть, FS_REQUIRES_DEV, FS_NO_DCACHE, и т.д.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;mount&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;метод, вызов которого производится при монтировании нового экземпляра файловой системы&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;kill_sb&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;метод, вызов которого производится при размонтировании экземпляра файловой системы&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;owner&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;для внутреннего использования VFS: в большинстве случаев вы должны инициализировать это через THIS_MODULE&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;next&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;для внутреннего использования VFS: вы должны инициализировать это в NULL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;  s_lock_key, s_umount_key: lockdep-specific&lt;/p&gt;
+&lt;p&gt;Метод &lt;code&gt;mount()&lt;/code&gt; имеет следующие аргументы:
+&lt;strong&gt;struct file_system_type *fs_type&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;описывает файловую систему, частично инициализируется определённым кодом файловой системы&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;int flags&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;флаги монтирования&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;const char *dev_name&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;монтируемое имя устройства&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;void *data&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;различные опции в виде ASCII-строки, указываемые при монтировании (смотри раздел “Mount Options”)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;При вызове, метод mount() должен возвращать корневой dentry запрошенного дерева каталогов. Вызывающий процесс должен захватить ссылку на &lt;em&gt;суперблок&lt;/em&gt; ФС, и &lt;em&gt;суперблок&lt;/em&gt; должен быть заблокирован. При ошибке, метод возвращает указатель ERR_PTR (ошибка).&lt;/p&gt;
+&lt;p&gt;Аргументы соответствуют таковым из mount(2) и их интерпретация зависит от типа ФС. Например, для блочной файловой системы, &lt;code&gt;dev_name&lt;/code&gt; интерпретируется как имя блочного устройства, и устойство это открыто, и оно содержит подходящую файловую систему, для которой метод &lt;code&gt;mount()&lt;/code&gt; создаёт и инициализирует соответствующий &lt;code&gt;struct super_block&lt;/code&gt;, и возвращает корневой dentry вызывающему процессу.&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-super_block&#34;&gt;Объект super_block&lt;/h2&gt;
+&lt;p&gt;Объект superblock представляет монтированную файловую систему.&lt;/p&gt;
+&lt;h3 id=&#34;struct-super_operations&#34;&gt;struct super_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает как VFS может манипулировать суперблоком вашей файловой системы. Начиная с kernel 2.6.22, определены следующие элементы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct inode *(*alloc_inode)(struct super_block *sb);
+void (*destroy_inode)(struct inode *);
+
+void (*dirty_inode) (struct inode *, int flags);
+int (*write_inode) (struct inode *, int);
+void (*drop_inode) (struct inode *);
+void (*delete_inode) (struct inode *);
+void (*put_super) (struct super_block *);
+int (*sync_fs)(struct super_block *sb, int wait);
+int (*freeze_fs) (struct super_block *);
+int (*unfreeze_fs) (struct super_block *);
+int (*statfs) (struct dentry *, struct kstatfs *);
+int (*remount_fs) (struct super_block *, int *, char *);
+void (*clear_inode) (struct inode *);
+void (*umount_begin) (struct super_block *);
+
+int (*show_options)(struct seq_file *, struct dentry *);
+
+ssize_t (*quota_read)(struct super_block *, int, char *, size_t, loff_t);
+ssize_t (*quota_write)(struct super_block *, int, const char *, size_t, loff_t);
+int (*nr_cached_objects)(struct super_block *);
+void (*free_cached_objects)(struct super_block *, int);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Все методы вызываются без каких-либо удерживаемых? (being held) блокировок, если не указано иное. Это означает, что большинство методов можно безопасно блокировать. Все методы вызываются только из контекста процесса (то есть не из обработчика прерываний или ниже (bottom half)).&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-inode&#34;&gt;Объект Inode&lt;/h2&gt;
+&lt;p&gt;Объект inode представляет объект внутри файловой системы.&lt;/p&gt;
+&lt;h3 id=&#34;struct-inode_operations&#34;&gt;struct inode_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как VFS может манипулировать inode&amp;rsquo;ом в вашей файловой системе. Начиная с kernel 2.6.22, определены следующие элементы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int (*create) (struct inode *,struct dentry *, umode_t, bool);
+struct dentry * (*lookup) (struct inode *,struct dentry *, unsigned int);
+int (*link) (struct dentry *,struct inode *,struct dentry *);
+int (*unlink) (struct inode *,struct dentry *);
+int (*symlink) (struct inode *,struct dentry *,const char *);
+int (*mkdir) (struct inode *,struct dentry *,umode_t);
+int (*rmdir) (struct inode *,struct dentry *);
+int (*mknod) (struct inode *,struct dentry *,umode_t,dev_t);
+int (*rename) (struct inode *, struct dentry *,
+               struct inode *, struct dentry *, unsigned int);
+int (*readlink) (struct dentry *, char __user *,int);
+const char *(*get_link) (struct dentry *, struct inode *,
+                         struct delayed_call *);
+int (*permission) (struct inode *, int);
+int (*get_acl)(struct inode *, int);
+int (*setattr) (struct dentry *, struct iattr *);
+int (*getattr) (const struct path *, struct kstat *, u32, unsigned int);
+ssize_t (*listxattr) (struct dentry *, char *, size_t);
+void (*update_time)(struct inode *, struct timespec *, int);
+int (*atomic_open)(struct inode *, struct dentry *, struct file *,
+                   unsigned open_flag, umode_t create_mode);
+int (*tmpfile) (struct inode *, struct dentry *, umode_t);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;И опять, все методы вызываются без каких-либо блокировок, если не указано иное.&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-адресное-пространство&#34;&gt;Объект Адресное Пространство&lt;/h2&gt;
+&lt;p&gt;Объект &lt;em&gt;адресное пространство&lt;/em&gt; используется для группирования и управления страницами в страничном кэше (page cache). Он может быть использован для отслеживания страниц в файле и отслеживания отображения секция файла в адресное пространство процесса.&lt;/p&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;обработка-ошибок-в-течении-writeback&#34;&gt;Обработка ошибок в течении writeback&lt;/h3&gt;
+&lt;p&gt;Большинство приложений, которые буферизуют операции чтения/записи, периодически синхронизируют файл вызовом (fsync, fdatasync, msync or sync_file_range), чтобы быть уверенным, что данные в буфере сброшены обратно на устройство хранения. &amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;struct-address_space_operations&#34;&gt;struct address_space_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как VFS может манипулировать отображением файла в &lt;em&gt;страничном кэше&lt;/em&gt; в вашей файловой системе. Определены следующие элементы структуры:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int (*writepage)(struct page *page, struct writeback_control *wbc);
+int (*readpage)(struct file *, struct page *);
+int (*writepages)(struct address_space *, struct writeback_control *);
+int (*set_page_dirty)(struct page *page);
+int (*readpages)(struct file *filp, struct address_space *mapping,
+                 struct list_head *pages, unsigned nr_pages);
+int (*write_begin)(struct file *, struct address_space *mapping,
+                   loff_t pos, unsigned len, unsigned flags,
+                struct page **pagep, void **fsdata);
+int (*write_end)(struct file *, struct address_space *mapping,
+                 loff_t pos, unsigned len, unsigned copied,
+                 struct page *page, void *fsdata);
+sector_t (*bmap)(struct address_space *, sector_t);
+void (*invalidatepage) (struct page *, unsigned int, unsigned int);
+int (*releasepage) (struct page *, int);
+void (*freepage)(struct page *);
+ssize_t (*direct_IO)(struct kiocb *, struct iov_iter *iter);
+/* isolate a page for migration */
+bool (*isolate_page) (struct page *, isolate_mode_t);
+/* migrate the contents of a page to the specified target */
+int (*migratepage) (struct page *, struct page *);
+/* put migration-failed page back to right list */
+void (*putback_page) (struct page *);
+int (*launder_page) (struct page *);
+
+int (*is_partially_uptodate) (struct page *, unsigned long,
+                              unsigned long);
+void (*is_dirty_writeback) (struct page *, bool *, bool *);
+int (*error_remove_page) (struct mapping *mapping, struct page *page);
+int (*swap_activate)(struct file *);
+int (*swap_deactivate)(struct file *);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;writepage&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается &lt;em&gt;Виртуальной Машиной&lt;/em&gt; для сброса черновых страниц обратно в хранилище. Это может случаться для сохранения целостности данных (&lt;code&gt;sync&lt;/code&gt;), или для освобождения памяти (flush)&amp;hellip;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;readpage&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается &lt;em&gt;Виртуальной Машиной&lt;/em&gt; при чтении страницы из хранилища. Эта страница будет заблокирована во время вызова &lt;code&gt;readpage&lt;/code&gt;, и должна быть разблокирована и промаркирована, как &lt;em&gt;uptodate&lt;/em&gt;, с момента завершения чтения. Если &lt;code&gt;-&amp;gt;readpage&lt;/code&gt; обнаруживает, что требуется разблокировка страницы по какой-либо причине, то он может сделать это, но вернув AOP_TRUNCATED_PAGE. В этом случае страница будет relocated, relocked и, если всё успешно будет выполнено, то вызов &lt;code&gt;-&amp;gt;readpage&lt;/code&gt; будет повторён.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;writepages&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается &lt;em&gt;Виртуальной Машиной&lt;/em&gt; для сброса на диск всех страниц, ассоциированных с &lt;em&gt;адресным пространством&lt;/em&gt; объекта.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;объект-файл&#34;&gt;Объект Файл&lt;/h2&gt;
+&lt;p&gt;Файловый объект представляет файл, открытый процессом. Он также известен, как &lt;em&gt;файловый дескриптор&lt;/em&gt; (open file description) в POSIX-диалекте.&lt;/p&gt;
+&lt;h3 id=&#34;struct-file_operations&#34;&gt;struct file_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как VFS может манипулировать открытым файлом. Начиная с kernel 4.18, определены следующие элементы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct file_operations {
+        struct module *owner;
+        loff_t (*llseek) (struct file *, loff_t, int);
+        ssize_t (*read) (struct file *, char __user *, size_t, loff_t *);
+        ssize_t (*write) (struct file *, const char __user *, size_t, loff_t *);
+        ssize_t (*read_iter) (struct kiocb *, struct iov_iter *);
+        ssize_t (*write_iter) (struct kiocb *, struct iov_iter *);
+        int (*iopoll)(struct kiocb *kiocb, bool spin);
+        int (*iterate) (struct file *, struct dir_context *);
+        int (*iterate_shared) (struct file *, struct dir_context *);
+        __poll_t (*poll) (struct file *, struct poll_table_struct *);
+        long (*unlocked_ioctl) (struct file *, unsigned int, unsigned long);
+        long (*compat_ioctl) (struct file *, unsigned int, unsigned long);
+        int (*mmap) (struct file *, struct vm_area_struct *);
+        int (*open) (struct inode *, struct file *);
+        int (*flush) (struct file *, fl_owner_t id);
+        int (*release) (struct inode *, struct file *);
+        int (*fsync) (struct file *, loff_t, loff_t, int datasync);
+        int (*fasync) (int, struct file *, int);
+        int (*lock) (struct file *, int, struct file_lock *);
+        ssize_t (*sendpage) (struct file *, struct page *, int, size_t, loff_t *, int);
+        unsigned long (*get_unmapped_area)(struct file *, unsigned long, unsigned long, unsigned long, unsigned long);
+        int (*check_flags)(int);
+        int (*flock) (struct file *, int, struct file_lock *);
+        ssize_t (*splice_write)(struct pipe_inode_info *, struct file *, loff_t *, size_t, unsigned int);
+        ssize_t (*splice_read)(struct file *, loff_t *, struct pipe_inode_info *, size_t, unsigned int);
+        int (*setlease)(struct file *, long, struct file_lock **, void **);
+        long (*fallocate)(struct file *file, int mode, loff_t offset,
+                          loff_t len);
+        void (*show_fdinfo)(struct seq_file *m, struct file *f);
+#ifndef CONFIG_MMU
+        unsigned (*mmap_capabilities)(struct file *);
+#endif
+        ssize_t (*copy_file_range)(struct file *, loff_t, struct file *, loff_t, size_t, unsigned int);
+        loff_t (*remap_file_range)(struct file *file_in, loff_t pos_in,
+                                   struct file *file_out, loff_t pos_out,
+                                   loff_t len, unsigned int remap_flags);
+        int (*fadvise)(struct file *, loff_t, loff_t, int);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Again, all methods are called without any locks being held, unless otherwise noted.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;llseek&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;вызывается, когда VFS нуждается в перемещении file position index&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;read&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;называется &lt;code&gt;read(2)&lt;/code&gt; и относится к системным вызовам
+&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;directory-entry-cache-dcache&#34;&gt;Directory Entry Cache (dcache)&lt;/h2&gt;
+&lt;h3 id=&#34;struct-dentry_operations&#34;&gt;struct dentry_operations&lt;/h3&gt;
+&lt;p&gt;Эта структура описывает, как файловая система может перегружать стандартные &lt;em&gt;dentry&lt;/em&gt; операции.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct dentry_operations {
+        int (*d_revalidate)(struct dentry *, unsigned int);
+        int (*d_weak_revalidate)(struct dentry *, unsigned int);
+        int (*d_hash)(const struct dentry *, struct qstr *);
+        int (*d_compare)(const struct dentry *,
+                         unsigned int, const char *, const struct qstr *);
+        int (*d_delete)(const struct dentry *);
+        int (*d_init)(struct dentry *);
+        void (*d_release)(struct dentry *);
+        void (*d_iput)(struct dentry *, struct inode *);
+        char *(*d_dname)(struct dentry *, char *, int);
+        struct vfsmount *(*d_automount)(struct path *);
+        int (*d_manage)(const struct path *, bool);
+        struct dentry *(*d_real)(struct dentry *, const struct inode *);
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;directory-entry-cache-api&#34;&gt;Directory Entry Cache API&lt;/h3&gt;
+&lt;p&gt;There are a number of functions defined which permit a filesystem to manipulate dentries:&lt;/p&gt;
+&lt;h2 id=&#34;mount-options&#34;&gt;Mount Options&lt;/h2&gt;
+&lt;h3 id=&#34;parsing-options&#34;&gt;Parsing options&lt;/h3&gt;
+&lt;p&gt;При монтировании или размонтировании файловой системы, передаётся строка, содержащая список опций монтирования, разделённых запятыми. Эти опции могут иметь любую из этих форм:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;option option=value
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The &amp;lt;linux/parser.h&amp;gt; header defines an API that helps parse these options. There are plenty of examples on how to use it in existing filesystems.&lt;/p&gt;
+&lt;h3 id=&#34;showing-options&#34;&gt;Showing options&lt;/h3&gt;
+&lt;p&gt;Если файловая система приняла опции, то она должна определить show_options(), для показа всех актуальных текущих опций. Правила показа:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;обязаны быть показаны тех опции, значения которых отличаются от принимаемых по умолчанию;&lt;/li&gt;
+&lt;li&gt;могут быть показаны те опции, которые включены (по умолчанию) или имеют значения по умолчанию.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Опции, внутренее используемые между маунт хэлпером и ядром (такие как дескриптор файла), или которые значимы только во время монтирования (такие, как управляющие созданием журнала), исключены от вышеоуказанных правил.&lt;/p&gt;
+&lt;p&gt;The underlying reason for the above rules is to make sure, that a mount can be accurately replicated (e.g. umounting and mounting again) based on the information found in /proc/mounts.&lt;/p&gt;
+&lt;p&gt;Resources
+(Note some of these resources are not up-to-date with the latest kernel
+version.)
+Creating Linux virtual filesystems. 2002
+&lt;a href=&#34;http://lwn.net/Articles/13325/&#34;&gt;http://lwn.net/Articles/13325/&lt;/a&gt;
+The Linux Virtual File-system Layer by Neil Brown. 1999
+&lt;a href=&#34;http://www.cse.unsw.edu.au/~neilb/oss/linux-commentary/vfs.html&#34;&gt;http://www.cse.unsw.edu.au/~neilb/oss/linux-commentary/vfs.html&lt;/a&gt;
+A tour of the Linux VFS by Michael K. Johnson. 1996
+&lt;a href=&#34;http://www.tldp.org/LDP/khg/HyperNews/get/fs/vfstour.html&#34;&gt;http://www.tldp.org/LDP/khg/HyperNews/get/fs/vfstour.html&lt;/a&gt;
+A small trail through the Linux kernel by Andries Brouwer. 2001
+&lt;a href=&#34;http://www.win.tue.nl/~aeb/linux/vfs/trail.html&#34;&gt;http://www.win.tue.nl/~aeb/linux/vfs/trail.html&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
+      <link>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-12-26&lt;/p&gt;
+&lt;p&gt;Я произвёл несколько опытов по сжатию LVM тома с Btrfs на борту и сделал для себя следующие выводы.&lt;/p&gt;
+&lt;h3 id=&#34;описание-безопасного-способа&#34;&gt;Описание безопасного способа&lt;/h3&gt;
+&lt;p&gt;Самый безопасный способ заключается в следующем: с LVM2 использовать ext4 с возможностью уменьшения и увеличения тома. Или использовать надёжную xfs с возможностью только увеличения тома. Или всё-таки использовать btrfs, но без попыток уменьшать том, то есть, как и в случае с xfs, только увеличивать том.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Сейчас могу дополнить, что при попытках уменьшить btrfs-том на LV, который занимает несколько PV, то от потери данных нас отделяет один шаг. Будет логичнее, если занимать несколько PV (и при необходимости освобождать PV), используя средства btrfs. То есть добавлять/удалять в/из существующего btrfs-тома дополнительные PV или даже разделы блочных устройств (не учавствующие в LVM2), без использования прослойки LV.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Так как LVM2 не может отследить границы занятого Btrfs пространства на томе, то безопасней произвести сокращение Btrfs до меньших значений, чем задуманный уменьшенный размер тома. Не забыть сделать сброс кэша командой &lt;code&gt;sync&lt;/code&gt; и подождать какое-то время для физического завершения этого процесса. Потом, после последующего сокращения тома командой &lt;code&gt;lvresize&lt;/code&gt;, произвести расширение Btrfs с опцией &lt;code&gt;max&lt;/code&gt; для заполнения всего выделенного пространства.&lt;/p&gt;
+&lt;h3 id=&#34;пример-уменьшения-размера-тома-с-btrfs&#34;&gt;Пример уменьшения размера тома с Btrfs.&lt;/h3&gt;
+&lt;p&gt;В данном примере том &lt;code&gt;/dev/vg/btrfs-tmp&lt;/code&gt; примонтирован к директории &lt;code&gt;/mnt/tmp&lt;/code&gt;. Сначала уменьшим Btrfs на 1100MiB. Затем уменьшим том LVM на 1GiB. И в конце увеличим Btrfs на ~100Mib, чтобы занять всё доступное дисковое пространство.&lt;/p&gt;
+&lt;p&gt;Для операции уменьшения размера Btrfs необходимо, чтобы ФС была примонтирована, то есть все операции делаются онлайн. При задании размеров дискового пространства параметром &lt;code&gt;m&lt;/code&gt; или &lt;code&gt;M&lt;/code&gt;, независимо от регистра оба символа  указывают на МебиБайт.&lt;/p&gt;
+&lt;p&gt;Команда &lt;code&gt;lvresize ...&lt;/code&gt; выдаёт предупреждение, что возможно нарушение целостности данных. Не обращаем внимания на это сообщение, так как, предположительно, понимаем что делаем и контролируем ситуацию.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# btrfs filesystem resize -1100m /mnt/tmp
+# sync 
+# lvresize -L -1000m /dev/vg/btrfs-tmp
+# btrfs filesystem resize max /mnt/tmp
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Команда уменьшения размера &lt;code&gt;btrfs&lt;/code&gt; может закончиться неудачей &lt;code&gt;ERROR: unable to resize &#39;/mnt/tmp&#39;: No space left on device&lt;/code&gt;. Это происходит из-за недостатка свободного места на Btrfs, даже если команда &lt;code&gt;btrfs filesystem usage&lt;/code&gt; показывает достаточно свободного места. После прочтения &lt;a href=&#34;https://btrfs.wiki.kernel.org/index.php/FAQ#Help.21_Btrfs_claims_I.27m_out_of_space.2C_but_it_looks_like_I_should_have_lots_left.21&#34;&gt;FAQ Btrfs&lt;/a&gt; приходит понимание, что с &lt;em&gt;free space&lt;/em&gt; на томах Btrfs всё сложнее, чем кажется.&lt;/p&gt;
+&lt;h3 id=&#34;как-я-это-проверял&#34;&gt;Как я это проверял&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Создавался том размером один GiB.&lt;/li&gt;
+&lt;li&gt;Том форматировался &lt;code&gt;mkfs.btrfs&lt;/code&gt; с опцией &lt;code&gt;--mixed&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;На отформатированном томе для его полного заполнения создавалось два файла.&lt;/li&gt;
+&lt;li&gt;Вычислялись хэши файлов с помощью &lt;code&gt;sha256sum&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Удалялся первый файл.&lt;/li&gt;
+&lt;li&gt;Производилась операция уменьшения Btrfs.&lt;/li&gt;
+&lt;li&gt;Давалась команда &lt;code&gt;sync&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Производилась операция уменьшения &lt;em&gt;LV&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Вычислялись хэши файлов с помощью &lt;code&gt;sha256sum&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Пару раз я намеренно установил размер тома на один экстент (&lt;em&gt;PE&lt;/em&gt;) меньше, чем выделил под Btrfs. Последующая проверка &lt;code&gt;sha256sum&lt;/code&gt; завершилась ошибкой чтения файла. Вновь отодвинув границу тома на один экстент больше, то есть вернув файловой системе доступ к отнятым ранее 4Mib, я повторил вычисление хэша файла, которое на это раз завершилось успешно с верным результатом.&lt;/p&gt;
+&lt;h3 id=&#34;bear-in-mind&#34;&gt;Bear in mind&lt;/h3&gt;
+&lt;p&gt;Если помнить, что LVM выделяет дисковое пространство блоками по умолчанию, &lt;em&gt;Physical Extent (PE)&lt;/em&gt;, по 4MiB, то можно вычислить точные значения новых границ Btrfs и тома с точностью до одного &lt;em&gt;PE&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Минимальный размер файловой ситемы Btrfs составляет 109MiB. Из-за размера PE в 4MiB, попытка уменьшить размер тома до 109MiB командой &lt;code&gt;lvresize&lt;/code&gt; приведёт к уменьшению тома до 112MiB, о чём будет указано в выводе команды.&lt;/p&gt;
+&lt;p&gt;Есть вероятность, что администратор при добавлении &lt;em&gt;Физического Тома (PV)&lt;/em&gt; в &lt;em&gt;Группу Томов (VG)&lt;/em&gt; указал другой размер &lt;em&gt;PE&lt;/em&gt;. То есть для точного вычисления новых границ Btrfs и &lt;em&gt;LV&lt;/em&gt; необходимо сначала получить информацию о размере &lt;em&gt;PE&lt;/em&gt; командой &lt;code&gt;pvdisplay&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Отсюда следует, что безопасней следовать совету из первого абзаца.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;code&gt;mkfs.btrfs&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&lt;code&gt;-M|--mixed&lt;/code&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Normally the data and metadata block groups are isolated. The mixed mode will remove the isolation and store both types in the same block group type. This helps to utilize the free space regardless of the purpose and is suitable for small devices. The separate allocation of block groups leads to a situation where the space is reserved for the other block group type, is not available for allocation and can lead to ENOSPC state.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;The recommended size for the mixed mode is for filesystems less than 1GiB. The soft recommendation is to use it for filesystems smaller than 5GiB. The mixed mode may lead to degraded performance on larger filesystems, but is otherwise usable, even on multiple devices.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Traditional Unix permissions и Access Control Lists</title>
+      <link>/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
+      <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-09-04&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;The term &lt;em&gt;user&lt;/em&gt; is used in two different ways. We often speak of a logged-in person as a user, and, sometimes, use the term to refer to the process which the user is controlling from his terminal. Especially in the context of user control, however, we apply the term &lt;em&gt;user&lt;/em&gt; to any member of the set of users (in the first sense) who could log in. In other words, we speak of a user as a registered identity.&amp;rdquo;&lt;br&gt;
+&lt;em&gt;Multics System Administrators Manual
+January 9, 1973
+This manual was written by Thomas H. Van Vleck of the Programming Development Office of the Massachusetts Institute of Technology.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;введение&#34;&gt;Введение&lt;/h3&gt;
+&lt;p&gt;Насколько я понял из чтения &lt;a href=&#34;https://multicians.org/features.html&#34;&gt;Multics Features&lt;/a&gt;, а также и другого материала по системам Multics/Unix, именно в Multics, предшественнике Unix, уже присутствовала древовидная иерархическая файловая система в виде каталогов с файлами (называемыми в Multics &lt;em&gt;сегментами&lt;/em&gt;), а также
+использовались развитые &lt;em&gt;ACLs&lt;/em&gt; и &lt;em&gt;режимы доступа&lt;/em&gt; в виде rwx-записей для &lt;em&gt;чтения&lt;/em&gt;, &lt;em&gt;записи&lt;/em&gt; и &lt;em&gt;выполнения&lt;/em&gt;. Так что не удивительно, что один из разработчиков Multics, Кен Томпсон (Ken Thompson), перенёс эти идеи в свою новую однопользовательскую операционную систему Unics (в дальнейшем Unix), упростив их до приемлемого уровня. Необходимо вспомнить, что ОС Multics изначально разрабатывалась для работы на серьёзных многопользовательских составных сложных (MULTiplex Information and Computing Service) системах, тогда как Unics писалась в виде баловства для работы на слабом устаревшем компьютере &lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Pdp7-oslo-2005.jpeg/1024px-Pdp7-oslo-2005.jpeg&#34;&gt;PDP-7&lt;/a&gt;, пылившемся в углу.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Впоследствии еще один исследователь лаборатории Bell Labs, Брайан Керниган (Brian Kernighan), как-то в шутку назвал эту систему UNICS (UNiplexed Information and Computing Service — примитивная информационная и вычислительная служба).&lt;br&gt;
+&lt;em&gt;Танненбаум. Современные Операционные Системы. 4-е издание.&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;в-мире-unix-всё-является-файлом&#34;&gt;В мире Unix всё является файлом&lt;/h3&gt;
+&lt;p&gt;Всё в Unix/Linux/POSIX-системе является файлом. Процесс, любое устройство, жёсткий диск, раздел на жёстком диске, etc. Даже каталог, содержащий в себе файлы, является не более чем файлом, в котором перечислены имена жёстких ссылок на другие файлы. Файл определяется номером в &lt;em&gt;inode&lt;/em&gt; и не имеет имени. Именем файла является, по минимуму, одна &lt;em&gt;жёсткая ссылка&lt;/em&gt; на файл, указанная в файле-каталоге.&lt;/p&gt;
+&lt;p&gt;Все файлы представлены в файловой системе &lt;em&gt;Операционной Системы&lt;/em&gt; (ОС) в виде древовидной структуры, называемой &lt;em&gt;Деревом Каталогов&lt;/em&gt;.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Одни ветви-каталоги этого дерева представляют собой отображение реальных файлов на внутренних и внешних накопителях. Здесь можно найти файлы, обеспечивающие работу самой ОС; временные файлы, появляющиеся и пропадающие во время работы ОС; файлы созданные пользователями на этом компьютере или принесённые на флэшке.&lt;/li&gt;
+&lt;li&gt;Другие ветви-каталоги отображают подключенные к системе устройства. Вставленная в USB-порт флэшка появится в этом каталоге в виде файла и, через чтение/запись в этот файл, с флэшкой можно производить низкоуровневые операции, например, чтобы восстановить случайно удалённые файлы.&lt;/li&gt;
+&lt;li&gt;Третьи ветви-каталоги являются динамическим представлением оперативной памяти ОС и процессов, работающих в ней, где каждый файл представляет отдельную работающую программу-процесс в ОЗУ. Здесь также можно найти массу информации по работающим процессам и операционной системе; читать и даже менять какие-либо параметры, оперативно влияя на работу процессов и ОС.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;uid-gid&#34;&gt;&lt;em&gt;UID&lt;/em&gt;, &lt;em&gt;GID&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;Каждый файл в &lt;em&gt;Дереве Каталогов&lt;/em&gt; принадлежит определённому пользователю и определённой группе пользователей. Эта информация записывается в область метаданных файла и представлена там полями &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt;, с числовым значением от 0 до 32767 в ранних Unix, от 0 до 65535 в Linux. Аббревиатура &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; означает &lt;em&gt;User ID&lt;/em&gt; и &lt;em&gt;Group ID&lt;/em&gt;. Подавляющее большинство файлов, созданных на момент установки ОС, имеют &lt;em&gt;UID&lt;/em&gt;=0 и &lt;em&gt;GID&lt;/em&gt;=0, то есть принадлежат пользователю &lt;em&gt;root&lt;/em&gt; и группе &lt;em&gt;root&lt;/em&gt;. Видимо по причине того, что установка новой системы происходит из-под &lt;em&gt;рута&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Назначение файлу &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; происходит на этапе создания файла. Работающая программа-процесс, принадлежащая какому-либо пользователю и группе, создаёт в файловой системе новый файл и этому файлу, если не указаны иные значения, автоматически назначаются &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; создавшего файл процесса. И в соответствии с установками &lt;code&gt;umask&lt;/code&gt;, для &lt;em&gt;UID&lt;/em&gt;, &lt;em&gt;GID&lt;/em&gt; и &lt;em&gt;Other&lt;/em&gt; устанавливаются флаги прав доступа (чтение, запись, исполнение).&lt;/p&gt;
+&lt;p&gt;При попытке программой-процессом получить доступ к какому-либо файлу через соответствующий системный вызов, ядром системы производится сравнение &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; процесса с &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; требуемого файла. При совпадении значений процессу представляется доступ (чтение, запись, исполнение) к файлу в соответствии с установленными флагами прав доступа. Подробнее этот алгоритм проверки разобран ниже.&lt;/p&gt;
+&lt;h3 id=&#34;получение-пользователем-uid-и-gid&#34;&gt;Получение пользователем &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;Системный администратор первых Unix добавлял в систему новых пользователей ручным редактирование файла &lt;code&gt;/etc/passwd&lt;/code&gt; (&lt;a href=&#34;https://s3.amazonaws.com/plan9-bell-labs/7thEdMan/v7vol2b.pdf&#34;&gt;Из седьмой редакции UNIX PROGRAMMER’S MANUAL, январь 1979&lt;/a&gt;):&lt;/p&gt;
+&lt;details&gt;&lt;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Install new users by editing the password file /etc/passwd (passwd(5)). This procedure should be done once multi-user mode is entered (see init(8)). You’ll have to make a current directory for each new user and change its owner to the newly installed name. Login as each user to make  sure the password file is correctly edited. For example:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ed /etc/passwd
+$a
+joe::10:1::/usr/joe:
+w
+q
+mkdir /usr/joe
+chown joe /usr/joe
+login joe
+ls -la
+login root
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This will make a new login entry for joe, who should be encouraged to use passwd(1) to give himself a password. His default current directory is&lt;code&gt; /usr/joe&lt;/code&gt; which has been created. The delivered password file has the user &lt;em&gt;bin&lt;/em&gt; in it to be used as a prototype.&lt;/p&gt;
+&lt;/p&gt;&lt;/details&gt;
+&lt;p&gt;Видно, что пользователю &lt;em&gt;joe&lt;/em&gt; назначен &lt;em&gt;UID&lt;/em&gt; = 10 и &lt;em&gt;GID&lt;/em&gt; = 1. Далее видно, что системному администратору предписывалось создать домашнюю папку нового пользователя и проверить корректность введённых сведений простым входом под логином нового пользователя.&lt;/p&gt;
+&lt;p&gt;Итак, каждый пользователь получал от системного администратора &lt;em&gt;имя пользователя&lt;/em&gt; и телефонный номер, на который можно было позвонить с &amp;ldquo;подходящего терминала, если только это не постоянно подключенный терминал&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;После установления связи с Unix, начиналась процедура входа в систему:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Пользователь видит приглашение &lt;code&gt;login:&lt;/code&gt;, вводит свой логин и нажимает &lt;em&gt;enter&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;getty&lt;/code&gt; вызывает &lt;code&gt;login&lt;/code&gt; с аргументом — введённым ранее именем пользователя.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;login&lt;/code&gt; сверяет введённое имя пользователя с информацией из файла &lt;code&gt;/etc/passwd&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Запрашивает пароль, если таковой был установлен.&lt;/li&gt;
+&lt;li&gt;Меняет текущую директорию на пользовательскую, меняет свой &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; на пользовательский и запускает оболочку, обычно, &lt;code&gt;/bin/sh&lt;/code&gt; или другую, указанную в &lt;code&gt;/etc/passwd&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Естественно, с этого момента все процессы, запускаемые из оболочки пользователя, наследовали &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt; пользователя. Отсюда следует, что все файлы, созданные этим пользователем в рамках своего сеанса, наследовали его &lt;em&gt;UID&lt;/em&gt; и &lt;em&gt;GID&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Интересно, что &amp;ldquo;The easiest way to log out is&amp;rdquo; было &amp;ldquo;to &lt;strong&gt;hang up&lt;/strong&gt; the phone.&amp;rdquo; Мы уже давно не &lt;em&gt;вешаем трубку&lt;/em&gt; для разрыва соединения и посылки соответствующего сигнала процессам. &lt;em&gt;Трубка&lt;/em&gt;, которую можно &lt;em&gt;повесить&lt;/em&gt;, исчезла, а сигнал остался.&lt;/p&gt;
+&lt;p&gt;Сейчас кое-что изменилось. Для добавления нового пользователя в систему используется специальные команды &lt;code&gt;adduser&lt;/code&gt; или &lt;code&gt;useradd&lt;/code&gt;. Пароли, после &lt;em&gt;червя Морриса&lt;/em&gt;, переместились в файл &lt;code&gt;/etc/shadow&lt;/code&gt;. Но, в принципе, мало что поменялось.&lt;/p&gt;
+&lt;h3 id=&#34;флаги-прав-доступа-к-файлу&#34;&gt;Флаги прав доступа к файлу&lt;/h3&gt;
+&lt;p&gt;Судя по первой редакции &lt;a href=&#34;https://www.bell-labs.com/usr/dmr/www/1stEdman.html&#34;&gt;UNIX PROGRAMMER’S MANUAL. K. Thompson, D. M. Ritchie. November 3, 1971&lt;/a&gt;, в частности &lt;a href=&#34;https://www.bell-labs.com/usr/dmr/www/man51.pdf&#34;&gt;File formats&lt;/a&gt;, изначально в Unix для файла предусматривались только следующие флаги доступа:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;executable (то есть &amp;ldquo;исполняемый&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;set user ID on execution (SETUID)&lt;/li&gt;
+&lt;li&gt;read, write (owner) (&amp;ldquo;чтение&amp;rdquo;, &amp;ldquo;запись&amp;rdquo; для &lt;em&gt;владельца&lt;/em&gt; файла)&lt;/li&gt;
+&lt;li&gt;read, write (non-owner) (&amp;ldquo;чтение&amp;rdquo;, &amp;ldquo;запись&amp;rdquo; для &lt;em&gt;остальных&lt;/em&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;В четвёртой редакции от ноября 1973 года &lt;a href=&#34;https://dspinellis.github.io/unix-v4man/v4man.pdf&#34;&gt;UNIX PROGRAMMER’S MANUAL, Fourth Edition&lt;/a&gt;, появились группы пользователей и биты прав доступа к файлу стали более привычными:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;setuser-ID on execution (SETUID)&lt;/li&gt;
+&lt;li&gt;setgroup-ID on execution (SETGID)&lt;/li&gt;
+&lt;li&gt;read, write, execute (owner)&lt;/li&gt;
+&lt;li&gt;read, write, execute (group)&lt;/li&gt;
+&lt;li&gt;read, write, execute (others)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;В шестой редакции упомянут &lt;em&gt;Sticky&lt;/em&gt; бит. А в седьмой редакции от января 1979 года &lt;a href=&#34;https://s3.amazonaws.com/plan9-bell-labs/7thEdMan/v7vol1.pdf&#34;&gt;UNIX PROGRAMMER’S MANUAL. Seventh Edition, Volume 1. January, 1979&lt;/a&gt; команда &lt;code&gt;chmod&lt;/code&gt; стала такой, какой мы знаем её сейчас.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;v7vol1_chmod-1.jpg&#34;&gt;CHMOD(1)    UNIX Programmer’s Manual&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;где-хранятся-uid-gid-файла-и-биты-прав-доступа&#34;&gt;Где хранятся &lt;em&gt;UID&lt;/em&gt;, &lt;em&gt;GID&lt;/em&gt; файла и биты прав доступа&lt;/h3&gt;
+&lt;p&gt;При создании файловой системы, кроме места хранения файлов с данными, выделяется место для хранения метаданных о файлах. Метаданные файла представлены структурой, которая называется &lt;em&gt;inode&lt;/em&gt; (индексный узел). В &lt;em&gt;inode&lt;/em&gt; хранится информация о файле, например:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;число жёстких ссылок на файл (имя файла здесь не хранится, так как на этот inode может ссылаться произвольное количество ссылок с различными именами, поэтому если количество ссылок уменьшится до нуля, тогда inode удаляется и блоки файла помечаются свободными);&lt;/li&gt;
+&lt;li&gt;тип файла;&lt;/li&gt;
+&lt;li&gt;время создания файла;&lt;/li&gt;
+&lt;li&gt;время последнего изменения файла;&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;UID&lt;/strong&gt;&lt;/em&gt; — идентификатор владельца файла;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;&lt;strong&gt;GID&lt;/strong&gt;&lt;/em&gt; — идентификатор группы;&lt;/li&gt;
+&lt;li&gt;режим доступа к файлу:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ownerModes -- rwx------&lt;/code&gt; (для &lt;em&gt;владельца&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;groupModes -- ---rwx---&lt;/code&gt; (для &lt;em&gt;группы&lt;/em&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;otherModes -- ------rwx&lt;/code&gt; (для &lt;em&gt;остальных&lt;/em&gt;, в случае несовпадения UID/GID вызывающего процесса с UID/GID вызываемого файла)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;acl&#34;&gt;&lt;em&gt;ACL&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;В 2002 году в ядро Linux была добавлена поддержка &lt;em&gt;Access Control Lists&lt;/em&gt;, которая добавила больше гибкости к управлению доступа к файлам, что приблизило Linux 2000-x к Multics 1960-x. Если ранее доступ к файлу назначался только одному пользователю и одной группе пользователей, то теперь появилась возможность назначать доступ к файлу нескольким пользователям и группам.&lt;/p&gt;
+&lt;h3 id=&#34;сравнение-traditional-unix-permissions-vs-acl&#34;&gt;Сравнение &lt;em&gt;Traditional Unix Permissions&lt;/em&gt; vs &lt;em&gt;ACL&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Традиционные права доступа Unix&lt;/em&gt;, в отличии от &lt;em&gt;ACL&lt;/em&gt;, доступны в ФС любой *nix-системы по умолчанию. Несмотря на то, что &lt;em&gt;Traditional Unix Permissions&lt;/em&gt;, по сравнению с &lt;em&gt;ACL&lt;/em&gt;, довольно примитивны, их достаточно для работы подавляющего большинства систем. Лично я применял &lt;em&gt;ACL&lt;/em&gt; на тех серверах, точнее, на тех томах, к информации на которых необходимо было обеспечить доступ некоторого количества пользователей, объединённых в несколько групп с различными правами доступа. Вдобавок к этому могу вспомнить ещё несколько случаев, где мне понадобилась поддержка &lt;em&gt;ACL&lt;/em&gt;. На тысяче других систем, мне &lt;em&gt;ACL&lt;/em&gt; не понадобилась.&lt;/p&gt;
+&lt;p&gt;Для некоторых файловых систем (ext3, ext4), при монтировании необходимо вручную включать поддержку ACL. В других (xfs, btrfs), поддержка ACL включена по умолчанию, но её можно отключить при монтировании.&lt;/p&gt;
+&lt;p&gt;Для обработки &lt;em&gt;ACL&lt;/em&gt; требуются ресурсы системы, поэтому включать поддержку &lt;em&gt;ACL&lt;/em&gt; без необходимости не рационально. С другой стороны, не помню, чтобы на томах xfs или btrfs я намеренно применял опцию &lt;code&gt;noacl&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;При использовании &lt;em&gt;ACL&lt;/em&gt; надо держать в уме, что при некоторых файловых операциях можно потерять эти настройки. Например:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Копировать файл с &lt;em&gt;ACL&lt;/em&gt; необходимо с опцией &lt;code&gt;cp -p file.txt ~/&lt;/code&gt;, но &lt;code&gt;mv file.txt ~/&lt;/code&gt; и без дополнительных опций сохранит &lt;em&gt;ACL&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;При копировании файла с тома, смонтированного с опцией &lt;code&gt;acl&lt;/code&gt;, на том &lt;code&gt;noacl&lt;/code&gt;, установленные &lt;em&gt;ACL&lt;/em&gt; потеряются.&lt;/li&gt;
+&lt;li&gt;Потерять &lt;em&gt;ACL&lt;/em&gt; можно при бэкапировании средствами, не умеющими работать с &lt;em&gt;ACL&lt;/em&gt;. Для обхода этих ограничений можно сохранять настройки &lt;em&gt;ACL&lt;/em&gt; в отдельный файл с помощью &lt;code&gt;getfacl&lt;/code&gt;, с последующим &lt;code&gt;setfacl&lt;/code&gt; из файла при операции восстановления их архива.&lt;/li&gt;
+&lt;li&gt;не все утилиты командной строки поддерживают &lt;em&gt;ACL&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;совместная-работа-traditional-unix-permissions--acl&#34;&gt;Совместная работа &lt;em&gt;Traditional Unix Permissions&lt;/em&gt; &amp;amp; &lt;em&gt;ACL&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;ACL&lt;/em&gt; дополняет &lt;em&gt;обычные права доступа&lt;/em&gt;, а не замещает их. В дополнении к традиционным правам доступа для &lt;em&gt;владельца&lt;/em&gt;, &lt;em&gt;группы&lt;/em&gt; и &lt;em&gt;остальные&lt;/em&gt;, появляется возможность добавить произвольное число пользователей и групп, которым необходимо добавить права на файл. Также можно установить &lt;em&gt;права по умолчанию&lt;/em&gt; на каталог, для автоматической установки некоторого набора прав на копируемые или создаваемые в этом каталоге файлы/папки. Это удобней стандартного &lt;code&gt;umask&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;алгоритм-проверки-прав-пользователя-при-обращении-к-файлу&#34;&gt;Алгоритм проверки прав пользователя при обращении к файлу&lt;/h3&gt;
+&lt;p&gt;(Перепроверить)
+Попробую описать алгоритм проверки прав пользователя при обращении к файлу. Процесс, например, &lt;em&gt;bash&lt;/em&gt;, в котором я ввожу команду &lt;code&gt;$ cat filename.txt&lt;/code&gt;, выполнит &lt;em&gt;системный вызов&lt;/em&gt; &lt;em&gt;open()&lt;/em&gt; к ядру с целью вывода &lt;em&gt;данных&lt;/em&gt; из файла на экран.&lt;/p&gt;
+&lt;p&gt;При системном вызове будут произведены проверки:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Сравнивается &lt;em&gt;UID&lt;/em&gt; процесса с &lt;em&gt;UID&lt;/em&gt; файла. При совпадении используются права доступа &lt;em&gt;владельца&lt;/em&gt;. Иначе \&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;GID&lt;/em&gt; процесса сравнивается с &lt;em&gt;GID&lt;/em&gt; файла. При совпадении используются права доступа &lt;em&gt;группы&lt;/em&gt;. Иначе \&lt;/li&gt;
+&lt;li&gt;Используются права доступа для &lt;em&gt;Остальных&lt;/em&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;После определения принадлежности, соответствующие биты &lt;em&gt;режима доступа&lt;/em&gt; разрешают, что может сделать процесс с файлом, то есть &lt;em&gt;чтение&lt;/em&gt;, &lt;em&gt;запись&lt;/em&gt;, &lt;em&gt;выполнение&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Алгоритм проверки доступа к файлу, защищённого &lt;em&gt;ACL&lt;/em&gt; описан в &lt;code&gt;man 5 acl&lt;/code&gt; и отличается от вышеприведённого только проверкой &lt;em&gt;маски&lt;/em&gt;, которая определяет максимальный уровень прав для всех, кроме владельца.&lt;/p&gt;
+&lt;h3 id=&#34;команды-для-работы-с-традиционными-правами-доступа-unix&#34;&gt;Команды для работы с &lt;em&gt;традиционными правами доступа Unix&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;ls -al&lt;/code&gt; — команда позволяет увидеть установленные права на файлы и каталоги.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;chown&lt;/code&gt; — команда для изменения &lt;em&gt;владельца:группы&lt;/em&gt; файла. Можно изменять отдельно &lt;em&gt;владельца&lt;/em&gt; или &lt;em&gt;группу&lt;/em&gt;. Интересно, что в Unix, до седьмой редакции включительно, &lt;code&gt;chown&lt;/code&gt; предназначалась только для смены владельца. Для смены группы использовалась команда &lt;code&gt;chgrp&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;chgrp&lt;/code&gt; — редко используемая мной команда для изменения только &lt;em&gt;группы&lt;/em&gt; файла.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;chmod&lt;/code&gt; — изменение прав доступа для &lt;em&gt;владельца&lt;/em&gt;, &lt;em&gt;группы&lt;/em&gt; файла, а также для &lt;em&gt;остальных&lt;/em&gt;. Кроме того, &lt;code&gt;chmod&lt;/code&gt; используется для установки &lt;em&gt;SETUID&lt;/em&gt;, &lt;em&gt;SETGID&lt;/em&gt; И &lt;em&gt;STICKY&lt;/em&gt; атрибутов на файлы и каталоги.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;umask&lt;/code&gt; — команда для установки прав по умолчанию при создании новых файлов и каталогов.&lt;/p&gt;
+&lt;h3 id=&#34;команды-для-работы-с-acl&#34;&gt;Команды для работы с &lt;em&gt;ACL&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;getfacl&lt;/code&gt; — команда для вывода текущих настроек &lt;em&gt;ACL&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;setfacl&lt;/code&gt; — команда для установки &lt;em&gt;ACL&lt;/em&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Дефрагментация XFS на удалённом сервере</title>
+      <link>/n/defragmentaciya-xfs-na-udalyonnom-servere/</link>
+      <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/defragmentaciya-xfs-na-udalyonnom-servere/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2011-03-30&lt;/p&gt;
+&lt;h3 id=&#34;этап-1&#34;&gt;Этап 1&lt;/h3&gt;
+&lt;p&gt;Входим на целевой сервер через ssh. Запускаем &lt;code&gt;screen&lt;/code&gt;, так как дефрагментация может занять продолжительное время.&lt;/p&gt;
+&lt;h3 id=&#34;этап-2&#34;&gt;Этап 2&lt;/h3&gt;
+&lt;p&gt;Определяем степень фрагментации целевых разделов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xfs_db -r /dev/sda2
+xfs_db&amp;gt; frag
+actual 35, ideal 34, fragmentation factor 2.86%
+xfs_db&amp;gt; quit
+# xfs_db -r /dev/mapper/lvm-home
+xfs_db&amp;gt; frag
+actual 113, ideal 111, fragmentation factor 1.77%
+xfs_db&amp;gt; quit
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В данном примере видна проверка обычного раздела /dev/sda2 и раздела lvm, работающего через device-mapper. Оба раздела не нуждаются в дефрагментации, что видно по выведенной информации.
+Если фактор фрагментации высок, то завершаем работу приложений, которые могут использовать разделы с файловой системой XFS, так как файлы, заблокированные работающими программами, не могут быть упорядочены.&lt;/p&gt;
+&lt;p&gt;Причины препятствующие дефрагментации:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Файл заблокирован каким-либо процессом;&lt;/li&gt;
+&lt;li&gt;Мало места на разделе.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;этап-3&#34;&gt;Этап 3&lt;/h3&gt;
+&lt;p&gt;Дефраментация запускается не для устройства, а для точки монтирования целевых разделов. Например, ранее проверенный на степень фрагментации раздел /dev/sda2 подмонтирован к /mnt/second. Запускаем дефрагментацию:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xfs_fsr -v /mnt/second
+/mnt/second start inode=0
+ino=137
+ino=137: file busy
+ino=537460065
+ino=537460065 already fully defragmented.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь видно, что раздел используется каким-то приложением или демоном, так как “file busy”. В противном случае мы увидели бы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xfs_fsr -v /mnt/second
+/mnt/second start inode=0
+ino=137
+extents before:68 after:1 DONE ino=137
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После дефрагметации можно убедиться, что фактор фрагментации уменьшился - повторив второй этап.
+Я замечал, что для разделов, работающих через device-mapper, информация о степени фрагментации может обновиться только после umount/mount. На самом же деле раздел, естественно, уже дефрагментирован.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Использование XFS</title>
+      <link>/n/ispolzovanie-xfs/</link>
+      <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ispolzovanie-xfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2011-03-30
+Для использования xfs в debian необходимо установить пакеты &lt;code&gt;xfsprogs&lt;/code&gt; и &lt;code&gt;xfsdump&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Далее кратко:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mkfs.xfs&lt;/code&gt; &amp;ndash; для форматирования;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_db -r /dev/sda6&lt;/code&gt; &amp;ndash; для сведений о текущей степени фрагментации (-r - read-only, для примонтированной фс);&lt;/li&gt;
+&lt;li&gt;дефрагментация:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xfs_db -r /dev/sda6
+xfs_db&amp;gt; frag
+actual 27414, ideal 514, fragmentation factor 98.13%
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;xfs_bmap&lt;/code&gt; &amp;ndash; для просмотра фрагментации определённого файла;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_fsr&lt;/code&gt; &amp;ndash; для дефрагментации. На разделе должно быть столько свободного места, чтобы вместился самый большой файл. В некоторых случаях лучше просто произвести копирование файлов между разделами? Не лучше. Фрагментация после копирования туда-обратно снизилась с 96 до 60 процентов. Потом всё равно прогнал дефргаментатором.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_check&lt;/code&gt; &amp;ndash; для проверки отмонтированной фс xfs;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_admin&lt;/code&gt; &amp;ndash; для изменения параметров отмонтированной фс xfs;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_growfs&lt;/code&gt; &amp;ndash; для увеличения размера xfs (раздел увеличил, а потом и xfs растянул).&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

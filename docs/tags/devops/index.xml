@@ -1,0 +1,68 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – DevOps</title>
+    <link>/tags/devops/</link>
+    <description>Recent content in DevOps on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>A: Jenkins Проблемы выполнения удалённых команд в сетях со stateful firewall и способы их решения</title>
+      <link>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
+      <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-05-31&lt;/p&gt;
+&lt;h2 id=&#34;описание-проблемы&#34;&gt;Описание проблемы&lt;/h2&gt;
+&lt;p&gt;Для запуска скрипта на удалённом узле могут использоваться два jenkins-плагина:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Publish over SSH plugin&amp;rdquo;, который не имеет встроенного keepalive-механизма.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;SSH plugin&amp;rdquo;, который имеет возможность посылки keepalive-пакетов, но требует настройки, так как по умолчанию это функция выключена.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;В процессе выполнения задач с использованием вышеуказанных плагинов, особенно если задача выполняется десятки минут или больше, то в дженкинсе наблюдалось прекращение вывода stdout в консоль, хотя скрипт, выполняемый на удалённом сервере, продолжал работу. Так как на дженкинсе оставался открытый ssh-сеанс в подвешенном состоянии, то дженкинс не мог определить завершения шага. Через некоторое время срабатывал принудительный останов задачи по таймауту и задача завершалась с Finished: FAILURE.&lt;/p&gt;
+&lt;h2 id=&#34;причина&#34;&gt;Причина&lt;/h2&gt;
+&lt;p&gt;Для контроля трафика между подсетями, VMWare использует по умолчанию stateful firewall, в настройках которых стоит параметр tcpTimeoutEstablished равный 3600 секунд, по истечении которых, tcp-сеансы с нулевым трафиком будут забыты. То есть, если выполняющаяся jenkins-задача не выдаёт никакой информации в stdout довольно продолжительное время, то tcp-сеанс будет прерван файрволом. В этом случае, после окончания работы скрипта на удалённом сервере, мы можем наблюдать всё ещё открытый ssh-сеанс на дженкинс-сервере, тогда как на втором конце ssh-сеанс будет давно закрыт.&lt;/p&gt;
+&lt;p&gt;Далее опишу различия в файрволах.&lt;/p&gt;
+&lt;h3 id=&#34;stateless-firewall&#34;&gt;Stateless firewall&lt;/h3&gt;
+&lt;p&gt;Файрволы без сохранения состояния используют для описания прохождения трафика незамысловатые правила, типа разрешить трафик из одной подсети с портов выше 1024 в другую подсеть на порт 22.&lt;/p&gt;
+&lt;p&gt;Файрвол не смотрит внутрь пакетов и не отслеживает состояние tcp-сеансов, то есть можно направить миллионы пакеты с установленным флагом SYN, что заставит целевой сервер открыть миллион tcp-сеансов с выделением каждому кусочка памяти, и файрвол пропустит их все.&lt;/p&gt;
+&lt;h3 id=&#34;stateful-firewall&#34;&gt;Stateful firewall&lt;/h3&gt;
+&lt;p&gt;Файрволы с сохранением состояния, в сравнении с Stateless firewall, используют для описания прохождения трафика правила посложнее. Например, разрешить трафик из одной подсети с портов выше 1024 в другую подсеть на порт 22 с установленным флагом SYN. Если хэндшейк свершился, то пропускать на этот же порт все следующие пакеты в рамках открытой ssh-сессии.&lt;/p&gt;
+&lt;p&gt;Для обеспечения такой работы с запоминанием состояния tcp-сеансов, необходимо выделить ресурсы. Поэтому, чтобы освобождать память от бесполезной информации, незакрытые сеансы сбрасываются и их состояние забывается.&lt;/p&gt;
+&lt;p&gt;В результате, когда ранее молчавший скрипт через час выдаст в stdout какую-нибудь информацию, то stateful firewall не пропустит пакет без установленного флага SYN.&lt;/p&gt;
+&lt;h2 id=&#34;способы-решения&#34;&gt;Способы решения&lt;/h2&gt;
+&lt;p&gt;Способ решения давно известен — это периодическая посылка keepalive-пакетов.&lt;/p&gt;
+&lt;p&gt;Включить такой способ предохранения от сброса tcp-сеанса можно несколькими способами.&lt;/p&gt;
+&lt;h3 id=&#34;включение-keepalive-в-настройках-sshd-удалённого-сервера&#34;&gt;Включение keepalive в настройках sshd удалённого сервера&lt;/h3&gt;
+&lt;p&gt;Это будет работать с обоими плагинами. Указываем на удалённом сервера в &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; следующие строки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#TCPKeepAlive yes # эта опция включена по умолчанию
+ClientAliveInterval 15
+ClientAliveCountMax 3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После добавления опций не забываем перезапустить sshd:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;включение-keepalive-в-настройках-ssh-plugin&#34;&gt;Включение keepalive в настройках &amp;ldquo;SSH plugin&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Заходим в &amp;ldquo;настройки дженкинса&amp;rdquo; — &amp;ldquo;конфигурация системы&amp;rdquo;, где можно наблюдать параграф &amp;ldquo;SSH remote hosts&amp;rdquo;. В полях &amp;ldquo;serverAliveInterval&amp;rdquo; и &amp;ldquo;timeout&amp;rdquo; устанавливаем время в миллисекундах. Для первого поля я выбрал значение 15000, а для второго 60000.&lt;/p&gt;
+&lt;p&gt;Понятно, что это будет работать только с плагином &amp;ldquo;SSH plugin&amp;rdquo;. В этом случае, плагин &amp;ldquo;Publish over SSH plugin&amp;rdquo; используется только для заброски файлов на удалённые сервера.&lt;/p&gt;
+&lt;h3 id=&#34;использование-стандартного-ssh-клиента-в-execute-shell&#34;&gt;Использование стандартного ssh-клиента в &amp;ldquo;Execute shell&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Никто не запрещает выполнять стандартные &lt;code&gt;rsync&lt;/code&gt; и &lt;code&gt;ssh&lt;/code&gt; для заброски скрипта на удалённый сервер и его выполнения там же. Не забываем добавить на jenkins-сервере в &lt;code&gt;/etc/ssh/ssh_config&lt;/code&gt; или в &lt;code&gt;/var/lib/jenkins/.ssh/config&lt;/code&gt; строчки активизирующие keepalive со стороны клиента:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Host *
+    ServerAliveInterval 15
+    ServerAliveCountMax 3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Также можно выполнять команду &lt;code&gt;ssh&lt;/code&gt; с опциями &lt;code&gt;ssh -oServerAliveInterval=15 -oServerAliveCountMax=3&lt;/code&gt; для этих же целей.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

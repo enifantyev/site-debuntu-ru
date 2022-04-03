@@ -1,0 +1,53 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – sudo</title>
+    <link>/tags/sudo/</link>
+    <description>Recent content in sudo on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/sudo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62</title>
+      <link>/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-03-01&lt;/p&gt;
+&lt;h2 id=&#34;анамнез&#34;&gt;Анамнез&lt;/h2&gt;
+&lt;p&gt;Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62&amp;hellip; бла-бла&lt;/p&gt;
+&lt;h2 id=&#34;диагноз&#34;&gt;Диагноз&lt;/h2&gt;
+&lt;p&gt;Файл &lt;code&gt;sudo.rpm&lt;/code&gt;, скачиваемый с sudo.ws, подписан цифровой подписью. Пакетный менеджер, устанавливаемый с RedOS7.2, не может обработать rpm-пакет подписанный gpg-подписью.&lt;/p&gt;
+&lt;h2 id=&#34;лечение&#34;&gt;Лечение&lt;/h2&gt;
+&lt;p&gt;Решил перепаковать rpm-файл sudo. В этом случае подпись будет утеряна, после чего установка на RedOS7.2 становится возможной.&lt;/p&gt;
+&lt;p&gt;Перепаковка выполняется под root&amp;rsquo;ом:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# В CentOS 7 я установил:
+yum install rpmrebuild
+ 
+# Скачал свежий sudo:
+curl -LO https://github.com/sudo-project/sudo/releases/download/SUDO_1_9_5p2/sudo-1.9.5-3.el7.x86_64.rpm
+ 
+# Запустил пересборку:
+rpmrebuild -enp sudo-1.9.5-3.el7.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запустился &lt;code&gt;vi&lt;/code&gt; со списком изменяемых опций. В числе прочих опций, увидел опцию &amp;lsquo;Release: 3.el7&amp;rsquo;, которую изменил на:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Release:       3.el7.nogpg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего, стандартным способом, записал изменения и вышел из &lt;code&gt;vi&lt;/code&gt;. Согласился на продолжение и получил результат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;result: /root/rpmbuild/RPMS/x86_64/sudo-1.9.5-3.el7.nogpg.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Этот пакет закинул на RedOS7.2 и установил стандартным:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum install sudo-1.9.5-3.el7.nogpg.x86_64.rpm
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

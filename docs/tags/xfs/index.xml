@@ -1,0 +1,97 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – XFS</title>
+    <link>/tags/xfs/</link>
+    <description>Recent content in XFS on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="/tags/xfs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>N: Дефрагментация XFS на удалённом сервере</title>
+      <link>/n/defragmentaciya-xfs-na-udalyonnom-servere/</link>
+      <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/defragmentaciya-xfs-na-udalyonnom-servere/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2011-03-30&lt;/p&gt;
+&lt;h3 id=&#34;этап-1&#34;&gt;Этап 1&lt;/h3&gt;
+&lt;p&gt;Входим на целевой сервер через ssh. Запускаем &lt;code&gt;screen&lt;/code&gt;, так как дефрагментация может занять продолжительное время.&lt;/p&gt;
+&lt;h3 id=&#34;этап-2&#34;&gt;Этап 2&lt;/h3&gt;
+&lt;p&gt;Определяем степень фрагментации целевых разделов:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xfs_db -r /dev/sda2
+xfs_db&amp;gt; frag
+actual 35, ideal 34, fragmentation factor 2.86%
+xfs_db&amp;gt; quit
+# xfs_db -r /dev/mapper/lvm-home
+xfs_db&amp;gt; frag
+actual 113, ideal 111, fragmentation factor 1.77%
+xfs_db&amp;gt; quit
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В данном примере видна проверка обычного раздела /dev/sda2 и раздела lvm, работающего через device-mapper. Оба раздела не нуждаются в дефрагментации, что видно по выведенной информации.
+Если фактор фрагментации высок, то завершаем работу приложений, которые могут использовать разделы с файловой системой XFS, так как файлы, заблокированные работающими программами, не могут быть упорядочены.&lt;/p&gt;
+&lt;p&gt;Причины препятствующие дефрагментации:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Файл заблокирован каким-либо процессом;&lt;/li&gt;
+&lt;li&gt;Мало места на разделе.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;этап-3&#34;&gt;Этап 3&lt;/h3&gt;
+&lt;p&gt;Дефраментация запускается не для устройства, а для точки монтирования целевых разделов. Например, ранее проверенный на степень фрагментации раздел /dev/sda2 подмонтирован к /mnt/second. Запускаем дефрагментацию:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xfs_fsr -v /mnt/second
+/mnt/second start inode=0
+ino=137
+ino=137: file busy
+ino=537460065
+ino=537460065 already fully defragmented.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Здесь видно, что раздел используется каким-то приложением или демоном, так как “file busy”. В противном случае мы увидели бы:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xfs_fsr -v /mnt/second
+/mnt/second start inode=0
+ino=137
+extents before:68 after:1 DONE ino=137
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После дефрагметации можно убедиться, что фактор фрагментации уменьшился - повторив второй этап.
+Я замечал, что для разделов, работающих через device-mapper, информация о степени фрагментации может обновиться только после umount/mount. На самом же деле раздел, естественно, уже дефрагментирован.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Использование XFS</title>
+      <link>/n/ispolzovanie-xfs/</link>
+      <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
+      
+      <guid>/n/ispolzovanie-xfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2011-03-30
+Для использования xfs в debian необходимо установить пакеты &lt;code&gt;xfsprogs&lt;/code&gt; и &lt;code&gt;xfsdump&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Далее кратко:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mkfs.xfs&lt;/code&gt; &amp;ndash; для форматирования;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_db -r /dev/sda6&lt;/code&gt; &amp;ndash; для сведений о текущей степени фрагментации (-r - read-only, для примонтированной фс);&lt;/li&gt;
+&lt;li&gt;дефрагментация:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# xfs_db -r /dev/sda6
+xfs_db&amp;gt; frag
+actual 27414, ideal 514, fragmentation factor 98.13%
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;xfs_bmap&lt;/code&gt; &amp;ndash; для просмотра фрагментации определённого файла;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_fsr&lt;/code&gt; &amp;ndash; для дефрагментации. На разделе должно быть столько свободного места, чтобы вместился самый большой файл. В некоторых случаях лучше просто произвести копирование файлов между разделами? Не лучше. Фрагментация после копирования туда-обратно снизилась с 96 до 60 процентов. Потом всё равно прогнал дефргаментатором.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_check&lt;/code&gt; &amp;ndash; для проверки отмонтированной фс xfs;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_admin&lt;/code&gt; &amp;ndash; для изменения параметров отмонтированной фс xfs;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xfs_growfs&lt;/code&gt; &amp;ndash; для увеличения размера xfs (раздел увеличил, а потом и xfs растянул).&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
