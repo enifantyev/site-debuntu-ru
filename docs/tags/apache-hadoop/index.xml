@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Apache Hadoop</title>
-    <link>/tags/apache-hadoop/</link>
+    <link>https://debuntu.ru/tags/apache-hadoop/</link>
     <description>Recent content in Apache Hadoop on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 11 Aug 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/apache-hadoop/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/apache-hadoop/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</title>
-      <link>/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
+      <link>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
       <pubDate>Wed, 11 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
       <description>
         
         
@@ -66,10 +66,10 @@ zoosu:TsKlydBdycdq-&amp;gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=
     
     <item>
       <title>A: Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)</title>
-      <link>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
+      <link>https://debuntu.ru/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
       <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
+      <guid>https://debuntu.ru/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
       <description>
         
         
@@ -382,10 +382,10 @@ mvn clean -DskipTests package -Pdist -X -T 4
     
     <item>
       <title>N: Блокирование доступа внешних программ к Hive metastore</title>
-      <link>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
+      <link>https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
       <pubDate>Mon, 19 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
+      <guid>https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
       <description>
         
         
@@ -421,10 +421,10 @@ This configuration &lt;b&gt;overrides&lt;/b&gt; the value set for Hive Proxy Use
     
     <item>
       <title>A: 01. Установка Cloudera Manager 6.3.1</title>
-      <link>/a/ustanovka-cloudera-manager-6-3.1/</link>
+      <link>https://debuntu.ru/a/ustanovka-cloudera-manager-6-3.1/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-cloudera-manager-6-3.1/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-cloudera-manager-6-3.1/</guid>
       <description>
         
         
@@ -489,10 +489,10 @@ ansible mgm -i cluster.inv -m systemd -a &amp;#34;name=cloudera-scm-server enabl
     
     <item>
       <title>A: 00. Подготовка к установке кластера Cloudera CDH 6.3.2</title>
-      <link>/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
+      <link>https://debuntu.ru/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
       <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
       <description>
         
         
@@ -646,10 +646,10 @@ ansible all -i cluster.inv -m shell -a &amp;#34;/bin/bash /root/tmp/updatehosts.
     
     <item>
       <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</title>
-      <link>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
+      <link>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
       <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
+      <guid>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
       <description>
         
         
@@ -667,10 +667,10 @@ ansible all -i cluster.inv -m shell -a &amp;#34;/bin/bash /root/tmp/updatehosts.
     
     <item>
       <title>N: Получение keytab-файла для сервисного принципала</title>
-      <link>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <link>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <guid>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
       <description>
         
         
@@ -699,10 +699,10 @@ ansible all -i cluster.inv -m shell -a &amp;#34;/bin/bash /root/tmp/updatehosts.
     
     <item>
       <title>A: Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
-      <link>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <link>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
       <description>
         
         
@@ -1368,10 +1368,10 @@ ipa group-del ${IPAGROUP}
     
     <item>
       <title>N: Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2</title>
-      <link>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
+      <link>https://debuntu.ru/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
       <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
+      <guid>https://debuntu.ru/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
       <description>
         
         
@@ -1396,10 +1396,10 @@ hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=exa
     
     <item>
       <title>A: Использование Apache Sqoop для импорта/экспорта данных между PostgreSQL и HDFS</title>
-      <link>/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
+      <link>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
+      <guid>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
       <description>
         
         
@@ -1596,15 +1596,15 @@ kdestroy
     
     <item>
       <title>A: Установка Apache Airflow и настройка его для работы с Apache Hadoop</title>
-      <link>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
+      <link>https://debuntu.ru/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
       <description>
         
         
         &lt;p&gt;2020-10-23&lt;/p&gt;
-&lt;p&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Эта версия Airflow устарела. Установка актуальной, второй версии, &lt;a href=&#34;/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya&#34;&gt;описана здесь&lt;/a&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Эта версия Airflow устарела. Установка актуальной, второй версии, &lt;a href=&#34;https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya&#34;&gt;описана здесь&lt;/a&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://airflow.apache.org/docs/stable/&#34;&gt;Apache Airflow Documentation&lt;/a&gt;&lt;/li&gt;
@@ -1868,14 +1868,14 @@ systemctl enable --now airflow-scheduler
     
     <item>
       <title>N: Disabling Hive CLI</title>
-      <link>/n/disabling-hive-cli/</link>
+      <link>https://debuntu.ru/n/disabling-hive-cli/</link>
       <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/disabling-hive-cli/</guid>
+      <guid>https://debuntu.ru/n/disabling-hive-cli/</guid>
       <description>
         
         
-        &lt;p&gt;Перед выполнением этой инструкции, необходимо ознакомиться с &lt;a href=&#34;/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore&#34;&gt;Блокирование доступа внешних программ к Hive metastore&lt;/a&gt;, где описано более централизованный способ блокирования доступа к Metastore Hive.&lt;/p&gt;
+        &lt;p&gt;Перед выполнением этой инструкции, необходимо ознакомиться с &lt;a href=&#34;https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore&#34;&gt;Блокирование доступа внешних программ к Hive metastore&lt;/a&gt;, где описано более централизованный способ блокирования доступа к Metastore Hive.&lt;/p&gt;
 &lt;p&gt;После активации Cloudera Sentry, необходимо предотвратить возможность использования консольной утилиты &lt;code&gt;hive&lt;/code&gt; пользователями. Вместо &lt;code&gt;hive&lt;/code&gt;, пользователи должны использовать утилиту &lt;code&gt;beeline&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Каталог HIVE_HOME можно найти из-под root командой:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME

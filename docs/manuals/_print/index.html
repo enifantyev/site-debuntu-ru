@@ -4,8 +4,8 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.96.0" />
-<link rel="canonical" type="text/html" href="/manuals/">
-<link rel="alternate" type="application/rss&#43;xml" href="/manuals/index.xml">
+<link rel="canonical" type="text/html" href="https://debuntu.ru/manuals/">
+<link rel="alternate" type="application/rss&#43;xml" href="https://debuntu.ru/manuals/index.xml">
 <meta name="robots" content="noindex, nofollow">
 
 
@@ -25,7 +25,7 @@
 <meta property="og:title" content="Инструкции" />
 <meta property="og:description" content="Debuntarium site" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/manuals/" /><meta property="og:site_name" content="Debuntarium" />
+<meta property="og:url" content="https://debuntu.ru/manuals/" /><meta property="og:site_name" content="Debuntarium" />
 
 <meta itemprop="name" content="Инструкции">
 <meta itemprop="description" content="Debuntarium site"><meta name="twitter:card" content="summary"/>
@@ -35,8 +35,8 @@
 
 
 
-<link rel="preload" href="/scss/main.min.209ee91954d0f2f182770e6c71011a5580360636bcf2a9bcf7f1c3da478784ff.css" as="style">
-<link href="/scss/main.min.209ee91954d0f2f182770e6c71011a5580360636bcf2a9bcf7f1c3da478784ff.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.0c255e5322d90eb422ab0ee9308bc2a8fdfd9fea49208f5ae4138ae94b1261a9.css" as="style">
+<link href="/scss/main.min.0c255e5322d90eb422ab0ee9308bc2a8fdfd9fea49208f5ae4138ae94b1261a9.css" rel="stylesheet" integrity="">
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3517323381341731"
      crossorigin="anonymous"></script>
@@ -584,10 +584,10 @@ sudo -u ${BORGUSERNAME} /bin/bash -c &#34;ln -s ${REPODIR} ~/&#34;
 export BORG_RSH=&#34;ssh -i ~/.ssh/${SSHKEYNAME}&#34;
 export BORG_REPO=&#34;${BORGUSERNAME}@localhost:${REPOLINKNAME}&#34;
 
-# Вызываем sudo -E для передачи переменных окружения в borg
-sudo -E -u ${BORGUSERNAME} /bin/bash -c &#39;borg init -e none&#39;
-</code></pre><p>На ошибку <code>Error: Permission denied</code> внимания не обращаем, так как сама ошибка не локализована, но структура репо создаётся и в дальнейшем репо работает нормально. При создании же нового репо из клиента, данная ошибка не появляется.</p>
-<p>3.5. Проверяем, что в каталоге первого репо создана структура:</p>
+# Вызываем sudo -EH для передачи переменных
+# окружения в borg и смены HOME.
+sudo -EH -u ${BORGUSERNAME} /bin/bash -c &#39;borg init -e none&#39;
+</code></pre><p>3.5. Проверяем, что в каталоге первого репо создана структура:</p>
 <pre tabindex="0"><code>$ ls -al ${REPODIR}
 total 72
 drwxr-xr-x 3 _borg _borg  4096 мар 11 17:30 .
@@ -719,7 +719,7 @@ Installing collected packages: wheel, pkgconfig, msgpack
 Successfully installed msgpack-1.0.3 pkgconfig-1.5.5 wheel-0.37.1
 WARNING: Running pip as the &#39;root&#39; user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
 </code></pre><h3 id="установка-утилиты-borgbackup">Установка утилиты borgbackup</h3>
-<pre tabindex="0"><code>python3 -m pip install borgbackup
+<pre tabindex="0"><code>python3 -m pip install --user borgbackup
 </code></pre><p>stdout:</p>
 <pre tabindex="0"><code>Collecting borgbackup
   Downloading borgbackup-1.1.17.tar.gz (3.8 MB)
@@ -1026,7 +1026,7 @@ chroot /mnt
 <p>Приводим <code>/etc/fstab</code> в актуальное состояние, так как в нём указаны устаревшие сведения, оставшиеся от машины донора.</p>
 <p>Необходимо помнить, что в <code>/etc/fstab</code> могут быть просто не указаны некоторые разделы. Например, восстанавливаемый снимок машины, на которой отсутствовал LV-том <code>/dev/vg/var</code> (то есть каталог <code>/var</code> находится в LV-томе <code>/dev/vg/root</code>), не будет иметь соответствующей строки в <code>/etc/fstab</code>. Если такой снимок будет развёрнут с песочнице с подключённым <code>/dev/vg/var</code> к <code>/var</code>, то потребуется вручную добавить в <code>/etc/fstab</code> строку <code>/dev/vg/var /var defaults 1 2</code>.</p>
 <p>Естественно, если восстанавливаемый снимок создавался на этой же машине, то этот пункт можно пропустить.</p>
-<h3 id="обновление-initramfs-и-выход-из-песочницы">Обновление initramfs и выход из песочницы</h3>
+<h3 id="обновление-initramfs">Обновление initramfs</h3>
 <p>При восстановлении снимка с другой операционной системой или при различии в версиях Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.</p>
 <p>Версию текущего ядра можно узнать через команду <code>uname -r</code>.</p>
 <p>Версии Linux-ядер в восстанавливаемом снимке видны в каталоге <code>/boot</code>.</p>
@@ -1039,6 +1039,15 @@ chroot /mnt
 <pre tabindex="0"><code>make-initrd --kernel=&#39;5.10.82-std-def-alt1&#39;
 </code></pre><h3 id="исправляем-сетевые-настройки">Исправляем сетевые настройки</h3>
 <p>Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.</p>
+<h3 id="генерируем-новые-sshd-ключи">Генерируем новые sshd-ключи</h3>
+<p>Требуется в случае, например, массового восстановления снимка одной машины на некоторое количество машин.</p>
+<pre tabindex="0"><code>rm -f /etc/ssh/ssh_host_*
+ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N &#34;&#34;
+ssh-keygen -t ed25519 -a 100 -f /etc/ssh/ssh_host_ed25519_key -N &#34;&#34;
+systemctl restart sshd
+</code></pre><blockquote>
+<p>Предполагается, что ключи DSA и ECDSA закомментированы в <code>/etc/ssh/sshd_config</code> по причине своей устарелости и дырявости.</p>
+</blockquote>
 <h3 id="выход-из-песочницы">Выход из песочницы</h3>
 <pre tabindex="0"><code>exit
 </code></pre><h2 id="заключительные-операции">Заключительные операции</h2>
@@ -3944,7 +3953,7 @@ Took 0.7221 seconds
 
 
 
-<script src="/js/main.min.1a2e43037d7eeb7eb548659ffab8adc920ddeef68063a09913f04392dd3c1f19.js" integrity="sha256-Gi5DA31&#43;6361SGWf&#43;ritySDd7vaAY6CZE/BDkt08Hxk=" crossorigin="anonymous"></script>
+<script src="/js/main.min.1803aac60b5d15b4e1eb06afd6e43614ea53ad4c8464e475cc45b8d15861de68.js" integrity="sha256-GAOqxgtdFbTh6wav1uQ2FOpTrUyEZOR1zEW40Vhh3mg=" crossorigin="anonymous"></script>
 
 
 

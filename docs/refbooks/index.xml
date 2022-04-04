@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Справочники</title>
-    <link>/refbooks/</link>
+    <link>https://debuntu.ru/refbooks/</link>
     <description>Recent content in Справочники on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 01 Jan 1970 03:00:02 +0300</lastBuildDate>
     
-	  <atom:link href="/refbooks/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/refbooks/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Refbooks: Краткий список утилит и команд оболочки для работы с процессами</title>
-      <link>/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
+      <link>https://debuntu.ru/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
       
-      <guid>/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
+      <guid>https://debuntu.ru/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
       <description>
         
         
@@ -101,10 +101,10 @@ user@wks01:~$ sudo killall -u eugene
     
     <item>
       <title>Refbooks: Управление пакетами в Python</title>
-      <link>/refbooks/python/upravleniye-paketami-v-payton/</link>
+      <link>https://debuntu.ru/refbooks/python/upravleniye-paketami-v-payton/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
       
-      <guid>/refbooks/python/upravleniye-paketami-v-payton/</guid>
+      <guid>https://debuntu.ru/refbooks/python/upravleniye-paketami-v-payton/</guid>
       <description>
         
         

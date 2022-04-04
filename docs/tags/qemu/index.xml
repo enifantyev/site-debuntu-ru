@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – QEMU</title>
-    <link>/tags/qemu/</link>
+    <link>https://debuntu.ru/tags/qemu/</link>
     <description>Recent content in QEMU on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 17 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/qemu/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/qemu/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Void Linux Установка QEMU/KVM</title>
-      <link>/n/void-linux-ustanovka-kvm/</link>
+      <link>https://debuntu.ru/n/void-linux-ustanovka-kvm/</link>
       <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/void-linux-ustanovka-kvm/</guid>
+      <guid>https://debuntu.ru/n/void-linux-ustanovka-kvm/</guid>
       <description>
         
         
@@ -176,10 +176,10 @@ nmcli con up br0
     
     <item>
       <title>N: Void Linux Установка QEMU/KVM</title>
-      <link>/n/void-linux-ustanovka-kvm/</link>
+      <link>https://debuntu.ru/n/void-linux-ustanovka-kvm/</link>
       <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/void-linux-ustanovka-kvm/</guid>
+      <guid>https://debuntu.ru/n/void-linux-ustanovka-kvm/</guid>
       <description>
         
         

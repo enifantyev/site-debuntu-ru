@@ -1,0 +1,12 @@
+/*
+
+Nothing defined here. The Hugo project that uses this theme can override Bootstrap by adding a file to:
+
+assets/scss/_styles_project.scss
+
+*/
+
+// Отключение правого бокового меню
+.td-page-meta { display: none !important; }
+// Отключение значков твиттера и т.п. из футера
+.list-inline { display: none !important; }

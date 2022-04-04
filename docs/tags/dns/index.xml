@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – DNS</title>
-    <link>/tags/dns/</link>
+    <link>https://debuntu.ru/tags/dns/</link>
     <description>Recent content in DNS on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 14 Jul 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/dns/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/dns/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Тестирование псевдо HA и LB dns-настроек в /etc/resolv.conf</title>
-      <link>/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
+      <link>https://debuntu.ru/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
       <pubDate>Wed, 14 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
+      <guid>https://debuntu.ru/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
       <description>
         
         
@@ -118,10 +118,10 @@ connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;1
     
     <item>
       <title>N: Срипт для добавления PTR-записей по списку из файла в обратную DNS-зону FreeIPA</title>
-      <link>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
+      <link>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
       <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
+      <guid>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
       <description>
         
         

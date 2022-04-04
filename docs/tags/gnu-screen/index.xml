@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – GNU Screen</title>
-    <link>/tags/gnu-screen/</link>
+    <link>https://debuntu.ru/tags/gnu-screen/</link>
     <description>Recent content in GNU Screen on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 07 Oct 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/gnu-screen/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/gnu-screen/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: GNU Screen. Краткая памятка</title>
-      <link>/a/gnu-screen-kratkaya-pamyatka/</link>
+      <link>https://debuntu.ru/a/gnu-screen-kratkaya-pamyatka/</link>
       <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/gnu-screen-kratkaya-pamyatka/</guid>
+      <guid>https://debuntu.ru/a/gnu-screen-kratkaya-pamyatka/</guid>
       <description>
         
         

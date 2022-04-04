@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – stunnel</title>
-    <link>/tags/stunnel/</link>
+    <link>https://debuntu.ru/tags/stunnel/</link>
     <description>Recent content in stunnel on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 26 Nov 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/stunnel/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/stunnel/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Компиляция свежего stunnel 5.60 из исходников на CentOS7</title>
-      <link>/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
+      <link>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
       <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
+      <guid>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
       <description>
         
         
@@ -38,7 +38,7 @@ cd stunnel-5.60
 make
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
 &lt;p&gt;Скомпилированный stunnel можно найти здесь &lt;code&gt;~/src/stunnel-5.60/src/stunnel&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Переименуем файл для удобства дальнейшего использования по инструкции &lt;a href=&#34;/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel&#34;&gt;Обфускация ssh-трафика с помощью stunnel&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;Переименуем файл для удобства дальнейшего использования по инструкции &lt;a href=&#34;https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel&#34;&gt;Обфускация ssh-трафика с помощью stunnel&lt;/a&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mv ~/src/stunnel-5.60/src/stunnel ~/src/stunnel-5.60/src/stunnel-5.60
 &lt;/code&gt;&lt;/pre&gt;
       </description>
@@ -46,10 +46,10 @@ make
     
     <item>
       <title>A: Обфускация ssh-трафика с помощью stunnel</title>
-      <link>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <link>https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
       <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <guid>https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
       <description>
         
         

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Инструкции</title>
-    <link>/manuals/</link>
+    <link>https://debuntu.ru/manuals/</link>
     <description>Recent content in Инструкции on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 31 Mar 2022 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/manuals/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/manuals/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</title>
-      <link>/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</link>
       <pubDate>Tue, 28 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</guid>
       <description>
         
         
@@ -588,10 +588,10 @@ Caused by: java.util.NoSuchElementException
     
     <item>
       <title>Manuals: 10. Установка и настройка BorgBackup</title>
-      <link>/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</guid>
       <description>
         
         
@@ -659,10 +659,10 @@ sudo -u ${BORGUSERNAME} /bin/bash -c &amp;#34;ln -s ${REPODIR} ~/&amp;#34;
 export BORG_RSH=&amp;#34;ssh -i ~/.ssh/${SSHKEYNAME}&amp;#34;
 export BORG_REPO=&amp;#34;${BORGUSERNAME}@localhost:${REPOLINKNAME}&amp;#34;
 
-# Вызываем sudo -E для передачи переменных окружения в borg
-sudo -E -u ${BORGUSERNAME} /bin/bash -c &amp;#39;borg init -e none&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На ошибку &lt;code&gt;Error: Permission denied&lt;/code&gt; внимания не обращаем, так как сама ошибка не локализована, но структура репо создаётся и в дальнейшем репо работает нормально. При создании же нового репо из клиента, данная ошибка не появляется.&lt;/p&gt;
-&lt;p&gt;3.5. Проверяем, что в каталоге первого репо создана структура:&lt;/p&gt;
+# Вызываем sudo -EH для передачи переменных
+# окружения в borg и смены HOME.
+sudo -EH -u ${BORGUSERNAME} /bin/bash -c &amp;#39;borg init -e none&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.5. Проверяем, что в каталоге первого репо создана структура:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ls -al ${REPODIR}
 total 72
 drwxr-xr-x 3 _borg _borg  4096 мар 11 17:30 .
@@ -679,10 +679,10 @@ drwx------ 3 _borg _borg  4096 мар 11 17:30 data
     
     <item>
       <title>Manuals: 00. Удаление реплики</title>
-      <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
       <pubDate>Mon, 27 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
       <description>
         
         
@@ -758,10 +758,10 @@ sudo reboot
     
     <item>
       <title>Manuals: 01. Подготовка хостов к установке реплик FreeIPA</title>
-      <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
       <description>
         
         
@@ -1055,10 +1055,10 @@ The token has been initialized and is reassigned to slot 1520725004
     
     <item>
       <title>Manuals: 01. Подготовительные работы для установки Atlas&#39;а</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</link>
       <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</guid>
       <description>
         
         
@@ -1107,10 +1107,10 @@ ipa group-add --desc=&amp;#34;Группа для роли DATA_SCIENTIST в Atl
     
     <item>
       <title>Manuals: 02. Подготовка служб Hadoop-кластера к развёртыванию Atlas&#39;а</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</link>
       <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</guid>
       <description>
         
         
@@ -1239,10 +1239,10 @@ HOST=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=read
     
     <item>
       <title>Manuals: 03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</link>
       <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</guid>
       <description>
         
         
@@ -1357,7 +1357,7 @@ curl --negotiate -u : &amp;#34;https://${SOLRSERVER}:8985/solr/admin/collections
 &lt;/details&gt;
 &lt;br&gt;
 &lt;p&gt;Через Web UI Solr&amp;rsquo;а наблюдаем три ранее добавленные коллекции:
-&lt;img src=&#34;/img/ustanovka-apache-atlas-2.2.0/solr-collections.png&#34; alt=&#34;Solr collections&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/ustanovka-apache-atlas-2.2.0/solr-collections.png&#34; alt=&#34;Solr collections&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;23-добавление-роли-в-sentry-для-доступа-atlasа-в-solr&#34;&gt;2.3. Добавление роли в Sentry для доступа Atlas&amp;rsquo;а в Solr&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_iw1_5dp_wk&#34;&gt;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_iw1_5dp_wk&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1465,10 +1465,10 @@ network.host: 10.1.137.11
     
     <item>
       <title>Manuals: 04. Распаковка и настройка Apache Atlas</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</guid>
       <description>
         
         
@@ -2109,10 +2109,10 @@ atlas.authentication.method.kerberos.token.validity = 3600
     
     <item>
       <title>Manuals: 05. 🎣 Заброс Hook&#39;а в Apache Hive</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
       <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
       <description>
         
         
@@ -2233,7 +2233,7 @@ unset OPTION
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
-&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
 &lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHive&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache Hive&lt;/a&gt;&lt;/p&gt;
 
@@ -2242,10 +2242,10 @@ unset OPTION
     
     <item>
       <title>Manuals: 11. Установка BorgBackup в AltLinux 9</title>
-      <link>/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</link>
       <pubDate>Thu, 31 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</guid>
       <description>
         
         
@@ -2267,10 +2267,10 @@ borg 1.1.17
     
     <item>
       <title>Manuals: 12. Установка BorgBackup в AltLinux 10</title>
-      <link>/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</link>
       <pubDate>Mon, 14 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</guid>
       <description>
         
         
@@ -2304,10 +2304,10 @@ borg 1.2.0
     
     <item>
       <title>Manuals: 06. 🎣 Заброс Hook&#39;а в Apache HBase</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</link>
       <pubDate>Fri, 22 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</guid>
       <description>
         
         
@@ -2427,7 +2427,7 @@ These arguments will be passed as part of the Java command line. Commonly, garba
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
-&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
 &lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHBase&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache HBase&lt;/a&gt;&lt;/p&gt;
 
@@ -2436,10 +2436,10 @@ These arguments will be passed as part of the Java command line. Commonly, garba
     
     <item>
       <title>Manuals: 13. Установка BorgBackup в RedOS 7.2</title>
-      <link>/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</guid>
       <description>
         
         
@@ -2477,7 +2477,7 @@ Installing collected packages: wheel, pkgconfig, msgpack
 Successfully installed msgpack-1.0.3 pkgconfig-1.5.5 wheel-0.37.1
 WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-утилиты-borgbackup&#34;&gt;Установка утилиты borgbackup&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install borgbackup
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install --user borgbackup
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Collecting borgbackup
   Downloading borgbackup-1.1.17.tar.gz (3.8 MB)
@@ -2503,10 +2503,10 @@ WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken per
     
     <item>
       <title>Manuals: 07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</guid>
       <description>
         
         
@@ -2520,10 +2520,10 @@ WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken per
     
     <item>
       <title>Manuals: 08. Первый запуск Apache Atlas и его отладка при необходимости</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</guid>
       <description>
         
         
@@ -2543,9 +2543,9 @@ WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken per
 Повторные запуски не были такими долгими и по времени занимали, в общей сложности, не более минуты.&lt;/p&gt;
 &lt;h2 id=&#34;2-web-ui-apache-atlas&#34;&gt;2. Web UI Apache Atlas&lt;/h2&gt;
 &lt;p&gt;2.1. После долгого ожидания, на порту 21443 Atlas-хоста появится авторизационная форма Atlas&amp;rsquo;а:
-&lt;img src=&#34;/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlaslogin.png&#34; alt=&#34;Apache Atlas Login Windows&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlaslogin.png&#34; alt=&#34;Apache Atlas Login Windows&#34;&gt;&lt;/p&gt;
 &lt;p&gt;2.2. После входа в Atlas, в главном окне можно наблюдать пустоту с надписью, что сущностей HBase нет, или, в другом случае, информацию только о двух Atlas&amp;rsquo;овских таблицах и столбцах из них, даже если в HBase и Hive уже существуют другие базы и таблицы:
-&lt;img src=&#34;/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlasmainwindow.png&#34; alt=&#34;Apache Atlas Main Windows&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlasmainwindow.png&#34; alt=&#34;Apache Atlas Main Windows&#34;&gt;&lt;/p&gt;
 &lt;p&gt;2.3. Для приведения базы данных Atlas&amp;rsquo;а в актуальное состояние, необходимо выполнить первоначальный импорт сведений о содержимом в HBase и Hive, как описано в одних их следующих главах этой инструкции.&lt;/p&gt;
 &lt;h2 id=&#34;3-отладка&#34;&gt;3. Отладка&lt;/h2&gt;
 &lt;h3 id=&#34;31-установка-уровня-логгирования-для-отладки&#34;&gt;3.1. Установка уровня логгирования для отладки&lt;/h3&gt;
@@ -2588,10 +2588,10 @@ $yarn rmadmin -refreshUserToGroupsMappings
     
     <item>
       <title>Manuals: 10. Первоначальный импорт содержимого Hive</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</link>
       <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</guid>
       <description>
         
         
@@ -2622,10 +2622,10 @@ Hive Meta Data imported successfully!!!
     
     <item>
       <title>Manuals: 11. Первоначальный импорт содержимого HBase</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</link>
       <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</guid>
       <description>
         
         
@@ -2668,10 +2668,10 @@ HBase Data Model imported successfully!!!
     
     <item>
       <title>Manuals: 20. 🔬 Тестирование работоспособности Apache Atlas</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</link>
       <pubDate>Mon, 06 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</guid>
       <description>
         
         
@@ -2719,9 +2719,9 @@ STORED AS TEXTFILE;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.6. Выполняем импорт данных из файла в созданную ранее таблицу:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;0: jdbc:hive2://dev-aux110p.test2.lan:100&amp;gt; LOAD DATA INPATH &amp;#39;atlas25.csv&amp;#39; OVERWRITE INTO TABLE atlas25.atlas25;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.7. В Apache Atlas&amp;rsquo;е выполняем поиск сущностей по ключевому слову atlas25 и наблюдаем результат:
-&lt;img src=&#34;/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasmainwindow.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasmainwindow.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
 &lt;p&gt;1.8. Щёлкнув по ссылке на &amp;lsquo;atlas25&amp;rsquo; с типом &amp;lsquo;hive_table&amp;rsquo;, на открышейся странице, во вкладке Lineage, наблюдаем &amp;ldquo;линейку&amp;rdquo;:
-&lt;img src=&#34;/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasline.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasline.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
 &lt;p&gt;1.9. После успешного выполнения вышеуказанных упражнений можно сказать, что информация из Hive в Atlas поступает.&lt;/p&gt;
 &lt;h2 id=&#34;2-проверка-получения-информации-из-hbase&#34;&gt;2. Проверка получения информации из HBase&lt;/h2&gt;
 &lt;p&gt;2.1. На машине с ролью HDFS Gateway, в своём домашнем каталоге создаём csv-файл и загружаем в HDFS:&lt;/p&gt;
@@ -2752,9 +2752,9 @@ ROW                             COLUMN+CELL
 3 row(s)
 Took 0.7221 seconds
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.5. В Apache Atlas&amp;rsquo;е выполняем поиск сущностей по ключевому слову atlas26 и наблюдаем результат:
-&lt;img src=&#34;/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlassearch.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlassearch.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
 &lt;p&gt;2.6. В отличии от данных из Hive, HBase не может предоставить Атласу файл-источник данных, поэтому &amp;ldquo;Линейка&amp;rdquo; останется пуста:
-&lt;img src=&#34;/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasempty.png&#34; alt=&#34;Apache Atlas Empty&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasempty.png&#34; alt=&#34;Apache Atlas Empty&#34;&gt;&lt;/p&gt;
 &lt;p&gt;2.7. В любом случае, в случае успешного прохождения этого теста, можно утверждать, что данные из HBase в Apache Atlas поступают.&lt;/p&gt;
 &lt;h2 id=&#34;3-проверка-получения-информации-из-spark&#34;&gt;3. Проверка получения информации из Spark&lt;/h2&gt;
 &lt;p&gt;При случае дописать.&lt;/p&gt;
@@ -2766,10 +2766,10 @@ Took 0.7221 seconds
     
     <item>
       <title>Manuals: 15. Создание шлюза в удалённой ИС для доступа хостов к бэкап-серверу</title>
-      <link>/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
       <pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
       <description>
         
         
@@ -2833,10 +2833,10 @@ export BORG_REPO=&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;
     
     <item>
       <title>Manuals: 20. Создание бэкапа всей системы с помощью BorgBackup</title>
-      <link>/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</guid>
       <description>
         
         
@@ -2940,10 +2940,10 @@ service auditd start
     
     <item>
       <title>Manuals: 30. Восстановление всей системы из бэкапа с помощью BorgBackup</title>
-      <link>/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</guid>
       <description>
         
         
@@ -3035,7 +3035,7 @@ chroot /mnt
 &lt;p&gt;Приводим &lt;code&gt;/etc/fstab&lt;/code&gt; в актуальное состояние, так как в нём указаны устаревшие сведения, оставшиеся от машины донора.&lt;/p&gt;
 &lt;p&gt;Необходимо помнить, что в &lt;code&gt;/etc/fstab&lt;/code&gt; могут быть просто не указаны некоторые разделы. Например, восстанавливаемый снимок машины, на которой отсутствовал LV-том &lt;code&gt;/dev/vg/var&lt;/code&gt; (то есть каталог &lt;code&gt;/var&lt;/code&gt; находится в LV-томе &lt;code&gt;/dev/vg/root&lt;/code&gt;), не будет иметь соответствующей строки в &lt;code&gt;/etc/fstab&lt;/code&gt;. Если такой снимок будет развёрнут с песочнице с подключённым &lt;code&gt;/dev/vg/var&lt;/code&gt; к &lt;code&gt;/var&lt;/code&gt;, то потребуется вручную добавить в &lt;code&gt;/etc/fstab&lt;/code&gt; строку &lt;code&gt;/dev/vg/var /var defaults 1 2&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Естественно, если восстанавливаемый снимок создавался на этой же машине, то этот пункт можно пропустить.&lt;/p&gt;
-&lt;h3 id=&#34;обновление-initramfs-и-выход-из-песочницы&#34;&gt;Обновление initramfs и выход из песочницы&lt;/h3&gt;
+&lt;h3 id=&#34;обновление-initramfs&#34;&gt;Обновление initramfs&lt;/h3&gt;
 &lt;p&gt;При восстановлении снимка с другой операционной системой или при различии в версиях Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.&lt;/p&gt;
 &lt;p&gt;Версию текущего ядра можно узнать через команду &lt;code&gt;uname -r&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Версии Linux-ядер в восстанавливаемом снимке видны в каталоге &lt;code&gt;/boot&lt;/code&gt;.&lt;/p&gt;
@@ -3048,6 +3048,15 @@ chroot /mnt
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;make-initrd --kernel=&amp;#39;5.10.82-std-def-alt1&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;исправляем-сетевые-настройки&#34;&gt;Исправляем сетевые настройки&lt;/h3&gt;
 &lt;p&gt;Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.&lt;/p&gt;
+&lt;h3 id=&#34;генерируем-новые-sshd-ключи&#34;&gt;Генерируем новые sshd-ключи&lt;/h3&gt;
+&lt;p&gt;Требуется в случае, например, массового восстановления снимка одной машины на некоторое количество машин.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -f /etc/ssh/ssh_host_*
+ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N &amp;#34;&amp;#34;
+ssh-keygen -t ed25519 -a 100 -f /etc/ssh/ssh_host_ed25519_key -N &amp;#34;&amp;#34;
+systemctl restart sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;Предполагается, что ключи DSA и ECDSA закомментированы в &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; по причине своей устарелости и дырявости.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;выход-из-песочницы&#34;&gt;Выход из песочницы&lt;/h3&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;exit
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;заключительные-операции&#34;&gt;Заключительные операции&lt;/h2&gt;
@@ -3070,10 +3079,10 @@ reboot -f
     
     <item>
       <title>Manuals: 40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</title>
-      <link>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
       <description>
         
         

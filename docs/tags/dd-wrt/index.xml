@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – DD-WRT</title>
-    <link>/tags/dd-wrt/</link>
+    <link>https://debuntu.ru/tags/dd-wrt/</link>
     <description>Recent content in DD-WRT on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sun, 25 Nov 2012 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/dd-wrt/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/dd-wrt/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Краткое описание установки DD-WRT на роутер Linksys WRT610N V2.0</title>
-      <link>/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</link>
+      <link>https://debuntu.ru/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</link>
       <pubDate>Sun, 25 Nov 2012 00:00:00 +0000</pubDate>
       
-      <guid>/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</guid>
+      <guid>https://debuntu.ru/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</guid>
       <description>
         
         

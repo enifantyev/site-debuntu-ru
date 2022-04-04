@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Статьи</title>
-    <link>/a/</link>
+    <link>https://debuntu.ru/a/</link>
     <description>Recent content in Статьи on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/a/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/a/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: CMAK. 01. Сборка rpm-пакета для CentOS7</title>
-      <link>/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
+      <link>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
+      <guid>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
       <description>
         
         
@@ -108,10 +108,10 @@ a/src/CMAK-3.0.0.5/target/rpm/tmp-buildroot/var /data/src/CMAK-3.0.0.5/target/rp
     
     <item>
       <title>A: Kafdrop. 01. Сборка jar-пакета</title>
-      <link>/a/kafdrop-sborka-jar-paketa/</link>
+      <link>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/kafdrop-sborka-jar-paketa/</guid>
+      <guid>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</guid>
       <description>
         
         
@@ -141,10 +141,10 @@ mvn clean package
     
     <item>
       <title>A: Kafdrop. 02. Установка и настройка</title>
-      <link>/a/kafdrop-ustanovka-i-nastroika/</link>
+      <link>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/kafdrop-ustanovka-i-nastroika/</guid>
+      <guid>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</guid>
       <description>
         
         
@@ -288,10 +288,10 @@ EOF
     
     <item>
       <title>A: Обфускация ssh-трафика с помощью stunnel</title>
-      <link>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <link>https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
       <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <guid>https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
       <description>
         
         
@@ -424,10 +424,10 @@ ssh1
     
     <item>
       <title>A: Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA</title>
-      <link>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
+      <link>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
       <description>
         
         
@@ -484,10 +484,10 @@ sudo ipa-getcert request -K HTTP/$(hostname) \
     
     <item>
       <title>A: GNU Screen. Краткая памятка</title>
-      <link>/a/gnu-screen-kratkaya-pamyatka/</link>
+      <link>https://debuntu.ru/a/gnu-screen-kratkaya-pamyatka/</link>
       <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/gnu-screen-kratkaya-pamyatka/</guid>
+      <guid>https://debuntu.ru/a/gnu-screen-kratkaya-pamyatka/</guid>
       <description>
         
         
@@ -684,10 +684,10 @@ sudo ipa-getcert request -K HTTP/$(hostname) \
     
     <item>
       <title>A: Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)</title>
-      <link>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
+      <link>https://debuntu.ru/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
       <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
+      <guid>https://debuntu.ru/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
       <description>
         
         
@@ -1000,10 +1000,10 @@ mvn clean -DskipTests package -Pdist -X -T 4
     
     <item>
       <title>A: Установка JupyterHub на CentOS 7 (draft)</title>
-      <link>/a/ustanovka-jupyterhub-na-centos-7/</link>
+      <link>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-jupyterhub-na-centos-7/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</guid>
       <description>
         
         
@@ -1444,10 +1444,10 @@ systemctl enable --now nginx
     
     <item>
       <title>A: 01. Установка Cloudera Manager 6.3.1</title>
-      <link>/a/ustanovka-cloudera-manager-6-3.1/</link>
+      <link>https://debuntu.ru/a/ustanovka-cloudera-manager-6-3.1/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-cloudera-manager-6-3.1/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-cloudera-manager-6-3.1/</guid>
       <description>
         
         
@@ -1512,10 +1512,10 @@ ansible mgm -i cluster.inv -m systemd -a &amp;#34;name=cloudera-scm-server enabl
     
     <item>
       <title>A: 00. Подготовка к установке кластера Cloudera CDH 6.3.2</title>
-      <link>/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
+      <link>https://debuntu.ru/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
       <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
       <description>
         
         
@@ -1669,10 +1669,10 @@ ansible all -i cluster.inv -m shell -a &amp;#34;/bin/bash /root/tmp/updatehosts.
     
     <item>
       <title>A: Mokey - пользовательский сервис сброса/смены паролей FreeIPA</title>
-      <link>/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
+      <link>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
       <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
+      <guid>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
       <description>
         
         
@@ -1836,10 +1836,10 @@ SSLCryptoDevice builtin
     
     <item>
       <title>A: Настройка аутентификации/авторизации в Apache Spark</title>
-      <link>/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</link>
+      <link>https://debuntu.ru/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</link>
       <pubDate>Fri, 30 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</guid>
+      <guid>https://debuntu.ru/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</guid>
       <description>
         
         
@@ -1892,10 +1892,10 @@ SSLCryptoDevice builtin
     
     <item>
       <title>A: Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
-      <link>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <link>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
       <description>
         
         
@@ -2561,10 +2561,10 @@ ipa group-del ${IPAGROUP}
     
     <item>
       <title>A: Создание system account для подключения LDAP-клиента к FreeIPA</title>
-      <link>/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
+      <link>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
       <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
+      <guid>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
       <description>
         
         
@@ -2672,10 +2672,10 @@ dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
     
     <item>
       <title>A: Администрирование таблиц в Apache HBase</title>
-      <link>/a/administrirovanie-tablic-v-apache-hbase/</link>
+      <link>https://debuntu.ru/a/administrirovanie-tablic-v-apache-hbase/</link>
       <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/administrirovanie-tablic-v-apache-hbase/</guid>
+      <guid>https://debuntu.ru/a/administrirovanie-tablic-v-apache-hbase/</guid>
       <description>
         
         
@@ -2784,10 +2784,10 @@ echo &amp;#34;enable &amp;#39;MyTableName&amp;#39;&amp;#34; | hbase shell
     
     <item>
       <title>A: Использование Apache Sqoop для импорта/экспорта данных между PostgreSQL и HDFS</title>
-      <link>/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
+      <link>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
+      <guid>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
       <description>
         
         
@@ -2984,15 +2984,15 @@ kdestroy
     
     <item>
       <title>A: Установка Apache Airflow и настройка его для работы с Apache Hadoop</title>
-      <link>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
+      <link>https://debuntu.ru/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
       <description>
         
         
         &lt;p&gt;2020-10-23&lt;/p&gt;
-&lt;p&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Эта версия Airflow устарела. Установка актуальной, второй версии, &lt;a href=&#34;/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya&#34;&gt;описана здесь&lt;/a&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Эта версия Airflow устарела. Установка актуальной, второй версии, &lt;a href=&#34;https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya&#34;&gt;описана здесь&lt;/a&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://airflow.apache.org/docs/stable/&#34;&gt;Apache Airflow Documentation&lt;/a&gt;&lt;/li&gt;
@@ -3256,10 +3256,10 @@ systemctl enable --now airflow-scheduler
     
     <item>
       <title>A: Настройка LDAP-аутентификации в Nexus Repository Manager</title>
-      <link>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
+      <link>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
       <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
+      <guid>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
       <description>
         
         
@@ -3275,7 +3275,7 @@ systemctl enable --now airflow-scheduler
 &lt;h2 id=&#34;настройка-аутентификации-security--ldap&#34;&gt;Настройка аутентификации (Security – LDAP)&lt;/h2&gt;
 &lt;h3 id=&#34;вкладка-connection&#34;&gt;Вкладка Connection&lt;/h3&gt;
 &lt;p&gt;Самоподписанный сертификат контроллера домена добавляется в NXRM через кнопку &amp;ldquo;View certificate&amp;rdquo;, где доступна операция &amp;ldquo;Add certificate to truststore&amp;rdquo;. После чего, добавленный сертификат можно наблюдать в разделе Security – SSL Certificates.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;вкладка-user-and-group&#34;&gt;Вкладка User and group&lt;/h3&gt;
 &lt;p&gt;Select template: Generic Ldap Server (делаем это в первый и единственный раз при настройке подключения).&lt;/p&gt;
 &lt;p&gt;User relative DN: cn=users&lt;/p&gt;
@@ -3286,7 +3286,7 @@ systemctl enable --now airflow-scheduler
 &lt;p&gt;Real name attribute: cn&lt;/p&gt;
 &lt;p&gt;Email attribute: mail&lt;/p&gt;
 &lt;p&gt;Password attribute: оставляем пустым.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Ниже настраиваем отображение групп пользователей из IPA в соответствующие роли NXRM.&lt;/p&gt;
 &lt;p&gt;Map LDAP groups as roles: устанавливаем галку.&lt;/p&gt;
 &lt;p&gt;Group type: Static Groups&lt;/p&gt;
@@ -3296,13 +3296,13 @@ systemctl enable --now airflow-scheduler
 &lt;p&gt;Group ID attribute: cn&lt;/p&gt;
 &lt;p&gt;Group member attribute: member&lt;/p&gt;
 &lt;p&gt;Group member format: uid=${username},cn=users,cn=accounts,dc=example,dc=org&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;После чего появляется возможность добавить внешнюю роль, имя которой берётся из LDAP.&lt;/p&gt;
 &lt;h2 id=&#34;настройка-авторизации&#34;&gt;Настройка авторизации&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;включение-ldap&#34;&gt;Включение LDAP&lt;/h2&gt;
 &lt;p&gt;Добавляем в активные LDAP realms.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Предположим, что в локальной базе есть пользователь с совпадающим логином, как в IPA, но с разными паролями. Логика работы аутентификации будет следующей:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Сначала nxrm найдёт пользователя в локальной базе, но так как пароль не подойдёт, то будет просмотрены и другие Realms.&lt;/li&gt;
@@ -3314,10 +3314,10 @@ systemctl enable --now airflow-scheduler
     
     <item>
       <title>A: Best Practices for Using LDAP Link with Vertica (перевод)</title>
-      <link>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
+      <link>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
       <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
+      <guid>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
       <description>
         
         
@@ -3368,10 +3368,10 @@ systemctl enable --now airflow-scheduler
     
     <item>
       <title>A: Jenkins Проблемы выполнения удалённых команд в сетях со stateful firewall и способы их решения</title>
-      <link>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
+      <link>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
+      <guid>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
       <description>
         
         
@@ -3418,10 +3418,10 @@ ClientAliveCountMax 3
     
     <item>
       <title>A: Сборка rpm-пакета nginx c модулями для kafka</title>
-      <link>/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
+      <link>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
+      <guid>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
       <description>
         
         
@@ -3581,10 +3581,10 @@ Installed size: 5.2 M
     
     <item>
       <title>A: Бэкап дампа базы Postgresql и его восстановление на новом сервере</title>
-      <link>/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
+      <link>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
+      <guid>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
       <description>
         
         
@@ -3705,10 +3705,10 @@ lbzip2 -c -d /data/pgsql/11/backup/psql_dumpall_20200421-103341.bz2 | psql postg
     
     <item>
       <title>A: Void Linux Послеустановочные шаги</title>
-      <link>/a/void-linux-posleustanovochnye-shagi/</link>
+      <link>https://debuntu.ru/a/void-linux-posleustanovochnye-shagi/</link>
       <pubDate>Wed, 08 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/void-linux-posleustanovochnye-shagi/</guid>
+      <guid>https://debuntu.ru/a/void-linux-posleustanovochnye-shagi/</guid>
       <description>
         
         
@@ -4007,21 +4007,21 @@ ln -s /etc/sv/popcorn /var/service/
     
     <item>
       <title>A: Развёртывание сети OpenVPN</title>
-      <link>/a/razvyortyvanie-seti-openvpn/</link>
+      <link>https://debuntu.ru/a/razvyortyvanie-seti-openvpn/</link>
       <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/razvyortyvanie-seti-openvpn/</guid>
+      <guid>https://debuntu.ru/a/razvyortyvanie-seti-openvpn/</guid>
       <description>
         
         
         &lt;p&gt;2020-03-31&lt;/p&gt;
 &lt;p&gt;Статья в процессе написания!&lt;/p&gt;
-&lt;p&gt;Я перерабатываю свою &lt;a href=&#34;/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov&#34;&gt;статью от 2014 года&lt;/a&gt; в соответствии с новыми стандартами и релизами OpenVPN.&lt;/p&gt;
-&lt;p&gt;Если лень много читать и хочется сразу запустить простую OpenVPN-сеть, то переходите к статье &lt;a href=&#34;/a/openvpn-eto-prosto&#34;&gt;OpenVPN — это просто&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Я перерабатываю свою &lt;a href=&#34;https://debuntu.ru/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov&#34;&gt;статью от 2014 года&lt;/a&gt; в соответствии с новыми стандартами и релизами OpenVPN.&lt;/p&gt;
+&lt;p&gt;Если лень много читать и хочется сразу запустить простую OpenVPN-сеть, то переходите к статье &lt;a href=&#34;https://debuntu.ru/a/openvpn-eto-prosto&#34;&gt;OpenVPN — это просто&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://openvpn.net/community-resources/reference-manual-for-openvpn-2-4/&#34;&gt;Reference manual for OpenVPN 2.4&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Рекомендую полезную книгу для понимания симметричного, ассиметричного шифрования и много другого по этой темы: &lt;a href=&#34;https://www.ozon.ru/context/detail/id/3217966/&#34;&gt;Саймон Сингх. Книга шифров: Тайная история шифров и их расшифровки&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha&#34;&gt;Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha&#34;&gt;Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
 &lt;p&gt;Изначально OpenVPN был разработан by James Yonan.&lt;/p&gt;
 &lt;h3 id=&#34;описание-из-референс-мануала&#34;&gt;Описание из референс мануала&lt;/h3&gt;
@@ -4070,9 +4070,9 @@ ln -s /etc/sv/popcorn /var/service/
 enp2s0
 enp2s1
 tun0 192.168.2.1/24
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Именно через этот сетевой интерфейс будет проходить локальный &lt;strong&gt;незашифрованный&lt;/strong&gt; трафик, и прослушивая его &lt;code&gt;tcpdump&lt;/code&gt;&amp;lsquo;ом мы увидим привычные пакеты, например &lt;em&gt;icmp request/echo&lt;/em&gt;, с номерами частных ip-адресов в полях источника и назначения. Одновременно с этим, прослушивая соответствующий физический интерфейс, мы увидим пакеты с internet ip-адресами в заголовке, но с криптомешаниной в поле для данных, в каковом поле находится инкапсулированный icmp-пакет, который мы и наблюдаем на устройстве &lt;em&gt;tun&lt;/em&gt;. Естественно, что из-за инкапсуляции размер MTU уменьшен, поэтому не забываем обеспечивать клиенту посылку &lt;a href=&#34;/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;&lt;em&gt;Path MTU Discovery&lt;/em&gt;&lt;/a&gt; к требуемому серверу с помощью соответствующих правил внутри туннеля и вне его.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Именно через этот сетевой интерфейс будет проходить локальный &lt;strong&gt;незашифрованный&lt;/strong&gt; трафик, и прослушивая его &lt;code&gt;tcpdump&lt;/code&gt;&amp;lsquo;ом мы увидим привычные пакеты, например &lt;em&gt;icmp request/echo&lt;/em&gt;, с номерами частных ip-адресов в полях источника и назначения. Одновременно с этим, прослушивая соответствующий физический интерфейс, мы увидим пакеты с internet ip-адресами в заголовке, но с криптомешаниной в поле для данных, в каковом поле находится инкапсулированный icmp-пакет, который мы и наблюдаем на устройстве &lt;em&gt;tun&lt;/em&gt;. Естественно, что из-за инкапсуляции размер MTU уменьшен, поэтому не забываем обеспечивать клиенту посылку &lt;a href=&#34;https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;&lt;em&gt;Path MTU Discovery&lt;/em&gt;&lt;/a&gt; к требуемому серверу с помощью соответствующих правил внутри туннеля и вне его.&lt;/p&gt;
 &lt;p&gt;Максимальное количество устройств &lt;strong&gt;tun&lt;/strong&gt; равняется &lt;strong&gt;1024&lt;/strong&gt;, судя по &lt;a href=&#34;https://github.com/torvalds/linux/blob/master/drivers/net/tun.c&#34;&gt;linux/tun.c&lt;/a&gt;. То есть, если специально не указывать в конфигурационных файлах номер &lt;em&gt;tun&lt;/em&gt; (tun0&amp;hellip;tun1023), то для следующего запускаемого виртуального интерфейса, будет назначен порядковый незанятый номер, начиная с &lt;em&gt;tun0&lt;/em&gt;. В правилах iptables, для выборки &lt;em&gt;всех&lt;/em&gt; tun-devices, надлежит использовать параметр &lt;em&gt;tun+&lt;/em&gt; (&lt;code&gt;iptables -A INPUT -i tun+ -j REJECT&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;Использование отдельного сетевого устройства &lt;em&gt;tun&lt;/em&gt; позволяет ограничивать трафик между локальными узлами простыми правилами &lt;code&gt;iptables&lt;/code&gt;, задаваемыми для интерфейса &lt;code&gt;tun&lt;/code&gt;. Например, &lt;code&gt;iptables -A INPUT -i tun1 -p icmp --icmp-type echo-request -j ACCEPT -m conntrack --ctstate NEW&lt;/code&gt; разрешит пинг хоста по его частному ip-адресу. Опять напомню для тех, кто фильтрует ICMP о &lt;a href=&#34;/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;Path MTU Discovery и прочее связанное с этим&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Использование отдельного сетевого устройства &lt;em&gt;tun&lt;/em&gt; позволяет ограничивать трафик между локальными узлами простыми правилами &lt;code&gt;iptables&lt;/code&gt;, задаваемыми для интерфейса &lt;code&gt;tun&lt;/code&gt;. Например, &lt;code&gt;iptables -A INPUT -i tun1 -p icmp --icmp-type echo-request -j ACCEPT -m conntrack --ctstate NEW&lt;/code&gt; разрешит пинг хоста по его частному ip-адресу. Опять напомню для тех, кто фильтрует ICMP о &lt;a href=&#34;https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;Path MTU Discovery и прочее связанное с этим&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;описание-сетевого-протокола-openvpn&#34;&gt;Описание сетевого протокола OpenVPN&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://build.openvpn.net/doxygen/network_protocol.html&#34;&gt;OpenVPN&amp;rsquo;s network protocol&lt;/a&gt;. Из описания понятно, что обмен информацией происходит по двум каналам, один из которых для управления, а другой для передачи данных. То есть датаграмма может содержать два типа полезной нагрузки (payload): либо управляющую информацию, либо передаваемые данные.&lt;/p&gt;
 &lt;h3 id=&#34;измененения-по-сравнению-со-статьёй-2014-года&#34;&gt;Измененения по сравнению со статьёй 2014 года&lt;/h3&gt;
@@ -4090,7 +4090,7 @@ tun0 192.168.2.1/24
 &lt;h1 id=&#34;развёртывание-сети-openvpn&#34;&gt;Развёртывание сети OpenVPN&lt;/h1&gt;
 &lt;p&gt;Мне кажется, я подобрал правильную последовательность действий для развёртывания сети. Сначала, на подходящем компьютере, создадим Центр Сертификации и выпустим необходимое количество ключей и сертификатов для &lt;em&gt;серверов&lt;/em&gt; и &lt;em&gt;клиентов&lt;/em&gt;. Потом займёмся установкой программного обеспечения и проверкой работы.&lt;/p&gt;
 &lt;h2 id=&#34;создание-ca-выпуск-ключей-и-сертификатов&#34;&gt;Создание CA, выпуск ключей и сертификатов&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Для создания ключей и сертификатов достаточно прав обычного пользователя.&lt;/strong&gt;&lt;/p&gt;
 &lt;h3 id=&#34;1-клонирование-easy-rsa&#34;&gt;1. Клонирование easy-rsa&lt;/h3&gt;
 &lt;p&gt;В выделенном для &lt;em&gt;CA&lt;/em&gt; каталоге клонируем текущую мастер-ветку Easy-RSA и подготавливаем файл с переменными &lt;code&gt;vars&lt;/code&gt;, изменяющими настройки генерации ключей по умолчанию:&lt;/p&gt;
@@ -4149,7 +4149,7 @@ a262b611478c658828f6f18bf8833e09
 &lt;p&gt;Невозможно выпустить несколько сертификатов под одним именем. Вместо выпуска нового сертификата, необходимо за 30 дней (переменная EASYRSA_CERT_RENEW в &lt;code&gt;vars&lt;/code&gt;) до окончания срока действия сертификата, произвести перевыпуск сертификата. В этом случае будет сгенерирован новый приватный ключ и новый сертификат для этого ключа. Старые сертификаты не попадут в &lt;em&gt;отозванные&lt;/em&gt;, так как необходимо успеть заменить ключ и сертификат на сервере до окончания срока действия предыдущего сертификата.&lt;/p&gt;
 &lt;h2 id=&#34;создание-файла-конфигурации-для-openvpn-сервера&#34;&gt;Создание файла конфигурации для OpenVPN-сервера&lt;/h2&gt;
 &lt;h3 id=&#34;разжёвывание&#34;&gt;Разжёвывание&lt;/h3&gt;
-&lt;p&gt;В идеале, как указано в &lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;, создание ключей и их сертификация производится в несколько этапов и на разных компьютерах. Но здесь мы сократим эти этапы (генерирование секретного ключа и создание запроса на сертификат на одной системе, сертификация открытого ключа на другой) до одной команды &lt;code&gt;easyrsa build-server-full nopass inline&lt;/code&gt;. Опция &lt;code&gt;nopass&lt;/code&gt; позволяет сгенерировать беспарольный приватный ключ, что удобно для использования на серверах. Опция &lt;code&gt;inline&lt;/code&gt; подготовит единственный файл &lt;code&gt;.creds&lt;/code&gt; со встроенными ключами и сертификатами для удобного добавления к файлу конфигурации.&lt;/p&gt;
+&lt;p&gt;В идеале, как указано в &lt;a href=&#34;https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;, создание ключей и их сертификация производится в несколько этапов и на разных компьютерах. Но здесь мы сократим эти этапы (генерирование секретного ключа и создание запроса на сертификат на одной системе, сертификация открытого ключа на другой) до одной команды &lt;code&gt;easyrsa build-server-full nopass inline&lt;/code&gt;. Опция &lt;code&gt;nopass&lt;/code&gt; позволяет сгенерировать беспарольный приватный ключ, что удобно для использования на серверах. Опция &lt;code&gt;inline&lt;/code&gt; подготовит единственный файл &lt;code&gt;.creds&lt;/code&gt; со встроенными ключами и сертификатами для удобного добавления к файлу конфигурации.&lt;/p&gt;
 &lt;p&gt;Подготовим отдельный скрипт для генерирования единственного файла &lt;code&gt;.conf&lt;/code&gt;, содержащего почти всё необходимое.&lt;/p&gt;
 &lt;p&gt;В скрипте, к имени файла ключа и сертификата будет добавляться дата истечения их срока действия. Естественно, термин &amp;ldquo;срок действия&amp;rdquo; касается только сертификата, но мне показалось удобным и к ключу добавить эту информацию. В принципе нет необходимости менять приватный ключ, если только он не был скомпрометирован, тогда как есть команда &lt;code&gt;easyrsa renew&lt;/code&gt; для перевыпуска нового сертификата на основе старого приватного ключа.&lt;/p&gt;
 &lt;p&gt;!!! Нет необходимости хранить в Центре Сертификации приватные ключи. Даже неприемлимо. Достаточно хранить только сертификаты по той причине, что они могут понадобиться при процедуре отзыва скомпрометированных ключей. В случае отсутствия копии сертификата, который необходимо добавить в список отозванных, есть способ отловить его во время подключения. Но я не помню как это делается.&lt;/p&gt;
@@ -4286,10 +4286,10 @@ shred -u pki/reqs/${SRVNAME}.req
     
     <item>
       <title>A: OpenVPN — это просто</title>
-      <link>/a/openvpn-eto-prosto/</link>
+      <link>https://debuntu.ru/a/openvpn-eto-prosto/</link>
       <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/openvpn-eto-prosto/</guid>
+      <guid>https://debuntu.ru/a/openvpn-eto-prosto/</guid>
       <description>
         
         
@@ -4305,7 +4305,7 @@ shred -u pki/reqs/${SRVNAME}.req
 &lt;/ol&gt;
 &lt;p&gt;Здесь приведена простая конфигурация для выхода &lt;em&gt;клиента&lt;/em&gt; в интернет через VPN-сервер. Стороннему наблюдателю будут видны зашифрованные udp-пакеты, которыми обменивается клиент со случайного порта выше 1024-го на порт UDP 9216 удалённого хоста. То есть враг будет знать сам факт использования VPN, но без соответствующих ключей и сертификатов не сможет наблюдать содержимое зашифрованного VPN-туннеля. Маскировка OpenVPN-трафика под HTTPS-протокол реализуется пакетом &lt;code&gt;obfsproxy&lt;/code&gt;, но о нём я напишу в другой статье.&lt;/p&gt;
 &lt;h2 id=&#34;1-центр-сертификации&#34;&gt;1. Центр Сертификации&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Для создания ключей и сертификатов достаточно прав обычного пользователя.&lt;/strong&gt;&lt;/p&gt;
 &lt;h3 id=&#34;11-развёртывание-центра-сертификации&#34;&gt;1.1 Развёртывание &amp;ldquo;Центра Сертификации&amp;rdquo;&lt;/h3&gt;
 &lt;h4 id=&#34;111-клонирование-easy-rsa&#34;&gt;1.1.1. Клонирование easy-rsa&lt;/h4&gt;
@@ -4461,10 +4461,10 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
     
     <item>
       <title>A: Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа</title>
-      <link>/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</link>
+      <link>https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</link>
       <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</guid>
+      <guid>https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</guid>
       <description>
         
         
@@ -4564,10 +4564,10 @@ lAVtlyeGpgnMUi4egWk=
     
     <item>
       <title>A: Path MTU Discovery и прочее связанное с этим</title>
-      <link>/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</link>
+      <link>https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</guid>
+      <guid>https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</guid>
       <description>
         
         
@@ -4715,10 +4715,10 @@ tcp сквозь openvpn over udp
     
     <item>
       <title>A: Описание VFS Виртуальной Файловой Системы Linux</title>
-      <link>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <link>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <guid>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
       <description>
         
         
@@ -5034,10 +5034,10 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
     
     <item>
       <title>A: Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
-      <link>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <link>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
       <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <guid>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
       <description>
         
         
@@ -5090,10 +5090,10 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
     
     <item>
       <title>A: Чем консоль отличается от терминала</title>
-      <link>/a/chem-konsol-otlichaetsya-ot-terminala/</link>
+      <link>https://debuntu.ru/a/chem-konsol-otlichaetsya-ot-terminala/</link>
       <pubDate>Sat, 23 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/chem-konsol-otlichaetsya-ot-terminala/</guid>
+      <guid>https://debuntu.ru/a/chem-konsol-otlichaetsya-ot-terminala/</guid>
       <description>
         
         
@@ -5118,7 +5118,7 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
 &lt;p&gt;В консоль выводится системная информация, начиная с запуска BIOS.&lt;/p&gt;
 &lt;p&gt;Но с приходом сети Интернет, при помощи технологии &amp;ldquo;KVM over IP&amp;rdquo;, стало возможным любую машину сделать консолью к другому компьютеру.&lt;/p&gt;
 &lt;h3 id=&#34;работа-с-tty&#34;&gt;Работа с TTY&lt;/h3&gt;
-&lt;img src=/chem-konsol-otlichaetsya-ot-terminala/teletype-asr33-mc_800x583.jpg width=50% align=&#34;middle&#34; /&gt;
+&lt;img src=https://debuntu.ru/chem-konsol-otlichaetsya-ot-terminala/teletype-asr33-mc_800x583.jpg width=50% align=&#34;middle&#34; /&gt;
 &lt;p&gt;После подключения к ОС, например Unix, машинка печатала на бумаге &lt;code&gt;login:&lt;/code&gt;, в ответ надо было напечатать свой логин. Далее на печать выходило &lt;code&gt;Password:&lt;/code&gt;. Здесь, в целях безопасности, пароль не пропечатывался на бумаге, да и сейчас отключена его печать на экране. После успешной авторизации, в ответ на приглашение оболочки, можно было набрать &lt;code&gt;mc&lt;/code&gt; и нажать &amp;ldquo;Ввод&amp;rdquo;, и на бумаге распечатывалось динамическое изображение &amp;ldquo;Midnight Commander&amp;rdquo;. Ориентируясь по распечатанной картинке, пользователь с помощью &amp;ldquo;стрелочек&amp;rdquo; выбирал необходимый текстовый файл, содержимое которого, после нажатия на F4, распечатывалось на бумаге в обрамлении &lt;code&gt;mcedit&lt;/code&gt; или &lt;code&gt;nano&lt;/code&gt;. Далее можно было приниматься за редактирование&amp;hellip; :-)&lt;/p&gt;
 &lt;h3 id=&#34;консольные-приложения&#34;&gt;Консольные приложения&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;Консольные приложения&lt;/em&gt; не были интерактивными. Ещё не было графического интерфейса и мышки. Вывод информации выполнялся построчно на печатающее устройство. Простое редактирование текстового файла представляло из себя серию команд с консоли.&lt;/p&gt;
@@ -5134,10 +5134,10 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
     
     <item>
       <title>A: Перевод Easy-RSA 3 Quickstart README</title>
-      <link>/a/perevod-easy-rsa-3-quickstart-readme/</link>
+      <link>https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <guid>https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme/</guid>
       <description>
         
         
@@ -5202,10 +5202,10 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
     
     <item>
       <title>A: Установка Plone CMS</title>
-      <link>/a/ustanovka-plone-cms/</link>
+      <link>https://debuntu.ru/a/ustanovka-plone-cms/</link>
       <pubDate>Mon, 21 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-plone-cms/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-plone-cms/</guid>
       <description>
         
         
@@ -5542,10 +5542,10 @@ server {
     
     <item>
       <title>A: Traditional Unix permissions и Access Control Lists</title>
-      <link>/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
+      <link>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
       <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
+      <guid>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
       <description>
         
         
@@ -5684,10 +5684,10 @@ login root
     
     <item>
       <title>A: Резервное копирование Plone</title>
-      <link>/a/rezervnoe-kopirovanie-plone/</link>
+      <link>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</link>
       <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/rezervnoe-kopirovanie-plone/</guid>
+      <guid>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</guid>
       <description>
         
         
@@ -5761,10 +5761,10 @@ blobbackuplocation =  /path/to/reliably/attached/storage/blobstorage
     
     <item>
       <title>A: Chroot rsync для безопасного сбора бэкапов с удалённых хостов</title>
-      <link>/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
+      <link>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
       <pubDate>Sun, 12 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
+      <guid>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
       <description>
         
         
@@ -5836,10 +5836,10 @@ command=&amp;#34;/bin/rsync --server --sender -vlogDtpre.iLsf . /backup/&amp;#34
     
     <item>
       <title>A: Создание копии сайта Plone</title>
-      <link>/a/ozdanie-kopii-saita-plone/</link>
+      <link>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</link>
       <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/ozdanie-kopii-saita-plone/</guid>
+      <guid>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</guid>
       <description>
         
         
@@ -5882,10 +5882,10 @@ command=&amp;#34;/bin/rsync --server --sender -vlogDtpre.iLsf . /backup/&amp;#34
     
     <item>
       <title>A: Добавление reCAPTCHA в Plone</title>
-      <link>/a/dobavlenie-recaptcha-v-plone/</link>
+      <link>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</link>
       <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/dobavlenie-recaptcha-v-plone/</guid>
+      <guid>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</guid>
       <description>
         
         
@@ -5938,10 +5938,10 @@ eggs =
     
     <item>
       <title>A: Простой Центр Сертификации для strongSwan IPsec</title>
-      <link>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <link>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <guid>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
       <description>
         
         
@@ -6016,10 +6016,10 @@ eggs =
     
     <item>
       <title>A: Использование Composer для установки и управления зависимостями Drupal 8</title>
-      <link>/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</link>
+      <link>https://debuntu.ru/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</link>
       <pubDate>Mon, 25 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</guid>
+      <guid>https://debuntu.ru/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</guid>
       <description>
         
         
@@ -6177,10 +6177,10 @@ $ tar -cvjf ../backup/my_site_name_dir_files_$(date &amp;#34;+%Y%m%d-%H%M%S&amp;
     
     <item>
       <title>A: LVM2 — создание, перемещение и удаление логических томов</title>
-      <link>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
+      <link>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
+      <guid>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
       <description>
         
         
@@ -6324,10 +6324,10 @@ $ tar -cvjf ../backup/my_site_name_dir_files_$(date &amp;#34;+%Y%m%d-%H%M%S&amp;
     
     <item>
       <title>A: FreeBSD Установка, удаление программ</title>
-      <link>/a/freebsd-ustanovka-udalenie-programm/</link>
+      <link>https://debuntu.ru/a/freebsd-ustanovka-udalenie-programm/</link>
       <pubDate>Sat, 13 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>/a/freebsd-ustanovka-udalenie-programm/</guid>
+      <guid>https://debuntu.ru/a/freebsd-ustanovka-udalenie-programm/</guid>
       <description>
         
         
@@ -6399,14 +6399,14 @@ $ tar -cvjf ../backup/my_site_name_dir_files_$(date &amp;#34;+%Y%m%d-%H%M%S&amp;
     
     <item>
       <title>A: Настраиваем OpenVPN сервер на подключение клиентов</title>
-      <link>/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
+      <link>https://debuntu.ru/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
       <pubDate>Mon, 04 Aug 2014 00:00:00 +0000</pubDate>
       
-      <guid>/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
+      <guid>https://debuntu.ru/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
       <description>
         
         
-        &lt;p&gt;2019-12-23 Опубликована свежая статья с упрощённым изложением &lt;a href=&#34;/a/openvpn-eto-prosto&#34;&gt;OpenVPN - это просто&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;2019-12-23 Опубликована свежая статья с упрощённым изложением &lt;a href=&#34;https://debuntu.ru/a/openvpn-eto-prosto&#34;&gt;OpenVPN - это просто&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;2014-08-04
 Статья в процессе переделки и дополнений по мере освоения.&lt;/p&gt;
 &lt;p&gt;Дописать:&lt;/p&gt;
@@ -6765,10 +6765,10 @@ http://www.lissyara.su/articles/freebsd/security/openvpn/
     
     <item>
       <title>A: Установка и использование в FreeBSD 9.1 нового пакетного менеджера pkgng</title>
-      <link>/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</link>
+      <link>https://debuntu.ru/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</link>
       <pubDate>Wed, 24 Apr 2013 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</guid>
       <description>
         
         
@@ -6860,10 +6860,10 @@ PUBKEY              : /usr/local/etc/pkg-pubkey.cert
     
     <item>
       <title>A: Установка PostgreSQL 9.0 на Debian 6.0</title>
-      <link>/a/ustanovka-postgresql-90-na-debian-60/</link>
+      <link>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</link>
       <pubDate>Thu, 17 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-postgresql-90-na-debian-60/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</guid>
       <description>
         
         
@@ -6882,10 +6882,10 @@ PUBKEY              : /usr/local/etc/pkg-pubkey.cert
     
     <item>
       <title>A: Настройка прозрачного squid3 &#43; squidGuard</title>
-      <link>/a/nastroyka-prozrachnogo-squid3-squidguard/</link>
+      <link>https://debuntu.ru/a/nastroyka-prozrachnogo-squid3-squidguard/</link>
       <pubDate>Sat, 12 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>/a/nastroyka-prozrachnogo-squid3-squidguard/</guid>
+      <guid>https://debuntu.ru/a/nastroyka-prozrachnogo-squid3-squidguard/</guid>
       <description>
         
         
@@ -7145,10 +7145,10 @@ delay_parameters 3 128000/128000 64000/128000 12800/64000&lt;br&gt;
     
     <item>
       <title>A: Установка egroupware 1.8 на debian 6.0</title>
-      <link>/a/ustanovka-egroupware-1-8-na-debian-6.0/</link>
+      <link>https://debuntu.ru/a/ustanovka-egroupware-1-8-na-debian-6.0/</link>
       <pubDate>Mon, 07 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-egroupware-1-8-na-debian-6.0/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-egroupware-1-8-na-debian-6.0/</guid>
       <description>
         
         
@@ -7180,10 +7180,10 @@ delay_parameters 3 128000/128000 64000/128000 12800/64000&lt;br&gt;
     
     <item>
       <title>A: Установка Eclipse 3.6 (Helios) в Ubuntu</title>
-      <link>/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</link>
+      <link>https://debuntu.ru/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</link>
       <pubDate>Fri, 19 Feb 2010 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</guid>
       <description>
         
         

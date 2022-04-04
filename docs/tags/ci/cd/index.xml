@@ -1,11 +1,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – CI/CD</title>
-    <link>/tags/ci/cd/</link>
+    <link>https://debuntu.ru/tags/ci/cd/</link>
     <description>Recent content in CI/CD on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     
-	  <atom:link href="/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -15,10 +15,10 @@
     
     <item>
       <title>A: Jenkins Проблемы выполнения удалённых команд в сетях со stateful firewall и способы их решения</title>
-      <link>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
+      <link>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
+      <guid>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
       <description>
         
         

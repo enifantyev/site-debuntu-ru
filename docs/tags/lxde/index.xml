@@ -1,11 +1,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – LXDE</title>
-    <link>/tags/lxde/</link>
+    <link>https://debuntu.ru/tags/lxde/</link>
     <description>Recent content in LXDE on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     
-	  <atom:link href="/tags/lxde/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/lxde/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -15,10 +15,10 @@
     
     <item>
       <title>N: В LXDE нет русской раскладки</title>
-      <link>/n/v-lxde-net-russkoi-raskladki/</link>
+      <link>https://debuntu.ru/n/v-lxde-net-russkoi-raskladki/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/n/v-lxde-net-russkoi-raskladki/</guid>
+      <guid>https://debuntu.ru/n/v-lxde-net-russkoi-raskladki/</guid>
       <description>
         
         

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Nginx</title>
-    <link>/tags/nginx/</link>
+    <link>https://debuntu.ru/tags/nginx/</link>
     <description>Recent content in Nginx on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 26 May 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Сборка rpm-пакета nginx c модулями для kafka</title>
-      <link>/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
+      <link>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
+      <guid>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
       <description>
         
         

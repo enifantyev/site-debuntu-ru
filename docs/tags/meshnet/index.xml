@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – meshnet</title>
-    <link>/tags/meshnet/</link>
+    <link>https://debuntu.ru/tags/meshnet/</link>
     <description>Recent content in meshnet on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 05 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/meshnet/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/meshnet/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Mikrotik: Wireless WDS Mesh With Mesh Interface</title>
-      <link>/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</link>
+      <link>https://debuntu.ru/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</link>
       <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</guid>
+      <guid>https://debuntu.ru/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</guid>
       <description>
         
         

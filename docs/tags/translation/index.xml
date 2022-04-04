@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – translation</title>
-    <link>/tags/translation/</link>
+    <link>https://debuntu.ru/tags/translation/</link>
     <description>Recent content in translation on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sat, 18 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/translation/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/translation/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Описание VFS Виртуальной Файловой Системы Linux</title>
-      <link>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <link>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <guid>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
       <description>
         
         
@@ -335,10 +335,10 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
     
     <item>
       <title>N: apt vs apt-get/apt-cache vs aptitude</title>
-      <link>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</link>
+      <link>https://debuntu.ru/n/apt-vs-apt-get-apt-cache-vs-aptitude/</link>
       <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</guid>
+      <guid>https://debuntu.ru/n/apt-vs-apt-get-apt-cache-vs-aptitude/</guid>
       <description>
         
         
@@ -389,10 +389,10 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
     
     <item>
       <title>A: Перевод Easy-RSA 3 Quickstart README</title>
-      <link>/a/perevod-easy-rsa-3-quickstart-readme/</link>
+      <link>https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <guid>https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme/</guid>
       <description>
         
         
@@ -457,10 +457,10 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
     
     <item>
       <title>A: Резервное копирование Plone</title>
-      <link>/a/rezervnoe-kopirovanie-plone/</link>
+      <link>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</link>
       <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/rezervnoe-kopirovanie-plone/</guid>
+      <guid>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</guid>
       <description>
         
         
@@ -534,10 +534,10 @@ blobbackuplocation =  /path/to/reliably/attached/storage/blobstorage
     
     <item>
       <title>A: Создание копии сайта Plone</title>
-      <link>/a/ozdanie-kopii-saita-plone/</link>
+      <link>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</link>
       <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/ozdanie-kopii-saita-plone/</guid>
+      <guid>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</guid>
       <description>
         
         
@@ -580,10 +580,10 @@ blobbackuplocation =  /path/to/reliably/attached/storage/blobstorage
     
     <item>
       <title>A: Добавление reCAPTCHA в Plone</title>
-      <link>/a/dobavlenie-recaptcha-v-plone/</link>
+      <link>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</link>
       <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/dobavlenie-recaptcha-v-plone/</guid>
+      <guid>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</guid>
       <description>
         
         
@@ -636,10 +636,10 @@ eggs =
     
     <item>
       <title>A: Простой Центр Сертификации для strongSwan IPsec</title>
-      <link>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <link>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <guid>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
       <description>
         
         
@@ -714,10 +714,10 @@ eggs =
     
     <item>
       <title>N: Краткое описание Monitorix</title>
-      <link>/n/kratkoe-opisanie-monitorix/</link>
+      <link>https://debuntu.ru/n/kratkoe-opisanie-monitorix/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
       
-      <guid>/n/kratkoe-opisanie-monitorix/</guid>
+      <guid>https://debuntu.ru/n/kratkoe-opisanie-monitorix/</guid>
       <description>
         
         
@@ -755,10 +755,10 @@ eggs =
     
     <item>
       <title>N: Выпуск Monitorix версии 3.12.0 (2020-02-21)</title>
-      <link>/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</link>
+      <link>https://debuntu.ru/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</guid>
+      <guid>https://debuntu.ru/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</guid>
       <description>
         
         

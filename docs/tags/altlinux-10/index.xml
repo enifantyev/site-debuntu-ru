@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – AltLinux 10</title>
-    <link>/tags/altlinux-10/</link>
+    <link>https://debuntu.ru/tags/altlinux-10/</link>
     <description>Recent content in AltLinux 10 on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/altlinux-10/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/altlinux-10/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: 12. Установка BorgBackup в AltLinux 10</title>
-      <link>/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</link>
       <pubDate>Mon, 14 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</guid>
       <description>
         
         
@@ -53,10 +53,10 @@ borg 1.2.0
     
     <item>
       <title>Manuals: 40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</title>
-      <link>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
       <description>
         
         

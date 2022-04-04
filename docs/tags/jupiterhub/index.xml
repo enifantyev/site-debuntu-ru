@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – JupiterHub</title>
-    <link>/tags/jupiterhub/</link>
+    <link>https://debuntu.ru/tags/jupiterhub/</link>
     <description>Recent content in JupiterHub on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 07 Jul 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/jupiterhub/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/jupiterhub/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub</title>
-      <link>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
+      <link>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
+      <guid>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
       <description>
         
         
@@ -99,10 +99,10 @@ SyntaxError: Unexpected identifier
     
     <item>
       <title>A: Установка JupyterHub на CentOS 7 (draft)</title>
-      <link>/a/ustanovka-jupyterhub-na-centos-7/</link>
+      <link>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-jupyterhub-na-centos-7/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</guid>
       <description>
         
         

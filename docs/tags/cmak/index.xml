@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – CMAK</title>
-    <link>/tags/cmak/</link>
+    <link>https://debuntu.ru/tags/cmak/</link>
     <description>Recent content in CMAK on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/cmak/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/cmak/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: CMAK. 01. Сборка rpm-пакета для CentOS7</title>
-      <link>/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
+      <link>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
+      <guid>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
       <description>
         
         

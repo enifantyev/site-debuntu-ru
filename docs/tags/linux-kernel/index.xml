@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Linux Kernel</title>
-    <link>/tags/linux-kernel/</link>
+    <link>https://debuntu.ru/tags/linux-kernel/</link>
     <description>Recent content in Linux Kernel on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/linux-kernel/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/linux-kernel/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Как собрать новое ядро linux</title>
-      <link>/n/kak-sobrat-novoe-yadro-linux/</link>
+      <link>https://debuntu.ru/n/kak-sobrat-novoe-yadro-linux/</link>
       <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
       
-      <guid>/n/kak-sobrat-novoe-yadro-linux/</guid>
+      <guid>https://debuntu.ru/n/kak-sobrat-novoe-yadro-linux/</guid>
       <description>
         
         
@@ -116,10 +116,10 @@
     
     <item>
       <title>Manuals: 40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</title>
-      <link>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
       <description>
         
         

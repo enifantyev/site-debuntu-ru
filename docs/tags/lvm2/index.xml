@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – LVM2</title>
-    <link>/tags/lvm2/</link>
+    <link>https://debuntu.ru/tags/lvm2/</link>
     <description>Recent content in LVM2 on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 03 Sep 2018 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/lvm2/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/lvm2/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: LVM2 — создание, перемещение и удаление логических томов</title>
-      <link>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
+      <link>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
+      <guid>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
       <description>
         
         

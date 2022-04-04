@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5</title>
-    <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</link>
+    <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</link>
     <description>Recent content in Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5 on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 27 Dec 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: 00. Удаление реплики</title>
-      <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
       <pubDate>Mon, 27 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
       <description>
         
         
@@ -95,10 +95,10 @@ sudo reboot
     
     <item>
       <title>Manuals: 01. Подготовка хостов к установке реплик FreeIPA</title>
-      <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
       <description>
         
         

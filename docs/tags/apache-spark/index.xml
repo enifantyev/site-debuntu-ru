@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Apache Spark</title>
-    <link>/tags/apache-spark/</link>
+    <link>https://debuntu.ru/tags/apache-spark/</link>
     <description>Recent content in Apache Spark on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 02 Nov 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/apache-spark/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/apache-spark/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Настройка аутентификации/авторизации в Apache Spark</title>
-      <link>/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</link>
+      <link>https://debuntu.ru/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</link>
       <pubDate>Fri, 30 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</guid>
+      <guid>https://debuntu.ru/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</guid>
       <description>
         
         
@@ -72,10 +72,10 @@
     
     <item>
       <title>Manuals: 07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</guid>
       <description>
         
         

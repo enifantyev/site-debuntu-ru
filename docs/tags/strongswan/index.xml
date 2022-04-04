@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – strongSwan</title>
-    <link>/tags/strongswan/</link>
+    <link>https://debuntu.ru/tags/strongswan/</link>
     <description>Recent content in strongSwan on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 22 Apr 2019 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/strongswan/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/strongswan/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Простой Центр Сертификации для strongSwan IPsec</title>
-      <link>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <link>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <guid>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
       <description>
         
         

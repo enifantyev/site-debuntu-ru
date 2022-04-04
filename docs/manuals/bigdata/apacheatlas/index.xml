@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Apache Atlas</title>
-    <link>/manuals/bigdata/apacheatlas/</link>
+    <link>https://debuntu.ru/manuals/bigdata/apacheatlas/</link>
     <description>Recent content in Apache Atlas on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 06 Dec 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/manuals/bigdata/apacheatlas/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/manuals/bigdata/apacheatlas/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</title>
-      <link>/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</link>
       <pubDate>Tue, 28 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</guid>
       <description>
         
         
@@ -588,10 +588,10 @@ Caused by: java.util.NoSuchElementException
     
     <item>
       <title>Manuals: Установка Apache Atlas 2.2.0</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/</link>
       <pubDate>Mon, 06 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/</guid>
       <description>
         
         

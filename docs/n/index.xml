@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Заметки</title>
-    <link>/n/</link>
+    <link>https://debuntu.ru/n/</link>
     <description>Recent content in Заметки on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 26 Nov 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/n/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/n/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Компиляция свежего stunnel 5.60 из исходников на CentOS7</title>
-      <link>/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
+      <link>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
       <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
+      <guid>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
       <description>
         
         
@@ -38,7 +38,7 @@ cd stunnel-5.60
 make
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
 &lt;p&gt;Скомпилированный stunnel можно найти здесь &lt;code&gt;~/src/stunnel-5.60/src/stunnel&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Переименуем файл для удобства дальнейшего использования по инструкции &lt;a href=&#34;/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel&#34;&gt;Обфускация ssh-трафика с помощью stunnel&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;Переименуем файл для удобства дальнейшего использования по инструкции &lt;a href=&#34;https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel&#34;&gt;Обфускация ssh-трафика с помощью stunnel&lt;/a&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mv ~/src/stunnel-5.60/src/stunnel ~/src/stunnel-5.60/src/stunnel-5.60
 &lt;/code&gt;&lt;/pre&gt;
       </description>
@@ -46,10 +46,10 @@ make
     
     <item>
       <title>N: Как сохранить расцвеченный выхлоп stdout в файл</title>
-      <link>/n/kak-sohranit-rascvechennyi-stdout-v-fail/</link>
+      <link>https://debuntu.ru/n/kak-sohranit-rascvechennyi-stdout-v-fail/</link>
       <pubDate>Tue, 19 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/kak-sohranit-rascvechennyi-stdout-v-fail/</guid>
+      <guid>https://debuntu.ru/n/kak-sohranit-rascvechennyi-stdout-v-fail/</guid>
       <description>
         
         
@@ -72,10 +72,10 @@ yum install expect-devel
     
     <item>
       <title>N: Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</title>
-      <link>/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
+      <link>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
       <pubDate>Wed, 11 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
       <description>
         
         
@@ -122,10 +122,10 @@ zoosu:TsKlydBdycdq-&amp;gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=
     
     <item>
       <title>N: Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</title>
-      <link>/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
+      <link>https://debuntu.ru/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
       <pubDate>Wed, 04 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
+      <guid>https://debuntu.ru/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
       <description>
         
         
@@ -178,10 +178,10 @@ EOF
     
     <item>
       <title>N: Блокирование доступа внешних программ к Hive metastore</title>
-      <link>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
+      <link>https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
       <pubDate>Mon, 19 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
+      <guid>https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
       <description>
         
         
@@ -217,10 +217,10 @@ This configuration &lt;b&gt;overrides&lt;/b&gt; the value set for Hive Proxy Use
     
     <item>
       <title>N: Тестирование псевдо HA и LB dns-настроек в /etc/resolv.conf</title>
-      <link>/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
+      <link>https://debuntu.ru/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
       <pubDate>Wed, 14 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
+      <guid>https://debuntu.ru/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
       <description>
         
         
@@ -319,10 +319,10 @@ connect(3, {sa_family=AF_INET, sin_port=htons(53), sin_addr=inet_addr(&amp;#34;1
     
     <item>
       <title>N: Ручное удаление реплики FreeIPA из RedOS7.2</title>
-      <link>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
+      <link>https://debuntu.ru/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
       <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
+      <guid>https://debuntu.ru/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
       <description>
         
         
@@ -349,10 +349,10 @@ rm -rf /etc/sysconfig/pki/tomcat
     
     <item>
       <title>N: Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub</title>
-      <link>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
+      <link>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
+      <guid>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
       <description>
         
         
@@ -432,10 +432,10 @@ SyntaxError: Unexpected identifier
     
     <item>
       <title>N: Проблема с пакетом psycopg2 при создании нового суперюзера для Cloudera Hue</title>
-      <link>/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</link>
+      <link>https://debuntu.ru/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</link>
       <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</guid>
+      <guid>https://debuntu.ru/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</guid>
       <description>
         
         
@@ -484,10 +484,10 @@ Superuser created successfully.
     
     <item>
       <title>N: Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</title>
-      <link>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
+      <link>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
       <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
+      <guid>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
       <description>
         
         
@@ -523,10 +523,10 @@ REVOKE ROLE admin_role FROM GROUP admin_group;
     
     <item>
       <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</title>
-      <link>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
+      <link>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
       <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
+      <guid>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
       <description>
         
         
@@ -544,10 +544,10 @@ REVOKE ROLE admin_role FROM GROUP admin_group;
     
     <item>
       <title>N: IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</title>
-      <link>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
+      <link>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
+      <guid>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
       <description>
         
         
@@ -673,10 +673,10 @@ May 11 20:40:20 dev-ipa01.test.lan server[3284]: arguments used: start
     
     <item>
       <title>N: Включение во FreeIPA отслеживания последней успешной аутентификации пользовательских аккаунтов</title>
-      <link>/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</link>
+      <link>https://debuntu.ru/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</link>
       <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</guid>
+      <guid>https://debuntu.ru/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</guid>
       <description>
         
         
@@ -729,10 +729,10 @@ Number of entries returned 3
     
     <item>
       <title>N: Отключение анонимного доступа к LDAP-каталогу FreeIPA</title>
-      <link>/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</link>
+      <link>https://debuntu.ru/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</link>
       <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</guid>
+      <guid>https://debuntu.ru/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</guid>
       <description>
         
         
@@ -791,10 +791,10 @@ text: Anonymous access is not allowed.
     
     <item>
       <title>N: Исправление проблемы с переключением раскладки клавиатуры в Visual Studio Code</title>
-      <link>/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</link>
+      <link>https://debuntu.ru/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</link>
       <pubDate>Thu, 15 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</guid>
+      <guid>https://debuntu.ru/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</guid>
       <description>
         
         
@@ -807,10 +807,10 @@ text: Anonymous access is not allowed.
     
     <item>
       <title>N: Отдельная hidden replicas для безопасного full backup FreeIPA</title>
-      <link>/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</link>
+      <link>https://debuntu.ru/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</guid>
+      <guid>https://debuntu.ru/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</guid>
       <description>
         
         
@@ -829,10 +829,10 @@ text: Anonymous access is not allowed.
     
     <item>
       <title>N: Получение keytab-файла для сервисного принципала</title>
-      <link>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <link>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <guid>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
       <description>
         
         
@@ -861,10 +861,10 @@ text: Anonymous access is not allowed.
     
     <item>
       <title>N: Выполнение ad-hoc absible команд</title>
-      <link>/n/vypolnenie-ad-hoc-absible-komand/</link>
+      <link>https://debuntu.ru/n/vypolnenie-ad-hoc-absible-komand/</link>
       <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/vypolnenie-ad-hoc-absible-komand/</guid>
+      <guid>https://debuntu.ru/n/vypolnenie-ad-hoc-absible-komand/</guid>
       <description>
         
         
@@ -906,10 +906,10 @@ for i in {1..126}; do nmap -Pn -p22 10.1.112.$i|grep open &amp;amp;&amp;amp; ech
     
     <item>
       <title>N: Организация беспарольного зеркала registry-1.docker.io</title>
-      <link>/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</link>
+      <link>https://debuntu.ru/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</link>
       <pubDate>Fri, 05 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</guid>
+      <guid>https://debuntu.ru/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</guid>
       <description>
         
         
@@ -932,10 +932,10 @@ for i in {1..126}; do nmap -Pn -p22 10.1.112.$i|grep open &amp;amp;&amp;amp; ech
     
     <item>
       <title>N: Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62</title>
-      <link>/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</link>
+      <link>https://debuntu.ru/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</link>
       <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</guid>
+      <guid>https://debuntu.ru/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</guid>
       <description>
         
         
@@ -967,10 +967,10 @@ rpmrebuild -enp sudo-1.9.5-3.el7.x86_64.rpm
     
     <item>
       <title>N: Создание keytab-файла для пользовательского принципала</title>
-      <link>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
+      <link>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
       <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
+      <guid>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
       <description>
         
         
@@ -1008,10 +1008,10 @@ Valid starting       Expires              Service principal
     
     <item>
       <title>N: Срипт для добавления PTR-записей по списку из файла в обратную DNS-зону FreeIPA</title>
-      <link>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
+      <link>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
       <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
+      <guid>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
       <description>
         
         
@@ -1050,10 +1050,10 @@ done &amp;lt; $LIST
     
     <item>
       <title>N: LDAP binding во FreeIPA</title>
-      <link>/n/ldap-binding-vo-freeipa/</link>
+      <link>https://debuntu.ru/n/ldap-binding-vo-freeipa/</link>
       <pubDate>Sun, 15 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/ldap-binding-vo-freeipa/</guid>
+      <guid>https://debuntu.ru/n/ldap-binding-vo-freeipa/</guid>
       <description>
         
         
@@ -1075,10 +1075,10 @@ done &amp;lt; $LIST
     
     <item>
       <title>N: Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2</title>
-      <link>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
+      <link>https://debuntu.ru/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
       <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
+      <guid>https://debuntu.ru/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
       <description>
         
         
@@ -1103,16 +1103,16 @@ hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=exa
     
     <item>
       <title>N: Неудачный запуск &#39;Inspect Network Performance&#39;: Failed running performance inspector on cluster</title>
-      <link>/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</link>
+      <link>https://debuntu.ru/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</link>
       <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</guid>
+      <guid>https://debuntu.ru/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</guid>
       <description>
         
         
         &lt;h2 id=&#34;проблема&#34;&gt;Проблема&lt;/h2&gt;
 &lt;p&gt;В результате запуска на кластере проверки &amp;ldquo;Inspect Network Performance&amp;rdquo; мы можем наблюдать картину:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Failed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Failed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
 &lt;p&gt;В логах &lt;code&gt;/var/log/cloudera-scm-agent/cloudera-scm-agent.log&lt;/code&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Thread-17 supervisor WARNING Failed while getting process info. Retrying. (&amp;lt;Fault
 10: &amp;#39;BAD_NAME: 3050-host-perf-inspector&amp;#39;&amp;gt;)
@@ -1128,17 +1128,17 @@ SyntaxError: invalid syntax
 &lt;p&gt;На наших машинах с CentOS7 на борту по умолчанию запускается &amp;lsquo;python3&amp;rsquo;. Поэтому для того, чтобы в кластере заработал &amp;ldquo;network-inspector&amp;rdquo; необходимо поменять шебанг у файла &lt;code&gt;/opt/cloudera/cm-agent/service/perf/host_perf_diag.py&lt;/code&gt;. Добавить цифру &amp;lsquo;2&amp;rsquo; к &amp;lsquo;#!/usr/bin/python&amp;rsquo;, чтобы было так:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/usr/bin/python2
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После применения решения можем наблюдать успешное выполнения теста:
-&lt;img src=&#34;/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Successfully completed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Successfully completed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
 
       </description>
     </item>
     
     <item>
       <title>N: Перенос кластера Cloudera CDH 6.3.2 в другой vlan</title>
-      <link>/n/perenos-klastera-cloudera-cdh-6-3-2-v-drugoi-vlan/</link>
+      <link>https://debuntu.ru/n/perenos-klastera-cloudera-cdh-6-3-2-v-drugoi-vlan/</link>
       <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/perenos-klastera-cloudera-cdh-6-3-2-v-drugoi-vlan/</guid>
+      <guid>https://debuntu.ru/n/perenos-klastera-cloudera-cdh-6-3-2-v-drugoi-vlan/</guid>
       <description>
         
         
@@ -1183,10 +1183,10 @@ SyntaxError: invalid syntax
     
     <item>
       <title>N: Добавление в NXRM единого репозитория для всех версий PostgreSQL</title>
-      <link>/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
+      <link>https://debuntu.ru/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
       <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
+      <guid>https://debuntu.ru/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
       <description>
         
         
@@ -1457,14 +1457,14 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
     
     <item>
       <title>N: Disabling Hive CLI</title>
-      <link>/n/disabling-hive-cli/</link>
+      <link>https://debuntu.ru/n/disabling-hive-cli/</link>
       <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/disabling-hive-cli/</guid>
+      <guid>https://debuntu.ru/n/disabling-hive-cli/</guid>
       <description>
         
         
-        &lt;p&gt;Перед выполнением этой инструкции, необходимо ознакомиться с &lt;a href=&#34;/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore&#34;&gt;Блокирование доступа внешних программ к Hive metastore&lt;/a&gt;, где описано более централизованный способ блокирования доступа к Metastore Hive.&lt;/p&gt;
+        &lt;p&gt;Перед выполнением этой инструкции, необходимо ознакомиться с &lt;a href=&#34;https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore&#34;&gt;Блокирование доступа внешних программ к Hive metastore&lt;/a&gt;, где описано более централизованный способ блокирования доступа к Metastore Hive.&lt;/p&gt;
 &lt;p&gt;После активации Cloudera Sentry, необходимо предотвратить возможность использования консольной утилиты &lt;code&gt;hive&lt;/code&gt; пользователями. Вместо &lt;code&gt;hive&lt;/code&gt;, пользователи должны использовать утилиту &lt;code&gt;beeline&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Каталог HIVE_HOME можно найти из-под root командой:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME
@@ -1484,10 +1484,10 @@ chmod 755 $HIVE_HOME/bin/hive
     
     <item>
       <title>N: Исправление застрявшего статуса у роли в Cloudera CDH</title>
-      <link>/n/ispravlenie-zastryavshego-statusa-u-roli-v-cloudera-hadoop/</link>
+      <link>https://debuntu.ru/n/ispravlenie-zastryavshego-statusa-u-roli-v-cloudera-hadoop/</link>
       <pubDate>Sat, 26 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/ispravlenie-zastryavshego-statusa-u-roli-v-cloudera-hadoop/</guid>
+      <guid>https://debuntu.ru/n/ispravlenie-zastryavshego-statusa-u-roli-v-cloudera-hadoop/</guid>
       <description>
         
         
@@ -1529,10 +1529,10 @@ UPDATE 1
     
     <item>
       <title>N: Запуск kafka-mirror-maker из systemd</title>
-      <link>/n/zapusk-kafka-mirror-maker-iz-systemd/</link>
+      <link>https://debuntu.ru/n/zapusk-kafka-mirror-maker-iz-systemd/</link>
       <pubDate>Sun, 06 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/zapusk-kafka-mirror-maker-iz-systemd/</guid>
+      <guid>https://debuntu.ru/n/zapusk-kafka-mirror-maker-iz-systemd/</guid>
       <description>
         
         
@@ -1600,10 +1600,10 @@ journalctl -f
     
     <item>
       <title>N: Обновление Nexus Repository Manager</title>
-      <link>/n/obnovlenie-nexus-repository-manager/</link>
+      <link>https://debuntu.ru/n/obnovlenie-nexus-repository-manager/</link>
       <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/obnovlenie-nexus-repository-manager/</guid>
+      <guid>https://debuntu.ru/n/obnovlenie-nexus-repository-manager/</guid>
       <description>
         
         
@@ -1658,10 +1658,10 @@ $ sudo chown nexus:nexus nexus-3.23.0-03 -R
     
     <item>
       <title>N: Установка Monitorix в Alpine Linux</title>
-      <link>/n/ustanovka-monitorix-v-alpine-linux/</link>
+      <link>https://debuntu.ru/n/ustanovka-monitorix-v-alpine-linux/</link>
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/ustanovka-monitorix-v-alpine-linux/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-monitorix-v-alpine-linux/</guid>
       <description>
         
         
@@ -1847,10 +1847,10 @@ stop() {
     
     <item>
       <title>N: Void Linux Установка QEMU/KVM</title>
-      <link>/n/void-linux-ustanovka-kvm/</link>
+      <link>https://debuntu.ru/n/void-linux-ustanovka-kvm/</link>
       <pubDate>Tue, 17 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/void-linux-ustanovka-kvm/</guid>
+      <guid>https://debuntu.ru/n/void-linux-ustanovka-kvm/</guid>
       <description>
         
         
@@ -2007,10 +2007,10 @@ nmcli con up br0
     
     <item>
       <title>N: Void Linux Установка Docker</title>
-      <link>/n/void-linux-ustanovka-docker/</link>
+      <link>https://debuntu.ru/n/void-linux-ustanovka-docker/</link>
       <pubDate>Sat, 22 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/void-linux-ustanovka-docker/</guid>
+      <guid>https://debuntu.ru/n/void-linux-ustanovka-docker/</guid>
       <description>
         
         
@@ -2047,10 +2047,10 @@ ln -s /etc/sv/docker /var/service
     
     <item>
       <title>N: Избавляемся от root&#39;а в Alpine Linux</title>
-      <link>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
+      <link>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
+      <guid>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
       <description>
         
         
@@ -2080,10 +2080,10 @@ addgroup newuser wheel
     
     <item>
       <title>N: Установка Alpine Linux в подтом btrfs</title>
-      <link>/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
+      <link>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
       <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
       <description>
         
         
@@ -2147,10 +2147,10 @@ reboot
     
     <item>
       <title>N: apt vs apt-get/apt-cache vs aptitude</title>
-      <link>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</link>
+      <link>https://debuntu.ru/n/apt-vs-apt-get-apt-cache-vs-aptitude/</link>
       <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/apt-vs-apt-get-apt-cache-vs-aptitude/</guid>
+      <guid>https://debuntu.ru/n/apt-vs-apt-get-apt-cache-vs-aptitude/</guid>
       <description>
         
         
@@ -2201,10 +2201,10 @@ reboot
     
     <item>
       <title>N: Первое впечатление от Void Linux</title>
-      <link>/n/pervye-vpechatleniya-o-void-linux/</link>
+      <link>https://debuntu.ru/n/pervye-vpechatleniya-o-void-linux/</link>
       <pubDate>Tue, 29 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/pervye-vpechatleniya-o-void-linux/</guid>
+      <guid>https://debuntu.ru/n/pervye-vpechatleniya-o-void-linux/</guid>
       <description>
         
         
@@ -2226,10 +2226,10 @@ reboot
     
     <item>
       <title>N: Сборка deb-пакета свежего EncFS</title>
-      <link>/n/sborka-deb-paketa-svezhego-encfs/</link>
+      <link>https://debuntu.ru/n/sborka-deb-paketa-svezhego-encfs/</link>
       <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/sborka-deb-paketa-svezhego-encfs/</guid>
+      <guid>https://debuntu.ru/n/sborka-deb-paketa-svezhego-encfs/</guid>
       <description>
         
         
@@ -2318,10 +2318,10 @@ Deleting temp dir...OK
     
     <item>
       <title>N: Настройка OAuth2-авторизации Google-аккаунтов в NextCloud</title>
-      <link>/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</link>
+      <link>https://debuntu.ru/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</guid>
+      <guid>https://debuntu.ru/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</guid>
       <description>
         
         
@@ -2375,10 +2375,10 @@ Deleting temp dir...OK
     
     <item>
       <title>N: Unable delete old snapshots of timeshift on btrfs volume</title>
-      <link>/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</link>
+      <link>https://debuntu.ru/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</link>
       <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</guid>
+      <guid>https://debuntu.ru/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</guid>
       <description>
         
         
@@ -2422,10 +2422,10 @@ ID 412 gen 90577 top level 411 path timeshift-btrfs/snapshots/2019-03-01_16-00-0
     
     <item>
       <title>N: cryptsetup короткая памятка</title>
-      <link>/n/cryptsetup-korotkaya-pamyatka/</link>
+      <link>https://debuntu.ru/n/cryptsetup-korotkaya-pamyatka/</link>
       <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/n/cryptsetup-korotkaya-pamyatka/</guid>
+      <guid>https://debuntu.ru/n/cryptsetup-korotkaya-pamyatka/</guid>
       <description>
         
         
@@ -2469,10 +2469,10 @@ umount ramfs &amp;amp;&amp;amp; rmdir ramfs
     
     <item>
       <title>N: AppArmor препятствует электронному подписыванию документов LibreOffice</title>
-      <link>/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</link>
+      <link>https://debuntu.ru/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</link>
       <pubDate>Tue, 27 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</guid>
+      <guid>https://debuntu.ru/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</guid>
       <description>
         
         
@@ -2494,10 +2494,10 @@ comm=&amp;#34;gpg&amp;#34; requested_mask=&amp;#34;wr&amp;#34; denied_mask=&amp;
     
     <item>
       <title>N: Mikrotik: Wireless WDS Mesh With Mesh Interface</title>
-      <link>/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</link>
+      <link>https://debuntu.ru/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</link>
       <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</guid>
+      <guid>https://debuntu.ru/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</guid>
       <description>
         
         
@@ -2575,10 +2575,10 @@ security-profile=default signal-range=-120..-60
     
     <item>
       <title>N: Усиление защиты sshd</title>
-      <link>/n/usilenie-zashchity-sshd/</link>
+      <link>https://debuntu.ru/n/usilenie-zashchity-sshd/</link>
       <pubDate>Wed, 20 Jan 2016 00:00:00 +0000</pubDate>
       
-      <guid>/n/usilenie-zashchity-sshd/</guid>
+      <guid>https://debuntu.ru/n/usilenie-zashchity-sshd/</guid>
       <description>
         
         
@@ -2626,10 +2626,10 @@ MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-
     
     <item>
       <title>N: OpenWRT Управление питанием порта USB</title>
-      <link>/n/openwrt-upravlenie-pitaniem-porta-usb/</link>
+      <link>https://debuntu.ru/n/openwrt-upravlenie-pitaniem-porta-usb/</link>
       <pubDate>Thu, 29 Oct 2015 00:00:00 +0000</pubDate>
       
-      <guid>/n/openwrt-upravlenie-pitaniem-porta-usb/</guid>
+      <guid>https://debuntu.ru/n/openwrt-upravlenie-pitaniem-porta-usb/</guid>
       <description>
         
         
@@ -2651,10 +2651,10 @@ export gpio4 gpiochip0 unexport
     
     <item>
       <title>N: Отправка почты из контактной формы MODx Evo через gmail</title>
-      <link>/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</link>
+      <link>https://debuntu.ru/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</link>
       <pubDate>Thu, 12 Dec 2013 00:00:00 +0000</pubDate>
       
-      <guid>/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</guid>
+      <guid>https://debuntu.ru/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</guid>
       <description>
         
         
@@ -2701,10 +2701,10 @@ public_html/manager/includes/controls/phpmailer/class.phpmailer.php:        $ssl
     
     <item>
       <title>N: Краткое описание установки DD-WRT на роутер Linksys WRT610N V2.0</title>
-      <link>/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</link>
+      <link>https://debuntu.ru/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</link>
       <pubDate>Sun, 25 Nov 2012 00:00:00 +0000</pubDate>
       
-      <guid>/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</guid>
+      <guid>https://debuntu.ru/n/kratkoe-opisanie-ustanovki-dd-wrt-na-router-linksys-wrt610n-v2.0/</guid>
       <description>
         
         
@@ -2728,10 +2728,10 @@ public_html/manager/includes/controls/phpmailer/class.phpmailer.php:        $ssl
     
     <item>
       <title>N: Разборка трекбола Logitech M570</title>
-      <link>/n/razborka-trekbola-logitech-m570/</link>
+      <link>https://debuntu.ru/n/razborka-trekbola-logitech-m570/</link>
       <pubDate>Fri, 30 Mar 2012 00:00:00 +0000</pubDate>
       
-      <guid>/n/razborka-trekbola-logitech-m570/</guid>
+      <guid>https://debuntu.ru/n/razborka-trekbola-logitech-m570/</guid>
       <description>
         
         
@@ -2742,17 +2742,17 @@ public_html/manager/includes/controls/phpmailer/class.phpmailer.php:        $ssl
 &lt;li&gt;один винт в батарейном отсеке под наклейкой с изображением батарейки.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Шарик вынимается лёгким подталкиванием через отверстие снизу.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/razborka-trekbola-logitech-m570/logitech_m570.jpg&#34; alt=&#34;Disassabling Logitech M570&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/razborka-trekbola-logitech-m570/logitech_m570.jpg&#34; alt=&#34;Disassabling Logitech M570&#34;&gt;&lt;/p&gt;
 
       </description>
     </item>
     
     <item>
       <title>N: Настройка клиента OpenVPN на Windows XP</title>
-      <link>/n/nastroika-klienta-openvpn-na-windows-xp/</link>
+      <link>https://debuntu.ru/n/nastroika-klienta-openvpn-na-windows-xp/</link>
       <pubDate>Sat, 28 May 2011 00:00:00 +0000</pubDate>
       
-      <guid>/n/nastroika-klienta-openvpn-na-windows-xp/</guid>
+      <guid>https://debuntu.ru/n/nastroika-klienta-openvpn-na-windows-xp/</guid>
       <description>
         
         

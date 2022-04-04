@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Ansible</title>
-    <link>/tags/ansible/</link>
+    <link>https://debuntu.ru/tags/ansible/</link>
     <description>Recent content in Ansible on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 12 Mar 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Выполнение ad-hoc absible команд</title>
-      <link>/n/vypolnenie-ad-hoc-absible-komand/</link>
+      <link>https://debuntu.ru/n/vypolnenie-ad-hoc-absible-komand/</link>
       <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/vypolnenie-ad-hoc-absible-komand/</guid>
+      <guid>https://debuntu.ru/n/vypolnenie-ad-hoc-absible-komand/</guid>
       <description>
         
         

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Kerberos</title>
-    <link>/tags/kerberos/</link>
+    <link>https://debuntu.ru/tags/kerberos/</link>
     <description>Recent content in Kerberos on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/kerberos/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/kerberos/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Получение keytab-файла для сервисного принципала</title>
-      <link>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <link>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <guid>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
       <description>
         
         
@@ -48,10 +48,10 @@
     
     <item>
       <title>N: Создание keytab-файла для пользовательского принципала</title>
-      <link>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
+      <link>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
       <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
+      <guid>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
       <description>
         
         

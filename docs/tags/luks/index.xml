@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – LUKS</title>
-    <link>/tags/luks/</link>
+    <link>https://debuntu.ru/tags/luks/</link>
     <description>Recent content in LUKS on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 10 Dec 2018 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/luks/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/luks/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: cryptsetup короткая памятка</title>
-      <link>/n/cryptsetup-korotkaya-pamyatka/</link>
+      <link>https://debuntu.ru/n/cryptsetup-korotkaya-pamyatka/</link>
       <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/n/cryptsetup-korotkaya-pamyatka/</guid>
+      <guid>https://debuntu.ru/n/cryptsetup-korotkaya-pamyatka/</guid>
       <description>
         
         

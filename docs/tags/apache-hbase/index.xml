@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Apache HBase</title>
-    <link>/tags/apache-hbase/</link>
+    <link>https://debuntu.ru/tags/apache-hbase/</link>
     <description>Recent content in Apache HBase on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 22 Oct 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/apache-hbase/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/apache-hbase/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Администрирование таблиц в Apache HBase</title>
-      <link>/a/administrirovanie-tablic-v-apache-hbase/</link>
+      <link>https://debuntu.ru/a/administrirovanie-tablic-v-apache-hbase/</link>
       <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/administrirovanie-tablic-v-apache-hbase/</guid>
+      <guid>https://debuntu.ru/a/administrirovanie-tablic-v-apache-hbase/</guid>
       <description>
         
         
@@ -128,10 +128,10 @@ echo &amp;#34;enable &amp;#39;MyTableName&amp;#39;&amp;#34; | hbase shell
     
     <item>
       <title>Manuals: 06. 🎣 Заброс Hook&#39;а в Apache HBase</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</link>
       <pubDate>Fri, 22 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</guid>
       <description>
         
         
@@ -251,7 +251,7 @@ These arguments will be passed as part of the Java command line. Commonly, garba
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
-&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
 &lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHBase&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache HBase&lt;/a&gt;&lt;/p&gt;
 
@@ -260,10 +260,10 @@ These arguments will be passed as part of the Java command line. Commonly, garba
     
     <item>
       <title>Manuals: 11. Первоначальный импорт содержимого HBase</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</link>
       <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</guid>
       <description>
         
         

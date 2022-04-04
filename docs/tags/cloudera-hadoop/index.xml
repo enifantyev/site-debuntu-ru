@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Cloudera Hadoop</title>
-    <link>/tags/cloudera-hadoop/</link>
+    <link>https://debuntu.ru/tags/cloudera-hadoop/</link>
     <description>Recent content in Cloudera Hadoop on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 11 Aug 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/cloudera-hadoop/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/cloudera-hadoop/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</title>
-      <link>/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
+      <link>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
       <pubDate>Wed, 11 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
       <description>
         
         
@@ -66,10 +66,10 @@ zoosu:TsKlydBdycdq-&amp;gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=
     
     <item>
       <title>A: 00. Подготовка к установке кластера Cloudera CDH 6.3.2</title>
-      <link>/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
+      <link>https://debuntu.ru/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
       <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
       <description>
         
         

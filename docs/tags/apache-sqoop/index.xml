@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Apache Sqoop</title>
-    <link>/tags/apache-sqoop/</link>
+    <link>https://debuntu.ru/tags/apache-sqoop/</link>
     <description>Recent content in Apache Sqoop on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sun, 01 Nov 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/apache-sqoop/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/apache-sqoop/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Использование Apache Sqoop для импорта/экспорта данных между PostgreSQL и HDFS</title>
-      <link>/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
+      <link>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
+      <guid>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
       <description>
         
         

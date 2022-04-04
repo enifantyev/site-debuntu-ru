@@ -1,5 +1,5 @@
-baseURL = "/"
-#baseURL = "https://debuntu.ru/"
+#baseURL = "/"
+baseURL = "https://debuntu.ru/"
 publishDir = "docs"
 title = "Debuntarium"
 

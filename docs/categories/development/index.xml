@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Development</title>
-    <link>/categories/development/</link>
+    <link>https://debuntu.ru/categories/development/</link>
     <description>Recent content in Development on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 07 Jul 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/categories/development/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/categories/development/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub</title>
-      <link>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
+      <link>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
+      <guid>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
       <description>
         
         

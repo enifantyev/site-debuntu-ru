@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Kafdrop</title>
-    <link>/tags/kafdrop/</link>
+    <link>https://debuntu.ru/tags/kafdrop/</link>
     <description>Recent content in Kafdrop on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/kafdrop/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/kafdrop/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Kafdrop. 01. Сборка jar-пакета</title>
-      <link>/a/kafdrop-sborka-jar-paketa/</link>
+      <link>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/kafdrop-sborka-jar-paketa/</guid>
+      <guid>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</guid>
       <description>
         
         
@@ -49,10 +49,10 @@ mvn clean package
     
     <item>
       <title>A: Kafdrop. 02. Установка и настройка</title>
-      <link>/a/kafdrop-ustanovka-i-nastroika/</link>
+      <link>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/kafdrop-ustanovka-i-nastroika/</guid>
+      <guid>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</guid>
       <description>
         
         

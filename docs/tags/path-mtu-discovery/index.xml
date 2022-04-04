@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Path MTU Discovery</title>
-    <link>/tags/path-mtu-discovery/</link>
+    <link>https://debuntu.ru/tags/path-mtu-discovery/</link>
     <description>Recent content in Path MTU Discovery on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 30 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/path-mtu-discovery/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/path-mtu-discovery/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Path MTU Discovery и прочее связанное с этим</title>
-      <link>/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</link>
+      <link>https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</guid>
+      <guid>https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</guid>
       <description>
         
         

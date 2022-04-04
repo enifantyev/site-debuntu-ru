@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Apache Tomcat</title>
-    <link>/tags/apache-tomcat/</link>
+    <link>https://debuntu.ru/tags/apache-tomcat/</link>
     <description>Recent content in Apache Tomcat on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 12 May 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/apache-tomcat/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/apache-tomcat/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</title>
-      <link>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
+      <link>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
+      <guid>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
       <description>
         
         

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Alpine Linux</title>
-    <link>/tags/alpine-linux/</link>
+    <link>https://debuntu.ru/tags/alpine-linux/</link>
     <description>Recent content in Alpine Linux on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 14 Apr 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/alpine-linux/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/alpine-linux/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Установка Monitorix в Alpine Linux</title>
-      <link>/n/ustanovka-monitorix-v-alpine-linux/</link>
+      <link>https://debuntu.ru/n/ustanovka-monitorix-v-alpine-linux/</link>
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/ustanovka-monitorix-v-alpine-linux/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-monitorix-v-alpine-linux/</guid>
       <description>
         
         
@@ -205,10 +205,10 @@ stop() {
     
     <item>
       <title>N: Избавляемся от root&#39;а в Alpine Linux</title>
-      <link>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
+      <link>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
+      <guid>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
       <description>
         
         
@@ -238,10 +238,10 @@ addgroup newuser wheel
     
     <item>
       <title>N: Установка Alpine Linux в подтом btrfs</title>
-      <link>/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
+      <link>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
       <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
       <description>
         
         

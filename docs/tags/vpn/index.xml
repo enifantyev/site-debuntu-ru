@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – VPN</title>
-    <link>/tags/vpn/</link>
+    <link>https://debuntu.ru/tags/vpn/</link>
     <description>Recent content in VPN on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 31 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/vpn/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/vpn/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,21 +16,21 @@
     
     <item>
       <title>A: Развёртывание сети OpenVPN</title>
-      <link>/a/razvyortyvanie-seti-openvpn/</link>
+      <link>https://debuntu.ru/a/razvyortyvanie-seti-openvpn/</link>
       <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/razvyortyvanie-seti-openvpn/</guid>
+      <guid>https://debuntu.ru/a/razvyortyvanie-seti-openvpn/</guid>
       <description>
         
         
         &lt;p&gt;2020-03-31&lt;/p&gt;
 &lt;p&gt;Статья в процессе написания!&lt;/p&gt;
-&lt;p&gt;Я перерабатываю свою &lt;a href=&#34;/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov&#34;&gt;статью от 2014 года&lt;/a&gt; в соответствии с новыми стандартами и релизами OpenVPN.&lt;/p&gt;
-&lt;p&gt;Если лень много читать и хочется сразу запустить простую OpenVPN-сеть, то переходите к статье &lt;a href=&#34;/a/openvpn-eto-prosto&#34;&gt;OpenVPN — это просто&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Я перерабатываю свою &lt;a href=&#34;https://debuntu.ru/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov&#34;&gt;статью от 2014 года&lt;/a&gt; в соответствии с новыми стандартами и релизами OpenVPN.&lt;/p&gt;
+&lt;p&gt;Если лень много читать и хочется сразу запустить простую OpenVPN-сеть, то переходите к статье &lt;a href=&#34;https://debuntu.ru/a/openvpn-eto-prosto&#34;&gt;OpenVPN — это просто&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://openvpn.net/community-resources/reference-manual-for-openvpn-2-4/&#34;&gt;Reference manual for OpenVPN 2.4&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Рекомендую полезную книгу для понимания симметричного, ассиметричного шифрования и много другого по этой темы: &lt;a href=&#34;https://www.ozon.ru/context/detail/id/3217966/&#34;&gt;Саймон Сингх. Книга шифров: Тайная история шифров и их расшифровки&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha&#34;&gt;Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha&#34;&gt;Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
 &lt;p&gt;Изначально OpenVPN был разработан by James Yonan.&lt;/p&gt;
 &lt;h3 id=&#34;описание-из-референс-мануала&#34;&gt;Описание из референс мануала&lt;/h3&gt;
@@ -79,9 +79,9 @@
 enp2s0
 enp2s1
 tun0 192.168.2.1/24
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Именно через этот сетевой интерфейс будет проходить локальный &lt;strong&gt;незашифрованный&lt;/strong&gt; трафик, и прослушивая его &lt;code&gt;tcpdump&lt;/code&gt;&amp;lsquo;ом мы увидим привычные пакеты, например &lt;em&gt;icmp request/echo&lt;/em&gt;, с номерами частных ip-адресов в полях источника и назначения. Одновременно с этим, прослушивая соответствующий физический интерфейс, мы увидим пакеты с internet ip-адресами в заголовке, но с криптомешаниной в поле для данных, в каковом поле находится инкапсулированный icmp-пакет, который мы и наблюдаем на устройстве &lt;em&gt;tun&lt;/em&gt;. Естественно, что из-за инкапсуляции размер MTU уменьшен, поэтому не забываем обеспечивать клиенту посылку &lt;a href=&#34;/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;&lt;em&gt;Path MTU Discovery&lt;/em&gt;&lt;/a&gt; к требуемому серверу с помощью соответствующих правил внутри туннеля и вне его.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Именно через этот сетевой интерфейс будет проходить локальный &lt;strong&gt;незашифрованный&lt;/strong&gt; трафик, и прослушивая его &lt;code&gt;tcpdump&lt;/code&gt;&amp;lsquo;ом мы увидим привычные пакеты, например &lt;em&gt;icmp request/echo&lt;/em&gt;, с номерами частных ip-адресов в полях источника и назначения. Одновременно с этим, прослушивая соответствующий физический интерфейс, мы увидим пакеты с internet ip-адресами в заголовке, но с криптомешаниной в поле для данных, в каковом поле находится инкапсулированный icmp-пакет, который мы и наблюдаем на устройстве &lt;em&gt;tun&lt;/em&gt;. Естественно, что из-за инкапсуляции размер MTU уменьшен, поэтому не забываем обеспечивать клиенту посылку &lt;a href=&#34;https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;&lt;em&gt;Path MTU Discovery&lt;/em&gt;&lt;/a&gt; к требуемому серверу с помощью соответствующих правил внутри туннеля и вне его.&lt;/p&gt;
 &lt;p&gt;Максимальное количество устройств &lt;strong&gt;tun&lt;/strong&gt; равняется &lt;strong&gt;1024&lt;/strong&gt;, судя по &lt;a href=&#34;https://github.com/torvalds/linux/blob/master/drivers/net/tun.c&#34;&gt;linux/tun.c&lt;/a&gt;. То есть, если специально не указывать в конфигурационных файлах номер &lt;em&gt;tun&lt;/em&gt; (tun0&amp;hellip;tun1023), то для следующего запускаемого виртуального интерфейса, будет назначен порядковый незанятый номер, начиная с &lt;em&gt;tun0&lt;/em&gt;. В правилах iptables, для выборки &lt;em&gt;всех&lt;/em&gt; tun-devices, надлежит использовать параметр &lt;em&gt;tun+&lt;/em&gt; (&lt;code&gt;iptables -A INPUT -i tun+ -j REJECT&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;Использование отдельного сетевого устройства &lt;em&gt;tun&lt;/em&gt; позволяет ограничивать трафик между локальными узлами простыми правилами &lt;code&gt;iptables&lt;/code&gt;, задаваемыми для интерфейса &lt;code&gt;tun&lt;/code&gt;. Например, &lt;code&gt;iptables -A INPUT -i tun1 -p icmp --icmp-type echo-request -j ACCEPT -m conntrack --ctstate NEW&lt;/code&gt; разрешит пинг хоста по его частному ip-адресу. Опять напомню для тех, кто фильтрует ICMP о &lt;a href=&#34;/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;Path MTU Discovery и прочее связанное с этим&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Использование отдельного сетевого устройства &lt;em&gt;tun&lt;/em&gt; позволяет ограничивать трафик между локальными узлами простыми правилами &lt;code&gt;iptables&lt;/code&gt;, задаваемыми для интерфейса &lt;code&gt;tun&lt;/code&gt;. Например, &lt;code&gt;iptables -A INPUT -i tun1 -p icmp --icmp-type echo-request -j ACCEPT -m conntrack --ctstate NEW&lt;/code&gt; разрешит пинг хоста по его частному ip-адресу. Опять напомню для тех, кто фильтрует ICMP о &lt;a href=&#34;https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim&#34;&gt;Path MTU Discovery и прочее связанное с этим&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;описание-сетевого-протокола-openvpn&#34;&gt;Описание сетевого протокола OpenVPN&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://build.openvpn.net/doxygen/network_protocol.html&#34;&gt;OpenVPN&amp;rsquo;s network protocol&lt;/a&gt;. Из описания понятно, что обмен информацией происходит по двум каналам, один из которых для управления, а другой для передачи данных. То есть датаграмма может содержать два типа полезной нагрузки (payload): либо управляющую информацию, либо передаваемые данные.&lt;/p&gt;
 &lt;h3 id=&#34;измененения-по-сравнению-со-статьёй-2014-года&#34;&gt;Измененения по сравнению со статьёй 2014 года&lt;/h3&gt;
@@ -99,7 +99,7 @@ tun0 192.168.2.1/24
 &lt;h1 id=&#34;развёртывание-сети-openvpn&#34;&gt;Развёртывание сети OpenVPN&lt;/h1&gt;
 &lt;p&gt;Мне кажется, я подобрал правильную последовательность действий для развёртывания сети. Сначала, на подходящем компьютере, создадим Центр Сертификации и выпустим необходимое количество ключей и сертификатов для &lt;em&gt;серверов&lt;/em&gt; и &lt;em&gt;клиентов&lt;/em&gt;. Потом займёмся установкой программного обеспечения и проверкой работы.&lt;/p&gt;
 &lt;h2 id=&#34;создание-ca-выпуск-ключей-и-сертификатов&#34;&gt;Создание CA, выпуск ключей и сертификатов&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Для создания ключей и сертификатов достаточно прав обычного пользователя.&lt;/strong&gt;&lt;/p&gt;
 &lt;h3 id=&#34;1-клонирование-easy-rsa&#34;&gt;1. Клонирование easy-rsa&lt;/h3&gt;
 &lt;p&gt;В выделенном для &lt;em&gt;CA&lt;/em&gt; каталоге клонируем текущую мастер-ветку Easy-RSA и подготавливаем файл с переменными &lt;code&gt;vars&lt;/code&gt;, изменяющими настройки генерации ключей по умолчанию:&lt;/p&gt;
@@ -158,7 +158,7 @@ a262b611478c658828f6f18bf8833e09
 &lt;p&gt;Невозможно выпустить несколько сертификатов под одним именем. Вместо выпуска нового сертификата, необходимо за 30 дней (переменная EASYRSA_CERT_RENEW в &lt;code&gt;vars&lt;/code&gt;) до окончания срока действия сертификата, произвести перевыпуск сертификата. В этом случае будет сгенерирован новый приватный ключ и новый сертификат для этого ключа. Старые сертификаты не попадут в &lt;em&gt;отозванные&lt;/em&gt;, так как необходимо успеть заменить ключ и сертификат на сервере до окончания срока действия предыдущего сертификата.&lt;/p&gt;
 &lt;h2 id=&#34;создание-файла-конфигурации-для-openvpn-сервера&#34;&gt;Создание файла конфигурации для OpenVPN-сервера&lt;/h2&gt;
 &lt;h3 id=&#34;разжёвывание&#34;&gt;Разжёвывание&lt;/h3&gt;
-&lt;p&gt;В идеале, как указано в &lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;, создание ключей и их сертификация производится в несколько этапов и на разных компьютерах. Но здесь мы сократим эти этапы (генерирование секретного ключа и создание запроса на сертификат на одной системе, сертификация открытого ключа на другой) до одной команды &lt;code&gt;easyrsa build-server-full nopass inline&lt;/code&gt;. Опция &lt;code&gt;nopass&lt;/code&gt; позволяет сгенерировать беспарольный приватный ключ, что удобно для использования на серверах. Опция &lt;code&gt;inline&lt;/code&gt; подготовит единственный файл &lt;code&gt;.creds&lt;/code&gt; со встроенными ключами и сертификатами для удобного добавления к файлу конфигурации.&lt;/p&gt;
+&lt;p&gt;В идеале, как указано в &lt;a href=&#34;https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Перевод Easy-RSA 3 Quickstart README&lt;/a&gt;, создание ключей и их сертификация производится в несколько этапов и на разных компьютерах. Но здесь мы сократим эти этапы (генерирование секретного ключа и создание запроса на сертификат на одной системе, сертификация открытого ключа на другой) до одной команды &lt;code&gt;easyrsa build-server-full nopass inline&lt;/code&gt;. Опция &lt;code&gt;nopass&lt;/code&gt; позволяет сгенерировать беспарольный приватный ключ, что удобно для использования на серверах. Опция &lt;code&gt;inline&lt;/code&gt; подготовит единственный файл &lt;code&gt;.creds&lt;/code&gt; со встроенными ключами и сертификатами для удобного добавления к файлу конфигурации.&lt;/p&gt;
 &lt;p&gt;Подготовим отдельный скрипт для генерирования единственного файла &lt;code&gt;.conf&lt;/code&gt;, содержащего почти всё необходимое.&lt;/p&gt;
 &lt;p&gt;В скрипте, к имени файла ключа и сертификата будет добавляться дата истечения их срока действия. Естественно, термин &amp;ldquo;срок действия&amp;rdquo; касается только сертификата, но мне показалось удобным и к ключу добавить эту информацию. В принципе нет необходимости менять приватный ключ, если только он не был скомпрометирован, тогда как есть команда &lt;code&gt;easyrsa renew&lt;/code&gt; для перевыпуска нового сертификата на основе старого приватного ключа.&lt;/p&gt;
 &lt;p&gt;!!! Нет необходимости хранить в Центре Сертификации приватные ключи. Даже неприемлимо. Достаточно хранить только сертификаты по той причине, что они могут понадобиться при процедуре отзыва скомпрометированных ключей. В случае отсутствия копии сертификата, который необходимо добавить в список отозванных, есть способ отловить его во время подключения. Но я не помню как это делается.&lt;/p&gt;
@@ -295,10 +295,10 @@ shred -u pki/reqs/${SRVNAME}.req
     
     <item>
       <title>A: OpenVPN — это просто</title>
-      <link>/a/openvpn-eto-prosto/</link>
+      <link>https://debuntu.ru/a/openvpn-eto-prosto/</link>
       <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/openvpn-eto-prosto/</guid>
+      <guid>https://debuntu.ru/a/openvpn-eto-prosto/</guid>
       <description>
         
         
@@ -314,7 +314,7 @@ shred -u pki/reqs/${SRVNAME}.req
 &lt;/ol&gt;
 &lt;p&gt;Здесь приведена простая конфигурация для выхода &lt;em&gt;клиента&lt;/em&gt; в интернет через VPN-сервер. Стороннему наблюдателю будут видны зашифрованные udp-пакеты, которыми обменивается клиент со случайного порта выше 1024-го на порт UDP 9216 удалённого хоста. То есть враг будет знать сам факт использования VPN, но без соответствующих ключей и сертификатов не сможет наблюдать содержимое зашифрованного VPN-туннеля. Маскировка OpenVPN-трафика под HTTPS-протокол реализуется пакетом &lt;code&gt;obfsproxy&lt;/code&gt;, но о нём я напишу в другой статье.&lt;/p&gt;
 &lt;h2 id=&#34;1-центр-сертификации&#34;&gt;1. Центр Сертификации&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Центр Сертификации&lt;/strong&gt; звучит очень сложно. На самом деле никакого дополнительного софта компилировать и собирать не надо. Создадим все необходимые для работы OpenVPN-сети файлы с помощью скриптиков из пакета &lt;a href=&#34;https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme&#34;&gt;Easy-RSA&lt;/a&gt;. Будет достаточно разместить EasyRSA в отдельной папке в домашнем каталоге, или, например, на флэшке. В самом крайнем случае, если нет нужды в постоянной или эпизодической работе по созданию новых ключей и сертификатов, то можно всё проделать прямо на OpenVPN-сервере, не забыв, после, надёжно удалить каталог.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Для создания ключей и сертификатов достаточно прав обычного пользователя.&lt;/strong&gt;&lt;/p&gt;
 &lt;h3 id=&#34;11-развёртывание-центра-сертификации&#34;&gt;1.1 Развёртывание &amp;ldquo;Центра Сертификации&amp;rdquo;&lt;/h3&gt;
 &lt;h4 id=&#34;111-клонирование-easy-rsa&#34;&gt;1.1.1. Клонирование easy-rsa&lt;/h4&gt;
@@ -470,10 +470,10 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
     
     <item>
       <title>A: Перевод Easy-RSA 3 Quickstart README</title>
-      <link>/a/perevod-easy-rsa-3-quickstart-readme/</link>
+      <link>https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <guid>https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme/</guid>
       <description>
         
         
@@ -538,10 +538,10 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
     
     <item>
       <title>A: Простой Центр Сертификации для strongSwan IPsec</title>
-      <link>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <link>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <guid>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
       <description>
         
         
@@ -616,14 +616,14 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
     
     <item>
       <title>A: Настраиваем OpenVPN сервер на подключение клиентов</title>
-      <link>/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
+      <link>https://debuntu.ru/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
       <pubDate>Mon, 04 Aug 2014 00:00:00 +0000</pubDate>
       
-      <guid>/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
+      <guid>https://debuntu.ru/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
       <description>
         
         
-        &lt;p&gt;2019-12-23 Опубликована свежая статья с упрощённым изложением &lt;a href=&#34;/a/openvpn-eto-prosto&#34;&gt;OpenVPN - это просто&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;2019-12-23 Опубликована свежая статья с упрощённым изложением &lt;a href=&#34;https://debuntu.ru/a/openvpn-eto-prosto&#34;&gt;OpenVPN - это просто&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;2014-08-04
 Статья в процессе переделки и дополнений по мере освоения.&lt;/p&gt;
 &lt;p&gt;Дописать:&lt;/p&gt;

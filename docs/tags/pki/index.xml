@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – PKI</title>
-    <link>/tags/pki/</link>
+    <link>https://debuntu.ru/tags/pki/</link>
     <description>Recent content in PKI on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 19 Mar 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/pki/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/pki/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа</title>
-      <link>/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</link>
+      <link>https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</link>
       <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</guid>
+      <guid>https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</guid>
       <description>
         
         
@@ -119,10 +119,10 @@ lAVtlyeGpgnMUi4egWk=
     
     <item>
       <title>A: Перевод Easy-RSA 3 Quickstart README</title>
-      <link>/a/perevod-easy-rsa-3-quickstart-readme/</link>
+      <link>https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <guid>https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme/</guid>
       <description>
         
         
@@ -187,10 +187,10 @@ lAVtlyeGpgnMUi4egWk=
     
     <item>
       <title>A: Простой Центр Сертификации для strongSwan IPsec</title>
-      <link>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <link>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <guid>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
       <description>
         
         

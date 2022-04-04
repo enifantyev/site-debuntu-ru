@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – LVM</title>
-    <link>/tags/lvm/</link>
+    <link>https://debuntu.ru/tags/lvm/</link>
     <description>Recent content in LVM on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/lvm/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/lvm/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
-      <link>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <link>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
       <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <guid>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
       <description>
         
         
@@ -72,10 +72,10 @@
     
     <item>
       <title>A: LVM2 — создание, перемещение и удаление логических томов</title>
-      <link>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
+      <link>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
+      <guid>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
       <description>
         
         
@@ -219,10 +219,10 @@
     
     <item>
       <title>Manuals: 20. Создание бэкапа всей системы с помощью BorgBackup</title>
-      <link>/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</guid>
       <description>
         
         
@@ -326,10 +326,10 @@ service auditd start
     
     <item>
       <title>Manuals: 30. Восстановление всей системы из бэкапа с помощью BorgBackup</title>
-      <link>/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</guid>
       <description>
         
         
@@ -421,7 +421,7 @@ chroot /mnt
 &lt;p&gt;Приводим &lt;code&gt;/etc/fstab&lt;/code&gt; в актуальное состояние, так как в нём указаны устаревшие сведения, оставшиеся от машины донора.&lt;/p&gt;
 &lt;p&gt;Необходимо помнить, что в &lt;code&gt;/etc/fstab&lt;/code&gt; могут быть просто не указаны некоторые разделы. Например, восстанавливаемый снимок машины, на которой отсутствовал LV-том &lt;code&gt;/dev/vg/var&lt;/code&gt; (то есть каталог &lt;code&gt;/var&lt;/code&gt; находится в LV-томе &lt;code&gt;/dev/vg/root&lt;/code&gt;), не будет иметь соответствующей строки в &lt;code&gt;/etc/fstab&lt;/code&gt;. Если такой снимок будет развёрнут с песочнице с подключённым &lt;code&gt;/dev/vg/var&lt;/code&gt; к &lt;code&gt;/var&lt;/code&gt;, то потребуется вручную добавить в &lt;code&gt;/etc/fstab&lt;/code&gt; строку &lt;code&gt;/dev/vg/var /var defaults 1 2&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Естественно, если восстанавливаемый снимок создавался на этой же машине, то этот пункт можно пропустить.&lt;/p&gt;
-&lt;h3 id=&#34;обновление-initramfs-и-выход-из-песочницы&#34;&gt;Обновление initramfs и выход из песочницы&lt;/h3&gt;
+&lt;h3 id=&#34;обновление-initramfs&#34;&gt;Обновление initramfs&lt;/h3&gt;
 &lt;p&gt;При восстановлении снимка с другой операционной системой или при различии в версиях Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.&lt;/p&gt;
 &lt;p&gt;Версию текущего ядра можно узнать через команду &lt;code&gt;uname -r&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Версии Linux-ядер в восстанавливаемом снимке видны в каталоге &lt;code&gt;/boot&lt;/code&gt;.&lt;/p&gt;
@@ -434,6 +434,15 @@ chroot /mnt
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;make-initrd --kernel=&amp;#39;5.10.82-std-def-alt1&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;исправляем-сетевые-настройки&#34;&gt;Исправляем сетевые настройки&lt;/h3&gt;
 &lt;p&gt;Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.&lt;/p&gt;
+&lt;h3 id=&#34;генерируем-новые-sshd-ключи&#34;&gt;Генерируем новые sshd-ключи&lt;/h3&gt;
+&lt;p&gt;Требуется в случае, например, массового восстановления снимка одной машины на некоторое количество машин.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -f /etc/ssh/ssh_host_*
+ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N &amp;#34;&amp;#34;
+ssh-keygen -t ed25519 -a 100 -f /etc/ssh/ssh_host_ed25519_key -N &amp;#34;&amp;#34;
+systemctl restart sshd
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;Предполагается, что ключи DSA и ECDSA закомментированы в &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; по причине своей устарелости и дырявости.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;выход-из-песочницы&#34;&gt;Выход из песочницы&lt;/h3&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;exit
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;заключительные-операции&#34;&gt;Заключительные операции&lt;/h2&gt;
@@ -456,10 +465,10 @@ reboot -f
     
     <item>
       <title>Manuals: 40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</title>
-      <link>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
       <description>
         
         

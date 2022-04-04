@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – make</title>
-    <link>/tags/make/</link>
+    <link>https://debuntu.ru/tags/make/</link>
     <description>Recent content in make on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 01 Apr 2011 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/make/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/make/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Как собрать новое ядро linux</title>
-      <link>/n/kak-sobrat-novoe-yadro-linux/</link>
+      <link>https://debuntu.ru/n/kak-sobrat-novoe-yadro-linux/</link>
       <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
       
-      <guid>/n/kak-sobrat-novoe-yadro-linux/</guid>
+      <guid>https://debuntu.ru/n/kak-sobrat-novoe-yadro-linux/</guid>
       <description>
         
         

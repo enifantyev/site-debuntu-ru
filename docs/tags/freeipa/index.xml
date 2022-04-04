@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – FreeIPA</title>
-    <link>/tags/freeipa/</link>
+    <link>https://debuntu.ru/tags/freeipa/</link>
     <description>Recent content in FreeIPA on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 27 Dec 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/freeipa/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/freeipa/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: 00. Удаление реплики</title>
-      <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
       <pubDate>Mon, 27 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
       <description>
         
         
@@ -95,10 +95,10 @@ sudo reboot
     
     <item>
       <title>Manuals: 01. Подготовка хостов к установке реплик FreeIPA</title>
-      <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
       <description>
         
         
@@ -392,10 +392,10 @@ The token has been initialized and is reassigned to slot 1520725004
     
     <item>
       <title>A: Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA</title>
-      <link>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
+      <link>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
       <description>
         
         
@@ -452,10 +452,10 @@ sudo ipa-getcert request -K HTTP/$(hostname) \
     
     <item>
       <title>N: Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</title>
-      <link>/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
+      <link>https://debuntu.ru/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
       <pubDate>Wed, 04 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
+      <guid>https://debuntu.ru/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
       <description>
         
         
@@ -508,10 +508,10 @@ EOF
     
     <item>
       <title>N: Ручное удаление реплики FreeIPA из RedOS7.2</title>
-      <link>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
+      <link>https://debuntu.ru/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
       <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
+      <guid>https://debuntu.ru/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
       <description>
         
         
@@ -538,10 +538,10 @@ rm -rf /etc/sysconfig/pki/tomcat
     
     <item>
       <title>A: Mokey - пользовательский сервис сброса/смены паролей FreeIPA</title>
-      <link>/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
+      <link>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
       <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
+      <guid>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
       <description>
         
         
@@ -705,10 +705,10 @@ SSLCryptoDevice builtin
     
     <item>
       <title>N: IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</title>
-      <link>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
+      <link>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
+      <guid>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
       <description>
         
         
@@ -834,10 +834,10 @@ May 11 20:40:20 dev-ipa01.test.lan server[3284]: arguments used: start
     
     <item>
       <title>N: Включение во FreeIPA отслеживания последней успешной аутентификации пользовательских аккаунтов</title>
-      <link>/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</link>
+      <link>https://debuntu.ru/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</link>
       <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</guid>
+      <guid>https://debuntu.ru/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</guid>
       <description>
         
         
@@ -890,10 +890,10 @@ Number of entries returned 3
     
     <item>
       <title>N: Отключение анонимного доступа к LDAP-каталогу FreeIPA</title>
-      <link>/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</link>
+      <link>https://debuntu.ru/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</link>
       <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</guid>
+      <guid>https://debuntu.ru/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</guid>
       <description>
         
         
@@ -952,10 +952,10 @@ text: Anonymous access is not allowed.
     
     <item>
       <title>N: Отдельная hidden replicas для безопасного full backup FreeIPA</title>
-      <link>/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</link>
+      <link>https://debuntu.ru/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</guid>
+      <guid>https://debuntu.ru/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</guid>
       <description>
         
         
@@ -974,10 +974,10 @@ text: Anonymous access is not allowed.
     
     <item>
       <title>N: Получение keytab-файла для сервисного принципала</title>
-      <link>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <link>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <guid>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
       <description>
         
         
@@ -1006,10 +1006,10 @@ text: Anonymous access is not allowed.
     
     <item>
       <title>A: Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
-      <link>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <link>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
       <description>
         
         
@@ -1675,10 +1675,10 @@ ipa group-del ${IPAGROUP}
     
     <item>
       <title>N: Создание keytab-файла для пользовательского принципала</title>
-      <link>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
+      <link>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
       <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
+      <guid>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
       <description>
         
         
@@ -1716,10 +1716,10 @@ Valid starting       Expires              Service principal
     
     <item>
       <title>N: Срипт для добавления PTR-записей по списку из файла в обратную DNS-зону FreeIPA</title>
-      <link>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
+      <link>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
       <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
+      <guid>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
       <description>
         
         
@@ -1758,10 +1758,10 @@ done &amp;lt; $LIST
     
     <item>
       <title>A: Создание system account для подключения LDAP-клиента к FreeIPA</title>
-      <link>/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
+      <link>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
       <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
+      <guid>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
       <description>
         
         
@@ -1869,10 +1869,10 @@ dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
     
     <item>
       <title>N: LDAP binding во FreeIPA</title>
-      <link>/n/ldap-binding-vo-freeipa/</link>
+      <link>https://debuntu.ru/n/ldap-binding-vo-freeipa/</link>
       <pubDate>Sun, 15 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/ldap-binding-vo-freeipa/</guid>
+      <guid>https://debuntu.ru/n/ldap-binding-vo-freeipa/</guid>
       <description>
         
         
@@ -1894,10 +1894,10 @@ dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
     
     <item>
       <title>A: Настройка LDAP-аутентификации в Nexus Repository Manager</title>
-      <link>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
+      <link>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
       <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
+      <guid>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
       <description>
         
         
@@ -1913,7 +1913,7 @@ dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
 &lt;h2 id=&#34;настройка-аутентификации-security--ldap&#34;&gt;Настройка аутентификации (Security – LDAP)&lt;/h2&gt;
 &lt;h3 id=&#34;вкладка-connection&#34;&gt;Вкладка Connection&lt;/h3&gt;
 &lt;p&gt;Самоподписанный сертификат контроллера домена добавляется в NXRM через кнопку &amp;ldquo;View certificate&amp;rdquo;, где доступна операция &amp;ldquo;Add certificate to truststore&amp;rdquo;. После чего, добавленный сертификат можно наблюдать в разделе Security – SSL Certificates.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;вкладка-user-and-group&#34;&gt;Вкладка User and group&lt;/h3&gt;
 &lt;p&gt;Select template: Generic Ldap Server (делаем это в первый и единственный раз при настройке подключения).&lt;/p&gt;
 &lt;p&gt;User relative DN: cn=users&lt;/p&gt;
@@ -1924,7 +1924,7 @@ dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
 &lt;p&gt;Real name attribute: cn&lt;/p&gt;
 &lt;p&gt;Email attribute: mail&lt;/p&gt;
 &lt;p&gt;Password attribute: оставляем пустым.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Ниже настраиваем отображение групп пользователей из IPA в соответствующие роли NXRM.&lt;/p&gt;
 &lt;p&gt;Map LDAP groups as roles: устанавливаем галку.&lt;/p&gt;
 &lt;p&gt;Group type: Static Groups&lt;/p&gt;
@@ -1934,13 +1934,13 @@ dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
 &lt;p&gt;Group ID attribute: cn&lt;/p&gt;
 &lt;p&gt;Group member attribute: member&lt;/p&gt;
 &lt;p&gt;Group member format: uid=${username},cn=users,cn=accounts,dc=example,dc=org&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;После чего появляется возможность добавить внешнюю роль, имя которой берётся из LDAP.&lt;/p&gt;
 &lt;h2 id=&#34;настройка-авторизации&#34;&gt;Настройка авторизации&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;включение-ldap&#34;&gt;Включение LDAP&lt;/h2&gt;
 &lt;p&gt;Добавляем в активные LDAP realms.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Предположим, что в локальной базе есть пользователь с совпадающим логином, как в IPA, но с разными паролями. Логика работы аутентификации будет следующей:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Сначала nxrm найдёт пользователя в локальной базе, но так как пароль не подойдёт, то будет просмотрены и другие Realms.&lt;/li&gt;

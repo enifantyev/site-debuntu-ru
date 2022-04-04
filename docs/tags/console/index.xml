@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – console</title>
-    <link>/tags/console/</link>
+    <link>https://debuntu.ru/tags/console/</link>
     <description>Recent content in console on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sat, 23 Nov 2019 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/console/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/console/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Чем консоль отличается от терминала</title>
-      <link>/a/chem-konsol-otlichaetsya-ot-terminala/</link>
+      <link>https://debuntu.ru/a/chem-konsol-otlichaetsya-ot-terminala/</link>
       <pubDate>Sat, 23 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/chem-konsol-otlichaetsya-ot-terminala/</guid>
+      <guid>https://debuntu.ru/a/chem-konsol-otlichaetsya-ot-terminala/</guid>
       <description>
         
         
@@ -44,7 +44,7 @@
 &lt;p&gt;В консоль выводится системная информация, начиная с запуска BIOS.&lt;/p&gt;
 &lt;p&gt;Но с приходом сети Интернет, при помощи технологии &amp;ldquo;KVM over IP&amp;rdquo;, стало возможным любую машину сделать консолью к другому компьютеру.&lt;/p&gt;
 &lt;h3 id=&#34;работа-с-tty&#34;&gt;Работа с TTY&lt;/h3&gt;
-&lt;img src=/chem-konsol-otlichaetsya-ot-terminala/teletype-asr33-mc_800x583.jpg width=50% align=&#34;middle&#34; /&gt;
+&lt;img src=https://debuntu.ru/chem-konsol-otlichaetsya-ot-terminala/teletype-asr33-mc_800x583.jpg width=50% align=&#34;middle&#34; /&gt;
 &lt;p&gt;После подключения к ОС, например Unix, машинка печатала на бумаге &lt;code&gt;login:&lt;/code&gt;, в ответ надо было напечатать свой логин. Далее на печать выходило &lt;code&gt;Password:&lt;/code&gt;. Здесь, в целях безопасности, пароль не пропечатывался на бумаге, да и сейчас отключена его печать на экране. После успешной авторизации, в ответ на приглашение оболочки, можно было набрать &lt;code&gt;mc&lt;/code&gt; и нажать &amp;ldquo;Ввод&amp;rdquo;, и на бумаге распечатывалось динамическое изображение &amp;ldquo;Midnight Commander&amp;rdquo;. Ориентируясь по распечатанной картинке, пользователь с помощью &amp;ldquo;стрелочек&amp;rdquo; выбирал необходимый текстовый файл, содержимое которого, после нажатия на F4, распечатывалось на бумаге в обрамлении &lt;code&gt;mcedit&lt;/code&gt; или &lt;code&gt;nano&lt;/code&gt;. Далее можно было приниматься за редактирование&amp;hellip; :-)&lt;/p&gt;
 &lt;h3 id=&#34;консольные-приложения&#34;&gt;Консольные приложения&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;Консольные приложения&lt;/em&gt; не были интерактивными. Ещё не было графического интерфейса и мышки. Вывод информации выполнялся построчно на печатающее устройство. Простое редактирование текстового файла представляло из себя серию команд с консоли.&lt;/p&gt;

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – FreeIPA</title>
-    <link>/manuals/freeipa/</link>
+    <link>https://debuntu.ru/manuals/freeipa/</link>
     <description>Recent content in FreeIPA on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 27 Dec 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/manuals/freeipa/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/manuals/freeipa/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5</title>
-      <link>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</link>
       <pubDate>Mon, 27 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</guid>
       <description>
         
         

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Nokia E52</title>
-    <link>/tags/nokia-e52/</link>
+    <link>https://debuntu.ru/tags/nokia-e52/</link>
     <description>Recent content in Nokia E52 on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 01 Apr 2011 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/nokia-e52/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/nokia-e52/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Настройка VoIP на Nokia E52</title>
-      <link>/n/nastroika-voip-na-nokia-e52/</link>
+      <link>https://debuntu.ru/n/nastroika-voip-na-nokia-e52/</link>
       <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
       
-      <guid>/n/nastroika-voip-na-nokia-e52/</guid>
+      <guid>https://debuntu.ru/n/nastroika-voip-na-nokia-e52/</guid>
       <description>
         
         

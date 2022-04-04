@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Hue</title>
-    <link>/tags/hue/</link>
+    <link>https://debuntu.ru/tags/hue/</link>
     <description>Recent content in Hue on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 09 Jun 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/hue/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/hue/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Проблема с пакетом psycopg2 при создании нового суперюзера для Cloudera Hue</title>
-      <link>/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</link>
+      <link>https://debuntu.ru/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</link>
       <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</guid>
+      <guid>https://debuntu.ru/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</guid>
       <description>
         
         
@@ -68,10 +68,10 @@ Superuser created successfully.
     
     <item>
       <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</title>
-      <link>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
+      <link>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
       <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
+      <guid>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
       <description>
         
         

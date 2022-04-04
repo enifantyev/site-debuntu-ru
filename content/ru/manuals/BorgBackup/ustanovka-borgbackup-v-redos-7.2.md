@@ -58,7 +58,7 @@ WARNING: Running pip as the 'root' user can result in broken permissions and con
 
 ### Установка утилиты borgbackup
 ```
-python3 -m pip install borgbackup
+python3 -m pip install --user borgbackup
 ```
 stdout:
 ```

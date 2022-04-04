@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – PostgreSQL</title>
-    <link>/tags/postgresql/</link>
+    <link>https://debuntu.ru/tags/postgresql/</link>
     <description>Recent content in PostgreSQL on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sun, 01 Nov 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/postgresql/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Использование Apache Sqoop для импорта/экспорта данных между PostgreSQL и HDFS</title>
-      <link>/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
+      <link>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
+      <guid>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
       <description>
         
         
@@ -216,10 +216,10 @@ kdestroy
     
     <item>
       <title>N: Добавление в NXRM единого репозитория для всех версий PostgreSQL</title>
-      <link>/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
+      <link>https://debuntu.ru/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
       <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
+      <guid>https://debuntu.ru/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
       <description>
         
         
@@ -490,10 +490,10 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64
     
     <item>
       <title>A: Бэкап дампа базы Postgresql и его восстановление на новом сервере</title>
-      <link>/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
+      <link>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
+      <guid>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
       <description>
         
         
@@ -614,10 +614,10 @@ lbzip2 -c -d /data/pgsql/11/backup/psql_dumpall_20200421-103341.bz2 | psql postg
     
     <item>
       <title>A: Установка PostgreSQL 9.0 на Debian 6.0</title>
-      <link>/a/ustanovka-postgresql-90-na-debian-60/</link>
+      <link>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</link>
       <pubDate>Thu, 17 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-postgresql-90-na-debian-60/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</guid>
       <description>
         
         

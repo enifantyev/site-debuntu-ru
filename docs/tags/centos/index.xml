@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – CentOS</title>
-    <link>/tags/centos/</link>
+    <link>https://debuntu.ru/tags/centos/</link>
     <description>Recent content in CentOS on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 11 Mar 2022 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/centos/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/centos/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: 10. Установка и настройка BorgBackup</title>
-      <link>/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</guid>
       <description>
         
         
@@ -87,10 +87,10 @@ sudo -u ${BORGUSERNAME} /bin/bash -c &amp;#34;ln -s ${REPODIR} ~/&amp;#34;
 export BORG_RSH=&amp;#34;ssh -i ~/.ssh/${SSHKEYNAME}&amp;#34;
 export BORG_REPO=&amp;#34;${BORGUSERNAME}@localhost:${REPOLINKNAME}&amp;#34;
 
-# Вызываем sudo -E для передачи переменных окружения в borg
-sudo -E -u ${BORGUSERNAME} /bin/bash -c &amp;#39;borg init -e none&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На ошибку &lt;code&gt;Error: Permission denied&lt;/code&gt; внимания не обращаем, так как сама ошибка не локализована, но структура репо создаётся и в дальнейшем репо работает нормально. При создании же нового репо из клиента, данная ошибка не появляется.&lt;/p&gt;
-&lt;p&gt;3.5. Проверяем, что в каталоге первого репо создана структура:&lt;/p&gt;
+# Вызываем sudo -EH для передачи переменных
+# окружения в borg и смены HOME.
+sudo -EH -u ${BORGUSERNAME} /bin/bash -c &amp;#39;borg init -e none&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.5. Проверяем, что в каталоге первого репо создана структура:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ls -al ${REPODIR}
 total 72
 drwxr-xr-x 3 _borg _borg  4096 мар 11 17:30 .
@@ -107,10 +107,10 @@ drwx------ 3 _borg _borg  4096 мар 11 17:30 data
     
     <item>
       <title>N: Компиляция свежего stunnel 5.60 из исходников на CentOS7</title>
-      <link>/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
+      <link>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
       <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
+      <guid>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
       <description>
         
         
@@ -129,7 +129,7 @@ cd stunnel-5.60
 make
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
 &lt;p&gt;Скомпилированный stunnel можно найти здесь &lt;code&gt;~/src/stunnel-5.60/src/stunnel&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Переименуем файл для удобства дальнейшего использования по инструкции &lt;a href=&#34;/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel&#34;&gt;Обфускация ssh-трафика с помощью stunnel&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;Переименуем файл для удобства дальнейшего использования по инструкции &lt;a href=&#34;https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel&#34;&gt;Обфускация ssh-трафика с помощью stunnel&lt;/a&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mv ~/src/stunnel-5.60/src/stunnel ~/src/stunnel-5.60/src/stunnel-5.60
 &lt;/code&gt;&lt;/pre&gt;
       </description>
@@ -137,10 +137,10 @@ make
     
     <item>
       <title>A: CMAK. 01. Сборка rpm-пакета для CentOS7</title>
-      <link>/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
+      <link>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
+      <guid>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
       <description>
         
         
@@ -229,10 +229,10 @@ a/src/CMAK-3.0.0.5/target/rpm/tmp-buildroot/var /data/src/CMAK-3.0.0.5/target/rp
     
     <item>
       <title>A: Kafdrop. 01. Сборка jar-пакета</title>
-      <link>/a/kafdrop-sborka-jar-paketa/</link>
+      <link>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/kafdrop-sborka-jar-paketa/</guid>
+      <guid>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</guid>
       <description>
         
         
@@ -262,10 +262,10 @@ mvn clean package
     
     <item>
       <title>A: Kafdrop. 02. Установка и настройка</title>
-      <link>/a/kafdrop-ustanovka-i-nastroika/</link>
+      <link>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/kafdrop-ustanovka-i-nastroika/</guid>
+      <guid>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</guid>
       <description>
         
         
@@ -409,10 +409,10 @@ EOF
     
     <item>
       <title>A: Обфускация ssh-трафика с помощью stunnel</title>
-      <link>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <link>https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
       <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <guid>https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
       <description>
         
         
@@ -545,10 +545,10 @@ ssh1
     
     <item>
       <title>A: Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA</title>
-      <link>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
+      <link>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
       <description>
         
         
@@ -605,10 +605,10 @@ sudo ipa-getcert request -K HTTP/$(hostname) \
     
     <item>
       <title>A: Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)</title>
-      <link>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
+      <link>https://debuntu.ru/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
       <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
+      <guid>https://debuntu.ru/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
       <description>
         
         
@@ -921,10 +921,10 @@ mvn clean -DskipTests package -Pdist -X -T 4
     
     <item>
       <title>A: Установка JupyterHub на CentOS 7 (draft)</title>
-      <link>/a/ustanovka-jupyterhub-na-centos-7/</link>
+      <link>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-jupyterhub-na-centos-7/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</guid>
       <description>
         
         
@@ -1365,10 +1365,10 @@ systemctl enable --now nginx
     
     <item>
       <title>A: 01. Установка Cloudera Manager 6.3.1</title>
-      <link>/a/ustanovka-cloudera-manager-6-3.1/</link>
+      <link>https://debuntu.ru/a/ustanovka-cloudera-manager-6-3.1/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-cloudera-manager-6-3.1/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-cloudera-manager-6-3.1/</guid>
       <description>
         
         
@@ -1433,10 +1433,10 @@ ansible mgm -i cluster.inv -m systemd -a &amp;#34;name=cloudera-scm-server enabl
     
     <item>
       <title>A: 00. Подготовка к установке кластера Cloudera CDH 6.3.2</title>
-      <link>/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
+      <link>https://debuntu.ru/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
       <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
       <description>
         
         
@@ -1590,10 +1590,10 @@ ansible all -i cluster.inv -m shell -a &amp;#34;/bin/bash /root/tmp/updatehosts.
     
     <item>
       <title>A: Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
-      <link>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <link>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
       <description>
         
         
@@ -2259,15 +2259,15 @@ ipa group-del ${IPAGROUP}
     
     <item>
       <title>A: Установка Apache Airflow и настройка его для работы с Apache Hadoop</title>
-      <link>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
+      <link>https://debuntu.ru/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
       <description>
         
         
         &lt;p&gt;2020-10-23&lt;/p&gt;
-&lt;p&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Эта версия Airflow устарела. Установка актуальной, второй версии, &lt;a href=&#34;/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya&#34;&gt;описана здесь&lt;/a&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Эта версия Airflow устарела. Установка актуальной, второй версии, &lt;a href=&#34;https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya&#34;&gt;описана здесь&lt;/a&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://airflow.apache.org/docs/stable/&#34;&gt;Apache Airflow Documentation&lt;/a&gt;&lt;/li&gt;

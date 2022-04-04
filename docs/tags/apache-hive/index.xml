@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Apache Hive</title>
-    <link>/tags/apache-hive/</link>
+    <link>https://debuntu.ru/tags/apache-hive/</link>
     <description>Recent content in Apache Hive on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 30 Aug 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/apache-hive/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/apache-hive/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: 05. 🎣 Заброс Hook&#39;а в Apache Hive</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
       <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
       <description>
         
         
@@ -140,7 +140,7 @@ unset OPTION
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
-&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
 &lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHive&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache Hive&lt;/a&gt;&lt;/p&gt;
 
@@ -149,10 +149,10 @@ unset OPTION
     
     <item>
       <title>N: Блокирование доступа внешних программ к Hive metastore</title>
-      <link>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
+      <link>https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
       <pubDate>Mon, 19 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
+      <guid>https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
       <description>
         
         
@@ -188,10 +188,10 @@ This configuration &lt;b&gt;overrides&lt;/b&gt; the value set for Hive Proxy Use
     
     <item>
       <title>N: Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</title>
-      <link>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
+      <link>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
       <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
+      <guid>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
       <description>
         
         
@@ -227,10 +227,10 @@ REVOKE ROLE admin_role FROM GROUP admin_group;
     
     <item>
       <title>N: Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2</title>
-      <link>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
+      <link>https://debuntu.ru/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
       <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
+      <guid>https://debuntu.ru/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
       <description>
         
         
@@ -255,14 +255,14 @@ hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=exa
     
     <item>
       <title>N: Disabling Hive CLI</title>
-      <link>/n/disabling-hive-cli/</link>
+      <link>https://debuntu.ru/n/disabling-hive-cli/</link>
       <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/n/disabling-hive-cli/</guid>
+      <guid>https://debuntu.ru/n/disabling-hive-cli/</guid>
       <description>
         
         
-        &lt;p&gt;Перед выполнением этой инструкции, необходимо ознакомиться с &lt;a href=&#34;/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore&#34;&gt;Блокирование доступа внешних программ к Hive metastore&lt;/a&gt;, где описано более централизованный способ блокирования доступа к Metastore Hive.&lt;/p&gt;
+        &lt;p&gt;Перед выполнением этой инструкции, необходимо ознакомиться с &lt;a href=&#34;https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore&#34;&gt;Блокирование доступа внешних программ к Hive metastore&lt;/a&gt;, где описано более централизованный способ блокирования доступа к Metastore Hive.&lt;/p&gt;
 &lt;p&gt;После активации Cloudera Sentry, необходимо предотвратить возможность использования консольной утилиты &lt;code&gt;hive&lt;/code&gt; пользователями. Вместо &lt;code&gt;hive&lt;/code&gt;, пользователи должны использовать утилиту &lt;code&gt;beeline&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Каталог HIVE_HOME можно найти из-под root командой:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME
@@ -282,10 +282,10 @@ chmod 755 $HIVE_HOME/bin/hive
     
     <item>
       <title>Manuals: 10. Первоначальный импорт содержимого Hive</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</link>
       <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</guid>
       <description>
         
         

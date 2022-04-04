@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – DB</title>
-    <link>/tags/db/</link>
+    <link>https://debuntu.ru/tags/db/</link>
     <description>Recent content in DB on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 03 Jul 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/db/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/db/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Best Practices for Using LDAP Link with Vertica (перевод)</title>
-      <link>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
+      <link>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
       <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
+      <guid>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
       <description>
         
         
@@ -70,10 +70,10 @@
     
     <item>
       <title>A: Бэкап дампа базы Postgresql и его восстановление на новом сервере</title>
-      <link>/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
+      <link>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
+      <guid>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
       <description>
         
         
@@ -194,10 +194,10 @@ lbzip2 -c -d /data/pgsql/11/backup/psql_dumpall_20200421-103341.bz2 | psql postg
     
     <item>
       <title>A: Установка PostgreSQL 9.0 на Debian 6.0</title>
-      <link>/a/ustanovka-postgresql-90-na-debian-60/</link>
+      <link>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</link>
       <pubDate>Thu, 17 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-postgresql-90-na-debian-60/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</guid>
       <description>
         
         

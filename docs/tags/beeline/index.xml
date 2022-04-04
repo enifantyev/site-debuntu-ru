@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – beeline</title>
-    <link>/tags/beeline/</link>
+    <link>https://debuntu.ru/tags/beeline/</link>
     <description>Recent content in beeline on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 09 Jun 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/beeline/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/beeline/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</title>
-      <link>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
+      <link>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
       <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
+      <guid>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
       <description>
         
         

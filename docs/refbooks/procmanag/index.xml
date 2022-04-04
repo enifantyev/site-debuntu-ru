@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Управление процессами</title>
-    <link>/refbooks/procmanag/</link>
+    <link>https://debuntu.ru/refbooks/procmanag/</link>
     <description>Recent content in Управление процессами on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 01 Jan 1970 03:00:02 +0300</lastBuildDate>
     
-	  <atom:link href="/refbooks/procmanag/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/refbooks/procmanag/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Refbooks: Краткий список утилит и команд оболочки для работы с процессами</title>
-      <link>/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
+      <link>https://debuntu.ru/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
       
-      <guid>/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
+      <guid>https://debuntu.ru/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
       <description>
         
         

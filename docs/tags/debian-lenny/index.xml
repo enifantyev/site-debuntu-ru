@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Debian Lenny</title>
-    <link>/tags/debian-lenny/</link>
+    <link>https://debuntu.ru/tags/debian-lenny/</link>
     <description>Recent content in Debian Lenny on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/debian-lenny/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/debian-lenny/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Установка VMWare Server на Debian Lenny</title>
-      <link>/n/ustanovka-vmware-server-na-debian-lenny/</link>
+      <link>https://debuntu.ru/n/ustanovka-vmware-server-na-debian-lenny/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>/n/ustanovka-vmware-server-na-debian-lenny/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-vmware-server-na-debian-lenny/</guid>
       <description>
         
         
@@ -40,7 +40,7 @@
 &lt;/ol&gt;
 &lt;p&gt;Ещё одна засада будет после обновления ядра линукса. VMWare Server откажется запускаться и попросит запустить свой сценарий установки. Ничего страшного. Запускаем предложенный сценарий. Вновь проходим все вопросы и ответы и вновь всё заработало. Замечу, что на этапе установки сетевой поддержки, сценарий предложит оставить предыдущие настройки. Я согласился, но VMWare Server опять не запустился. Выполнив сценарий по полной программе  я получил работающий VMWare Server.&lt;/p&gt;
 &lt;p&gt;Ссылки для использования:
-&lt;a href=&#34;/n/kak-sobrat-novoe-yadro-linux&#34;&gt;Как собрать новое ядро linux&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;https://debuntu.ru/n/kak-sobrat-novoe-yadro-linux&#34;&gt;Как собрать новое ядро linux&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;удаление-vmware-server&#34;&gt;Удаление VMware Server:&lt;/h2&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# rpm -qa | grep VM
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&amp;hellip; тут вылезет &amp;ldquo;имя пакета&amp;rdquo;&lt;/p&gt;

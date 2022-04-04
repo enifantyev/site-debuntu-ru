@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Cockpit</title>
-    <link>/tags/cockpit/</link>
+    <link>https://debuntu.ru/tags/cockpit/</link>
     <description>Recent content in Cockpit on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 11 Oct 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/cockpit/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/cockpit/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA</title>
-      <link>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
+      <link>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
       <description>
         
         

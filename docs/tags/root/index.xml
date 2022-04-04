@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – root</title>
-    <link>/tags/root/</link>
+    <link>https://debuntu.ru/tags/root/</link>
     <description>Recent content in root on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/root/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/root/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: Избавляемся от root&#39;а в Alpine Linux</title>
-      <link>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
+      <link>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
+      <guid>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
       <description>
         
         

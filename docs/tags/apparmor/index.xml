@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – AppArmor</title>
-    <link>/tags/apparmor/</link>
+    <link>https://debuntu.ru/tags/apparmor/</link>
     <description>Recent content in AppArmor on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 27 Nov 2018 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/apparmor/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/apparmor/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>N: AppArmor препятствует электронному подписыванию документов LibreOffice</title>
-      <link>/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</link>
+      <link>https://debuntu.ru/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</link>
       <pubDate>Tue, 27 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</guid>
+      <guid>https://debuntu.ru/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</guid>
       <description>
         
         

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – groupware</title>
-    <link>/tags/groupware/</link>
+    <link>https://debuntu.ru/tags/groupware/</link>
     <description>Recent content in groupware on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 07 Mar 2011 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/groupware/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/groupware/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Установка egroupware 1.8 на debian 6.0</title>
-      <link>/a/ustanovka-egroupware-1-8-na-debian-6.0/</link>
+      <link>https://debuntu.ru/a/ustanovka-egroupware-1-8-na-debian-6.0/</link>
       <pubDate>Mon, 07 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-egroupware-1-8-na-debian-6.0/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-egroupware-1-8-na-debian-6.0/</guid>
       <description>
         
         

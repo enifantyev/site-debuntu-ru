@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Apache Atlas</title>
-    <link>/tags/apache-atlas/</link>
+    <link>https://debuntu.ru/tags/apache-atlas/</link>
     <description>Recent content in Apache Atlas on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Mon, 06 Dec 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/apache-atlas/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/apache-atlas/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</title>
-      <link>/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</link>
       <pubDate>Tue, 28 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</guid>
       <description>
         
         
@@ -588,10 +588,10 @@ Caused by: java.util.NoSuchElementException
     
     <item>
       <title>Manuals: 01. Подготовительные работы для установки Atlas&#39;а</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</link>
       <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/</guid>
       <description>
         
         
@@ -640,10 +640,10 @@ ipa group-add --desc=&amp;#34;Группа для роли DATA_SCIENTIST в Atl
     
     <item>
       <title>Manuals: 02. Подготовка служб Hadoop-кластера к развёртыванию Atlas&#39;а</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</link>
       <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas/</guid>
       <description>
         
         
@@ -772,10 +772,10 @@ HOST=*-&amp;gt;CONSUMERGROUP=*-&amp;gt;action=read
     
     <item>
       <title>Manuals: 03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</link>
       <pubDate>Wed, 03 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas/</guid>
       <description>
         
         
@@ -890,7 +890,7 @@ curl --negotiate -u : &amp;#34;https://${SOLRSERVER}:8985/solr/admin/collections
 &lt;/details&gt;
 &lt;br&gt;
 &lt;p&gt;Через Web UI Solr&amp;rsquo;а наблюдаем три ранее добавленные коллекции:
-&lt;img src=&#34;/img/ustanovka-apache-atlas-2.2.0/solr-collections.png&#34; alt=&#34;Solr collections&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/ustanovka-apache-atlas-2.2.0/solr-collections.png&#34; alt=&#34;Solr collections&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;23-добавление-роли-в-sentry-для-доступа-atlasа-в-solr&#34;&gt;2.3. Добавление роли в Sentry для доступа Atlas&amp;rsquo;а в Solr&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_iw1_5dp_wk&#34;&gt;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_iw1_5dp_wk&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
@@ -998,10 +998,10 @@ network.host: 10.1.137.11
     
     <item>
       <title>Manuals: 04. Распаковка и настройка Apache Atlas</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas/</guid>
       <description>
         
         
@@ -1642,10 +1642,10 @@ atlas.authentication.method.kerberos.token.validity = 3600
     
     <item>
       <title>Manuals: 05. 🎣 Заброс Hook&#39;а в Apache Hive</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
       <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
       <description>
         
         
@@ -1766,7 +1766,7 @@ unset OPTION
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
-&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
 &lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHive&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache Hive&lt;/a&gt;&lt;/p&gt;
 
@@ -1775,10 +1775,10 @@ unset OPTION
     
     <item>
       <title>A: Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)</title>
-      <link>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
+      <link>https://debuntu.ru/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
       <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
+      <guid>https://debuntu.ru/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
       <description>
         
         
@@ -2091,10 +2091,10 @@ mvn clean -DskipTests package -Pdist -X -T 4
     
     <item>
       <title>Manuals: 06. 🎣 Заброс Hook&#39;а в Apache HBase</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</link>
       <pubDate>Fri, 22 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/</guid>
       <description>
         
         
@@ -2214,7 +2214,7 @@ These arguments will be passed as part of the Java command line. Commonly, garba
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;p&gt;3.2. Нажимаем Save Changes.&lt;/p&gt;
-&lt;p&gt;3.3. &lt;img src=&#34;/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;p&gt;3.3. &lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
 &lt;h2 id=&#34;4-использованные-материалы&#34;&gt;4. Использованные материалы&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://atlas.apache.org/#/HookHBase&#34;&gt;Apache Atlas Hook &amp;amp; Bridge for Apache HBase&lt;/a&gt;&lt;/p&gt;
 
@@ -2223,10 +2223,10 @@ These arguments will be passed as part of the Java command line. Commonly, garba
     
     <item>
       <title>Manuals: 07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</guid>
       <description>
         
         
@@ -2240,10 +2240,10 @@ These arguments will be passed as part of the Java command line. Commonly, garba
     
     <item>
       <title>Manuals: 08. Первый запуск Apache Atlas и его отладка при необходимости</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</guid>
       <description>
         
         
@@ -2263,9 +2263,9 @@ These arguments will be passed as part of the Java command line. Commonly, garba
 Повторные запуски не были такими долгими и по времени занимали, в общей сложности, не более минуты.&lt;/p&gt;
 &lt;h2 id=&#34;2-web-ui-apache-atlas&#34;&gt;2. Web UI Apache Atlas&lt;/h2&gt;
 &lt;p&gt;2.1. После долгого ожидания, на порту 21443 Atlas-хоста появится авторизационная форма Atlas&amp;rsquo;а:
-&lt;img src=&#34;/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlaslogin.png&#34; alt=&#34;Apache Atlas Login Windows&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlaslogin.png&#34; alt=&#34;Apache Atlas Login Windows&#34;&gt;&lt;/p&gt;
 &lt;p&gt;2.2. После входа в Atlas, в главном окне можно наблюдать пустоту с надписью, что сущностей HBase нет, или, в другом случае, информацию только о двух Atlas&amp;rsquo;овских таблицах и столбцах из них, даже если в HBase и Hive уже существуют другие базы и таблицы:
-&lt;img src=&#34;/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlasmainwindow.png&#34; alt=&#34;Apache Atlas Main Windows&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/pervyy-zapusk-apache-atlas-i-yego-otladka/apacheatlasmainwindow.png&#34; alt=&#34;Apache Atlas Main Windows&#34;&gt;&lt;/p&gt;
 &lt;p&gt;2.3. Для приведения базы данных Atlas&amp;rsquo;а в актуальное состояние, необходимо выполнить первоначальный импорт сведений о содержимом в HBase и Hive, как описано в одних их следующих главах этой инструкции.&lt;/p&gt;
 &lt;h2 id=&#34;3-отладка&#34;&gt;3. Отладка&lt;/h2&gt;
 &lt;h3 id=&#34;31-установка-уровня-логгирования-для-отладки&#34;&gt;3.1. Установка уровня логгирования для отладки&lt;/h3&gt;
@@ -2308,10 +2308,10 @@ $yarn rmadmin -refreshUserToGroupsMappings
     
     <item>
       <title>Manuals: 10. Первоначальный импорт содержимого Hive</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</link>
       <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</guid>
       <description>
         
         
@@ -2342,10 +2342,10 @@ Hive Meta Data imported successfully!!!
     
     <item>
       <title>Manuals: 11. Первоначальный импорт содержимого HBase</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</link>
       <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</guid>
       <description>
         
         
@@ -2388,10 +2388,10 @@ HBase Data Model imported successfully!!!
     
     <item>
       <title>Manuals: 20. 🔬 Тестирование работоспособности Apache Atlas</title>
-      <link>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</link>
       <pubDate>Mon, 06 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</guid>
       <description>
         
         
@@ -2439,9 +2439,9 @@ STORED AS TEXTFILE;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.6. Выполняем импорт данных из файла в созданную ранее таблицу:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;0: jdbc:hive2://dev-aux110p.test2.lan:100&amp;gt; LOAD DATA INPATH &amp;#39;atlas25.csv&amp;#39; OVERWRITE INTO TABLE atlas25.atlas25;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;1.7. В Apache Atlas&amp;rsquo;е выполняем поиск сущностей по ключевому слову atlas25 и наблюдаем результат:
-&lt;img src=&#34;/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasmainwindow.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasmainwindow.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
 &lt;p&gt;1.8. Щёлкнув по ссылке на &amp;lsquo;atlas25&amp;rsquo; с типом &amp;lsquo;hive_table&amp;rsquo;, на открышейся странице, во вкладке Lineage, наблюдаем &amp;ldquo;линейку&amp;rdquo;:
-&lt;img src=&#34;/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasline.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasline.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
 &lt;p&gt;1.9. После успешного выполнения вышеуказанных упражнений можно сказать, что информация из Hive в Atlas поступает.&lt;/p&gt;
 &lt;h2 id=&#34;2-проверка-получения-информации-из-hbase&#34;&gt;2. Проверка получения информации из HBase&lt;/h2&gt;
 &lt;p&gt;2.1. На машине с ролью HDFS Gateway, в своём домашнем каталоге создаём csv-файл и загружаем в HDFS:&lt;/p&gt;
@@ -2472,9 +2472,9 @@ ROW                             COLUMN+CELL
 3 row(s)
 Took 0.7221 seconds
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.5. В Apache Atlas&amp;rsquo;е выполняем поиск сущностей по ключевому слову atlas26 и наблюдаем результат:
-&lt;img src=&#34;/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlassearch.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlassearch.png&#34; alt=&#34;Apache Atlas Search&#34;&gt;&lt;/p&gt;
 &lt;p&gt;2.6. В отличии от данных из Hive, HBase не может предоставить Атласу файл-источник данных, поэтому &amp;ldquo;Линейка&amp;rdquo; останется пуста:
-&lt;img src=&#34;/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasempty.png&#34; alt=&#34;Apache Atlas Empty&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/testirovaniye-rabotosposobnosti-apache-atlas/apacheatlasempty.png&#34; alt=&#34;Apache Atlas Empty&#34;&gt;&lt;/p&gt;
 &lt;p&gt;2.7. В любом случае, в случае успешного прохождения этого теста, можно утверждать, что данные из HBase в Apache Atlas поступают.&lt;/p&gt;
 &lt;h2 id=&#34;3-проверка-получения-информации-из-spark&#34;&gt;3. Проверка получения информации из Spark&lt;/h2&gt;
 &lt;p&gt;При случае дописать.&lt;/p&gt;

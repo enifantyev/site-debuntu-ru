@@ -20514,5 +20514,10 @@ Nothing defined here. The Hugo project that uses this theme can override Bootstr
 assets/scss/_styles_project.scss
 
 */
+.td-page-meta {
+  display: none !important; }
+
+.list-inline {
+  display: none !important; }
 
 /*# sourceMappingURL=main.css.map */

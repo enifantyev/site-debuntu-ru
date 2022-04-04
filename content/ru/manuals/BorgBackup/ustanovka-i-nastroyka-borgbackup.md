@@ -105,11 +105,10 @@ REPOLINKNAME="repo1" # Имя ссылки в home на репо
 export BORG_RSH="ssh -i ~/.ssh/${SSHKEYNAME}"
 export BORG_REPO="${BORGUSERNAME}@localhost:${REPOLINKNAME}"
 
-# Вызываем sudo -E для передачи переменных окружения в borg
-sudo -E -u ${BORGUSERNAME} /bin/bash -c 'borg init -e none'
+# Вызываем sudo -EH для передачи переменных
+# окружения в borg и смены HOME.
+sudo -EH -u ${BORGUSERNAME} /bin/bash -c 'borg init -e none'
 ```
-
-На ошибку `Error: Permission denied` внимания не обращаем, так как сама ошибка не локализована, но структура репо создаётся и в дальнейшем репо работает нормально. При создании же нового репо из клиента, данная ошибка не появляется.
 
 3.5. Проверяем, что в каталоге первого репо создана структура:
 ```

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – ssh</title>
-    <link>/tags/ssh/</link>
+    <link>https://debuntu.ru/tags/ssh/</link>
     <description>Recent content in ssh on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Wed, 16 Mar 2022 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Обфускация ssh-трафика с помощью stunnel</title>
-      <link>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <link>https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
       <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <guid>https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
       <description>
         
         
@@ -152,10 +152,10 @@ ssh1
     
     <item>
       <title>A: Jenkins Проблемы выполнения удалённых команд в сетях со stateful firewall и способы их решения</title>
-      <link>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
+      <link>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
+      <guid>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
       <description>
         
         
@@ -202,10 +202,10 @@ ClientAliveCountMax 3
     
     <item>
       <title>A: Chroot rsync для безопасного сбора бэкапов с удалённых хостов</title>
-      <link>/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
+      <link>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
       <pubDate>Sun, 12 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
+      <guid>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
       <description>
         
         
@@ -277,10 +277,10 @@ command=&amp;#34;/bin/rsync --server --sender -vlogDtpre.iLsf . /backup/&amp;#34
     
     <item>
       <title>N: Усиление защиты sshd</title>
-      <link>/n/usilenie-zashchity-sshd/</link>
+      <link>https://debuntu.ru/n/usilenie-zashchity-sshd/</link>
       <pubDate>Wed, 20 Jan 2016 00:00:00 +0000</pubDate>
       
-      <guid>/n/usilenie-zashchity-sshd/</guid>
+      <guid>https://debuntu.ru/n/usilenie-zashchity-sshd/</guid>
       <description>
         
         
@@ -328,10 +328,10 @@ MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-
     
     <item>
       <title>Manuals: 15. Создание шлюза в удалённой ИС для доступа хостов к бэкап-серверу</title>
-      <link>/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
       <pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
       <description>
         
         

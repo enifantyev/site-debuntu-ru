@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – Apache Airflow</title>
-    <link>/tags/apache-airflow/</link>
+    <link>https://debuntu.ru/tags/apache-airflow/</link>
     <description>Recent content in Apache Airflow on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Tue, 23 Feb 2021 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/apache-airflow/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/apache-airflow/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
-      <link>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <link>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
       <description>
         
         
@@ -685,15 +685,15 @@ ipa group-del ${IPAGROUP}
     
     <item>
       <title>A: Установка Apache Airflow и настройка его для работы с Apache Hadoop</title>
-      <link>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
+      <link>https://debuntu.ru/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
       <description>
         
         
         &lt;p&gt;2020-10-23&lt;/p&gt;
-&lt;p&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Эта версия Airflow устарела. Установка актуальной, второй версии, &lt;a href=&#34;/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya&#34;&gt;описана здесь&lt;/a&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color: red;&#34;&gt;&lt;strong&gt;Эта версия Airflow устарела. Установка актуальной, второй версии, &lt;a href=&#34;https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya&#34;&gt;описана здесь&lt;/a&gt;.&lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://airflow.apache.org/docs/stable/&#34;&gt;Apache Airflow Documentation&lt;/a&gt;&lt;/li&gt;

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debuntarium – FileSystem</title>
-    <link>/tags/filesystem/</link>
+    <link>https://debuntu.ru/tags/filesystem/</link>
     <description>Recent content in FileSystem on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sat, 18 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	  <atom:link href="/tags/filesystem/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://debuntu.ru/tags/filesystem/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>A: Описание VFS Виртуальной Файловой Системы Linux</title>
-      <link>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <link>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <guid>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
       <description>
         
         
@@ -335,10 +335,10 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
     
     <item>
       <title>A: Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
-      <link>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <link>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
       <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <guid>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
       <description>
         
         
@@ -391,10 +391,10 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
     
     <item>
       <title>A: Traditional Unix permissions и Access Control Lists</title>
-      <link>/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
+      <link>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
       <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
+      <guid>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
       <description>
         
         
@@ -533,10 +533,10 @@ login root
     
     <item>
       <title>N: Дефрагментация XFS на удалённом сервере</title>
-      <link>/n/defragmentaciya-xfs-na-udalyonnom-servere/</link>
+      <link>https://debuntu.ru/n/defragmentaciya-xfs-na-udalyonnom-servere/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>/n/defragmentaciya-xfs-na-udalyonnom-servere/</guid>
+      <guid>https://debuntu.ru/n/defragmentaciya-xfs-na-udalyonnom-servere/</guid>
       <description>
         
         
@@ -581,10 +581,10 @@ extents before:68 after:1 DONE ino=137
     
     <item>
       <title>N: Использование XFS</title>
-      <link>/n/ispolzovanie-xfs/</link>
+      <link>https://debuntu.ru/n/ispolzovanie-xfs/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
       
-      <guid>/n/ispolzovanie-xfs/</guid>
+      <guid>https://debuntu.ru/n/ispolzovanie-xfs/</guid>
       <description>
         
         
