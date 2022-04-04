@@ -99,6 +99,17 @@ fi
 mount -o bind,ro /boot /mnt/boot
 ```
 
+### Проверка монтирования
+```
+mount | grep '/mnt'
+```
+Пример вывода:
+```
+/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
+/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
+```
+
 ### Резервное копирование
 Устанавливаем переменные, чтобы не вводить параметры дважды:
 ```

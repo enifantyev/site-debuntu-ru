@@ -305,6 +305,12 @@ fi
 
 # Mounting /boot on /mnt/boot
 mount -o bind,ro /boot /mnt/boot
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;проверка-монтирования&#34;&gt;Проверка монтирования&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount | grep &amp;#39;/mnt&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пример вывода:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
+/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;резервное-копирование&#34;&gt;Резервное копирование&lt;/h3&gt;
 &lt;p&gt;Устанавливаем переменные, чтобы не вводить параметры дважды:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORG_RSH=&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;
@@ -483,7 +489,7 @@ full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 [f681b040b6f7579e4
 &lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;отмонтируем-снимок&#34;&gt;Отмонтируем снимок&lt;/h4&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg umount /mnt
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
-&lt;h4 id=&#34;типы-файловых-систем-совпадают&#34;&gt;Типы файловых систем совпадают&lt;/h4&gt;
+&lt;h4 id=&#34;если-типы-файловых-систем-совпадают&#34;&gt;Если типы файловых систем совпадают&lt;/h4&gt;
 &lt;p&gt;При монтировании xfs используем опцию &lt;code&gt;nouuid&lt;/code&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Mounting root on /mnt
 LV=&amp;#39;/dev/vg/snap_root&amp;#39;
@@ -505,9 +511,10 @@ fi
 
 # Mounting /boot on /mnt/boot
 mount -o bind /boot /mnt/boot
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;типы-файловых-систем-различны&#34;&gt;Типы файловых систем различны&lt;/h4&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;если-типы-файловых-систем-различны&#34;&gt;Если типы файловых систем различны&lt;/h4&gt;
 &lt;p&gt;Форматируем разделы. Например, если восстанавливаемый снимок создан на машине с &amp;rsquo;ext4&#39;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# /dev/sda1 --&amp;gt; /boot
+umount /boot
 mkfs.ext4 /dev/sda1
 # /dev/vg/root --&amp;gt; /
 mkfs.ext4 /dev/vg/snap_root
@@ -525,7 +532,9 @@ mount /dev/vg/snap_var /mnt/var
 /dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
 /dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-содержимого-снэпшотов-и-boot&#34;&gt;Удаление содержимого снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Если разделы были отформатированы на одном из предыдущих пунктов, то удаление содержимого разделов можно пропустить.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Иначе удаляем всё содержимое снэпшотов и каталога &lt;code&gt;/boot&lt;/code&gt; с проверкой:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf /mnt/*
 du /mnt
@@ -554,12 +563,21 @@ chroot /mnt
 &lt;li&gt;Так как песочница, в которой производилась генерация &lt;code&gt;grub.cfg&lt;/code&gt;, находится на LV с именами &lt;code&gt;snap_root&lt;/code&gt; и &lt;code&gt;snap_var&lt;/code&gt;, то исправляем в сгенерированном &lt;code&gt;/boot/grub/grub.cfg&lt;/code&gt; названия разделов:&lt;br&gt;
 &lt;code&gt;sed -i &#39;s/vg-snap_root/vg-root/g&#39; /boot/grub/grub.cfg&lt;/code&gt; или &lt;code&gt; sed -i &#39;s/vg-snap_root/vg-root/g&#39; /boot/grub2/grub.cfg&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):&lt;br&gt;
-&lt;code&gt;grub-install /dev/sda&lt;/code&gt; или &lt;code&gt;grub2-install /dev/sda&lt;/code&gt;&lt;/li&gt;
+&lt;code&gt;grub-install /dev/sda&lt;/code&gt; или &lt;code&gt;grub2-install /dev/sda&lt;/code&gt;.&lt;/li&gt;
 &lt;/ol&gt;
+&lt;hr&gt;
+&lt;p&gt;Эталонный вывод после &lt;code&gt;grub-install&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Installing for i386-pc platform.
+Installation finished. No error reported.
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;Если произошли ошибки, то машина с большой вероятностью загрузится в &amp;lsquo;grub recovery&amp;rsquo;-режиме.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;исправляем-etcfstab&#34;&gt;Исправляем &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;Приводим &lt;code&gt;/etc/fstab&lt;/code&gt; в актуальное состояние, так как в нём указаны устаревшие сведения, оставшиеся от машины донора.&lt;/p&gt;
 &lt;p&gt;Необходимо помнить, что в &lt;code&gt;/etc/fstab&lt;/code&gt; могут быть просто не указаны некоторые разделы. Например, восстанавливаемый снимок машины, на которой отсутствовал LV-том &lt;code&gt;/dev/vg/var&lt;/code&gt; (то есть каталог &lt;code&gt;/var&lt;/code&gt; находится в LV-томе &lt;code&gt;/dev/vg/root&lt;/code&gt;), не будет иметь соответствующей строки в &lt;code&gt;/etc/fstab&lt;/code&gt;. Если такой снимок будет развёрнут с песочнице с подключённым &lt;code&gt;/dev/vg/var&lt;/code&gt; к &lt;code&gt;/var&lt;/code&gt;, то потребуется вручную добавить в &lt;code&gt;/etc/fstab&lt;/code&gt; строку &lt;code&gt;/dev/vg/var /var defaults 1 2&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Естественно, если восстанавливаемый снимок создавался на этой же машине, то этот пункт можно пропустить.&lt;/p&gt;
+&lt;h3 id=&#34;исправляем-имя-хоста&#34;&gt;Исправляем имя хоста&lt;/h3&gt;
+&lt;p&gt;Проверяем/исправляем содержимое файлов &lt;code&gt;/etc/hostname&lt;/code&gt; и &lt;code&gt;/etc/hosts&lt;/code&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;обновление-initramfs&#34;&gt;Обновление initramfs&lt;/h3&gt;
 &lt;p&gt;При восстановлении снимка с другой операционной системой или при различии в версиях Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.&lt;/p&gt;
 &lt;p&gt;Версию текущего ядра можно узнать через команду &lt;code&gt;uname -r&lt;/code&gt;.&lt;/p&gt;

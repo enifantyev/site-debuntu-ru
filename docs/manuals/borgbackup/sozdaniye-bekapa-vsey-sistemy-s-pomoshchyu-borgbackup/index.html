@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
 "><meta itemprop="datePublished" content="2022-03-11T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-03-11T00:00:00+00:00" />
-<meta itemprop="wordCount" content="549">
+<meta itemprop="wordCount" content="575">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="20. Создание бэкапа всей системы с помощью BorgBackup"/>
 <meta name="twitter:description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
@@ -278,6 +278,7 @@ if (!doNotTrack) {
         <li><a href="#отключение-работающих-демонов">Отключение работающих демонов</a></li>
         <li><a href="#создание-временных-lvm-snapshotов">Создание временных LVM snapshot&rsquo;ов</a></li>
         <li><a href="#монтирование-снэпшотов--директорию-boot">Монтирование снэпшотов + директорию <code>/boot</code></a></li>
+        <li><a href="#проверка-монтирования">Проверка монтирования</a></li>
         <li><a href="#резервное-копирование">Резервное копирование</a></li>
         <li><a href="#удаление-временных-снэпшотов">Удаление временных снэпшотов</a></li>
         <li><a href="#запуск-остановленных-демонов">Запуск остановленных демонов</a></li>
@@ -767,6 +768,12 @@ fi
 
 # Mounting /boot on /mnt/boot
 mount -o bind,ro /boot /mnt/boot
+</code></pre><h3 id="проверка-монтирования">Проверка монтирования</h3>
+<pre tabindex="0"><code>mount | grep &#39;/mnt&#39;
+</code></pre><p>Пример вывода:</p>
+<pre tabindex="0"><code>/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
+/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
 </code></pre><h3 id="резервное-копирование">Резервное копирование</h3>
 <p>Устанавливаем переменные, чтобы не вводить параметры дважды:</p>
 <pre tabindex="0"><code>export BORG_RSH=&#34;ssh -i ~/.ssh/borg1&#34;

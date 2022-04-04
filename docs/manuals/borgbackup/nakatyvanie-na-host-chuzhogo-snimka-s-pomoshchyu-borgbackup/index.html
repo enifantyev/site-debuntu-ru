@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса восстановления на хост чужого снимка всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
 "><meta itemprop="datePublished" content="2022-04-04T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-04-04T00:00:00+00:00" />
-<meta itemprop="wordCount" content="935">
+<meta itemprop="wordCount" content="973">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="31. Накатывание на хост чужого снимка с помощью BorgBackup"/>
 <meta name="twitter:description" content="Описание процесса восстановления на хост чужого снимка всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
@@ -288,6 +288,7 @@ if (!doNotTrack) {
         <li><a href="#chroot-для-исправления-загрузки">chroot для исправления загрузки</a></li>
         <li><a href="#обновление-grub">Обновление GRUB</a></li>
         <li><a href="#исправляем-etcfstab">Исправляем <code>/etc/fstab</code></a></li>
+        <li><a href="#исправляем-имя-хоста">Исправляем имя хоста</a></li>
         <li><a href="#обновление-initramfs">Обновление initramfs</a></li>
         <li><a href="#исправляем-сетевые-настройки">Исправляем сетевые настройки</a></li>
         <li><a href="#генерируем-новые-sshd-ключи">Генерируем новые sshd-ключи</a></li>
@@ -742,7 +743,7 @@ full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 [f681b040b6f7579e4
 </code></pre><h4 id="отмонтируем-снимок">Отмонтируем снимок</h4>
 <pre tabindex="0"><code>borg umount /mnt
 </code></pre><h3 id="монтирование-снэпшотов--директорию-boot">Монтирование снэпшотов + директорию <code>/boot</code></h3>
-<h4 id="типы-файловых-систем-совпадают">Типы файловых систем совпадают</h4>
+<h4 id="если-типы-файловых-систем-совпадают">Если типы файловых систем совпадают</h4>
 <p>При монтировании xfs используем опцию <code>nouuid</code>:</p>
 <pre tabindex="0"><code># Mounting root on /mnt
 LV=&#39;/dev/vg/snap_root&#39;
@@ -764,9 +765,10 @@ fi
 
 # Mounting /boot on /mnt/boot
 mount -o bind /boot /mnt/boot
-</code></pre><h4 id="типы-файловых-систем-различны">Типы файловых систем различны</h4>
+</code></pre><h4 id="если-типы-файловых-систем-различны">Если типы файловых систем различны</h4>
 <p>Форматируем разделы. Например, если восстанавливаемый снимок создан на машине с &rsquo;ext4':</p>
 <pre tabindex="0"><code># /dev/sda1 --&gt; /boot
+umount /boot
 mkfs.ext4 /dev/sda1
 # /dev/vg/root --&gt; /
 mkfs.ext4 /dev/vg/snap_root
@@ -784,7 +786,9 @@ mount /dev/vg/snap_var /mnt/var
 /dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
 /dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
 </code></pre><h3 id="удаление-содержимого-снэпшотов-и-boot">Удаление содержимого снэпшотов и <code>/boot</code></h3>
+<blockquote>
 <p>Если разделы были отформатированы на одном из предыдущих пунктов, то удаление содержимого разделов можно пропустить.</p>
+</blockquote>
 <p>Иначе удаляем всё содержимое снэпшотов и каталога <code>/boot</code> с проверкой:</p>
 <pre tabindex="0"><code>rm -rf /mnt/*
 du /mnt
@@ -813,12 +817,21 @@ chroot /mnt
 <li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов:<br>
 <code>sed -i 's/vg-snap_root/vg-root/g' /boot/grub/grub.cfg</code> или <code> sed -i 's/vg-snap_root/vg-root/g' /boot/grub2/grub.cfg</code></li>
 <li>На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):<br>
-<code>grub-install /dev/sda</code> или <code>grub2-install /dev/sda</code></li>
+<code>grub-install /dev/sda</code> или <code>grub2-install /dev/sda</code>.</li>
 </ol>
+<hr>
+<p>Эталонный вывод после <code>grub-install</code>:</p>
+<pre tabindex="0"><code>Installing for i386-pc platform.
+Installation finished. No error reported.
+</code></pre><blockquote>
+<p>Если произошли ошибки, то машина с большой вероятностью загрузится в &lsquo;grub recovery&rsquo;-режиме.</p>
+</blockquote>
 <h3 id="исправляем-etcfstab">Исправляем <code>/etc/fstab</code></h3>
 <p>Приводим <code>/etc/fstab</code> в актуальное состояние, так как в нём указаны устаревшие сведения, оставшиеся от машины донора.</p>
 <p>Необходимо помнить, что в <code>/etc/fstab</code> могут быть просто не указаны некоторые разделы. Например, восстанавливаемый снимок машины, на которой отсутствовал LV-том <code>/dev/vg/var</code> (то есть каталог <code>/var</code> находится в LV-томе <code>/dev/vg/root</code>), не будет иметь соответствующей строки в <code>/etc/fstab</code>. Если такой снимок будет развёрнут с песочнице с подключённым <code>/dev/vg/var</code> к <code>/var</code>, то потребуется вручную добавить в <code>/etc/fstab</code> строку <code>/dev/vg/var /var defaults 1 2</code>.</p>
 <p>Естественно, если восстанавливаемый снимок создавался на этой же машине, то этот пункт можно пропустить.</p>
+<h3 id="исправляем-имя-хоста">Исправляем имя хоста</h3>
+<p>Проверяем/исправляем содержимое файлов <code>/etc/hostname</code> и <code>/etc/hosts</code>.</p>
 <h3 id="обновление-initramfs">Обновление initramfs</h3>
 <p>При восстановлении снимка с другой операционной системой или при различии в версиях Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.</p>
 <p>Версию текущего ядра можно узнать через команду <code>uname -r</code>.</p>
