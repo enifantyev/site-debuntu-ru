@@ -397,10 +397,10 @@
     <lastmod>2022-03-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://debuntu.ru/manuals/borgbackup/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://debuntu.ru/manuals/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+    <lastmod>2022-04-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</loc>
     <lastmod>2022-03-11T00:00:00+00:00</lastmod>
@@ -438,8 +438,26 @@
     <loc>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</loc>
     <lastmod>2022-03-18T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://debuntu.ru/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</loc>
+    <lastmod>2022-04-04T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</loc>
     <lastmod>2022-03-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://debuntu.ru/tags/backup-software/</loc>
+    <lastmod>2022-04-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://debuntu.ru/tags/borgbackup/</loc>
+    <lastmod>2022-04-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://debuntu.ru/</loc>
+    <lastmod>2022-04-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://debuntu.ru/tags/lvm/</loc>
+    <lastmod>2022-04-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://debuntu.ru/tags/</loc>
+    <lastmod>2022-04-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://debuntu.ru/tags/altlinux/</loc>
     <lastmod>2022-03-31T00:00:00+00:00</lastmod>
@@ -447,25 +465,10 @@
     <loc>https://debuntu.ru/tags/altlinux-9/</loc>
     <lastmod>2022-03-31T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://debuntu.ru/tags/backup-software/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://debuntu.ru/tags/borgbackup/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://debuntu.ru/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://debuntu.ru/tags/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://debuntu.ru/tags/altlinux-10/</loc>
     <lastmod>2022-03-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://debuntu.ru/tags/linux-kernel/</loc>
-    <lastmod>2022-03-18T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://debuntu.ru/tags/lvm/</loc>
     <lastmod>2022-03-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://debuntu.ru/tags/redos/</loc>

@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса восстановления всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
 "><meta itemprop="datePublished" content="2022-03-18T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-03-18T00:00:00+00:00" />
-<meta itemprop="wordCount" content="817">
+<meta itemprop="wordCount" content="576">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="30. Восстановление всей системы из бэкапа с помощью BorgBackup"/>
 <meta name="twitter:description" content="Описание процесса восстановления всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
@@ -183,6 +183,8 @@ if (!doNotTrack) {
   <a href="/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupsozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup"><span class="">20. Создание бэкапа всей системы с помощью BorgBackup</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsborgbackupvosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup-li">
   <a href="/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupvosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup"><span class="td-sidebar-nav-active-item">30. Восстановление всей системы из бэкапа с помощью BorgBackup</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup-li">
+  <a href="/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup"><span class="">31. Накатывание на хост чужого снимка с помощью BorgBackup</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup-li">
   <a href="/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup"><span class="">40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</span></a>
 </li>
@@ -283,11 +285,8 @@ if (!doNotTrack) {
     <li><a href="#исправление-загрузки">Исправление загрузки</a>
       <ul>
         <li><a href="#chroot-для-исправления-загрузки">chroot для исправления загрузки</a></li>
-        <li><a href="#обновление-grub">Обновление GRUB</a></li>
-        <li><a href="#исправляем-etcfstab">Исправляем <code>/etc/fstab</code></a></li>
         <li><a href="#обновление-initramfs">Обновление initramfs</a></li>
-        <li><a href="#исправляем-сетевые-настройки">Исправляем сетевые настройки</a></li>
-        <li><a href="#генерируем-новые-sshd-ключи">Генерируем новые sshd-ключи</a></li>
+        <li><a href="#проверяем-сетевые-настройки">Проверяем сетевые настройки</a></li>
         <li><a href="#выход-из-песочницы">Выход из песочницы</a></li>
       </ul>
     </li>
@@ -297,7 +296,6 @@ if (!doNotTrack) {
         <li><a href="#reboot">reboot</a></li>
       </ul>
     </li>
-    <li><a href="#после-перезагрузки">После перезагрузки</a></li>
   </ul>
 </nav></div>
 
@@ -374,7 +372,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/automation/" data-taxonomy-term="automation"><span class="taxonomy-label">Automation</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/backup-software/" data-taxonomy-term="backup-software"><span class="taxonomy-label">Backup SoftWare</span><span class="taxonomy-count">8</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/backup-software/" data-taxonomy-term="backup-software"><span class="taxonomy-label">Backup SoftWare</span><span class="taxonomy-count">9</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bash/" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">1</span></a></li>
         
@@ -382,7 +380,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">29</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">8</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">9</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/btrfs/" data-taxonomy-term="btrfs"><span class="taxonomy-label">Btrfs</span><span class="taxonomy-count">3</span></a></li>
         
@@ -492,7 +490,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/luks/" data-taxonomy-term="luks"><span class="taxonomy-label">LUKS</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/lvm/" data-taxonomy-term="lvm"><span class="taxonomy-label">LVM</span><span class="taxonomy-count">5</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/lvm/" data-taxonomy-term="lvm"><span class="taxonomy-label">LVM</span><span class="taxonomy-count">6</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/lvm2/" data-taxonomy-term="lvm2"><span class="taxonomy-label">LVM2</span><span class="taxonomy-count">1</span></a></li>
         
@@ -727,7 +725,7 @@ lvcreate -L 4G -s -n snap_var /dev/vg/var
 LV=&#39;/dev/vg/snap_root&#39;
 FSTYPE=$(df -T ${LV/snap_/} | egrep &#34;ext4|xfs&#34; | awk &#39;{print $2}&#39;)
 if [[ ${FSTYPE} = &#34;xfs&#34; ]]; then
-  mount ${LV} /mnt
+  mount -o nouuid ${LV} /mnt
 elif [[ ${FSTYPE} = &#34;ext4&#34; ]]; then
   mount ${LV} /mnt
 fi
@@ -736,7 +734,7 @@ fi
 LV=&#39;/dev/vg/snap_var&#39;
 FSTYPE=$(df -T ${LV/snap_/} | egrep &#34;ext4|xfs&#34; | awk &#39;{print $2}&#39;)
 if [[ ${FSTYPE} = &#34;xfs&#34; ]]; then
-  mount ${LV} /mnt/var
+  mount -o nouuid ${LV} /mnt/var
 elif [[ ${FSTYPE} = &#34;ext4&#34; ]]; then
   mount ${LV} /mnt/var
 fi
@@ -776,23 +774,8 @@ mount -t sysfs /sys /mnt/sys/
 mount --bind /dev /mnt/dev/
 mount --bind /run /mnt/run
 chroot /mnt
-</code></pre><h3 id="обновление-grub">Обновление GRUB</h3>
-<p>В некоторых случаях, например при восстановлении снимка с другой операционной системой, потребуется обновить GRUB.</p>
-<p>Общая схема обновления GRUB такая:</p>
-<ol>
-<li>Генерируем новый <code>/boot/grub/grub.cfg</code>. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&rsquo;ы разделов на диске.<br>
-<code>grub-mkconfig -o /boot/grub/grub.cfg</code> или <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code></li>
-<li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов:<br>
-<code>sed -i 's/vg-snap_root/vg-root/g' /boot/grub/grub.cfg</code> или <code> sed -i 's/vg-snap_root/vg-root/g' /boot/grub2/grub.cfg</code></li>
-<li>На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):<br>
-<code>grub-install /dev/sda</code> или <code>grub2-install /dev/sda</code></li>
-</ol>
-<h3 id="исправляем-etcfstab">Исправляем <code>/etc/fstab</code></h3>
-<p>Приводим <code>/etc/fstab</code> в актуальное состояние, так как в нём указаны устаревшие сведения, оставшиеся от машины донора.</p>
-<p>Необходимо помнить, что в <code>/etc/fstab</code> могут быть просто не указаны некоторые разделы. Например, восстанавливаемый снимок машины, на которой отсутствовал LV-том <code>/dev/vg/var</code> (то есть каталог <code>/var</code> находится в LV-томе <code>/dev/vg/root</code>), не будет иметь соответствующей строки в <code>/etc/fstab</code>. Если такой снимок будет развёрнут с песочнице с подключённым <code>/dev/vg/var</code> к <code>/var</code>, то потребуется вручную добавить в <code>/etc/fstab</code> строку <code>/dev/vg/var /var defaults 1 2</code>.</p>
-<p>Естественно, если восстанавливаемый снимок создавался на этой же машине, то этот пункт можно пропустить.</p>
-<h3 id="обновление-initramfs">Обновление initramfs</h3>
-<p>При восстановлении снимка с другой операционной системой или при различии в версиях Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.</p>
+</code></pre><h3 id="обновление-initramfs">Обновление initramfs</h3>
+<p>При восстановлении старого снимка этой машины с предыдущей версией Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.</p>
 <p>Версию текущего ядра можно узнать через команду <code>uname -r</code>.</p>
 <p>Версии Linux-ядер в восстанавливаемом снимке видны в каталоге <code>/boot</code>.</p>
 <h4 id="centos-7-redos-72">CentOS 7, RedOS 7.2</h4>
@@ -802,17 +785,8 @@ chroot /mnt
 <pre tabindex="0"><code>make-initrd
 </code></pre><p>или при необходимости указания версии ядра:</p>
 <pre tabindex="0"><code>make-initrd --kernel=&#39;5.10.82-std-def-alt1&#39;
-</code></pre><h3 id="исправляем-сетевые-настройки">Исправляем сетевые настройки</h3>
+</code></pre><h3 id="проверяем-сетевые-настройки">Проверяем сетевые настройки</h3>
 <p>Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.</p>
-<h3 id="генерируем-новые-sshd-ключи">Генерируем новые sshd-ключи</h3>
-<p>Требуется в случае, например, массового восстановления снимка одной машины на некоторое количество машин.</p>
-<pre tabindex="0"><code>rm -f /etc/ssh/ssh_host_*
-ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N &#34;&#34;
-ssh-keygen -t ed25519 -a 100 -f /etc/ssh/ssh_host_ed25519_key -N &#34;&#34;
-systemctl restart sshd
-</code></pre><blockquote>
-<p>Предполагается, что ключи DSA и ECDSA закомментированы в <code>/etc/ssh/sshd_config</code> по причине своей устарелости и дырявости.</p>
-</blockquote>
 <h3 id="выход-из-песочницы">Выход из песочницы</h3>
 <pre tabindex="0"><code>exit
 </code></pre><h2 id="заключительные-операции">Заключительные операции</h2>
@@ -828,8 +802,7 @@ lvconvert --merge /dev/vg/snap_root
 <pre tabindex="0"><code>sync
 sleep 10
 reboot -f
-</code></pre><h2 id="после-перезагрузки">После перезагрузки</h2>
-
+</code></pre>
 	
 	
 	
