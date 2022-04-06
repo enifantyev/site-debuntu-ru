@@ -10,3 +10,19 @@ assets/scss/_styles_project.scss
 .td-page-meta { display: none !important; }
 // Отключение значков твиттера и т.п. из футера
 .list-inline { display: none !important; }
+/*
+// Оглавление
+.td-toc {
+  ul {
+    list-style: square outside !important;
+    //color: navy !important;
+    padding-left: 10%;
+  }
+  #TableOfContents {
+    a {
+      list-style: square outside !important;
+      //color: #232222;
+    }
+  }
+}
+*/

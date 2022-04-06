@@ -2252,6 +2252,8 @@ unset OPTION
         &lt;p&gt;2022-03-31&lt;/p&gt;
 &lt;h3 id=&#34;установка-из-apt&#34;&gt;Установка из APT&lt;/h3&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install borg
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ borg -V
+borg 1.1.10
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-из-pip&#34;&gt;Установка из pip&lt;/h3&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install python3-module-pkgconfig python3-module-setuptools \
 python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
@@ -2259,7 +2261,7 @@ libacl-devel libacl libssl-devel liblz4-devel libzstd-devel \
 libxxhash-devel gcc-c++ python3-module-setuptools_scm
 &lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install --upgrade pip
 &lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install borgbackup
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg -V
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ borg -V
 borg 1.1.17
 &lt;/code&gt;&lt;/pre&gt;
       </description>
@@ -2832,7 +2834,7 @@ export BORG_REPO=&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;
     </item>
     
     <item>
-      <title>Manuals: 20. Создание бэкапа всей системы с помощью BorgBackup</title>
+      <title>Manuals: 20. Создание бэкапа всей системы с помощью LVM и BorgBackup</title>
       <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
       
@@ -2945,7 +2947,7 @@ service auditd start
     </item>
     
     <item>
-      <title>Manuals: 30. Восстановление всей системы из бэкапа с помощью BorgBackup</title>
+      <title>Manuals: 30. Восстановление всей системы из бэкапа с помощью LVM и BorgBackup</title>
       <link>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
       
@@ -3059,7 +3061,7 @@ reboot -f
     </item>
     
     <item>
-      <title>Manuals: 31. Накатывание на хост чужого снимка с помощью BorgBackup</title>
+      <title>Manuals: 31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup</title>
       <link>https://debuntu.ru/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</link>
       <pubDate>Mon, 04 Apr 2022 00:00:00 +0000</pubDate>
       
@@ -3184,11 +3186,17 @@ chroot /mnt
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Installing for i386-pc platform.
 Installation finished. No error reported.
 &lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
-&lt;p&gt;Если произошли ошибки, то машина с большой вероятностью загрузится в &amp;lsquo;grub recovery&amp;rsquo;-режиме.&lt;/p&gt;
+&lt;p&gt;⚠️ Если произошли ошибки, то машина с большой вероятностью загрузится в &amp;lsquo;grub recovery&amp;rsquo;-режиме.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;исправляем-etcfstab&#34;&gt;Исправляем &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠️ Напомню, что файл &lt;code&gt;/etc/fstab&lt;/code&gt; обязательно должен заканчиваться &amp;lsquo;новой строкой&amp;rsquo;, иначе ОС не сможет загрузиться.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Приводим &lt;code&gt;/etc/fstab&lt;/code&gt; в актуальное состояние, так как в нём указаны устаревшие сведения, оставшиеся от машины донора.&lt;/p&gt;
 &lt;p&gt;Необходимо помнить, что в &lt;code&gt;/etc/fstab&lt;/code&gt; могут быть просто не указаны некоторые разделы. Например, восстанавливаемый снимок машины, на которой отсутствовал LV-том &lt;code&gt;/dev/vg/var&lt;/code&gt; (то есть каталог &lt;code&gt;/var&lt;/code&gt; находится в LV-томе &lt;code&gt;/dev/vg/root&lt;/code&gt;), не будет иметь соответствующей строки в &lt;code&gt;/etc/fstab&lt;/code&gt;. Если такой снимок будет развёрнут с песочнице с подключённым &lt;code&gt;/dev/vg/var&lt;/code&gt; к &lt;code&gt;/var&lt;/code&gt;, то потребуется вручную добавить в &lt;code&gt;/etc/fstab&lt;/code&gt; строку &lt;code&gt;/dev/vg/var /var defaults 1 2&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠️ Рекомендуется указывать в &lt;code&gt;/etc/fstab&lt;/code&gt; UUID раздела &lt;code&gt;/boot&lt;/code&gt;, так как на машинах AltLinux 10 с двумя дисками я наблюдал рокировки между &lt;code&gt;/dev/sda&lt;/code&gt; и &lt;code&gt;/dev/sdb&lt;/code&gt; после перезагрузок машины. На машинах с другими ОС такого пока не наблюдалось.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Естественно, если восстанавливаемый снимок создавался на этой же машине, то этот пункт можно пропустить.&lt;/p&gt;
 &lt;h3 id=&#34;исправляем-имя-хоста&#34;&gt;Исправляем имя хоста&lt;/h3&gt;
 &lt;p&gt;Проверяем/исправляем содержимое файлов &lt;code&gt;/etc/hostname&lt;/code&gt; и &lt;code&gt;/etc/hosts&lt;/code&gt;.&lt;/p&gt;
@@ -3207,9 +3215,11 @@ Installation finished. No error reported.
 &lt;p&gt;Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.&lt;/p&gt;
 &lt;h3 id=&#34;генерируем-новые-sshd-ключи&#34;&gt;Генерируем новые sshd-ключи&lt;/h3&gt;
 &lt;p&gt;Требуется в случае, например, массового восстановления снимка одной машины на некоторое количество машин.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -f /etc/ssh/ssh_host_*
-ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N &amp;#34;&amp;#34;
-ssh-keygen -t ed25519 -a 100 -f /etc/ssh/ssh_host_ed25519_key -N &amp;#34;&amp;#34;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#DIR=&amp;#34;/etc/openssh&amp;#34; # AltLinux
+DIR=&amp;#34;/etc/ssh&amp;#34;
+rm -f ${DIR}/ssh_host_*
+ssh-keygen -t rsa -b 4096 -f ${DIR}/ssh_host_rsa_key -N &amp;#34;&amp;#34;
+ssh-keygen -t ed25519 -a 100 -f ${DIR}/ssh_host_ed25519_key -N &amp;#34;&amp;#34;
 systemctl restart sshd
 &lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
 &lt;p&gt;Предполагается, что ключи DSA и ECDSA закомментированы в &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; по причине своей устарелости и дырявости.&lt;/p&gt;
@@ -3230,7 +3240,9 @@ lvconvert --merge /dev/vg/snap_root
 sleep 10
 reboot -f
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;после-перезагрузки&#34;&gt;После перезагрузки&lt;/h2&gt;
-
+&lt;p&gt;В случае установленной на машине ОС &amp;lsquo;AltLinux 10&amp;rsquo;, потребуется ещё одна перезагрузка машины по той причине, что следы от ранее созданных сеэпшотов, по неясной причине, остаются в &lt;code&gt;/dev/mapper/&lt;/code&gt;, но не в &lt;code&gt;/dev/vg/&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;reboot
+&lt;/code&gt;&lt;/pre&gt;
       </description>
     </item>
     

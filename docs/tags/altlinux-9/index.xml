@@ -26,6 +26,8 @@
         &lt;p&gt;2022-03-31&lt;/p&gt;
 &lt;h3 id=&#34;установка-из-apt&#34;&gt;Установка из APT&lt;/h3&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install borg
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ borg -V
+borg 1.1.10
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-из-pip&#34;&gt;Установка из pip&lt;/h3&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install python3-module-pkgconfig python3-module-setuptools \
 python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
@@ -33,7 +35,7 @@ libacl-devel libacl libssl-devel liblz4-devel libzstd-devel \
 libxxhash-devel gcc-c++ python3-module-setuptools_scm
 &lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install --upgrade pip
 &lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install borgbackup
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg -V
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ borg -V
 borg 1.1.17
 &lt;/code&gt;&lt;/pre&gt;
       </description>

@@ -18,10 +18,10 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>20. Создание бэкапа всей системы с помощью BorgBackup | Debuntarium</title>
+<title>20. Создание бэкапа всей системы с помощью LVM и BorgBackup | Debuntarium</title>
 <meta name="description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
 ">
-<meta property="og:title" content="20. Создание бэкапа всей системы с помощью BorgBackup" />
+<meta property="og:title" content="20. Создание бэкапа всей системы с помощью LVM и BorgBackup" />
 <meta property="og:description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
 " />
 <meta property="og:type" content="article" />
@@ -29,21 +29,21 @@
 <meta property="article:published_time" content="2022-03-11T00:00:00+00:00" />
 <meta property="article:modified_time" content="2022-03-11T00:00:00+00:00" /><meta property="og:site_name" content="Debuntarium" />
 
-<meta itemprop="name" content="20. Создание бэкапа всей системы с помощью BorgBackup">
+<meta itemprop="name" content="20. Создание бэкапа всей системы с помощью LVM и BorgBackup">
 <meta itemprop="description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
 "><meta itemprop="datePublished" content="2022-03-11T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-03-11T00:00:00+00:00" />
 <meta itemprop="wordCount" content="575">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="20. Создание бэкапа всей системы с помощью BorgBackup"/>
+<meta name="twitter:title" content="20. Создание бэкапа всей системы с помощью LVM и BorgBackup"/>
 <meta name="twitter:description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
 "/>
 
 
 
 
-<link rel="preload" href="/scss/main.min.0c255e5322d90eb422ab0ee9308bc2a8fdfd9fea49208f5ae4138ae94b1261a9.css" as="style">
-<link href="/scss/main.min.0c255e5322d90eb422ab0ee9308bc2a8fdfd9fea49208f5ae4138ae94b1261a9.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" as="style">
+<link href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" rel="stylesheet" integrity="">
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3517323381341731"
      crossorigin="anonymous"></script>
@@ -180,11 +180,11 @@ if (!doNotTrack) {
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupsozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru-li">
   <a href="/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupsozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru"><span class="">15. Создание шлюза в удалённой ИС для доступа хостов к бэкап-серверу</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsborgbackupsozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup-li">
-  <a href="/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupsozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup"><span class="td-sidebar-nav-active-item">20. Создание бэкапа всей системы с помощью BorgBackup</span></a>
+  <a href="/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupsozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup"><span class="td-sidebar-nav-active-item">20. Создание бэкапа всей системы с помощью LVM и BorgBackup</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupvosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup-li">
-  <a href="/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupvosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup"><span class="">30. Восстановление всей системы из бэкапа с помощью BorgBackup</span></a>
+  <a href="/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupvosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup"><span class="">30. Восстановление всей системы из бэкапа с помощью LVM и BorgBackup</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup-li">
-  <a href="/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup"><span class="">31. Накатывание на хост чужого снимка с помощью BorgBackup</span></a>
+  <a href="/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup"><span class="">31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup-li">
   <a href="/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup"><span class="">40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</span></a>
 </li>
@@ -256,7 +256,7 @@ if (!doNotTrack) {
 <a href="https://github.com/google/docsy-example/tree/main/content/ru/manuals/BorgBackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshch%27yu-borgbackup.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa fa-file-alt fa-fw"></i> [i18n] post_view_this</a>
   <a href="https://github.com/google/docsy-example/edit/main/content/ru/manuals/BorgBackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshch%27yu-borgbackup.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Отредактировать страницу</a>
   <a href="https://github.com/google/docsy-example/new/main/content/ru/manuals/BorgBackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshch%27yu-borgbackup.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Create child page</a>
-  <a href="https://github.com/google/docsy-example/issues/new?title=20.%20%d0%a1%d0%be%d0%b7%d0%b4%d0%b0%d0%bd%d0%b8%d0%b5%20%d0%b1%d1%8d%d0%ba%d0%b0%d0%bf%d0%b0%20%d0%b2%d1%81%d0%b5%d0%b9%20%d1%81%d0%b8%d1%81%d1%82%d0%b5%d0%bc%d1%8b%20%d1%81%20%d0%bf%d0%be%d0%bc%d0%be%d1%89%d1%8c%d1%8e%20BorgBackup" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Предложить изменения документации</a>
+  <a href="https://github.com/google/docsy-example/issues/new?title=20.%20%d0%a1%d0%be%d0%b7%d0%b4%d0%b0%d0%bd%d0%b8%d0%b5%20%d0%b1%d1%8d%d0%ba%d0%b0%d0%bf%d0%b0%20%d0%b2%d1%81%d0%b5%d0%b9%20%d1%81%d0%b8%d1%81%d1%82%d0%b5%d0%bc%d1%8b%20%d1%81%20%d0%bf%d0%be%d0%bc%d0%be%d1%89%d1%8c%d1%8e%20LVM%20%d0%b8%20BorgBackup" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Предложить изменения документации</a>
   <a href="https://github.com/google/docsy/issues/new" class="td-page-meta--project-issue" target="_blank" rel="noopener"><i class="fas fa-tasks fa-fw"></i> Предложить доработки по проекту</a>
   <a id="print" href="https://debuntu.ru/manuals/borgbackup/_print/"><i class="fa fa-print fa-fw"></i> Print entire section</a>
 
@@ -328,9 +328,9 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">12</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">13</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">4</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hive/" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">6</span></a></li>
         
@@ -366,7 +366,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/beeline/" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">29</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">30</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">9</span></a></li>
         
@@ -436,7 +436,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/groupware/" data-taxonomy-term="groupware"><span class="taxonomy-label">groupware</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/hdfs/" data-taxonomy-term="hdfs"><span class="taxonomy-label">HDFS</span><span class="taxonomy-count">2</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/hdfs/" data-taxonomy-term="hdfs"><span class="taxonomy-label">HDFS</span><span class="taxonomy-count">3</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/history/" data-taxonomy-term="history"><span class="taxonomy-label">History</span><span class="taxonomy-count">2</span></a></li>
         
@@ -651,13 +651,13 @@ if (!doNotTrack) {
     <a href="https://debuntu.ru/manuals/borgbackup/">BorgBackup</a>
   </li>
   <li class="breadcrumb-item active" aria-current="page">
-    <a href="https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/">20. Создание бэкапа всей системы с помощью BorgBackup</a>
+    <a href="https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/">20. Создание бэкапа всей системы с помощью LVM и BorgBackup</a>
   </li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>20. Создание бэкапа всей системы с помощью BorgBackup</h1>
+	<h1>20. Создание бэкапа всей системы с помощью LVM и BorgBackup</h1>
 	<div class="lead">Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.</div>
 	<header class="article-meta">
 		

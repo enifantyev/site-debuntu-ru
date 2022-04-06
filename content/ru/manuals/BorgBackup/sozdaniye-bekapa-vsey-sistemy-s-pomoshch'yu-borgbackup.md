@@ -1,5 +1,5 @@
 ---
-title: "20. Создание бэкапа всей системы с помощью BorgBackup"
+title: "20. Создание бэкапа всей системы с помощью LVM и BorgBackup"
 date: 2022-03-11
 weight: 20
 description: >

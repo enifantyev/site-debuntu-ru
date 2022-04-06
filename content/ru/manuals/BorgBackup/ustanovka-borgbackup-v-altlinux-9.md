@@ -18,6 +18,10 @@ tags:
 apt-get install borg
 ```
 
+```
+$ borg -V
+borg 1.1.10
+```
 
 ### Установка из pip
 ```
@@ -36,6 +40,6 @@ python3 -m pip install borgbackup
 ```
 
 ```
-borg -V
+$ borg -V
 borg 1.1.17
 ```

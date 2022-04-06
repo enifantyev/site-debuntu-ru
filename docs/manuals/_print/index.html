@@ -35,8 +35,8 @@
 
 
 
-<link rel="preload" href="/scss/main.min.0c255e5322d90eb422ab0ee9308bc2a8fdfd9fea49208f5ae4138ae94b1261a9.css" as="style">
-<link href="/scss/main.min.0c255e5322d90eb422ab0ee9308bc2a8fdfd9fea49208f5ae4138ae94b1261a9.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" as="style">
+<link href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" rel="stylesheet" integrity="">
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3517323381341731"
      crossorigin="anonymous"></script>
@@ -235,7 +235,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1.6: <a href="#pg-9815c94c1a2523d3dd40b4c7182e8149">20. Создание бэкапа всей системы с помощью BorgBackup</a></li>
+<li>1.6: <a href="#pg-9815c94c1a2523d3dd40b4c7182e8149">20. Создание бэкапа всей системы с помощью LVM и BorgBackup</a></li>
 
 
     
@@ -243,7 +243,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1.7: <a href="#pg-721408f9f63a98ab1cd455872f3a26e8">30. Восстановление всей системы из бэкапа с помощью BorgBackup</a></li>
+<li>1.7: <a href="#pg-721408f9f63a98ab1cd455872f3a26e8">30. Восстановление всей системы из бэкапа с помощью LVM и BorgBackup</a></li>
 
 
     
@@ -251,7 +251,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1.8: <a href="#pg-a76891e3004a4b3daa5521beb909c61c">31. Накатывание на хост чужого снимка с помощью BorgBackup</a></li>
+<li>1.8: <a href="#pg-a76891e3004a4b3daa5521beb909c61c">31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup</a></li>
 
 
     
@@ -626,6 +626,8 @@ drwx------ 3 _borg _borg  4096 мар 11 17:30 data
 	<p>2022-03-31</p>
 <h3 id="установка-из-apt">Установка из APT</h3>
 <pre tabindex="0"><code>apt-get install borg
+</code></pre><pre tabindex="0"><code>$ borg -V
+borg 1.1.10
 </code></pre><h3 id="установка-из-pip">Установка из pip</h3>
 <pre tabindex="0"><code>apt-get install python3-module-pkgconfig python3-module-setuptools \
 python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
@@ -633,7 +635,7 @@ libacl-devel libacl libssl-devel liblz4-devel libzstd-devel \
 libxxhash-devel gcc-c++ python3-module-setuptools_scm
 </code></pre><pre tabindex="0"><code>python3 -m pip install --upgrade pip
 </code></pre><pre tabindex="0"><code>python3 -m pip install borgbackup
-</code></pre><pre tabindex="0"><code>borg -V
+</code></pre><pre tabindex="0"><code>$ borg -V
 borg 1.1.17
 </code></pre>
 </div>
@@ -833,7 +835,7 @@ export BORG_REPO=&#34;ssh://_borg@backup-client1:2222/./repo1&#34;
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-9815c94c1a2523d3dd40b4c7182e8149">1.6 - 20. Создание бэкапа всей системы с помощью BorgBackup</h1>
+	<h1 id="pg-9815c94c1a2523d3dd40b4c7182e8149">1.6 - 20. Создание бэкапа всей системы с помощью LVM и BorgBackup</h1>
     <div class="lead">Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.</div>
 	<p>2022-03-11</p>
 <h2 id="подготовительные-мероприятия">Подготовительные мероприятия</h2>
@@ -950,7 +952,7 @@ service auditd start
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-721408f9f63a98ab1cd455872f3a26e8">1.7 - 30. Восстановление всей системы из бэкапа с помощью BorgBackup</h1>
+	<h1 id="pg-721408f9f63a98ab1cd455872f3a26e8">1.7 - 30. Восстановление всей системы из бэкапа с помощью LVM и BorgBackup</h1>
     <div class="lead">Описание процесса восстановления всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.</div>
 	<p>2022-03-11
 2022-03-18</p>
@@ -1068,7 +1070,7 @@ reboot -f
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-a76891e3004a4b3daa5521beb909c61c">1.8 - 31. Накатывание на хост чужого снимка с помощью BorgBackup</h1>
+	<h1 id="pg-a76891e3004a4b3daa5521beb909c61c">1.8 - 31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup</h1>
     <div class="lead">Описание процесса восстановления на хост чужого снимка всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.</div>
 	<p>2022-04-04</p>
 <h2 id="подготовительные-мероприятия">Подготовительные мероприятия</h2>
@@ -1187,11 +1189,17 @@ chroot /mnt
 <pre tabindex="0"><code>Installing for i386-pc platform.
 Installation finished. No error reported.
 </code></pre><blockquote>
-<p>Если произошли ошибки, то машина с большой вероятностью загрузится в &lsquo;grub recovery&rsquo;-режиме.</p>
+<p>⚠️ Если произошли ошибки, то машина с большой вероятностью загрузится в &lsquo;grub recovery&rsquo;-режиме.</p>
 </blockquote>
 <h3 id="исправляем-etcfstab">Исправляем <code>/etc/fstab</code></h3>
+<blockquote>
+<p>⚠️ Напомню, что файл <code>/etc/fstab</code> обязательно должен заканчиваться &lsquo;новой строкой&rsquo;, иначе ОС не сможет загрузиться.</p>
+</blockquote>
 <p>Приводим <code>/etc/fstab</code> в актуальное состояние, так как в нём указаны устаревшие сведения, оставшиеся от машины донора.</p>
 <p>Необходимо помнить, что в <code>/etc/fstab</code> могут быть просто не указаны некоторые разделы. Например, восстанавливаемый снимок машины, на которой отсутствовал LV-том <code>/dev/vg/var</code> (то есть каталог <code>/var</code> находится в LV-томе <code>/dev/vg/root</code>), не будет иметь соответствующей строки в <code>/etc/fstab</code>. Если такой снимок будет развёрнут с песочнице с подключённым <code>/dev/vg/var</code> к <code>/var</code>, то потребуется вручную добавить в <code>/etc/fstab</code> строку <code>/dev/vg/var /var defaults 1 2</code>.</p>
+<blockquote>
+<p>⚠️ Рекомендуется указывать в <code>/etc/fstab</code> UUID раздела <code>/boot</code>, так как на машинах AltLinux 10 с двумя дисками я наблюдал рокировки между <code>/dev/sda</code> и <code>/dev/sdb</code> после перезагрузок машины. На машинах с другими ОС такого пока не наблюдалось.</p>
+</blockquote>
 <p>Естественно, если восстанавливаемый снимок создавался на этой же машине, то этот пункт можно пропустить.</p>
 <h3 id="исправляем-имя-хоста">Исправляем имя хоста</h3>
 <p>Проверяем/исправляем содержимое файлов <code>/etc/hostname</code> и <code>/etc/hosts</code>.</p>
@@ -1210,9 +1218,11 @@ Installation finished. No error reported.
 <p>Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.</p>
 <h3 id="генерируем-новые-sshd-ключи">Генерируем новые sshd-ключи</h3>
 <p>Требуется в случае, например, массового восстановления снимка одной машины на некоторое количество машин.</p>
-<pre tabindex="0"><code>rm -f /etc/ssh/ssh_host_*
-ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N &#34;&#34;
-ssh-keygen -t ed25519 -a 100 -f /etc/ssh/ssh_host_ed25519_key -N &#34;&#34;
+<pre tabindex="0"><code>#DIR=&#34;/etc/openssh&#34; # AltLinux
+DIR=&#34;/etc/ssh&#34;
+rm -f ${DIR}/ssh_host_*
+ssh-keygen -t rsa -b 4096 -f ${DIR}/ssh_host_rsa_key -N &#34;&#34;
+ssh-keygen -t ed25519 -a 100 -f ${DIR}/ssh_host_ed25519_key -N &#34;&#34;
 systemctl restart sshd
 </code></pre><blockquote>
 <p>Предполагается, что ключи DSA и ECDSA закомментированы в <code>/etc/ssh/sshd_config</code> по причине своей устарелости и дырявости.</p>
@@ -1233,7 +1243,9 @@ lvconvert --merge /dev/vg/snap_root
 sleep 10
 reboot -f
 </code></pre><h2 id="после-перезагрузки">После перезагрузки</h2>
-
+<p>В случае установленной на машине ОС &lsquo;AltLinux 10&rsquo;, потребуется ещё одна перезагрузка машины по той причине, что следы от ранее созданных сеэпшотов, по неясной причине, остаются в <code>/dev/mapper/</code>, но не в <code>/dev/vg/</code>.</p>
+<pre tabindex="0"><code>reboot
+</code></pre>
 </div>
 
 

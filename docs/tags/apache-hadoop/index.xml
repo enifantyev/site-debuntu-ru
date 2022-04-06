@@ -1367,6 +1367,118 @@ ipa group-del ${IPAGROUP}
     </item>
     
     <item>
+      <title>Refbooks: Администрирование таблиц в Apache HBase</title>
+      <link>https://debuntu.ru/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</link>
+      <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-11-14&lt;/p&gt;
+&lt;h2 id=&#34;работа-с-таблицами-hbase&#34;&gt;Работа с таблицами HBase&lt;/h2&gt;
+&lt;p&gt;Работу с таблицами будем производить через CLI-утилиту &lt;code&gt;hbase&lt;/code&gt;. Есть два способа выполнения команд с &lt;code&gt;hbase&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Первый способ заключается в запуске &lt;code&gt;hbase shell&lt;/code&gt; и интерактивной подаче команд:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ hbase shell
+hbase(main):001:0&amp;gt; list
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Второй способ позволяет использовать &lt;code&gt;hbase&lt;/code&gt; в скриптах:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;list&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если кластер керберизированный, то перед работой с сервисами кластера получаем Kerberos-билет с помощью &lt;code&gt;kinit&lt;/code&gt; или из соответствующего &amp;lsquo;keytab&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;kinit -kt hbase.keytab hbase/$(hostname)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если кластер некерберизированный и не хватает прав для выполнения операций, описанных в этой памятке, то &amp;hellip;&lt;/p&gt;
+&lt;p&gt;Пытаемся подать команду через &lt;code&gt;sudo -u hdfs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo -u hdfs hdfs dfs -rm ...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Или с помощью &lt;code&gt;HADOOP_USER_NAME=hdfs&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HADOOP_USER_NAME=hdfs hbase org.apache.hadoop.hbase.mapreduce.Import ...
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;экспорт-данных-из-таблицы-hbase-в-hdfs-на-основе-mapreduce&#34;&gt;Экспорт данных из таблицы HBase в HDFS на основе mapreduce&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Данные из таблицы экспортируем в отдельную папку HDFS.&lt;/li&gt;
+&lt;li&gt;Переносим экспортированные данные в локальную FS.&lt;/li&gt;
+&lt;li&gt;Удаляем экспортированные данные из HDFS.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;CURDATE=$(date +%y%m%d-%H%M%S)
+
+hbase org.apache.hadoop.hbase.mapreduce.Export &amp;#39;MyTableName&amp;#39; /tmp/MyTableName_Export_${CURDATE}
+
+hdfs dfs -copyToLocal /tmp/MyTableName_Export_${CURDATE} /data/tmp/
+
+hdfs dfs -rm -r -f -skipTrash /tmp/MyTableName_Export_${CURDATE}
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-пустой-таблицы-в-hbase&#34;&gt;Создание пустой таблицы в HBase&lt;/h3&gt;
+&lt;p&gt;При создании новой таблицы в HBase, второй параметр определяет &amp;lsquo;COLUMN FAMILIES&amp;rsquo;. При необходимости, кроме названия, можно указывать дополнительные опции в &amp;lsquo;COLUMN FAMILIES&amp;rsquo;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;create &amp;#39;MyTableName&amp;#39;, &amp;#39;data&amp;#39;&amp;#34;  | hbase shell
+
+echo &amp;#34;create &amp;#39;MyTableName&amp;#39;, {NAME =&amp;gt; &amp;#39;data&amp;#39;, COMPRESSION =&amp;gt; &amp;#39;GZ&amp;#39;}&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;описание-column-families&#34;&gt;Описание COLUMN FAMILIES&lt;/h3&gt;
+&lt;p&gt;Узнать &amp;lsquo;COLUMN FAMILIES&amp;rsquo; из описания к существующей таблице.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ hbase shell
+hbase(main):001:0&amp;gt; describe &amp;#39;SomeTableName&amp;#39;
+
+Table SomeTableName is ENABLED
+SomeTableName
+COLUMN FAMILIES DESCRIPTION
+{NAME =&amp;gt; &amp;#39;data&amp;#39;, BLOOMFILTER =&amp;gt; &amp;#39;ROW&amp;#39;, VERSIONS =&amp;gt; &amp;#39;1&amp;#39;, IN_MEMORY =&amp;gt; &amp;#39;false&amp;#39;, KEEP_DELETED_CELLS =&amp;gt; &amp;#39;FALSE&amp;#39;,
+ DATA_BLOCK_ENCODING =&amp;gt; &amp;#39;NONE&amp;#39;, TTL =&amp;gt; &amp;#39;FOREVER&amp;#39;, COMPRESSION =&amp;gt; &amp;#39;GZ&amp;#39;, MIN_VERSIONS =&amp;gt; &amp;#39;0&amp;#39;, BLOCKCACHE =&amp;gt; &amp;#39;t
+rue&amp;#39;, BLOCKSIZE =&amp;gt; &amp;#39;65536&amp;#39;, REPLICATION_SCOPE =&amp;gt; &amp;#39;0&amp;#39;}
+1 row(s) in 0.3900 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;способы-импорта-данных-из-hdfs-в-таблицу-hbase&#34;&gt;Способы импорта данных из HDFS в таблицу HBase&lt;/h3&gt;
+&lt;p&gt;Перед процедурой импорта, размещаем импортируемые данные в папке HDFS.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;hdfs dfs -copyFromLocal /tmp/MyTableName_Export_201114-123315 /tmp
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Импортируемые данные не уничтожат существующие данные в таблице. Уничтожение данных производится через &lt;code&gt;echo &amp;quot;truncate &#39;myTableName&#39;&amp;quot; | hbase shell&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&#34;1-импорт-методом-import&#34;&gt;1. Импорт методом Import&lt;/h4&gt;
+&lt;p&gt;При этом способе импорта, данные заливаются из HDFS напрямую в HBase. Это удобно, но, к сожалению, иногда, процесс импорта прерывается ошибками. В этом случае успешно работает &lt;a href=&#34;http://hbase.apache.org/book.html#completebulkload&#34;&gt;CompleteBulkLoad&lt;/a&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;hbase org.apache.hadoop.hbase.mapreduce.Import &amp;#39;MyTableName&amp;#39; /tmp/MyTableName_Export_201114-123315
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;2-импорт-с-помощью-completebulkload-loadincrementalhfiles&#34;&gt;2. Импорт с помощью CompleteBulkLoad (LoadIncrementalHFiles)&lt;/h4&gt;
+&lt;p&gt;При этом способе импорта, &lt;a href=&#34;http://hbase.apache.org/book.html#completebulkload&#34;&gt;CompleteBulkLoad&lt;/a&gt;, данные предварительно преобразовываются в формат HBase, сохраняясь в отдельной HDFS-папке. Процесс этот довольно продолжительный. Но далее, второй командой, подготовленная папка мгновенно переносится в хранилище HBase.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;hbase org.apache.hadoop.hbase.mapreduce.Import -Dimport.bulk.output=/tmp/H_TableName_tmp &amp;#39;TableName&amp;#39; /tmp/TableName_Export_201114-123315
+
+hbase org.apache.hadoop.hbase.tool.LoadIncrementalHFiles /tmp/H_TableName_tmp TableName
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;список-таблиц&#34;&gt;Список таблиц&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;list&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-содержимого-таблицы&#34;&gt;Удаление содержимого таблицы&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;truncate &amp;#39;myTableName&amp;#39;&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;На время подрезки данных, таблица автоматически переводится в режим &amp;lsquo;disabled&amp;rsquo;.&lt;/p&gt;
+&lt;h3 id=&#34;удаление-таблицы&#34;&gt;Удаление таблицы&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;disable &amp;#39;MyTableName&amp;#39;&amp;#34; | hbase shell
+echo &amp;#34;drop &amp;#39;MyTableName&amp;#39;&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;работа-с-правами-доступа&#34;&gt;Работа с правами доступа&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_sg_hbase_authorization.html#concept_enm_hhx_yp&#34;&gt;Configuring HBase Authorization | Cloudera Enterprise 6.3.x&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;получение-списка-с-правами-доступа&#34;&gt;Получение списка с правами доступа&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;user_permission &amp;#39;.*&amp;#39; # Все таблицы
+user_permission &amp;#39;MyTable&amp;#39; # Для одной таблицы
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;предоставление-прав-доступа&#34;&gt;Предоставление прав доступа&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;grant &amp;#39;eugene&amp;#39;, &amp;#39;RWXCA&amp;#39;, &amp;#39;MyTable&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;отзыв-прав-доступа&#34;&gt;Отзыв прав доступа&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;revoke &amp;#39;eugene&amp;#39;, &amp;#39;MyTable&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;работа-со-снимками&#34;&gt;Работа со снимками&lt;/h2&gt;
+&lt;h3 id=&#34;список-снимков&#34;&gt;Список снимков&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;list_snapshots&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-снимка&#34;&gt;Создание снимка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;CURDATE=$(date +%y%m%d-%H%M%S)
+
+echo &amp;#34;snapshot &amp;#39;MyTableName&amp;#39;, &amp;#39;MyTableName_Snapshot_$CURDATA&amp;#39;&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;экспорт-снимка-в-hdfs-папку&#34;&gt;Экспорт снимка в hdfs папку&lt;/h3&gt;
+&lt;p&gt;Создаём в HDFS каталог /tmp/hbase_snapshots и экспортируем туда снимок:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;hdfs dfs -mkdir -p /tmp/hbase_snapshots
+hbase org.apache.hadoop.hbase.snapshot.ExportSnapshot -snapshot MyTableName_Snapshot -copy-to /tmp/hbase_snapshots
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В результате, в &lt;code&gt;/tmp/hbase_snapshots&lt;/code&gt; наблюдаем готовую структуру для переноса в другой кластер в hdfs каталог &lt;code&gt;/hbase&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;hdfs dfs -ls /tmp/hbase_snapshots
+Found 2 items
+drwxrwx---   - hbase supergroup          0 2021-04-01 14:29 /tmp/hbase_snapshots/.hbase-snapshot
+drwxrwx---   - hdfs  supergroup          0 2021-04-01 14:29 /tmp/hbase_snapshots/archive
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После переноса этого каталога в другой кластер, содержимое папок &lt;code&gt;.hbase-snapshot&lt;/code&gt; и &lt;code&gt;archive&lt;/code&gt; копируем в такие же папки в каталоге &lt;code&gt;/hbase&lt;/code&gt;, после чего в списке снимков появится искомый снимок, к которому можно применить команду &lt;code&gt;restore_snapshot&lt;/code&gt;. Нет нужды создавать новую таблицу для этого снимка. Новая таблица будет создана автоматически, как точная копия таблицы, с которой делался снимок.&lt;/p&gt;
+&lt;h3 id=&#34;восстановление-снимка&#34;&gt;Восстановление снимка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;disable &amp;#39;MyTableName&amp;#39;&amp;#34; | hbase shell
+echo &amp;#34;restore_snapshot &amp;#39;MyTableName_Snapshot_201114-141940&amp;#39;&amp;#34; | hbase shell
+echo &amp;#34;enable &amp;#39;MyTableName&amp;#39;&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;клонирование-таблицы-из-снимка&#34;&gt;Клонирование таблицы из снимка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;clone_snapshot &amp;#39;MyTableName_Snapshot_201114-141940&amp;#39;, &amp;#39;MyOtherTableName&amp;#39;&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-снимка&#34;&gt;Удаление снимка&lt;/h3&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;echo &amp;#34;delete_snapshot &amp;#39;MyTableName_Snapshot_201114-141940&amp;#39;&amp;#34; | hbase shell
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
       <title>N: Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2</title>
       <link>https://debuntu.ru/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
       <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>

@@ -35,8 +35,8 @@
 
 
 
-<link rel="preload" href="/scss/main.min.0c255e5322d90eb422ab0ee9308bc2a8fdfd9fea49208f5ae4138ae94b1261a9.css" as="style">
-<link href="/scss/main.min.0c255e5322d90eb422ab0ee9308bc2a8fdfd9fea49208f5ae4138ae94b1261a9.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" as="style">
+<link href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" rel="stylesheet" integrity="">
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3517323381341731"
      crossorigin="anonymous"></script>
@@ -180,7 +180,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1: <a href="#pg-6bfacb4eec186580890b0297616260d6">Python</a></li>
+<li>1: <a href="#pg-0964af5e012ac9cf0322bd2c8cfb38e0">Apache Hadoop</a></li>
 
 
     
@@ -195,7 +195,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1.1: <a href="#pg-cf5647bbe371aa2f74948c9fd62c1efb">Управление пакетами в Python</a></li>
+<li>1.1: <a href="#pg-b9943912c32dd2b73ab1101dc1d07fff">Администрирование таблиц в Apache HBase</a></li>
 
 
     
@@ -207,7 +207,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2: <a href="#pg-e1c4523904d38ca6ed0b436d7a610801">Управление процессами</a></li>
+<li>2: <a href="#pg-6bfacb4eec186580890b0297616260d6">Python</a></li>
 
 
     
@@ -222,7 +222,34 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2.1: <a href="#pg-46130c3bc0778ca4c424bea7f388837d">Краткий список утилит и команд оболочки для работы с процессами</a></li>
+<li>2.1: <a href="#pg-cf5647bbe371aa2f74948c9fd62c1efb">Управление пакетами в Python</a></li>
+
+
+    
+  
+
+    </ul>
+    
+  
+    
+    
+	
+<li>3: <a href="#pg-e1c4523904d38ca6ed0b436d7a610801">Управление процессами</a></li>
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+<li>3.1: <a href="#pg-46130c3bc0778ca4c424bea7f388837d">Краткий список утилит и команд оболочки для работы с процессами</a></li>
 
 
     
@@ -257,7 +284,7 @@ This is the multi-page printable view of this section.
 
 <div class="td-content" style="">
     
-	<h1 id="pg-6bfacb4eec186580890b0297616260d6">1 - Python</h1>
+	<h1 id="pg-0964af5e012ac9cf0322bd2c8cfb38e0">1 - Apache Hadoop</h1>
     
 	
 </div>
@@ -282,7 +309,152 @@ This is the multi-page printable view of this section.
 
 <div class="td-content" style="">
     
-	<h1 id="pg-cf5647bbe371aa2f74948c9fd62c1efb">1.1 - Управление пакетами в Python</h1>
+	<h1 id="pg-b9943912c32dd2b73ab1101dc1d07fff">1.1 - Администрирование таблиц в Apache HBase</h1>
+    <div class="lead">Описание обычных работ администратора с таблицами в Apache HBase.</div>
+	<p>2020-11-14</p>
+<h2 id="работа-с-таблицами-hbase">Работа с таблицами HBase</h2>
+<p>Работу с таблицами будем производить через CLI-утилиту <code>hbase</code>. Есть два способа выполнения команд с <code>hbase</code>.</p>
+<p>Первый способ заключается в запуске <code>hbase shell</code> и интерактивной подаче команд:</p>
+<pre tabindex="0"><code>$ hbase shell
+hbase(main):001:0&gt; list
+</code></pre><p>Второй способ позволяет использовать <code>hbase</code> в скриптах:</p>
+<pre tabindex="0"><code>echo &#34;list&#34; | hbase shell
+</code></pre><p>Если кластер керберизированный, то перед работой с сервисами кластера получаем Kerberos-билет с помощью <code>kinit</code> или из соответствующего &lsquo;keytab&rsquo;:</p>
+<pre tabindex="0"><code>kinit -kt hbase.keytab hbase/$(hostname)
+</code></pre><p>Если кластер некерберизированный и не хватает прав для выполнения операций, описанных в этой памятке, то &hellip;</p>
+<p>Пытаемся подать команду через <code>sudo -u hdfs</code>:</p>
+<pre tabindex="0"><code>sudo -u hdfs hdfs dfs -rm ...
+</code></pre><p>Или с помощью <code>HADOOP_USER_NAME=hdfs</code>:</p>
+<pre tabindex="0"><code>HADOOP_USER_NAME=hdfs hbase org.apache.hadoop.hbase.mapreduce.Import ...
+</code></pre><h3 id="экспорт-данных-из-таблицы-hbase-в-hdfs-на-основе-mapreduce">Экспорт данных из таблицы HBase в HDFS на основе mapreduce</h3>
+<ol>
+<li>Данные из таблицы экспортируем в отдельную папку HDFS.</li>
+<li>Переносим экспортированные данные в локальную FS.</li>
+<li>Удаляем экспортированные данные из HDFS.</li>
+</ol>
+<pre tabindex="0"><code>CURDATE=$(date +%y%m%d-%H%M%S)
+
+hbase org.apache.hadoop.hbase.mapreduce.Export &#39;MyTableName&#39; /tmp/MyTableName_Export_${CURDATE}
+
+hdfs dfs -copyToLocal /tmp/MyTableName_Export_${CURDATE} /data/tmp/
+
+hdfs dfs -rm -r -f -skipTrash /tmp/MyTableName_Export_${CURDATE}
+</code></pre><h3 id="создание-пустой-таблицы-в-hbase">Создание пустой таблицы в HBase</h3>
+<p>При создании новой таблицы в HBase, второй параметр определяет &lsquo;COLUMN FAMILIES&rsquo;. При необходимости, кроме названия, можно указывать дополнительные опции в &lsquo;COLUMN FAMILIES&rsquo;.</p>
+<pre tabindex="0"><code>echo &#34;create &#39;MyTableName&#39;, &#39;data&#39;&#34;  | hbase shell
+
+echo &#34;create &#39;MyTableName&#39;, {NAME =&gt; &#39;data&#39;, COMPRESSION =&gt; &#39;GZ&#39;}&#34; | hbase shell
+</code></pre><h3 id="описание-column-families">Описание COLUMN FAMILIES</h3>
+<p>Узнать &lsquo;COLUMN FAMILIES&rsquo; из описания к существующей таблице.</p>
+<pre tabindex="0"><code>$ hbase shell
+hbase(main):001:0&gt; describe &#39;SomeTableName&#39;
+
+Table SomeTableName is ENABLED
+SomeTableName
+COLUMN FAMILIES DESCRIPTION
+{NAME =&gt; &#39;data&#39;, BLOOMFILTER =&gt; &#39;ROW&#39;, VERSIONS =&gt; &#39;1&#39;, IN_MEMORY =&gt; &#39;false&#39;, KEEP_DELETED_CELLS =&gt; &#39;FALSE&#39;,
+ DATA_BLOCK_ENCODING =&gt; &#39;NONE&#39;, TTL =&gt; &#39;FOREVER&#39;, COMPRESSION =&gt; &#39;GZ&#39;, MIN_VERSIONS =&gt; &#39;0&#39;, BLOCKCACHE =&gt; &#39;t
+rue&#39;, BLOCKSIZE =&gt; &#39;65536&#39;, REPLICATION_SCOPE =&gt; &#39;0&#39;}
+1 row(s) in 0.3900 seconds
+</code></pre><h3 id="способы-импорта-данных-из-hdfs-в-таблицу-hbase">Способы импорта данных из HDFS в таблицу HBase</h3>
+<p>Перед процедурой импорта, размещаем импортируемые данные в папке HDFS.</p>
+<pre tabindex="0"><code>hdfs dfs -copyFromLocal /tmp/MyTableName_Export_201114-123315 /tmp
+</code></pre><p>Импортируемые данные не уничтожат существующие данные в таблице. Уничтожение данных производится через <code>echo &quot;truncate 'myTableName'&quot; | hbase shell</code></p>
+<h4 id="1-импорт-методом-import">1. Импорт методом Import</h4>
+<p>При этом способе импорта, данные заливаются из HDFS напрямую в HBase. Это удобно, но, к сожалению, иногда, процесс импорта прерывается ошибками. В этом случае успешно работает <a href="http://hbase.apache.org/book.html#completebulkload">CompleteBulkLoad</a>.</p>
+<pre tabindex="0"><code>hbase org.apache.hadoop.hbase.mapreduce.Import &#39;MyTableName&#39; /tmp/MyTableName_Export_201114-123315
+</code></pre><h4 id="2-импорт-с-помощью-completebulkload-loadincrementalhfiles">2. Импорт с помощью CompleteBulkLoad (LoadIncrementalHFiles)</h4>
+<p>При этом способе импорта, <a href="http://hbase.apache.org/book.html#completebulkload">CompleteBulkLoad</a>, данные предварительно преобразовываются в формат HBase, сохраняясь в отдельной HDFS-папке. Процесс этот довольно продолжительный. Но далее, второй командой, подготовленная папка мгновенно переносится в хранилище HBase.</p>
+<pre tabindex="0"><code>hbase org.apache.hadoop.hbase.mapreduce.Import -Dimport.bulk.output=/tmp/H_TableName_tmp &#39;TableName&#39; /tmp/TableName_Export_201114-123315
+
+hbase org.apache.hadoop.hbase.tool.LoadIncrementalHFiles /tmp/H_TableName_tmp TableName
+</code></pre><h3 id="список-таблиц">Список таблиц</h3>
+<pre tabindex="0"><code>echo &#34;list&#34; | hbase shell
+</code></pre><h3 id="удаление-содержимого-таблицы">Удаление содержимого таблицы</h3>
+<pre tabindex="0"><code>echo &#34;truncate &#39;myTableName&#39;&#34; | hbase shell
+</code></pre><p>На время подрезки данных, таблица автоматически переводится в режим &lsquo;disabled&rsquo;.</p>
+<h3 id="удаление-таблицы">Удаление таблицы</h3>
+<pre tabindex="0"><code>echo &#34;disable &#39;MyTableName&#39;&#34; | hbase shell
+echo &#34;drop &#39;MyTableName&#39;&#34; | hbase shell
+</code></pre><h2 id="работа-с-правами-доступа">Работа с правами доступа</h2>
+<p><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_sg_hbase_authorization.html#concept_enm_hhx_yp">Configuring HBase Authorization | Cloudera Enterprise 6.3.x</a></p>
+<h3 id="получение-списка-с-правами-доступа">Получение списка с правами доступа</h3>
+<pre tabindex="0"><code>user_permission &#39;.*&#39; # Все таблицы
+user_permission &#39;MyTable&#39; # Для одной таблицы
+</code></pre><h3 id="предоставление-прав-доступа">Предоставление прав доступа</h3>
+<pre tabindex="0"><code>grant &#39;eugene&#39;, &#39;RWXCA&#39;, &#39;MyTable&#39;
+</code></pre><h3 id="отзыв-прав-доступа">Отзыв прав доступа</h3>
+<pre tabindex="0"><code>revoke &#39;eugene&#39;, &#39;MyTable&#39;
+</code></pre><h2 id="работа-со-снимками">Работа со снимками</h2>
+<h3 id="список-снимков">Список снимков</h3>
+<pre tabindex="0"><code>echo &#34;list_snapshots&#34; | hbase shell
+</code></pre><h3 id="создание-снимка">Создание снимка</h3>
+<pre tabindex="0"><code>CURDATE=$(date +%y%m%d-%H%M%S)
+
+echo &#34;snapshot &#39;MyTableName&#39;, &#39;MyTableName_Snapshot_$CURDATA&#39;&#34; | hbase shell
+</code></pre><h3 id="экспорт-снимка-в-hdfs-папку">Экспорт снимка в hdfs папку</h3>
+<p>Создаём в HDFS каталог /tmp/hbase_snapshots и экспортируем туда снимок:</p>
+<pre tabindex="0"><code>hdfs dfs -mkdir -p /tmp/hbase_snapshots
+hbase org.apache.hadoop.hbase.snapshot.ExportSnapshot -snapshot MyTableName_Snapshot -copy-to /tmp/hbase_snapshots
+</code></pre><p>В результате, в <code>/tmp/hbase_snapshots</code> наблюдаем готовую структуру для переноса в другой кластер в hdfs каталог <code>/hbase</code>:</p>
+<pre tabindex="0"><code>hdfs dfs -ls /tmp/hbase_snapshots
+Found 2 items
+drwxrwx---   - hbase supergroup          0 2021-04-01 14:29 /tmp/hbase_snapshots/.hbase-snapshot
+drwxrwx---   - hdfs  supergroup          0 2021-04-01 14:29 /tmp/hbase_snapshots/archive
+</code></pre><p>После переноса этого каталога в другой кластер, содержимое папок <code>.hbase-snapshot</code> и <code>archive</code> копируем в такие же папки в каталоге <code>/hbase</code>, после чего в списке снимков появится искомый снимок, к которому можно применить команду <code>restore_snapshot</code>. Нет нужды создавать новую таблицу для этого снимка. Новая таблица будет создана автоматически, как точная копия таблицы, с которой делался снимок.</p>
+<h3 id="восстановление-снимка">Восстановление снимка</h3>
+<pre tabindex="0"><code>echo &#34;disable &#39;MyTableName&#39;&#34; | hbase shell
+echo &#34;restore_snapshot &#39;MyTableName_Snapshot_201114-141940&#39;&#34; | hbase shell
+echo &#34;enable &#39;MyTableName&#39;&#34; | hbase shell
+</code></pre><h3 id="клонирование-таблицы-из-снимка">Клонирование таблицы из снимка</h3>
+<pre tabindex="0"><code>echo &#34;clone_snapshot &#39;MyTableName_Snapshot_201114-141940&#39;, &#39;MyOtherTableName&#39;&#34; | hbase shell
+</code></pre><h3 id="удаление-снимка">Удаление снимка</h3>
+<pre tabindex="0"><code>echo &#34;delete_snapshot &#39;MyTableName_Snapshot_201114-141940&#39;&#34; | hbase shell
+</code></pre>
+</div>
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-6bfacb4eec186580890b0297616260d6">2 - Python</h1>
+    
+	
+</div>
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+<div class="td-content" style="">
+    
+	<h1 id="pg-cf5647bbe371aa2f74948c9fd62c1efb">2.1 - Управление пакетами в Python</h1>
     <div class="lead">Краткий справочник по работе с пакетами Python.</div>
 	<h2 id="способы-установки-python-пакетов">Способы установки python-пакетов</h2>
 <h3 id="с-помощью-системного-менеджера-пакетов-apt-или-yum">С помощью системного менеджера пакетов APT или YUM</h3>
@@ -354,7 +526,7 @@ pip install -r requirements.txt
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-e1c4523904d38ca6ed0b436d7a610801">2 - Управление процессами</h1>
+	<h1 id="pg-e1c4523904d38ca6ed0b436d7a610801">3 - Управление процессами</h1>
     
 	
 </div>
@@ -379,7 +551,7 @@ pip install -r requirements.txt
 
 <div class="td-content" style="">
     
-	<h1 id="pg-46130c3bc0778ca4c424bea7f388837d">2.1 - Краткий список утилит и команд оболочки для работы с процессами</h1>
+	<h1 id="pg-46130c3bc0778ca4c424bea7f388837d">3.1 - Краткий список утилит и команд оболочки для работы с процессами</h1>
     <div class="lead">Краткий справочник по утилитам и командам оболочки для работы с процессами Linux.</div>
 	<p>2022-03-29</p>
 <h2 id="обозреть-работающие-процессы">Обозреть работающие процессы</h2>
