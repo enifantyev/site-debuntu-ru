@@ -8,6 +8,9 @@ tags:
   - OpenVPN
   - VPN
   - Ubuntu
+aliases:
+  - /a/razvyortyvanie-seti-openvpn/
+  - /manuals/vpn/razvyortyvanie-seti-openvpn/
 ---
 
 2020-03-31

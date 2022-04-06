@@ -6,6 +6,9 @@ description: >
   Краткая памятка по использованию GNU Screen
 tags:
   - GNU Screen
+aliases:
+  - /a/gnu-screen-kratkaya-pamyatka/
+  - /refbooks/linux/gnu-screen-kratkaya-pamyatka/
 ---
 
 2021-10-07

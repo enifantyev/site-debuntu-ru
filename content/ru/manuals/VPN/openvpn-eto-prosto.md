@@ -8,6 +8,9 @@ tags:
   - OpenVPN
   - VPN
   - Ubuntu
+aliases:
+  - /a/openvpn-eto-prosto/
+  - /manuals/vpn/openvpn-eto-prosto/
 ---
 
 2020-03-22

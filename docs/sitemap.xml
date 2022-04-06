@@ -109,7 +109,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/gnu-screen-kratkaya-pamyatka/</loc>
+    <loc>https://debuntu.ru/refbooks/linux/gnu-screen-kratkaya-pamyatka/</loc>
     <lastmod>2021-10-07T00:00:00+00:00</lastmod>
   </url>
   
@@ -326,13 +326,6 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/administrirovanie-tablic-v-apache-hbase/</loc>
-    <lastmod>2020-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
     <loc>https://debuntu.ru/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</loc>
     <lastmod>2020-11-14T00:00:00+00:00</lastmod>
   </url>
@@ -459,14 +452,14 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/razvyortyvanie-seti-openvpn/</loc>
+    <loc>https://debuntu.ru/manuals/vpn/razvyortyvanie-seti-openvpn/</loc>
     <lastmod>2020-03-31T00:00:00+00:00</lastmod>
   </url>
   
   
   
   <url>
-    <loc>https://debuntu.ru/a/openvpn-eto-prosto/</loc>
+    <loc>https://debuntu.ru/manuals/vpn/openvpn-eto-prosto/</loc>
     <lastmod>2020-03-22T00:00:00+00:00</lastmod>
   </url>
   
@@ -550,7 +543,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/perevod-easy-rsa-3-quickstart-readme/</loc>
+    <loc>https://debuntu.ru/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</loc>
     <lastmod>2019-10-22T00:00:00+00:00</lastmod>
   </url>
   
@@ -606,7 +599,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</loc>
+    <loc>https://debuntu.ru/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</loc>
     <lastmod>2019-04-22T00:00:00+00:00</lastmod>
   </url>
   
@@ -683,7 +676,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</loc>
+    <loc>https://debuntu.ru/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</loc>
     <lastmod>2014-08-04T00:00:00+00:00</lastmod>
   </url>
   
@@ -830,7 +823,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</loc>
+    <loc>https://debuntu.ru/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</loc>
     <lastmod>1970-01-01T03:00:02+03:00</lastmod>
   </url>
   
@@ -1003,6 +996,20 @@
   
   
   <url>
+    <loc>https://debuntu.ru/refbooks/linux/</loc>
+    <lastmod>2021-10-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/refbooks/</loc>
+    <lastmod>2021-10-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/refbooks/apachehadoop/</loc>
     <lastmod>2020-11-14T00:00:00+00:00</lastmod>
   </url>
@@ -1010,21 +1017,14 @@
   
   
   <url>
-    <loc>https://debuntu.ru/refbooks/</loc>
-    <lastmod>2020-11-14T00:00:00+00:00</lastmod>
+    <loc>https://debuntu.ru/manuals/vpn/</loc>
+    <lastmod>2020-03-31T00:00:00+00:00</lastmod>
   </url>
   
   
   
   <url>
     <loc>https://debuntu.ru/refbooks/python/</loc>
-    <lastmod>1970-01-01T03:00:02+03:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
-    <loc>https://debuntu.ru/refbooks/procmanag/</loc>
     <lastmod>1970-01-01T03:00:02+03:00</lastmod>
   </url>
   

@@ -106,11 +106,11 @@ drwx------ 3 _borg _borg  4096 мар 11 17:30 data
     </item>
     
     <item>
-      <title>A: Развёртывание сети OpenVPN</title>
-      <link>https://debuntu.ru/a/razvyortyvanie-seti-openvpn/</link>
+      <title>Manuals: Развёртывание сети OpenVPN</title>
+      <link>https://debuntu.ru/manuals/vpn/razvyortyvanie-seti-openvpn/</link>
       <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/a/razvyortyvanie-seti-openvpn/</guid>
+      <guid>https://debuntu.ru/manuals/vpn/razvyortyvanie-seti-openvpn/</guid>
       <description>
         
         
@@ -385,11 +385,11 @@ shred -u pki/reqs/${SRVNAME}.req
     </item>
     
     <item>
-      <title>A: OpenVPN — это просто</title>
-      <link>https://debuntu.ru/a/openvpn-eto-prosto/</link>
+      <title>Manuals: OpenVPN — это просто</title>
+      <link>https://debuntu.ru/manuals/vpn/openvpn-eto-prosto/</link>
       <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/a/openvpn-eto-prosto/</guid>
+      <guid>https://debuntu.ru/manuals/vpn/openvpn-eto-prosto/</guid>
       <description>
         
         
@@ -560,11 +560,11 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
     </item>
     
     <item>
-      <title>A: Настраиваем OpenVPN сервер на подключение клиентов</title>
-      <link>https://debuntu.ru/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
+      <title>Manuals: Настраиваем OpenVPN сервер на подключение клиентов</title>
+      <link>https://debuntu.ru/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
       <pubDate>Mon, 04 Aug 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
+      <guid>https://debuntu.ru/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
       <description>
         
         

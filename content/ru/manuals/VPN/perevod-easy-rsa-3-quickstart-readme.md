@@ -10,6 +10,9 @@ tags:
   - VPN
   - PKI
   - translation
+aliases:
+  - /a/perevod-easy-rsa-3-quickstart-readme/
+  - /manuals/vpn/perevod-easy-rsa-3-quickstart-readme/
 ---
 
 2019-10-22

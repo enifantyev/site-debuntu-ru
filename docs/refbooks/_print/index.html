@@ -180,7 +180,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1: <a href="#pg-0964af5e012ac9cf0322bd2c8cfb38e0">Apache Hadoop</a></li>
+<li>1: <a href="#pg-0cb8a1e29f564167c55df396a1c18980">Linux</a></li>
 
 
     
@@ -195,7 +195,15 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1.1: <a href="#pg-b9943912c32dd2b73ab1101dc1d07fff">Администрирование таблиц в Apache HBase</a></li>
+<li>1.1: <a href="#pg-7d8e923ec54426fe9e48104895a84d10">GNU Screen. Краткая памятка</a></li>
+
+
+    
+  
+    
+    
+	
+<li>1.2: <a href="#pg-cb0d478043127102b6c9d8e07526ac72">Краткий список утилит и команд оболочки для работы с процессами</a></li>
 
 
     
@@ -207,7 +215,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2: <a href="#pg-6bfacb4eec186580890b0297616260d6">Python</a></li>
+<li>2: <a href="#pg-0964af5e012ac9cf0322bd2c8cfb38e0">Apache Hadoop</a></li>
 
 
     
@@ -222,7 +230,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2.1: <a href="#pg-cf5647bbe371aa2f74948c9fd62c1efb">Управление пакетами в Python</a></li>
+<li>2.1: <a href="#pg-b9943912c32dd2b73ab1101dc1d07fff">Администрирование таблиц в Apache HBase</a></li>
 
 
     
@@ -234,7 +242,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3: <a href="#pg-e1c4523904d38ca6ed0b436d7a610801">Управление процессами</a></li>
+<li>3: <a href="#pg-6bfacb4eec186580890b0297616260d6">Python</a></li>
 
 
     
@@ -249,7 +257,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.1: <a href="#pg-46130c3bc0778ca4c424bea7f388837d">Краткий список утилит и команд оболочки для работы с процессами</a></li>
+<li>3.1: <a href="#pg-cf5647bbe371aa2f74948c9fd62c1efb">Управление пакетами в Python</a></li>
 
 
     
@@ -284,7 +292,7 @@ This is the multi-page printable view of this section.
 
 <div class="td-content" style="">
     
-	<h1 id="pg-0964af5e012ac9cf0322bd2c8cfb38e0">1 - Apache Hadoop</h1>
+	<h1 id="pg-0cb8a1e29f564167c55df396a1c18980">1 - Linux</h1>
     
 	
 </div>
@@ -309,7 +317,329 @@ This is the multi-page printable view of this section.
 
 <div class="td-content" style="">
     
-	<h1 id="pg-b9943912c32dd2b73ab1101dc1d07fff">1.1 - Администрирование таблиц в Apache HBase</h1>
+	<h1 id="pg-7d8e923ec54426fe9e48104895a84d10">1.1 - GNU Screen. Краткая памятка</h1>
+    <div class="lead">Краткая памятка по использованию GNU Screen</div>
+	<p>2021-10-07</p>
+<p>Совет. Гугление дополнительной информации производить по ключевой фразе &ldquo;gnu screen&rdquo;.</p>
+<h2 id="единственный-сеанс-gnu-screen">Единственный сеанс GNU Screen</h2>
+<table>
+<thead>
+<tr>
+<th>Команда</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>screen -ls</code></td>
+<td>вывести список всех Screen-сеансов.</td>
+</tr>
+<tr>
+<td><code>screen</code></td>
+<td>запустить новый безымянный Screen-сеанс.</td>
+</tr>
+<tr>
+<td><code>screen -r</code></td>
+<td>возобновить отключённый Screen-сеанс.</td>
+</tr>
+<tr>
+<td><code>screen -d</code></td>
+<td>отключиться от текущего Screen-сеанса.</td>
+</tr>
+<tr>
+<td><code>screen -x</code></td>
+<td>подключиться к активному Screen-сеанс в режиме multiuser.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="множество-сеансов-gnu-screen">Множество сеансов GNU Screen</h2>
+<table>
+<thead>
+<tr>
+<th>Команда</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>screen -ls</code></td>
+<td>вывести список всех Screen-сеансов.</td>
+</tr>
+<tr>
+<td><code>screen -S Atlas</code></td>
+<td>создать сеанс Screen с названием Atlas.</td>
+</tr>
+<tr>
+<td><code>screen -r A</code> или <code>screen -r At</code> и т.д.</td>
+<td>возобновить сеанс Screen, указав часть его имени.</td>
+</tr>
+<tr>
+<td><code>screen -r 230919</code></td>
+<td>возобновить сеанс Screen, указав его полный номер.</td>
+</tr>
+<tr>
+<td><code>screen -d At</code></td>
+<td>отключиться от текущего Screen-сеанса, указав часть его имени.</td>
+</tr>
+<tr>
+<td><code>screen -d 2309</code></td>
+<td>отключиться от текущего Screen-сеанса, указав часть его номера.</td>
+</tr>
+<tr>
+<td><code>screen -x Atlas</code></td>
+<td>подключиться к активному Screen-сеанс в режиме multiuser, указав его полное имя.</td>
+</tr>
+<tr>
+<td><code>screen -x 23</code></td>
+<td>подключиться к активному Screen-сеанс в режиме multiuser, указав часть его номера.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="часто--используемые-сочетания-клавиш-внутри-gnu-screen">Часто  используемые сочетания клавиш внутри GNU Screen</h2>
+<table>
+<thead>
+<tr>
+<th>Сочетание клавиш</th>
+<th>Описание</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+a</code> <code>d</code></td>
+<td>покинуть текущий сеанс screen.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>s</code></td>
+<td>заморозка вывода stdout в активном окне. Ввод продолжает работать. Часто нажимается по ошибке.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>q</code></td>
+<td>разморозка вывода stdout в активном окне.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>x</code></td>
+<td><strong>заблокировать текущий сеанс Screen с выводом запроса пароля текущего пользователя.</strong>  Часто нажимается по ошибке. Как назло, именно в этот момент пароль вылетает из головы!</td>
+</tr>
+<tr>
+<td>&mdash;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>c</code></td>
+<td>создать новое окно.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>&quot;</code></td>
+<td>вывести меню со всеми окнами в текущем сеансе screen&rsquo;а с возможность перехода в выбранное окно.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>1</code></td>
+<td>переключиться на окно номер &ldquo;1&rdquo; или вывести в текущем регионе окно номер &ldquo;1&rdquo;.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>n</code></td>
+<td>переключиться на следующее по порядку окно.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>p</code></td>
+<td>переключиться на предыдущее по порядку окно.</td>
+</tr>
+<tr>
+<td>&mdash;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>S</code></td>
+<td>разделить горизонтально активное окно/регион на два региона.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> `</td>
+<td>`</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>Tab</code>  (или <code>Shift Tab</code>)</td>
+<td>переключиться между видимыми регионами по часовой или против часовой стрелки.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>:</code> <code>resize -10</code></td>
+<td>уменьшить размер текущего региона на десять строк или десять знакомест, в зависимости от схемы разделения окна.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>:</code> <code>resize -v -10</code></td>
+<td>уменьшить размер текущего региона на десять строк.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>:</code> <code>resize -h +10</code></td>
+<td>увеличить размер текущего региона на десять знакомест.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>:</code> <code>resize 10</code></td>
+<td>установить размер текущего региона в десять строк или десять знакомест, в зависимости от схемы разделения окна.</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>X</code></td>
+<td>закрыть активный регион.</td>
+</tr>
+<tr>
+<td>&mdash;</td>
+<td>&mdash;</td>
+</tr>
+<tr>
+<td><code>Ctrl+a</code> <code>[</code> или <code>Esc</code></td>
+<td>переход в режим копирования/вставки. Этот режим также используется для изучения вывода команды, когда интересующие строки скрылись за верхним краем экрана.</td>
+</tr>
+<tr>
+<td><code>↑</code></td>
+<td>переместить курсор вверх и прокрутить экран вниз.</td>
+</tr>
+<tr>
+<td><code>↓</code></td>
+<td>переместить крусор вниз и прокрутить экран вверх.</td>
+</tr>
+<tr>
+<td><code>q</code> или <code>Esc</code></td>
+<td>выход из режима копирования/вставки.</td>
+</tr>
+<tr>
+<td>&mdash;</td>
+<td>&mdash;</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-cb0d478043127102b6c9d8e07526ac72">1.2 - Краткий список утилит и команд оболочки для работы с процессами</h1>
+    <div class="lead">Краткий справочник по утилитам и командам оболочки для работы с процессами Linux.</div>
+	<p>2022-03-29</p>
+<h2 id="обозреть-работающие-процессы">Обозреть работающие процессы</h2>
+<h3 id="ps"><code>ps</code></h3>
+<p><code>ps</code> — process status.</p>
+<pre tabindex="0"><code>user@wks01:~$ ps aux
+</code></pre><p>Linux Minit:</p>
+<pre tabindex="0"><code>user@wks01:~$ ps 1
+    PID TTY      STAT   TIME COMMAND
+      1 ?        Ss     0:08 /sbin/init
+</code></pre><p>CentOS:</p>
+<pre tabindex="0"><code>[root@srv01 ~]$ ps 1
+  PID TTY      STAT   TIME COMMAND
+    1 ?        Ss     0:55 /usr/lib/systemd/systemd --switched-root --system --deserialize 22
+</code></pre><h3 id="ptree"><code>ptree</code></h3>
+<p><code>ptree</code> — process tree. Выводит дерево процессов.</p>
+<h3 id="top-htop"><code>top</code>, <code>htop</code></h3>
+<p>Информация обо всех процессах в режиме реального времени.</p>
+<h2 id="получить-информацию-о-процессе">Получить информацию о процессе</h2>
+<h3 id="pidoff"><code>pidoff</code></h3>
+<p><code>pidoff</code> — find the process ID of a running program.</p>
+<pre tabindex="0"><code>user@wks01:~$ pidof mc
+146747 45720 12313 7516
+</code></pre><h3 id="pgrep"><code>pgrep</code></h3>
+<p><code>pgrep</code> — process grep.</p>
+<pre tabindex="0"><code>user@wks01:~$ pgrep -l fire
+10900 firefox-bin
+</code></pre><h3 id="pwdx"><code>pwdx</code></h3>
+<p><code>pwdx</code> — print working dir process.</p>
+<pre tabindex="0"><code>user@wks01:~$ pwdx 12313
+12313: /home/user
+</code></pre><h3 id="lsof"><code>lsof</code></h3>
+<p><code>lsof</code> — list open files.</p>
+<pre tabindex="0"><code>[root@home-ipa05 ~]# lsof -i -n -P
+COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+rpcbind 2610     rpc    6u  IPv4  15059      0t0  UDP *:111
+rpcbind 2610     rpc    7u  IPv4  15064      0t0  TCP *:111 (LISTEN)
+rpcbind 2610     rpc    8u  IPv6  15065      0t0  UDP *:111
+rpcbind 2610     rpc    9u  IPv6  15066      0t0  TCP *:111 (LISTEN)
+chronyd 2647 _chrony    5u  IPv4  15253      0t0  UDP 127.0.0.1:323
+chronyd 2647 _chrony    6u  IPv6  15254      0t0  UDP [::1]:323
+sshd    2888    root    3u  IPv4  16102      0t0  TCP *:22 (LISTEN)
+sshd    2888    root    4u  IPv6  16104      0t0  TCP *:22 (LISTEN)
+sshd    2914    root    3u  IPv4  16110      0t0  TCP 172.16.14.10:22-&gt;172.16.14.1:45098 (ESTABLISHED)
+</code></pre><h3 id="fuser"><code>fuser</code></h3>
+<p><code>fuser</code> — identify processes using files or sockets.</p>
+<p>Какой процесс используется порт 22000 в пространстве имён «tcp»:</p>
+<pre tabindex="0"><code> user@wks01:~$ sudo fuser -v -n tcp 22000
+                     USER        PID ACCESS COMMAND
+22000/tcp:           eugene    221135 F.... syncthing
+</code></pre><h2 id="убить-выбранный-процесс">Убить выбранный процесс</h2>
+<h3 id="kill-pkill-killall"><code>kill</code>, <code>pkill</code>, <code>killall</code></h3>
+<p><code>kill</code>, <code>pkill</code>, <code>killall</code> — process kill.</p>
+<pre tabindex="0"><code>user@wks01:~$ kill 221135
+user@wks01:~$ pkill -9 firefox
+user@wks01:~$ sudo killall -u eugene
+</code></pre><h2 id="изменить-приоритет-процесса">Изменить приоритет процесса</h2>
+<h3 id="nice-renice"><code>nice</code>, <code>renice</code></h3>
+<p><code>nice</code>, <code>renice</code> — запуск процесса с заданным приоритетом «nice» или изменение приоритета «nice» работающего процесса.</p>
+<p>Приоритет «nice» нельзя путать с действительный приоритетом процесса, выданным «планировщиком».</p>
+<p>Текущее значение «nice» при использовании утилиты <code>top</code> — столбец «NI», тогда как действительный приоритет — столбец «PR».</p>
+<ul>
+<li>−20 — самый высокий приоритет «nice» выполнения процесса.</li>
+<li>+20 — самый низкий приоритет «nice».</li>
+</ul>
+<h3 id="bg-fg"><code>bg</code>, <code>fg</code></h3>
+<ul>
+<li><code>bg</code> — запуск приложения из командной строки в фоновом режиме.</li>
+<li><code>fg</code> — вывод приложенияиз фонового режима.</li>
+</ul>
+<h2 id="изучить-работающий-процесс">Изучить работающий процесс</h2>
+<h3 id="strace"><code>strace</code></h3>
+<p><code>strace</code> — system call tracer.</p>
+
+</div>
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-0964af5e012ac9cf0322bd2c8cfb38e0">2 - Apache Hadoop</h1>
+    
+	
+</div>
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+<div class="td-content" style="">
+    
+	<h1 id="pg-b9943912c32dd2b73ab1101dc1d07fff">2.1 - Администрирование таблиц в Apache HBase</h1>
     <div class="lead">Описание обычных работ администратора с таблицами в Apache HBase.</div>
 	<p>2020-11-14</p>
 <h2 id="работа-с-таблицами-hbase">Работа с таблицами HBase</h2>
@@ -429,7 +759,7 @@ echo &#34;enable &#39;MyTableName&#39;&#34; | hbase shell
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-6bfacb4eec186580890b0297616260d6">2 - Python</h1>
+	<h1 id="pg-6bfacb4eec186580890b0297616260d6">3 - Python</h1>
     
 	
 </div>
@@ -454,7 +784,7 @@ echo &#34;enable &#39;MyTableName&#39;&#34; | hbase shell
 
 <div class="td-content" style="">
     
-	<h1 id="pg-cf5647bbe371aa2f74948c9fd62c1efb">2.1 - Управление пакетами в Python</h1>
+	<h1 id="pg-cf5647bbe371aa2f74948c9fd62c1efb">3.1 - Управление пакетами в Python</h1>
     <div class="lead">Краткий справочник по работе с пакетами Python.</div>
 	<h2 id="способы-установки-python-пакетов">Способы установки python-пакетов</h2>
 <h3 id="с-помощью-системного-менеджера-пакетов-apt-или-yum">С помощью системного менеджера пакетов APT или YUM</h3>
@@ -508,124 +838,6 @@ pip install -r requirements.txt
 </code></pre><p>или</p>
 <pre tabindex="0"><code>pip freeze | xargs pip uninstall -y
 </code></pre>
-</div>
-
-
-
-    
-	
-  
-
-    
-	
-  
-    
-    
-	
-    
-
-<div class="td-content" style="page-break-before: always">
-    
-	<h1 id="pg-e1c4523904d38ca6ed0b436d7a610801">3 - Управление процессами</h1>
-    
-	
-</div>
-
-
-
-    
-      
-  
-  
-  
-  
-
-  
-  
-
-  
-    
-    
-	
-    
-
-<div class="td-content" style="">
-    
-	<h1 id="pg-46130c3bc0778ca4c424bea7f388837d">3.1 - Краткий список утилит и команд оболочки для работы с процессами</h1>
-    <div class="lead">Краткий справочник по утилитам и командам оболочки для работы с процессами Linux.</div>
-	<p>2022-03-29</p>
-<h2 id="обозреть-работающие-процессы">Обозреть работающие процессы</h2>
-<h3 id="ps"><code>ps</code></h3>
-<p><code>ps</code> — process status.</p>
-<pre tabindex="0"><code>user@wks01:~$ ps aux
-</code></pre><p>Linux Minit:</p>
-<pre tabindex="0"><code>user@wks01:~$ ps 1
-    PID TTY      STAT   TIME COMMAND
-      1 ?        Ss     0:08 /sbin/init
-</code></pre><p>CentOS:</p>
-<pre tabindex="0"><code>[root@srv01 ~]$ ps 1
-  PID TTY      STAT   TIME COMMAND
-    1 ?        Ss     0:55 /usr/lib/systemd/systemd --switched-root --system --deserialize 22
-</code></pre><h3 id="ptree"><code>ptree</code></h3>
-<p><code>ptree</code> — process tree. Выводит дерево процессов.</p>
-<h3 id="top-htop"><code>top</code>, <code>htop</code></h3>
-<p>Информация обо всех процессах в режиме реального времени.</p>
-<h2 id="получить-информацию-о-процессе">Получить информацию о процессе</h2>
-<h3 id="pidoff"><code>pidoff</code></h3>
-<p><code>pidoff</code> — find the process ID of a running program.</p>
-<pre tabindex="0"><code>user@wks01:~$ pidof mc
-146747 45720 12313 7516
-</code></pre><h3 id="pgrep"><code>pgrep</code></h3>
-<p><code>pgrep</code> — process grep.</p>
-<pre tabindex="0"><code>user@wks01:~$ pgrep -l fire
-10900 firefox-bin
-</code></pre><h3 id="pwdx"><code>pwdx</code></h3>
-<p><code>pwdx</code> — print working dir process.</p>
-<pre tabindex="0"><code>user@wks01:~$ pwdx 12313
-12313: /home/user
-</code></pre><h3 id="lsof"><code>lsof</code></h3>
-<p><code>lsof</code> — list open files.</p>
-<pre tabindex="0"><code>[root@home-ipa05 ~]# lsof -i -n -P
-COMMAND  PID    USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
-rpcbind 2610     rpc    6u  IPv4  15059      0t0  UDP *:111
-rpcbind 2610     rpc    7u  IPv4  15064      0t0  TCP *:111 (LISTEN)
-rpcbind 2610     rpc    8u  IPv6  15065      0t0  UDP *:111
-rpcbind 2610     rpc    9u  IPv6  15066      0t0  TCP *:111 (LISTEN)
-chronyd 2647 _chrony    5u  IPv4  15253      0t0  UDP 127.0.0.1:323
-chronyd 2647 _chrony    6u  IPv6  15254      0t0  UDP [::1]:323
-sshd    2888    root    3u  IPv4  16102      0t0  TCP *:22 (LISTEN)
-sshd    2888    root    4u  IPv6  16104      0t0  TCP *:22 (LISTEN)
-sshd    2914    root    3u  IPv4  16110      0t0  TCP 172.16.14.10:22-&gt;172.16.14.1:45098 (ESTABLISHED)
-</code></pre><h3 id="fuser"><code>fuser</code></h3>
-<p><code>fuser</code> — identify processes using files or sockets.</p>
-<p>Какой процесс используется порт 22000 в пространстве имён «tcp»:</p>
-<pre tabindex="0"><code> user@wks01:~$ sudo fuser -v -n tcp 22000
-                     USER        PID ACCESS COMMAND
-22000/tcp:           eugene    221135 F.... syncthing
-</code></pre><h2 id="убить-выбранный-процесс">Убить выбранный процесс</h2>
-<h3 id="kill-pkill-killall"><code>kill</code>, <code>pkill</code>, <code>killall</code></h3>
-<p><code>kill</code>, <code>pkill</code>, <code>killall</code> — process kill.</p>
-<pre tabindex="0"><code>user@wks01:~$ kill 221135
-user@wks01:~$ pkill -9 firefox
-user@wks01:~$ sudo killall -u eugene
-</code></pre><h2 id="изменить-приоритет-процесса">Изменить приоритет процесса</h2>
-<h3 id="nice-renice"><code>nice</code>, <code>renice</code></h3>
-<p><code>nice</code>, <code>renice</code> — запуск процесса с заданным приоритетом «nice» или изменение приоритета «nice» работающего процесса.</p>
-<p>Приоритет «nice» нельзя путать с действительный приоритетом процесса, выданным «планировщиком».</p>
-<p>Текущее значение «nice» при использовании утилиты <code>top</code> — столбец «NI», тогда как действительный приоритет — столбец «PR».</p>
-<ul>
-<li>−20 — самый высокий приоритет «nice» выполнения процесса.</li>
-<li>+20 — самый низкий приоритет «nice».</li>
-</ul>
-<h3 id="bg-fg"><code>bg</code>, <code>fg</code></h3>
-<ul>
-<li><code>bg</code> — запуск приложения из командной строки в фоновом режиме.</li>
-<li><code>fg</code> — вывод приложенияиз фонового режима.</li>
-</ul>
-<h2 id="изучить-работающий-процесс">Изучить работающий процесс</h2>
-<h3 id="strace"><code>strace</code></h3>
-<p><code>strace</code> — system call tracer.</p>
-
 </div>
 
 

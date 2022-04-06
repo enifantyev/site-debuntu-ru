@@ -8,6 +8,9 @@ tags:
   - OpenVPN
   - VPN
   - Ubuntu
+aliases:
+  - /a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/
+  - /manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/
 ---
 
 2019-12-23 Опубликована свежая статья с упрощённым изложением [OpenVPN - это просто](/a/openvpn-eto-prosto)

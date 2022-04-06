@@ -4,7 +4,7 @@
     <link>https://debuntu.ru/refbooks/</link>
     <description>Recent content in Справочники on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 14 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 07 Oct 2021 00:00:00 +0000</lastBuildDate>
     
 	  <atom:link href="https://debuntu.ru/refbooks/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,6 +13,206 @@
         
       
     
+    
+    <item>
+      <title>Refbooks: GNU Screen. Краткая памятка</title>
+      <link>https://debuntu.ru/refbooks/linux/gnu-screen-kratkaya-pamyatka/</link>
+      <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/refbooks/linux/gnu-screen-kratkaya-pamyatka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-10-07&lt;/p&gt;
+&lt;p&gt;Совет. Гугление дополнительной информации производить по ключевой фразе &amp;ldquo;gnu screen&amp;rdquo;.&lt;/p&gt;
+&lt;h2 id=&#34;единственный-сеанс-gnu-screen&#34;&gt;Единственный сеанс GNU Screen&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Команда&lt;/th&gt;
+&lt;th&gt;Описание&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -ls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;вывести список всех Screen-сеансов.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;запустить новый безымянный Screen-сеанс.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -r&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;возобновить отключённый Screen-сеанс.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -d&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;отключиться от текущего Screen-сеанса.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -x&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;подключиться к активному Screen-сеанс в режиме multiuser.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;множество-сеансов-gnu-screen&#34;&gt;Множество сеансов GNU Screen&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Команда&lt;/th&gt;
+&lt;th&gt;Описание&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -ls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;вывести список всех Screen-сеансов.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -S Atlas&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;создать сеанс Screen с названием Atlas.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -r A&lt;/code&gt; или &lt;code&gt;screen -r At&lt;/code&gt; и т.д.&lt;/td&gt;
+&lt;td&gt;возобновить сеанс Screen, указав часть его имени.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -r 230919&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;возобновить сеанс Screen, указав его полный номер.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -d At&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;отключиться от текущего Screen-сеанса, указав часть его имени.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -d 2309&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;отключиться от текущего Screen-сеанса, указав часть его номера.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -x Atlas&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;подключиться к активному Screen-сеанс в режиме multiuser, указав его полное имя.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;screen -x 23&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;подключиться к активному Screen-сеанс в режиме multiuser, указав часть его номера.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;часто--используемые-сочетания-клавиш-внутри-gnu-screen&#34;&gt;Часто  используемые сочетания клавиш внутри GNU Screen&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Сочетание клавиш&lt;/th&gt;
+&lt;th&gt;Описание&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;d&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;покинуть текущий сеанс screen.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;s&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;заморозка вывода stdout в активном окне. Ввод продолжает работать. Часто нажимается по ошибке.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;q&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;разморозка вывода stdout в активном окне.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;x&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;заблокировать текущий сеанс Screen с выводом запроса пароля текущего пользователя.&lt;/strong&gt;  Часто нажимается по ошибке. Как назло, именно в этот момент пароль вылетает из головы!&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;c&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;создать новое окно.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;&amp;quot;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;вывести меню со всеми окнами в текущем сеансе screen&amp;rsquo;а с возможность перехода в выбранное окно.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;переключиться на окно номер &amp;ldquo;1&amp;rdquo; или вывести в текущем регионе окно номер &amp;ldquo;1&amp;rdquo;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;n&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;переключиться на следующее по порядку окно.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;p&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;переключиться на предыдущее по порядку окно.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;S&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;разделить горизонтально активное окно/регион на два региона.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; `&lt;/td&gt;
+&lt;td&gt;`&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;Tab&lt;/code&gt;  (или &lt;code&gt;Shift Tab&lt;/code&gt;)&lt;/td&gt;
+&lt;td&gt;переключиться между видимыми регионами по часовой или против часовой стрелки.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;:&lt;/code&gt; &lt;code&gt;resize -10&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;уменьшить размер текущего региона на десять строк или десять знакомест, в зависимости от схемы разделения окна.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;:&lt;/code&gt; &lt;code&gt;resize -v -10&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;уменьшить размер текущего региона на десять строк.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;:&lt;/code&gt; &lt;code&gt;resize -h +10&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;увеличить размер текущего региона на десять знакомест.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;:&lt;/code&gt; &lt;code&gt;resize 10&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;установить размер текущего региона в десять строк или десять знакомест, в зависимости от схемы разделения окна.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;X&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;закрыть активный регион.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;[&lt;/code&gt; или &lt;code&gt;Esc&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;переход в режим копирования/вставки. Этот режим также используется для изучения вывода команды, когда интересующие строки скрылись за верхним краем экрана.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;↑&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;переместить курсор вверх и прокрутить экран вниз.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;↓&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;переместить крусор вниз и прокрутить экран вверх.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;q&lt;/code&gt; или &lt;code&gt;Esc&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;выход из режима копирования/вставки.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;td&gt;&amp;mdash;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+      </description>
+    </item>
     
     <item>
       <title>Refbooks: Администрирование таблиц в Apache HBase</title>
@@ -128,10 +328,10 @@ echo &amp;#34;enable &amp;#39;MyTableName&amp;#39;&amp;#34; | hbase shell
     
     <item>
       <title>Refbooks: Краткий список утилит и команд оболочки для работы с процессами</title>
-      <link>https://debuntu.ru/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
+      <link>https://debuntu.ru/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
       
-      <guid>https://debuntu.ru/refbooks/procmanag/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
+      <guid>https://debuntu.ru/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
       <description>
         
         

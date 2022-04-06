@@ -10,6 +10,9 @@ tags:
   - VPN
   - PKI
   - translation
+aliases:
+  - /a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/
+  - /manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/
 ---
 
 2019-04-22
