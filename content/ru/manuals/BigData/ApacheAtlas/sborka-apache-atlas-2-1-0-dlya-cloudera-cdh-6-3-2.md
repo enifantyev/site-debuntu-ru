@@ -11,6 +11,9 @@ tags:
   - CentOS
   - CentOS 7
   - BigData
+aliases:
+  - /a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/
+  - /manuals/bigdata/apacheatlas/
 ---
 
 2021-08-05

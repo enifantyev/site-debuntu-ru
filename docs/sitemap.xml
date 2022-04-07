@@ -60,7 +60,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</loc>
+    <loc>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</loc>
     <lastmod>2021-11-19T00:00:00+00:00</lastmod>
   </url>
   
@@ -130,7 +130,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</loc>
     <lastmod>2021-08-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -291,7 +291,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</loc>
     <lastmod>2021-02-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -354,7 +354,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</loc>
     <lastmod>2020-10-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -996,6 +996,13 @@
   
   
   <url>
+    <loc>https://debuntu.ru/manuals/vpn/</loc>
+    <lastmod>2021-11-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/refbooks/linux/</loc>
     <lastmod>2021-10-07T00:00:00+00:00</lastmod>
   </url>
@@ -1010,15 +1017,15 @@
   
   
   <url>
-    <loc>https://debuntu.ru/refbooks/apachehadoop/</loc>
-    <lastmod>2020-11-14T00:00:00+00:00</lastmod>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheairflow/</loc>
+    <lastmod>2021-02-23T00:00:00+00:00</lastmod>
   </url>
   
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/vpn/</loc>
-    <lastmod>2020-03-31T00:00:00+00:00</lastmod>
+    <loc>https://debuntu.ru/refbooks/apachehadoop/</loc>
+    <lastmod>2020-11-14T00:00:00+00:00</lastmod>
   </url>
   
   

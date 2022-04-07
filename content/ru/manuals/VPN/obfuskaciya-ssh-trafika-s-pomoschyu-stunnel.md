@@ -10,6 +10,8 @@ tags:
   - CentOS
   - CentOS 7
   - ssh
+aliases:
+  - /a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/
 ---
 
 2021-11-19

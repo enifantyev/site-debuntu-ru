@@ -180,7 +180,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1: <a href="#pg-37838840032fe6ca8daee650ff70bd54">Развёртывание сети OpenVPN</a></li>
+<li>1: <a href="#pg-f4ebbbb09301d0e9d79c8ebcd0600a44">Обфускация ssh-трафика с помощью stunnel</a></li>
 
 
     
@@ -188,7 +188,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2: <a href="#pg-caf4aa8bbcfa884e181c0539e81eb635">OpenVPN — это просто</a></li>
+<li>2: <a href="#pg-37838840032fe6ca8daee650ff70bd54">Развёртывание сети OpenVPN</a></li>
 
 
     
@@ -196,7 +196,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3: <a href="#pg-422183b92fb0196c11e4b84eb8c69908">Перевод Easy-RSA 3 Quickstart README</a></li>
+<li>3: <a href="#pg-caf4aa8bbcfa884e181c0539e81eb635">OpenVPN — это просто</a></li>
 
 
     
@@ -204,7 +204,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>4: <a href="#pg-1121795f51fc24c702a09d9c39f08f39">Простой Центр Сертификации для strongSwan IPsec</a></li>
+<li>4: <a href="#pg-422183b92fb0196c11e4b84eb8c69908">Перевод Easy-RSA 3 Quickstart README</a></li>
 
 
     
@@ -212,7 +212,15 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>5: <a href="#pg-4d935e53584ac78186d848a47940ca77">Настраиваем OpenVPN сервер на подключение клиентов</a></li>
+<li>5: <a href="#pg-1121795f51fc24c702a09d9c39f08f39">Простой Центр Сертификации для strongSwan IPsec</a></li>
+
+
+    
+  
+    
+    
+	
+<li>6: <a href="#pg-4d935e53584ac78186d848a47940ca77">Настраиваем OpenVPN сервер на подключение клиентов</a></li>
 
 
     
@@ -243,7 +251,147 @@ This is the multi-page printable view of this section.
 
 <div class="td-content" style="">
     
-	<h1 id="pg-37838840032fe6ca8daee650ff70bd54">1 - Развёртывание сети OpenVPN</h1>
+	<h1 id="pg-f4ebbbb09301d0e9d79c8ebcd0600a44">1 - Обфускация ssh-трафика с помощью stunnel</h1>
+    <div class="lead">Иногда требуется скрыть от посторонних глаз наличие ssh-трафика или дополнительно защитить sshd-порт. Описывается способ с аутентификацией по TLS-сертификату.</div>
+	<p>2021-11-19</p>
+<h2 id="настройка-сервера">Настройка сервера</h2>
+<p>Устанавливаем на сервер пакет stunnel:</p>
+<pre tabindex="0"><code>sudo yum install stunnel
+</code></pre><p>Компилируем свежий stunnel по инструкции <a href="n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7">Компиляция свежего stunnel 5.60 из исходников на CentOS7</a>.</p>
+<p>Подменяем установленный stunnel 4.56, новым stunnel 5.60:</p>
+<pre tabindex="0"><code>sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56
+sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin
+cd /usr/bin
+ln -s stunnel-5.60 stunnel
+</code></pre><p>Добавляем системного пользователя, под которым будет запускаться stunnel:</p>
+<pre tabindex="0"><code>sudo useradd -r -s /sbin/nologin -M stunnel
+</code></pre><p>&lt;Здесь используем FreeIPA-сертификаты, сгенерированные на сервере. Потом допишу процесс получения и автообновления с помощью Certmonger.&gt;</p>
+<p>Создаём конфигурационный файл для stunnel:</p>
+<pre tabindex="0"><code>cat &lt;&lt; EOF | sudo tee /etc/stunnel/stunnel.conf 
+#output = /var/log/stunnel/stunnel.log
+pid = /run/stunnel/stunnel.pid
+
+[ssh]
+client = no
+accept = 2222
+connect = 127.0.0.1:22
+
+CAfile = /etc/ipa/ca.crt
+cert = /etc/pki/tls/certs/HTTP_srv.example.org.crt
+key = /etc/pki/tls/private/HTTP_srv.example.org.key
+CApath = /etc/stunnel/certs
+
+# CentOS7 - obsolete options.
+#sslVersion = TLSv1.2
+#verify = 2
+
+# New options.
+requireCert = yes
+verifyChain = yes
+
+sslVersion = all
+options    = NO_SSLv2
+options    = NO_SSLv3
+options    = NO_TLSv1
+options    = NO_TLSv1.1
+EOF
+</code></pre><p>Создадим каталог для log-файла и назначим права:</p>
+<pre tabindex="0"><code>sudo mkdir /var/log/stunnel
+sudo chown stunnel.stunnel /var/log/stunnel
+sudo chown -R stunnel.stunnel /etc/stunnel 
+</code></pre><p>Создаём systemd unit для автоматического запуска stunnel:</p>
+<pre tabindex="0"><code>cat &lt;&lt; EOF | sudo tee /etc/systemd/system/stunnel.service
+[Unit]
+Description=Stunnel service
+After=network.target syslog.target
+ 
+[Service]
+RuntimeDirectory=stunnel
+RuntimeDirectoryMode=0775
+User=stunnel
+Group=stunnel
+Type=forking
+#ExecStart=/usr/bin/stunnel -v /etc/stunnel/stunnel.conf
+ExecStart=/usr/bin/stunnel  /etc/stunnel/stunnel.conf
+Restart=on-failure
+RestartSec=5s
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+EOF
+</code></pre><p>Перечитываем systemd и запускаем stunnel.</p>
+<pre tabindex="0"><code>sudo systemctl daemon-reload
+sudo systemctl enable --now stunnel
+</code></pre><h2 id="получение-сертификата-пользователя">Получение сертификата пользователя</h2>
+<p>На своей рабочей машине создаём свой приватный ключ <code>eugene.key</code>и запрос на сертификацию <code>cert.csr</code> (опция &lsquo;-nodes&rsquo; опускает задание пароля для ключа):</p>
+<pre tabindex="0"><code>$ openssl req -new -newkey rsa:4096 -nodes -keyout eugene.key -out cert.csr -subj &#39;/CN=eugene&#39;
+Generating a RSA private key
+...........++++
+.........++++
+writing new private key to &#39;eugene.key&#39;
+</code></pre><p>&lt;Здесь дописать процедуру получения TLS-сертификата из FreeIPA с помощью созданного файла с запросом на сертификацию.&gt;</p>
+<p>После получения сертификата, вычисляем его hash:</p>
+<pre tabindex="0"><code>$ openssl x509 -hash -noout -in eugene.crt
+0518aad7
+</code></pre><p>Создаём на сервере в каталоге <code>/etc/stunnel/certs</code> файл <code>0518aad7.0</code> с содержимым, копией содержимого полученного сертификата. Цифра в расширении имени файла означает порядковый номер. Следующему добавленному сертификату дадим имя <code>xxxxxxxx.1</code>.</p>
+<p>Возможно, что на сервере, после добавления очередного сертификата, потребуется перезапустить демон tunnel:</p>
+<pre tabindex="0"><code>sudo systemctl restart stunnel
+</code></pre><h2 id="настройка-клиента">Настройка клиента</h2>
+<p>Устанавливаем пакет stunnel:</p>
+<pre tabindex="0"><code>sudo apt install stunnel4
+</code></pre><p>Создаём конфигурационный файл для stunnel:</p>
+<pre tabindex="0"><code>mkdir ~/.config/stunnel/
+
+cat &lt;&lt; EOF &gt; ~/.config/stunnel/stunnel1.conf
+output = /tmp/stunnel.log
+pid = /tmp/stunnel.pid
+
+[ssh]
+client = yes
+accept = 127.0.0.1:2222
+connect = 10.1.61.28:2222
+
+CAfile = /home/user/.config/stunnel/ca.crt
+cert = /home/user/.config/stunnel/eugene_example.org.pub
+key = /home/user/.config/stunnel/eugene.key
+
+verifyChain = yes
+EOF
+</code></pre><p>С этого момента можно сразу вручную прокинуть мост до удалённого сервера командой <code>stunnel ~/.config/stunnel/stunnel1.conf</code>.</p>
+<p>Для облегчения запуска туннеля, создаём запускаемый файл в каталоге <code>~/.local/bin</code>:</p>
+<pre tabindex="0"><code>cat &lt;&lt; EOF &gt; ~/.local/bin/stun1
+#!/bin/bash
+stunnel ~/.config/stunnel/stunnel1.conf
+EOF
+
+chmod u+x ~/.local/bin/stun1
+</code></pre><p>С этого момента можно запускать туннель командой <code>stun1</code> при условии, что в переменной PATH указан путь <code>~/.local/bin</code>.</p>
+<p>Добавляем Alias для входа на удалённый sshd через TLS-туннель:</p>
+<pre tabindex="0"><code>alias ssh1=&#34;ssh -p 2222 eugene@127.0.0.1&#34;
+</code></pre><p>При желании, можно добавить этот Alias в <code>~/.bashrc</code>.</p>
+<h2 id="процедура-подключения-к-ssh-серверу">Процедура подключения к ssh-серверу</h2>
+<p>Поднимаем туннель и подключаемся через него к удалённому серверу:</p>
+<pre tabindex="0"><code>stun1
+ssh1
+</code></pre><p>При необходимости роняем TLS-туннель командой, например:</p>
+<pre tabindex="0"><code>pkill stunnel
+</code></pre>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-37838840032fe6ca8daee650ff70bd54">2 - Развёртывание сети OpenVPN</h1>
     <div class="lead">Описание развёртывания OpenVPN сети, начиная с организации Центра Сертификации, выпуска ключей и сертификатов, и заканчивая установкой OpenVPN серверов и клиентов.</div>
 	<p>2020-03-31</p>
 <p>Статья в процессе написания!</p>
@@ -526,7 +674,7 @@ shred -u pki/reqs/${SRVNAME}.req
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-caf4aa8bbcfa884e181c0539e81eb635">2 - OpenVPN — это просто</h1>
+	<h1 id="pg-caf4aa8bbcfa884e181c0539e81eb635">3 - OpenVPN — это просто</h1>
     <div class="lead">Здесь описана простейшая схема с одним сервером и одним клиентом. Тем не менее используются открытые ключи, работа сервера с правами непривилегированного пользователя и перенос демона openvpn после запуска в песочницу. Копируем код целыми блоками в оболочку bash и выполняем.</div>
 	<p>2020-03-22</p>
 <p>Читая сейчас <a href="https://openvpn.net/community-resources/reference-manual-for-openvpn-2-4/">Reference manual for OpenVPN 2.4</a>, я постарался привести свои слегка устаревшие знания по настройке OpenVPN-сети к современным реалиям. В настоящей инструкции, вместо RSA-сертификатов используется криптография на эллиптических кривых. Для шифрования канала выбран протокол с добавочной информацией, позволяющей контролировать целостность пакетов. <code>tls-auth</code>+<code>key-direction</code> заменены на <code>tls-crypt</code>. CBC -&gt; GCM. SHA1 -&gt; SHA512, dh -&gt; ecdh-curve.</p>
@@ -705,7 +853,7 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-422183b92fb0196c11e4b84eb8c69908">3 - Перевод Easy-RSA 3 Quickstart README</h1>
+	<h1 id="pg-422183b92fb0196c11e4b84eb8c69908">4 - Перевод Easy-RSA 3 Quickstart README</h1>
     <div class="lead">Мой вольный перевод статьи <a href="https://github.com/OpenVPN/easy-rsa/blob/master/README.quickstart.md">Easy-RSA 3 Quickstart README</a>. Пакет скриптов Easy-RSA используется для ускорения создания Центра Сертификации, выпуска сертификатов и использования их в OpenVPN-сетях.</div>
 	<p>2019-10-22</p>
 <h3 id="предисловие-от-меня">Предисловие от меня</h3>
@@ -777,7 +925,7 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-1121795f51fc24c702a09d9c39f08f39">4 - Простой Центр Сертификации для strongSwan IPsec</h1>
+	<h1 id="pg-1121795f51fc24c702a09d9c39f08f39">5 - Простой Центр Сертификации для strongSwan IPsec</h1>
     <div class="lead">Простой Центр Сертификации для strongSwan IPsec</div>
 	<p>2019-04-22</p>
 <blockquote>
@@ -859,7 +1007,7 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-4d935e53584ac78186d848a47940ca77">5 - Настраиваем OpenVPN сервер на подключение клиентов</h1>
+	<h1 id="pg-4d935e53584ac78186d848a47940ca77">6 - Настраиваем OpenVPN сервер на подключение клиентов</h1>
     <div class="lead">Описание установки OpenVPN сервера, создание ключей для сервера и клиента и пример конфигурации клиента.</div>
 	<p>2019-12-23 Опубликована свежая статья с упрощённым изложением <a href="/a/openvpn-eto-prosto">OpenVPN - это просто</a></p>
 <p>2014-08-04

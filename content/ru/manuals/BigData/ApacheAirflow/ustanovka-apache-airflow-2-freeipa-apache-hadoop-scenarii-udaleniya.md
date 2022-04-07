@@ -10,6 +10,8 @@ tags:
   - Apache Hadoop
   - CentOS
   - CentOS 7
+aliases:
+  - /a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/
 ---
 
 ## Использованные материалы

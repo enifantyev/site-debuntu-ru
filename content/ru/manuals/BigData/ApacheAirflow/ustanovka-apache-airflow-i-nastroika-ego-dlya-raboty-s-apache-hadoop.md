@@ -1,5 +1,5 @@
 ---
-title: "Установка Apache Airflow и настройка его для работы с Apache Hadoop"
+title: "Установка Apache Airflow и настройка его для работы с Apache Hadoop (устарело)"
 date: 2020-10-23
 weight: 10
 description: >
@@ -10,6 +10,8 @@ tags:
   - BigData
   - CentOS
   - CentOS 7
+aliases:
+  - /a/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/
 ---
 
 2020-10-23

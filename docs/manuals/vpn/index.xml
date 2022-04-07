@@ -4,7 +4,7 @@
     <link>https://debuntu.ru/manuals/vpn/</link>
     <description>Recent content in VPN on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 31 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Nov 2021 00:00:00 +0000</lastBuildDate>
     
 	  <atom:link href="https://debuntu.ru/manuals/vpn/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,6 +13,142 @@
         
       
     
+    
+    <item>
+      <title>Manuals: Обфускация ssh-трафика с помощью stunnel</title>
+      <link>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-11-19&lt;/p&gt;
+&lt;h2 id=&#34;настройка-сервера&#34;&gt;Настройка сервера&lt;/h2&gt;
+&lt;p&gt;Устанавливаем на сервер пакет stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Компилируем свежий stunnel по инструкции &lt;a href=&#34;n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7&#34;&gt;Компиляция свежего stunnel 5.60 из исходников на CentOS7&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Подменяем установленный stunnel 4.56, новым stunnel 5.60:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56
+sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin
+cd /usr/bin
+ln -s stunnel-5.60 stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Добавляем системного пользователя, под которым будет запускаться stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo useradd -r -s /sbin/nologin -M stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&amp;lt;Здесь используем FreeIPA-сертификаты, сгенерированные на сервере. Потом допишу процесс получения и автообновления с помощью Certmonger.&amp;gt;&lt;/p&gt;
+&lt;p&gt;Создаём конфигурационный файл для stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/stunnel/stunnel.conf 
+#output = /var/log/stunnel/stunnel.log
+pid = /run/stunnel/stunnel.pid
+
+[ssh]
+client = no
+accept = 2222
+connect = 127.0.0.1:22
+
+CAfile = /etc/ipa/ca.crt
+cert = /etc/pki/tls/certs/HTTP_srv.example.org.crt
+key = /etc/pki/tls/private/HTTP_srv.example.org.key
+CApath = /etc/stunnel/certs
+
+# CentOS7 - obsolete options.
+#sslVersion = TLSv1.2
+#verify = 2
+
+# New options.
+requireCert = yes
+verifyChain = yes
+
+sslVersion = all
+options    = NO_SSLv2
+options    = NO_SSLv3
+options    = NO_TLSv1
+options    = NO_TLSv1.1
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создадим каталог для log-файла и назначим права:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mkdir /var/log/stunnel
+sudo chown stunnel.stunnel /var/log/stunnel
+sudo chown -R stunnel.stunnel /etc/stunnel 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём systemd unit для автоматического запуска stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/stunnel.service
+[Unit]
+Description=Stunnel service
+After=network.target syslog.target
+ 
+[Service]
+RuntimeDirectory=stunnel
+RuntimeDirectoryMode=0775
+User=stunnel
+Group=stunnel
+Type=forking
+#ExecStart=/usr/bin/stunnel -v /etc/stunnel/stunnel.conf
+ExecStart=/usr/bin/stunnel  /etc/stunnel/stunnel.conf
+Restart=on-failure
+RestartSec=5s
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Перечитываем systemd и запускаем stunnel.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl daemon-reload
+sudo systemctl enable --now stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;получение-сертификата-пользователя&#34;&gt;Получение сертификата пользователя&lt;/h2&gt;
+&lt;p&gt;На своей рабочей машине создаём свой приватный ключ &lt;code&gt;eugene.key&lt;/code&gt;и запрос на сертификацию &lt;code&gt;cert.csr&lt;/code&gt; (опция &amp;lsquo;-nodes&amp;rsquo; опускает задание пароля для ключа):&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ openssl req -new -newkey rsa:4096 -nodes -keyout eugene.key -out cert.csr -subj &amp;#39;/CN=eugene&amp;#39;
+Generating a RSA private key
+...........++++
+.........++++
+writing new private key to &amp;#39;eugene.key&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&amp;lt;Здесь дописать процедуру получения TLS-сертификата из FreeIPA с помощью созданного файла с запросом на сертификацию.&amp;gt;&lt;/p&gt;
+&lt;p&gt;После получения сертификата, вычисляем его hash:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ openssl x509 -hash -noout -in eugene.crt
+0518aad7
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём на сервере в каталоге &lt;code&gt;/etc/stunnel/certs&lt;/code&gt; файл &lt;code&gt;0518aad7.0&lt;/code&gt; с содержимым, копией содержимого полученного сертификата. Цифра в расширении имени файла означает порядковый номер. Следующему добавленному сертификату дадим имя &lt;code&gt;xxxxxxxx.1&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Возможно, что на сервере, после добавления очередного сертификата, потребуется перезапустить демон tunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart stunnel
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка-клиента&#34;&gt;Настройка клиента&lt;/h2&gt;
+&lt;p&gt;Устанавливаем пакет stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo apt install stunnel4
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Создаём конфигурационный файл для stunnel:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/.config/stunnel/
+
+cat &amp;lt;&amp;lt; EOF &amp;gt; ~/.config/stunnel/stunnel1.conf
+output = /tmp/stunnel.log
+pid = /tmp/stunnel.pid
+
+[ssh]
+client = yes
+accept = 127.0.0.1:2222
+connect = 10.1.61.28:2222
+
+CAfile = /home/user/.config/stunnel/ca.crt
+cert = /home/user/.config/stunnel/eugene_example.org.pub
+key = /home/user/.config/stunnel/eugene.key
+
+verifyChain = yes
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;С этого момента можно сразу вручную прокинуть мост до удалённого сервера командой &lt;code&gt;stunnel ~/.config/stunnel/stunnel1.conf&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Для облегчения запуска туннеля, создаём запускаемый файл в каталоге &lt;code&gt;~/.local/bin&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; ~/.local/bin/stun1
+#!/bin/bash
+stunnel ~/.config/stunnel/stunnel1.conf
+EOF
+
+chmod u+x ~/.local/bin/stun1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;С этого момента можно запускать туннель командой &lt;code&gt;stun1&lt;/code&gt; при условии, что в переменной PATH указан путь &lt;code&gt;~/.local/bin&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Добавляем Alias для входа на удалённый sshd через TLS-туннель:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;alias ssh1=&amp;#34;ssh -p 2222 eugene@127.0.0.1&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При желании, можно добавить этот Alias в &lt;code&gt;~/.bashrc&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;процедура-подключения-к-ssh-серверу&#34;&gt;Процедура подключения к ssh-серверу&lt;/h2&gt;
+&lt;p&gt;Поднимаем туннель и подключаемся через него к удалённому серверу:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;stun1
+ssh1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;При необходимости роняем TLS-туннель командой, например:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pkill stunnel
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
     
     <item>
       <title>Manuals: Развёртывание сети OpenVPN</title>

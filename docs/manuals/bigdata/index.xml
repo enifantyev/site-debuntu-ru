@@ -27,5 +27,18 @@
       </description>
     </item>
     
+    <item>
+      <title>Manuals: Apache Airflow</title>
+      <link>https://debuntu.ru/manuals/bigdata/apacheairflow/</link>
+      <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/apacheairflow/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
+    
   </channel>
 </rss>
