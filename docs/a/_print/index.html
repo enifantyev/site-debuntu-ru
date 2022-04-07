@@ -2708,7 +2708,14 @@ ln -s /etc/sv/nanoklogd /var/service/
 <pre tabindex="0"><code>$ sudo usermod -aG socklog $USER
 </code></pre><h3 id="добавление-часто-используемого-по">Добавление часто используемого ПО</h3>
 <p>Устанавливаем часто используемые пакеты:</p>
-<pre tabindex="0"><code>$ sudo xbps-install -Su unzip atom vscode mosh mc chromium opera torbrowser-launcher keepassxc encfs libreoffice tint2 stellarium net-tools mtr NetworkManager-openvpn wireshark-qt zenmap tcpdump calibre atril file-roller mplayer vlc gnome-calculator gnome-system-monitor gedit clamav rkhunter chkrootkit smartmontools parted remmina telegram-desktop cool-retro-term font-3270 ntfs-3g attr-progs acl-progs libcap-ng-progs vsv bootiso bridge-utils io.elementary.photos
+<pre tabindex="0"><code>$ sudo xbps-install -Su unzip atom vscode mosh mc chromium opera \
+torbrowser-launcher keepassxc encfs libreoffice tint2 stellarium \
+net-tools mtr NetworkManager-openvpn wireshark-qt zenmap tcpdump \
+calibre atril file-roller mplayer vlc gnome-calculator gnome-system-monitor \
+gedit clamav rkhunter chkrootkit smartmontools parted remmina \
+telegram-desktop cool-retro-term font-3270 ntfs-3g attr-progs acl-progs \
+libcap-ng-progs vsv bootiso bridge-utils io.elementary.photos
+
 $ sudo usermod -a -G wireshark $USER
 </code></pre><h3 id="vga">VGA</h3>
 <h4 id="nvidia340">nvidia340</h4>

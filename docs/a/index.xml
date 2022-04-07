@@ -2174,7 +2174,14 @@ ln -s /etc/sv/nanoklogd /var/service/
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo usermod -aG socklog $USER
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;добавление-часто-используемого-по&#34;&gt;Добавление часто используемого ПО&lt;/h3&gt;
 &lt;p&gt;Устанавливаем часто используемые пакеты:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo xbps-install -Su unzip atom vscode mosh mc chromium opera torbrowser-launcher keepassxc encfs libreoffice tint2 stellarium net-tools mtr NetworkManager-openvpn wireshark-qt zenmap tcpdump calibre atril file-roller mplayer vlc gnome-calculator gnome-system-monitor gedit clamav rkhunter chkrootkit smartmontools parted remmina telegram-desktop cool-retro-term font-3270 ntfs-3g attr-progs acl-progs libcap-ng-progs vsv bootiso bridge-utils io.elementary.photos
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo xbps-install -Su unzip atom vscode mosh mc chromium opera \
+torbrowser-launcher keepassxc encfs libreoffice tint2 stellarium \
+net-tools mtr NetworkManager-openvpn wireshark-qt zenmap tcpdump \
+calibre atril file-roller mplayer vlc gnome-calculator gnome-system-monitor \
+gedit clamav rkhunter chkrootkit smartmontools parted remmina \
+telegram-desktop cool-retro-term font-3270 ntfs-3g attr-progs acl-progs \
+libcap-ng-progs vsv bootiso bridge-utils io.elementary.photos
+
 $ sudo usermod -a -G wireshark $USER
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;vga&#34;&gt;VGA&lt;/h3&gt;
 &lt;h4 id=&#34;nvidia340&#34;&gt;nvidia340&lt;/h4&gt;

@@ -239,7 +239,14 @@ $ sudo usermod -aG socklog $USER
 ### Добавление часто используемого ПО
 Устанавливаем часто используемые пакеты:
 ```
-$ sudo xbps-install -Su unzip atom vscode mosh mc chromium opera torbrowser-launcher keepassxc encfs libreoffice tint2 stellarium net-tools mtr NetworkManager-openvpn wireshark-qt zenmap tcpdump calibre atril file-roller mplayer vlc gnome-calculator gnome-system-monitor gedit clamav rkhunter chkrootkit smartmontools parted remmina telegram-desktop cool-retro-term font-3270 ntfs-3g attr-progs acl-progs libcap-ng-progs vsv bootiso bridge-utils io.elementary.photos
+$ sudo xbps-install -Su unzip atom vscode mosh mc chromium opera \
+torbrowser-launcher keepassxc encfs libreoffice tint2 stellarium \
+net-tools mtr NetworkManager-openvpn wireshark-qt zenmap tcpdump \
+calibre atril file-roller mplayer vlc gnome-calculator gnome-system-monitor \
+gedit clamav rkhunter chkrootkit smartmontools parted remmina \
+telegram-desktop cool-retro-term font-3270 ntfs-3g attr-progs acl-progs \
+libcap-ng-progs vsv bootiso bridge-utils io.elementary.photos
+
 $ sudo usermod -a -G wireshark $USER
 ```
 
