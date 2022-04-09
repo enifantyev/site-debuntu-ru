@@ -7,6 +7,9 @@ description: >
 tags:
   - NUT
   - APC
+aliases:
+  - /note/nastroyka-nut-dlya-ippon-back-power-pro-600
+  - /n/nastroika-nut-dlya-ippon-back-power-pro-600/
 ---
 
 <p><a href="http://blog.shadypixel.com/monitoring-a-ups-with-nut-on-debian-or-ubuntu-linux/">http://blog.shadypixel.com/monitoring-a-ups-with-nut-on-debian-or-ubuntu-linux/</a></p>

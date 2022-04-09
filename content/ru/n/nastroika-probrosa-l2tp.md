@@ -7,6 +7,9 @@ description: >
 tags:
   - L2TP
   - NAT
+aliases:
+  - /note/nastroyka-probrosa-l2tp
+  - /n/nastroika-probrosa-l2tp/
 ---
 
 <p>L2TP сервер слушает на портах udp 1701 и udp 500.</p>
@@ -85,4 +88,3 @@ iptables -t nat -A POSTROUTING -d 192.168.0.1/32 -p udp -m udp --dport 4500 -j S
 <p>One usage of NAT-T and IPsec is to enable <a title="Opportunistic encryption" href="http://en.wikipedia.org/wiki/Opportunistic_encryption">opportunistic encryption</a> between systems. NAT-T allows systems behind NATs to request and establish secure connections on demand.</p>
 </div>
 <p> </p>
-

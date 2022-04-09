@@ -6,6 +6,9 @@ description: >
   OpenWRT Управление питанием порта USB
 tags:
   - OpenWRT
+aliases:
+  - /note/openwrt-upravlenie-pitaniem-porta-usb
+  - /n/openwrt-upravlenie-pitaniem-porta-usb/
 ---
 
 2015-10-29
