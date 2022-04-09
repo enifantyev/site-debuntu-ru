@@ -7,6 +7,8 @@ description: >
 tags:
   - Squid
   - SquidGuard
+aliases:
+  - /nastroyka-prozrachnogo-squid3-squidguard
 ---
 
 2011-03-12
@@ -23,10 +25,10 @@ tags:
 
 Файл /etc/squid3/squid.conf состоит из нескольких разделов...
 
-### *Options for authentication*
+#### *Options for authentication*
 Раздел для настройки авторизации. При настройке прозрачного прокси - не нужен. Все строки закомментированы.
 
-### *Access controls*
+#### *Access controls*
 Контроль доступа. Важный раздел. Работают 23 строки. Добавляем две работающие строки.
 ```
 acl manager proto cache_object  
@@ -58,7 +60,7 @@ icp_access deny all
 htcp_access deny all
 ```
 
-### *Network options*
+#### *Network options*
 Сетевые настройки. По умолчанию раскомментирована лишь одна строка:
 ```
 http_port 3128
@@ -68,56 +70,56 @@ http_port 3128
 http_port 192.168.15.1:3128 transparent
 ```
 
-### *SSL options*
+#### *SSL options*
 Настройка прокси для ssl-запросов. Ни одной строчки не раскомментировано. Этот раздел нам не нужен, так как будем выпускать ssl-запросы через iptables.
 
-### *Options which affect the neighbor selection algorithm*
+#### *Options which affect the neighbor selection algorithm*
 У нас один прокси сервер squid и это раздел нам не нужен. Раскомментирована одна строка:
 ```
 hierarchy_stoplist cgi-bin ?
 ```
 
-### *Memory cache options*
+#### *Memory cache options*
 Использование оперативной памяти. Ни одной работающей строчки. Оставляем все настройки по умолчанию.
 
-### *Disk cache options*
+#### *Disk cache options*
 Интересный раздел по кэшированию запросов на винчестере. Ни одной работающей строчки. Оставляем все настройки по умолчанию.
 
-### *Logfile options*
+#### *Logfile options*
 Одна работающая строка:
 ```
 access_log /var/log/squid3/access.log squid
 ```
 
-### *<Options for FTP gatewaying, Options for external support programs>*
+#### *<Options for FTP gatewaying, Options for external support programs>*
 Эти разделы полностью закомментированы.
 
-### *Options for URL rewriting*
+#### *Options for URL rewriting*
 Ни одной работающей строки. Здесь включим редирект на squidGuard:
 ```
 url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 ```
 Помним, что из-за этой строки, пока squidGuard не будет настроен, squid3 будет падать сразу после запуска!
 
-### *<Options for tuning the cache, HTTP options, Timeouts, Administrative parameters, Options for the cache registration service, HTTPD-accelerator options, Delay pool parameters, WCCPv1 and WCCPv2 configuration options, Persistent connection handling, Cache digest options, SNMP options>*
+#### *<Options for tuning the cache, HTTP options, Timeouts, Administrative parameters, Options for the cache registration service, HTTPD-accelerator options, Delay pool parameters, WCCPv1 and WCCPv2 configuration options, Persistent connection handling, Cache digest options, SNMP options>*
 Эти разделы полностью закомментированы.
 
-### *ICP options*
+#### *ICP options*
 icp_port 3130
 
-### *<Multicast ICP options, Internal icon options>*
+#### *<Multicast ICP options, Internal icon options>*
 Эти разделы полностью закомментированы.
 
-### *Error page options*
+#### *Error page options*
 Здесь включим русификацию ошибок прокси-сервера, выдаваемых в ответ на запросы пользователей несуществующих страниц в интернете и т.д.:
 ```
 error_directory /usr/share/squid3/errors/Russian-1251
 ```
 
-### *< Options influencing request forwarding, Advanced networking options, ICAP options, DNS options>*
+#### *< Options influencing request forwarding, Advanced networking options, ICAP options, DNS options>*
 Эти разделы полностью закомментированы.
 
-### *Miscellaneous*
+#### *Miscellaneous*
 ```
 coredump_dir /var/spool/squid3
 ```
@@ -239,7 +241,7 @@ $ squidGuard -C all
 $ chown -R proxy:proxy *
 ```
 
-### Изменение записей в списках доменов и URL
+#### Изменение записей в списках доменов и URL
 
 Пример. Рядом с файлом `domains.db` в папке `/var/lib/squiguard/db/webmail` создаём файл `domains.diff`. В него заносим строку или несколько строк, по одной на каждую запись:
 ```

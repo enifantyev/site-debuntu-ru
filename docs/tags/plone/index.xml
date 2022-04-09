@@ -533,5 +533,51 @@ eggs =
       </description>
     </item>
     
+    <item>
+      <title>A: Создание копии сайта Plone</title>
+      <link>https://debuntu.ru/a/sozdanie-kopii-saita-plone/</link>
+      <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/a/sozdanie-kopii-saita-plone/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-10&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Краткая инструкция о том, как создать копию Plone-инсталляции.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;введение&#34;&gt;Введение&lt;/h3&gt;
+&lt;p&gt;Эта инструкция расскажет вам основы создания дубля Plone-сайта для тестирования или бэкапа.&lt;/p&gt;
+&lt;h3 id=&#34;необходимые-условия&#34;&gt;Необходимые условия&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Возможность копирования файлов из/в удалённый сервер&lt;/li&gt;
+&lt;li&gt;Возможность использования командной строки&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;содержимое-plone-сайта&#34;&gt;Содержимое Plone-сайта&lt;/h3&gt;
+&lt;p&gt;Что должно быть скопировано:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;buildout.cfg&lt;/code&gt; - определяет конфигурацию вашего сайта&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src folder&lt;/code&gt; - содержит аддоны разработанные вами&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var/filestorage/Data.fs&lt;/code&gt; - ZODB база данных вашего сайта&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var/blobstorage folder&lt;/code&gt; - содержит объекты типа &amp;ldquo;файл&amp;rdquo; базы данных ZODB (BLOBы)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Другие папки (eggs, downloads, parts и т.д.) генерируются утилитой buildout и могут оставаться пустыми.&lt;/p&gt;
+&lt;h3 id=&#34;копирование-и-подготовка-к-первому-старту-plone-сайта&#34;&gt;Копирование и подготовка к первому старту Plone-сайта&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Создайте новый сайт в новом месте с помощью &lt;em&gt;Унифицированного Plone Установщика&lt;/em&gt; и убедитесь, что можете войти в admin-аккаунт с его временным паролем.&lt;/li&gt;
+&lt;li&gt;Удалите содержимое папки &lt;code&gt;var/filestorage/&lt;/code&gt; на новой системе.&lt;/li&gt;
+&lt;li&gt;Скопируйте файл &lt;code&gt;var/filestorage/Data.fs&lt;/code&gt; из старой системы в новую систему и заметьте, что пароль админа сохраняется в этом копируемом файле, поэтому временный пароль, полученный во время установки нового сайта более недействителен.&lt;/li&gt;
+&lt;li&gt;Удалите содержимое папки &lt;code&gt;var/blobstorage&lt;/code&gt; на новой системе.&lt;/li&gt;
+&lt;li&gt;Скопируйте папку &lt;code&gt;var/blobstorage&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Скопируйте папку &lt;code&gt;src&lt;/code&gt;, если у вас есть свои разработки для сайта.&lt;/li&gt;
+&lt;li&gt;Скопируйте &lt;code&gt;buildout.cfg&lt;/code&gt; и другие &lt;code&gt;.cfg&lt;/code&gt; файлы.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Перезапустите &lt;code&gt;sudo -u plone_buildout bin/buildout&lt;/code&gt; для автоматической загрузки и настройки всех Python-пакетов необходимых для запуска нового сайта&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Теперь можно запустить сайт &lt;code&gt;sudo -u plone_daemon /srv/plone/zinstance/bin/plonectl fg&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;По какой-то причине я не смог увидеть содержимое моего скопированного сайта по адресу &lt;code&gt;http://127.0.0.1:8080/id1&lt;/code&gt;. Отображалась пустая страница, хотя в HTML-код содержал полную страницу скопированного сайта.  Рабочим адресом является &lt;code&gt;http://localhost:8080/id1&lt;/code&gt;.&lt;/p&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>

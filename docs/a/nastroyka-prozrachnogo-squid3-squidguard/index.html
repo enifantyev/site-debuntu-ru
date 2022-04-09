@@ -240,6 +240,8 @@ if (!doNotTrack) {
   <a href="/a/ustanovka-eclipse-3-6-helios-v-ubuntu/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-austanovka-eclipse-3-6-helios-v-ubuntu"><span class="">Установка Eclipse 3.6 (Helios) в Ubuntu</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-aopisanie-failovoi-sistemy-overlayfs-li">
   <a href="/a/opisanie-failovoi-sistemy-overlayfs/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-aopisanie-failovoi-sistemy-overlayfs"><span class="">Описание файловой системы OverlayFS</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-asozdanie-kopii-saita-plone-li">
+  <a href="/a/sozdanie-kopii-saita-plone/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-asozdanie-kopii-saita-plone"><span class="">Создание копии сайта Plone</span></a>
 </li>
   </ul>
 </li>
@@ -268,27 +270,12 @@ if (!doNotTrack) {
     <li><a href="#установка-squid3-squidguard">Установка Squid3 SquidGuard</a></li>
     <li><a href="#настройка-squid3">Настройка Squid3</a>
       <ul>
-        <li><a href="#options-for-authentication"><em>Options for authentication</em></a></li>
-        <li><a href="#access-controls"><em>Access controls</em></a></li>
-        <li><a href="#network-options"><em>Network options</em></a></li>
-        <li><a href="#ssl-options"><em>SSL options</em></a></li>
-        <li><a href="#options-which-affect-the-neighbor-selection-algorithm"><em>Options which affect the neighbor selection algorithm</em></a></li>
-        <li><a href="#memory-cache-options"><em>Memory cache options</em></a></li>
-        <li><a href="#disk-cache-options"><em>Disk cache options</em></a></li>
-        <li><a href="#logfile-options"><em>Logfile options</em></a></li>
-        <li><a href="#options-for-ftp-gatewaying-options-for-external-support-programs"><em>&lt;Options for FTP gatewaying, Options for external support programs&gt;</em></a></li>
-        <li><a href="#options-for-url-rewriting"><em>Options for URL rewriting</em></a></li>
-        <li><a href="#options-for-tuning-the-cache-http-options-timeouts-administrative-parameters-options-for-the-cache-registration-service-httpd-accelerator-options-delay-pool-parameters-wccpv1-and-wccpv2-configuration-options-persistent-connection-handling-cache-digest-options-snmp-options"><em>&lt;Options for tuning the cache, HTTP options, Timeouts, Administrative parameters, Options for the cache registration service, HTTPD-accelerator options, Delay pool parameters, WCCPv1 and WCCPv2 configuration options, Persistent connection handling, Cache digest options, SNMP options&gt;</em></a></li>
-        <li><a href="#icp-options"><em>ICP options</em></a></li>
-        <li><a href="#multicast-icp-options-internal-icon-options"><em>&lt;Multicast ICP options, Internal icon options&gt;</em></a></li>
-        <li><a href="#error-page-options"><em>Error page options</em></a></li>
-        <li><a href="#-options-influencing-request-forwarding-advanced-networking-options-icap-options-dns-options"><em>&lt; Options influencing request forwarding, Advanced networking options, ICAP options, DNS options&gt;</em></a></li>
-        <li><a href="#miscellaneous"><em>Miscellaneous</em></a></li>
+        <li></li>
       </ul>
     </li>
     <li><a href="#настройка-squidguard">Настройка squidGuard</a>
       <ul>
-        <li><a href="#изменение-записей-в-списках-доменов-и-url">Изменение записей в списках доменов и URL</a></li>
+        <li></li>
       </ul>
     </li>
     <li><a href="#настройка-iptables-для-работы-squid3">Настройка iptables для работы squid3</a></li>
@@ -546,7 +533,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/pki/" data-taxonomy-term="pki"><span class="taxonomy-label">PKI</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/plone/" data-taxonomy-term="plone"><span class="taxonomy-label">Plone</span><span class="taxonomy-count">4</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/plone/" data-taxonomy-term="plone"><span class="taxonomy-label">Plone</span><span class="taxonomy-count">5</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/portsnap/" data-taxonomy-term="portsnap"><span class="taxonomy-label">portsnap</span><span class="taxonomy-count">1</span></a></li>
         
@@ -701,9 +688,9 @@ if (!doNotTrack) {
 <h2 id="настройка-squid3">Настройка Squid3</h2>
 <p>Настройки squid3 лежат в файле <code>/etc/squid3/squid.conf</code>. Не надо пугаться обилию информации в этом файле, так как достаточно включить цветовыделение синтаксиса, чтобы увидеть, что работающих строк не больше пары или тройки десятков. Все остальные строки закоментированы и представляют собой описание, настройки по умолчанию и примеры опций squid3.</p>
 <p>Файл /etc/squid3/squid.conf состоит из нескольких разделов&hellip;</p>
-<h3 id="options-for-authentication"><em>Options for authentication</em></h3>
+<h4 id="options-for-authentication"><em>Options for authentication</em></h4>
 <p>Раздел для настройки авторизации. При настройке прозрачного прокси - не нужен. Все строки закомментированы.</p>
-<h3 id="access-controls"><em>Access controls</em></h3>
+<h4 id="access-controls"><em>Access controls</em></h4>
 <p>Контроль доступа. Важный раздел. Работают 23 строки. Добавляем две работающие строки.</p>
 <pre tabindex="0"><code>acl manager proto cache_object  
 acl localhost src 127.0.0.1/32  
@@ -732,41 +719,41 @@ http_access allow localhost
 http_access deny all  
 icp_access deny all  
 htcp_access deny all
-</code></pre><h3 id="network-options"><em>Network options</em></h3>
+</code></pre><h4 id="network-options"><em>Network options</em></h4>
 <p>Сетевые настройки. По умолчанию раскомментирована лишь одна строка:</p>
 <pre tabindex="0"><code>http_port 3128
 </code></pre><p>Изменяем эту опцию, добавляя интерфейс, на котором принимаем запросы, и включая прозрачность:</p>
 <pre tabindex="0"><code>http_port 192.168.15.1:3128 transparent
-</code></pre><h3 id="ssl-options"><em>SSL options</em></h3>
+</code></pre><h4 id="ssl-options"><em>SSL options</em></h4>
 <p>Настройка прокси для ssl-запросов. Ни одной строчки не раскомментировано. Этот раздел нам не нужен, так как будем выпускать ssl-запросы через iptables.</p>
-<h3 id="options-which-affect-the-neighbor-selection-algorithm"><em>Options which affect the neighbor selection algorithm</em></h3>
+<h4 id="options-which-affect-the-neighbor-selection-algorithm"><em>Options which affect the neighbor selection algorithm</em></h4>
 <p>У нас один прокси сервер squid и это раздел нам не нужен. Раскомментирована одна строка:</p>
 <pre tabindex="0"><code>hierarchy_stoplist cgi-bin ?
-</code></pre><h3 id="memory-cache-options"><em>Memory cache options</em></h3>
+</code></pre><h4 id="memory-cache-options"><em>Memory cache options</em></h4>
 <p>Использование оперативной памяти. Ни одной работающей строчки. Оставляем все настройки по умолчанию.</p>
-<h3 id="disk-cache-options"><em>Disk cache options</em></h3>
+<h4 id="disk-cache-options"><em>Disk cache options</em></h4>
 <p>Интересный раздел по кэшированию запросов на винчестере. Ни одной работающей строчки. Оставляем все настройки по умолчанию.</p>
-<h3 id="logfile-options"><em>Logfile options</em></h3>
+<h4 id="logfile-options"><em>Logfile options</em></h4>
 <p>Одна работающая строка:</p>
 <pre tabindex="0"><code>access_log /var/log/squid3/access.log squid
-</code></pre><h3 id="options-for-ftp-gatewaying-options-for-external-support-programs"><em>&lt;Options for FTP gatewaying, Options for external support programs&gt;</em></h3>
+</code></pre><h4 id="options-for-ftp-gatewaying-options-for-external-support-programs"><em>&lt;Options for FTP gatewaying, Options for external support programs&gt;</em></h4>
 <p>Эти разделы полностью закомментированы.</p>
-<h3 id="options-for-url-rewriting"><em>Options for URL rewriting</em></h3>
+<h4 id="options-for-url-rewriting"><em>Options for URL rewriting</em></h4>
 <p>Ни одной работающей строки. Здесь включим редирект на squidGuard:</p>
 <pre tabindex="0"><code>url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 </code></pre><p>Помним, что из-за этой строки, пока squidGuard не будет настроен, squid3 будет падать сразу после запуска!</p>
-<h3 id="options-for-tuning-the-cache-http-options-timeouts-administrative-parameters-options-for-the-cache-registration-service-httpd-accelerator-options-delay-pool-parameters-wccpv1-and-wccpv2-configuration-options-persistent-connection-handling-cache-digest-options-snmp-options"><em>&lt;Options for tuning the cache, HTTP options, Timeouts, Administrative parameters, Options for the cache registration service, HTTPD-accelerator options, Delay pool parameters, WCCPv1 and WCCPv2 configuration options, Persistent connection handling, Cache digest options, SNMP options&gt;</em></h3>
+<h4 id="options-for-tuning-the-cache-http-options-timeouts-administrative-parameters-options-for-the-cache-registration-service-httpd-accelerator-options-delay-pool-parameters-wccpv1-and-wccpv2-configuration-options-persistent-connection-handling-cache-digest-options-snmp-options"><em>&lt;Options for tuning the cache, HTTP options, Timeouts, Administrative parameters, Options for the cache registration service, HTTPD-accelerator options, Delay pool parameters, WCCPv1 and WCCPv2 configuration options, Persistent connection handling, Cache digest options, SNMP options&gt;</em></h4>
 <p>Эти разделы полностью закомментированы.</p>
-<h3 id="icp-options"><em>ICP options</em></h3>
+<h4 id="icp-options"><em>ICP options</em></h4>
 <p>icp_port 3130</p>
-<h3 id="multicast-icp-options-internal-icon-options"><em>&lt;Multicast ICP options, Internal icon options&gt;</em></h3>
+<h4 id="multicast-icp-options-internal-icon-options"><em>&lt;Multicast ICP options, Internal icon options&gt;</em></h4>
 <p>Эти разделы полностью закомментированы.</p>
-<h3 id="error-page-options"><em>Error page options</em></h3>
+<h4 id="error-page-options"><em>Error page options</em></h4>
 <p>Здесь включим русификацию ошибок прокси-сервера, выдаваемых в ответ на запросы пользователей несуществующих страниц в интернете и т.д.:</p>
 <pre tabindex="0"><code>error_directory /usr/share/squid3/errors/Russian-1251
-</code></pre><h3 id="-options-influencing-request-forwarding-advanced-networking-options-icap-options-dns-options"><em>&lt; Options influencing request forwarding, Advanced networking options, ICAP options, DNS options&gt;</em></h3>
+</code></pre><h4 id="-options-influencing-request-forwarding-advanced-networking-options-icap-options-dns-options"><em>&lt; Options influencing request forwarding, Advanced networking options, ICAP options, DNS options&gt;</em></h4>
 <p>Эти разделы полностью закомментированы.</p>
-<h3 id="miscellaneous"><em>Miscellaneous</em></h3>
+<h4 id="miscellaneous"><em>Miscellaneous</em></h4>
 <pre tabindex="0"><code>coredump_dir /var/spool/squid3
 </code></pre><p>Будет лучше переименовать существующий файл <code>squid3.conf</code> и создать новый пустой <code>squid3.conf</code>, наполнив его приведёнными выше работающими строками.</p>
 <h2 id="настройка-squidguard">Настройка squidGuard</h2>
@@ -869,7 +856,7 @@ redirect http://192.168.0.1/squidguard.html
 <p>Исходные текстовые файлы удалять не надо. Могут пригодиться при дополнении или пересоздании базы.</p>
 <p>Изменяем хозяина и группу на содержимом папки /var/lib/squidguard, так как в эту папку будет лазить squid:</p>
 <pre tabindex="0"><code>$ chown -R proxy:proxy *
-</code></pre><h3 id="изменение-записей-в-списках-доменов-и-url">Изменение записей в списках доменов и URL</h3>
+</code></pre><h4 id="изменение-записей-в-списках-доменов-и-url">Изменение записей в списках доменов и URL</h4>
 <p>Пример. Рядом с файлом <code>domains.db</code> в папке <code>/var/lib/squiguard/db/webmail</code> создаём файл <code>domains.diff</code>. В него заносим строку или несколько строк, по одной на каждую запись:</p>
 <pre tabindex="0"><code>-google.com (что означает вычеркнуть этот домен из базы)  
 или

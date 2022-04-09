@@ -1,0 +1,112 @@
+00. Подготовка к установке кластера Cloudera CDH 6.3.2
+01. Установка Cloudera Manager 6.3.1
+AppArmor препятствует электронному подписыванию документов LibreOffice
+apt vs apt-get/apt-cache vs aptitude
+Best Practices for Using LDAP Link with Vertica (перевод)
+Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA
+Chroot rsync для безопасного сбора бэкапов с удалённых хостов
+Cloudera Hue Log: Couldn't import snappy. Support for snappy compression disabled.
+CMAK. 01. Сборка rpm-пакета для CentOS7
+cryptsetup короткая памятка
+Disabling Hive CLI
+FreeBSD Установка, удаление программ
+GNU Screen. Краткая памятка
+IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)
+Jenkins Проблемы выполнения удалённых команд в сетях со stateful firewall и способы их решения
+Kafdrop. 01. Сборка jar-пакета
+Kafdrop. 02. Установка и настройка
+LDAP binding во FreeIPA
+LVM2 — создание, перемещение и удаление логических томов
+Mikrotik: Wireless WDS Mesh With Mesh Interface
+Mokey - пользовательский сервис сброса/смены паролей FreeIPA
+OpenVPN — это просто
+OpenWRT Управление питанием порта USB
+Path MTU Discovery и прочее связанное с этим
+Traditional Unix permissions и Access Control Lists
+Unable delete old snapshots of timeshift on btrfs volume
+Void Linux Послеустановочные шаги
+Void Linux Установка Docker
+Void Linux Установка QEMU/KVM
+Администрирование таблиц в Apache HBase
+Безопасное уменьшение логического тома LVM с файловой системой Btrfs
+Блокирование доступа внешних программ к Hive metastore
+Бэкап дампа базы Postgresql и его восстановление на новом сервере
+В LXDE нет русской раскладки
+Включение во FreeIPA отслеживания последней успешной аутентификации пользовательских аккаунтов
+Выполнение ad-hoc absible команд
+Выпуск Monitorix версии 3.12.0 (2020-02-21)
+Дефрагментация XFS на удалённом сервере
+Добавление reCAPTCHA в Plone
+Добавление в NXRM единого репозитория для всех версий PostgreSQL
+Запуск kafka-mirror-maker из systemd
+Избавляемся от root'а в Alpine Linux
+Использование Apache Sqoop для импорта/экспорта данных между PostgreSQL и HDFS
+Использование Composer для установки и управления зависимостями Drupal 8
+Использование XFS
+Использование прокси-сервер Approx для локального кэширования APT-репозиториев
+Исправление застрявшего статуса у роли в Cloudera Hadoop
+Исправление проблемы с переключением раскладки клавиатуры в Visual Studio Code
+Как собрать новое ядро linux
+Как сохранить расцвеченный выхлоп stdout в файл
+Компиляция свежего stunnel 5.60 из исходников на CentOS7
+Краткое описание Monitorix
+Краткое описание установки DD-WRT на роутер Linksys WRT610N V2.0
+Настраиваем OpenVPN сервер на подключения клиентов
+Настройка LDAP-аутентификации в Nexus Repository Manager
+Настройка LDAP-аутентификации в керберизированном Cloudera Hive
+Настройка NUT для IPPON BACK POWER PRO 600
+Настройка OAuth2-авторизации Google-аккаунтов в NextCloud
+Настройка VoIP на Nokia E52
+Настройка аутентификации/авторизации в Apache Spark
+Настройка клиента OpenVPN на Windows XP
+Настройка проброса L2TP
+Настройка прозрачного squid3 + squidGuard
+Необходимые модули для Drupal 7.0
+Неудачный запуск "Inspect Network Performance": Failed running performance inspector on cluster
+Обновление Nexus Repository Manager
+Обфускация ssh-трафика с помощью stunnel
+Описание VFS Виртуальной Файловой Системы Linux
+Описание файловой системы OverlayFS
+Организация беспарольного зеркала registry-1.docker.io
+Отдельная hidden replicas для безопасного full backup FreeIPA
+Отключение анонимного доступа к LDAP-каталогу FreeIPA
+Отправка почты из контактной формы MODx Evo через gmail
+Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub
+Первые впечатления о Void Linux
+Перевод Easy-RSA 3 Quickstart README
+Перенос кластера Cloudera CDH 6.3.2 в другой vlan
+Получение keytab-файла для сервисного принципала
+Получение прав Superuser'а в ZooKeeper'е Cloudera CDH 6.3.2
+Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62
+Проблема с пакетом psycopg2 при создании нового суперюзера для Cloudera Hue
+Простой Центр Сертификации для strongSwan IPsec
+Разборка трекбола Logitech M570
+Развёртывание сети OpenVPN
+Резервное копирование Plone
+Ручное удаление реплики FreeIPA из RedOS7.2
+Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)
+Сборка deb-пакета свежего EncFS
+Сборка rpm-пакета nginx c модулями для kafka
+Создание keytab-файла для пользовательского принципала
+Создание system account для подключения LDAP-клиента к FreeIPA
+Создание копии сайта Plone
+Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline
+Срипт для добавления PTR-записей по списку из файла в обратную DNS-зону FreeIPA
+Тестирование псевдо HA и LB dns-настроек в /etc/resolv.conf
+Усиление защиты sshd
+Установка Alpine Linux в подтом btrfs
+Установка Apache Airflow 2 + FreeIPA + Apache Hadoop + сценарий удаления
+Установка Apache Airflow и настройка его для работы с Apache Hadoop
+Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA
+Установка debian на fake raid
+Установка Eclipse 3.6 (Helios) в Ubuntu
+Установка egroupware 1.8 на debian 6.0
+Установка JupyterHub на CentOS 7 (draft)
+Установка Monitorix в Alpine Linux
+Установка Plone CMS
+Установка PostgreSQL 9.0 на Debian 6.0
+Установка VMWare Server на Debian Lenny
+Установка и использование Truecrypt
+Установка и использование в FreeBSD 9.1 нового пакетного менеджера pkgng
+Чем консоль отличается от терминала
+Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа

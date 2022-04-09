@@ -4232,9 +4232,9 @@ PUBKEY              : /usr/local/etc/pkg-pubkey.cert
 &lt;h2 id=&#34;настройка-squid3&#34;&gt;Настройка Squid3&lt;/h2&gt;
 &lt;p&gt;Настройки squid3 лежат в файле &lt;code&gt;/etc/squid3/squid.conf&lt;/code&gt;. Не надо пугаться обилию информации в этом файле, так как достаточно включить цветовыделение синтаксиса, чтобы увидеть, что работающих строк не больше пары или тройки десятков. Все остальные строки закоментированы и представляют собой описание, настройки по умолчанию и примеры опций squid3.&lt;/p&gt;
 &lt;p&gt;Файл /etc/squid3/squid.conf состоит из нескольких разделов&amp;hellip;&lt;/p&gt;
-&lt;h3 id=&#34;options-for-authentication&#34;&gt;&lt;em&gt;Options for authentication&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;options-for-authentication&#34;&gt;&lt;em&gt;Options for authentication&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Раздел для настройки авторизации. При настройке прозрачного прокси - не нужен. Все строки закомментированы.&lt;/p&gt;
-&lt;h3 id=&#34;access-controls&#34;&gt;&lt;em&gt;Access controls&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;access-controls&#34;&gt;&lt;em&gt;Access controls&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Контроль доступа. Важный раздел. Работают 23 строки. Добавляем две работающие строки.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;acl manager proto cache_object  
 acl localhost src 127.0.0.1/32  
@@ -4263,41 +4263,41 @@ http_access allow localhost
 http_access deny all  
 icp_access deny all  
 htcp_access deny all
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;network-options&#34;&gt;&lt;em&gt;Network options&lt;/em&gt;&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;network-options&#34;&gt;&lt;em&gt;Network options&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Сетевые настройки. По умолчанию раскомментирована лишь одна строка:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;http_port 3128
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Изменяем эту опцию, добавляя интерфейс, на котором принимаем запросы, и включая прозрачность:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;http_port 192.168.15.1:3128 transparent
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;ssl-options&#34;&gt;&lt;em&gt;SSL options&lt;/em&gt;&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;ssl-options&#34;&gt;&lt;em&gt;SSL options&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Настройка прокси для ssl-запросов. Ни одной строчки не раскомментировано. Этот раздел нам не нужен, так как будем выпускать ssl-запросы через iptables.&lt;/p&gt;
-&lt;h3 id=&#34;options-which-affect-the-neighbor-selection-algorithm&#34;&gt;&lt;em&gt;Options which affect the neighbor selection algorithm&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;options-which-affect-the-neighbor-selection-algorithm&#34;&gt;&lt;em&gt;Options which affect the neighbor selection algorithm&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;У нас один прокси сервер squid и это раздел нам не нужен. Раскомментирована одна строка:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;hierarchy_stoplist cgi-bin ?
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;memory-cache-options&#34;&gt;&lt;em&gt;Memory cache options&lt;/em&gt;&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;memory-cache-options&#34;&gt;&lt;em&gt;Memory cache options&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Использование оперативной памяти. Ни одной работающей строчки. Оставляем все настройки по умолчанию.&lt;/p&gt;
-&lt;h3 id=&#34;disk-cache-options&#34;&gt;&lt;em&gt;Disk cache options&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;disk-cache-options&#34;&gt;&lt;em&gt;Disk cache options&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Интересный раздел по кэшированию запросов на винчестере. Ни одной работающей строчки. Оставляем все настройки по умолчанию.&lt;/p&gt;
-&lt;h3 id=&#34;logfile-options&#34;&gt;&lt;em&gt;Logfile options&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;logfile-options&#34;&gt;&lt;em&gt;Logfile options&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Одна работающая строка:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;access_log /var/log/squid3/access.log squid
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;options-for-ftp-gatewaying-options-for-external-support-programs&#34;&gt;&lt;em&gt;&amp;lt;Options for FTP gatewaying, Options for external support programs&amp;gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;options-for-ftp-gatewaying-options-for-external-support-programs&#34;&gt;&lt;em&gt;&amp;lt;Options for FTP gatewaying, Options for external support programs&amp;gt;&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Эти разделы полностью закомментированы.&lt;/p&gt;
-&lt;h3 id=&#34;options-for-url-rewriting&#34;&gt;&lt;em&gt;Options for URL rewriting&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;options-for-url-rewriting&#34;&gt;&lt;em&gt;Options for URL rewriting&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Ни одной работающей строки. Здесь включим редирект на squidGuard:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;url_rewrite_program /usr/bin/squidGuard -c /etc/squid/squidGuard.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Помним, что из-за этой строки, пока squidGuard не будет настроен, squid3 будет падать сразу после запуска!&lt;/p&gt;
-&lt;h3 id=&#34;options-for-tuning-the-cache-http-options-timeouts-administrative-parameters-options-for-the-cache-registration-service-httpd-accelerator-options-delay-pool-parameters-wccpv1-and-wccpv2-configuration-options-persistent-connection-handling-cache-digest-options-snmp-options&#34;&gt;&lt;em&gt;&amp;lt;Options for tuning the cache, HTTP options, Timeouts, Administrative parameters, Options for the cache registration service, HTTPD-accelerator options, Delay pool parameters, WCCPv1 and WCCPv2 configuration options, Persistent connection handling, Cache digest options, SNMP options&amp;gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;options-for-tuning-the-cache-http-options-timeouts-administrative-parameters-options-for-the-cache-registration-service-httpd-accelerator-options-delay-pool-parameters-wccpv1-and-wccpv2-configuration-options-persistent-connection-handling-cache-digest-options-snmp-options&#34;&gt;&lt;em&gt;&amp;lt;Options for tuning the cache, HTTP options, Timeouts, Administrative parameters, Options for the cache registration service, HTTPD-accelerator options, Delay pool parameters, WCCPv1 and WCCPv2 configuration options, Persistent connection handling, Cache digest options, SNMP options&amp;gt;&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Эти разделы полностью закомментированы.&lt;/p&gt;
-&lt;h3 id=&#34;icp-options&#34;&gt;&lt;em&gt;ICP options&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;icp-options&#34;&gt;&lt;em&gt;ICP options&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;icp_port 3130&lt;/p&gt;
-&lt;h3 id=&#34;multicast-icp-options-internal-icon-options&#34;&gt;&lt;em&gt;&amp;lt;Multicast ICP options, Internal icon options&amp;gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;multicast-icp-options-internal-icon-options&#34;&gt;&lt;em&gt;&amp;lt;Multicast ICP options, Internal icon options&amp;gt;&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Эти разделы полностью закомментированы.&lt;/p&gt;
-&lt;h3 id=&#34;error-page-options&#34;&gt;&lt;em&gt;Error page options&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;error-page-options&#34;&gt;&lt;em&gt;Error page options&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Здесь включим русификацию ошибок прокси-сервера, выдаваемых в ответ на запросы пользователей несуществующих страниц в интернете и т.д.:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;error_directory /usr/share/squid3/errors/Russian-1251
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;-options-influencing-request-forwarding-advanced-networking-options-icap-options-dns-options&#34;&gt;&lt;em&gt;&amp;lt; Options influencing request forwarding, Advanced networking options, ICAP options, DNS options&amp;gt;&lt;/em&gt;&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;-options-influencing-request-forwarding-advanced-networking-options-icap-options-dns-options&#34;&gt;&lt;em&gt;&amp;lt; Options influencing request forwarding, Advanced networking options, ICAP options, DNS options&amp;gt;&lt;/em&gt;&lt;/h4&gt;
 &lt;p&gt;Эти разделы полностью закомментированы.&lt;/p&gt;
-&lt;h3 id=&#34;miscellaneous&#34;&gt;&lt;em&gt;Miscellaneous&lt;/em&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;miscellaneous&#34;&gt;&lt;em&gt;Miscellaneous&lt;/em&gt;&lt;/h4&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;coredump_dir /var/spool/squid3
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Будет лучше переименовать существующий файл &lt;code&gt;squid3.conf&lt;/code&gt; и создать новый пустой &lt;code&gt;squid3.conf&lt;/code&gt;, наполнив его приведёнными выше работающими строками.&lt;/p&gt;
 &lt;h2 id=&#34;настройка-squidguard&#34;&gt;Настройка squidGuard&lt;/h2&gt;
@@ -4400,7 +4400,7 @@ redirect http://192.168.0.1/squidguard.html
 &lt;p&gt;Исходные текстовые файлы удалять не надо. Могут пригодиться при дополнении или пересоздании базы.&lt;/p&gt;
 &lt;p&gt;Изменяем хозяина и группу на содержимом папки /var/lib/squidguard, так как в эту папку будет лазить squid:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ chown -R proxy:proxy *
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;изменение-записей-в-списках-доменов-и-url&#34;&gt;Изменение записей в списках доменов и URL&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;изменение-записей-в-списках-доменов-и-url&#34;&gt;Изменение записей в списках доменов и URL&lt;/h4&gt;
 &lt;p&gt;Пример. Рядом с файлом &lt;code&gt;domains.db&lt;/code&gt; в папке &lt;code&gt;/var/lib/squiguard/db/webmail&lt;/code&gt; создаём файл &lt;code&gt;domains.diff&lt;/code&gt;. В него заносим строку или несколько строк, по одной на каждую запись:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-google.com (что означает вычеркнуть этот домен из базы)  
 или
@@ -4712,6 +4712,52 @@ if &amp;ldquo;redirect_always_follow&amp;rdquo; feature is not enabled).&lt;/li&
 &lt;p&gt;(*) redirect_dir=follow only conflicts with metacopy=on if upperdir=&amp;hellip; is given.&lt;/p&gt;
 &lt;h3 id=&#34;расшаривание-и-копирование-слоёв&#34;&gt;Расшаривание и копирование слоёв&lt;/h3&gt;
 &lt;p&gt;Нижние слои могут совместно использоваться при монтировании нескольких разных overlay-стеков, и это обычная практика. При монтировании какой-нибудь Overlay может использовать тот же путь до каталога нижнего слоя, что и другой overlay mount.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>A: Создание копии сайта Plone</title>
+      <link>https://debuntu.ru/a/sozdanie-kopii-saita-plone/</link>
+      <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/a/sozdanie-kopii-saita-plone/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2019-05-10&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Краткая инструкция о том, как создать копию Plone-инсталляции.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;введение&#34;&gt;Введение&lt;/h3&gt;
+&lt;p&gt;Эта инструкция расскажет вам основы создания дубля Plone-сайта для тестирования или бэкапа.&lt;/p&gt;
+&lt;h3 id=&#34;необходимые-условия&#34;&gt;Необходимые условия&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Возможность копирования файлов из/в удалённый сервер&lt;/li&gt;
+&lt;li&gt;Возможность использования командной строки&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;содержимое-plone-сайта&#34;&gt;Содержимое Plone-сайта&lt;/h3&gt;
+&lt;p&gt;Что должно быть скопировано:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;buildout.cfg&lt;/code&gt; - определяет конфигурацию вашего сайта&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;src folder&lt;/code&gt; - содержит аддоны разработанные вами&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var/filestorage/Data.fs&lt;/code&gt; - ZODB база данных вашего сайта&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var/blobstorage folder&lt;/code&gt; - содержит объекты типа &amp;ldquo;файл&amp;rdquo; базы данных ZODB (BLOBы)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Другие папки (eggs, downloads, parts и т.д.) генерируются утилитой buildout и могут оставаться пустыми.&lt;/p&gt;
+&lt;h3 id=&#34;копирование-и-подготовка-к-первому-старту-plone-сайта&#34;&gt;Копирование и подготовка к первому старту Plone-сайта&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Создайте новый сайт в новом месте с помощью &lt;em&gt;Унифицированного Plone Установщика&lt;/em&gt; и убедитесь, что можете войти в admin-аккаунт с его временным паролем.&lt;/li&gt;
+&lt;li&gt;Удалите содержимое папки &lt;code&gt;var/filestorage/&lt;/code&gt; на новой системе.&lt;/li&gt;
+&lt;li&gt;Скопируйте файл &lt;code&gt;var/filestorage/Data.fs&lt;/code&gt; из старой системы в новую систему и заметьте, что пароль админа сохраняется в этом копируемом файле, поэтому временный пароль, полученный во время установки нового сайта более недействителен.&lt;/li&gt;
+&lt;li&gt;Удалите содержимое папки &lt;code&gt;var/blobstorage&lt;/code&gt; на новой системе.&lt;/li&gt;
+&lt;li&gt;Скопируйте папку &lt;code&gt;var/blobstorage&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Скопируйте папку &lt;code&gt;src&lt;/code&gt;, если у вас есть свои разработки для сайта.&lt;/li&gt;
+&lt;li&gt;Скопируйте &lt;code&gt;buildout.cfg&lt;/code&gt; и другие &lt;code&gt;.cfg&lt;/code&gt; файлы.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Перезапустите &lt;code&gt;sudo -u plone_buildout bin/buildout&lt;/code&gt; для автоматической загрузки и настройки всех Python-пакетов необходимых для запуска нового сайта&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Теперь можно запустить сайт &lt;code&gt;sudo -u plone_daemon /srv/plone/zinstance/bin/plonectl fg&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;По какой-то причине я не смог увидеть содержимое моего скопированного сайта по адресу &lt;code&gt;http://127.0.0.1:8080/id1&lt;/code&gt;. Отображалась пустая страница, хотя в HTML-код содержал полную страницу скопированного сайта.  Рабочим адресом является &lt;code&gt;http://localhost:8080/id1&lt;/code&gt;.&lt;/p&gt;
 
       </description>
     </item>
