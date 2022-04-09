@@ -2246,11 +2246,11 @@ ansible mgm -i cluster.inv -m systemd -a &amp;#34;name=cloudera-scm-server enabl
 &lt;strong&gt;Enable LDAP Authentication  Hive (Service-Wide)&lt;/strong&gt;: ☑&lt;/li&gt;
 &lt;li&gt;Указываем адрес LDAP-сервера
 &lt;strong&gt;LDAP URL&lt;/strong&gt;
-hive.server2.authentication.ldap.url: &lt;code&gt;ldaps://ldap.example.org:636&lt;/code&gt;&lt;/li&gt;
+hive.server2.authentication.ldap.url: &lt;code&gt;ldaps://ldap1.example.org ldaps://ldap2.example.org ldaps://ldap3.example.org&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Указываем контейнер поиска пользователей
 &lt;strong&gt;LDAP BaseDN&lt;/strong&gt;
 hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=example,dc=org&lt;/code&gt;
-&lt;img src=&#34;cloudera_hive_ldap.png&#34; alt=&#34;Cloudera Hive LDAP&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://debuntu.ru/img/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/cloudera_hive_ldap.png&#34; alt=&#34;Cloudera Hive LDAP&#34;&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
       </description>

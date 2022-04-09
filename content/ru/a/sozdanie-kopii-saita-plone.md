@@ -1,7 +1,7 @@
 ---
 title: "Создание копии сайта Plone"
 date: 2019-05-10
-weight: 12
+weight: 10
 description: >
   Частичный перевод статьи https://docs.plone.org/manage/deploying/copy.html с моими дополнениями.
 tags:

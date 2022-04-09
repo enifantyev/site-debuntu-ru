@@ -26,11 +26,11 @@
         &lt;p&gt;2021-05-12&lt;/p&gt;
 &lt;h2 id=&#34;симптомы&#34;&gt;Симптомы&lt;/h2&gt;
 &lt;p&gt;Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы &amp;ldquo;Сертификаты&amp;rdquo;, после долгого ожидания в виде вывески &amp;ldquo;В процессе&amp;rdquo;:
-&lt;img src=&#34;freeipa-certificates-wait.png&#34; alt=&#34;FreeIPA Certificates Wait&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa-certificates-wait.png&#34; alt=&#34;FreeIPA Certificates Wait&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Далее появляется баннер с ошибкой:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;IPA Error 4301: CertificateOperationError
 Certificate operation cannot be completed: Unable to communicate with CMS (500)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;ipa_error_4301.png&#34; alt=&#34;IPA Error 4301&#34;&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/ipa_error_4301.png&#34; alt=&#34;IPA Error 4301&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Невозможно выполнение:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
 ipa: ERROR: Certificate operation cannot be completed: Unable to communicate with CMS (500)
@@ -110,7 +110,7 @@ tomcat-9.0.44-1.el7.noarch
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего перезапускаем сервис &amp;lsquo;pki-tomcatd@pki-tomcat&amp;rsquo;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart pki-tomcatd@pki-tomcat
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;freeipa_authentication_success.png&#34; alt=&#34;FreeIPA Certificates&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa_authentication_success.png&#34; alt=&#34;FreeIPA Certificates&#34;&gt;&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
   Issuing CA: ipa
   Certificate: MIIDgjCCAmqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAzMREwDwYDVQQKDAhURVNULkxBTjEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTIxMDUwNDE4MzYwNFoXDTQxMDUwNDE4MzYwNFowMzERMA8GA1UECgwIVEVTVC5MQU4xHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANwBn6gEBu73KL4OT/yuZNMNaL7esYVhQclx4d3lVVAFS7lXk/7Hh91MY39IL/N0teNvTnZn3I9E7VtkgATBvxXzzaLR+iMvDH1OWLIIcLuh4RfR8mVH5PRs1374aXrRRHlrQXElqm7kRt4yWQXb2ibagdnnQxdf2CvstA0HQCDg5DlNprVXu82RWomiacayyadnaZ/KKJmJAHhV4fY0I8tLn6uyVdOspfgA2ZQUaAXOuRtrbGuowegEbCurRO5egDl7GpSR6fOkxiFcnI/jEufatNe3ZQllF3ywT8rfT+oa+52BPCl9J25XrJYw0g71npocVkRi4gY86h0C2LEHeGMCAwEAAaOBoDCBnTAfBgNVHSMEGDAWgBSSy/ljEEs9wsV19d9s4SzwgaQnqjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBxjAdBgNVHQ4EFgQUksv5YxBLPcLFdfXfbOEs8IGkJ6owOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vaXBhLWNhLnRlc3QubGFuL2NhL29jc3AwDQYJKoZIhvcNAQELBQADggEBAJ5t2ZOsPPl121dmCChndCD2aPAWjDZR5FYlEZZN8pk7ApoZ1yDDqPcX/NS+h3Lsj2SqDR1YjljkU6yLdaZy9RJ6NqfDnqt6EIvX5TM6KEuU8ga78tzP0/gJESeFr4oAh1wy/YwQrl2qhaI23SrRQEQXsxdi1s9fBBpAMlszcu5YYgvMimPAoKTdfAvm/nAfH6tcP6Hfvj5aNwQLPqc+S0xrJanAs97mktp84z1rtY5hjnrYKAYGQIE51h/v+f7grnmShiM55qu+A+qxYBqUozf0pNQ/Mo5zB8WongizCYyqjnhBHhdh/E9ca9kmkz7xEdgwxxTqe958WZ/9K+PgtWs=

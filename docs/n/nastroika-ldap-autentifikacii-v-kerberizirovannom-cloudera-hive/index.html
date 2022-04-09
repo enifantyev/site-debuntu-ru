@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2 проста и незатейлива.
 "><meta itemprop="datePublished" content="2020-11-08T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2020-11-08T00:00:00+00:00" />
-<meta itemprop="wordCount" content="38">
+<meta itemprop="wordCount" content="40">
 <meta itemprop="keywords" content="Apache Hive,Apache Hadoop,Cloudera CDH 6.3.2,BigData," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2"/>
 <meta name="twitter:description" content="Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2 проста и незатейлива.
@@ -187,7 +187,7 @@ if (!doNotTrack) {
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nsozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline-li">
   <a href="/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-nsozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline"><span class="">Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled-li">
-  <a href="/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled"><span class="">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</span></a>
+  <a href="/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled"><span class="">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500-li">
   <a href="/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-nipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500"><span class="">IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nvklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov-li">
@@ -706,11 +706,11 @@ if (!doNotTrack) {
 <strong>Enable LDAP Authentication  Hive (Service-Wide)</strong>: ☑</li>
 <li>Указываем адрес LDAP-сервера
 <strong>LDAP URL</strong>
-hive.server2.authentication.ldap.url: <code>ldaps://ldap.example.org:636</code></li>
+hive.server2.authentication.ldap.url: <code>ldaps://ldap1.example.org ldaps://ldap2.example.org ldaps://ldap3.example.org</code></li>
 <li>Указываем контейнер поиска пользователей
 <strong>LDAP BaseDN</strong>
 hive.server2.authentication.ldap.baseDN: <code>cn=users,cn=accounts,dc=example,dc=org</code>
-<img src="cloudera_hive_ldap.png" alt="Cloudera Hive LDAP"></li>
+<img src="/img/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/cloudera_hive_ldap.png" alt="Cloudera Hive LDAP"></li>
 </ol>
 
 	

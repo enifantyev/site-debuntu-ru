@@ -13,14 +13,14 @@ tags:
 
 ## Симптомы
 Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы "Сертификаты", после долгого ожидания в виде вывески "В процессе":
-![FreeIPA Certificates Wait](freeipa-certificates-wait.png)
+![FreeIPA Certificates Wait](/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa-certificates-wait.png)
 
 Далее появляется баннер с ошибкой:
 ```
 IPA Error 4301: CertificateOperationError
 Certificate operation cannot be completed: Unable to communicate with CMS (500)
 ```
-![IPA Error 4301](ipa_error_4301.png)
+![IPA Error 4301](/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/ipa_error_4301.png)
 
 Невозможно выполнение:
 ```
@@ -121,7 +121,7 @@ sudo systemctl restart pki-tomcatd@pki-tomcat
 ```
 
 ## Результат
-![FreeIPA Certificates](freeipa_authentication_success.png)
+![FreeIPA Certificates](/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa_authentication_success.png)
 ```
 # ipa cert-show 1
   Issuing CA: ipa

@@ -260,7 +260,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>11: <a href="#pg-4d6919df0825d263597b599039e2687b">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</a></li>
+<li>11: <a href="#pg-4d6919df0825d263597b599039e2687b">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</a></li>
 
 
     
@@ -1186,7 +1186,7 @@ psycopg2==2.5.1
 <pre tabindex="0"><code># pip2 install psycopg2-binary
 Collecting psycopg2-binary
   Downloading http://nexus.example.org:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
-    100% |████████████████████████████████| 2.9MB 96.1MB/s 
+    100% |████████████████████████████████| 2.9MB 96.1MB/s
 Installing collected packages: psycopg2-binary
 Successfully installed psycopg2-binary-2.8.6
 You are using pip version 8.1.2, however version 21.1.2 is available.
@@ -1198,11 +1198,11 @@ then it must be set, if not, you can ignore
   export LD_LIBRARY_PATH=/path/to/instantclient
 Username (leave blank to use &#39;root&#39;): admhue
 Email address: admhue@example.org
-Password: 
-Password (again): 
+Password:
+Password (again):
 Superuser created successfully.
 </code></pre><p>Убеждаюсь, что текущая настройка Hue — &lsquo;Authentication Backend&rsquo; — содержит параметр <code>desktop.auth.backend.AllowFirstUserDjangoBackend</code>:
-<img src="cloudera_hue_param_authentication_backend.png" alt="cloudera hue param authentication backend"></p>
+<img src="/img/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/cloudera_hue_param_authentication_backend.png" alt="cloudera hue param authentication backend"></p>
 <p>После чего я вхожу в Hue под новым суперюзером и выполняю необходимые настройки.</p>
 
 </div>
@@ -1262,12 +1262,12 @@ REVOKE ROLE admin_role FROM GROUP admin_group;
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-4d6919df0825d263597b599039e2687b">11 - Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</h1>
+	<h1 id="pg-4d6919df0825d263597b599039e2687b">11 - Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</h1>
     <div class="lead">Предупреждение исчезает после установки python2-пакета python-snappy.</div>
 	<p>2021-06-05</p>
 <h2 id="анамнез">Анамнез</h2>
 <p>После перезапуска Hue в логе видны предупреждения &ldquo;Couldn&rsquo;t import snappy. Support for snappy compression disabled.&rdquo;:
-<img src="hue_couldnt_import_snappy.png" alt="Couldn&amp;rsquo;t import snappy. Support for snappy compression disabled."></p>
+<img src="/img/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/hue_couldnt_import_snappy.png" alt="Couldn&amp;rsquo;t import snappy. Support for snappy compression disabled."></p>
 <h2 id="решение">Решение</h2>
 <p>На всех машинах кластера выполнил из-под root:</p>
 <pre tabindex="0"><code>pip2 install python-snappy
@@ -1292,11 +1292,11 @@ REVOKE ROLE admin_role FROM GROUP admin_group;
 	<p>2021-05-12</p>
 <h2 id="симптомы">Симптомы</h2>
 <p>Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы &ldquo;Сертификаты&rdquo;, после долгого ожидания в виде вывески &ldquo;В процессе&rdquo;:
-<img src="freeipa-certificates-wait.png" alt="FreeIPA Certificates Wait"></p>
+<img src="/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa-certificates-wait.png" alt="FreeIPA Certificates Wait"></p>
 <p>Далее появляется баннер с ошибкой:</p>
 <pre tabindex="0"><code>IPA Error 4301: CertificateOperationError
 Certificate operation cannot be completed: Unable to communicate with CMS (500)
-</code></pre><p><img src="ipa_error_4301.png" alt="IPA Error 4301"></p>
+</code></pre><p><img src="/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/ipa_error_4301.png" alt="IPA Error 4301"></p>
 <p>Невозможно выполнение:</p>
 <pre tabindex="0"><code># ipa cert-show 1
 ipa: ERROR: Certificate operation cannot be completed: Unable to communicate with CMS (500)
@@ -1376,7 +1376,7 @@ tomcat-9.0.44-1.el7.noarch
 </code></pre><p>После чего перезапускаем сервис &lsquo;pki-tomcatd@pki-tomcat&rsquo;:</p>
 <pre tabindex="0"><code>sudo systemctl restart pki-tomcatd@pki-tomcat
 </code></pre><h2 id="результат">Результат</h2>
-<p><img src="freeipa_authentication_success.png" alt="FreeIPA Certificates"></p>
+<p><img src="/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa_authentication_success.png" alt="FreeIPA Certificates"></p>
 <pre tabindex="0"><code># ipa cert-show 1
   Issuing CA: ipa
   Certificate: MIIDgjCCAmqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAzMREwDwYDVQQKDAhURVNULkxBTjEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTIxMDUwNDE4MzYwNFoXDTQxMDUwNDE4MzYwNFowMzERMA8GA1UECgwIVEVTVC5MQU4xHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANwBn6gEBu73KL4OT/yuZNMNaL7esYVhQclx4d3lVVAFS7lXk/7Hh91MY39IL/N0teNvTnZn3I9E7VtkgATBvxXzzaLR+iMvDH1OWLIIcLuh4RfR8mVH5PRs1374aXrRRHlrQXElqm7kRt4yWQXb2ibagdnnQxdf2CvstA0HQCDg5DlNprVXu82RWomiacayyadnaZ/KKJmJAHhV4fY0I8tLn6uyVdOspfgA2ZQUaAXOuRtrbGuowegEbCurRO5egDl7GpSR6fOkxiFcnI/jEufatNe3ZQllF3ywT8rfT+oa+52BPCl9J25XrJYw0g71npocVkRi4gY86h0C2LEHeGMCAwEAAaOBoDCBnTAfBgNVHSMEGDAWgBSSy/ljEEs9wsV19d9s4SzwgaQnqjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBxjAdBgNVHQ4EFgQUksv5YxBLPcLFdfXfbOEs8IGkJ6owOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vaXBhLWNhLnRlc3QubGFuL2NhL29jc3AwDQYJKoZIhvcNAQELBQADggEBAJ5t2ZOsPPl121dmCChndCD2aPAWjDZR5FYlEZZN8pk7ApoZ1yDDqPcX/NS+h3Lsj2SqDR1YjljkU6yLdaZy9RJ6NqfDnqt6EIvX5TM6KEuU8ga78tzP0/gJESeFr4oAh1wy/YwQrl2qhaI23SrRQEQXsxdi1s9fBBpAMlszcu5YYgvMimPAoKTdfAvm/nAfH6tcP6Hfvj5aNwQLPqc+S0xrJanAs97mktp84z1rtY5hjnrYKAYGQIE51h/v+f7grnmShiM55qu+A+qxYBqUozf0pNQ/Mo5zB8WongizCYyqjnhBHhdh/E9ca9kmkz7xEdgwxxTqe958WZ/9K+PgtWs=
@@ -1877,11 +1877,11 @@ done &lt; $LIST
 <strong>Enable LDAP Authentication  Hive (Service-Wide)</strong>: ☑</li>
 <li>Указываем адрес LDAP-сервера
 <strong>LDAP URL</strong>
-hive.server2.authentication.ldap.url: <code>ldaps://ldap.example.org:636</code></li>
+hive.server2.authentication.ldap.url: <code>ldaps://ldap1.example.org ldaps://ldap2.example.org ldaps://ldap3.example.org</code></li>
 <li>Указываем контейнер поиска пользователей
 <strong>LDAP BaseDN</strong>
 hive.server2.authentication.ldap.baseDN: <code>cn=users,cn=accounts,dc=example,dc=org</code>
-<img src="cloudera_hive_ldap.png" alt="Cloudera Hive LDAP"></li>
+<img src="/img/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/cloudera_hive_ldap.png" alt="Cloudera Hive LDAP"></li>
 </ol>
 
 </div>
@@ -1902,7 +1902,7 @@ hive.server2.authentication.ldap.baseDN: <code>cn=users,cn=accounts,dc=example,d
     <div class="lead">На новом кластере проваливался тест Inspect Network Performance. Причина в установленном по умолчанию python3 на CentOS7.</div>
 	<h2 id="проблема">Проблема</h2>
 <p>В результате запуска на кластере проверки &ldquo;Inspect Network Performance&rdquo; мы можем наблюдать картину:</p>
-<p><img src="/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png" alt="Failed running performance inspector on cluster"></p>
+<p><img src="/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png" alt="Failed running performance inspector on cluster"></p>
 <p>В логах <code>/var/log/cloudera-scm-agent/cloudera-scm-agent.log</code>:</p>
 <pre tabindex="0"><code>Thread-17 supervisor WARNING Failed while getting process info. Retrying. (&lt;Fault
 10: &#39;BAD_NAME: 3050-host-perf-inspector&#39;&gt;)
@@ -1918,7 +1918,7 @@ SyntaxError: invalid syntax
 <p>На наших машинах с CentOS7 на борту по умолчанию запускается &lsquo;python3&rsquo;. Поэтому для того, чтобы в кластере заработал &ldquo;network-inspector&rdquo; необходимо поменять шебанг у файла <code>/opt/cloudera/cm-agent/service/perf/host_perf_diag.py</code>. Добавить цифру &lsquo;2&rsquo; к &lsquo;#!/usr/bin/python&rsquo;, чтобы было так:</p>
 <pre tabindex="0"><code>#!/usr/bin/python2
 </code></pre><p>После применения решения можем наблюдать успешное выполнения теста:
-<img src="/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png" alt="Successfully completed running performance inspector on cluster"></p>
+<img src="/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png" alt="Successfully completed running performance inspector on cluster"></p>
 
 </div>
 
@@ -3628,7 +3628,7 @@ public_html/manager/includes/controls/phpmailer/class.phpmailer.php:        $ssl
 <li>один винт в батарейном отсеке под наклейкой с изображением батарейки.</li>
 </ul>
 <p>Шарик вынимается лёгким подталкиванием через отверстие снизу.</p>
-<p><img src="/razborka-trekbola-logitech-m570/logitech_m570.jpg" alt="Disassabling Logitech M570"></p>
+<p><img src="/img/razborka-trekbola-logitech-m570/logitech_m570.jpg" alt="Disassabling Logitech M570"></p>
 
 </div>
 

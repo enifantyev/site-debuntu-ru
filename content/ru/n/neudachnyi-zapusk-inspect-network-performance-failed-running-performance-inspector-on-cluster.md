@@ -12,7 +12,7 @@ tags:
 
 В результате запуска на кластере проверки "Inspect Network Performance" мы можем наблюдать картину:
 
-![Failed running performance inspector on cluster](/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png)
+![Failed running performance inspector on cluster](/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png)
 
 В логах `/var/log/cloudera-scm-agent/cloudera-scm-agent.log`:
 ```
@@ -38,4 +38,4 @@ SyntaxError: invalid syntax
 ```
 
 После применения решения можем наблюдать успешное выполнения теста:
-![Successfully completed running performance inspector on cluster](/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png)
+![Successfully completed running performance inspector on cluster](/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png)

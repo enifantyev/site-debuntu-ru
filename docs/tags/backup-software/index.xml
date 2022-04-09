@@ -369,6 +369,10 @@ service auditd stop
 &lt;p&gt;Помним, что в Volume Group должно быть достаточно свободного места для размещения снэпшотов.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -L 500M -s -n snap_root /dev/vg/root
 lvcreate -L 500M -s -n snap_var /dev/vg/var
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если требуется освободить немного места в VG, то можно попробовать освободить пару гигабайтов за счёт уменьшения, например &lt;code&gt;/dev/vg/data&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/sbin/lvreduce -L -2G -r /dev/vg/data
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После завершения бэкапа вновь увеличиваем LV:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/sbin/lvextend -l +100%FREE -r /dev/vg/data
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;При монтировании xfs используем опцию &lt;code&gt;nouuid&lt;/code&gt;, поэтому проверяем тип файловой системы:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Mounting root on /mnt

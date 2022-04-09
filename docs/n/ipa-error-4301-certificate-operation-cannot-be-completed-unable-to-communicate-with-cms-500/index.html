@@ -187,7 +187,7 @@ if (!doNotTrack) {
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nsozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline-li">
   <a href="/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-nsozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline"><span class="">Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled-li">
-  <a href="/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled"><span class="">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</span></a>
+  <a href="/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled"><span class="">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-nipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500-li">
   <a href="/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-nipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500"><span class="td-sidebar-nav-active-item">IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nvklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov-li">
@@ -698,11 +698,11 @@ if (!doNotTrack) {
 	<p>2021-05-12</p>
 <h2 id="симптомы">Симптомы</h2>
 <p>Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы &ldquo;Сертификаты&rdquo;, после долгого ожидания в виде вывески &ldquo;В процессе&rdquo;:
-<img src="freeipa-certificates-wait.png" alt="FreeIPA Certificates Wait"></p>
+<img src="/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa-certificates-wait.png" alt="FreeIPA Certificates Wait"></p>
 <p>Далее появляется баннер с ошибкой:</p>
 <pre tabindex="0"><code>IPA Error 4301: CertificateOperationError
 Certificate operation cannot be completed: Unable to communicate with CMS (500)
-</code></pre><p><img src="ipa_error_4301.png" alt="IPA Error 4301"></p>
+</code></pre><p><img src="/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/ipa_error_4301.png" alt="IPA Error 4301"></p>
 <p>Невозможно выполнение:</p>
 <pre tabindex="0"><code># ipa cert-show 1
 ipa: ERROR: Certificate operation cannot be completed: Unable to communicate with CMS (500)
@@ -782,7 +782,7 @@ tomcat-9.0.44-1.el7.noarch
 </code></pre><p>После чего перезапускаем сервис &lsquo;pki-tomcatd@pki-tomcat&rsquo;:</p>
 <pre tabindex="0"><code>sudo systemctl restart pki-tomcatd@pki-tomcat
 </code></pre><h2 id="результат">Результат</h2>
-<p><img src="freeipa_authentication_success.png" alt="FreeIPA Certificates"></p>
+<p><img src="/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa_authentication_success.png" alt="FreeIPA Certificates"></p>
 <pre tabindex="0"><code># ipa cert-show 1
   Issuing CA: ipa
   Certificate: MIIDgjCCAmqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAzMREwDwYDVQQKDAhURVNULkxBTjEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTIxMDUwNDE4MzYwNFoXDTQxMDUwNDE4MzYwNFowMzERMA8GA1UECgwIVEVTVC5MQU4xHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANwBn6gEBu73KL4OT/yuZNMNaL7esYVhQclx4d3lVVAFS7lXk/7Hh91MY39IL/N0teNvTnZn3I9E7VtkgATBvxXzzaLR+iMvDH1OWLIIcLuh4RfR8mVH5PRs1374aXrRRHlrQXElqm7kRt4yWQXb2ibagdnnQxdf2CvstA0HQCDg5DlNprVXu82RWomiacayyadnaZ/KKJmJAHhV4fY0I8tLn6uyVdOspfgA2ZQUaAXOuRtrbGuowegEbCurRO5egDl7GpSR6fOkxiFcnI/jEufatNe3ZQllF3ywT8rfT+oa+52BPCl9J25XrJYw0g71npocVkRi4gY86h0C2LEHeGMCAwEAAaOBoDCBnTAfBgNVHSMEGDAWgBSSy/ljEEs9wsV19d9s4SzwgaQnqjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBxjAdBgNVHQ4EFgQUksv5YxBLPcLFdfXfbOEs8IGkJ6owOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vaXBhLWNhLnRlc3QubGFuL2NhL29jc3AwDQYJKoZIhvcNAQELBQADggEBAJ5t2ZOsPPl121dmCChndCD2aPAWjDZR5FYlEZZN8pk7ApoZ1yDDqPcX/NS+h3Lsj2SqDR1YjljkU6yLdaZy9RJ6NqfDnqt6EIvX5TM6KEuU8ga78tzP0/gJESeFr4oAh1wy/YwQrl2qhaI23SrRQEQXsxdi1s9fBBpAMlszcu5YYgvMimPAoKTdfAvm/nAfH6tcP6Hfvj5aNwQLPqc+S0xrJanAs97mktp84z1rtY5hjnrYKAYGQIE51h/v+f7grnmShiM55qu+A+qxYBqUozf0pNQ/Mo5zB8WongizCYyqjnhBHhdh/E9ca9kmkz7xEdgwxxTqe958WZ/9K+PgtWs=

@@ -810,7 +810,7 @@ systemctl enable --now airflow-{webserver,scheduler,kerberos}
 <pre tabindex="0"><code>$ sudo cp /usr/local/lib/python3.6/site-packages/airflow/example_dags/example_bash_operator.py /data/airflow/dags/
 </code></pre><p>По умолчанию, сканирование каталога с DAG&rsquo;ами выполняется каждые пять минут, поэтому придётся немного подождать момента появления нового DAG&rsquo;а в списке DAG&rsquo;ов, или переопределить этот параметр &lsquo;dag_dir_list_interval&rsquo;.</p>
 <p>После появления тестового DAG&rsquo;а, его необходимо включить, а потом запустить. Успешное выполнение выглядит так:
-<img src="airflowexampletask.png" alt="AirfowExampleTask"></p>
+<img src="/img/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/airflowexampletask.png" alt="AirfowExampleTask"></p>
 <p>Можно считать, что Airflow установлен.</p>
 <h2 id="почти-полное-удаление-если-потребуется">Почти полное удаление, если потребуется</h2>
 <p>Выполняем под <code>sudo su</code>:</p>

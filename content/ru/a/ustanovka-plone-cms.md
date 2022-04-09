@@ -338,17 +338,17 @@ Mem:           1.0G        248M        167M        7.6M        607M        531M
 
 Заходим через любой веб-браузер на адрес `http://127.0.0.1:8080` и видим приглашение к созданию нового Plone-сайта:
 
-![Create new Plone site](plone_install_window_create_new_plone_site_1.png)
+![Create new Plone site](/img/ustanovka-plone-cms/plone_install_window_create_new_plone_site_1.png)
 
 Страница после нажатия единственной кнопки и ввода логина/пароля:
 
-![Create first Plone site](plone_install_window_create_new_plone_site_2.png)
+![Create first Plone site](/img/ustanovka-plone-cms/plone_install_window_create_new_plone_site_2.png)
 
 В поле "Path identifier", вместо "Plone", я введу придуманный короткий ID моего первого сайта на Plone. Для второго сайта, использую другой ID. Если же новый сайт будет единственным в этом plone-сервере, то можно оставить ID по умолчанию. Этот ID будет светиться в URL сайта, типа `http://127.0.0.1:8080/id1` или `http://127.0.0.1:8080/plone`. В дальнейшем при настройке nginx для проксирования новых сайтов, мы уберём этот ID из URL и обращение к сайтам будет производиться через нормальные URL, типа `https://www.example.com`, `https://dbg.example.com` и т.п.
 
 После заполнения прочих полей и применения мы увидим:
 
-![Create first Plone site](plone_install_window_create_new_plone_site_3.png)
+![Create first Plone site](/img/ustanovka-plone-cms/plone_install_window_create_new_plone_site_3.png)
 
 Собственно это уже полноценный сайт. Необходимо настроить, например, nginx и заниматься наполнением сайта.
 

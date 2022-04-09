@@ -460,7 +460,7 @@ psycopg2==2.5.1
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pip2 install psycopg2-binary
 Collecting psycopg2-binary
   Downloading http://nexus.example.org:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
-    100% |████████████████████████████████| 2.9MB 96.1MB/s 
+    100% |████████████████████████████████| 2.9MB 96.1MB/s
 Installing collected packages: psycopg2-binary
 Successfully installed psycopg2-binary-2.8.6
 You are using pip version 8.1.2, however version 21.1.2 is available.
@@ -472,11 +472,11 @@ then it must be set, if not, you can ignore
   export LD_LIBRARY_PATH=/path/to/instantclient
 Username (leave blank to use &amp;#39;root&amp;#39;): admhue
 Email address: admhue@example.org
-Password: 
-Password (again): 
+Password:
+Password (again):
 Superuser created successfully.
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Убеждаюсь, что текущая настройка Hue — &amp;lsquo;Authentication Backend&amp;rsquo; — содержит параметр &lt;code&gt;desktop.auth.backend.AllowFirstUserDjangoBackend&lt;/code&gt;:
-&lt;img src=&#34;cloudera_hue_param_authentication_backend.png&#34; alt=&#34;cloudera hue param authentication backend&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/cloudera_hue_param_authentication_backend.png&#34; alt=&#34;cloudera hue param authentication backend&#34;&gt;&lt;/p&gt;
 &lt;p&gt;После чего я вхожу в Hue под новым суперюзером и выполняю необходимые настройки.&lt;/p&gt;
 
       </description>
@@ -522,7 +522,7 @@ REVOKE ROLE admin_role FROM GROUP admin_group;
     </item>
     
     <item>
-      <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</title>
+      <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</title>
       <link>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
       <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
       
@@ -533,7 +533,7 @@ REVOKE ROLE admin_role FROM GROUP admin_group;
         &lt;p&gt;2021-06-05&lt;/p&gt;
 &lt;h2 id=&#34;анамнез&#34;&gt;Анамнез&lt;/h2&gt;
 &lt;p&gt;После перезапуска Hue в логе видны предупреждения &amp;ldquo;Couldn&amp;rsquo;t import snappy. Support for snappy compression disabled.&amp;rdquo;:
-&lt;img src=&#34;hue_couldnt_import_snappy.png&#34; alt=&#34;Couldn&amp;amp;rsquo;t import snappy. Support for snappy compression disabled.&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/hue_couldnt_import_snappy.png&#34; alt=&#34;Couldn&amp;amp;rsquo;t import snappy. Support for snappy compression disabled.&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
 &lt;p&gt;На всех машинах кластера выполнил из-под root:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip2 install python-snappy
@@ -554,11 +554,11 @@ REVOKE ROLE admin_role FROM GROUP admin_group;
         &lt;p&gt;2021-05-12&lt;/p&gt;
 &lt;h2 id=&#34;симптомы&#34;&gt;Симптомы&lt;/h2&gt;
 &lt;p&gt;Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы &amp;ldquo;Сертификаты&amp;rdquo;, после долгого ожидания в виде вывески &amp;ldquo;В процессе&amp;rdquo;:
-&lt;img src=&#34;freeipa-certificates-wait.png&#34; alt=&#34;FreeIPA Certificates Wait&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa-certificates-wait.png&#34; alt=&#34;FreeIPA Certificates Wait&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Далее появляется баннер с ошибкой:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;IPA Error 4301: CertificateOperationError
 Certificate operation cannot be completed: Unable to communicate with CMS (500)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;ipa_error_4301.png&#34; alt=&#34;IPA Error 4301&#34;&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/ipa_error_4301.png&#34; alt=&#34;IPA Error 4301&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Невозможно выполнение:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
 ipa: ERROR: Certificate operation cannot be completed: Unable to communicate with CMS (500)
@@ -638,7 +638,7 @@ tomcat-9.0.44-1.el7.noarch
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего перезапускаем сервис &amp;lsquo;pki-tomcatd@pki-tomcat&amp;rsquo;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart pki-tomcatd@pki-tomcat
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;freeipa_authentication_success.png&#34; alt=&#34;FreeIPA Certificates&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa_authentication_success.png&#34; alt=&#34;FreeIPA Certificates&#34;&gt;&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
   Issuing CA: ipa
   Certificate: MIIDgjCCAmqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAzMREwDwYDVQQKDAhURVNULkxBTjEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTIxMDUwNDE4MzYwNFoXDTQxMDUwNDE4MzYwNFowMzERMA8GA1UECgwIVEVTVC5MQU4xHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANwBn6gEBu73KL4OT/yuZNMNaL7esYVhQclx4d3lVVAFS7lXk/7Hh91MY39IL/N0teNvTnZn3I9E7VtkgATBvxXzzaLR+iMvDH1OWLIIcLuh4RfR8mVH5PRs1374aXrRRHlrQXElqm7kRt4yWQXb2ibagdnnQxdf2CvstA0HQCDg5DlNprVXu82RWomiacayyadnaZ/KKJmJAHhV4fY0I8tLn6uyVdOspfgA2ZQUaAXOuRtrbGuowegEbCurRO5egDl7GpSR6fOkxiFcnI/jEufatNe3ZQllF3ywT8rfT+oa+52BPCl9J25XrJYw0g71npocVkRi4gY86h0C2LEHeGMCAwEAAaOBoDCBnTAfBgNVHSMEGDAWgBSSy/ljEEs9wsV19d9s4SzwgaQnqjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBxjAdBgNVHQ4EFgQUksv5YxBLPcLFdfXfbOEs8IGkJ6owOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vaXBhLWNhLnRlc3QubGFuL2NhL29jc3AwDQYJKoZIhvcNAQELBQADggEBAJ5t2ZOsPPl121dmCChndCD2aPAWjDZR5FYlEZZN8pk7ApoZ1yDDqPcX/NS+h3Lsj2SqDR1YjljkU6yLdaZy9RJ6NqfDnqt6EIvX5TM6KEuU8ga78tzP0/gJESeFr4oAh1wy/YwQrl2qhaI23SrRQEQXsxdi1s9fBBpAMlszcu5YYgvMimPAoKTdfAvm/nAfH6tcP6Hfvj5aNwQLPqc+S0xrJanAs97mktp84z1rtY5hjnrYKAYGQIE51h/v+f7grnmShiM55qu+A+qxYBqUozf0pNQ/Mo5zB8WongizCYyqjnhBHhdh/E9ca9kmkz7xEdgwxxTqe958WZ/9K+PgtWs=
@@ -1091,11 +1091,11 @@ done &amp;lt; $LIST
 &lt;strong&gt;Enable LDAP Authentication  Hive (Service-Wide)&lt;/strong&gt;: ☑&lt;/li&gt;
 &lt;li&gt;Указываем адрес LDAP-сервера
 &lt;strong&gt;LDAP URL&lt;/strong&gt;
-hive.server2.authentication.ldap.url: &lt;code&gt;ldaps://ldap.example.org:636&lt;/code&gt;&lt;/li&gt;
+hive.server2.authentication.ldap.url: &lt;code&gt;ldaps://ldap1.example.org ldaps://ldap2.example.org ldaps://ldap3.example.org&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Указываем контейнер поиска пользователей
 &lt;strong&gt;LDAP BaseDN&lt;/strong&gt;
 hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=example,dc=org&lt;/code&gt;
-&lt;img src=&#34;cloudera_hive_ldap.png&#34; alt=&#34;Cloudera Hive LDAP&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://debuntu.ru/img/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/cloudera_hive_ldap.png&#34; alt=&#34;Cloudera Hive LDAP&#34;&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
       </description>
@@ -1112,7 +1112,7 @@ hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=exa
         
         &lt;h2 id=&#34;проблема&#34;&gt;Проблема&lt;/h2&gt;
 &lt;p&gt;В результате запуска на кластере проверки &amp;ldquo;Inspect Network Performance&amp;rdquo; мы можем наблюдать картину:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Failed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Failed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
 &lt;p&gt;В логах &lt;code&gt;/var/log/cloudera-scm-agent/cloudera-scm-agent.log&lt;/code&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Thread-17 supervisor WARNING Failed while getting process info. Retrying. (&amp;lt;Fault
 10: &amp;#39;BAD_NAME: 3050-host-perf-inspector&amp;#39;&amp;gt;)
@@ -1128,7 +1128,7 @@ SyntaxError: invalid syntax
 &lt;p&gt;На наших машинах с CentOS7 на борту по умолчанию запускается &amp;lsquo;python3&amp;rsquo;. Поэтому для того, чтобы в кластере заработал &amp;ldquo;network-inspector&amp;rdquo; необходимо поменять шебанг у файла &lt;code&gt;/opt/cloudera/cm-agent/service/perf/host_perf_diag.py&lt;/code&gt;. Добавить цифру &amp;lsquo;2&amp;rsquo; к &amp;lsquo;#!/usr/bin/python&amp;rsquo;, чтобы было так:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/usr/bin/python2
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После применения решения можем наблюдать успешное выполнения теста:
-&lt;img src=&#34;https://debuntu.ru/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Successfully completed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Successfully completed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
 
       </description>
     </item>
@@ -2742,7 +2742,7 @@ public_html/manager/includes/controls/phpmailer/class.phpmailer.php:        $ssl
 &lt;li&gt;один винт в батарейном отсеке под наклейкой с изображением батарейки.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Шарик вынимается лёгким подталкиванием через отверстие снизу.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/razborka-trekbola-logitech-m570/logitech_m570.jpg&#34; alt=&#34;Disassabling Logitech M570&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/razborka-trekbola-logitech-m570/logitech_m570.jpg&#34; alt=&#34;Disassabling Logitech M570&#34;&gt;&lt;/p&gt;
 
       </description>
     </item>

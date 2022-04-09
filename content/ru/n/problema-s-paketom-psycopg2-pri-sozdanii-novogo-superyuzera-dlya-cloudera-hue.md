@@ -38,7 +38,7 @@ psycopg2==2.5.1
 # pip2 install psycopg2-binary
 Collecting psycopg2-binary
   Downloading http://nexus.example.org:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
-    100% |████████████████████████████████| 2.9MB 96.1MB/s 
+    100% |████████████████████████████████| 2.9MB 96.1MB/s
 Installing collected packages: psycopg2-binary
 Successfully installed psycopg2-binary-2.8.6
 You are using pip version 8.1.2, however version 21.1.2 is available.
@@ -53,12 +53,12 @@ then it must be set, if not, you can ignore
   export LD_LIBRARY_PATH=/path/to/instantclient
 Username (leave blank to use 'root'): admhue
 Email address: admhue@example.org
-Password: 
-Password (again): 
+Password:
+Password (again):
 Superuser created successfully.
 ```
 
 Убеждаюсь, что текущая настройка Hue&nbsp;&mdash;&nbsp;'Authentication Backend'&nbsp;&mdash; содержит параметр `desktop.auth.backend.AllowFirstUserDjangoBackend`:
-![cloudera hue param authentication backend](cloudera_hue_param_authentication_backend.png)
+![cloudera hue param authentication backend](/img/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/cloudera_hue_param_authentication_backend.png)
 
 После чего я вхожу в Hue под новым суперюзером и выполняю необходимые настройки.

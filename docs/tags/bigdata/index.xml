@@ -2383,7 +2383,7 @@ psycopg2==2.5.1
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pip2 install psycopg2-binary
 Collecting psycopg2-binary
   Downloading http://nexus.example.org:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
-    100% |████████████████████████████████| 2.9MB 96.1MB/s 
+    100% |████████████████████████████████| 2.9MB 96.1MB/s
 Installing collected packages: psycopg2-binary
 Successfully installed psycopg2-binary-2.8.6
 You are using pip version 8.1.2, however version 21.1.2 is available.
@@ -2395,18 +2395,18 @@ then it must be set, if not, you can ignore
   export LD_LIBRARY_PATH=/path/to/instantclient
 Username (leave blank to use &amp;#39;root&amp;#39;): admhue
 Email address: admhue@example.org
-Password: 
-Password (again): 
+Password:
+Password (again):
 Superuser created successfully.
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Убеждаюсь, что текущая настройка Hue — &amp;lsquo;Authentication Backend&amp;rsquo; — содержит параметр &lt;code&gt;desktop.auth.backend.AllowFirstUserDjangoBackend&lt;/code&gt;:
-&lt;img src=&#34;cloudera_hue_param_authentication_backend.png&#34; alt=&#34;cloudera hue param authentication backend&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/cloudera_hue_param_authentication_backend.png&#34; alt=&#34;cloudera hue param authentication backend&#34;&gt;&lt;/p&gt;
 &lt;p&gt;После чего я вхожу в Hue под новым суперюзером и выполняю необходимые настройки.&lt;/p&gt;
 
       </description>
     </item>
     
     <item>
-      <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</title>
+      <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</title>
       <link>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
       <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
       
@@ -2417,7 +2417,7 @@ Superuser created successfully.
         &lt;p&gt;2021-06-05&lt;/p&gt;
 &lt;h2 id=&#34;анамнез&#34;&gt;Анамнез&lt;/h2&gt;
 &lt;p&gt;После перезапуска Hue в логе видны предупреждения &amp;ldquo;Couldn&amp;rsquo;t import snappy. Support for snappy compression disabled.&amp;rdquo;:
-&lt;img src=&#34;hue_couldnt_import_snappy.png&#34; alt=&#34;Couldn&amp;amp;rsquo;t import snappy. Support for snappy compression disabled.&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/hue_couldnt_import_snappy.png&#34; alt=&#34;Couldn&amp;amp;rsquo;t import snappy. Support for snappy compression disabled.&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
 &lt;p&gt;На всех машинах кластера выполнил из-под root:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip2 install python-snappy
@@ -2612,11 +2612,11 @@ echo &amp;#34;enable &amp;#39;MyTableName&amp;#39;&amp;#34; | hbase shell
 &lt;strong&gt;Enable LDAP Authentication  Hive (Service-Wide)&lt;/strong&gt;: ☑&lt;/li&gt;
 &lt;li&gt;Указываем адрес LDAP-сервера
 &lt;strong&gt;LDAP URL&lt;/strong&gt;
-hive.server2.authentication.ldap.url: &lt;code&gt;ldaps://ldap.example.org:636&lt;/code&gt;&lt;/li&gt;
+hive.server2.authentication.ldap.url: &lt;code&gt;ldaps://ldap1.example.org ldaps://ldap2.example.org ldaps://ldap3.example.org&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Указываем контейнер поиска пользователей
 &lt;strong&gt;LDAP BaseDN&lt;/strong&gt;
 hive.server2.authentication.ldap.baseDN: &lt;code&gt;cn=users,cn=accounts,dc=example,dc=org&lt;/code&gt;
-&lt;img src=&#34;cloudera_hive_ldap.png&#34; alt=&#34;Cloudera Hive LDAP&#34;&gt;&lt;/li&gt;
+&lt;img src=&#34;https://debuntu.ru/img/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/cloudera_hive_ldap.png&#34; alt=&#34;Cloudera Hive LDAP&#34;&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
       </description>
@@ -3297,7 +3297,7 @@ journalctl -f
         &lt;p&gt;2020-07-03&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&#34;&gt;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Итак, вы настроили и включили LDAP Link и работаете с Vertica, что позволяет синхронизировать пользователей и группы LDAP с соответствующими пользователями и ролями Vertica. Но вы по прежнему должны управлять пользователями и ролями в Vertica, которые вы не создавали с помощью LDAP Link. На следующем рисунке показано, как может выглядеть ваша конфигурация.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;VerticaLDAPLinkSync.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/best-practices-for-using-ldap-link-with-vertica-perevod/VerticaLDAPLinkSync.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Но есть несколько рекомендаций, которым вы должны следовать, чтобы убедиться, что вы случайно не потеряете ни пользователей, ни данные. В этом блоге объясняется, как обеспечить бесперебойную работу службы LDAP Link.&lt;/p&gt;
 &lt;h3 id=&#34;перед-включением-ldap-link-выполните-тестовый-прогон-всухую&#34;&gt;Перед включением LDAP Link выполните тестовый &amp;ldquo;прогон всухую&amp;rdquo;&lt;/h3&gt;
 &lt;p&gt;Параметр &amp;ldquo;LDAPLinkDryRun&amp;rdquo; определяет, должна ли Vertica выполнить тесты между LDAP-сервером и Vertica. &amp;ldquo;Прогон всухую&amp;rdquo; проверяет:&lt;/p&gt;

@@ -715,11 +715,11 @@ SSLCryptoDevice builtin
         &lt;p&gt;2021-05-12&lt;/p&gt;
 &lt;h2 id=&#34;симптомы&#34;&gt;Симптомы&lt;/h2&gt;
 &lt;p&gt;Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы &amp;ldquo;Сертификаты&amp;rdquo;, после долгого ожидания в виде вывески &amp;ldquo;В процессе&amp;rdquo;:
-&lt;img src=&#34;freeipa-certificates-wait.png&#34; alt=&#34;FreeIPA Certificates Wait&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa-certificates-wait.png&#34; alt=&#34;FreeIPA Certificates Wait&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Далее появляется баннер с ошибкой:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;IPA Error 4301: CertificateOperationError
 Certificate operation cannot be completed: Unable to communicate with CMS (500)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;ipa_error_4301.png&#34; alt=&#34;IPA Error 4301&#34;&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/ipa_error_4301.png&#34; alt=&#34;IPA Error 4301&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Невозможно выполнение:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
 ipa: ERROR: Certificate operation cannot be completed: Unable to communicate with CMS (500)
@@ -799,7 +799,7 @@ tomcat-9.0.44-1.el7.noarch
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После чего перезапускаем сервис &amp;lsquo;pki-tomcatd@pki-tomcat&amp;rsquo;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo systemctl restart pki-tomcatd@pki-tomcat
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;freeipa_authentication_success.png&#34; alt=&#34;FreeIPA Certificates&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/freeipa_authentication_success.png&#34; alt=&#34;FreeIPA Certificates&#34;&gt;&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa cert-show 1
   Issuing CA: ipa
   Certificate: MIIDgjCCAmqgAwIBAgIBATANBgkqhkiG9w0BAQsFADAzMREwDwYDVQQKDAhURVNULkxBTjEeMBwGA1UEAwwVQ2VydGlmaWNhdGUgQXV0aG9yaXR5MB4XDTIxMDUwNDE4MzYwNFoXDTQxMDUwNDE4MzYwNFowMzERMA8GA1UECgwIVEVTVC5MQU4xHjAcBgNVBAMMFUNlcnRpZmljYXRlIEF1dGhvcml0eTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANwBn6gEBu73KL4OT/yuZNMNaL7esYVhQclx4d3lVVAFS7lXk/7Hh91MY39IL/N0teNvTnZn3I9E7VtkgATBvxXzzaLR+iMvDH1OWLIIcLuh4RfR8mVH5PRs1374aXrRRHlrQXElqm7kRt4yWQXb2ibagdnnQxdf2CvstA0HQCDg5DlNprVXu82RWomiacayyadnaZ/KKJmJAHhV4fY0I8tLn6uyVdOspfgA2ZQUaAXOuRtrbGuowegEbCurRO5egDl7GpSR6fOkxiFcnI/jEufatNe3ZQllF3ywT8rfT+oa+52BPCl9J25XrJYw0g71npocVkRi4gY86h0C2LEHeGMCAwEAAaOBoDCBnTAfBgNVHSMEGDAWgBSSy/ljEEs9wsV19d9s4SzwgaQnqjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBxjAdBgNVHQ4EFgQUksv5YxBLPcLFdfXfbOEs8IGkJ6owOgYIKwYBBQUHAQEELjAsMCoGCCsGAQUFBzABhh5odHRwOi8vaXBhLWNhLnRlc3QubGFuL2NhL29jc3AwDQYJKoZIhvcNAQELBQADggEBAJ5t2ZOsPPl121dmCChndCD2aPAWjDZR5FYlEZZN8pk7ApoZ1yDDqPcX/NS+h3Lsj2SqDR1YjljkU6yLdaZy9RJ6NqfDnqt6EIvX5TM6KEuU8ga78tzP0/gJESeFr4oAh1wy/YwQrl2qhaI23SrRQEQXsxdi1s9fBBpAMlszcu5YYgvMimPAoKTdfAvm/nAfH6tcP6Hfvj5aNwQLPqc+S0xrJanAs97mktp84z1rtY5hjnrYKAYGQIE51h/v+f7grnmShiM55qu+A+qxYBqUozf0pNQ/Mo5zB8WongizCYyqjnhBHhdh/E9ca9kmkz7xEdgwxxTqe958WZ/9K+PgtWs=
@@ -1602,7 +1602,7 @@ systemctl enable --now airflow-{webserver,scheduler,kerberos}
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo cp /usr/local/lib/python3.6/site-packages/airflow/example_dags/example_bash_operator.py /data/airflow/dags/
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;По умолчанию, сканирование каталога с DAG&amp;rsquo;ами выполняется каждые пять минут, поэтому придётся немного подождать момента появления нового DAG&amp;rsquo;а в списке DAG&amp;rsquo;ов, или переопределить этот параметр &amp;lsquo;dag_dir_list_interval&amp;rsquo;.&lt;/p&gt;
 &lt;p&gt;После появления тестового DAG&amp;rsquo;а, его необходимо включить, а потом запустить. Успешное выполнение выглядит так:
-&lt;img src=&#34;airflowexampletask.png&#34; alt=&#34;AirfowExampleTask&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/airflowexampletask.png&#34; alt=&#34;AirfowExampleTask&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Можно считать, что Airflow установлен.&lt;/p&gt;
 &lt;h2 id=&#34;почти-полное-удаление-если-потребуется&#34;&gt;Почти полное удаление, если потребуется&lt;/h2&gt;
 &lt;p&gt;Выполняем под &lt;code&gt;sudo su&lt;/code&gt;:&lt;/p&gt;
@@ -1913,7 +1913,7 @@ dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
 &lt;h2 id=&#34;настройка-аутентификации-security--ldap&#34;&gt;Настройка аутентификации (Security – LDAP)&lt;/h2&gt;
 &lt;h3 id=&#34;вкладка-connection&#34;&gt;Вкладка Connection&lt;/h3&gt;
 &lt;p&gt;Самоподписанный сертификат контроллера домена добавляется в NXRM через кнопку &amp;ldquo;View certificate&amp;rdquo;, где доступна операция &amp;ldquo;Add certificate to truststore&amp;rdquo;. После чего, добавленный сертификат можно наблюдать в разделе Security – SSL Certificates.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;вкладка-user-and-group&#34;&gt;Вкладка User and group&lt;/h3&gt;
 &lt;p&gt;Select template: Generic Ldap Server (делаем это в первый и единственный раз при настройке подключения).&lt;/p&gt;
 &lt;p&gt;User relative DN: cn=users&lt;/p&gt;
@@ -1924,7 +1924,7 @@ dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
 &lt;p&gt;Real name attribute: cn&lt;/p&gt;
 &lt;p&gt;Email attribute: mail&lt;/p&gt;
 &lt;p&gt;Password attribute: оставляем пустым.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Ниже настраиваем отображение групп пользователей из IPA в соответствующие роли NXRM.&lt;/p&gt;
 &lt;p&gt;Map LDAP groups as roles: устанавливаем галку.&lt;/p&gt;
 &lt;p&gt;Group type: Static Groups&lt;/p&gt;
@@ -1934,13 +1934,13 @@ dn: uid=binddn_test,cn=sysaccounts,cn=etc,dc=example,dc=org
 &lt;p&gt;Group ID attribute: cn&lt;/p&gt;
 &lt;p&gt;Group member attribute: member&lt;/p&gt;
 &lt;p&gt;Group member format: uid=${username},cn=users,cn=accounts,dc=example,dc=org&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;После чего появляется возможность добавить внешнюю роль, имя которой берётся из LDAP.&lt;/p&gt;
 &lt;h2 id=&#34;настройка-авторизации&#34;&gt;Настройка авторизации&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;включение-ldap&#34;&gt;Включение LDAP&lt;/h2&gt;
 &lt;p&gt;Добавляем в активные LDAP realms.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Предположим, что в локальной базе есть пользователь с совпадающим логином, как в IPA, но с разными паролями. Логика работы аутентификации будет следующей:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Сначала nxrm найдёт пользователя в локальной базе, но так как пароль не подойдёт, то будет просмотрены и другие Realms.&lt;/li&gt;

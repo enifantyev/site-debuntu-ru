@@ -44,7 +44,7 @@ psycopg2==2.5.1
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# pip2 install psycopg2-binary
 Collecting psycopg2-binary
   Downloading http://nexus.example.org:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
-    100% |████████████████████████████████| 2.9MB 96.1MB/s 
+    100% |████████████████████████████████| 2.9MB 96.1MB/s
 Installing collected packages: psycopg2-binary
 Successfully installed psycopg2-binary-2.8.6
 You are using pip version 8.1.2, however version 21.1.2 is available.
@@ -56,18 +56,18 @@ then it must be set, if not, you can ignore
   export LD_LIBRARY_PATH=/path/to/instantclient
 Username (leave blank to use &amp;#39;root&amp;#39;): admhue
 Email address: admhue@example.org
-Password: 
-Password (again): 
+Password:
+Password (again):
 Superuser created successfully.
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Убеждаюсь, что текущая настройка Hue — &amp;lsquo;Authentication Backend&amp;rsquo; — содержит параметр &lt;code&gt;desktop.auth.backend.AllowFirstUserDjangoBackend&lt;/code&gt;:
-&lt;img src=&#34;cloudera_hue_param_authentication_backend.png&#34; alt=&#34;cloudera hue param authentication backend&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/cloudera_hue_param_authentication_backend.png&#34; alt=&#34;cloudera hue param authentication backend&#34;&gt;&lt;/p&gt;
 &lt;p&gt;После чего я вхожу в Hue под новым суперюзером и выполняю необходимые настройки.&lt;/p&gt;
 
       </description>
     </item>
     
     <item>
-      <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</title>
+      <title>N: Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</title>
       <link>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
       <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
       
@@ -78,7 +78,7 @@ Superuser created successfully.
         &lt;p&gt;2021-06-05&lt;/p&gt;
 &lt;h2 id=&#34;анамнез&#34;&gt;Анамнез&lt;/h2&gt;
 &lt;p&gt;После перезапуска Hue в логе видны предупреждения &amp;ldquo;Couldn&amp;rsquo;t import snappy. Support for snappy compression disabled.&amp;rdquo;:
-&lt;img src=&#34;hue_couldnt_import_snappy.png&#34; alt=&#34;Couldn&amp;amp;rsquo;t import snappy. Support for snappy compression disabled.&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/hue_couldnt_import_snappy.png&#34; alt=&#34;Couldn&amp;amp;rsquo;t import snappy. Support for snappy compression disabled.&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
 &lt;p&gt;На всех машинах кластера выполнил из-под root:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip2 install python-snappy

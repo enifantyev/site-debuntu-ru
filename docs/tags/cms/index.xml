@@ -298,12 +298,12 @@ Mem:           1.0G        248M        167M        7.6M        607M        531M
 &lt;p&gt;Пока у нас нет настроенного Apache или Nginx, то прокидываем удалённый &lt;code&gt;127.0.0.1:8080&lt;/code&gt; порт на локальную машину:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;$ ssh -L8080:127.0.0.1:8080 root@plone.example.com&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Заходим через любой веб-браузер на адрес &lt;code&gt;http://127.0.0.1:8080&lt;/code&gt; и видим приглашение к созданию нового Plone-сайта:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;plone_install_window_create_new_plone_site_1.png&#34; alt=&#34;Create new Plone site&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-plone-cms/plone_install_window_create_new_plone_site_1.png&#34; alt=&#34;Create new Plone site&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Страница после нажатия единственной кнопки и ввода логина/пароля:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;plone_install_window_create_new_plone_site_2.png&#34; alt=&#34;Create first Plone site&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-plone-cms/plone_install_window_create_new_plone_site_2.png&#34; alt=&#34;Create first Plone site&#34;&gt;&lt;/p&gt;
 &lt;p&gt;В поле &amp;ldquo;Path identifier&amp;rdquo;, вместо &amp;ldquo;Plone&amp;rdquo;, я введу придуманный короткий ID моего первого сайта на Plone. Для второго сайта, использую другой ID. Если же новый сайт будет единственным в этом plone-сервере, то можно оставить ID по умолчанию. Этот ID будет светиться в URL сайта, типа &lt;code&gt;http://127.0.0.1:8080/id1&lt;/code&gt; или &lt;code&gt;http://127.0.0.1:8080/plone&lt;/code&gt;. В дальнейшем при настройке nginx для проксирования новых сайтов, мы уберём этот ID из URL и обращение к сайтам будет производиться через нормальные URL, типа &lt;code&gt;https://www.example.com&lt;/code&gt;, &lt;code&gt;https://dbg.example.com&lt;/code&gt; и т.п.&lt;/p&gt;
 &lt;p&gt;После заполнения прочих полей и применения мы увидим:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;plone_install_window_create_new_plone_site_3.png&#34; alt=&#34;Create first Plone site&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-plone-cms/plone_install_window_create_new_plone_site_3.png&#34; alt=&#34;Create first Plone site&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Собственно это уже полноценный сайт. Необходимо настроить, например, nginx и заниматься наполнением сайта.&lt;/p&gt;
 &lt;p&gt;&lt;a name=&#34;ADDING_NEXT_SITE&#34;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;добавление-следующего-сайта-в-plone&#34;&gt;Добавление следующего сайта в Plone&lt;/h3&gt;
@@ -377,7 +377,7 @@ server {
 &lt;li&gt;Тестируй бэкапы на предмет восстановления&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;dialog-warning.png&#34; alt=&#34;&#34;&gt; Эта инструкция допускает, что вы уже делаете это для всей вашей системы, и будет рассматривать только те вещи, которые касаются Plone. Когда мы говорим, что мы предполагаем, что вы уже делаете это для всей системы, мы имеем в виду, что механизмы резервного копирования вашей системы — rsync, bacula и т.д. — уже выполняют резервное копирование директории, в которую вы установили Plone.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/dialog-warning.png&#34; alt=&#34;&#34;&gt; Эта инструкция допускает, что вы уже делаете это для всей вашей системы, и будет рассматривать только те вещи, которые касаются Plone. Когда мы говорим, что мы предполагаем, что вы уже делаете это для всей системы, мы имеем в виду, что механизмы резервного копирования вашей системы — rsync, bacula и т.д. — уже выполняют резервное копирование директории, в которую вы установили Plone.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Ваш buildout и его кэши уже забэкапированы, и вы протестировали процесс восстановления.&lt;/p&gt;
 &lt;p&gt;Вам осталось поразмышлять об адекватном бэкапе и восстановлении базы данных Plone.&lt;/p&gt;

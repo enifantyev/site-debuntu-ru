@@ -1,6 +1,6 @@
 ---
 title: "Описание файловой системы OverlayFS"
-date: 22020-02-01
+date: 2020-02-01
 weight: 10
 description: >
   Мой неполный перевод статьи [Overlay Filesystem](https://www.kernel.org/doc/Documentation/filesystems/overlayfs.txt) из https://www.kernel.org

@@ -736,7 +736,7 @@ $ sudo cp /usr/local/lib/python3.6/site-packages/airflow/example_dags/example_ba
 По умолчанию, сканирование каталога с DAG'ами выполняется каждые пять минут, поэтому придётся немного подождать момента появления нового DAG'а в списке DAG'ов, или переопределить этот параметр 'dag_dir_list_interval'.
 
 После появления тестового DAG'а, его необходимо включить, а потом запустить. Успешное выполнение выглядит так:
-![AirfowExampleTask](airflowexampletask.png)
+![AirfowExampleTask](/img/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/airflowexampletask.png)
 
 Можно считать, что Airflow установлен.
 

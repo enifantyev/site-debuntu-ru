@@ -3290,7 +3290,7 @@ systemctl enable --now airflow-{webserver,scheduler,kerberos}
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo cp /usr/local/lib/python3.6/site-packages/airflow/example_dags/example_bash_operator.py /data/airflow/dags/
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;По умолчанию, сканирование каталога с DAG&amp;rsquo;ами выполняется каждые пять минут, поэтому придётся немного подождать момента появления нового DAG&amp;rsquo;а в списке DAG&amp;rsquo;ов, или переопределить этот параметр &amp;lsquo;dag_dir_list_interval&amp;rsquo;.&lt;/p&gt;
 &lt;p&gt;После появления тестового DAG&amp;rsquo;а, его необходимо включить, а потом запустить. Успешное выполнение выглядит так:
-&lt;img src=&#34;airflowexampletask.png&#34; alt=&#34;AirfowExampleTask&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/airflowexampletask.png&#34; alt=&#34;AirfowExampleTask&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Можно считать, что Airflow установлен.&lt;/p&gt;
 &lt;h2 id=&#34;почти-полное-удаление-если-потребуется&#34;&gt;Почти полное удаление, если потребуется&lt;/h2&gt;
 &lt;p&gt;Выполняем под &lt;code&gt;sudo su&lt;/code&gt;:&lt;/p&gt;
@@ -5258,6 +5258,10 @@ service auditd stop
 &lt;p&gt;Помним, что в Volume Group должно быть достаточно свободного места для размещения снэпшотов.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -L 500M -s -n snap_root /dev/vg/root
 lvcreate -L 500M -s -n snap_var /dev/vg/var
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если требуется освободить немного места в VG, то можно попробовать освободить пару гигабайтов за счёт уменьшения, например &lt;code&gt;/dev/vg/data&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/sbin/lvreduce -L -2G -r /dev/vg/data
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После завершения бэкапа вновь увеличиваем LV:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/sbin/lvextend -l +100%FREE -r /dev/vg/data
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;При монтировании xfs используем опцию &lt;code&gt;nouuid&lt;/code&gt;, поэтому проверяем тип файловой системы:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Mounting root on /mnt

@@ -202,6 +202,8 @@ if (!doNotTrack) {
   <a href="/a/void-linux-posleustanovochnye-shagi/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-avoid-linux-posleustanovochnye-shagi"><span class="">Void Linux Послеустановочные шаги</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-achto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha-li">
   <a href="/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-achto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha"><span class="">Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-aopisanie-failovoi-sistemy-overlayfs-li">
+  <a href="/a/opisanie-failovoi-sistemy-overlayfs/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-aopisanie-failovoi-sistemy-overlayfs"><span class="">Описание файловой системы OverlayFS</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-apath-mtu-discovery-i-prochee-svyazannoe-s-etim-li">
   <a href="/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-apath-mtu-discovery-i-prochee-svyazannoe-s-etim"><span class="">Path MTU Discovery и прочее связанное с этим</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-aopisanie-vfs-virtualnoi-failovoi-sistemy-linux-li">
@@ -220,6 +222,8 @@ if (!doNotTrack) {
   <a href="/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-achroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov"><span class="">Chroot rsync для безопасного сбора бэкапов с удалённых хостов</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-aozdanie-kopii-saita-plone-li">
   <a href="/a/ozdanie-kopii-saita-plone/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-aozdanie-kopii-saita-plone"><span class="">Создание копии сайта Plone</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-asozdanie-kopii-saita-plone-li">
+  <a href="/a/sozdanie-kopii-saita-plone/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-asozdanie-kopii-saita-plone"><span class="">Создание копии сайта Plone</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-adobavlenie-recaptcha-v-plone-li">
   <a href="/a/dobavlenie-recaptcha-v-plone/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-adobavlenie-recaptcha-v-plone"><span class="">Добавление reCAPTCHA в Plone</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-aispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8-li">
@@ -238,10 +242,6 @@ if (!doNotTrack) {
   <a href="/a/ustanovka-egroupware-1-8-na-debian-6.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-austanovka-egroupware-1-8-na-debian-60"><span class="">Установка egroupware 1.8 на debian 6.0</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-austanovka-eclipse-3-6-helios-v-ubuntu-li">
   <a href="/a/ustanovka-eclipse-3-6-helios-v-ubuntu/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-austanovka-eclipse-3-6-helios-v-ubuntu"><span class="">Установка Eclipse 3.6 (Helios) в Ubuntu</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-aopisanie-failovoi-sistemy-overlayfs-li">
-  <a href="/a/opisanie-failovoi-sistemy-overlayfs/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-aopisanie-failovoi-sistemy-overlayfs"><span class="">Описание файловой системы OverlayFS</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-asozdanie-kopii-saita-plone-li">
-  <a href="/a/sozdanie-kopii-saita-plone/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-asozdanie-kopii-saita-plone"><span class="">Создание копии сайта Plone</span></a>
 </li>
   </ul>
 </li>
@@ -958,12 +958,12 @@ Mem:           1.0G        248M        167M        7.6M        607M        531M
 <p>Пока у нас нет настроенного Apache или Nginx, то прокидываем удалённый <code>127.0.0.1:8080</code> порт на локальную машину:</p>
 <p><code>$ ssh -L8080:127.0.0.1:8080 root@plone.example.com</code></p>
 <p>Заходим через любой веб-браузер на адрес <code>http://127.0.0.1:8080</code> и видим приглашение к созданию нового Plone-сайта:</p>
-<p><img src="plone_install_window_create_new_plone_site_1.png" alt="Create new Plone site"></p>
+<p><img src="/img/ustanovka-plone-cms/plone_install_window_create_new_plone_site_1.png" alt="Create new Plone site"></p>
 <p>Страница после нажатия единственной кнопки и ввода логина/пароля:</p>
-<p><img src="plone_install_window_create_new_plone_site_2.png" alt="Create first Plone site"></p>
+<p><img src="/img/ustanovka-plone-cms/plone_install_window_create_new_plone_site_2.png" alt="Create first Plone site"></p>
 <p>В поле &ldquo;Path identifier&rdquo;, вместо &ldquo;Plone&rdquo;, я введу придуманный короткий ID моего первого сайта на Plone. Для второго сайта, использую другой ID. Если же новый сайт будет единственным в этом plone-сервере, то можно оставить ID по умолчанию. Этот ID будет светиться в URL сайта, типа <code>http://127.0.0.1:8080/id1</code> или <code>http://127.0.0.1:8080/plone</code>. В дальнейшем при настройке nginx для проксирования новых сайтов, мы уберём этот ID из URL и обращение к сайтам будет производиться через нормальные URL, типа <code>https://www.example.com</code>, <code>https://dbg.example.com</code> и т.п.</p>
 <p>После заполнения прочих полей и применения мы увидим:</p>
-<p><img src="plone_install_window_create_new_plone_site_3.png" alt="Create first Plone site"></p>
+<p><img src="/img/ustanovka-plone-cms/plone_install_window_create_new_plone_site_3.png" alt="Create first Plone site"></p>
 <p>Собственно это уже полноценный сайт. Необходимо настроить, например, nginx и заниматься наполнением сайта.</p>
 <p><a name="ADDING_NEXT_SITE"></a></p>
 <h3 id="добавление-следующего-сайта-в-plone">Добавление следующего сайта в Plone</h3>

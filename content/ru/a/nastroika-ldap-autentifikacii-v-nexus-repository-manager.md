@@ -25,7 +25,7 @@ tags:
 
 Самоподписанный сертификат контроллера домена добавляется в NXRM через кнопку "View certificate", где доступна операция "Add certificate to truststore". После чего, добавленный сертификат можно наблюдать в разделе Security – SSL Certificates.
 
-![](/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png)
+![](/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap1.png)
 
 ### Вкладка User and group
 Select template: Generic Ldap Server (делаем это в первый и единственный раз при настройке подключения).
@@ -46,7 +46,7 @@ Email attribute: mail
 
 Password attribute: оставляем пустым.
 
-![](/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png)
+![](/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap2.png)
 
 Ниже настраиваем отображение групп пользователей из IPA в соответствующие роли NXRM.
 
@@ -66,17 +66,17 @@ Group member attribute: member
 
 Group member format: uid=${username},cn=users,cn=accounts,dc=example,dc=org
 
-![](/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png)
+![](/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap3.png)
 
 После чего появляется возможность добавить внешнюю роль, имя которой берётся из LDAP.
 
 ## Настройка авторизации
-![](/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png)
+![](/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-ldap-create-external-role.png)
 
 ## Включение LDAP
 Добавляем в активные LDAP realms.
 
-![](/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png)
+![](/img/nastroika-ldap-autentifikacii-v-nexus-repository-manager/nxrm-realms.png)
 
 Предположим, что в локальной базе есть пользователь с совпадающим логином, как в IPA, но с разными паролями. Логика работы аутентификации будет следующей:
 

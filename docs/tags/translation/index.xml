@@ -4,7 +4,7 @@
     <link>https://debuntu.ru/tags/translation/</link>
     <description>Recent content in translation on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 18 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	  <atom:link href="https://debuntu.ru/tags/translation/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,6 +13,174 @@
         
       
     
+    
+    <item>
+      <title>A: Описание файловой системы OverlayFS</title>
+      <link>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</link>
+      <pubDate>Sat, 01 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2020-02-01&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Не закончен, так как не хватает знаний. По мере изучения, постараюсь дополнить.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Данная файловая системы используется, например, в Docker. Часто её можно наблюдать на роутерах или других подобных устройствах, где оперативная запись информации ведётся во временную наложенную ФС, доступную до момента выключения устройства.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;С помощью OverlayFS я объединяю домашние фото и видео каталоги для удобного просмотра. Так как архивы исходных фотографий доступны только для чтения, наложением рабочей папки, для сохранения временных или промежуточных файлов обработки, я добиваюсь удобства в обработке фоток.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Каталог = Директория = Папка&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Перед пониманием темы Overlay Filesystem, мне необходимо провентилировать &lt;a href=&#34;https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux&#34;&gt;Linux Virtual File System&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;overlay-filesystem&#34;&gt;Overlay Filesystem&lt;/h2&gt;
+&lt;p&gt;Этот документ описывает прототип нового подхода к обеспечению функциональности &lt;strong&gt;overlay filesystem&lt;/strong&gt; (&lt;em&gt;наложенная файловая система&lt;/em&gt;) в Линукс (некоторые предпочитают называть &lt;strong&gt;union-filesystems&lt;/strong&gt; &lt;em&gt;объединённая файловая система&lt;/em&gt;). &lt;strong&gt;Overlay filesystem&lt;/strong&gt; пытается показать файловую систему так, как результат наложения одной ФС поверх другой ФС.&lt;/p&gt;
+&lt;h3 id=&#34;overlay-объекты&#34;&gt;Overlay объекты&lt;/h3&gt;
+&lt;p&gt;Метод наложения файловой системы является смешанным, так как объекты, которые видны в этой ФС не всегда ей принадлежат. Во многих случаях, доступ к объекту в объединении будет неразличимым от доступа к соответствующему объекту из обычной файловой системы. Это наиболее очевидно из поля &amp;lsquo;st_dev&amp;rsquo; возвращаемого системным вызовом &lt;code&gt;stat&lt;/code&gt; (&lt;code&gt;man 2 stat&lt;/code&gt;).&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Почитав stat(2), я выяснил, что поле &amp;lsquo;st_dev&amp;rsquo; описывает устройство на котором находится файл. &amp;lsquo;st_ino&amp;rsquo; — номер inode.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;В то время как директории будут сообщать &amp;lsquo;st_dev&amp;rsquo; из &lt;em&gt;наложенной&lt;/em&gt; файловой системы, объекты, не являющиеся каталогами, могут сообщать &amp;lsquo;st_dev&amp;rsquo; из &lt;em&gt;нижней&lt;/em&gt; или &lt;em&gt;верхней&lt;/em&gt; файловой системы, которая предоставляет объект. Аналогично &amp;lsquo;st_ino&amp;rsquo; будет уникальным только в сочетании с &amp;lsquo;st_dev&amp;rsquo;, и оба они могут изменяться в течение всего времени жизни объекта не-каталога. Многие приложения и инструменты игнорируют эти значения.&lt;/p&gt;
+&lt;p&gt;В особом случае, когда все наложенные слои принадлежат одной подлежащей файловой системе, то все объекты будут сообщать &amp;lsquo;st_dev&amp;rsquo; из наложенной файловой системы, а &amp;lsquo;st_ino&amp;rsquo; из подлежащей файловой системы. Это делает монтирование наложения более совместимым со сканерами файловой системы, и оверлей-объекты будут отличаться от соответствующих объектов в оригинальной файловой системе.&lt;/p&gt;
+&lt;p&gt;On 64bit systems, even if all overlay layers are not on the same underlying filesystem, the same compliant behavior could be achieved with the &amp;ldquo;xino&amp;rdquo; feature. The &amp;ldquo;xino&amp;rdquo; feature composes a unique object identifier from the real object st_ino and an underlying fsid index. If all underlying filesystems support NFS file handles and export file handles with 32bit inode number encoding (e.g. ext4), overlay filesystem will use the high inode number bits for fsid.  Even when the underlying filesystem uses 64bit inode numbers, users can still enable the &amp;ldquo;xino&amp;rdquo; feature with the &amp;ldquo;-o xino=on&amp;rdquo; overlay mount option.  That is useful for the case of underlying filesystems like xfs and tmpfs, which use 64bit inode numbers, but are very unlikely to use the high inode number bit.&lt;/p&gt;
+&lt;h3 id=&#34;верхний-и-нижний-слои&#34;&gt;Верхний и нижний слои&lt;/h3&gt;
+&lt;p&gt;Наложенная файловая система комбинируется из двух ФС - &lt;em&gt;верхней&lt;/em&gt; и &lt;em&gt;нижней&lt;/em&gt;. Когда имя объекта существует в обеих ФС, тогда объект из &lt;em&gt;верхней&lt;/em&gt; ФС виден, а объект из &lt;em&gt;нижней&lt;/em&gt; ФС скрыт. В случае с совпадением имён каталогов, их содержимое будет объединено.&lt;/p&gt;
+&lt;p&gt;Было бы правильней употреблять термин верхнее и нижнее &lt;em&gt;дерево каталогов&lt;/em&gt; вместо термина &lt;em&gt;файловая система&lt;/em&gt;, поскольку вполне возможно, что оба &lt;em&gt;дерева каталогов&lt;/em&gt; могут находиться в одной и той же файловой системе, и здесь не требуется указывать корень файловой системы для верхней или нижней файловой системы.&lt;/p&gt;
+&lt;p&gt;Нижняя файловая система может быть любой файловой системой, поддерживаемой Linux, и для неё не требуется прав на запись. Нижняя файловая система может быть даже другим оверлеем. Верхняя файловая система обычно доступна для записи, и в таком случае она должна поддерживать создание расширенных атрибутов &amp;ldquo;trusted.*&amp;rdquo;, и также должна предоставлять допустимый &amp;rsquo;d_type&amp;rsquo; в &amp;lsquo;readdir&amp;rsquo; ответах, так что NFS не подходит.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;readdir — чтение директории
+описание поля &amp;ldquo;d_type&amp;rdquo;&amp;hellip;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;details&gt;&lt;p&gt;
+&#34;d_type&#34; Это поле содержит значение, обозначающее тип файла, что позволяет избежать затрат на вызов lstat(2), если дальнейшие действия зависят от типа файла.
+&lt;p&gt;When a suitable feature test macro is defined (_DEFAULT_SOURCE on glibc versions since 2.19, or _BSD_SOURCE on glibc versions 2.19 and earlier), glibc defines the following macro constants for the value returned in d_type:
+DT_BLK      This is a block device.
+DT_CHR      This is a character device.
+DT_DIR      This is a directory.
+DT_FIFO     This is a named pipe (FIFO).
+DT_LNK      This is a symbolic link.
+DT_REG      This is a regular file.
+DT_SOCK     This is a UNIX domain socket.
+DT_UNKNOWN  The file type could not be determined.&lt;/p&gt;
+&lt;p&gt;На данный момент только некоторые файловые системы (среди них, такие как: Btrfs, ext2, ext3, and ext4) умеют возвращать правильное значение типа файла в поде &amp;ldquo;d_type&amp;rdquo;. Все приложения обязаны должным образом обрабатывать возвращаемое значение DT_UNKNOWN.&lt;/p&gt;
+&lt;/p&gt;&lt;/details&gt;&lt;br&gt;
+&lt;p&gt;Только в варианте, когда наложенная ФС имеет атрибут &amp;ldquo;только для чтения&amp;rdquo; и составлена из двух &amp;ldquo;только для чтения&amp;rdquo; файловых систем, могут использоваться любые типы ФС.&lt;/p&gt;
+&lt;h3 id=&#34;каталоги&#34;&gt;Каталоги&lt;/h3&gt;
+&lt;p&gt;В оверлее, в основном, участвуют каталоги. Если &lt;em&gt;имя&lt;/em&gt; объекта ссылается не на каталог, и объект проявляется как в верхней, так и в нижней файловых системах, то нижний объект скрыт и &lt;em&gt;имя&lt;/em&gt; относится только к верхнему объекту.&lt;/p&gt;
+&lt;p&gt;Если верхний и нижний объекты являются каталогами, то формируется объединенный каталог.&lt;/p&gt;
+&lt;p&gt;В момент монтирования две директории, указанные в опциях как &amp;ldquo;upperdir&amp;rdquo; и &amp;ldquo;lowerdir&amp;rdquo;, соединяются в одну объединённую директорию:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mount -t overlay overlay -olowerdir=/lower,upperdir=/upper,workdir=/work /merged
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Опция &amp;ldquo;workdir&amp;rdquo; должна указывать на пустой каталог в той же файловой системе, где находится &amp;ldquo;upperdir&amp;rdquo;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;dentry&lt;/em&gt; — объект VFS, содержащий информацию о директориях ФС и существующий только в памяти файловой системы и не хранится на диске. Если я правильно понял, то предназначен для уменьшения обращений к ФС при перечитывании содержимого каталогов.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Тогда всякий раз, когда поиск запрашивается в такой объединенной директории, просмотр выполняется в каждой фактической директории и объединенный результат кэшируется в &lt;em&gt;dentry&lt;/em&gt;, принадлежащем наложенной файловой системе. Если оба актуальных поиска находят каталоги, оба сохраняются и создается объединенный каталог, в противном случае сохраняется только один: верхний, если он существует, иначе нижний.&lt;/p&gt;
+&lt;p&gt;Объединяются только списки имён из директорий. Другое содержимое, такое как метаданные и расширенные атрибуты, отображается только для директорий из верхней ФС. Эти атрибуты для директории из нижней ФС скрыты.&lt;/p&gt;
+&lt;h3 id=&#34;выбеленные-и-непрозрачные-каталоги&#34;&gt;&amp;ldquo;Выбеленные&amp;rdquo; и &amp;ldquo;непрозрачные&amp;rdquo; каталоги&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Не уверен, что подобрал правильный перевод для &amp;ldquo;whiteouts and opaque directories&amp;rdquo;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Чтобы выполнять &lt;code&gt;rm&lt;/code&gt; и &lt;code&gt;rmdir&lt;/code&gt; без изменения нижней файловой системы, наложенная файловая система должна записать в верхнюю файловую систему информацию о том, что файлы были удалены. Это делается с помощью &amp;ldquo;выбеленных&amp;rdquo; и &amp;ldquo;непрозрачных&amp;rdquo; каталогов (объекты не-каталоги всегда непрозрачны).&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Выбеленная&amp;rdquo; директория создаётся как символьное устройство с номером устройства 0/0. Когда в верхнем слое объединенного каталога обнаруживается &amp;ldquo;выбеленная&amp;rdquo; директория, любое совпадающее имя на нижнем уровне игнорируется, и сама &amp;ldquo;выбеленная&amp;rdquo; директория также скрывается.&lt;/p&gt;
+&lt;p&gt;Каталог объявляется &amp;ldquo;непрозрачным&amp;rdquo; установкой расширенного атрибута &amp;ldquo;trust.overlay.opaque&amp;rdquo; в значение &amp;ldquo;y&amp;rdquo;. Если верхний слой содержит &amp;ldquo;непрозрачный&amp;rdquo; каталог с именем совпадающим с именем каталога из нижнего слоя, тогда соответствующий каталог в нижнем слое игнорируется.&lt;/p&gt;
+&lt;h3 id=&#34;системный-запрос-readdir-чтение-каталога&#34;&gt;Системный запрос readdir (Чтение каталога)&lt;/h3&gt;
+&lt;p&gt;Когда &lt;code&gt;readdir&lt;/code&gt; запрашивается в объединенном каталоге, то каждый верхний и нижний каталог читается, а списки имён объединяются очевидным образом (сначала читается верхний, затем нижний, уже существующие имена не добавляются повторно). Этот объединенный список имён кэшируется в &amp;lsquo;struct file&amp;rsquo; и таким остаётся так долго, пока файл остаётся открытым. Если директория открыта и одновременно читается двумя процессами, то каждый из них будет иметь отдельный кэш. A &lt;code&gt;seekdir&lt;/code&gt; to the start of the directory (offset 0) followed by a &lt;code&gt;readdir&lt;/code&gt; will cause the cache to be discarded and rebuilt.&lt;/p&gt;
+&lt;p&gt;Это означает, что изменения в объединённой директории не проявятся пока каталог читается. Вряд ли это будет замечено каким-либо программами.&lt;/p&gt;
+&lt;p&gt;seek offsets are assigned sequentially when the directories are read.
+Thus if&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;read part of a directory&lt;/li&gt;
+&lt;li&gt;remember an offset, and close the directory&lt;/li&gt;
+&lt;li&gt;re-open the directory some time later&lt;/li&gt;
+&lt;li&gt;seek to the remembered offset&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;there may be little correlation between the old and new locations in the list of filenames, particularly if anything has changed in the directory.&lt;/p&gt;
+&lt;p&gt;Readdir on directories that are not merged is simply handled by the underlying directory (upper or lower).&lt;/p&gt;
+&lt;h3 id=&#34;переименование-каталога&#34;&gt;Переименование каталога&lt;/h3&gt;
+&lt;p&gt;Когда переименовывается каталог, который является нижним или объединённым (то есть этот каталог не был создан на верхнем слое до начала операции), overlayfs может обработать его двумя различными способами:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;возврат EXDEV ошибки: эта ошибка возвращается вызовом &lt;code&gt;rename&lt;/code&gt;, когда при попытке перемещения файла или директории нарушаются границы файловой системы. Приложение обычно готово обработать эту ошибку (&lt;code&gt;mv&lt;/code&gt;, для примера, рекурсивно копирует дерево директорий). Это поведение по умолчанию.&lt;/li&gt;
+&lt;li&gt;Если свойство &amp;ldquo;redirect_dir&amp;rdquo; включено, тогда директория будет скопирована (без своего содержимого). Потом будет &lt;em&gt;установлен&lt;/em&gt; расширенный атрибут &amp;ldquo;trusted.overlay.redirect&amp;rdquo; на &lt;em&gt;путь&lt;/em&gt; оригинального местоположения от корня &lt;em&gt;наложения&lt;/em&gt;. В заключении директория перемещается в новое место.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Есть несколько способов настроить &amp;ldquo;redirect_dir&amp;rdquo; свойство.&lt;/p&gt;
+&lt;p&gt;Kernel config options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;OVERLAY_FS_REDIRECT_DIR:
+&lt;ul&gt;
+&lt;li&gt;If this is enabled, then redirect_dir is turned on by  default.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;OVERLAY_FS_REDIRECT_ALWAYS_FOLLOW:
+&lt;ul&gt;
+&lt;li&gt;If this is enabled, then redirects are always followed by default. Enabling this results in a less secure configuration.  Enable this option only when worried about backward compatibility with kernels that have the redirect_dir feature and follow redirects even if turned off.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Module options (can also be changed through &lt;code&gt;/sys/module/overlay/parameters/*&lt;/code&gt;) :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;redirect_dir=BOOL&amp;rdquo;:
+&lt;ul&gt;
+&lt;li&gt;See OVERLAY_FS_REDIRECT_DIR kernel config option above.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;redirect_always_follow=BOOL&amp;rdquo;:
+&lt;ul&gt;
+&lt;li&gt;See OVERLAY_FS_REDIRECT_ALWAYS_FOLLOW kernel config option above.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;redirect_max=NUM&amp;rdquo;:
+&lt;ul&gt;
+&lt;li&gt;The maximum number of bytes in an absolute redirect (default is 256)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mount options:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;redirect_dir=on&amp;rdquo;:
+Redirects are enabled.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;redirect_dir=follow&amp;rdquo;:
+Redirects are not created, but followed.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;redirect_dir=off&amp;rdquo;:
+Redirects are not created and only followed if &amp;ldquo;redirect_always_follow&amp;rdquo;
+feature is enabled in the kernel/module config.&lt;/li&gt;
+&lt;li&gt;&amp;ldquo;redirect_dir=nofollow&amp;rdquo;:
+Redirects are not created and not followed (equivalent to &amp;ldquo;redirect_dir=off&amp;rdquo;
+if &amp;ldquo;redirect_always_follow&amp;rdquo; feature is not enabled).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When the NFS export feature is enabled, every copied up directory is indexed by the file handle of the lower inode and a file handle of the upper directory is stored in a &amp;ldquo;trusted.overlay.upper&amp;rdquo; extended  attribute on the index entry.  On lookup of a merged directory, if the upper directory does not match the file handle stores in the index, that is an indication that multiple upper directories may be redirected to the same lower directory.  In that case, lookup returns an error and warns about a possible inconsistency.&lt;/p&gt;
+&lt;p&gt;Because lower layer redirects cannot be verified with the index, enabling NFS export support on an overlay filesystem with no upper layer requires turning off redirect follow (e.g. &amp;ldquo;redirect_dir=nofollow&amp;rdquo;).&lt;/p&gt;
+&lt;h3 id=&#34;прочие-объекты-не-каталоги&#34;&gt;Прочие объекты не-Каталоги&lt;/h3&gt;
+&lt;p&gt;Объекты, не являющиеся каталогами (файлы, симлинки, device-special files, и т.д.), представлены в &lt;em&gt;объединённой&lt;/em&gt; ФС из &lt;em&gt;верхней&lt;/em&gt;, либо из &lt;em&gt;нижней&lt;/em&gt; файловой системы, по обстоятельствам. Когда требуется доступ на запись к файлу, представленному в нижней файловой системе, то сначала файл копируется из нижней ФС в верхнюю (copy_up). Обратите внимание, что создание жёсткой ссылки также требует copy_up, тогда как создание симлинка такой операции конечно не требует.&lt;/p&gt;
+&lt;p&gt;Если файл, открытый на запись, не был изменён, то операция copy_up выполнена не будет.&lt;/p&gt;
+&lt;p&gt;Процесс copy_up начинается с проверки наличия в &lt;em&gt;верхней&lt;/em&gt; ФС соответствующих каталогов, которые создаются при необходимости. После чего в существующий или созданный каталог копируется объект с такими же метаданными (owner, mode, mtime, symlink-target etc.). Далее, в случае если объект это файл, то копируется содержимое нижнего файла в только что созданный файл в верхней ФС. В заключении копируются расширенные атрибуты.&lt;/p&gt;
+&lt;p&gt;После завершения процесса copy_up, overlay ФС предоставит прямой доступ к только что созданному файлу из &lt;em&gt;верхней&lt;/em&gt; файловой системы. Последующие операции над файлом будут едва заметны для overlay ФС (тогда как операции над именем файла, вроде переименования или unlink, конечно будут замечены и обработаны).&lt;/p&gt;
+&lt;h3 id=&#34;множество-нижних-слоёв&#34;&gt;Множество нижних слоёв&lt;/h3&gt;
+&lt;p&gt;Множество нижних слоёв можно задать с помощью символа двоеточие (&amp;quot;:&amp;quot;), используя его как разделитель между именами каталогово. Для примера:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount -t overlay overlay -olowerdir=/lower1:/lower2:/lower3 /merged
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Как видно в примере, опции &amp;ldquo;upperdir=&amp;rdquo; и &amp;ldquo;workdir=&amp;rdquo; могут не указываться. И в этом случае наложение будет доступно только для чтения.&lt;/p&gt;
+&lt;p&gt;Указанные нижние каталоги будут стекированы справа налево, то есть lower1 будет на самом верху, lower2 посередине, а lower3 на нижнем уровне.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/opisanie-failovoi-sistemy-overlayfs/ro-ro-overlay.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;В пустом каталоге &lt;code&gt;RawArchive&lt;/code&gt;, после монтирования доступном только для чтения, мы увидим объединённое отображение двух папок c исходниками фото- и видеоматериалов. Все каталоги, задействованные в этой схеме, могут находиться, как на одном носителе, так и на разных (даже сетевых?).&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;копирование-только-метаданных&#34;&gt;Копирование только метаданных&lt;/h3&gt;
+&lt;p&gt;Когда включена опция копирования только метаданных, overlayfs скопирует только метаданные (в отличие от всего файла), в том случае когда выполняется определённая операция, типа &lt;code&gt;chown/chmod&lt;/code&gt;. Полностью файл будет скопирован после того, как файл будет открыт для &lt;strong&gt;записи&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Другими словами, это операция с задержкой копирования данных. Данные будут скопированы в том случае, если понадобится их изменение.&lt;/p&gt;
+&lt;p&gt;Есть несколько способов включения/отключния этой опции. Опция CONFIG_OVERLAY_FS_METACOPY может быть установлена/снята для включения/отключения этой функции по умолчанию. Или можно включить/отключить эту опцию во время загрузки модуля с параметром metacopy=on/off. И наконец, использовать опцию metacopy=on/off во время монтирования.&lt;/p&gt;
+&lt;p&gt;Не стоит использовать &lt;em&gt;metacopy=on&lt;/em&gt; с ненадёжными верхним/нижним каталогом. Otherwise it is possible that an attacker can create a handcrafted file with appropriate REDIRECT and METACOPY xattrs, and gain access to file on lower pointed by REDIRECT. This should not be possible on local system as setting &amp;ldquo;trusted.&amp;rdquo; xattrs will require CAP_SYS_ADMIN. But it should be possible for untrusted layers like from a pen drive.&lt;/p&gt;
+&lt;p&gt;Note: redirect_dir={off|nofollow|follow(*)} conflicts with metacopy=on, and results in an error.&lt;/p&gt;
+&lt;p&gt;(*) redirect_dir=follow only conflicts with metacopy=on if upperdir=&amp;hellip; is given.&lt;/p&gt;
+&lt;h3 id=&#34;расшаривание-и-копирование-слоёв&#34;&gt;Расшаривание и копирование слоёв&lt;/h3&gt;
+&lt;p&gt;Нижние слои могут совместно использоваться при монтировании нескольких разных overlay-стеков, и это обычная практика. При монтировании какой-нибудь Overlay может использовать тот же путь до каталога нижнего слоя, что и другой overlay mount.&lt;/p&gt;
+
+      </description>
+    </item>
     
     <item>
       <title>A: Описание VFS Виртуальной Файловой Системы Linux</title>
@@ -478,7 +646,7 @@ A small trail through the Linux kernel by Andries Brouwer. 2001
 &lt;li&gt;Тестируй бэкапы на предмет восстановления&lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;dialog-warning.png&#34; alt=&#34;&#34;&gt; Эта инструкция допускает, что вы уже делаете это для всей вашей системы, и будет рассматривать только те вещи, которые касаются Plone. Когда мы говорим, что мы предполагаем, что вы уже делаете это для всей системы, мы имеем в виду, что механизмы резервного копирования вашей системы — rsync, bacula и т.д. — уже выполняют резервное копирование директории, в которую вы установили Plone.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/dialog-warning.png&#34; alt=&#34;&#34;&gt; Эта инструкция допускает, что вы уже делаете это для всей вашей системы, и будет рассматривать только те вещи, которые касаются Plone. Когда мы говорим, что мы предполагаем, что вы уже делаете это для всей системы, мы имеем в виду, что механизмы резервного копирования вашей системы — rsync, bacula и т.д. — уже выполняют резервное копирование директории, в которую вы установили Plone.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Ваш buildout и его кэши уже забэкапированы, и вы протестировали процесс восстановления.&lt;/p&gt;
 &lt;p&gt;Вам осталось поразмышлять об адекватном бэкапе и восстановлении базы данных Plone.&lt;/p&gt;
@@ -779,174 +947,6 @@ eggs =
 &lt;p&gt;Пожалуйста, гляньте в ман о &lt;code&gt;monitorix.conf(5)&lt;/code&gt; для всех подробностей.&lt;/p&gt;
 &lt;p&gt;ВАЖНО: Файл конфы &lt;code&gt;monitorix.conf&lt;/code&gt; был расширен из-за важных изменений.&lt;/p&gt;
 &lt;p&gt;Всем пользователям, все еще использующим более старые версии, рекомендуется выполнить обновление до этой версии.&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>A: Описание файловой системы OverlayFS</title>
-      <link>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</guid>
-      <description>
-        
-        
-        &lt;p&gt;2020-02-01&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Не закончен, так как не хватает знаний. По мере изучения, постараюсь дополнить.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Данная файловая системы используется, например, в Docker. Часто её можно наблюдать на роутерах или других подобных устройствах, где оперативная запись информации ведётся во временную наложенную ФС, доступную до момента выключения устройства.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;С помощью OverlayFS я объединяю домашние фото и видео каталоги для удобного просмотра. Так как архивы исходных фотографий доступны только для чтения, наложением рабочей папки, для сохранения временных или промежуточных файлов обработки, я добиваюсь удобства в обработке фоток.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Каталог = Директория = Папка&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Перед пониманием темы Overlay Filesystem, мне необходимо провентилировать &lt;a href=&#34;https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux&#34;&gt;Linux Virtual File System&lt;/a&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;overlay-filesystem&#34;&gt;Overlay Filesystem&lt;/h2&gt;
-&lt;p&gt;Этот документ описывает прототип нового подхода к обеспечению функциональности &lt;strong&gt;overlay filesystem&lt;/strong&gt; (&lt;em&gt;наложенная файловая система&lt;/em&gt;) в Линукс (некоторые предпочитают называть &lt;strong&gt;union-filesystems&lt;/strong&gt; &lt;em&gt;объединённая файловая система&lt;/em&gt;). &lt;strong&gt;Overlay filesystem&lt;/strong&gt; пытается показать файловую систему так, как результат наложения одной ФС поверх другой ФС.&lt;/p&gt;
-&lt;h3 id=&#34;overlay-объекты&#34;&gt;Overlay объекты&lt;/h3&gt;
-&lt;p&gt;Метод наложения файловой системы является смешанным, так как объекты, которые видны в этой ФС не всегда ей принадлежат. Во многих случаях, доступ к объекту в объединении будет неразличимым от доступа к соответствующему объекту из обычной файловой системы. Это наиболее очевидно из поля &amp;lsquo;st_dev&amp;rsquo; возвращаемого системным вызовом &lt;code&gt;stat&lt;/code&gt; (&lt;code&gt;man 2 stat&lt;/code&gt;).&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Почитав stat(2), я выяснил, что поле &amp;lsquo;st_dev&amp;rsquo; описывает устройство на котором находится файл. &amp;lsquo;st_ino&amp;rsquo; — номер inode.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;В то время как директории будут сообщать &amp;lsquo;st_dev&amp;rsquo; из &lt;em&gt;наложенной&lt;/em&gt; файловой системы, объекты, не являющиеся каталогами, могут сообщать &amp;lsquo;st_dev&amp;rsquo; из &lt;em&gt;нижней&lt;/em&gt; или &lt;em&gt;верхней&lt;/em&gt; файловой системы, которая предоставляет объект. Аналогично &amp;lsquo;st_ino&amp;rsquo; будет уникальным только в сочетании с &amp;lsquo;st_dev&amp;rsquo;, и оба они могут изменяться в течение всего времени жизни объекта не-каталога. Многие приложения и инструменты игнорируют эти значения.&lt;/p&gt;
-&lt;p&gt;В особом случае, когда все наложенные слои принадлежат одной подлежащей файловой системе, то все объекты будут сообщать &amp;lsquo;st_dev&amp;rsquo; из наложенной файловой системы, а &amp;lsquo;st_ino&amp;rsquo; из подлежащей файловой системы. Это делает монтирование наложения более совместимым со сканерами файловой системы, и оверлей-объекты будут отличаться от соответствующих объектов в оригинальной файловой системе.&lt;/p&gt;
-&lt;p&gt;On 64bit systems, even if all overlay layers are not on the same underlying filesystem, the same compliant behavior could be achieved with the &amp;ldquo;xino&amp;rdquo; feature. The &amp;ldquo;xino&amp;rdquo; feature composes a unique object identifier from the real object st_ino and an underlying fsid index. If all underlying filesystems support NFS file handles and export file handles with 32bit inode number encoding (e.g. ext4), overlay filesystem will use the high inode number bits for fsid.  Even when the underlying filesystem uses 64bit inode numbers, users can still enable the &amp;ldquo;xino&amp;rdquo; feature with the &amp;ldquo;-o xino=on&amp;rdquo; overlay mount option.  That is useful for the case of underlying filesystems like xfs and tmpfs, which use 64bit inode numbers, but are very unlikely to use the high inode number bit.&lt;/p&gt;
-&lt;h3 id=&#34;верхний-и-нижний-слои&#34;&gt;Верхний и нижний слои&lt;/h3&gt;
-&lt;p&gt;Наложенная файловая система комбинируется из двух ФС - &lt;em&gt;верхней&lt;/em&gt; и &lt;em&gt;нижней&lt;/em&gt;. Когда имя объекта существует в обеих ФС, тогда объект из &lt;em&gt;верхней&lt;/em&gt; ФС виден, а объект из &lt;em&gt;нижней&lt;/em&gt; ФС скрыт. В случае с совпадением имён каталогов, их содержимое будет объединено.&lt;/p&gt;
-&lt;p&gt;Было бы правильней употреблять термин верхнее и нижнее &lt;em&gt;дерево каталогов&lt;/em&gt; вместо термина &lt;em&gt;файловая система&lt;/em&gt;, поскольку вполне возможно, что оба &lt;em&gt;дерева каталогов&lt;/em&gt; могут находиться в одной и той же файловой системе, и здесь не требуется указывать корень файловой системы для верхней или нижней файловой системы.&lt;/p&gt;
-&lt;p&gt;Нижняя файловая система может быть любой файловой системой, поддерживаемой Linux, и для неё не требуется прав на запись. Нижняя файловая система может быть даже другим оверлеем. Верхняя файловая система обычно доступна для записи, и в таком случае она должна поддерживать создание расширенных атрибутов &amp;ldquo;trusted.*&amp;rdquo;, и также должна предоставлять допустимый &amp;rsquo;d_type&amp;rsquo; в &amp;lsquo;readdir&amp;rsquo; ответах, так что NFS не подходит.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;readdir — чтение директории
-описание поля &amp;ldquo;d_type&amp;rdquo;&amp;hellip;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;details&gt;&lt;p&gt;
-&#34;d_type&#34; Это поле содержит значение, обозначающее тип файла, что позволяет избежать затрат на вызов lstat(2), если дальнейшие действия зависят от типа файла.
-&lt;p&gt;When a suitable feature test macro is defined (_DEFAULT_SOURCE on glibc versions since 2.19, or _BSD_SOURCE on glibc versions 2.19 and earlier), glibc defines the following macro constants for the value returned in d_type:
-DT_BLK      This is a block device.
-DT_CHR      This is a character device.
-DT_DIR      This is a directory.
-DT_FIFO     This is a named pipe (FIFO).
-DT_LNK      This is a symbolic link.
-DT_REG      This is a regular file.
-DT_SOCK     This is a UNIX domain socket.
-DT_UNKNOWN  The file type could not be determined.&lt;/p&gt;
-&lt;p&gt;На данный момент только некоторые файловые системы (среди них, такие как: Btrfs, ext2, ext3, and ext4) умеют возвращать правильное значение типа файла в поде &amp;ldquo;d_type&amp;rdquo;. Все приложения обязаны должным образом обрабатывать возвращаемое значение DT_UNKNOWN.&lt;/p&gt;
-&lt;/p&gt;&lt;/details&gt;&lt;br&gt;
-&lt;p&gt;Только в варианте, когда наложенная ФС имеет атрибут &amp;ldquo;только для чтения&amp;rdquo; и составлена из двух &amp;ldquo;только для чтения&amp;rdquo; файловых систем, могут использоваться любые типы ФС.&lt;/p&gt;
-&lt;h3 id=&#34;каталоги&#34;&gt;Каталоги&lt;/h3&gt;
-&lt;p&gt;В оверлее, в основном, участвуют каталоги. Если &lt;em&gt;имя&lt;/em&gt; объекта ссылается не на каталог, и объект проявляется как в верхней, так и в нижней файловых системах, то нижний объект скрыт и &lt;em&gt;имя&lt;/em&gt; относится только к верхнему объекту.&lt;/p&gt;
-&lt;p&gt;Если верхний и нижний объекты являются каталогами, то формируется объединенный каталог.&lt;/p&gt;
-&lt;p&gt;В момент монтирования две директории, указанные в опциях как &amp;ldquo;upperdir&amp;rdquo; и &amp;ldquo;lowerdir&amp;rdquo;, соединяются в одну объединённую директорию:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# mount -t overlay overlay -olowerdir=/lower,upperdir=/upper,workdir=/work /merged
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Опция &amp;ldquo;workdir&amp;rdquo; должна указывать на пустой каталог в той же файловой системе, где находится &amp;ldquo;upperdir&amp;rdquo;.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;dentry&lt;/em&gt; — объект VFS, содержащий информацию о директориях ФС и существующий только в памяти файловой системы и не хранится на диске. Если я правильно понял, то предназначен для уменьшения обращений к ФС при перечитывании содержимого каталогов.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Тогда всякий раз, когда поиск запрашивается в такой объединенной директории, просмотр выполняется в каждой фактической директории и объединенный результат кэшируется в &lt;em&gt;dentry&lt;/em&gt;, принадлежащем наложенной файловой системе. Если оба актуальных поиска находят каталоги, оба сохраняются и создается объединенный каталог, в противном случае сохраняется только один: верхний, если он существует, иначе нижний.&lt;/p&gt;
-&lt;p&gt;Объединяются только списки имён из директорий. Другое содержимое, такое как метаданные и расширенные атрибуты, отображается только для директорий из верхней ФС. Эти атрибуты для директории из нижней ФС скрыты.&lt;/p&gt;
-&lt;h3 id=&#34;выбеленные-и-непрозрачные-каталоги&#34;&gt;&amp;ldquo;Выбеленные&amp;rdquo; и &amp;ldquo;непрозрачные&amp;rdquo; каталоги&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Не уверен, что подобрал правильный перевод для &amp;ldquo;whiteouts and opaque directories&amp;rdquo;.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Чтобы выполнять &lt;code&gt;rm&lt;/code&gt; и &lt;code&gt;rmdir&lt;/code&gt; без изменения нижней файловой системы, наложенная файловая система должна записать в верхнюю файловую систему информацию о том, что файлы были удалены. Это делается с помощью &amp;ldquo;выбеленных&amp;rdquo; и &amp;ldquo;непрозрачных&amp;rdquo; каталогов (объекты не-каталоги всегда непрозрачны).&lt;/p&gt;
-&lt;p&gt;&amp;ldquo;Выбеленная&amp;rdquo; директория создаётся как символьное устройство с номером устройства 0/0. Когда в верхнем слое объединенного каталога обнаруживается &amp;ldquo;выбеленная&amp;rdquo; директория, любое совпадающее имя на нижнем уровне игнорируется, и сама &amp;ldquo;выбеленная&amp;rdquo; директория также скрывается.&lt;/p&gt;
-&lt;p&gt;Каталог объявляется &amp;ldquo;непрозрачным&amp;rdquo; установкой расширенного атрибута &amp;ldquo;trust.overlay.opaque&amp;rdquo; в значение &amp;ldquo;y&amp;rdquo;. Если верхний слой содержит &amp;ldquo;непрозрачный&amp;rdquo; каталог с именем совпадающим с именем каталога из нижнего слоя, тогда соответствующий каталог в нижнем слое игнорируется.&lt;/p&gt;
-&lt;h3 id=&#34;системный-запрос-readdir-чтение-каталога&#34;&gt;Системный запрос readdir (Чтение каталога)&lt;/h3&gt;
-&lt;p&gt;Когда &lt;code&gt;readdir&lt;/code&gt; запрашивается в объединенном каталоге, то каждый верхний и нижний каталог читается, а списки имён объединяются очевидным образом (сначала читается верхний, затем нижний, уже существующие имена не добавляются повторно). Этот объединенный список имён кэшируется в &amp;lsquo;struct file&amp;rsquo; и таким остаётся так долго, пока файл остаётся открытым. Если директория открыта и одновременно читается двумя процессами, то каждый из них будет иметь отдельный кэш. A &lt;code&gt;seekdir&lt;/code&gt; to the start of the directory (offset 0) followed by a &lt;code&gt;readdir&lt;/code&gt; will cause the cache to be discarded and rebuilt.&lt;/p&gt;
-&lt;p&gt;Это означает, что изменения в объединённой директории не проявятся пока каталог читается. Вряд ли это будет замечено каким-либо программами.&lt;/p&gt;
-&lt;p&gt;seek offsets are assigned sequentially when the directories are read.
-Thus if&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;read part of a directory&lt;/li&gt;
-&lt;li&gt;remember an offset, and close the directory&lt;/li&gt;
-&lt;li&gt;re-open the directory some time later&lt;/li&gt;
-&lt;li&gt;seek to the remembered offset&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;there may be little correlation between the old and new locations in the list of filenames, particularly if anything has changed in the directory.&lt;/p&gt;
-&lt;p&gt;Readdir on directories that are not merged is simply handled by the underlying directory (upper or lower).&lt;/p&gt;
-&lt;h3 id=&#34;переименование-каталога&#34;&gt;Переименование каталога&lt;/h3&gt;
-&lt;p&gt;Когда переименовывается каталог, который является нижним или объединённым (то есть этот каталог не был создан на верхнем слое до начала операции), overlayfs может обработать его двумя различными способами:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;возврат EXDEV ошибки: эта ошибка возвращается вызовом &lt;code&gt;rename&lt;/code&gt;, когда при попытке перемещения файла или директории нарушаются границы файловой системы. Приложение обычно готово обработать эту ошибку (&lt;code&gt;mv&lt;/code&gt;, для примера, рекурсивно копирует дерево директорий). Это поведение по умолчанию.&lt;/li&gt;
-&lt;li&gt;Если свойство &amp;ldquo;redirect_dir&amp;rdquo; включено, тогда директория будет скопирована (без своего содержимого). Потом будет &lt;em&gt;установлен&lt;/em&gt; расширенный атрибут &amp;ldquo;trusted.overlay.redirect&amp;rdquo; на &lt;em&gt;путь&lt;/em&gt; оригинального местоположения от корня &lt;em&gt;наложения&lt;/em&gt;. В заключении директория перемещается в новое место.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Есть несколько способов настроить &amp;ldquo;redirect_dir&amp;rdquo; свойство.&lt;/p&gt;
-&lt;p&gt;Kernel config options:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;OVERLAY_FS_REDIRECT_DIR:
-&lt;ul&gt;
-&lt;li&gt;If this is enabled, then redirect_dir is turned on by  default.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;OVERLAY_FS_REDIRECT_ALWAYS_FOLLOW:
-&lt;ul&gt;
-&lt;li&gt;If this is enabled, then redirects are always followed by default. Enabling this results in a less secure configuration.  Enable this option only when worried about backward compatibility with kernels that have the redirect_dir feature and follow redirects even if turned off.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Module options (can also be changed through &lt;code&gt;/sys/module/overlay/parameters/*&lt;/code&gt;) :&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&amp;ldquo;redirect_dir=BOOL&amp;rdquo;:
-&lt;ul&gt;
-&lt;li&gt;See OVERLAY_FS_REDIRECT_DIR kernel config option above.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;redirect_always_follow=BOOL&amp;rdquo;:
-&lt;ul&gt;
-&lt;li&gt;See OVERLAY_FS_REDIRECT_ALWAYS_FOLLOW kernel config option above.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;redirect_max=NUM&amp;rdquo;:
-&lt;ul&gt;
-&lt;li&gt;The maximum number of bytes in an absolute redirect (default is 256)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Mount options:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&amp;ldquo;redirect_dir=on&amp;rdquo;:
-Redirects are enabled.&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;redirect_dir=follow&amp;rdquo;:
-Redirects are not created, but followed.&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;redirect_dir=off&amp;rdquo;:
-Redirects are not created and only followed if &amp;ldquo;redirect_always_follow&amp;rdquo;
-feature is enabled in the kernel/module config.&lt;/li&gt;
-&lt;li&gt;&amp;ldquo;redirect_dir=nofollow&amp;rdquo;:
-Redirects are not created and not followed (equivalent to &amp;ldquo;redirect_dir=off&amp;rdquo;
-if &amp;ldquo;redirect_always_follow&amp;rdquo; feature is not enabled).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;When the NFS export feature is enabled, every copied up directory is indexed by the file handle of the lower inode and a file handle of the upper directory is stored in a &amp;ldquo;trusted.overlay.upper&amp;rdquo; extended  attribute on the index entry.  On lookup of a merged directory, if the upper directory does not match the file handle stores in the index, that is an indication that multiple upper directories may be redirected to the same lower directory.  In that case, lookup returns an error and warns about a possible inconsistency.&lt;/p&gt;
-&lt;p&gt;Because lower layer redirects cannot be verified with the index, enabling NFS export support on an overlay filesystem with no upper layer requires turning off redirect follow (e.g. &amp;ldquo;redirect_dir=nofollow&amp;rdquo;).&lt;/p&gt;
-&lt;h3 id=&#34;прочие-объекты-не-каталоги&#34;&gt;Прочие объекты не-Каталоги&lt;/h3&gt;
-&lt;p&gt;Объекты, не являющиеся каталогами (файлы, симлинки, device-special files, и т.д.), представлены в &lt;em&gt;объединённой&lt;/em&gt; ФС из &lt;em&gt;верхней&lt;/em&gt;, либо из &lt;em&gt;нижней&lt;/em&gt; файловой системы, по обстоятельствам. Когда требуется доступ на запись к файлу, представленному в нижней файловой системе, то сначала файл копируется из нижней ФС в верхнюю (copy_up). Обратите внимание, что создание жёсткой ссылки также требует copy_up, тогда как создание симлинка такой операции конечно не требует.&lt;/p&gt;
-&lt;p&gt;Если файл, открытый на запись, не был изменён, то операция copy_up выполнена не будет.&lt;/p&gt;
-&lt;p&gt;Процесс copy_up начинается с проверки наличия в &lt;em&gt;верхней&lt;/em&gt; ФС соответствующих каталогов, которые создаются при необходимости. После чего в существующий или созданный каталог копируется объект с такими же метаданными (owner, mode, mtime, symlink-target etc.). Далее, в случае если объект это файл, то копируется содержимое нижнего файла в только что созданный файл в верхней ФС. В заключении копируются расширенные атрибуты.&lt;/p&gt;
-&lt;p&gt;После завершения процесса copy_up, overlay ФС предоставит прямой доступ к только что созданному файлу из &lt;em&gt;верхней&lt;/em&gt; файловой системы. Последующие операции над файлом будут едва заметны для overlay ФС (тогда как операции над именем файла, вроде переименования или unlink, конечно будут замечены и обработаны).&lt;/p&gt;
-&lt;h3 id=&#34;множество-нижних-слоёв&#34;&gt;Множество нижних слоёв&lt;/h3&gt;
-&lt;p&gt;Множество нижних слоёв можно задать с помощью символа двоеточие (&amp;quot;:&amp;quot;), используя его как разделитель между именами каталогово. Для примера:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount -t overlay overlay -olowerdir=/lower1:/lower2:/lower3 /merged
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Как видно в примере, опции &amp;ldquo;upperdir=&amp;rdquo; и &amp;ldquo;workdir=&amp;rdquo; могут не указываться. И в этом случае наложение будет доступно только для чтения.&lt;/p&gt;
-&lt;p&gt;Указанные нижние каталоги будут стекированы справа налево, то есть lower1 будет на самом верху, lower2 посередине, а lower3 на нижнем уровне.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/opisanie-failovoi-sistemy-overlayfs/ro-ro-overlay.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;В пустом каталоге &lt;code&gt;RawArchive&lt;/code&gt;, после монтирования доступном только для чтения, мы увидим объединённое отображение двух папок c исходниками фото- и видеоматериалов. Все каталоги, задействованные в этой схеме, могут находиться, как на одном носителе, так и на разных (даже сетевых?).&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;копирование-только-метаданных&#34;&gt;Копирование только метаданных&lt;/h3&gt;
-&lt;p&gt;Когда включена опция копирования только метаданных, overlayfs скопирует только метаданные (в отличие от всего файла), в том случае когда выполняется определённая операция, типа &lt;code&gt;chown/chmod&lt;/code&gt;. Полностью файл будет скопирован после того, как файл будет открыт для &lt;strong&gt;записи&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Другими словами, это операция с задержкой копирования данных. Данные будут скопированы в том случае, если понадобится их изменение.&lt;/p&gt;
-&lt;p&gt;Есть несколько способов включения/отключния этой опции. Опция CONFIG_OVERLAY_FS_METACOPY может быть установлена/снята для включения/отключения этой функции по умолчанию. Или можно включить/отключить эту опцию во время загрузки модуля с параметром metacopy=on/off. И наконец, использовать опцию metacopy=on/off во время монтирования.&lt;/p&gt;
-&lt;p&gt;Не стоит использовать &lt;em&gt;metacopy=on&lt;/em&gt; с ненадёжными верхним/нижним каталогом. Otherwise it is possible that an attacker can create a handcrafted file with appropriate REDIRECT and METACOPY xattrs, and gain access to file on lower pointed by REDIRECT. This should not be possible on local system as setting &amp;ldquo;trusted.&amp;rdquo; xattrs will require CAP_SYS_ADMIN. But it should be possible for untrusted layers like from a pen drive.&lt;/p&gt;
-&lt;p&gt;Note: redirect_dir={off|nofollow|follow(*)} conflicts with metacopy=on, and results in an error.&lt;/p&gt;
-&lt;p&gt;(*) redirect_dir=follow only conflicts with metacopy=on if upperdir=&amp;hellip; is given.&lt;/p&gt;
-&lt;h3 id=&#34;расшаривание-и-копирование-слоёв&#34;&gt;Расшаривание и копирование слоёв&lt;/h3&gt;
-&lt;p&gt;Нижние слои могут совместно использоваться при монтировании нескольких разных overlay-стеков, и это обычная практика. При монтировании какой-нибудь Overlay может использовать тот же путь до каталога нижнего слоя, что и другой overlay mount.&lt;/p&gt;
 
       </description>
     </item>

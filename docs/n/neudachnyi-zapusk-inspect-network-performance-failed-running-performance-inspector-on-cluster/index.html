@@ -187,7 +187,7 @@ if (!doNotTrack) {
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nsozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline-li">
   <a href="/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-nsozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline"><span class="">Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled-li">
-  <a href="/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled"><span class="">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</span></a>
+  <a href="/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled"><span class="">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500-li">
   <a href="/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-nipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500"><span class="">IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nvklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov-li">
@@ -686,7 +686,7 @@ if (!doNotTrack) {
 	</header>    
 	<h2 id="проблема">Проблема</h2>
 <p>В результате запуска на кластере проверки &ldquo;Inspect Network Performance&rdquo; мы можем наблюдать картину:</p>
-<p><img src="/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png" alt="Failed running performance inspector on cluster"></p>
+<p><img src="/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png" alt="Failed running performance inspector on cluster"></p>
 <p>В логах <code>/var/log/cloudera-scm-agent/cloudera-scm-agent.log</code>:</p>
 <pre tabindex="0"><code>Thread-17 supervisor WARNING Failed while getting process info. Retrying. (&lt;Fault
 10: &#39;BAD_NAME: 3050-host-perf-inspector&#39;&gt;)
@@ -702,7 +702,7 @@ SyntaxError: invalid syntax
 <p>На наших машинах с CentOS7 на борту по умолчанию запускается &lsquo;python3&rsquo;. Поэтому для того, чтобы в кластере заработал &ldquo;network-inspector&rdquo; необходимо поменять шебанг у файла <code>/opt/cloudera/cm-agent/service/perf/host_perf_diag.py</code>. Добавить цифру &lsquo;2&rsquo; к &lsquo;#!/usr/bin/python&rsquo;, чтобы было так:</p>
 <pre tabindex="0"><code>#!/usr/bin/python2
 </code></pre><p>После применения решения можем наблюдать успешное выполнения теста:
-<img src="/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png" alt="Successfully completed running performance inspector on cluster"></p>
+<img src="/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png" alt="Successfully completed running performance inspector on cluster"></p>
 
 	
 	

@@ -25,7 +25,7 @@
         
         &lt;h2 id=&#34;проблема&#34;&gt;Проблема&lt;/h2&gt;
 &lt;p&gt;В результате запуска на кластере проверки &amp;ldquo;Inspect Network Performance&amp;rdquo; мы можем наблюдать картину:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Failed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/failed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Failed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
 &lt;p&gt;В логах &lt;code&gt;/var/log/cloudera-scm-agent/cloudera-scm-agent.log&lt;/code&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Thread-17 supervisor WARNING Failed while getting process info. Retrying. (&amp;lt;Fault
 10: &amp;#39;BAD_NAME: 3050-host-perf-inspector&amp;#39;&amp;gt;)
@@ -41,7 +41,7 @@ SyntaxError: invalid syntax
 &lt;p&gt;На наших машинах с CentOS7 на борту по умолчанию запускается &amp;lsquo;python3&amp;rsquo;. Поэтому для того, чтобы в кластере заработал &amp;ldquo;network-inspector&amp;rdquo; необходимо поменять шебанг у файла &lt;code&gt;/opt/cloudera/cm-agent/service/perf/host_perf_diag.py&lt;/code&gt;. Добавить цифру &amp;lsquo;2&amp;rsquo; к &amp;lsquo;#!/usr/bin/python&amp;rsquo;, чтобы было так:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/usr/bin/python2
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После применения решения можем наблюдать успешное выполнения теста:
-&lt;img src=&#34;https://debuntu.ru/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Successfully completed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://debuntu.ru/img/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/successfully_completed_running_performance_inspector_on_cluster.png&#34; alt=&#34;Successfully completed running performance inspector on cluster&#34;&gt;&lt;/p&gt;
 
       </description>
     </item>

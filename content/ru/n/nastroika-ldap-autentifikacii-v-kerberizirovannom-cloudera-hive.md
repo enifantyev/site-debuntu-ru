@@ -21,8 +21,8 @@ tags:
     **Enable LDAP Authentication  Hive (Service-Wide)**: &#9745;
 2. Указываем адрес LDAP-сервера
     **LDAP URL**
-    hive.server2.authentication.ldap.url: `ldaps://ldap.example.org:636`
+    hive.server2.authentication.ldap.url: `ldaps://ldap1.example.org ldaps://ldap2.example.org ldaps://ldap3.example.org`
 3. Указываем контейнер поиска пользователей
     **LDAP BaseDN**
     hive.server2.authentication.ldap.baseDN: `cn=users,cn=accounts,dc=example,dc=org`
-![Cloudera Hive LDAP](cloudera_hive_ldap.png)
+![Cloudera Hive LDAP](/img/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/cloudera_hive_ldap.png)

@@ -12,6 +12,7 @@ tags:
   - translation
 aliases:
   - /a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/
+  - /a/prostoi-centr-sertifikacii-dlya-strongswan-ipsec-1
   - /manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/
 ---
 

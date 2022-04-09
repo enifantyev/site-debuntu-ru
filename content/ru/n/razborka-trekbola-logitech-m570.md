@@ -16,4 +16,4 @@ tags:
 
 Шарик вынимается лёгким подталкиванием через отверстие снизу.
 
-![Disassabling Logitech M570](/razborka-trekbola-logitech-m570/logitech_m570.jpg)
+![Disassabling Logitech M570](/img/razborka-trekbola-logitech-m570/logitech_m570.jpg)

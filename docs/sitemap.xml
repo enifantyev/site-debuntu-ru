@@ -487,6 +487,13 @@
   
   
   <url>
+    <loc>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</loc>
+    <lastmod>2020-02-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</loc>
     <lastmod>2020-01-30T00:00:00+00:00</lastmod>
   </url>
@@ -586,6 +593,13 @@
   
   <url>
     <loc>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</loc>
+    <lastmod>2019-05-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/a/sozdanie-kopii-saita-plone/</loc>
     <lastmod>2019-05-10T00:00:00+00:00</lastmod>
   </url>
   
@@ -856,12 +870,6 @@
   
   
   <url>
-    <loc>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</loc>
-  </url>
-  
-  
-  
-  <url>
     <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</loc>
     <lastmod>2022-03-31T00:00:00+00:00</lastmod>
   </url>
@@ -913,13 +921,6 @@
   <url>
     <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase/</loc>
     <lastmod>2021-08-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
-    <loc>https://debuntu.ru/a/sozdanie-kopii-saita-plone/</loc>
-    <lastmod>2019-05-10T00:00:00+00:00</lastmod>
   </url>
   
   

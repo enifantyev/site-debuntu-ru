@@ -187,7 +187,7 @@ if (!doNotTrack) {
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nsozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline-li">
   <a href="/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-nsozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline"><span class="">Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled-li">
-  <a href="/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled"><span class="">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled.</span></a>
+  <a href="/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-ncloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled"><span class="">Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500-li">
   <a href="/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-nipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500"><span class="">IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-nvklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov-li">
@@ -707,7 +707,7 @@ psycopg2==2.5.1
 <pre tabindex="0"><code># pip2 install psycopg2-binary
 Collecting psycopg2-binary
   Downloading http://nexus.example.org:8081/repository/all_pypi.org_proxy/packages/psycopg2-binary/2.8.6/psycopg2_binary-2.8.6-cp27-cp27mu-manylinux1_x86_64.whl (2.9MB)
-    100% |████████████████████████████████| 2.9MB 96.1MB/s 
+    100% |████████████████████████████████| 2.9MB 96.1MB/s
 Installing collected packages: psycopg2-binary
 Successfully installed psycopg2-binary-2.8.6
 You are using pip version 8.1.2, however version 21.1.2 is available.
@@ -719,11 +719,11 @@ then it must be set, if not, you can ignore
   export LD_LIBRARY_PATH=/path/to/instantclient
 Username (leave blank to use &#39;root&#39;): admhue
 Email address: admhue@example.org
-Password: 
-Password (again): 
+Password:
+Password (again):
 Superuser created successfully.
 </code></pre><p>Убеждаюсь, что текущая настройка Hue — &lsquo;Authentication Backend&rsquo; — содержит параметр <code>desktop.auth.backend.AllowFirstUserDjangoBackend</code>:
-<img src="cloudera_hue_param_authentication_backend.png" alt="cloudera hue param authentication backend"></p>
+<img src="/img/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/cloudera_hue_param_authentication_backend.png" alt="cloudera hue param authentication backend"></p>
 <p>После чего я вхожу в Hue под новым суперюзером и выполняю необходимые настройки.</p>
 
 	
