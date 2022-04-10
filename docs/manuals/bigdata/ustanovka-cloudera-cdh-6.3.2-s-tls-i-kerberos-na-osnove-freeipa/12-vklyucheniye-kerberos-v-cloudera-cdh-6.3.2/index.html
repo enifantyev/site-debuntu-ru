@@ -846,15 +846,15 @@ Valid starting       Expires              Service principal
 </code></pre><p>Видим &lsquo;aes256-cts-hmac-sha1-96&rsquo;, поэтому пропускаем этот шаг.</p>
 <h3 id="25-kerberos-принципал-для-cloudera-manager-server-во-freeipa">2.5. Kerberos-принципал для Cloudera Manager Server во FreeIPA</h3>
 <p>Забегая вперёд отметим, что в конце выполнения &ldquo;мастера включения Kerberos&rdquo; Cloudera Manager Server создаст host-принципалы и загрузит keytab&rsquo;ы для всех сервисов в кластере. Для этого Cloudera Manager Server нуждается в отдельном принципале с соответствующими правами, позволяющими проделать эту работу.</p>
-<p>Если вы используете FreeIPA, визард создаст свой собственный аккаунт с необходимыми привилегиями. Для этого потребуется ввод учётных данных администратора FreeIPA. Эти учетные данные не сохраняются и используются только для создания нового пользователя и роли (с именами cmadin- &lt;random_id&gt; и cmadminrole соответственно) и получения его keytab. Cloudera Manager сохраняет этот keytab для будущих операций Kerberos, таких как восстановление учетных данных аккаунтов служб CDH.
-<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_1.png" alt=""></p>
+<p>Если вы используете FreeIPA, визард создаст свой собственный аккаунт с необходимыми привилегиями. Для этого потребуется ввод учётных данных администратора FreeIPA. Эти учетные данные не сохраняются и используются только для создания нового пользователя и роли (с именами cmadin- &lt;random_id&gt; и cmadminrole соответственно) и получения его keytab. Cloudera Manager сохраняет этот keytab для будущих операций Kerberos, таких как восстановление учетных данных аккаунтов служб CDH.</p>
+<p><img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_1.png" alt=""></p>
 <h2 id="3-включение-kerberos-используя-визард">3. Включение Kerberos используя визард</h2>
 <h3 id="31-запуск">3.1. Запуск</h3>
-<p>Выбираем в меню &lsquo;Enable Kerberos&rsquo;:
-<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_2.png" alt=""></p>
+<p>Выбираем в меню &lsquo;Enable Kerberos&rsquo;:</p>
+<p><img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_2.png" alt=""></p>
 <h3 id="32-getting-started">3.2. Getting Started</h3>
-<p>Первый экран Getting Started:
-<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_3.png" alt=""></p>
+<p>Первый экран Getting Started:</p>
+<p><img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_3.png" alt=""></p>
 <p>Ставим все галочки соглашаясь, что для включения в кластере Kerberos, мы уверены в том, что:</p>
 <ul>
 <li>Все узлы кластера введены в домен.</li>
@@ -962,8 +962,8 @@ test.lan = TEST.LAN
 </tr>
 </table>
 <h3 id="35-setup-kdc-account">3.5. Setup KDC Account</h3>
-<p>Здесь надо использовать УЗ с участием в группе &lsquo;admins&rsquo;, так как Cloudera создаст свою уникальную специальную УЗ с бессрочным паролем и привилегиями, перечисленными чуть ниже.
-<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_6.png" alt=""></p>
+<p>Здесь надо использовать УЗ с участием в группе &lsquo;admins&rsquo;, так как Cloudera создаст свою уникальную специальную УЗ с бессрочным паролем и привилегиями, перечисленными чуть ниже.</p>
+<p><img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_6.png" alt=""></p>
 <p>Для справки. Используя предоставленные учётные данные, Cloudera визард создаст во FreeIPA свою УЗ вида cmadmin-<random> с ролью cmadminrole, которая имеет привилегию &lsquo;Service Administrators&rsquo;, которая имеет разрешения:</p>
 <ul>
 <li>System: Add Services</li>
@@ -993,11 +993,11 @@ test.lan = TEST.LAN
 <h3 id="37-configure-kerberos">3.7. Configure Kerberos</h3>
 <p><img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_8.png" alt=""></p>
 <p>Так как требуемые пакеты у нас были установлены на этапе введения хостов в домен, то оставляем без изменений.</p>
-<p>Просто ради интереса временно снял галку &lsquo;Use Default Kerberos Principals&rsquo; и увидел:
-<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_9.png" alt=""></p>
+<p>Просто ради интереса временно снял галку &lsquo;Use Default Kerberos Principals&rsquo; и увидел:</p>
+<p><img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_9.png" alt=""></p>
 <h3 id="38-enable-kerberos-command">3.8. Enable Kerberos Command</h3>
-<p>Здесь наблюдаем прогресс включения Kerberos, после чего видим результат:
-<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_10.png" alt=""></p>
+<p>Здесь наблюдаем прогресс включения Kerberos, после чего видим результат:</p>
+<p><img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_10.png" alt=""></p>
 <h3 id="39-summary">3.9. Summary</h3>
 <p><img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_11.png" alt=""></p>
 <h2 id="5-включение-kerberos-аутентификации-для-http-web-консоли-для-hadoop-ролей">5. Включение Kerberos-аутентификации для HTTP Web Консоли для Hadoop ролей</h2>
@@ -1011,8 +1011,8 @@ General Error(s)
 Role is missing Kerberos keytab. Go to the Kerberos Credentials page and click the Generate Missing Credentials button.
 </span>
 <br><br>
-<p>По совету из предупреждения выполнил &lsquo;Generate Missing Credentials&rsquo;, но в ответ получил баннер:
-<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_12.png" alt=""></p>
+<p>По совету из предупреждения выполнил &lsquo;Generate Missing Credentials&rsquo;, но в ответ получил баннер:</p>
+<p><img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_12.png" alt=""></p>
 <p>Игнорирую сообщение и перезапускаю кластер. После перезапуска кластера &lsquo;Yarn Healt test&rsquo; выдал ошибку. Перезапустил YARN. Если судить по приборам, то всё в норме.</p>
 
 	

@@ -16,10 +16,10 @@
     
     <item>
       <title>Manuals: 01. Подготовка к установке кластера Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/01-podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
       <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/01-podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
       <description>
         
         
@@ -173,10 +173,10 @@ ansible all -i cluster.inv -m shell -a &amp;#34;/bin/bash /root/tmp/updatehosts.
     
     <item>
       <title>Manuals: 02. Установка Cloudera Manager 6.3.1</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/02-ustanovka-cloudera-manager-6-3.1/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/02-ustanovka-cloudera-manager-6-3.1/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1/</guid>
       <description>
         
         
@@ -241,10 +241,10 @@ ansible mgm -i cluster.inv -m systemd -a &amp;#34;name=cloudera-scm-server enabl
     
     <item>
       <title>Manuals: 03. Установка основных компонентов Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/03-ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/03-ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</guid>
       <description>
         
         
@@ -338,10 +338,10 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
     
     <item>
       <title>Manuals: 04. После установки основных компонентов</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/04-posle-ustanovki-osnovnykh-komponentov/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/04-posle-ustanovki-osnovnykh-komponentov/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov/</guid>
       <description>
         
         
@@ -360,10 +360,10 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
     
     <item>
       <title>Manuals: 10. Настройка TLS для Cloudera Manager Server и его агентов</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</link>
       <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</guid>
       <description>
         
         
@@ -514,10 +514,10 @@ For this scenario, make sure that your DNS and /etc/hosts file are configured co
     
     <item>
       <title>Manuals: 11. Настройка TLS для HDFS и YARN</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/11-nastroyka-tls-dlya-hdfs-i-yarn/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/</link>
       <pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/11-nastroyka-tls-dlya-hdfs-i-yarn/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/</guid>
       <description>
         
         
@@ -713,10 +713,10 @@ General Error(s)&lt;br&gt;&lt;br&gt;
     
     <item>
       <title>Manuals: 12. Включение Kerberos в Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/12-vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</link>
       <pubDate>Thu, 14 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/12-vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</guid>
       <description>
         
         
@@ -809,15 +809,15 @@ Valid starting       Expires              Service principal
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Видим &amp;lsquo;aes256-cts-hmac-sha1-96&amp;rsquo;, поэтому пропускаем этот шаг.&lt;/p&gt;
 &lt;h3 id=&#34;25-kerberos-принципал-для-cloudera-manager-server-во-freeipa&#34;&gt;2.5. Kerberos-принципал для Cloudera Manager Server во FreeIPA&lt;/h3&gt;
 &lt;p&gt;Забегая вперёд отметим, что в конце выполнения &amp;ldquo;мастера включения Kerberos&amp;rdquo; Cloudera Manager Server создаст host-принципалы и загрузит keytab&amp;rsquo;ы для всех сервисов в кластере. Для этого Cloudera Manager Server нуждается в отдельном принципале с соответствующими правами, позволяющими проделать эту работу.&lt;/p&gt;
-&lt;p&gt;Если вы используете FreeIPA, визард создаст свой собственный аккаунт с необходимыми привилегиями. Для этого потребуется ввод учётных данных администратора FreeIPA. Эти учетные данные не сохраняются и используются только для создания нового пользователя и роли (с именами cmadin- &amp;lt;random_id&amp;gt; и cmadminrole соответственно) и получения его keytab. Cloudera Manager сохраняет этот keytab для будущих операций Kerberos, таких как восстановление учетных данных аккаунтов служб CDH.
-&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Если вы используете FreeIPA, визард создаст свой собственный аккаунт с необходимыми привилегиями. Для этого потребуется ввод учётных данных администратора FreeIPA. Эти учетные данные не сохраняются и используются только для создания нового пользователя и роли (с именами cmadin- &amp;lt;random_id&amp;gt; и cmadminrole соответственно) и получения его keytab. Cloudera Manager сохраняет этот keytab для будущих операций Kerberos, таких как восстановление учетных данных аккаунтов служб CDH.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;3-включение-kerberos-используя-визард&#34;&gt;3. Включение Kerberos используя визард&lt;/h2&gt;
 &lt;h3 id=&#34;31-запуск&#34;&gt;3.1. Запуск&lt;/h3&gt;
-&lt;p&gt;Выбираем в меню &amp;lsquo;Enable Kerberos&amp;rsquo;:
-&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Выбираем в меню &amp;lsquo;Enable Kerberos&amp;rsquo;:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;32-getting-started&#34;&gt;3.2. Getting Started&lt;/h3&gt;
-&lt;p&gt;Первый экран Getting Started:
-&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Первый экран Getting Started:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Ставим все галочки соглашаясь, что для включения в кластере Kerberos, мы уверены в том, что:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Все узлы кластера введены в домен.&lt;/li&gt;
@@ -925,8 +925,8 @@ test.lan = TEST.LAN
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;h3 id=&#34;35-setup-kdc-account&#34;&gt;3.5. Setup KDC Account&lt;/h3&gt;
-&lt;p&gt;Здесь надо использовать УЗ с участием в группе &amp;lsquo;admins&amp;rsquo;, так как Cloudera создаст свою уникальную специальную УЗ с бессрочным паролем и привилегиями, перечисленными чуть ниже.
-&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_6.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Здесь надо использовать УЗ с участием в группе &amp;lsquo;admins&amp;rsquo;, так как Cloudera создаст свою уникальную специальную УЗ с бессрочным паролем и привилегиями, перечисленными чуть ниже.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_6.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Для справки. Используя предоставленные учётные данные, Cloudera визард создаст во FreeIPA свою УЗ вида cmadmin-&lt;random&gt; с ролью cmadminrole, которая имеет привилегию &amp;lsquo;Service Administrators&amp;rsquo;, которая имеет разрешения:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;System: Add Services&lt;/li&gt;
@@ -956,11 +956,11 @@ test.lan = TEST.LAN
 &lt;h3 id=&#34;37-configure-kerberos&#34;&gt;3.7. Configure Kerberos&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_8.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Так как требуемые пакеты у нас были установлены на этапе введения хостов в домен, то оставляем без изменений.&lt;/p&gt;
-&lt;p&gt;Просто ради интереса временно снял галку &amp;lsquo;Use Default Kerberos Principals&amp;rsquo; и увидел:
-&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_9.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Просто ради интереса временно снял галку &amp;lsquo;Use Default Kerberos Principals&amp;rsquo; и увидел:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_9.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;38-enable-kerberos-command&#34;&gt;3.8. Enable Kerberos Command&lt;/h3&gt;
-&lt;p&gt;Здесь наблюдаем прогресс включения Kerberos, после чего видим результат:
-&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_10.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Здесь наблюдаем прогресс включения Kerberos, после чего видим результат:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_10.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;39-summary&#34;&gt;3.9. Summary&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_11.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;5-включение-kerberos-аутентификации-для-http-web-консоли-для-hadoop-ролей&#34;&gt;5. Включение Kerberos-аутентификации для HTTP Web Консоли для Hadoop ролей&lt;/h2&gt;
@@ -974,8 +974,8 @@ General Error(s)
 Role is missing Kerberos keytab. Go to the Kerberos Credentials page and click the Generate Missing Credentials button.
 &lt;/span&gt;
 &lt;br&gt;&lt;br&gt;
-&lt;p&gt;По совету из предупреждения выполнил &amp;lsquo;Generate Missing Credentials&amp;rsquo;, но в ответ получил баннер:
-&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;По совету из предупреждения выполнил &amp;lsquo;Generate Missing Credentials&amp;rsquo;, но в ответ получил баннер:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Игнорирую сообщение и перезапускаю кластер. После перезапуска кластера &amp;lsquo;Yarn Healt test&amp;rsquo; выдал ошибку. Перезапустил YARN. Если судить по приборам, то всё в норме.&lt;/p&gt;
 
       </description>

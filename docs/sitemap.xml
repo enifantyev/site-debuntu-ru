@@ -11,28 +11,28 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/01-podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</loc>
     <lastmod>2021-06-10T00:00:00+00:00</lastmod>
   </url>
   
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/02-ustanovka-cloudera-manager-6-3.1/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1/</loc>
     <lastmod>2021-06-16T00:00:00+00:00</lastmod>
   </url>
   
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/03-ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</loc>
     <lastmod>2021-06-16T00:00:00+00:00</lastmod>
   </url>
   
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/04-posle-ustanovki-osnovnykh-komponentov/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov/</loc>
     <lastmod>2021-06-16T00:00:00+00:00</lastmod>
   </url>
   
@@ -207,7 +207,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</loc>
     <lastmod>2021-06-17T00:00:00+00:00</lastmod>
   </url>
   
@@ -912,7 +912,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/11-nastroyka-tls-dlya-hdfs-i-yarn/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/</loc>
     <lastmod>2021-06-01T00:00:00+00:00</lastmod>
   </url>
   
@@ -940,7 +940,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/12-vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</loc>
     <lastmod>2021-10-14T00:00:00+00:00</lastmod>
   </url>
   

@@ -10,8 +10,7 @@ tags:
   - CentOS
   - CentOS 7
   - BigData
-url:
-  - /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/
+url: /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/
 ---
 
 ## Использованные материалы
