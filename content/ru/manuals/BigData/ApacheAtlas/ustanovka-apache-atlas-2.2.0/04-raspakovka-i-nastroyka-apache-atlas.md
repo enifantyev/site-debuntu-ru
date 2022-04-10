@@ -8,6 +8,7 @@ tags:
   - BigData
   - Apache Atlas
   - Cloudera CDH 6.3.2
+slug: raspakovka-i-nastroyka-apache-atlas
 ---
 
 2021-10-20 – 2021-11-02

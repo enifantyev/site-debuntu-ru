@@ -9,6 +9,7 @@ tags:
   - Apache Atlas
   - Apache Hive
   - Cloudera CDH 6.3.2
+slug: pervonachalnyy-import-soderzhimogo-hive
 ---
 
 2021-08-29

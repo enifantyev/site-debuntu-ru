@@ -8,8 +8,7 @@ tags:
   - BigData
   - Apache Atlas
   - Cloudera CDH 6.3.2
-aliases:
-  - /manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas/
+slug: podgotovitelnyye-raboty-dlya-ustanovki-atlas
 ---
 
 Везде, где выполняется работа с керберизированными сервисами, помним о предварительном получении Kerberos-билета, если таковой не был получен ранее.

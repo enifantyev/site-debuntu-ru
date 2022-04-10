@@ -8,6 +8,7 @@ tags:
   - BigData
   - Apache Atlas
   - Cloudera CDH 6.3.2
+slug: pervyy-zapusk-apache-atlas-i-yego-otladka
 ---
 
 2021-11-02

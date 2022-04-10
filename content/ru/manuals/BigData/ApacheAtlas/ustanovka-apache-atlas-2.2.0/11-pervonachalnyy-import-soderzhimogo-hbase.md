@@ -9,6 +9,7 @@ tags:
   - Apache Atlas
   - Apache HBase
   - Cloudera CDH 6.3.2
+slug: pervonachalnyy-import-soderzhimogo-hbase
 ---
 
 2021-08-29

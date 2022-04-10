@@ -9,6 +9,7 @@ tags:
   - Apache Atlas
   - Apache Spark
   - Cloudera CDH 6.3.2
+slug: zabros-hook-v-spark
 ---
 
 Почитать:

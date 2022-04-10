@@ -8,6 +8,7 @@ tags:
   - BigData
   - Apache Atlas
   - Cloudera CDH 6.3.2
+slug: testirovaniye-rabotosposobnosti-apache-atlas
 ---
 
 2021-12-06

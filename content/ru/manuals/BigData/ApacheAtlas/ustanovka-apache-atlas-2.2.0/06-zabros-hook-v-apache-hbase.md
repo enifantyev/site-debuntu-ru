@@ -1,27 +1,29 @@
 ---
-title: "05. 🎣 Заброс Hook'а в Apache Hive"
-date: 2021-08-30
-weight: 10
+title: "06. 🎣 Заброс Hook'а в Apache HBase"
+date: 2021-10-22
+weight: 11
 description: >
   Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
 tags:
   - BigData
   - Apache Atlas
-  - Apache Hive
+  - Apache HBase
   - Cloudera CDH 6.3.2
+slug: zabros-hook-v-apache-hbase
 ---
 
-2021-08-30
+2021-08-30 / 2021-10-22
 
 ## 1.Введение
 Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.
 
-## 2. Создание Atlas-папки на хостах с ролью 'HiveServer2'
-2.1. На хостах с ролью 'HiveServer2' создаём atlas-каталоги и скачиваем с Nexus'а необходимый файл:
+## 2. Создание Atlas-папки на хостах с ролью 'HBase Master'
+2.1. На хостах с ролью 'HBase Master' создаём atlas-каталоги и скачиваем с Nexus'а необходимый файл:
 ```
-FILENAME="?????????????????"
-## Пробел нужен, чтобы пароль не попал в history
- NXUSERPASS="eugene:xxxxxxxxxxxxx"
+FILENAME="?????????????????????????"
+set +o history
+NXUSERPASS="eugene:xxxxxxxxxxxxx"
+set -o history
 DIR="apache-atlas-2.2.0_cdh6.3.2_j8.181_mvn3.8.1"
 
 ## Скачиваем сборку с Nexus'а
@@ -37,7 +39,12 @@ sudo chown -R root.root ${DIR}
 sudo chmod -R u=rwX,go=rX ${DIR}
 ```
 
-2.2. Создаём файл 'atlas-application.properties':
+2.2. Залинковываем jar-библиотеки Atlas'а в каталог `/usr/lib/hbase/lib`:
+```
+sudo ln -s /opt/atlas/hook/hbase/* /usr/lib/hbase/lib/
+```
+
+2.3. Создаём файл 'atlas-application.properties':
 ```
 ZOOKEEPERSERVERS="dev-zk110p.test2.lan:2181,dev-zk111p.test2.lan:2181,dev-zk112p.test2.lan:2181"
 KAFKASERVERS="dev-dn110p.test2.lan:9092,dev-dn111p.test2.lan:9092,dev-dn112p.test2.lan:9092"
@@ -77,7 +84,7 @@ atlas.jaas.KafkaClient.option.principal=atlas/_HOST@${REALMNAME}
 EOF
 ```
 
-2.3. Создаём, если таковой ещё не был сгененирован, и получаем новый keytab. Напомню, что <span style="color:red">последующие получения keytab'а необходимо выполнять с опцией '-r', иначе вместо получения существующего keytab'а будет создан новый keytab</span>, вследствие чего уже работающие сервисы Atlas'а перестанут аутентифицировать и потребуется повторить для них получение keytab'ов и перезапустить сервисы:
+2.4. Создаём, если таковой ещё не был сгененирован, и получаем новый keytab. Напомню, что <span style="color:red">последующие получения keytab'а необходимо выполнять с опцией '-r', иначе вместо получения существующего keytab'а будет создан новый keytab</span>, вследствие чего уже работающие сервисы Atlas'а перестанут аутентифицировать и потребуется повторить для них получение keytab'ов и перезапустить сервисы:
 ```
 REALMNAME="$(hostname -d | tr [:lower:] [:upper:])"
 IPAADMIN="eugene"
@@ -85,59 +92,52 @@ IPAADMIN="eugene"
 OPTION="-r"
 
 # kinit ${IPAADMIN}
+ipa service-add atlas/$(hostname)
+
 ipa service-allow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
 ipa service-allow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
+
 ipa-getkeytab -p atlas/$(hostname) -k ~/atlas.keytab ${OPTION}
 ipa service-disallow-retrieve-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
 ipa service-disallow-create-keytab atlas/$(hostname)@${REALMNAME} --users=${IPAADMIN}
 
 sudo mv ~/atlas.keytab /opt/atlas/conf/
 sudo chown root.root /opt/atlas/conf/atlas.keytab
-sudo setfacl -m u:hive:r /opt/atlas/conf/atlas.keytab
+sudo setfacl -m u:hbase:r /opt/atlas/conf/atlas.keytab
 
 unset OPTION
 ```
 
-## 3. Заброс Hook'а в Apache Hive через Cloudera Manager
+3. Подключение Hook'а к Apache HBase
 
-3.1. В настройках службы Hive изменяем следующие параметры:
+3.1. В настройках службы Hue изменяем следующие параметры:
 <table>
 <tr>
 <th>Property</th><th>Value</th><th>Description</th>
 </tr>
 <tr>
-<td><b>HiveServer2 Advanced Configuration Snippet (Safety Valve) for hive-site.xml</b></td>
 <td>
-<b>Name</b>: <span style="color:blue">hive.exec.post.hooks</span><br>
-<b>Value</b>: <span style="color:blue">org.apache.atlas.hive.hook.HiveHook</span><br>
-<b>Description</b>:<br>
-<hr>
-<span style="color:lightgrey"> Следующие параметры не используем. После проверки, будут удалены или активированы.
-
-<b>Name</b>: hive.reloadable.aux.jars.path<br>
-<b>Value</b>: /opt/atlas/hook/hive<br>
-<b>Description:</b><br>
-<br>
-<b>Name</b>: atlas.cluster.name<br>
-<b>Value</b>: primary<br>
-<b>Description</b>:<br>
-</span>
+<b>HBase Coprocessor Master Classes</b><br>
+hbase.coprocessor.master.classes
 </td>
 <td>
-	For advanced use only. A string to be inserted into hive-site.xml for this role only.
+- <span style="color:blue">org.apache.hadoop.hbase.security.access.AccessController</span><br>
+- <span style="color:blue">org.apache.atlas.hbase.hook.HBaseAtlasCoprocessor</span>
+<br><br>
+При следующих установках Atlas'а попытаться определить момент, когда происходит ошибка <span style="color:salmon">HBase. Ошибка при выполнении 'user_permission'. ERROR: DISABLED: Security features are not available.</span> Именно для её решения понадобилось добавить 'org.apache.hadoop.hbase.security.access.AccessController'.
+</td>
+<td>
+List of org.apache.hadoop.hbase.coprocessor.MasterObserver coprocessors that are loaded by default on the active HMaster process. For any implemented coprocessor methods, the listed classes will be called in order. After implementing your own MasterObserver, just put it in HBase's classpath and add the fully qualified class name here.
 </td>
 </tr>
 <tr>
-<td><b>Java Configuration Options for HiveServer2</b></td>
-<td>{{JAVA_GC_ARGS}} <span style="color:blue">-Datlas.conf=/opt/atlas/conf/</span></td>
+<td>Java Configuration Options for HBase Master</td>
 <td>
-	These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.
+{{JAVA_GC_ARGS}} -XX:ReservedCodeCacheSize=256m <span style="color:blue">-Datlas.conf=/opt/atlas/conf/</span>
 </td>
-</tr>
-<tr>
-<td><b>HiveServer2 Environment Advanced Configuration Snippet (Safety Valve)</b></td>
-<td><span style="color:blue">HIVE_AUX_JARS_PATH=/opt/atlas/hook/hive/</span></td>
-<td>For advanced use only, key-value pairs (one on each line) to be inserted into a role's environment. Applies to configurations of this role except client configuration.</td>
+<td>
+These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.
+</td>
 </tr>
 </table>
 
@@ -146,4 +146,4 @@ unset OPTION
 3.3. ![](/img/clouderabutton.png)Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.
 
 ## 4. Использованные материалы
-[Apache Atlas Hook & Bridge for Apache Hive](https://atlas.apache.org/#/HookHive)
+[Apache Atlas Hook & Bridge for Apache HBase](https://atlas.apache.org/#/HookHBase)
