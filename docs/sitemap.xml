@@ -912,6 +912,13 @@
   
   
   <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/11-nastroyka-tls-dlya-hdfs-i-yarn/</loc>
+    <lastmod>2021-06-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
   </url>
@@ -928,6 +935,13 @@
   <url>
     <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/</loc>
     <lastmod>2021-11-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/12-vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</loc>
+    <lastmod>2021-10-14T00:00:00+00:00</lastmod>
   </url>
   
   
@@ -1038,6 +1052,13 @@
   
   
   <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/</loc>
+    <lastmod>2021-10-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/refbooks/linux/</loc>
     <lastmod>2021-10-07T00:00:00+00:00</lastmod>
   </url>
@@ -1047,13 +1068,6 @@
   <url>
     <loc>https://debuntu.ru/refbooks/</loc>
     <lastmod>2021-10-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
-    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/</loc>
-    <lastmod>2021-06-17T00:00:00+00:00</lastmod>
   </url>
   
   

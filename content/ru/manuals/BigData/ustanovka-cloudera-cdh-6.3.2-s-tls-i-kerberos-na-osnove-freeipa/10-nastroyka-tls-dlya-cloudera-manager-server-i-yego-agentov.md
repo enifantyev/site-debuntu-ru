@@ -10,6 +10,8 @@ tags:
   - CentOS
   - CentOS 7
   - BigData
+aliases:
+  - /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/
 ---
 
 ## Использованные материалы
@@ -59,75 +61,75 @@ ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars
 <tr><th>Property</th><th>Value</th><th>Description</th></tr>
 <tr>
 <td><b>Use TLS Encryption for Admin Console</b></td>
-<td>☑</td>
+<td><span style="color: blue">☑</span></td>
 <td>Enable TLS encryption (HTTPS) between the user and the Cloudera Manager Admin Console. When checked, the HTTPS port will be used.</td>
 </tr>
 <tr>
 <td><b>Use TLS Encryption for Agents</b></td>
-<td>☑</td>
+<td><span style="color: blue">☑</span></td>
 <td>Select this option to enable TLS encryption between the Server and Agents.</td>
 </tr>
 <tr>
 <td><b>Use TLS Authentication of Agents to Server</b></td>
-<td>☑</td>
+<td><span style="color: blue">☑</span></td>
 <td>Select this option to enable TLS Authentication of Agents to the Server.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager TLS/SSL Server JKS Keystore File Location</b></td>
-<td>/opt/cloudera/security/pki/server.jks</td>
+<td><span style="color: blue">/opt/cloudera/security/pki/server.jks</code></span></td>
 <td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Cloudera Manager is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager TLS/SSL Server JKS Keystore File Password</b></td>
-<td>По умолчанию: changeit.</td>
+<td>По умолчанию: <span style="color: blue">changeit</code></span>.</td>
 <td>The password for the Cloudera Manager JKS keystore file.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager TLS/SSL Client Trust Store File</b></td>
-<td>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
+<td><span style="color: blue">/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
 <td>The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that Cloudera Manager might connect to. This is used when Cloudera Manager is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager Server TLS/SSL Certificate Trust Store Password</b></td>
-<td>По умолчанию: changeit.</td>
+<td>По умолчанию: <span style="color: blue">changeit</code></span>.</td>
 <td>The password for the Cloudera Manager TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
 </tr>
 </table>
-6. Нажимаем Save Changes.<br>
+6. Нажимаем **Save Changes**.<br>
 7. В настройках Cloudera Management Service (http://cloudera:7180/cmf/services/6/config), используя категорию 'Security', изменяем следующие параметры:
 <table>
 <tr><th>Property</th><th>Value</th><th>Description</th></tr>
 <tr>
 <td><b>TLS/SSL Client Truststore File Location</b><br><i>ssl.client.truststore.location</i></td>
-<td>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
+<td><span style="color: blue">/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</code></span></td>
 <td>Path to the client truststore file used in HTTPS communication. This truststore contains certificates of trusted servers, or of Certificate Authorities trusted to identify servers. If set, this is used to verify certificates in HTTPS communication with CDH services and the Cloudera Manager Server. If not set, the default Java truststore is used to verify certificates. The contents of this truststore can be modified without restarting the Cloudera Management Service roles. By default, changes to its contents are picked up within ten seconds.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager Server TLS/SSL Client Trust Store Password</b>
 <i>ssl.client.truststore.password</i></td>
-<td>По умолчанию: changeit.</td>
+<td>По умолчанию: <span style="color: blue">changeit</code></span>.</td>
 <td>The password for the Cloudera Manager Server TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
 </tr>
 <tr>
 <td><b>Enable TLS/SSL for Firehose Debug Server</b>
 <i>debug.servlet.https.enabled</i></td>
-<td>☑</td>
+<td><span style="color: blue">☑</span></td>
 <td>Encrypt communication between clients and Firehose Debug Server using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).</td>
 </tr>
 <tr>
 <td><b>Firehose Debug Server TLS/SSL Server JKS Keystore File Location</b>
 <i>debug.servlet.https.keystorePath</i></td>
-<td>/opt/cloudera/security/pki/server.jks</td>
+<td><span style="color: blue">/opt/cloudera/security/pki/server.jks</code></span></td>
 <td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Firehose Debug Server is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
 </tr>
 <tr>
 <td><b>Firehose Debug Server TLS/SSL Server JKS Keystore File Password</b>
 <i>debug.servlet.https.keystorePassword</i></td>
-<td>По умолчанию: changeit.</td>
+<td>По умолчанию: <span style="color: blue">changeit</code></span>.</td>
 <td>The password for the Firehose Debug Server JKS keystore file.</td>
 </tr>
 </table>
-8. Нажимаем Save Changes.<br><br>
+8. Нажимаем **Save Changes**.<br><br>
 
 >Без настроенных параметров Firehose Debug Server, после включения в настройках ZooKeeper параметра "Enable TLS client authentication for JMX port", Cloudera Manager перестаёт видеть состояние серверов ZooKeeper.
 
@@ -144,7 +146,7 @@ ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars
 12. Потом запускаем кластер и наблюдаем, что всё в норме:
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_10_2.png)
 
-## Отладка при необходимости
+## 3. Отладка при необходимости
 ### Verify that Cloudera Manager Server and Agents are Communicating
 In the Cloudera Manager Admin Console, go to Hosts > All Hosts. If you see successful heartbeats reported in the Last Heartbeat column after restarting the agents and server, TLS certificate authentication is working properly. If not, check the agent log (/var/log/cloudera-scm-agent/cloudera-scm-agent.log) for errors.
 

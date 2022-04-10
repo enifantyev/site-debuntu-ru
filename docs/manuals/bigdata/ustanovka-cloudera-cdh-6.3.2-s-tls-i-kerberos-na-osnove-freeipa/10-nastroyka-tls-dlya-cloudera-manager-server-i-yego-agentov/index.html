@@ -33,7 +33,7 @@
 <meta itemprop="description" content="В этой части описывается настройка TLS для Cloudera Manager Server и его агентов.
 "><meta itemprop="datePublished" content="2021-06-17T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-06-17T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1190">
+<meta itemprop="wordCount" content="1191">
 <meta itemprop="keywords" content="Cloudera CDH 6.3.2,Apache Hadoop,CentOS,CentOS 7,BigData," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="10. Настройка TLS для Cloudera Manager Server и его агентов"/>
 <meta name="twitter:description" content="В этой части описывается настройка TLS для Cloudera Manager Server и его агентов.
@@ -257,6 +257,10 @@ if (!doNotTrack) {
   <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/04-posle-ustanovki-osnovnykh-komponentov/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa04-posle-ustanovki-osnovnykh-komponentov"><span class="">04. После установки основных компонентов</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov-li">
   <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov"><span class="td-sidebar-nav-active-item">10. Настройка TLS для Cloudera Manager Server и его агентов</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa11-nastroyka-tls-dlya-hdfs-i-yarn-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/11-nastroyka-tls-dlya-hdfs-i-yarn/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa11-nastroyka-tls-dlya-hdfs-i-yarn"><span class="">11. Настройка TLS для HDFS и YARN</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa12-vklyucheniye-kerberos-v-cloudera-cdh-632-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/12-vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa12-vklyucheniye-kerberos-v-cloudera-cdh-632"><span class="">12. Включение Kerberos в Cloudera CDH 6.3.2</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapacheairflow-li">
@@ -316,7 +320,7 @@ if (!doNotTrack) {
     <li><a href="#вступление">Вступление</a></li>
     <li><a href="#1-генерация-tls-сертификатов">1. Генерация TLS-сертификатов</a></li>
     <li><a href="#2-настройка-tls-для-cm-клиентов-и-связи-между-cm-и-агентами">2. Настройка TLS для CM, клиентов, и связи между CM и агентами</a></li>
-    <li><a href="#отладка-при-необходимости">Отладка при необходимости</a>
+    <li><a href="#3-отладка-при-необходимости">3. Отладка при необходимости</a>
       <ul>
         <li><a href="#verify-that-cloudera-manager-server-and-agents-are-communicating">Verify that Cloudera Manager Server and Agents are Communicating</a></li>
         <li><a href="#прочее">Прочее</a></li>
@@ -366,7 +370,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">16</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">18</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
         
@@ -404,21 +408,21 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/beeline/" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">32</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">34</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">9</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/btrfs/" data-taxonomy-term="btrfs"><span class="taxonomy-label">Btrfs</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos/" data-taxonomy-term="centos"><span class="taxonomy-label">CentOS</span><span class="taxonomy-count">16</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos/" data-taxonomy-term="centos"><span class="taxonomy-label">CentOS</span><span class="taxonomy-count">18</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos-7/" data-taxonomy-term="centos-7"><span class="taxonomy-label">CentOS 7</span><span class="taxonomy-count">13</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos-7/" data-taxonomy-term="centos-7"><span class="taxonomy-label">CentOS 7</span><span class="taxonomy-count">15</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/chroot/" data-taxonomy-term="chroot"><span class="taxonomy-label">chroot</span><span class="taxonomy-count">1</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">23</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">25</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-hadoop/" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span><span class="taxonomy-count">2</span></a></li>
         
@@ -773,75 +777,75 @@ ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars
 <tr><th>Property</th><th>Value</th><th>Description</th></tr>
 <tr>
 <td><b>Use TLS Encryption for Admin Console</b></td>
-<td>☑</td>
+<td><span style="color: blue">☑</span></td>
 <td>Enable TLS encryption (HTTPS) between the user and the Cloudera Manager Admin Console. When checked, the HTTPS port will be used.</td>
 </tr>
 <tr>
 <td><b>Use TLS Encryption for Agents</b></td>
-<td>☑</td>
+<td><span style="color: blue">☑</span></td>
 <td>Select this option to enable TLS encryption between the Server and Agents.</td>
 </tr>
 <tr>
 <td><b>Use TLS Authentication of Agents to Server</b></td>
-<td>☑</td>
+<td><span style="color: blue">☑</span></td>
 <td>Select this option to enable TLS Authentication of Agents to the Server.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager TLS/SSL Server JKS Keystore File Location</b></td>
-<td>/opt/cloudera/security/pki/server.jks</td>
+<td><span style="color: blue">/opt/cloudera/security/pki/server.jks</code></span></td>
 <td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Cloudera Manager is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager TLS/SSL Server JKS Keystore File Password</b></td>
-<td>По умолчанию: changeit.</td>
+<td>По умолчанию: <span style="color: blue">changeit</code></span>.</td>
 <td>The password for the Cloudera Manager JKS keystore file.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager TLS/SSL Client Trust Store File</b></td>
-<td>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
+<td><span style="color: blue">/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
 <td>The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that Cloudera Manager might connect to. This is used when Cloudera Manager is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager Server TLS/SSL Certificate Trust Store Password</b></td>
-<td>По умолчанию: changeit.</td>
+<td>По умолчанию: <span style="color: blue">changeit</code></span>.</td>
 <td>The password for the Cloudera Manager TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
 </tr>
 </table>
-6. Нажимаем Save Changes.<br>
+6. Нажимаем **Save Changes**.<br>
 7. В настройках Cloudera Management Service (http://cloudera:7180/cmf/services/6/config), используя категорию 'Security', изменяем следующие параметры:
 <table>
 <tr><th>Property</th><th>Value</th><th>Description</th></tr>
 <tr>
 <td><b>TLS/SSL Client Truststore File Location</b><br><i>ssl.client.truststore.location</i></td>
-<td>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
+<td><span style="color: blue">/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</code></span></td>
 <td>Path to the client truststore file used in HTTPS communication. This truststore contains certificates of trusted servers, or of Certificate Authorities trusted to identify servers. If set, this is used to verify certificates in HTTPS communication with CDH services and the Cloudera Manager Server. If not set, the default Java truststore is used to verify certificates. The contents of this truststore can be modified without restarting the Cloudera Management Service roles. By default, changes to its contents are picked up within ten seconds.</td>
 </tr>
 <tr>
 <td><b>Cloudera Manager Server TLS/SSL Client Trust Store Password</b>
 <i>ssl.client.truststore.password</i></td>
-<td>По умолчанию: changeit.</td>
+<td>По умолчанию: <span style="color: blue">changeit</code></span>.</td>
 <td>The password for the Cloudera Manager Server TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
 </tr>
 <tr>
 <td><b>Enable TLS/SSL for Firehose Debug Server</b>
 <i>debug.servlet.https.enabled</i></td>
-<td>☑</td>
+<td><span style="color: blue">☑</span></td>
 <td>Encrypt communication between clients and Firehose Debug Server using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).</td>
 </tr>
 <tr>
 <td><b>Firehose Debug Server TLS/SSL Server JKS Keystore File Location</b>
 <i>debug.servlet.https.keystorePath</i></td>
-<td>/opt/cloudera/security/pki/server.jks</td>
+<td><span style="color: blue">/opt/cloudera/security/pki/server.jks</code></span></td>
 <td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Firehose Debug Server is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
 </tr>
 <tr>
 <td><b>Firehose Debug Server TLS/SSL Server JKS Keystore File Password</b>
 <i>debug.servlet.https.keystorePassword</i></td>
-<td>По умолчанию: changeit.</td>
+<td>По умолчанию: <span style="color: blue">changeit</code></span>.</td>
 <td>The password for the Firehose Debug Server JKS keystore file.</td>
 </tr>
 </table>
-8. Нажимаем Save Changes.<br><br>
+8. Нажимаем **Save Changes**.<br><br>
 <blockquote>
 <p>Без настроенных параметров Firehose Debug Server, после включения в настройках ZooKeeper параметра &ldquo;Enable TLS client authentication for JMX port&rdquo;, Cloudera Manager перестаёт видеть состояние серверов ZooKeeper.</p>
 </blockquote>
@@ -858,7 +862,7 @@ ansible mgm -i cluster.inv -m systemd \
 <li>Потом запускаем кластер и наблюдаем, что всё в норме:
 <img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_10_2.png" alt=""></li>
 </ol>
-<h2 id="отладка-при-необходимости">Отладка при необходимости</h2>
+<h2 id="3-отладка-при-необходимости">3. Отладка при необходимости</h2>
 <h3 id="verify-that-cloudera-manager-server-and-agents-are-communicating">Verify that Cloudera Manager Server and Agents are Communicating</h3>
 <p>In the Cloudera Manager Admin Console, go to Hosts &gt; All Hosts. If you see successful heartbeats reported in the Last Heartbeat column after restarting the agents and server, TLS certificate authentication is working properly. If not, check the agent log (/var/log/cloudera-scm-agent/cloudera-scm-agent.log) for errors.</p>
 <p>For example, you might see the following error:</p>
