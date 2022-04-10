@@ -10,7 +10,7 @@ tags:
   - CentOS
   - CentOS 7
   - BigData
-aliases:
+url:
   - /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/
 ---
 

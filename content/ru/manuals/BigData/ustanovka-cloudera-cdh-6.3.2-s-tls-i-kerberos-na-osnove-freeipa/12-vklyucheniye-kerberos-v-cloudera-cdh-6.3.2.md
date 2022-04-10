@@ -10,7 +10,7 @@ tags:
   - CentOS
   - CentOS 7
   - BigData
-aliases:
+url:
   - /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/
 ---
 
@@ -115,15 +115,18 @@ Valid starting       Expires              Service principal
 Забегая вперёд отметим, что в конце выполнения "мастера включения Kerberos" Cloudera Manager Server создаст host-принципалы и загрузит keytab'ы для всех сервисов в кластере. Для этого Cloudera Manager Server нуждается в отдельном принципале с соответствующими правами, позволяющими проделать эту работу.
 
 Если вы используете FreeIPA, визард создаст свой собственный аккаунт с необходимыми привилегиями. Для этого потребуется ввод учётных данных администратора FreeIPA. Эти учетные данные не сохраняются и используются только для создания нового пользователя и роли (с именами cmadin- <random_id> и cmadminrole соответственно) и получения его keytab. Cloudera Manager сохраняет этот keytab для будущих операций Kerberos, таких как восстановление учетных данных аккаунтов служб CDH.
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_1.png)
 
 ## 3. Включение Kerberos используя визард
 ### 3.1. Запуск
 Выбираем в меню 'Enable Kerberos':
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_2.png)
 
 ### 3.2. Getting Started
 Первый экран Getting Started:
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_3.png)
 
 Ставим все галочки соглашаясь, что для включения в кластере Kerberos, мы уверены в том, что:
@@ -232,6 +235,7 @@ test.lan = TEST.LAN
 
 ### 3.5. Setup KDC Account
 Здесь надо использовать УЗ с участием в группе 'admins', так как Cloudera создаст свою уникальную специальную УЗ с бессрочным паролем и привилегиями, перечисленными чуть ниже.
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_6.png)
 
 Для справки. Используя предоставленные учётные данные, Cloudera визард создаст во FreeIPA свою УЗ вида cmadmin-<random> с ролью cmadminrole, которая имеет привилегию 'Service Administrators', которая имеет разрешения:
@@ -247,6 +251,7 @@ test.lan = TEST.LAN
 - System: Remove Service Delegations
 
 ### 3.6. Import KDC Account Manager Credentials Command
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_7.png)
 
 >Во FreeIPA появилась УЗ 'cmadmin-<random>', в поле 'Job Title' которой я написал:
@@ -261,18 +266,22 @@ test.lan = TEST.LAN
 На этом этапе может происходить ошибка "kinit: Client 'cmadmin-<random>@TEST.LAN' not found in Kerberos database while getting initial credentials". Ошибка происходила из-за недоступности первого контроллера домена, который был выключен для проверки отказоустойчивости клиентов.
 
 ### 3.7. Configure Kerberos
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_8.png)
 
 Так как требуемые пакеты у нас были установлены на этапе введения хостов в домен, то оставляем без изменений.
 
 Просто ради интереса временно снял галку 'Use Default Kerberos Principals' и увидел:
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_9.png)
 
 ### 3.8. Enable Kerberos Command
 Здесь наблюдаем прогресс включения Kerberos, после чего видим результат:
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_10.png)
 
 ### 3.9. Summary
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_11.png)
 
 ## 5. Включение Kerberos-аутентификации для HTTP Web Консоли для Hadoop ролей
@@ -290,6 +299,7 @@ Role is missing Kerberos keytab. Go to the Kerberos Credentials page and click t
 <br><br>
 
 По совету из предупреждения выполнил 'Generate Missing Credentials', но в ответ получил баннер:
+
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_12_12.png)
 
 Игнорирую сообщение и перезапускаю кластер. После перезапуска кластера 'Yarn Healt test' выдал ошибку. Перезапустил YARN. Если судить по приборам, то всё в норме.
