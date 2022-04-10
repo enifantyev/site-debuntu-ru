@@ -1,15 +1,17 @@
 ---
-title: "00. Подготовка к установке кластера Cloudera CDH 6.3.2"
+title: "01. Подготовка к установке кластера Cloudera CDH 6.3.2"
 date: 2021-06-10
-weight: 10
+weight: 1
 description: >
-  Нулевая часть, где описывается подготовка к установке Cloudera CDH 6.3.2.
+  Первая часть, где описывается подготовка к установке Cloudera CDH 6.3.2.
 tags:
   - Cloudera Hadoop
   - Apache Hadoop
   - CentOS
   - CentOS 7
   - BigData
+aliases:
+  - /a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/
 ---
 
 2021-06-10
@@ -29,7 +31,7 @@ tags:
 ```
 mkdir hadoop && cd hadoop
 printf '[defaults]\nhost_key_checking=false\n' > ansible.cfg
- 
+
 printf '[all:var]\nansible_user=jenkins\n#ansible_password=\n' > cluster.inv
 printf 'ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n' >> cluster.inv
 cat << EOF | tee -a cluster.inv > cluster.ips
@@ -81,7 +83,7 @@ NETMASK=255.255.255.128
 IPADDR=10.1.4.1
 GATEWAY=10.1.4.254
 PEERDNS=no
- 
+
 check_link_down() {
  return 1;
 }
@@ -95,7 +97,7 @@ check_link_down() {
 ```
 # Смотрим
 ansible all -i cluster.inv -m shell -a "cat /etc/sysconfig/network-scripts/ifcfg-ens32" --become
- 
+
 # Удаляем записи DNS
 ansible all -i cluster.inv -m lineinfile -a "path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp='^DNS=' state=absent" --become
 # Удаляем запись DOMAIN
@@ -107,7 +109,7 @@ ansible all -i cluster.inv -m lineinfile -a "path=/etc/sysconfig/network-scripts
 ```
 # Смотрим
 ansible all -i cluster.inv -m shell -a "cat /etc/sysconfig/network" --become
- 
+
 # Очищаем
 ansible all -i cluster.inv -m shell -a "> /etc/sysconfig/network" --become
 ```
@@ -136,7 +138,7 @@ nameserver 10.1.85.7
 ```
 # Смотрим
 ansible all -i cluster.inv -m shell -a "cat /etc/resolv.conf"
- 
+
 # Обновляем resolv.conf
 ansible all -i cluster.inv -m shell -a "echo 'options rotate timeout:1 attempts:1' > /etc/resolv.conf" --become
 ansible all -i cluster.inv -m systemd -a "name=network state=restarted" --become
@@ -161,7 +163,7 @@ ansible all -i cluster.inv -m shell -a "chronyc sources" --become
 ```
 # Смотрим
 ansible all -i cluster.inv -m shell -a "cat /etc/hosts" --become
- 
+
 # Обновляем /etc/hosts на всех узлах через следующие команды...
 # Подготавливаем скрипт
 cat << EOF > updatehosts.sh
@@ -178,7 +180,7 @@ EOF
 # список ip-адресов и подготовленный скрипт забрасываем на все узлы
 ansible all -i cluster.inv -m copy -a "src=cluster.ips dest=/root/tmp/" --become
 ansible all -i cluster.inv -m copy -a "src=updatehosts.sh dest=/root/tmp/" --become
- 
+
 # запускаем выполнение скрипта на всех узлах
 ansible all -i cluster.inv -m shell -a "/bin/bash /root/tmp/updatehosts.sh" --become
 ```

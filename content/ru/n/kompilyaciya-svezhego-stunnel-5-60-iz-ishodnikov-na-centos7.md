@@ -8,6 +8,8 @@ tags:
   - stunnel
   - CentOS
   - CentOS 7
+aliases:
+  - /manuals/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7
 ---
 
 2021-11-26

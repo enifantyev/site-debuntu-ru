@@ -1,7 +1,7 @@
 ---
-title: "01. Установка Cloudera Manager 6.3.1"
+title: "02. Установка Cloudera Manager 6.3.1"
 date: 2021-06-16
-weight: 10
+weight: 2
 description: >
   В этой части описывается установка Cloudera Manager 6.3.1.
 tags:
@@ -10,6 +10,8 @@ tags:
   - CentOS
   - CentOS 7
   - BigData
+aliases:
+  - /a/ustanovka-cloudera-manager-6-3.1/
 ---
 
 2021-06-16
@@ -31,7 +33,7 @@ printf '\n[mgm]\n10.1.4.6\n' >> cluster.inv
 При установке компонента Hue, потребуется пакет `libtidy`, который находится в EPEL-репозитории. Поэтому подготавливаем не только файлы репозиториев cloudera, но и epel. Файлы Cloudera-репо будут заброшены на машину управления кластером, тогда как epel-репо на все машины кластера:
 ```
 cd hadoop
- 
+
 cat << EOF > cloudera-manager.repo
 [cloudera-manager]
 USERNAME=nx-pubrepo-reader
@@ -40,7 +42,7 @@ name = Cloudera Manager, Version cloudera-cm-6.3.1-hosted
 baseurl = http://10.1.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
 gpgcheck = 0
 EOF
- 
+
 cat << EOF > cloudera-cdh.repo
 [cloudera-cdh]
 USERNAME=nx-pubrepo-reader
@@ -49,7 +51,7 @@ name = Cloudera Manager, Version cloudera-cdh-6.3.2-hosted
 baseurl = http://10.1.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
 gpgcheck = 0
 EOF
- 
+
 cat << EOF > epel.repo
 [epel7]
 USERNAME=nx-pubrepo-reader

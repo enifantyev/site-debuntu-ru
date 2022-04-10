@@ -180,7 +180,15 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1: <a href="#pg-75ef88a9c7579298a4a0af838183f548">Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5</a></li>
+<li>1: <a href="#pg-efdc8d762206d93c3296ee944a4f5400">Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</a></li>
+
+
+    
+  
+    
+    
+	
+<li>2: <a href="#pg-75ef88a9c7579298a4a0af838183f548">Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5</a></li>
 
 
     
@@ -195,7 +203,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1.1: <a href="#pg-e55d3d1b430dbb2891117de4c612e6a7">00. Удаление реплики</a></li>
+<li>2.1: <a href="#pg-e55d3d1b430dbb2891117de4c612e6a7">00. Удаление реплики</a></li>
 
 
     
@@ -203,7 +211,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>1.2: <a href="#pg-213050214eab990d7feb91a9c5cf11fa">01. Подготовка хостов к установке реплик FreeIPA</a></li>
+<li>2.2: <a href="#pg-213050214eab990d7feb91a9c5cf11fa">01. Подготовка хостов к установке реплик FreeIPA</a></li>
 
 
     
@@ -238,7 +246,141 @@ This is the multi-page printable view of this section.
 
 <div class="td-content" style="">
     
-	<h1 id="pg-75ef88a9c7579298a4a0af838183f548">1 - Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5</h1>
+	<h1 id="pg-efdc8d762206d93c3296ee944a4f5400">1 - Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</h1>
+    <div class="lead">Краткое описание утилиты используемой для наглядной демонстрации состояния синхронизации реплик FreeIPA.</div>
+	<p>2021-08-04<br>
+2022-01-27</p>
+<h2 id="1-ссылки">1. Ссылки</h2>
+<p><a href="https://github.com/peterpakos/checkipaconsistency">https://github.com/peterpakos/checkipaconsistency</a></p>
+<h2 id="2-описание">2. Описание</h2>
+<ul>
+<li>Утилита может запускаться на любой из IPA-реплик.</li>
+<li>Так как для работы утилиты требуется пароль для УЗ &lsquo;cn=Directory Manager&rsquo;, то использование утилиты потенциально опасно.</li>
+<li>Безопасней запускать утилиту удалённо с применением пароля для УЗ &lsquo;cn=Directory Manager&rsquo; хранящегося в приемлемом Vault&rsquo;е.</li>
+<li>Утилита выводит таблицу с информацией по всем (если специально не настроено другое) репликам домена. Пример:
+<pre tabindex="0"><code>$ sudo -i
+# cipa
++--------------------+------------------+------------------+------------------+-------+
+| FreeIPA servers:   | dev-ipa01p       | dev-ipa02p       | dev-ipa03p       | STATE |
++--------------------+------------------+------------------+------------------+-------+
+| Active Users       | 1                | 1                | 1                | OK    |
+| Stage Users        | 0                | 0                | 0                | OK    |
+| Preserved Users    | 0                | 0                | 0                | OK    |
+| Hosts              | 21               | 21               | 21               | OK    |
+| Services           | 15               | 15               | 15               | OK    |
+| User Groups        | 4                | 4                | 4                | OK    |
+| Host Groups        | 1                | 1                | 1                | OK    |
+| Netgroups          | 0                | 0                | 0                | OK    |
+| HBAC Rules         | 1                | 1                | 1                | OK    |
+| SUDO Rules         | 0                | 0                | 0                | OK    |
+| DNS Zones          | 2                | 2                | 2                | OK    |
+| Certificates       | 26               | 26               | 26               | OK    |
+| LDAP Conflicts     | 0                | 0                | 0                | OK    |
+| Ghost Replicas     | 0                | 0                | 0                | OK    |
+| Anonymous BIND     | ROOTDSE          | ON               | ON               | FAIL  |
+| Microsoft ADTrust  | False            | False            | False            | OK    |
+| Replication Status | dev-ipa02p 0     | dev-ipa01p 0     | dev-ipa02p 0     | OK    |
+|                    | dev-ipa03p 0     | dev-ipa03p 0     | dev-ipa01p 0     |       |
++--------------------+------------------+------------------+------------------+-------+
+</code></pre></li>
+<li>В вышеуказанном примере видно, что на второй и третьей реплике разрешён анонимный доступ к LDAP-каталогу.</li>
+</ul>
+<h2 id="3-установка">3. Установка</h2>
+<ol>
+<li>На любой или на всех IPA-репликах входим в контекст root и устанавливаем утилиту в профиль root&rsquo;а:
+<pre tabindex="0"><code>$ sudo -i
+# python3 -m pip install --user checkipaconsistency
+</code></pre></li>
+<li>В каталоге <code>/root/.local/bin</code> появился файл запуска утилиты <code>cipa</code>. Чтобы запускать его без ввода полного пути, в файле <code>/root/.bashrc</code>, добавляем к переменной PATH путь $HOME/.local/bin.
+<pre tabindex="0"><code>HOME=$HOME/.local/bin:$HOME
+</code></pre></li>
+<li>Предыдущую версию 2.7.10 можно установить через pip <code>pip install --user checkipaconsistency</code>, тогда как последнюю версию придётся собирать:
+<pre tabindex="0"><code>$ git clone https://github.com/peterpakos/checkipaconsistency.git
+$ cd checkipaconsistency
+$ pip install --user -r requirements.txt
+$ ./cipa
+Initial config saved to ~/.config/checkipaconsistency - PLEASE EDIT IT!
+IPA domain not set
+</code></pre></li>
+</ol>
+<h2 id="4-настройка">4. Настройка</h2>
+<ol>
+<li>После первого запуска утилиты cipa появится сообщение с просьбой заполнить содержимое конфигруационного файла <code>~/.config/checkipaconsistency</code>.</li>
+<li>Выполняем эту просьбу. Пример содержимого:
+<pre tabindex="0"><code>[IPA]
+domain = example.org
+#hosts = ipa01, ipa02, ipa03, ipa04, ipa05, ipa06
+binddn = cn=Directory Manager
+bindpw = ~D%K-JEWEJIbn5:Gx1N.TWn&lt;UybGHoOU@cDbgs7iShL
+</code></pre></li>
+<li>Так как для работы утилиты требуется пароль для УЗ &lsquo;cn=Directory Manager&rsquo;, то использование утилиты потенциально опасно.</li>
+</ol>
+<h2 id="5-способы-использования">5. Способы использования</h2>
+<h3 id="51-запуск-утилиты-без-параметров">5.1. Запуск утилиты без параметров</h3>
+<ol>
+<li>Если путь <code>~/.local/bin</code> добавлен к пеменной PATH и присутствует файл <code>~/.config/checkipaconsistency</code> с надлежащим содержимым, то запускам утилиту без параметров:
+<pre tabindex="0"><code>$ ./cipa
++--------------------+--------------+--------------+--------------+-------+
+| FreeIPA servers:   | dev-ipa01p   | dev-ipa02p   | dev-ipa03p   | STATE |
++--------------------+--------------+--------------+--------------+-------+
+| Active Users       | 19           | 19           | 19           | OK    |
+| Stage Users        | 0            | 0            | 0            | OK    |
+| Preserved Users    | 1            | 1            | 1            | OK    |
+| Hosts              | 16           | 16           | 16           | OK    |
+| Services           | 65           | 65           | 65           | OK    |
+| User Groups        | 33           | 33           | 33           | OK    |
+| Host Groups        | 1            | 1            | 1            | OK    |
+| Netgroups          | 0            | 0            | 0            | OK    |
+| HBAC Rules         | 1            | 1            | 1            | OK    |
+| SUDO Rules         | 0            | 0            | 0            | OK    |
+| DNS Zones          | 2            | 2            | 2            | OK    |
+| Certificates       | 108          | 108          | 108          | OK    |
+| LDAP Conflicts     | 0            | 0            | 0            | OK    |
+| Ghost Replicas     | 0            | 0            | 0            | OK    |
+| Anonymous BIND     | ON           | ON           | ON           | OK    |
+| Microsoft ADTrust  | False        | False        | False        | OK    |
+| Replication Status | dev-ipa03p 0 | dev-ipa03p 0 | dev-ipa02p 0 | OK    |
+|                    | dev-ipa02p 0 | dev-ipa01p 0 | dev-ipa01p 0 |       |
++--------------------+--------------+--------------+--------------+-------+
+</code></pre></li>
+<li><span style="color: red">Так как для работы утилиты требуется пароль для УЗ &lsquo;cn=Directory Manager&rsquo;, то локальное использование утилиты потенциально опасно.</span></li>
+</ol>
+<h3 id="52-запуск-утилиты-с-параметрами">5.2. Запуск утилиты с параметрами</h3>
+<ol>
+<li>На любой IPA-реплике из командной строки без использования файла <code>~/.config/checkipaconsistency</code> запускаем утилиту, временно отключая запись истории:
+<pre tabindex="0"><code>set +o history
+cipa -d test01.corp -D&#39;cn=Directory Manager&#39; -W &#39;~D%K-JEWEJIbn5:Gx1N.TWn&lt;UybGHoOU@cDbgs7iShL&#39;
+set -o history
+</code></pre></li>
+<li>Если в Bash переменная HISTCONTROL установлена в значения &lsquo;ignorespace&rsquo; или &lsquo;ignoredup&rsquo;, то есть способ запустить команду без попадания в history, если перед командой ввести пробел. В примере ниже лидирующий пробел обозначен символом &lsquo;▂&rsquo;:
+<pre tabindex="0"><code>▂cipa -d tes...
+</code></pre></li>
+</ol>
+<h3 id="53-запуск-утилиты-удалённо">5.3. Запуск утилиты удалённо</h3>
+<ol>
+<li>Самый безопасный способ, если исходить из принципа отсутствия на администрируемой машине каких-либо секретов.</li>
+</ol>
+<h2 id="6-встреченные-проблемы">6. Встреченные проблемы</h2>
+<h3 id="61-configparserinterpolationsyntaxerror--must-be-followed-by--or--found">6.1. configparser.InterpolationSyntaxError: &lsquo;%&rsquo; must be followed by &lsquo;%&rsquo; or &lsquo;(&rsquo;, found</h3>
+<p>При наличии символа &lsquo;%&rsquo; в пароле &lsquo;cn=Directory Studio&rsquo;, запуск <code>cipa</code> завершается ошибкой:</p>
+<pre tabindex="0"><code>configparser.InterpolationSyntaxError: &#39;%&#39; must be followed by &#39;%&#39; or &#39;(&#39;, found
+</code></pre><p>Проблема исчезла после замены в строке пароля символа &lsquo;%&rsquo; на два символа &lsquo;%%&rsquo;, как и написано в сообщении. Теперь запуск <code>cipa</code> заканчивается корректным выводом информации по согласованности реплик домена.</p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-75ef88a9c7579298a4a0af838183f548">2 - Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5</h1>
     
 	
 </div>
@@ -263,7 +405,7 @@ This is the multi-page printable view of this section.
 
 <div class="td-content" style="">
     
-	<h1 id="pg-e55d3d1b430dbb2891117de4c612e6a7">1.1 - 00. Удаление реплики</h1>
+	<h1 id="pg-e55d3d1b430dbb2891117de4c612e6a7">2.1 - 00. Удаление реплики</h1>
     <div class="lead">Описание зачистки машин от неудачно установленного экзмепляра FreeIPA.</div>
 	<p>2021-12-27</p>
 <h2 id="1-ссылки-на-использованные-материалы">1. Ссылки на использованные материалы</h2>
@@ -346,7 +488,7 @@ sudo reboot
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-213050214eab990d7feb91a9c5cf11fa">1.2 - 01. Подготовка хостов к установке реплик FreeIPA</h1>
+	<h1 id="pg-213050214eab990d7feb91a9c5cf11fa">2.2 - 01. Подготовка хостов к установке реплик FreeIPA</h1>
     <div class="lead">Подготовительные работы перед установкой FreeIPA.</div>
 	<p>2021-12-24</p>
 <h2 id="1изменение-сетевых-настроек-и-имени-хоста">1. Изменение сетевых настроек и имени хоста:</h2>

@@ -11,6 +11,34 @@
   
   
   <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</loc>
+    <lastmod>2021-06-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1/</loc>
+    <lastmod>2021-06-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</loc>
+    <lastmod>2021-06-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov/</loc>
+    <lastmod>2021-06-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</loc>
     <lastmod>2022-03-11T00:00:00+00:00</lastmod>
   </url>
@@ -137,7 +165,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</loc>
+    <loc>https://debuntu.ru/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</loc>
     <lastmod>2021-08-04T00:00:00+00:00</lastmod>
   </url>
   
@@ -174,20 +202,6 @@
   <url>
     <loc>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</loc>
     <lastmod>2021-07-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
-    <loc>https://debuntu.ru/a/ustanovka-cloudera-manager-6-3.1/</loc>
-    <lastmod>2021-06-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
-    <loc>https://debuntu.ru/a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</loc>
-    <lastmod>2021-06-10T00:00:00+00:00</lastmod>
   </url>
   
   
@@ -1026,6 +1040,13 @@
   <url>
     <loc>https://debuntu.ru/refbooks/</loc>
     <lastmod>2021-10-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/</loc>
+    <lastmod>2021-06-16T00:00:00+00:00</lastmod>
   </url>
   
   

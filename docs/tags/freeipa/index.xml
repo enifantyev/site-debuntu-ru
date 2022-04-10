@@ -451,34 +451,85 @@ sudo ipa-getcert request -K HTTP/$(hostname) \
     </item>
     
     <item>
-      <title>N: Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</title>
-      <link>https://debuntu.ru/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
+      <title>Manuals: Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</title>
+      <link>https://debuntu.ru/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
       <pubDate>Wed, 04 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
       <description>
         
         
-        &lt;p&gt;2021-08-04&lt;/p&gt;
+        &lt;p&gt;2021-08-04&lt;br&gt;
+2022-01-27&lt;/p&gt;
+&lt;h2 id=&#34;1-ссылки&#34;&gt;1. Ссылки&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/peterpakos/checkipaconsistency&#34;&gt;https://github.com/peterpakos/checkipaconsistency&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;установка-checkipaconsistency&#34;&gt;Установка checkipaconsistency&lt;/h2&gt;
-&lt;p&gt;Предыдущую версию 2.7.10 можно установить через pip &lt;code&gt;pip install --user checkipaconsistency&lt;/code&gt;, тогда как последнюю версию придётся собирать:&lt;/p&gt;
+&lt;h2 id=&#34;2-описание&#34;&gt;2. Описание&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Утилита может запускаться на любой из IPA-реплик.&lt;/li&gt;
+&lt;li&gt;Так как для работы утилиты требуется пароль для УЗ &amp;lsquo;cn=Directory Manager&amp;rsquo;, то использование утилиты потенциально опасно.&lt;/li&gt;
+&lt;li&gt;Безопасней запускать утилиту удалённо с применением пароля для УЗ &amp;lsquo;cn=Directory Manager&amp;rsquo; хранящегося в приемлемом Vault&amp;rsquo;е.&lt;/li&gt;
+&lt;li&gt;Утилита выводит таблицу с информацией по всем (если специально не настроено другое) репликам домена. Пример:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo -i
+# cipa
++--------------------+------------------+------------------+------------------+-------+
+| FreeIPA servers:   | dev-ipa01p       | dev-ipa02p       | dev-ipa03p       | STATE |
++--------------------+------------------+------------------+------------------+-------+
+| Active Users       | 1                | 1                | 1                | OK    |
+| Stage Users        | 0                | 0                | 0                | OK    |
+| Preserved Users    | 0                | 0                | 0                | OK    |
+| Hosts              | 21               | 21               | 21               | OK    |
+| Services           | 15               | 15               | 15               | OK    |
+| User Groups        | 4                | 4                | 4                | OK    |
+| Host Groups        | 1                | 1                | 1                | OK    |
+| Netgroups          | 0                | 0                | 0                | OK    |
+| HBAC Rules         | 1                | 1                | 1                | OK    |
+| SUDO Rules         | 0                | 0                | 0                | OK    |
+| DNS Zones          | 2                | 2                | 2                | OK    |
+| Certificates       | 26               | 26               | 26               | OK    |
+| LDAP Conflicts     | 0                | 0                | 0                | OK    |
+| Ghost Replicas     | 0                | 0                | 0                | OK    |
+| Anonymous BIND     | ROOTDSE          | ON               | ON               | FAIL  |
+| Microsoft ADTrust  | False            | False            | False            | OK    |
+| Replication Status | dev-ipa02p 0     | dev-ipa01p 0     | dev-ipa02p 0     | OK    |
+|                    | dev-ipa03p 0     | dev-ipa03p 0     | dev-ipa01p 0     |       |
++--------------------+------------------+------------------+------------------+-------+
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;В вышеуказанном примере видно, что на второй и третьей реплике разрешён анонимный доступ к LDAP-каталогу.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-установка&#34;&gt;3. Установка&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;На любой или на всех IPA-репликах входим в контекст root и устанавливаем утилиту в профиль root&amp;rsquo;а:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo -i
+# python3 -m pip install --user checkipaconsistency
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;В каталоге &lt;code&gt;/root/.local/bin&lt;/code&gt; появился файл запуска утилиты &lt;code&gt;cipa&lt;/code&gt;. Чтобы запускать его без ввода полного пути, в файле &lt;code&gt;/root/.bashrc&lt;/code&gt;, добавляем к переменной PATH путь $HOME/.local/bin.
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HOME=$HOME/.local/bin:$HOME
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;Предыдущую версию 2.7.10 можно установить через pip &lt;code&gt;pip install --user checkipaconsistency&lt;/code&gt;, тогда как последнюю версию придётся собирать:
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ git clone https://github.com/peterpakos/checkipaconsistency.git
 $ cd checkipaconsistency
 $ pip install --user -r requirements.txt
 $ ./cipa
 Initial config saved to ~/.config/checkipaconsistency - PLEASE EDIT IT!
 IPA domain not set
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;настройка&#34;&gt;Настройка&lt;/h2&gt;
-&lt;p&gt;Настройки находятся в файле &lt;code&gt;~/.config/checkipaconsistency&lt;/code&gt;, где укажем пароль от &amp;lsquo;cn=Directory Manager&amp;rsquo;, что не безопасно. Напомню, что этот специальный аккаунт критически важен для безопасности домена FreeIPA.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat &amp;lt;&amp;lt; EOF &amp;gt; ~/.config/checkipaconsistency
-[IPA]
-domain = test.lan
-hosts = dev-ipa01p, dev-ipa02p, dev-ipa03p
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;4-настройка&#34;&gt;4. Настройка&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;После первого запуска утилиты cipa появится сообщение с просьбой заполнить содержимое конфигруационного файла &lt;code&gt;~/.config/checkipaconsistency&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Выполняем эту просьбу. Пример содержимого:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[IPA]
+domain = example.org
+#hosts = ipa01, ipa02, ipa03, ipa04, ipa05, ipa06
 binddn = cn=Directory Manager
-bindpw = DirectoryManagerPassWord
-EOF
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;использование&#34;&gt;Использование&lt;/h2&gt;
+bindpw = ~D%K-JEWEJIbn5:Gx1N.TWn&amp;lt;UybGHoOU@cDbgs7iShL
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;Так как для работы утилиты требуется пароль для УЗ &amp;lsquo;cn=Directory Manager&amp;rsquo;, то использование утилиты потенциально опасно.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;5-способы-использования&#34;&gt;5. Способы использования&lt;/h2&gt;
+&lt;h3 id=&#34;51-запуск-утилиты-без-параметров&#34;&gt;5.1. Запуск утилиты без параметров&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Если путь &lt;code&gt;~/.local/bin&lt;/code&gt; добавлен к пеменной PATH и присутствует файл &lt;code&gt;~/.config/checkipaconsistency&lt;/code&gt; с надлежащим содержимым, то запускам утилиту без параметров:
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ./cipa
 +--------------------+--------------+--------------+--------------+-------+
 | FreeIPA servers:   | dev-ipa01p   | dev-ipa02p   | dev-ipa03p   | STATE |
@@ -502,7 +553,30 @@ EOF
 | Replication Status | dev-ipa03p 0 | dev-ipa03p 0 | dev-ipa02p 0 | OK    |
 |                    | dev-ipa02p 0 | dev-ipa01p 0 | dev-ipa01p 0 |       |
 +--------------------+--------------+--------------+--------------+-------+
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style=&#34;color: red&#34;&gt;Так как для работы утилиты требуется пароль для УЗ &amp;lsquo;cn=Directory Manager&amp;rsquo;, то локальное использование утилиты потенциально опасно.&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;52-запуск-утилиты-с-параметрами&#34;&gt;5.2. Запуск утилиты с параметрами&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;На любой IPA-реплике из командной строки без использования файла &lt;code&gt;~/.config/checkipaconsistency&lt;/code&gt; запускаем утилиту, временно отключая запись истории:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;set +o history
+cipa -d test01.corp -D&amp;#39;cn=Directory Manager&amp;#39; -W &amp;#39;~D%K-JEWEJIbn5:Gx1N.TWn&amp;lt;UybGHoOU@cDbgs7iShL&amp;#39;
+set -o history
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;Если в Bash переменная HISTCONTROL установлена в значения &amp;lsquo;ignorespace&amp;rsquo; или &amp;lsquo;ignoredup&amp;rsquo;, то есть способ запустить команду без попадания в history, если перед командой ввести пробел. В примере ниже лидирующий пробел обозначен символом &amp;lsquo;▂&amp;rsquo;:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;▂cipa -d tes...
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;53-запуск-утилиты-удалённо&#34;&gt;5.3. Запуск утилиты удалённо&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Самый безопасный способ, если исходить из принципа отсутствия на администрируемой машине каких-либо секретов.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;6-встреченные-проблемы&#34;&gt;6. Встреченные проблемы&lt;/h2&gt;
+&lt;h3 id=&#34;61-configparserinterpolationsyntaxerror--must-be-followed-by--or--found&#34;&gt;6.1. configparser.InterpolationSyntaxError: &amp;lsquo;%&amp;rsquo; must be followed by &amp;lsquo;%&amp;rsquo; or &amp;lsquo;(&amp;rsquo;, found&lt;/h3&gt;
+&lt;p&gt;При наличии символа &amp;lsquo;%&amp;rsquo; в пароле &amp;lsquo;cn=Directory Studio&amp;rsquo;, запуск &lt;code&gt;cipa&lt;/code&gt; завершается ошибкой:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;configparser.InterpolationSyntaxError: &amp;#39;%&amp;#39; must be followed by &amp;#39;%&amp;#39; or &amp;#39;(&amp;#39;, found
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проблема исчезла после замены в строке пароля символа &amp;lsquo;%&amp;rsquo; на два символа &amp;lsquo;%%&amp;rsquo;, как и написано в сообщении. Теперь запуск &lt;code&gt;cipa&lt;/code&gt; заканчивается корректным выводом информации по согласованности реплик домена.&lt;/p&gt;
+
       </description>
     </item>
     
