@@ -337,7 +337,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2.1: <a href="#pg-f5031989547676df5e5632190020a1d0">01. Подготовка к установке кластера Cloudera CDH 6.3.2</a></li>
+<li>2.1: <a href="#pg-e9d14c6eececd0856060ab36e2ba34d4">01. Подготовка к установке кластера Cloudera CDH 6.3.2</a></li>
 
 
     
@@ -345,7 +345,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2.2: <a href="#pg-16d17d1a0c7a3a54d7f57c48a3e867e3">02. Установка Cloudera Manager 6.3.1</a></li>
+<li>2.2: <a href="#pg-4466dc0c752a7013eca057ed1d68f523">02. Установка Cloudera Manager 6.3.1</a></li>
 
 
     
@@ -353,7 +353,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2.3: <a href="#pg-a1b43e1b0fcafd74c23df719093e3348">03. Установка основных компонентов Cloudera CDH 6.3.2</a></li>
+<li>2.3: <a href="#pg-ec0c1ea14f9247eb3a09c97d660690f9">03. Установка основных компонентов Cloudera CDH 6.3.2</a></li>
 
 
     
@@ -361,7 +361,15 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2.4: <a href="#pg-1084c291a7a12a831bf62a006069e24f">04. После установки основных компонентов</a></li>
+<li>2.4: <a href="#pg-7d9a52f4488dea17e716b1ead3a2c0d0">04. После установки основных компонентов</a></li>
+
+
+    
+  
+    
+    
+	
+<li>2.5: <a href="#pg-551f51e53a125726986dba0fa1e020d9">10. Настройка TLS для Cloudera Manager Server и его агентов</a></li>
 
 
     
@@ -3036,7 +3044,7 @@ Took 0.7221 seconds
 
 <div class="td-content" style="">
     
-	<h1 id="pg-f5031989547676df5e5632190020a1d0">2.1 - 01. Подготовка к установке кластера Cloudera CDH 6.3.2</h1>
+	<h1 id="pg-e9d14c6eececd0856060ab36e2ba34d4">2.1 - 01. Подготовка к установке кластера Cloudera CDH 6.3.2</h1>
     <div class="lead">Первая часть, где описывается подготовка к установке Cloudera CDH 6.3.2.</div>
 	<p>2021-06-10</p>
 <h2 id="1-введение">1. Введение</h2>
@@ -3197,7 +3205,7 @@ ansible all -i cluster.inv -m shell -a &#34;/bin/bash /root/tmp/updatehosts.sh&#
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-16d17d1a0c7a3a54d7f57c48a3e867e3">2.2 - 02. Установка Cloudera Manager 6.3.1</h1>
+	<h1 id="pg-4466dc0c752a7013eca057ed1d68f523">2.2 - 02. Установка Cloudera Manager 6.3.1</h1>
     <div class="lead">В этой части описывается установка Cloudera Manager 6.3.1.</div>
 	<p>2021-06-16</p>
 <h2 id="1-введение">1. Введение</h2>
@@ -3269,7 +3277,7 @@ ansible mgm -i cluster.inv -m systemd -a &#34;name=cloudera-scm-server enabled=y
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-a1b43e1b0fcafd74c23df719093e3348">2.3 - 03. Установка основных компонентов Cloudera CDH 6.3.2</h1>
+	<h1 id="pg-ec0c1ea14f9247eb3a09c97d660690f9">2.3 - 03. Установка основных компонентов Cloudera CDH 6.3.2</h1>
     <div class="lead">В этой части описывается установка основных компонентов Cloudera CDH 6.3.2.</div>
 	<p>2021-06-16</p>
 <p>Может быть будет удобнее, если установить основные пакеты для Hadoop&rsquo;а вручную, как описано на странице Ручная установка набора Cloudera-пакетов.</p>
@@ -3302,9 +3310,9 @@ ansible mgm -i cluster.inv -m systemd -a &#34;name=cloudera-scm-server enabled=y
 <img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_3_6.png" alt="">
 <br></p>
 <details><summary>/var/log/cloudera-scm-server/cloudera-scm-server.log...</summary>
-<pre tabindex="0"><code>2021-06-19 17:15:22,427 INFO NodeConfiguratorThread-0-0:com.cloudera.server.cmf.node.NodeConfiguratorProgress: udrvsdv-aux90p.test.lan: Transitioning from AUTHENTICATE (PT0.292S) to MAKE_TEMP_DIR
+<pre tabindex="0"><code>2021-06-19 17:15:22,427 INFO NodeConfiguratorThread-0-0:com.cloudera.server.cmf.node.NodeConfiguratorProgress: dev-aux90p.test.lan: Transitioning from AUTHENTICATE (PT0.292S) to MAKE_TEMP_DIR
 2021-06-19 17:15:22,471 ERROR NodeConfiguratorThread-0-1:net.schmizz.concurrent.Promise: &lt;&lt;authenticated&gt;&gt; woke to: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received during publickey auth: GLOBAL_REQUEST
-2021-06-19 17:15:22,471 WARN NodeConfiguratorThread-0-1:com.cloudera.server.cmf.node.NodeConfigurator: Could not authenticate to udrvsdv-aux91p.test.lan
+2021-06-19 17:15:22,471 WARN NodeConfiguratorThread-0-1:com.cloudera.server.cmf.node.NodeConfigurator: Could not authenticate to dev-aux91p.test.lan
 net.schmizz.sshj.userauth.UserAuthException: Exhausted available authentication methods
         at net.schmizz.sshj.SSHClient.auth(SSHClient.java:232)
         at net.schmizz.sshj.SSHClient.auth(SSHClient.java:208)
@@ -3324,7 +3332,7 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
         at net.schmizz.sshj.transport.Decoder.decode(Decoder.java:107)
         at net.schmizz.sshj.transport.Decoder.received(Decoder.java:175)
         at net.schmizz.sshj.transport.Reader.run(Reader.java:60)
-2021-06-19 17:15:22,482 INFO NodeConfiguratorThread-0-1:com.cloudera.server.cmf.node.NodeConfiguratorProgress: udrvsdv-aux91p.test.lan: Setting AUTHENTICATE as failed and done state
+2021-06-19 17:15:22,482 INFO NodeConfiguratorThread-0-1:com.cloudera.server.cmf.node.NodeConfiguratorProgress: dev-aux91p.test.lan: Setting AUTHENTICATE as failed and done state
 2021-06-19 17:15:22,482 INFO NodeConfiguratorThread-0-1:net.schmizz.sshj.transport.TransportImpl: Disconnected - BY_APPLICATION
 </code></pre></details>
 <br>
@@ -3370,8 +3378,8 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-1084c291a7a12a831bf62a006069e24f">2.4 - 04. После установки основных компонентов</h1>
-    <div class="lead">В этой части описывается установка Cloudera Manager 6.3.1.</div>
+	<h1 id="pg-7d9a52f4488dea17e716b1ead3a2c0d0">2.4 - 04. После установки основных компонентов</h1>
+    <div class="lead">В этой части описывается завершение установки основных компонентов.</div>
 	<p>2021-06-16</p>
 <h2 id="настройка-каталогов-для-логгирования">Настройка каталогов для логгирования</h2>
 <p>В центральном окне Cloudera Web UI выбираем раздел Log Directories, где изменяем все &lsquo;/var/log&rsquo; на &lsquo;/data/log&rsquo;:
@@ -3381,6 +3389,164 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
 <h2 id="выполняем-предложения-cloudera">Выполняем предложения Cloudera</h2>
 <p>Рассматриваем предложения Cloudera Management Console и исправляем ситуацию. Стараемся, по возможности, добиться полностью &ldquo;зелёного&rdquo; состояния кластера, но часто это невозможно из-за, например, недостатка ресурсов выделенных для инициализации кластера.
 <img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_4_2.png" alt=""></p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-551f51e53a125726986dba0fa1e020d9">2.5 - 10. Настройка TLS для Cloudera Manager Server и его агентов</h1>
+    <div class="lead">В этой части описывается настройка TLS для Cloudera Manager Server и его агентов.</div>
+	<h2 id="использованные-материалы">Использованные материалы</h2>
+<ul>
+<li><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/how_to_configure_cm_tls.html">Manually Configuring TLS Encryption for Cloudera Manager</a></li>
+<li><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/configure_tls_cm_agent_port.html">Manually Configuring TLS Encryption on the Agent Listening Port</a></li>
+</ul>
+<h2 id="вступление">Вступление</h2>
+<p>Когда вы настраиваете аутентификацию и авторизацию в кластере, Cloudera Manager Server отправляет различную конфиденциальную информацию по сети на узлы кластера, например, таблицы ключей Kerberos и файлы конфигурации, содержащие пароли. Чтобы защитить эту передачу, необходимо настроить TLS-шифрование между Cloudera Manager Server и всеми узлами кластера.</p>
+<p>Шифрование TLS также используется для защиты клиентских подключений к административному интерфейсу Cloudera Manager с помощью HTTPS.</p>
+<p>Cloudera Manager также поддерживает аутентификацию TLS. Если кластер не настроен на TLS-аутентификацию, то злоумышленник может добавить свой хост в Cloudera Manager, установив программное обеспечение Cloudera Manager Agent и настроив его для связи с Cloudera Manager Server. Чтобы предотвратить это, вы должны установить сертификаты на каждом хосте агента и настроить Cloudera Manager Server на доверие этим сертификатам.</p>
+<h2 id="1-генерация-tls-сертификатов">1. Генерация TLS-сертификатов</h2>
+<p>Установка TLS-сертификатов выполняется на каждом узле кластера. Так как все узлы кластера добавлены во FreeIPA-домен, то запрос сертификата в Центре Сертификации и автоматическое обновление имеющихся сертификатов грамотней будет поручить Certmonger&rsquo;у, а не следовать инструкции от Cloudera. Это, а также добавление ключей и сертификатов в java-хранилища, удобней сделать через Ansible-плэйбук cloudera_setup_tls.</p>
+<p>Плэйбук выполняет операцию <code>ipa-getcert request -k HTTP/$(hostname -f) ...</code> с размещением ключа и TLS-сертификата к нему в каталоге <code>/opt/cloudera/security/pki/</code>. К выпуску сертификата привязано выполнение bash-скрипта, который разместит сертификат в надлежащих хранилищах, используемых при выполнении java-приложений. После выпуска сертификата и выполнения скрипта, плэйбук перенастраивает Cloudera Manager Agents на использование TLS-сертификатов и перезапускает агентов.</p>
+<p><span style="color: red">Перед разбросом ключей и сертификатов, остановливаем кластер и менеджмент, так как будет потеряна связь с агентами!!!</span></p>
+<pre tabindex="0"><code># Скачиваем весь ansible из gitlab&#39;а
+git clone git@ISBI-GITLABP.passport.local:adm/ansible.git
+# Подправляем плэйбук
+sed -i s/all-root/cl/ ansible/playbooks/cloudera_setup_tls.yml
+
+cd ansible
+
+# Выполняем тестовый --check прогон
+ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &#39;{&#34;IPA_CERT_MANAGER&#34;:&#34;admin&#34;}&#39; --become --check
+
+# Выполняем плэйбук
+ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &#39;{&#34;IPA_CERT_MANAGER&#34;:&#34;admin&#34;}&#39; --become
+</code></pre><p>Замечу, что выполняя сейчас все действия из ансибл-плэйбука, мы слегка опережаем клаудеровскую инструкцию. Поэтому очерёдность операция в этой инструкции не совпадает с клаудеровскими инструкциями.</p>
+<p>Не запуская остановленные Cloudera Management Service и кластер, продолжаем выполнять шаги этой инструкции.</p>
+<h2 id="2-настройка-tls-для-cm-клиентов-и-связи-между-cm-и-агентами">2. Настройка TLS для CM, клиентов, и связи между CM и агентами</h2>
+<ol>
+<li>Входим Cloudera Manager Admin Console.</li>
+<li>Выбираем Administration &gt; Settings.</li>
+<li>Выбираем категорию Security.</li>
+<li>В строке фильтрации результатов указываем TLS.</li>
+<li>Настраиваем следующие TLS параметры по порядку:</li>
+</ol>
+<table>
+<tr><th>Property</th><th>Value</th><th>Description</th></tr>
+<tr>
+<td><b>Use TLS Encryption for Admin Console</b></td>
+<td>☑</td>
+<td>Enable TLS encryption (HTTPS) between the user and the Cloudera Manager Admin Console. When checked, the HTTPS port will be used.</td>
+</tr>
+<tr>
+<td><b>Use TLS Encryption for Agents</b></td>
+<td>☑</td>
+<td>Select this option to enable TLS encryption between the Server and Agents.</td>
+</tr>
+<tr>
+<td><b>Use TLS Authentication of Agents to Server</b></td>
+<td>☑</td>
+<td>Select this option to enable TLS Authentication of Agents to the Server.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager TLS/SSL Server JKS Keystore File Location</b></td>
+<td>/opt/cloudera/security/pki/server.jks</td>
+<td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Cloudera Manager is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager TLS/SSL Server JKS Keystore File Password</b></td>
+<td>По умолчанию: changeit.</td>
+<td>The password for the Cloudera Manager JKS keystore file.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager TLS/SSL Client Trust Store File</b></td>
+<td>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
+<td>The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that Cloudera Manager might connect to. This is used when Cloudera Manager is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager Server TLS/SSL Certificate Trust Store Password</b></td>
+<td>По умолчанию: changeit.</td>
+<td>The password for the Cloudera Manager TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
+</tr>
+</table>
+6. Нажимаем Save Changes.<br>
+7. В настройках Cloudera Management Service (http://cloudera:7180/cmf/services/6/config), используя категорию 'Security', изменяем следующие параметры:
+<table>
+<tr><th>Property</th><th>Value</th><th>Description</th></tr>
+<tr>
+<td><b>TLS/SSL Client Truststore File Location</b><br><i>ssl.client.truststore.location</i></td>
+<td>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
+<td>Path to the client truststore file used in HTTPS communication. This truststore contains certificates of trusted servers, or of Certificate Authorities trusted to identify servers. If set, this is used to verify certificates in HTTPS communication with CDH services and the Cloudera Manager Server. If not set, the default Java truststore is used to verify certificates. The contents of this truststore can be modified without restarting the Cloudera Management Service roles. By default, changes to its contents are picked up within ten seconds.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager Server TLS/SSL Client Trust Store Password</b>
+<i>ssl.client.truststore.password</i></td>
+<td>По умолчанию: changeit.</td>
+<td>The password for the Cloudera Manager Server TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
+</tr>
+<tr>
+<td><b>Enable TLS/SSL for Firehose Debug Server</b>
+<i>debug.servlet.https.enabled</i></td>
+<td>☑</td>
+<td>Encrypt communication between clients and Firehose Debug Server using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).</td>
+</tr>
+<tr>
+<td><b>Firehose Debug Server TLS/SSL Server JKS Keystore File Location</b>
+<i>debug.servlet.https.keystorePath</i></td>
+<td>/opt/cloudera/security/pki/server.jks</td>
+<td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Firehose Debug Server is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
+</tr>
+<tr>
+<td><b>Firehose Debug Server TLS/SSL Server JKS Keystore File Password</b>
+<i>debug.servlet.https.keystorePassword</i></td>
+<td>По умолчанию: changeit.</td>
+<td>The password for the Firehose Debug Server JKS keystore file.</td>
+</tr>
+</table>
+8. Нажимаем Save Changes.<br><br>
+<blockquote>
+<p>Без настроенных параметров Firehose Debug Server, после включения в настройках ZooKeeper параметра &ldquo;Enable TLS client authentication for JMX port&rdquo;, Cloudera Manager перестаёт видеть состояние серверов ZooKeeper.</p>
+</blockquote>
+<ol start="9">
+<li>Выходим из каталога <code>ansible</code>, где чуть ранее запускалась задача разброса сертификатов, в наш рабочий каталог, и  перезапускаем Cloudera Manager server:
+<pre tabindex="0"><code>cd ..
+ansible mgm -i cluster.inv -m systemd \
+-a &#34;name=cloudera-scm-server state=restarted&#34; --become
+</code></pre></li>
+<li>Через несколько минут поключаемся к Cloudera Manager Admin Console используя HTTPS на 7183 порту: <a href="https://dev-mgm01p.test.lan:7183">https://dev-mgm01p.test.lan:7183</a>.</li>
+<li>Сначала запускаем Cloudera Management Service:
+<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_10_1.png" alt=""><br>
+Здесь видим, что все 13 хостов находятся на связи, а значит TLS-шифрование между узлами работает.</li>
+<li>Потом запускаем кластер и наблюдаем, что всё в норме:
+<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_10_2.png" alt=""></li>
+</ol>
+<h2 id="отладка-при-необходимости">Отладка при необходимости</h2>
+<h3 id="verify-that-cloudera-manager-server-and-agents-are-communicating">Verify that Cloudera Manager Server and Agents are Communicating</h3>
+<p>In the Cloudera Manager Admin Console, go to Hosts &gt; All Hosts. If you see successful heartbeats reported in the Last Heartbeat column after restarting the agents and server, TLS certificate authentication is working properly. If not, check the agent log (/var/log/cloudera-scm-agent/cloudera-scm-agent.log) for errors.</p>
+<p>For example, you might see the following error:</p>
+<p>WrongHost: Peer certificate commonName does not match host, expected 192.0.2.155, got cdh-1.example.com
+[02/May/2018 15:04:15 +0000] 4655 MainThread agent        ERROR    Heartbeating to 192.0.2.155:7182 failed
+For this scenario, make sure that your DNS and /etc/hosts file are configured correctly, and that your server_host parameter in /etc/cloudera-scm-agent/config.ini uses the Cloudera Manager Server hostname, and not IP address.</p>
+<h3 id="прочее">Прочее</h3>
+<ol>
+<li>Проверка TLS-работоспособности Cloudera Agent&rsquo;ов на хостах:
+<pre tabindex="0"><code>openssl s_client -connect &lt;hostname&gt;:9000
+</code></pre></li>
+<li>Можно обнаружить в логах Cloudera Manager Server запись &ldquo;com.cloudera.cmf.command.CmdNoopPropagateException: All roles are unlicensed and cannot be started&rdquo;. Внимания можно не обращать, так как последствий не обнаружено. Проблема была в использовании ip-адреса CM, вместо его FQDN-имени в файле настройки агентов.<br>
+Проверить в &lsquo;/etc/cloudera-scm-agent/config.ini&rsquo; параметр &lsquo;server_host&rsquo; должен содержать полное FQDN-имя, как в TLS-сертификате, например:
+<pre tabindex="0"><code>server_host=dev-mgm01p.test.lan
+</code></pre></li>
+</ol>
 
 </div>
 

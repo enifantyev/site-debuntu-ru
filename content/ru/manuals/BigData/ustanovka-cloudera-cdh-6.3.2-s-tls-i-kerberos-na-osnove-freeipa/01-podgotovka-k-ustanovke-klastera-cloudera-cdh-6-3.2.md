@@ -12,6 +12,7 @@ tags:
   - BigData
 aliases:
   - /a/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/
+  - /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/
 ---
 
 2021-06-10

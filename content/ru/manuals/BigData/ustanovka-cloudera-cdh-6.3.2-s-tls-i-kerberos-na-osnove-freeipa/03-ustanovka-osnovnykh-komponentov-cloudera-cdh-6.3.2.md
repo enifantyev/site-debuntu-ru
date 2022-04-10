@@ -10,6 +10,8 @@ tags:
   - CentOS
   - CentOS 7
   - BigData
+aliases:
+  - /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/
 ---
 
 2021-06-16
@@ -56,9 +58,9 @@ tags:
 <details><summary>/var/log/cloudera-scm-server/cloudera-scm-server.log...</summary>
 
 ```
-2021-06-19 17:15:22,427 INFO NodeConfiguratorThread-0-0:com.cloudera.server.cmf.node.NodeConfiguratorProgress: udrvsdv-aux90p.test.lan: Transitioning from AUTHENTICATE (PT0.292S) to MAKE_TEMP_DIR
+2021-06-19 17:15:22,427 INFO NodeConfiguratorThread-0-0:com.cloudera.server.cmf.node.NodeConfiguratorProgress: dev-aux90p.test.lan: Transitioning from AUTHENTICATE (PT0.292S) to MAKE_TEMP_DIR
 2021-06-19 17:15:22,471 ERROR NodeConfiguratorThread-0-1:net.schmizz.concurrent.Promise: <<authenticated>> woke to: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received during publickey auth: GLOBAL_REQUEST
-2021-06-19 17:15:22,471 WARN NodeConfiguratorThread-0-1:com.cloudera.server.cmf.node.NodeConfigurator: Could not authenticate to udrvsdv-aux91p.test.lan
+2021-06-19 17:15:22,471 WARN NodeConfiguratorThread-0-1:com.cloudera.server.cmf.node.NodeConfigurator: Could not authenticate to dev-aux91p.test.lan
 net.schmizz.sshj.userauth.UserAuthException: Exhausted available authentication methods
         at net.schmizz.sshj.SSHClient.auth(SSHClient.java:232)
         at net.schmizz.sshj.SSHClient.auth(SSHClient.java:208)
@@ -78,7 +80,7 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
         at net.schmizz.sshj.transport.Decoder.decode(Decoder.java:107)
         at net.schmizz.sshj.transport.Decoder.received(Decoder.java:175)
         at net.schmizz.sshj.transport.Reader.run(Reader.java:60)
-2021-06-19 17:15:22,482 INFO NodeConfiguratorThread-0-1:com.cloudera.server.cmf.node.NodeConfiguratorProgress: udrvsdv-aux91p.test.lan: Setting AUTHENTICATE as failed and done state
+2021-06-19 17:15:22,482 INFO NodeConfiguratorThread-0-1:com.cloudera.server.cmf.node.NodeConfiguratorProgress: dev-aux91p.test.lan: Setting AUTHENTICATE as failed and done state
 2021-06-19 17:15:22,482 INFO NodeConfiguratorThread-0-1:net.schmizz.sshj.transport.TransportImpl: Disconnected - BY_APPLICATION
 ```
 </details>
