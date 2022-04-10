@@ -1709,10 +1709,10 @@ systemctl enable --now nginx
     
     <item>
       <title>Manuals: 10. Настройка TLS для Cloudera Manager Server и его агентов</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</link>
       <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</guid>
       <description>
         
         
@@ -1730,7 +1730,7 @@ systemctl enable --now nginx
 &lt;p&gt;Плэйбук выполняет операцию &lt;code&gt;ipa-getcert request -k HTTP/$(hostname -f) ...&lt;/code&gt; с размещением ключа и TLS-сертификата к нему в каталоге &lt;code&gt;/opt/cloudera/security/pki/&lt;/code&gt;. К выпуску сертификата привязано выполнение bash-скрипта, который разместит сертификат в надлежащих хранилищах, используемых при выполнении java-приложений. После выпуска сертификата и выполнения скрипта, плэйбук перенастраивает Cloudera Manager Agents на использование TLS-сертификатов и перезапускает агентов.&lt;/p&gt;
 &lt;p&gt;&lt;span style=&#34;color: red&#34;&gt;Перед разбросом ключей и сертификатов, остановливаем кластер и менеджмент, так как будет потеряна связь с агентами!!!&lt;/span&gt;&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Скачиваем весь ansible из gitlab&amp;#39;а
-git clone git@ISBI-GITLABP.passport.local:adm/ansible.git
+git clone git@git.example.org:adm/ansible.git
 # Подправляем плэйбук
 sed -i s/all-root/cl/ ansible/playbooks/cloudera_setup_tls.yml
 

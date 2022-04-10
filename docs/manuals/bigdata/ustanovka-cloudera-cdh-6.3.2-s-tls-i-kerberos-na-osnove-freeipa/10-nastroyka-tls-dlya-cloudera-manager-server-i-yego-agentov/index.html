@@ -18,25 +18,25 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>07. 🎣 Заброс Hook&#39;а в Spark (в разработке) | Debuntarium</title>
-<meta name="description" content="Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
+<title>10. Настройка TLS для Cloudera Manager Server и его агентов | Debuntarium</title>
+<meta name="description" content="В этой части описывается настройка TLS для Cloudera Manager Server и его агентов.
 ">
-<meta property="og:title" content="07. 🎣 Заброс Hook&#39;а в Spark (в разработке)" />
-<meta property="og:description" content="Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
+<meta property="og:title" content="10. Настройка TLS для Cloudera Manager Server и его агентов" />
+<meta property="og:description" content="В этой части описывается настройка TLS для Cloudera Manager Server и его агентов.
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/" /><meta property="article:section" content="manuals" />
-<meta property="article:published_time" content="2021-11-02T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-11-02T00:00:00+00:00" /><meta property="og:site_name" content="Debuntarium" />
+<meta property="og:url" content="https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/" /><meta property="article:section" content="manuals" />
+<meta property="article:published_time" content="2021-06-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-06-17T00:00:00+00:00" /><meta property="og:site_name" content="Debuntarium" />
 
-<meta itemprop="name" content="07. 🎣 Заброс Hook&#39;а в Spark (в разработке)">
-<meta itemprop="description" content="Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
-"><meta itemprop="datePublished" content="2021-11-02T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2021-11-02T00:00:00+00:00" />
-<meta itemprop="wordCount" content="13">
-<meta itemprop="keywords" content="BigData,Apache Atlas,Apache Spark,Cloudera CDH 6.3.2," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="07. 🎣 Заброс Hook&#39;а в Spark (в разработке)"/>
-<meta name="twitter:description" content="Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.
+<meta itemprop="name" content="10. Настройка TLS для Cloudera Manager Server и его агентов">
+<meta itemprop="description" content="В этой части описывается настройка TLS для Cloudera Manager Server и его агентов.
+"><meta itemprop="datePublished" content="2021-06-17T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-06-17T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1190">
+<meta itemprop="keywords" content="Cloudera CDH 6.3.2,Apache Hadoop,CentOS,CentOS 7,BigData," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="10. Настройка TLS для Cloudera Manager Server и его агентов"/>
+<meta name="twitter:description" content="В этой части описывается настройка TLS для Cloudera Manager Server и его агентов.
 "/>
 
 
@@ -208,14 +208,14 @@ if (!doNotTrack) {
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manualsbigdata-li">
   <a href="/manuals/bigdata/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdata"><span class="">BigData</span></a>
   <ul class="ul-2 foldable">
-    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manualsbigdataapacheatlas-li">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapacheatlas-li">
   <a href="/manuals/bigdata/apacheatlas/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataapacheatlas"><span class="">Apache Atlas</span></a>
   <ul class="ul-3 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlassborka-apache-atlas-220-dlya-cloudera-cdh-632-li">
   <a href="/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlassborka-apache-atlas-220-dlya-cloudera-cdh-632"><span class="">Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlassborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2-li">
   <a href="/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlassborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2"><span class="">Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220-li">
   <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220"><span class="">Установка Apache Atlas 2.2.0</span></a>
   <ul class="ul-4 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220podgotovitelnyye-raboty-dlya-ustanovki-atlas-li">
@@ -230,8 +230,8 @@ if (!doNotTrack) {
   <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hive"><span class="">05. 🎣 Заброс Hook&#39;а в Apache Hive</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hbase-li">
   <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hbase"><span class="">06. 🎣 Заброс Hook&#39;а в Apache HBase</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-spark-li">
-  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-spark"><span class="td-sidebar-nav-active-item">07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-spark-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-spark"><span class="">07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervyy-zapusk-apache-atlas-i-yego-otladka-li">
   <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervyy-zapusk-apache-atlas-i-yego-otladka"><span class="">08. Первый запуск Apache Atlas и его отладка при необходимости</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervonachalnyy-import-soderzhimogo-hive-li">
@@ -244,7 +244,7 @@ if (!doNotTrack) {
   </ul>
 </li>
   </ul>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa-li">
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa-li">
   <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa"><span class="">Установка Cloudera CDH 6.3.2 с TLS и Kerberos на основе FreeIPA</span></a>
   <ul class="ul-3 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa01-podgotovka-k-ustanovke-klastera-cloudera-cdh-6-32-li">
@@ -255,8 +255,8 @@ if (!doNotTrack) {
   <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/03-ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa03-ustanovka-osnovnykh-komponentov-cloudera-cdh-632"><span class="">03. Установка основных компонентов Cloudera CDH 6.3.2</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa04-posle-ustanovki-osnovnykh-komponentov-li">
   <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/04-posle-ustanovki-osnovnykh-komponentov/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa04-posle-ustanovki-osnovnykh-komponentov"><span class="">04. После установки основных компонентов</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov-li">
-  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov"><span class="">10. Настройка TLS для Cloudera Manager Server и его агентов</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipa10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov"><span class="td-sidebar-nav-active-item">10. Настройка TLS для Cloudera Manager Server и его агентов</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapacheairflow-li">
@@ -298,17 +298,32 @@ if (!doNotTrack) {
           <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
             
 <div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
-<a href="https://github.com/google/docsy-example/tree/main/content/ru/manuals/BigData/ApacheAtlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa fa-file-alt fa-fw"></i> [i18n] post_view_this</a>
-  <a href="https://github.com/google/docsy-example/edit/main/content/ru/manuals/BigData/ApacheAtlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Отредактировать страницу</a>
-  <a href="https://github.com/google/docsy-example/new/main/content/ru/manuals/BigData/ApacheAtlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Create child page</a>
-  <a href="https://github.com/google/docsy-example/issues/new?title=07.%20%f0%9f%8e%a3%20%d0%97%d0%b0%d0%b1%d1%80%d0%be%d1%81%20Hook%27%d0%b0%20%d0%b2%20Spark%20%28%d0%b2%20%d1%80%d0%b0%d0%b7%d1%80%d0%b0%d0%b1%d0%be%d1%82%d0%ba%d0%b5%29" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Предложить изменения документации</a>
+<a href="https://github.com/google/docsy-example/tree/main/content/ru/manuals/BigData/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa fa-file-alt fa-fw"></i> [i18n] post_view_this</a>
+  <a href="https://github.com/google/docsy-example/edit/main/content/ru/manuals/BigData/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Отредактировать страницу</a>
+  <a href="https://github.com/google/docsy-example/new/main/content/ru/manuals/BigData/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Create child page</a>
+  <a href="https://github.com/google/docsy-example/issues/new?title=10.%20%d0%9d%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0%20TLS%20%d0%b4%d0%bb%d1%8f%20Cloudera%20Manager%20Server%20%d0%b8%20%d0%b5%d0%b3%d0%be%20%d0%b0%d0%b3%d0%b5%d0%bd%d1%82%d0%be%d0%b2" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Предложить изменения документации</a>
   <a href="https://github.com/google/docsy/issues/new" class="td-page-meta--project-issue" target="_blank" rel="noopener"><i class="fas fa-tasks fa-fw"></i> Предложить доработки по проекту</a>
-  <a id="print" href="https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/_print/"><i class="fa fa-print fa-fw"></i> Print entire section</a>
+  <a id="print" href="https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/_print/"><i class="fa fa-print fa-fw"></i> Print entire section</a>
 
 </div>
 
             
 
+
+<div class="td-toc"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#использованные-материалы">Использованные материалы</a></li>
+    <li><a href="#вступление">Вступление</a></li>
+    <li><a href="#1-генерация-tls-сертификатов">1. Генерация TLS-сертификатов</a></li>
+    <li><a href="#2-настройка-tls-для-cm-клиентов-и-связи-между-cm-и-агентами">2. Настройка TLS для CM, клиентов, и связи между CM и агентами</a></li>
+    <li><a href="#отладка-при-необходимости">Отладка при необходимости</a>
+      <ul>
+        <li><a href="#verify-that-cloudera-manager-server-and-agents-are-communicating">Verify that Cloudera Manager Server and Agents are Communicating</a></li>
+        <li><a href="#прочее">Прочее</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
 
 
 
@@ -674,20 +689,17 @@ if (!doNotTrack) {
     <a href="https://debuntu.ru/manuals/bigdata/">BigData</a>
   </li>
   <li class="breadcrumb-item">
-    <a href="https://debuntu.ru/manuals/bigdata/apacheatlas/">Apache Atlas</a>
-  </li>
-  <li class="breadcrumb-item">
-    <a href="https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/">Установка Apache Atlas 2.2.0</a>
+    <a href="https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/">Установка Cloudera CDH 6.3.2 с TLS и Kerberos на основе FreeIPA</a>
   </li>
   <li class="breadcrumb-item active" aria-current="page">
-    <a href="https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/">07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</a>
+    <a href="https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/10-nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/">10. Настройка TLS для Cloudera Manager Server и его агентов</a>
   </li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</h1>
-	<div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
+	<h1>10. Настройка TLS для Cloudera Manager Server и его агентов</h1>
+	<div class="lead">В этой части описывается настройка TLS для Cloudera Manager Server и его агентов.</div>
 	<header class="article-meta">
 		
 
@@ -700,13 +712,15 @@ if (!doNotTrack) {
   <h5 class="taxonomy-title">Tags:</h5>
   <ul class="taxonomy-terms">
     
-      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span></a></li>
-    
-      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span></a></li>
-    
-      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-spark/" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span></a></li>
-    
       <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span></a></li>
+    
+      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span></a></li>
+    
+      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos/" data-taxonomy-term="centos"><span class="taxonomy-label">CentOS</span></a></li>
+    
+      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos-7/" data-taxonomy-term="centos-7"><span class="taxonomy-label">CentOS 7</span></a></li>
+    
+      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span></a></li>
     
   </ul>
 </div>
@@ -720,10 +734,147 @@ if (!doNotTrack) {
 
 		
 	</header>    
-	<p>Почитать:</p>
+	<h2 id="использованные-материалы">Использованные материалы</h2>
 <ul>
-<li><a href="https://docs.microsoft.com/ru-ru/azure/purview/how-to-lineage-spark-atlas-connector">Как использовать соединитель Apache Atlas для сбора сведений о происхождении данных Spark</a></li>
+<li><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/how_to_configure_cm_tls.html">Manually Configuring TLS Encryption for Cloudera Manager</a></li>
+<li><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/configure_tls_cm_agent_port.html">Manually Configuring TLS Encryption on the Agent Listening Port</a></li>
 </ul>
+<h2 id="вступление">Вступление</h2>
+<p>Когда вы настраиваете аутентификацию и авторизацию в кластере, Cloudera Manager Server отправляет различную конфиденциальную информацию по сети на узлы кластера, например, таблицы ключей Kerberos и файлы конфигурации, содержащие пароли. Чтобы защитить эту передачу, необходимо настроить TLS-шифрование между Cloudera Manager Server и всеми узлами кластера.</p>
+<p>Шифрование TLS также используется для защиты клиентских подключений к административному интерфейсу Cloudera Manager с помощью HTTPS.</p>
+<p>Cloudera Manager также поддерживает аутентификацию TLS. Если кластер не настроен на TLS-аутентификацию, то злоумышленник может добавить свой хост в Cloudera Manager, установив программное обеспечение Cloudera Manager Agent и настроив его для связи с Cloudera Manager Server. Чтобы предотвратить это, вы должны установить сертификаты на каждом хосте агента и настроить Cloudera Manager Server на доверие этим сертификатам.</p>
+<h2 id="1-генерация-tls-сертификатов">1. Генерация TLS-сертификатов</h2>
+<p>Установка TLS-сертификатов выполняется на каждом узле кластера. Так как все узлы кластера добавлены во FreeIPA-домен, то запрос сертификата в Центре Сертификации и автоматическое обновление имеющихся сертификатов грамотней будет поручить Certmonger&rsquo;у, а не следовать инструкции от Cloudera. Это, а также добавление ключей и сертификатов в java-хранилища, удобней сделать через Ansible-плэйбук cloudera_setup_tls.</p>
+<p>Плэйбук выполняет операцию <code>ipa-getcert request -k HTTP/$(hostname -f) ...</code> с размещением ключа и TLS-сертификата к нему в каталоге <code>/opt/cloudera/security/pki/</code>. К выпуску сертификата привязано выполнение bash-скрипта, который разместит сертификат в надлежащих хранилищах, используемых при выполнении java-приложений. После выпуска сертификата и выполнения скрипта, плэйбук перенастраивает Cloudera Manager Agents на использование TLS-сертификатов и перезапускает агентов.</p>
+<p><span style="color: red">Перед разбросом ключей и сертификатов, остановливаем кластер и менеджмент, так как будет потеряна связь с агентами!!!</span></p>
+<pre tabindex="0"><code># Скачиваем весь ansible из gitlab&#39;а
+git clone git@git.example.org:adm/ansible.git
+# Подправляем плэйбук
+sed -i s/all-root/cl/ ansible/playbooks/cloudera_setup_tls.yml
+
+cd ansible
+
+# Выполняем тестовый --check прогон
+ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &#39;{&#34;IPA_CERT_MANAGER&#34;:&#34;admin&#34;}&#39; --become --check
+
+# Выполняем плэйбук
+ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &#39;{&#34;IPA_CERT_MANAGER&#34;:&#34;admin&#34;}&#39; --become
+</code></pre><p>Замечу, что выполняя сейчас все действия из ансибл-плэйбука, мы слегка опережаем клаудеровскую инструкцию. Поэтому очерёдность операция в этой инструкции не совпадает с клаудеровскими инструкциями.</p>
+<p>Не запуская остановленные Cloudera Management Service и кластер, продолжаем выполнять шаги этой инструкции.</p>
+<h2 id="2-настройка-tls-для-cm-клиентов-и-связи-между-cm-и-агентами">2. Настройка TLS для CM, клиентов, и связи между CM и агентами</h2>
+<ol>
+<li>Входим Cloudera Manager Admin Console.</li>
+<li>Выбираем Administration &gt; Settings.</li>
+<li>Выбираем категорию Security.</li>
+<li>В строке фильтрации результатов указываем TLS.</li>
+<li>Настраиваем следующие TLS параметры по порядку:</li>
+</ol>
+<table>
+<tr><th>Property</th><th>Value</th><th>Description</th></tr>
+<tr>
+<td><b>Use TLS Encryption for Admin Console</b></td>
+<td>☑</td>
+<td>Enable TLS encryption (HTTPS) between the user and the Cloudera Manager Admin Console. When checked, the HTTPS port will be used.</td>
+</tr>
+<tr>
+<td><b>Use TLS Encryption for Agents</b></td>
+<td>☑</td>
+<td>Select this option to enable TLS encryption between the Server and Agents.</td>
+</tr>
+<tr>
+<td><b>Use TLS Authentication of Agents to Server</b></td>
+<td>☑</td>
+<td>Select this option to enable TLS Authentication of Agents to the Server.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager TLS/SSL Server JKS Keystore File Location</b></td>
+<td>/opt/cloudera/security/pki/server.jks</td>
+<td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Cloudera Manager is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager TLS/SSL Server JKS Keystore File Password</b></td>
+<td>По умолчанию: changeit.</td>
+<td>The password for the Cloudera Manager JKS keystore file.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager TLS/SSL Client Trust Store File</b></td>
+<td>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
+<td>The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that Cloudera Manager might connect to. This is used when Cloudera Manager is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager Server TLS/SSL Certificate Trust Store Password</b></td>
+<td>По умолчанию: changeit.</td>
+<td>The password for the Cloudera Manager TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
+</tr>
+</table>
+6. Нажимаем Save Changes.<br>
+7. В настройках Cloudera Management Service (http://cloudera:7180/cmf/services/6/config), используя категорию 'Security', изменяем следующие параметры:
+<table>
+<tr><th>Property</th><th>Value</th><th>Description</th></tr>
+<tr>
+<td><b>TLS/SSL Client Truststore File Location</b><br><i>ssl.client.truststore.location</i></td>
+<td>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</td>
+<td>Path to the client truststore file used in HTTPS communication. This truststore contains certificates of trusted servers, or of Certificate Authorities trusted to identify servers. If set, this is used to verify certificates in HTTPS communication with CDH services and the Cloudera Manager Server. If not set, the default Java truststore is used to verify certificates. The contents of this truststore can be modified without restarting the Cloudera Management Service roles. By default, changes to its contents are picked up within ten seconds.</td>
+</tr>
+<tr>
+<td><b>Cloudera Manager Server TLS/SSL Client Trust Store Password</b>
+<i>ssl.client.truststore.password</i></td>
+<td>По умолчанию: changeit.</td>
+<td>The password for the Cloudera Manager Server TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
+</tr>
+<tr>
+<td><b>Enable TLS/SSL for Firehose Debug Server</b>
+<i>debug.servlet.https.enabled</i></td>
+<td>☑</td>
+<td>Encrypt communication between clients and Firehose Debug Server using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).</td>
+</tr>
+<tr>
+<td><b>Firehose Debug Server TLS/SSL Server JKS Keystore File Location</b>
+<i>debug.servlet.https.keystorePath</i></td>
+<td>/opt/cloudera/security/pki/server.jks</td>
+<td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Firehose Debug Server is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
+</tr>
+<tr>
+<td><b>Firehose Debug Server TLS/SSL Server JKS Keystore File Password</b>
+<i>debug.servlet.https.keystorePassword</i></td>
+<td>По умолчанию: changeit.</td>
+<td>The password for the Firehose Debug Server JKS keystore file.</td>
+</tr>
+</table>
+8. Нажимаем Save Changes.<br><br>
+<blockquote>
+<p>Без настроенных параметров Firehose Debug Server, после включения в настройках ZooKeeper параметра &ldquo;Enable TLS client authentication for JMX port&rdquo;, Cloudera Manager перестаёт видеть состояние серверов ZooKeeper.</p>
+</blockquote>
+<ol start="9">
+<li>Выходим из каталога <code>ansible</code>, где чуть ранее запускалась задача разброса сертификатов, в наш рабочий каталог, и  перезапускаем Cloudera Manager server:
+<pre tabindex="0"><code>cd ..
+ansible mgm -i cluster.inv -m systemd \
+-a &#34;name=cloudera-scm-server state=restarted&#34; --become
+</code></pre></li>
+<li>Через несколько минут поключаемся к Cloudera Manager Admin Console используя HTTPS на 7183 порту: <a href="https://dev-mgm01p.test.lan:7183">https://dev-mgm01p.test.lan:7183</a>.</li>
+<li>Сначала запускаем Cloudera Management Service:
+<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_10_1.png" alt=""><br>
+Здесь видим, что все 13 хостов находятся на связи, а значит TLS-шифрование между узлами работает.</li>
+<li>Потом запускаем кластер и наблюдаем, что всё в норме:
+<img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_10_2.png" alt=""></li>
+</ol>
+<h2 id="отладка-при-необходимости">Отладка при необходимости</h2>
+<h3 id="verify-that-cloudera-manager-server-and-agents-are-communicating">Verify that Cloudera Manager Server and Agents are Communicating</h3>
+<p>In the Cloudera Manager Admin Console, go to Hosts &gt; All Hosts. If you see successful heartbeats reported in the Last Heartbeat column after restarting the agents and server, TLS certificate authentication is working properly. If not, check the agent log (/var/log/cloudera-scm-agent/cloudera-scm-agent.log) for errors.</p>
+<p>For example, you might see the following error:</p>
+<p>WrongHost: Peer certificate commonName does not match host, expected 192.0.2.155, got cdh-1.example.com
+[02/May/2018 15:04:15 +0000] 4655 MainThread agent        ERROR    Heartbeating to 192.0.2.155:7182 failed
+For this scenario, make sure that your DNS and /etc/hosts file are configured correctly, and that your server_host parameter in /etc/cloudera-scm-agent/config.ini uses the Cloudera Manager Server hostname, and not IP address.</p>
+<h3 id="прочее">Прочее</h3>
+<ol>
+<li>Проверка TLS-работоспособности Cloudera Agent&rsquo;ов на хостах:
+<pre tabindex="0"><code>openssl s_client -connect &lt;hostname&gt;:9000
+</code></pre></li>
+<li>Можно обнаружить в логах Cloudera Manager Server запись &ldquo;com.cloudera.cmf.command.CmdNoopPropagateException: All roles are unlicensed and cannot be started&rdquo;. Внимания можно не обращать, так как последствий не обнаружено. Проблема была в использовании ip-адреса CM, вместо его FQDN-имени в файле настройки агентов.<br>
+Проверить в &lsquo;/etc/cloudera-scm-agent/config.ini&rsquo; параметр &lsquo;server_host&rsquo; должен содержать полное FQDN-имя, как в TLS-сертификате, например:
+<pre tabindex="0"><code>server_host=dev-mgm01p.test.lan
+</code></pre></li>
+</ol>
 
 	
 	

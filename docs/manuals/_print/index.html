@@ -537,7 +537,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.2.5: <a href="#pg-551f51e53a125726986dba0fa1e020d9">10. Настройка TLS для Cloudera Manager Server и его агентов</a></li>
+<li>3.2.5: <a href="#pg-5c60c1561133f06613568e8a72bd95c5">10. Настройка TLS для Cloudera Manager Server и его агентов</a></li>
 
 
     
@@ -5046,7 +5046,7 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-551f51e53a125726986dba0fa1e020d9">3.2.5 - 10. Настройка TLS для Cloudera Manager Server и его агентов</h1>
+	<h1 id="pg-5c60c1561133f06613568e8a72bd95c5">3.2.5 - 10. Настройка TLS для Cloudera Manager Server и его агентов</h1>
     <div class="lead">В этой части описывается настройка TLS для Cloudera Manager Server и его агентов.</div>
 	<h2 id="использованные-материалы">Использованные материалы</h2>
 <ul>
@@ -5062,7 +5062,7 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
 <p>Плэйбук выполняет операцию <code>ipa-getcert request -k HTTP/$(hostname -f) ...</code> с размещением ключа и TLS-сертификата к нему в каталоге <code>/opt/cloudera/security/pki/</code>. К выпуску сертификата привязано выполнение bash-скрипта, который разместит сертификат в надлежащих хранилищах, используемых при выполнении java-приложений. После выпуска сертификата и выполнения скрипта, плэйбук перенастраивает Cloudera Manager Agents на использование TLS-сертификатов и перезапускает агентов.</p>
 <p><span style="color: red">Перед разбросом ключей и сертификатов, остановливаем кластер и менеджмент, так как будет потеряна связь с агентами!!!</span></p>
 <pre tabindex="0"><code># Скачиваем весь ansible из gitlab&#39;а
-git clone git@ISBI-GITLABP.passport.local:adm/ansible.git
+git clone git@git.example.org:adm/ansible.git
 # Подправляем плэйбук
 sed -i s/all-root/cl/ ansible/playbooks/cloudera_setup_tls.yml
 
