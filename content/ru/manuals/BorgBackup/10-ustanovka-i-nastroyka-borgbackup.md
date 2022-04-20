@@ -9,6 +9,7 @@ tags:
   - Backup SoftWare
   - CentOS
   - Ubuntu
+slug: ustanovka-i-nastroyka-borgbackup
 ---
 
 2022-03-11
@@ -16,12 +17,12 @@ tags:
 ## 1. Установка BorgBackup
 ### 1.1. Добавление EPEL
 На CentOS необходим репо EPEL.
-```
+```bash
 $ sudo yum install epel-release
 ```
 
 ### 1.2. Установка BorgBackup в CentOS7
-```
+```bash
 $ sudo yum install borg
 ...
 Dependencies Resolved
@@ -51,13 +52,13 @@ Total download size
 
 ### 1.3. Ubuntu
 На Ubuntu добавляем PPA:
-```
+```bash
 sudo add-apt-repository ppa:costamagnagianfranco/borgbackup
 ```
 
 ## 2. Настройка Borg-сервера
 2.1. Добавляем системного пользователя '_borg', под которым клиенты будут подключаться по ssh к серверу и запускать приложение `borg`. Пароль для этой УЗ не запоминаем, так как он не потребуется в дальнейшем, но без наличия пароля будет невозможно подключиться к borg-аккаунту через ssh.
-```
+```bash
 export BORGUSERNAME="_borg"
 
 set +o history
@@ -67,12 +68,12 @@ set -o history
 ```
 
 2.2. Создаём папку `.ssh`, где позже разместим файлы необходимые для подключения по ssh.
-```
+```bash
 sudo -u ${BORGUSERNAME} /bin/bash -c 'mkdir -p ~/.ssh && chmod 700 ~/.ssh'
 ```
 
 2.3. Создаём ssh-ключи для будущих клиентов этого репо. Кстати, здесь их хранить не обязательно. Наверное, будет правильней для каждого репо создавать отдельные ключи.
-```
+```bash
 export SSHKEYNAME="borg_repo1"
 
 sudo -u ${BORGUSERNAME} /bin/bash -c "ssh-keygen -t ed25519 -q -N '' -f ~/.ssh/${SSHKEYNAME}"
@@ -81,7 +82,7 @@ sudo -u ${BORGUSERNAME} /bin/bash -c "ssh-keygen -t ed25519 -q -N '' -f ~/.ssh/$
 ## 3. Настройка первого репо для бэкапов
 
 3.1. Создаём первый каталог для хранения первого репо и пробрасываем линк к нему в домашний каталог. По этой короткой ссылке будет удобно указывать название репо для архивов, вместо длинного полного пути к бэкап-каталогу.
-```
+```bash
 export REPODIR="/data/borg/repo1"
 
 sudo mkdir -p ${REPODIR}
@@ -90,17 +91,17 @@ sudo -u ${BORGUSERNAME} /bin/bash -c "ln -s ${REPODIR} ~/"
 ```
 
 3.2. Если файл `authorized_keys` отсутствует, то создаём его с единственной записью-комментом "*Требуется указывать полный путь к каждому репо*".
-```
+```bash
 sudo -u ${BORGUSERNAME} /bin/bash -c "cd ~/.ssh; echo '# Требуется указывать полный путь к каждому репо' > authorized_keys"
 ```
 
 3.3. Добавляем в `authorized_keys` запись для доступа к репо:
-```
+```bash
 sudo -u ${BORGUSERNAME} /bin/bash -c "cd ~/.ssh; echo -e 'command=\"/usr/bin/borg serve --restrict-to-path ${REPODIR}\",restrict $(cat ${SSHKEYNAME}.pub)' >> authorized_keys"
 ```
 
 3.4. Инициализируем первый репо без шифрования:
-```
+```bash
 REPOLINKNAME="repo1" # Имя ссылки в home на репо
 export BORG_RSH="ssh -i ~/.ssh/${SSHKEYNAME}"
 export BORG_REPO="${BORGUSERNAME}@localhost:${REPOLINKNAME}"
@@ -111,7 +112,7 @@ sudo -EH -u ${BORGUSERNAME} /bin/bash -c 'borg init -e none'
 ```
 
 3.5. Проверяем, что в каталоге первого репо создана структура:
-```
+```bash
 $ ls -al ${REPODIR}
 total 72
 drwxr-xr-x 3 _borg _borg  4096 мар 11 17:30 .

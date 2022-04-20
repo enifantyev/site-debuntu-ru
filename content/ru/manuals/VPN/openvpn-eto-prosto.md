@@ -8,9 +8,9 @@ tags:
   - OpenVPN
   - VPN
   - Ubuntu
+slug: openvpn-eto-prosto
 aliases:
   - /a/openvpn-eto-prosto/
-  - /manuals/vpn/openvpn-eto-prosto/
 ---
 
 2020-03-22

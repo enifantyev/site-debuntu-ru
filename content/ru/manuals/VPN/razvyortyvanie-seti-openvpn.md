@@ -10,7 +10,7 @@ tags:
   - Ubuntu
 aliases:
   - /a/razvyortyvanie-seti-openvpn/
-  - /manuals/vpn/razvyortyvanie-seti-openvpn/
+slug: razvyortyvanie-seti-openvpn
 ---
 
 2020-03-31
@@ -118,7 +118,7 @@ tun0 192.168.2.1/24
 
 ### 1. Клонирование easy-rsa
 В выделенном для *CA* каталоге клонируем текущую мастер-ветку Easy-RSA и подготавливаем файл с переменными `vars`, изменяющими настройки генерации ключей по умолчанию:
-```
+```bash
 git clone https://github.com/OpenVPN/easy-rsa.git
 cd easy-rsa/easyrsa3
 cp vars.example vars
@@ -139,19 +139,19 @@ cp vars.example vars
 
 ### 3. Первичная инициализация PKI
 Первоначальная инициализация PKI:
-```
-$ ./easyrsa init-pki
+```bash
+./easyrsa init-pki
 ```
 
 ### 4. Создание секретного ключа и сертификата Центра Сертификации
 Будем использовать секретный ключ, защищённый паролем. Это означает, что при каждом подписывании новых сертификатов, потребуется вводить пароль.
-```
-$ ./easyrsa build-ca
+```bash
+./easyrsa build-ca
 ```
 
 В случае, если кража ключей CA с последующим несанкционированным выпуском ключей не принципиальна, то существует способ отказаться от установки пароля на секретный ключ CA:
-```
-$ ./easyrsa build-ca nopass
+```bash
+./easyrsa build-ca nopass
 ```
 
 ### 5. Разделяемый секрет ta.key
@@ -162,12 +162,12 @@ $ ./easyrsa build-ca nopass
 Новая опция `--tls-crypt` не требует использования `--key-direction`, в отличии от `--tls-auth` с обязательным указанием *направления*.
 
 Если следовать мануалу OpenVPN, то разделяемый секрет правильно генерировать командой:
-```
+```bash
 openvpn --genkey --secret pki/ta.key
 ```
 
 Если же пакет `openvpn` не установлен, то я, на скорую руку, подобрал менее безопасный способ:
-```
+```bash
 echo '-----BEGIN OpenVPN Static key V1-----' > pki/ta.key; \
 head -c 256 /dev/urandom | hexdump -e '16/1 "%02x" "\n"' >> pki/ta.key; \
 echo '-----END OpenVPN Static key V1-----' >> pki/ta.key
@@ -295,9 +295,10 @@ d87c829b654879b7cd16469089354840
 ```
 
 ### Цимес
-<!--
+> <span style="color: red">Доделать этот скрипт!</span>
+
 Для автоматизации всего вышеуказанного, в каталоге с файлом `./easyrsa`, создадим скрипт `newsrv.sh`:
-```
+```bash
 #!/bin/bash
 # Example for use: ./gensrv.sh srv1
 SRVNAME=$1
@@ -329,7 +330,6 @@ shred -u pki/${SRVNAME}.creds
 shred -u pki/private/${SRVNAME}.key
 shred -u pki/reqs/${SRVNAME}.req
 ```
--->
 
 ### Разъяснение некоторых опций
 #### local

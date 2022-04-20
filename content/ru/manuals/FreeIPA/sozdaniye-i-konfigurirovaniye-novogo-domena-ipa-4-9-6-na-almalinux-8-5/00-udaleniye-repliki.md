@@ -8,6 +8,7 @@ tags:
   - FreeIPA
   - FreeIPA 4.9.6
   - AlmaLinux 8.5
+slug: udaleniye-repliki
 ---
 
 2021-12-27
@@ -21,21 +22,21 @@ tags:
 ## 3. Неполное удаление для повторного добавления реплики
 ### 3.1. Операции на удаляемом сервере
 3.1.1. На удаляемом сервере запускаем процедуру удаления IPA-сервера:
-  ```
+  ```bash
   $ sudo ipa-server-install --uninstall
   ```
 3.1.2. Здесь же зачищаем логи скриптов установки/удаления IPA-сервера:
-  ```
+  ```bash
   sudo rm -rf /var/log/ipa*.log
   ```
 3.1.3. Перезагружаем хост:
-  ```
+  ```bash
   sudo reboot
   ```
 
 ### 3.2. Операции на остающихся IPA-репликах
 3.2.1. В случае невозможности полноценного выполнения пункта 3.1., удаляем реплику из топологии используя любую машину в домене. Для этого, из командной строки любой оставшейся в домене машины выполняем:
-  ```
+  ```bash
   $ kinit admin
   $ export REPLICA="replica.example.org"
   $ ipa server-del ${REPLICA}
@@ -61,20 +62,20 @@ tags:
 После "неполного" удаления выполняем дополнительные шаги.
 
 4.1. Удаляем пакеты:
-  ```
+  ```bash
   sudo dnf -y module remove idm:DL1/dns
   sudo dnf -y autoremove python3-ipaserver
   ```
 
 4.2. Переключаемся на поток 'idm:client':
-  ```
+  ```bash
   sudo dnf -y module enable idm:client
   sudo dnf -y module reset idm:client
   sudo dnf -y distro-sync
   ```
 
 4.3. Зачищаем логи и прочие каталоги, после чего перезагружаем хост:
-  ```
+  ```bash
   sudo rm -rf /var/log/ipa*.log \
     /var/log/custodia \
     /var/log/dirsrv \

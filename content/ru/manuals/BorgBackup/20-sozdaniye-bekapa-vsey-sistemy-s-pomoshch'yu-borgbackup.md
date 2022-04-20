@@ -8,6 +8,7 @@ tags:
   - BorgBackup
   - Backup SoftWare
   - LVM
+slug: sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup
 ---
 
 2022-03-11
@@ -29,7 +30,7 @@ tags:
     - диск не разбит или разбит на один раздел. Пространство подключёно к LVM2 и именовано и подключено так `/dev/vgdata/data` - `/data`;
     - может быть организован по другому.
 
-```
+```bash
 # parted /dev/sda unit mib print free
 Model: VMware Virtual disk (scsi)
 Disk /dev/sda: 51200MiB
@@ -50,7 +51,7 @@ Number  Start    End       Size      Type     File system  Flags
 ## Процесс резервного копирования
 ### Отключение работающих демонов
 Останавливаем и выключаем главные сервисы, работающие на хосте, чтобы предотвратить автоматический запуск демонов после восстановления системы. Например:
-```
+```bash
 ipactl stop
 systemctl disable --now dirsrv@TEST4.LAN.service
 systemctl disable --now pki-tomcatd
@@ -61,7 +62,7 @@ systemctl disable --now ipa-dnskeysyncd
 ```
 
 В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:
-```
+```bash
 systemctl stop postfix
 systemctl stop rsyslog
 service auditd stop
@@ -69,24 +70,24 @@ service auditd stop
 
 ### Создание временных LVM snapshot'ов
 Помним, что в Volume Group должно быть достаточно свободного места для размещения снэпшотов.
-```
+```bash
 lvcreate -L 500M -s -n snap_root /dev/vg/root
 lvcreate -L 500M -s -n snap_var /dev/vg/var
 ```
 
 Если требуется освободить немного места в VG, то можно попробовать освободить пару гигабайтов за счёт уменьшения, например `/dev/vg/data`:
-```
+```bash
 /usr/sbin/lvreduce -L -2G -r /dev/vg/data
 ```
 
 После завершения бэкапа вновь увеличиваем LV:
-```
+```bash
 /usr/sbin/lvextend -l +100%FREE -r /dev/vg/data
 ```
 
 ### Монтирование снэпшотов + директорию `/boot`
 При монтировании xfs используем опцию `nouuid`, поэтому проверяем тип файловой системы:
-```
+```bash
 # Mounting root on /mnt
 LV='/dev/vg/snap_root'
 FSTYPE=$(df -T ${LV/snap_/} | egrep "ext4|xfs" | awk '{print $2}')
@@ -110,7 +111,7 @@ mount -o bind,ro /boot /mnt/boot
 ```
 
 ### Проверка монтирования
-```
+```bash
 mount | grep '/mnt'
 ```
 Пример вывода:
@@ -122,18 +123,18 @@ mount | grep '/mnt'
 
 ### Резервное копирование
 Устанавливаем переменные, чтобы не вводить параметры дважды:
-```
+```bash
 export BORG_RSH="ssh -i ~/.ssh/borg1"
 export BORG_REPO="_borg@192.168.50.10:home-ipa"
 ```
 
 Выполняем бэкап со сжатием передовым компрессором [Zstandard](https://ru.wikipedia.org/wiki/Zstandard):
-```
+```bash
 borg create -C zstd --stats --progress ::full_{hostname}_{now} /mnt
 ```
 
 ### Удаление временных снэпшотов
-```
+```bash
 umount -R /mnt
 lvremove -y /dev/vg/snap_var
 lvremove -y /dev/vg/snap_root
@@ -141,7 +142,7 @@ lvremove -y /dev/vg/snap_root
 
 ### Запуск остановленных демонов
 Запускаем ранее остановленные локальные демоны:
-```
+```bash
 systemctl start postfix
 systemctl start rsyslog
 service auditd start

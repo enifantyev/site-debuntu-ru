@@ -9,17 +9,18 @@ tags:
   - Backup SoftWare
   - AltLinux 10
   - Altlinux
+slug: ustanovka-borgbackup-v-altlinux-10
 ---
 
 2022-03-14
 
 ### Установка borg 1.1.17
-```
+```bash
 apt-get install borg
 ```
 
 ### Установка borg 1.2
-```
+```bash
 $ sudo apt-get install python3-module-pkgconfig python3-module-setuptools \
 python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
 libacl-devel libacl libssl-devel liblz4-devel libzstd-devel libxxhash-devel
@@ -39,11 +40,11 @@ After unpacking 8373kB of additional disk space will be used.
 Do you want to continue? [Y/n]
 ```
 
-```
+```bash
 pip install borgbackup
 ```
 
-```
+```bash
 borg -V
 borg 1.2.0
 ```

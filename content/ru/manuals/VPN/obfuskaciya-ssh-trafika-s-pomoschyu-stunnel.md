@@ -12,6 +12,7 @@ tags:
   - ssh
 aliases:
   - /a/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/
+slug: obfuskaciya-ssh-trafika-s-pomoschyu-stunnel
 ---
 
 2021-11-19

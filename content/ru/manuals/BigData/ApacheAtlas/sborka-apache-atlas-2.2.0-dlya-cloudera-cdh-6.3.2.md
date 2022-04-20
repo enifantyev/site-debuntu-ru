@@ -25,7 +25,7 @@ tags:
 
 ### 1.1. Установка Maven
 Сначала устанавливаем maven 3.0.5-17.el7 из стандартных репо для CentOS7:
-```
+```bash
 sudo yum install maven
 ```
 
@@ -190,7 +190,7 @@ Complete!
 На данный момент последняя версия maven равна 3.8.1, но с этой версией сборка Atlas'а 2.1.0 прерывалась ошибками, тогда как Atlas 2.2.0 собирался без ошибок. Поэтому для сборки Atlas'а 2.1.0 выбираем Maven 3.6.3, а для Atlas 2.2.0 выбираем версию Maven 3.8.1.
 
 Скачиваем и устанавливаем переменные:
-```
+```bash
 MVNVER="3.8.1"
 curl -LO https://archive.apache.org/dist/maven/maven-3/${MVNVER}/binaries/apache-maven-${MVNVER}-bin.tar.gz
 sudo tar -xvf apache-maven-${MVNVER}-bin.tar.gz -C /opt
@@ -215,8 +215,8 @@ source /etc/profile.d/maven.sh
 ```
 
 Проверяем версию Maven'а и используемую версию Java:
-```
-$ mvn --version
+```bash
+mvn --version
 
 Apache Maven 3.8.1 (05c21c65bdfed0f71a2f2ada8b84da59348c4c5d)
 Maven home: /opt/maven
@@ -227,7 +227,7 @@ OS name: "linux", version: "3.10.0-1160.36.2.el7.x86_64", arch: "amd64", family:
 
 ### 1.2. Установка NodeJS
 Добавляем репо:
-```
+```bash
 USERNAME=nx-pubrepo-r
 PASSWORD=xSAR1zZi7dQzs3QBx2vthdyk2qQrXv
 
@@ -244,14 +244,14 @@ EOF
 ```
 
 Устанавливаем NodeJS:
-```
+```bash
 sudo yum install -y --enablerepo=nodejs16 nodejs
 ```
 
 ## 2. Подготовка к сборке
 ### 2.1. Скачивание и распаковка исходников
 Сайт проекта находится здесь https://atlas.apache.org/. Находим и скачиваем исходники Apache Atlas:
-```
+```bash
 mkdir ~/src && cd ~/src
 curl -LO https://mirror.linux-ia64.org/apache/atlas/2.2.0/apache-atlas-2.2.0-sources.tar.gz
 tar -xvf apache-atlas-2.2.0-sources.tar.gz
@@ -260,7 +260,7 @@ cd ~/src/apache-atlas-sources-2.2.0
 
 ### 2.2. Изменения в файле `pom.xml`
 В файл 'pom.xml', в раздел <repository>, добавляем клаудеровский репозиторий с maven-артефактами:
-```
+```java
 <repository>
     <id>cloudera</id>
     <url>https://repository.cloudera.com/artifactory/cloudera-repos</url>
@@ -274,7 +274,7 @@ cd ~/src/apache-atlas-sources-2.2.0
 ```
 
 В этом же файле находим и меняем версии продуктов на следующие:
-```
+```java
 <elasticsearch.version>6.8.20</elasticsearch.version>
 <hadoop.version>3.0.0-cdh6.3.2</hadoop.version>
 <hbase.version>2.1.0-cdh6.3.2</hbase.version>
@@ -288,7 +288,7 @@ cd ~/src/apache-atlas-sources-2.2.0
 ```
 
 В этом же файле меняем версию артефакта 'atlas-buildtools' cо значения '1.0' на значение '0.8.1', так как артефакт 'atlas-buildtools-1.0' не может быть найден. Но можно попробовать версию  '1.0.0-alpha':
-```
+```java
 <artifactId>maven-checkstyle-plugin</artifactId>
     <dependencies>
         <dependency>
@@ -301,7 +301,7 @@ cd ~/src/apache-atlas-sources-2.2.0
 
 ### 2.3. Изменения в других файлах
 В файле '~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/bridge/HiveMetaStoreBridge.java' переходим на 577 строку, комментируем "String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;" и добавляем "String catalogName = null;":
-```
+```java
 public static String getDatabaseName(Database hiveDB) {
     String dbName      = hiveDB.getName().toLowerCase();
     //String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;
@@ -316,7 +316,7 @@ public static String getDatabaseName(Database hiveDB) {
 ```
 
 В файле '~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/AtlasHiveHookContext.java' переходим на 81 строку "this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;", комментируем её и добавляем "this.metastoreHandler = null;":
-```
+```java
 public AtlasHiveHookContext(HiveHook hook, HiveOperation hiveOperation, HookContext hiveContext, HiveHookObjectNamesCache knownObjects,
                             HiveMetastoreHook metastoreHook, ListenerEvent listenerEvent) throws Exception {
     this.hook             = hook;
@@ -335,7 +335,7 @@ public AtlasHiveHookContext(HiveHook hook, HiveOperation hiveOperation, HookCont
 ```
 
 В файле `~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/events/CreateHiveProcess.java` комментируем строку 263 с упоминанием 'MATERIALIZED_VIEW':
-```
+```java
 private boolean isDdlOperation(AtlasEntity entity) {
     return entity != null && !context.isMetastoreHook()
         && (context.getHiveOperation().equals(HiveOperation.CREATETABLE_AS_SELECT)
@@ -346,7 +346,7 @@ private boolean isDdlOperation(AtlasEntity entity) {
 ```
 
 В файле `~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/HiveHook.java` комментируем строки 212 и 217  с упоминанием 'MATERIALIZED_VIEW':
-```
+```java
 case DROPTABLE:
 case DROPVIEW:
 //case DROP_MATERIALIZED_VIEW:
@@ -366,7 +366,7 @@ break;
 ```
 
 Заготовка bash-скрипта для автоматизации изменений в файлах:
-```
+```bash
 sed 's|<elasticsearch.version>6.8.15|<elasticsearch.version>6.8.20|'  pom.xml
 sed 's|<hadoop.version>3.3.0|<hadoop.version>3.0.0-cdh6.3.2|' pom.xml
 sed 's|<hbase.version>2.3.3|<hbase.version>2.1.0-cdh6.3.2|' pom.xml
@@ -382,7 +382,7 @@ sed -i '/<artifactId>atlas-buildtools|{n;s/<version>1.0/<version>1.0.0-alpha/}' 
 
 ## 3. Сборка Apache Atlas
 Переходим в каталог с исходниками и собираем пакеты с сохранением цветного stderr и stdout в файл `install.log` (X — debug, T — количество потоков):
-```
+```bash
 cd ~/src/apache-atlas-sources-2.2.0
 unbuffer mvn clean -DskipTests package -Pdist -X -T 4 2>&1 | tee install.log
 

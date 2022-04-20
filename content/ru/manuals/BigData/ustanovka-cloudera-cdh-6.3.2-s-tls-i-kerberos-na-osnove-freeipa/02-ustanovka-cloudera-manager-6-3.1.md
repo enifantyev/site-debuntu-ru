@@ -26,13 +26,13 @@ url: /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-fr
 
 ## 2. Выделение машины управления кластером
 Машина управления кластером имеет название, которое включает в себя буквы 'mgm'. Определив ip-адрес этой машины, добавим новые строки в инвентори файл ансибла:
-```
+```bash
 printf '\n[mgm]\n10.1.4.6\n' >> cluster.inv
 ```
 
 ## 3. Добавление файлов repo на машину управления
 При установке компонента Hue, потребуется пакет `libtidy`, который находится в EPEL-репозитории. Поэтому подготавливаем не только файлы репозиториев cloudera, но и epel. Файлы Cloudera-репо будут заброшены на машину управления кластером, тогда как epel-репо на все машины кластера:
-```
+```bash
 cd hadoop
 
 cat << EOF > cloudera-manager.repo
@@ -67,25 +67,25 @@ EOF
 ```
 
 Копируем CM репо-файл на машину cloudera server и epel repo-файл на все машины:
-```
+```bash
 ansible mgm -i cluster.inv -m copy -a "src=cloudera-manager.repo dest='/etc/yum.repos.d/'" --become
 ansible all -i cluster.inv -m copy -a "src=epel.repo dest='/etc/yum.repos.d/'" --become
 ```
 
 ## 4. Установка JDK и Cloudera Manager
-```
+```bash
 ansible mgm -i cluster.inv -m yum -a "name=oracle-j2sdk1.8 state=latest" --become
 ansible mgm -i cluster.inv -m yum -a "name=cloudera-manager-daemons,cloudera-manager-agent,cloudera-manager-server,cloudera-manager-server-db-2 state=latest" --become
 ```
 
 ## 5. Установка дополнительных пакетов
 Дополнительно устанавливаем свежие версии python-пакета `psycopg2-binary` и `python-snappy`, которые используется Hue-компонентом. Так как неизвестно точно на каких хостах будут добавлены экземпляры Hue, то устанавливаем пакеты на все хосты.
-```
+```bash
 ansible all -i cluster.inv -m pip -a "name=psycopg2-binary,python-snappy state=latest" --become
 ```
 
 ## 6. Запуск PostgreSQL и Cloudera Manager
-```
+```bash
 ansible mgm -i cluster.inv -m systemd -a "name=cloudera-scm-server-db enabled=yes state=started" --become
 ansible mgm -i cluster.inv -m systemd -a "name=cloudera-scm-server enabled=yes state=started" --become
 ```

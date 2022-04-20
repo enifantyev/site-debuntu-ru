@@ -29,7 +29,7 @@ url: /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-fr
 
 ## 2. Преднастройка и подготовка к проверкам
 На командной машине в каталоге `~/hadoop` подготовим файлы для ансибла с ip-адресами машин будущего кластера:
-```
+```bash
 mkdir hadoop && cd hadoop
 printf '[defaults]\nhost_key_checking=false\n' > ansible.cfg
 
@@ -55,7 +55,7 @@ EOF
 <span style="color:red">Перед началом проверки обязательная перезагрузка машин! Этот шаг выполняется для применения всех постоянных настроек и отмены всех временных настроек машины.</span>
 
 Выполняем обновление и перезагрузку всех машин:
-```
+```bash
 ansible all -i cluster.inv -m yum -a "name=* state=latest" --become
 ansible all -i cluster.inv -m reboot --become
 ```
@@ -95,7 +95,7 @@ check_link_down() {
 </p></details><br>
 
 Проверку и, если необходимо, удаление лишних строк производим командами:
-```
+```bash
 # Смотрим
 ansible all -i cluster.inv -m shell -a "cat /etc/sysconfig/network-scripts/ifcfg-ens32" --become
 
@@ -107,7 +107,7 @@ ansible all -i cluster.inv -m lineinfile -a "path=/etc/sysconfig/network-scripts
 
 ### 4.2. Файл `/etc/sysconfig/network`
 Информация из этого файла — `/etc/sysconfig/network` — используется скриптами при запуске машины, или перезапуске демона network,  и частично замещает/добавляет информацию в файле `/etc/resolv.conf`. Поэтому необходимо сделать этот файл пустым.
-```
+```bash
 # Смотрим
 ansible all -i cluster.inv -m shell -a "cat /etc/sysconfig/network" --become
 
@@ -136,7 +136,7 @@ nameserver 10.1.85.7
 </p></details><br>
 
 Проверку и, если необходимо, добавление опций производим командами:
-```
+```bash
 # Смотрим
 ansible all -i cluster.inv -m shell -a "cat /etc/resolv.conf"
 
@@ -147,7 +147,7 @@ ansible all -i cluster.inv -m systemd -a "name=network state=restarted" --become
 
 ## 5. Проверка обратного разрешения dns-имён
 С пульта управления, при помощи ансибла, пытаемся выполнить обратное разрешение dns-имён:
-```
+```bash
 while read line; \
   do ansible all -i cluster.inv -m shell -a "host $line"; \
   done < cluster.ips
@@ -155,13 +155,13 @@ while read line; \
 
 ## 6. Проверка настроек и работы сервиса точного времени
 Визуально проверяем наличие синхронизации с серверами точного времени:
-```
+```bash
 ansible all -i cluster.inv -m shell -a "chronyc sources" --become
 ```
 
 ## 7. Подготовка файла /etc/hosts
 Проверку и, если необходимо, обновление файла производим командами:
-```
+```bash
 # Смотрим
 ansible all -i cluster.inv -m shell -a "cat /etc/hosts" --become
 
@@ -188,13 +188,13 @@ ansible all -i cluster.inv -m shell -a "/bin/bash /root/tmp/updatehosts.sh" --be
 
 ## 8. Создание tmp-каталога для дампов java-машин
 По умолчанию, в настройках сервисов указан каталог `/tmp`, который используется для создания дампов java-машин, в случае их падения при ошибке "OutOfMemoryError". Cоздадим новый каталог для этих целей на большем разделе, так как корневой раздел обычно слишком мал, чтобы разместить полный дамп java-машины:
-```
+```bash
 ansible all -i cluster.inv -m file -a 'path=/data/tmp state=directory mode=1777' --become
 ```
 
 ## 9. Заключительная перезагрузка машин
 <span style="color:red">Если были изменения на узлах будущего кластера, то обязательная перезагрузка машин. Этот шаг выполняется для применения всех постоянных настроек и отмены всех временных настроек машины.</span>
-```
+```bash
 ansible all -i cluster.inv -m reboot --become
 ```
 

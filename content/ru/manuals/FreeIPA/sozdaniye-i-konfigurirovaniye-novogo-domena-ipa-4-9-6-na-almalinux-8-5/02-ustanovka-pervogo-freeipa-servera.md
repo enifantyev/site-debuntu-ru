@@ -1,13 +1,14 @@
 ---
 title: "02. Установка первого FreeIPA-сервера"
 date: 2
-weight: 10
+weight: 12
 description: >
   Описание процесса установки первого IPA-сервера.
 tags:
   - FreeIPA 4.9.6
   - FreeIPA
   - AlmaLinux 8.5
+slug: ustanovka-pervogo-freeipa-servera
 draft: true
 ---
 
@@ -51,7 +52,7 @@ draft: true
 Судя по исходникам, пароли могут содержать все ASCII-символы, кроме обратного слэша (видим следующее присваивание — bad_characters = '\\' — в регулярных выражениях символ обратного слэша обычно обозначается двумя обратными слэшами). Наверное, наравне с обратным слэшем, лучше будет воздержаться от использования одинарных, обратных и двойных кавычек, а также прямого слэша и вертикальной черты.
 
 Для генерации пароля, который не будет включать в себя символы слэшей и кавычек (одинарных, двойных и обратных), проще использовать утилиту `pwgen`:
-```
+```bash
 $ pwgen --secure --symbols --remove-chars="\\|/\"\'\`" 42 1
 tD*$6?6F~sBX.Q_8<_7RmR^$~1]sWJs70rY5_TqFyO
 ```
@@ -103,7 +104,7 @@ def validate_admin_password(password):
 
 ### 1.3. Процесс установки первого сервера FreeIPA
 Выполняем следующий скрипт и ждём окончания процедуры. В случае наличия на хосте только одного ip-адреса, переменную IP_ADDRESS и опцию `--ip-address` можно не применять.
-```
+```bash
 # Для облегчения дальнейшей генерации паролей устанавливаем пакет pwgen
 sudo dnf -y install pwgen
 
@@ -433,7 +434,7 @@ The ipa-server-install command was successful
 
 ### 1.4. Вход в Web UI FreeIPA
 Пока отсутствует DNS resolving для нового домена test3.lan, добавляем на свою рабочую машину в файл `/etc/hosts` запись для FreeIPA-сервера:
-```
+```bash
 echo "10.1.160.23 dev-ipa04.test3.lan" | sudo tee -a /etc/hosts
 ```
 
@@ -474,7 +475,7 @@ https://url-ipa-server.example.org/ipa/ui/#/e/dnsconfig/details
 
 ### 1.6. Отключение анонимного доступа к LDAP-каталогу
 Процедура выполняется для каждого сервера, так как изменения производятся в нереплицируемой части LDAP-каталога 'cn=config'.
-```
+```bash
 IPAREPLICA="dev-ipa04.test3.lan"
 set +o history
 DMPASS="qMSxV(EvB#o>Brd,0<6n;"
@@ -488,7 +489,7 @@ nsslapd-allow-anonymous-access: rootdse
 EOF
 ```
 
-```
+```bash
 ipactl restart
 ```
 
@@ -499,7 +500,7 @@ ipactl restart
 3. Файл `/root/cacert.p12` с приватным ключом и сертификатом от Центра Сертификации. Здесь необходимо продублировать пароль от 'cn=Directory Manager', так как на его основе, на данный момент, зашифровано содержимое файла `cacert.p12`.
 
 Надёжно сохранив пароли для УЗ 'cn=Directory Manager' и 'uid=admin' в надёжном месте, удаляем файл `/root/freeipa_passwords.txt`:
-```
+```bash
 sudo shred -u /root/freeipa_passwords.txt
 ```
 
@@ -507,7 +508,7 @@ sudo shred -u /root/freeipa_passwords.txt
 
 ## 3. Утилита ipa-healthcheck
 Запуск ipa-healtcheck завершается с четырьмя замечаниями:
-```
+```bash
 sudo ipa-healthcheck
 [                                                                                                                      
   {
@@ -570,7 +571,7 @@ sudo ipa-healthcheck
 ```
 Надо будет разрешить эти проблемки.
 
-```
+```bash
 certutil -d sql:/etc/pki/pki-tomcat/alias -L
 
 Certificate Nickname                                         Trust Attributes

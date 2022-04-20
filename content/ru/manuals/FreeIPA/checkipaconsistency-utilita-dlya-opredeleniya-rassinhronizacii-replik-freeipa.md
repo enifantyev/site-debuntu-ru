@@ -6,6 +6,7 @@ description: >
   Краткое описание утилиты используемой для наглядной демонстрации состояния синхронизации реплик FreeIPA.
 tags:
   - FreeIPA
+slug: checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa
 aliases:
   - /n/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/
   - /manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/

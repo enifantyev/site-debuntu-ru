@@ -16,7 +16,7 @@ tags:
 ## Работы на исходном сервере
 ### Сбор сведений перед созданием дампа
 На исходном сервере запоминаем версию postgresql:
-```
+```bash
 # rpm -qa|grep sql
 postgresql11-server-11.4-1PGDG.rhel7.x86_64
 postgresql11-11.4-1PGDG.rhel7.x86_64
@@ -26,7 +26,7 @@ postgresql11-libs-11.4-1PGDG.rhel7.x86_64
 Смотрим `who` и активные сетевые подключения через `ss -tul`, чтобы удостовериться в своём одиноком присутствии на сервере.
 
 Ознакомимся со свободным местом на сервере, где увидим, что есть свободные 340G:
-```
+```bash
 # df -h
 Filesystem             Size  Used Avail Use% Mounted on
 /dev/mapper/rhel-root  1.3T  906G  340G  73% /
@@ -40,7 +40,7 @@ tmpfs                  3.2G     0  3.2G   0% /run/user/1007
 ```
 
 Ищем postgresql в обычном месте `/var/lib` и находим экземпляр в `/var/lib/pgsql/11/data`. Узнаём размер каталога:
-```
+```bash
 # du -hs du -hs /var/lib/pgsql/11/data
 895G    du -hs /var/lib/pgsql/11/data
 ```
@@ -63,7 +63,7 @@ tmpfs                  3.2G     0  3.2G   0% /run/user/1007
 
 ### Создание полного дампа исходного экземпляра posgresql
 Определяем количество ядер у процессора (через `top`, `htop`, `cat /proc/cpuinfo`) и запускаем создание дампа со сжатием через lbzip2, с указанием найденного количества ядер для ускорения работы (в данном случае восемь потоков):
-```
+```bash
 sudo su
 su - postgres
 time pg_dumpall -v | lbzip2 -n 8 -9 > /var/lib/pgsql/11/backups/pgsql_dumpall_$(date -u +%Y%m%d-%H%M%S).bz2
@@ -88,7 +88,7 @@ sys     16m31.101s
 - подключение репо postgresql
 
 Памятуя о версии на исходном сервере, производим установку конкретной версии posgresql:
-```
+```bash
 # yum install postgresql11-server-11.4-1PGDG.rhel7.x86_64
 ...
 =======================================================================================
@@ -103,7 +103,7 @@ Installing for dependencies:
 ```
 
 Устанавливаем пакет `yum-plugin-versionlock` для возможности блокировки пакетов от апгрейда и выполняем блокировку пакетов `postgresql11*`:
-```
+```bash
 # yum install yum-plugin-versionlock
 # yum versionlock postgresql11*
 Loaded plugins: product-id, rhnplugin, search-disabled-repos, versionlock
@@ -118,7 +118,7 @@ versionlock added: 3
 
 ### Монтирование большого раздела к /var/lib/pgsql
 На новом сервер наблюдаем отдельный большой раздел 1.5TB подмонтрованный к `/data`. Создадим на нём каталог pgsql и прочее:
-```
+```bash
 mkdir -p /data/pgsql/11/{data,backup}
 chown postgres:postgres /data/pgsql -R
 chmod 700 /data/pgsql -R
@@ -126,14 +126,14 @@ cp /var/lib/pgsql/.bash_profile /data/pgsql
 ```
 
 Добавим в /etc/fstab следующую строку для автоматического биндинга `/data/pgsql` к `/var/lib/pgsql`:
-```
+```bash
 /data/pgsql /var/lib/pgsql none defaults,bind 0 0
 ```
 
 Важно!!! Если после последней строки в файле `/etc/fstab` не будет добавлена пустая строка, то сервер зависнет на этапе загрузки системы. Не помню причины этого явления, поэтому примите на веру, если не знали.
 
 ### Инициализация и запуск
-```
+```bash
 /usr/pgsql-11/bin/postgresql-11-setup initdb
 systemctl start postgresql-11
 ```
@@ -144,7 +144,7 @@ systemctl start postgresql-11
 В нашем случае прямое ssh-соединение между серверами отсутствует, поэтому скопируем полученный дамп через форпост, который доступен из обоих сегментов сети.
 
 Сейчас мы находимся на промежуточном сервере. Сначала подключаемся по ssh к одному из серверов, на каковом сервере открывается локальный порт 50000, который связывается с портом 22 другого сервера (через промежуточный сервер!):
-```
+```bash
 # ssh -R 127.0.0.1:50000:10.0.0.2:22 root@10.0.0.1
 [root@10.0.0.1]# _
 ```
@@ -152,7 +152,7 @@ systemctl start postgresql-11
 Теперь, находясь на сервере 10.0.0.1 (что видно по приглашению командной строки) помним, что постучавшись на локальный порт `127.0.0.1:50000`, мы, на самом деле, стучимся на `10.0.0.2:22`, но не на прямую, а через промежуточный сервер.
 
 Поэтому здесь же запускаем процесс копирования с докачкой и проверкой. Копируем дамп и файлы настроек:
-```
+```bash
 rsync -avP -e "ssh -p50000" /var/lib/pgsql/11/backup/pgsql_dumpall_20200421-103341.bz2 127.0.0.1:/data/pgsql/11/backup/
 rsync -vP -e "ssh -p50000" /var/lib/pgsql/11/data/* 127.0.0.1:/data/pgsql/11/backup/data
 ```
@@ -160,24 +160,24 @@ rsync -vP -e "ssh -p50000" /var/lib/pgsql/11/data/* 127.0.0.1:/data/pgsql/11/bac
 В результате этой команды, наш дамп, через промежуточный сервер, будет залит на новый сервер.
 
 ### Восстановление дампа на новом сервере
-```
+```bash
 sudo su
 su - postgres
 lbzip2 -c -d /data/pgsql/11/backup/psql_dumpall_20200421-103341.bz2 | psql postgres
 ```
 
 ### Восстановление настроек экземпляра postresgql
-```
+```bash
 cp /data/pgsql/11/backup/data/* /data/pgsql/11/data/
 ```
 
 ### Настройка атозапуска postgesql
-```
+```bash
 systemctl enable postgresql-11
 ```
 
 ### Перезагрузка для проверки
-```
+```bash
 reboot
 ```
 

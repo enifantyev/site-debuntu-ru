@@ -1,13 +1,14 @@
 ---
 title: "01. Подготовка хостов к установке реплик FreeIPA"
 date: 2021-12-24
-weight: 10
+weight: 11
 description: >
   Подготовительные работы перед установкой FreeIPA.
 tags:
   - FreeIPA
   - FreeIPA 4.9.6
   - AlmaLinux 8.5
+slug: podgotovka-khostov-k-ustanovke-replikatsii-freeipa
 ---
 
 2021-12-24
@@ -15,7 +16,7 @@ tags:
 ## 1. Изменение сетевых настроек и имени хоста:
 
 1.1. Исправляем `/etc/hosts`:
-```
+```bash
 cat << EOF | sudo tee /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
@@ -23,17 +24,17 @@ EOF
 ```
 
 1.2. Обнуляем `/etc/sysconfig/network`:
-```
+```bash
 echo "" | sudo tee /etc/sysconfig/network
 ```
 
 1.3. Учитывая, что обращение за rpm-пакетами к Nexus Repository Manager производится по ip-адресу, то обнуляем `/etc/resolv.conf`:
-```
+```bash
 echo "" | sudo tee /etc/resolv.conf
 ```
 
 1.4. Задаём имя машины в нижнем регистре с указанием имени будущего домена:
-```
+```bash
 DOMAINNAME="test3.lan"
 sudo hostnamectl set-hostname $(echo $(hostname -s) | tr '[:upper:]' '[:lower:]').${DOMAINNAME}
 ```
@@ -43,7 +44,7 @@ sudo hostnamectl set-hostname $(echo $(hostname -s) | tr '[:upper:]' '[:lower:]'
 ## 2. Добавление необходимых пакетов
 
 2.1. Смотрим список доступных потоков:
-```
+```bash
 [user@host ~]$ sudo dnf module list idm
 Last metadata expiration check: 0:06:45 ago on Чт 27 янв 2022 12:04:24.
 AlmaLinux 8 - AppStream
@@ -55,7 +56,7 @@ Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
 ```
 
 2.2. Включаем модуль, в котором находится всё необходимое для установки FreeIPA-сервера:
-```
+```bash
 sudo dnf -y module enable idm:DL1
 ```
 <details>
@@ -90,7 +91,7 @@ Complete!
     `sudo dnf -y module reset idm:DL1 && sudo dnf -y module enable idm:DL1`
 
 2.3. Переключаем получение необходимых для установки FreeIPA пакетов на доставку из модуля 'idm:DL1', одновременно синхронизируя уже полученные пакеты:
-```
+```bash
 sudo dnf -y distro-sync
 ```
 <details>
@@ -122,7 +123,7 @@ Total download size: 3.1 M
 </details><br>
 
 2.4. Добавляем в систему пакеты для последующей установки FreeIPA-сервера со встроенным DNS-резольвером:
-```
+```bash
 sudo dnf -y module install idm:DL1/dns
 ```
 

@@ -90,7 +90,7 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
 
 ## Inspect Cluster
 Перед проверкой Inspect Network Performance и Inspect Hosts, исправляем на всех машинах шебанг в файле `/opt/cloudera/cm-agent/service/perf/host_perf_diag.py`, иначе проверка Inspect Network Performance завершится ошибкой, так как по умолчанию на машинах используется python3.
-```
+```bash
 ansible all -i cluster.inv -m replace \
 -a 'path=/opt/cloudera/cm-agent/service/perf/host_perf_diag.py regexp=^#!\/usr\/bin\/python replace=#!/usr/bin/python2' --become
 ```

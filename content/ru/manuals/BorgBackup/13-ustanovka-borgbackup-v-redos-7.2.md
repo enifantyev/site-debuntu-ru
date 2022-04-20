@@ -9,24 +9,25 @@ tags:
   - Backup SoftWare
   - RedOS 7.2
   - RedOS
+slug: ustanovka-borgbackup-v-redos-7.2
 ---
 
 2022-03-17
 
 ## Установка пакетов, необходимых для сборки borgbackup
-```
+```bash
 yum -y install openssl-devel python3-devel libacl-devel libacl lz4-devel \
 libzstd-devel libxxhash-devel gcc-c++
 ```
 
 ## Обновляем pip
-```
+```bash
 python3 -m pip install -U pip
 ```
 
 ## Добавляем borgbackup в /roo/.local/bin
 ### Пакеты pkgconfig setuptools wheel msgpack
-```
+```bash
 python3 -m pip install --user pkgconfig setuptools wheel msgpack
 ```
 stdout:
@@ -57,7 +58,7 @@ WARNING: Running pip as the 'root' user can result in broken permissions and con
 ```
 
 ### Установка утилиты borgbackup
-```
+```bash
 python3 -m pip install --user borgbackup
 ```
 stdout:

@@ -10,8 +10,8 @@ tags:
   - BigData
   - HDFS
 aliases:
-  - /refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/
   - /a/administrirovanie-tablic-v-apache-hbase/
+slug: administrirovanie-tablic-v-apache-hbase
 ---
 
 2020-11-14

@@ -8,6 +8,7 @@ tags:
   - BorgBackup
   - Backup SoftWare
   - ssh
+slug: sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru
 ---
 
 2022-03-16
@@ -47,30 +48,30 @@ tags:
 
 ### 'backup-client1'. Включение ssh gateway
 Итак, на хосте 'backup-client1' включаем опцию 'GatewayPorts' и перезапускаем демон sshd:
-```
+```bash
 sed -i 's/#GatewayPorts no/GatewayPorts yes/' /etc/ssh/sshd_config
 systemctl restart sshd
 ```
 
 Проверка:
-```
+```bash
 sshd -T | grep gatewayports
 ```
 
 ### 'awx-host'. Прокидывание временного туннеля-шлюза между 'backup-client1' и 'backup-server'
 На машине 'awx-host' выполняем создание туннеля-шлюза. Для удобства последующего закрытия туннеля, используем мультиплексирование с созданием управляющего сокета, через который сможем подать команду на закрытие туннеля. Кроме того, запретим подачу команд через этот туннель удалённой машине, а также переведём соединение в фоновый режим:
-```
+```bash
 ssh -MS /tmp/borg-is3 -Nf -R 0.0.0.0:2222:backup-server:22 eugene@backup-client1
 ```
 
 После окончания операций бэкапа, через управляющий сокет, подаём команду закрыть туннель:
-```
+```bash
 ssh -S /tmp/borg-is3 -O exit eugene@backup-client1
 ```
 
 ### Настройка клиентов
 Ключ ssh для доступа к borg-репозиторию создаём в `~/.ssh`, а в `~/.bashrc` добавляем переменные для работы с borg-репозиторием:
-```
+```bash
 export BORG_RSH="ssh -i /root/.ssh/borg1"
 export BORG_REPO="ssh://_borg@backup-client1:2222/./repo1"
 ```
