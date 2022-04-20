@@ -7,7 +7,7 @@ description: >
 tags:
   - Cloudera CDH 6.3.2
   - Apache Hadoop
-  - РВАЫ
+  - HDFS
   - CentOS
   - CentOS 7
   - BigData

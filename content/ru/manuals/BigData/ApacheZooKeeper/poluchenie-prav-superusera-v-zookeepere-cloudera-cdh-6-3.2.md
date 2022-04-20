@@ -8,9 +8,9 @@ tags:
   - Apache Zookeeper
   - Apache Hadoop
   - Cloudera Hadoop
-slug: poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2
 alias:
   - /n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/
+slug: poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2
 ---
 
 2021-08-11

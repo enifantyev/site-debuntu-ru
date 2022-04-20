@@ -2,7 +2,7 @@
 ---
 title: "Apache Atlas"
 linkTitle: "Apache Atlas"
-weight: 20
+#weight: 10
 menu:
   manuals:
     bigdata:
