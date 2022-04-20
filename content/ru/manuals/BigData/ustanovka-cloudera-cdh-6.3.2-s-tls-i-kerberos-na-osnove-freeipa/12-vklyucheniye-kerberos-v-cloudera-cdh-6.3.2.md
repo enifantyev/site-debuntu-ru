@@ -3,7 +3,7 @@ title: "12. Включение Kerberos в Cloudera CDH 6.3.2"
 date: 2021-10-14
 weight: 12
 description: >
-  В этой части описывается настройка TLS для HDFS и YARN.
+  В этой части описывается включение Kerberos в кластере Hadoop.
 tags:
   - Cloudera CDH 6.3.2
   - Apache Hadoop
