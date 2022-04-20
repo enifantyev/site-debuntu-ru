@@ -12,7 +12,7 @@ tags:
   - BigData
 aliases:
   - /a/ustanovka-cloudera-manager-6-3.1/
-url: /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1/
+slug: ustanovka-cloudera-manager-6-3.1
 ---
 
 2021-06-16

@@ -10,7 +10,7 @@ tags:
   - CentOS
   - CentOS 7
   - BigData
-url: /manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/
+slug: nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov
 ---
 
 ## Использованные материалы
