@@ -19,7 +19,7 @@ slug: hdfs-nastroyka
 ## Enable High Availability
 [Enabling HDFS HA](https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_hag_hdfs_ha_enabling.html)
 
-1. В настройках сервиса HDFS, используя фильтр по слову 'dfs.journalnode.edits.dir', изменяем следующий параметр:
+1. В настройках сервиса HDFS, используя фильтр по слову &laquo;dfs.journalnode.edits.dir&raquo;, изменяем следующий параметр:
 <table>
 <tr>
 <th>Property</th><th>Value</th><th>Description</th>

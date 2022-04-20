@@ -13,8 +13,7 @@ tags:
 slug: vklyucheniye-kerberos-v-cloudera-cdh-6.3.2
 ---
 
-2021-06-17<br>
-2021-10-14
+2021-06-17&nbsp;&ndash;&nbsp;2021-10-14
 
 ## 1. Использованные материалы
 1. [How to Configure Clusters to Use Kerberos for Authentication](https://docs.cloudera.com/documentation/enterprise/latest/topics/cm_sg_using_cm_sec_config.html)

@@ -2,7 +2,7 @@
 ---
 title: "Apache ZooKeeper"
 linkTitle: "Apache ZooKeeper"
-#weight: 10
+weight: 20
 menu:
   manuals:
     bigdata:

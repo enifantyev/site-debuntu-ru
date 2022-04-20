@@ -2,7 +2,7 @@
 ---
 title: "Apache Airflow"
 linkTitle: "Apache Airflow"
-#weight: 10
+weight: 20
 menu:
   manuals:
     bigdata:
