@@ -71,56 +71,6 @@ yum install expect-devel
     </item>
     
     <item>
-      <title>N: Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
-      <pubDate>Wed, 11 Aug 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
-      <description>
-        
-        
-        &lt;p&gt;2021-08-11&lt;/p&gt;
-&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
-&lt;p&gt;При удалении ноды &lt;code&gt;/solr&lt;/code&gt; через &lt;code&gt;zookeeper-client&lt;/code&gt; выводилась ошибка:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[zk: localhost:2181(CONNECTED) 0] rmr /solr
-The command &amp;#39;rmr&amp;#39; has been deprecated. Please use &amp;#39;deleteall&amp;#39; instead.
-Authentication is not valid : /solr/security
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Решение этой проблемы нашёл здесь: &lt;a href=&#34;https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421&#34;&gt;https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;алгоритм-получения-прав-superuserа&#34;&gt;Алгоритм получения прав superuser&amp;rsquo;а&lt;/h2&gt;
-&lt;p&gt;Переходим в домашний каталог Zookeeper&amp;rsquo;а и запускаем генерацию дайджеста пароля для только что придуманного логина, под которым возобладаем superuser-правами в Zookeeper&amp;rsquo;е, например &amp;lsquo;zoosu:TsKlydBdycdq&amp;rsquo;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /usr/lib/zookeeper &amp;amp;&amp;amp; \
-  /usr/java/jdk1.8.0_181-cloudera/bin/java -cp &amp;#34;./zookeeper.jar:lib/slf4j-api-1.7.25.jar&amp;#34; org.apache.zookeeper.server.auth.DigestAuthenticationProvider zoosu:TsKlydBdycdq
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В выводе команды видим дайджест &amp;lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&amp;rsquo;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SLF4J: Failed to load class &amp;#34;org.slf4j.impl.StaticLoggerBinder&amp;#34;.
-SLF4J: Defaulting to no-operation (NOP) logger implementation
-SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-zoosu:TsKlydBdycdq-&amp;gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Вставляем эти учётные данные (&amp;lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&amp;rsquo;) в строку параметров для java-машины ZooKeeper&amp;rsquo;а (&amp;rsquo;&lt;span style=&#34;color:blue&#34;&gt;-Dzookeeper.DigestAuthenticationProvider.superDigest=zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&lt;/span&gt;&amp;rsquo;), которую размещаем в настройках ZooKeeper&amp;rsquo;а в Cloudera Manager.&lt;/p&gt;
-&lt;p&gt;В настройках ZooKeeper, используя фильтр &amp;lsquo;Java Configuration Options for Zookeeper Server&amp;rsquo;, изменяем следующие параметры:&lt;/p&gt;
-&lt;table&gt;
-&lt;tr&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
-&lt;tr valign=top&gt;
-&lt;td&gt;&lt;b&gt;Java Configuration Options for Zookeeper Server&lt;/b&gt;&lt;/td&gt;
-&lt;td&gt;&lt;span style=&#34;color:blue&#34;&gt;-Dzookeeper.DigestAuthenticationProvider.superDigest=&lt;br&gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-&lt;p&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
-&lt;p&gt;Или останавливаем кластер и запускаем только сервис ZooKeeper&amp;rsquo;а, если, конечно, хотим удалить вышеуказанную строку из настроек, после выполнения удаления ноды. После чего останавливаем ZooKeeper и запускаем весь кластер.&lt;/p&gt;
-&lt;h2 id=&#34;удаление-ноды&#34;&gt;Удаление ноды&lt;/h2&gt;
-&lt;p&gt;На ZooKeeper-узле запускаем &lt;code&gt;zookeeper-client&lt;/code&gt;, авторизуемся с помощью команды &lt;code&gt;addauth digest zoosu:TsKlydBdycdq&lt;/code&gt;, и выполняем удаление ноды &lt;code&gt;/solr&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[zk: localhost:2181(CONNECTED) 0] ls /solr
-[configs, overseer, security.json, solr.xml, autoscaling.json, security, aliases.json, live_nodes, collections, overseer_elect, clusterstate.json, autoscaling, clusterprops.json]
-[zk: localhost:2181(CONNECTED) 1] addauth digest zoosu:TsKlydBdycdq
-[zk: localhost:2181(CONNECTED) 2] deleteall /solr
-[zk: localhost:2181(CONNECTED) 3] ls /
-[zookeeper, hadoop-ha, kafka, hive_zookeeper_namespace_hive, hbase]
-[zk: localhost:2181(CONNECTED) 4]
-&lt;/code&gt;&lt;/pre&gt;
-      </description>
-    </item>
-    
-    <item>
       <title>N: Блокирование доступа внешних программ к Hive metastore</title>
       <link>https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
       <pubDate>Mon, 19 Jul 2021 00:00:00 +0000</pubDate>
@@ -2932,6 +2882,75 @@ verb 3
 &lt;a href=&#34;http://www.linuxcenter.ru/lib/articles/system/kernel26_install.phtml&#34;&gt;http://www.linuxcenter.ru/lib/articles/system/kernel26_install.phtml&lt;/a&gt;
 &lt;a href=&#34;http://www.opennet.ru/base/sys/install_linux_kernel.txt.html&#34;&gt;http://www.opennet.ru/base/sys/install_linux_kernel.txt.html&lt;/a&gt;
 &lt;a href=&#34;http://www.mr-h1z.com/linux/ubuntu/%D0%A1%D0%BE%D0%B1%D0%B8%D1%80%D0%B0%D0%B5%D0%BC-%D1%81%D0%B2%D0%BE%D0%B5-%D1%8F%D0%B4%D1%80%D0%BE-%D0%B4%D0%BB%D1%8F-%D1%83%D0%B1%D1%83%D0%BD%D1%82%D1%8B&#34;&gt;http://www.mr-h1z.com/linux/ubuntu/%D0%A1%D0%BE%D0%B1%D0%B8%D1%80%D0%B0%D0%B5%D0%BC-%D1%81%D0%B2%D0%BE%D0%B5-%D1%8F%D0%B4%D1%80%D0%BE-%D0%B4%D0%BB%D1%8F-%D1%83%D0%B1%D1%83%D0%BD%D1%82%D1%8B&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>N: Настройка VoIP на Nokia E52</title>
+      <link>https://debuntu.ru/n/nastroika-voip-na-nokia-e52/</link>
+      <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/n/nastroika-voip-na-nokia-e52/</guid>
+      <description>
+        
+        
+        &lt;p&gt;Скачиваем отсюда &lt;a href=&#34;http://www.forum.nokia.com/info/sw.nokia.com/id/d476061e-90ca-42e9-b3ea-1a852f3808ec/SIP_VoIP_Settings.html&#34;&gt;http://www.forum.nokia.com/info/sw.nokia.com/id/d476061e-90ca-42e9-b3ea-1a852f3808ec/SIP_VoIP_Settings.html&lt;/a&gt; SIP VoIP 3.x Settings (164 kB) и устанавливаем на телефон эту приблуду, которая позволит нам настроить профили для sip провайдеров.&lt;/p&gt;
+&lt;div&gt;
+&lt;h3&gt;&lt;a id=&#34;астраиваем sipnet.ru&#34; name=&#34;астраиваем sipnet.ru&#34;&gt;&lt;/a&gt;Настраиваем sipnet.ru&lt;/h3&gt;
+&lt;div&gt;Меню - Панель управления - Параметры сети - Advanced VoIP settings&lt;/div&gt;
+&lt;div&gt;&lt;strong&gt;SIP settings&lt;/strong&gt;&lt;/div&gt;
+&lt;div&gt;Функции - Новый профиль SIP - Исп. проф. по умолч.&lt;/div&gt;
+&lt;div&gt;Для sipnet.ru:&lt;/div&gt;
+&lt;div&gt;Имя профиля:             Sipnet&lt;/div&gt;
+&lt;div&gt;Профиль услуги:          IETF&lt;/div&gt;
+&lt;div&gt;Назначание по умолч.:    Интернет&lt;/div&gt;
+&lt;div&gt;Открыт. имя польз.:      000000@sipnet.ru (свой номер в сипнете)&lt;/div&gt;
+&lt;div&gt;Использовать сжатие:     нет&lt;/div&gt;
+&lt;div&gt;Регистрация:             Всегда&lt;/div&gt;
+&lt;div&gt;Использовать защиту:     Нет&lt;/div&gt;
+&lt;div&gt;Прокси-сервер:           не заполняем&lt;/div&gt;
+&lt;div&gt;Сервер регистрации:&lt;/div&gt;
+&lt;div&gt;        Адрес сервера рег:    sipnet.ru&lt;/div&gt;
+&lt;div&gt;        Область:              нет&lt;/div&gt;
+&lt;div&gt;        Имя пользователя:     000000 (свой номер в сипнете)&lt;/div&gt;
+&lt;div&gt;        Пароль:               ****   (свой пароль в сипнете)&lt;/div&gt;
+&lt;div&gt;        Тип передачи:         UDP&lt;/div&gt;
+&lt;div&gt;        Порт:                 5060&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt; &lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;Поднимаемся до Параметры сети - Advanced VoIP settings и заходим в&lt;/div&gt;
+&lt;div&gt;&lt;strong&gt;VoIP services&lt;/strong&gt;&lt;/div&gt;
+&lt;div&gt;options - new service - Use default profile - Sipnet (его мы только что делали)&lt;/div&gt;
+&lt;div&gt;аппарат зависнет на несколько секунд и...&lt;/div&gt;
+&lt;div&gt;Вкл. услугу&lt;/div&gt;
+&lt;div&gt;Можно юзать. Надо только помнить, что сипнет.ру берёт за звонки на сотовые телефоны дороже, чем звонить с сотового на сотовый.&lt;/div&gt;
+&lt;div&gt;
+&lt;h3&gt;&lt;a id=&#34;Настраиваем webcalldirect.com&#34; name=&#34;Настраиваем webcalldirect.com&#34;&gt;&lt;/a&gt;Настраиваем webcalldirect.com&lt;/h3&gt;
+&lt;div&gt;Для webcalldirect.com (Voipdiscount.com настраивается аналогично. Думаю, что и прочие, из линейки бетамакса, настраиваются также) :&lt;/div&gt;
+&lt;div&gt;Имя профиля:             Webcalldirect.com&lt;/div&gt;
+&lt;div&gt;Профиль услуги:          IETF&lt;/div&gt;
+&lt;div&gt;Назначание по умолч.:    Интернет&lt;/div&gt;
+&lt;div&gt;Открыт. имя польз.:      user@webcalldirect.com (своё имя в webcalldirect.com)&lt;/div&gt;
+&lt;div&gt;Использовать сжатие:     нет&lt;/div&gt;
+&lt;div&gt;Регистрация:             Всегда&lt;/div&gt;
+&lt;div&gt;Использовать защиту:     Нет&lt;/div&gt;
+&lt;div&gt;Прокси-сервер:           не заполняем&lt;/div&gt;
+&lt;div&gt;Сервер регистрации:&lt;/div&gt;
+&lt;div&gt;        Адрес сервера рег:    sip.webcalldirect.com&lt;/div&gt;
+&lt;div&gt;        Область:              нет&lt;/div&gt;
+&lt;div&gt;        Имя пользователя:     user (своё имя в webcalldirect.com)&lt;/div&gt;
+&lt;div&gt;        Пароль:               ****   (свой пароль в webcalldirect.com)&lt;/div&gt;
+&lt;div&gt;        Тип передачи:         UDP&lt;/div&gt;
+&lt;div&gt;        Порт:                 5060&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt; &lt;/div&gt;
+&lt;div&gt;Оплачиваю бетамакс через paypal, через Qiwi или Visa/Mastercard&#39;ом напрямую.&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
 
       </description>
     </item>

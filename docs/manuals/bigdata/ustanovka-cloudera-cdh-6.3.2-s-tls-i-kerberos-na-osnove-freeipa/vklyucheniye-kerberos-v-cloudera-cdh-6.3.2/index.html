@@ -19,10 +19,10 @@
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
 <title>12. Включение Kerberos в Cloudera CDH 6.3.2 | Debuntarium</title>
-<meta name="description" content="В этой части описывается настройка TLS для HDFS и YARN.
+<meta name="description" content="В этой части описывается включение Kerberos в кластере Hadoop.
 ">
 <meta property="og:title" content="12. Включение Kerberos в Cloudera CDH 6.3.2" />
-<meta property="og:description" content="В этой части описывается настройка TLS для HDFS и YARN.
+<meta property="og:description" content="В этой части описывается включение Kerberos в кластере Hadoop.
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/" /><meta property="article:section" content="manuals" />
@@ -30,20 +30,20 @@
 <meta property="article:modified_time" content="2021-10-14T00:00:00+00:00" /><meta property="og:site_name" content="Debuntarium" />
 
 <meta itemprop="name" content="12. Включение Kerberos в Cloudera CDH 6.3.2">
-<meta itemprop="description" content="В этой части описывается настройка TLS для HDFS и YARN.
+<meta itemprop="description" content="В этой части описывается включение Kerberos в кластере Hadoop.
 "><meta itemprop="datePublished" content="2021-10-14T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-10-14T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1569">
+<meta itemprop="wordCount" content="1570">
 <meta itemprop="keywords" content="Cloudera CDH 6.3.2,Apache Hadoop,CentOS,CentOS 7,BigData," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="12. Включение Kerberos в Cloudera CDH 6.3.2"/>
-<meta name="twitter:description" content="В этой части описывается настройка TLS для HDFS и YARN.
+<meta name="twitter:description" content="В этой части описывается включение Kerberos в кластере Hadoop.
 "/>
 
 
 
 
-<link rel="preload" href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" as="style">
-<link href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.scss" as="style">
+<link href="/scss/main.scss" rel="stylesheet" integrity="">
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1HVBCPETY0"></script>
@@ -165,7 +165,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.27dd182b6bc58e0a2e9e46f0f9e7d42a.json"
+  data-offline-search-index-json-src="/offline-search-index.42636af9ad6c1ba00c03854f39a5aa54.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -187,7 +187,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.27dd182b6bc58e0a2e9e46f0f9e7d42a.json"
+  data-offline-search-index-json-src="/offline-search-index.42636af9ad6c1ba00c03854f39a5aa54.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -205,8 +205,8 @@ if (!doNotTrack) {
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupustanovka-i-nastroyka-borgbackup-li">
   <a href="/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-i-nastroyka-borgbackup"><span class="">10. Установка и настройка BorgBackup</span></a>
-</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupustanovka-borgbackup-v-altlinux-9-li">
-  <a href="/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-borgbackup-v-altlinux-9"><span class="">11. Установка BorgBackup в AltLinux 9</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupustanovka-i-nastroyka-borgbackup-li">
+  <a href="/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-i-nastroyka-borgbackup"><span class="">11. Установка BorgBackup в AltLinux 9</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupustanovka-borgbackup-v-altlinux-10-li">
   <a href="/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-borgbackup-v-altlinux-10"><span class="">12. Установка BorgBackup в AltLinux 10</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupustanovka-borgbackup-v-redos-72-li">
@@ -295,6 +295,17 @@ if (!doNotTrack) {
   <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipanastroyka-tls-dlya-hdfs-i-yarn"><span class="">11. Настройка TLS для HDFS и YARN</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipavklyucheniye-kerberos-v-cloudera-cdh-632-li">
   <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipavklyucheniye-kerberos-v-cloudera-cdh-632"><span class="td-sidebar-nav-active-item">12. Включение Kerberos в Cloudera CDH 6.3.2</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipazookeeper-nastroyka-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipazookeeper-nastroyka"><span class="">13. Zookeeper. Настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahdfs-nastroyka-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahdfs-nastroyka"><span class="">14. HDFS. Настройка</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapachezookeeper-li">
+  <a href="/manuals/bigdata/apachezookeeper/" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataapachezookeeper"><span class="">Apache ZooKeeper</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataapachezookeeperpoluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-32-li">
+  <a href="/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapachezookeeperpoluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-32"><span class="">Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapacheairflow-li">
@@ -409,7 +420,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/alpine-linux/" data-taxonomy-term="alpine-linux"><span class="taxonomy-label">Alpine Linux</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/altlinux/" data-taxonomy-term="altlinux"><span class="taxonomy-label">Altlinux</span><span class="taxonomy-count">3</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/altlinux/" data-taxonomy-term="altlinux"><span class="taxonomy-label">AltLinux</span><span class="taxonomy-count">3</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/altlinux-10/" data-taxonomy-term="altlinux-10"><span class="taxonomy-label">AltLinux 10</span><span class="taxonomy-count">2</span></a></li>
         
@@ -423,7 +434,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">18</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">20</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
         
@@ -461,21 +472,21 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/beeline/" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">34</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">36</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">9</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/btrfs/" data-taxonomy-term="btrfs"><span class="taxonomy-label">Btrfs</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos/" data-taxonomy-term="centos"><span class="taxonomy-label">CentOS</span><span class="taxonomy-count">18</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos/" data-taxonomy-term="centos"><span class="taxonomy-label">CentOS</span><span class="taxonomy-count">20</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos-7/" data-taxonomy-term="centos-7"><span class="taxonomy-label">CentOS 7</span><span class="taxonomy-count">15</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos-7/" data-taxonomy-term="centos-7"><span class="taxonomy-label">CentOS 7</span><span class="taxonomy-count">17</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/chroot/" data-taxonomy-term="chroot"><span class="taxonomy-label">chroot</span><span class="taxonomy-count">1</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">25</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">27</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-hadoop/" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span><span class="taxonomy-count">2</span></a></li>
         
@@ -531,7 +542,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/groupware/" data-taxonomy-term="groupware"><span class="taxonomy-label">groupware</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/hdfs/" data-taxonomy-term="hdfs"><span class="taxonomy-label">HDFS</span><span class="taxonomy-count">2</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/hdfs/" data-taxonomy-term="hdfs"><span class="taxonomy-label">HDFS</span><span class="taxonomy-count">3</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/history/" data-taxonomy-term="history"><span class="taxonomy-label">History</span><span class="taxonomy-count">2</span></a></li>
         
@@ -703,6 +714,8 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/xfs/" data-taxonomy-term="xfs"><span class="taxonomy-label">XFS</span><span class="taxonomy-count">2</span></a></li>
         
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/zookeper/" data-taxonomy-term="zookeper"><span class="taxonomy-label">Zookeper</span><span class="taxonomy-count">1</span></a></li>
+        
       </ul>
     </div>
   
@@ -756,7 +769,7 @@ if (!doNotTrack) {
             
 <div class="td-content">
 	<h1>12. Включение Kerberos в Cloudera CDH 6.3.2</h1>
-	<div class="lead">В этой части описывается настройка TLS для HDFS и YARN.</div>
+	<div class="lead">В этой части описывается включение Kerberos в кластере Hadoop.</div>
 	<header class="article-meta">
 		
 
@@ -791,8 +804,7 @@ if (!doNotTrack) {
 
 		
 	</header>    
-	<p>2021-06-17<br>
-2021-10-14</p>
+	<p>2021-06-17 – 2021-10-14</p>
 <h2 id="1-использованные-материалы">1. Использованные материалы</h2>
 <ol>
 <li><a href="https://docs.cloudera.com/documentation/enterprise/latest/topics/cm_sg_using_cm_sec_config.html">How to Configure Clusters to Use Kerberos for Authentication</a></li>
@@ -864,20 +876,20 @@ This should list port 749 on your master KDC. Support for it is not complete at 
 <h3 id="24-установка-jce-policy-файлы-для-aes-256-шифрования">2.4. Установка JCE Policy файлы для AES-256 шифрования</h3>
 <p>Этот шаг мы можем пропустить, так как &ldquo;этот шаг не требуется в случае использования JDK =&gt; 1.8.0_161. В JDK 1.8.0_161 по умолчанию включено сильное шифрование без всякого ограничения.&rdquo;</p>
 <p>Проверяем наличие поддержки AES256:</p>
-<pre tabindex="0"><code>$ sudo rpm -qa *1.8
-oracle-j2sdk1.8-1.8.0+update181-1.x86_64
-
-$ kinit nifanteve
-Password for nifanteve@TEST.LAN:
-
-$ klist -e
-Ticket cache: KEYRING:persistent:1000:1000
-Default principal: nifanteve@TEST.LAN
-
-Valid starting       Expires              Service principal
-02/03/2021 11:16:42  02/04/2021 11:16:34  krbtgt/TEST.LAN@TEST.LAN
-        Etype (skey, tkt): aes256-cts-hmac-sha1-96, aes256-cts-hmac-sha1-96
-</code></pre><p>Видим &lsquo;aes256-cts-hmac-sha1-96&rsquo;, поэтому пропускаем этот шаг.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo rpm -qa *1.8
+</span></span><span style="display:flex;"><span>oracle-j2sdk1.8-1.8.0+update181-1.x86_64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kinit nifanteve
+</span></span><span style="display:flex;"><span>Password <span style="color:#204a87;font-weight:bold">for</span> nifanteve@TEST.LAN:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ klist -e
+</span></span><span style="display:flex;"><span>Ticket cache: KEYRING:persistent:1000:1000
+</span></span><span style="display:flex;"><span>Default principal: nifanteve@TEST.LAN
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Valid starting       Expires              Service principal
+</span></span><span style="display:flex;"><span>02/03/2021 11:16:42  02/04/2021 11:16:34  krbtgt/TEST.LAN@TEST.LAN
+</span></span><span style="display:flex;"><span>        Etype <span style="color:#ce5c00;font-weight:bold">(</span>skey, tkt<span style="color:#ce5c00;font-weight:bold">)</span>: aes256-cts-hmac-sha1-96, aes256-cts-hmac-sha1-96
+</span></span></code></pre></div><p>Видим &lsquo;aes256-cts-hmac-sha1-96&rsquo;, поэтому пропускаем этот шаг.</p>
 <h3 id="25-kerberos-принципал-для-cloudera-manager-server-во-freeipa">2.5. Kerberos-принципал для Cloudera Manager Server во FreeIPA</h3>
 <p>Забегая вперёд отметим, что в конце выполнения &ldquo;мастера включения Kerberos&rdquo; Cloudera Manager Server создаст host-принципалы и загрузит keytab&rsquo;ы для всех сервисов в кластере. Для этого Cloudera Manager Server нуждается в отдельном принципале с соответствующими правами, позволяющими проделать эту работу.</p>
 <p>Если вы используете FreeIPA, визард создаст свой собственный аккаунт с необходимыми привилегиями. Для этого потребуется ввод учётных данных администратора FreeIPA. Эти учетные данные не сохраняются и используются только для создания нового пользователя и роли (с именами cmadin- &lt;random_id&gt; и cmadminrole соответственно) и получения его keytab. Cloudera Manager сохраняет этот keytab для будущих операций Kerberos, таких как восстановление учетных данных аккаунтов служб CDH.</p>

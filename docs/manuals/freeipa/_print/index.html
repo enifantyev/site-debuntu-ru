@@ -35,8 +35,8 @@
 
 
 
-<link rel="preload" href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" as="style">
-<link href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.scss" as="style">
+<link href="/scss/main.scss" rel="stylesheet" integrity="">
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1HVBCPETY0"></script>
@@ -158,7 +158,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.27dd182b6bc58e0a2e9e46f0f9e7d42a.json"
+  data-offline-search-index-json-src="/offline-search-index.42636af9ad6c1ba00c03854f39a5aa54.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -227,7 +227,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2.1: <a href="#pg-e55d3d1b430dbb2891117de4c612e6a7">00. Удаление реплики</a></li>
+<li>2.1: <a href="#pg-ad8c9f335e0bc067578a099f1373394a">00. Удаление реплики</a></li>
 
 
     
@@ -235,7 +235,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>2.2: <a href="#pg-213050214eab990d7feb91a9c5cf11fa">01. Подготовка хостов к установке реплик FreeIPA</a></li>
+<li>2.2: <a href="#pg-ceb985c0cebb56da6f001d80b4dfac27">01. Подготовка хостов к установке реплик FreeIPA</a></li>
 
 
     
@@ -429,7 +429,7 @@ set -o history
 
 <div class="td-content" style="">
     
-	<h1 id="pg-e55d3d1b430dbb2891117de4c612e6a7">2.1 - 00. Удаление реплики</h1>
+	<h1 id="pg-ad8c9f335e0bc067578a099f1373394a">2.1 - 00. Удаление реплики</h1>
     <div class="lead">Описание зачистки машин от неудачно установленного экзмепляра FreeIPA.</div>
 	<p>2021-12-27</p>
 <h2 id="1-ссылки-на-использованные-материалы">1. Ссылки на использованные материалы</h2>
@@ -439,17 +439,17 @@ set -o history
 <h2 id="3-неполное-удаление-для-повторного-добавления-реплики">3. Неполное удаление для повторного добавления реплики</h2>
 <h3 id="31-операции-на-удаляемом-сервере">3.1. Операции на удаляемом сервере</h3>
 <p>3.1.1. На удаляемом сервере запускаем процедуру удаления IPA-сервера:</p>
-<pre tabindex="0"><code>$ sudo ipa-server-install --uninstall
-</code></pre><p>3.1.2. Здесь же зачищаем логи скриптов установки/удаления IPA-сервера:</p>
-<pre tabindex="0"><code>sudo rm -rf /var/log/ipa*.log
-</code></pre><p>3.1.3. Перезагружаем хост:</p>
-<pre tabindex="0"><code>sudo reboot
-</code></pre><h3 id="32-операции-на-остающихся-ipa-репликах">3.2. Операции на остающихся IPA-репликах</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo ipa-server-install --uninstall
+</span></span></code></pre></div><p>3.1.2. Здесь же зачищаем логи скриптов установки/удаления IPA-сервера:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo rm -rf /var/log/ipa*.log
+</span></span></code></pre></div><p>3.1.3. Перезагружаем хост:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo reboot
+</span></span></code></pre></div><h3 id="32-операции-на-остающихся-ipa-репликах">3.2. Операции на остающихся IPA-репликах</h3>
 <p>3.2.1. В случае невозможности полноценного выполнения пункта 3.1., удаляем реплику из топологии используя любую машину в домене. Для этого, из командной строки любой оставшейся в домене машины выполняем:</p>
-<pre tabindex="0"><code>$ kinit admin
-$ export REPLICA=&#34;replica.example.org&#34;
-$ ipa server-del ${REPLICA}
-</code></pre><p>3.2.2. Проверяем через Web UI, что упоминания об удаляемом сервере не остались в следующих местах:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ kinit admin
+</span></span><span style="display:flex;"><span>$ <span style="color:#204a87">export</span> <span style="color:#000">REPLICA</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;replica.example.org&#34;</span>
+</span></span><span style="display:flex;"><span>$ ipa server-del <span style="color:#4e9a06">${</span><span style="color:#000">REPLICA</span><span style="color:#4e9a06">}</span>
+</span></span></code></pre></div><p>3.2.2. Проверяем через Web UI, что упоминания об удаляемом сервере не остались в следующих местах:</p>
 <ul>
 <li>Список IPA-серверов (<a href="https://dev-ipa04p.test3.lan/ipa/ui/#/e/server/search)">https://dev-ipa04p.test3.lan/ipa/ui/#/e/server/search)</a>.</li>
 <li>Список хостов (<a href="https://dev-ipa04p.test3.lan/ipa/ui/#/e/host/search)">https://dev-ipa04p.test3.lan/ipa/ui/#/e/host/search)</a>.</li>
@@ -469,34 +469,34 @@ $ ipa server-del ${REPLICA}
 <h2 id="4-полное-удаление">4. Полное удаление</h2>
 <p>После &ldquo;неполного&rdquo; удаления выполняем дополнительные шаги.</p>
 <p>4.1. Удаляем пакеты:</p>
-<pre tabindex="0"><code>sudo dnf -y module remove idm:DL1/dns
-sudo dnf -y autoremove python3-ipaserver
-</code></pre><p>4.2. Переключаемся на поток &lsquo;idm:client&rsquo;:</p>
-<pre tabindex="0"><code>sudo dnf -y module enable idm:client
-sudo dnf -y module reset idm:client
-sudo dnf -y distro-sync
-</code></pre><p>4.3. Зачищаем логи и прочие каталоги, после чего перезагружаем хост:</p>
-<pre tabindex="0"><code>sudo rm -rf /var/log/ipa*.log \
-  /var/log/custodia \
-  /var/log/dirsrv \
-  /var/log/httpd \
-  /var/log/ipa \
-  /var/log/pki \
-  /var/log/opencryptoki
-
-sudo rm -rf /etc/custodia/* \
-  /etc/dirsrv \
-  /etc/ipa \
-
-sudo rm -rf /var/lib/certmonger/* \
-  /var/lib/custodia \
-  /var/lib/dirsrv \
-  /var/lib/httpd \
-  /var/lib/ipa \
-  /var/lib/opencryptoki
-
-sudo reboot
-</code></pre><p>4.4. После удаления сервера потребуется восстановить содержимое файла <code>/etc/resolv.conf</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf -y module remove idm:DL1/dns
+</span></span><span style="display:flex;"><span>sudo dnf -y autoremove python3-ipaserver
+</span></span></code></pre></div><p>4.2. Переключаемся на поток &lsquo;idm:client&rsquo;:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf -y module <span style="color:#204a87">enable</span> idm:client
+</span></span><span style="display:flex;"><span>sudo dnf -y module reset idm:client
+</span></span><span style="display:flex;"><span>sudo dnf -y distro-sync
+</span></span></code></pre></div><p>4.3. Зачищаем логи и прочие каталоги, после чего перезагружаем хост:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo rm -rf /var/log/ipa*.log <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/log/custodia <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/log/dirsrv <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/log/httpd <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/log/ipa <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/log/pki <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/log/opencryptoki
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo rm -rf /etc/custodia/* <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/dirsrv <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/ipa <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>
+</span></span><span style="display:flex;"><span>sudo rm -rf /var/lib/certmonger/* <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/lib/custodia <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/lib/dirsrv <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/lib/httpd <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/lib/ipa <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /var/lib/opencryptoki
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo reboot
+</span></span></code></pre></div><p>4.4. После удаления сервера потребуется восстановить содержимое файла <code>/etc/resolv.conf</code>.</p>
 
 </div>
 
@@ -512,35 +512,35 @@ sudo reboot
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-213050214eab990d7feb91a9c5cf11fa">2.2 - 01. Подготовка хостов к установке реплик FreeIPA</h1>
+	<h1 id="pg-ceb985c0cebb56da6f001d80b4dfac27">2.2 - 01. Подготовка хостов к установке реплик FreeIPA</h1>
     <div class="lead">Подготовительные работы перед установкой FreeIPA.</div>
 	<p>2021-12-24</p>
 <h2 id="1изменение-сетевых-настроек-и-имени-хоста">1. Изменение сетевых настроек и имени хоста:</h2>
 <p>1.1. Исправляем <code>/etc/hosts</code>:</p>
-<pre tabindex="0"><code>cat &lt;&lt; EOF | sudo tee /etc/hosts
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-EOF
-</code></pre><p>1.2. Обнуляем <code>/etc/sysconfig/network</code>:</p>
-<pre tabindex="0"><code>echo &#34;&#34; | sudo tee /etc/sysconfig/network
-</code></pre><p>1.3. Учитывая, что обращение за rpm-пакетами к Nexus Repository Manager производится по ip-адресу, то обнуляем <code>/etc/resolv.conf</code>:</p>
-<pre tabindex="0"><code>echo &#34;&#34; | sudo tee /etc/resolv.conf
-</code></pre><p>1.4. Задаём имя машины в нижнем регистре с указанием имени будущего домена:</p>
-<pre tabindex="0"><code>DOMAINNAME=&#34;test3.lan&#34;
-sudo hostnamectl set-hostname $(echo $(hostname -s) | tr &#39;[:upper:]&#39; &#39;[:lower:]&#39;).${DOMAINNAME}
-</code></pre><h2 id="2-добавление-необходимых-пакетов">2. Добавление необходимых пакетов</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat <span style="color:#4e9a06">&lt;&lt; EOF | sudo tee /etc/hosts
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span></code></pre></div><p>1.2. Обнуляем <code>/etc/sysconfig/network</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#000;font-weight:bold">|</span> sudo tee /etc/sysconfig/network
+</span></span></code></pre></div><p>1.3. Учитывая, что обращение за rpm-пакетами к Nexus Repository Manager производится по ip-адресу, то обнуляем <code>/etc/resolv.conf</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;&#34;</span> <span style="color:#000;font-weight:bold">|</span> sudo tee /etc/resolv.conf
+</span></span></code></pre></div><p>1.4. Задаём имя машины в нижнем регистре с указанием имени будущего домена:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">DOMAINNAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;test3.lan&#34;</span>
+</span></span><span style="display:flex;"><span>sudo hostnamectl set-hostname <span style="color:#204a87;font-weight:bold">$(</span><span style="color:#204a87">echo</span> <span style="color:#204a87;font-weight:bold">$(</span>hostname -s<span style="color:#204a87;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">|</span> tr <span style="color:#4e9a06">&#39;[:upper:]&#39;</span> <span style="color:#4e9a06">&#39;[:lower:]&#39;</span><span style="color:#204a87;font-weight:bold">)</span>.<span style="color:#4e9a06">${</span><span style="color:#000">DOMAINNAME</span><span style="color:#4e9a06">}</span>
+</span></span></code></pre></div><h2 id="2-добавление-необходимых-пакетов">2. Добавление необходимых пакетов</h2>
 <p>2.1. Смотрим список доступных потоков:</p>
-<pre tabindex="0"><code>[user@host ~]$ sudo dnf module list idm
-Last metadata expiration check: 0:06:45 ago on Чт 27 янв 2022 12:04:24.
-AlmaLinux 8 - AppStream
-Name  Stream      Profiles                                  Summary                                                       
-idm   DL1         adtrust, client, common [d], dns, server  The Red Hat Enterprise Linux Identity Management system module
-idm   client [d]  common [d]                                RHEL IdM long term support client module                      
-
-Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
-</code></pre><p>2.2. Включаем модуль, в котором находится всё необходимое для установки FreeIPA-сервера:</p>
-<pre tabindex="0"><code>sudo dnf -y module enable idm:DL1
-</code></pre><details>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>user@host ~<span style="color:#ce5c00;font-weight:bold">]</span>$ sudo dnf module list idm
+</span></span><span style="display:flex;"><span>Last metadata expiration check: 0:06:45 ago on Чт <span style="color:#0000cf;font-weight:bold">27</span> янв <span style="color:#0000cf;font-weight:bold">2022</span> 12:04:24.
+</span></span><span style="display:flex;"><span>AlmaLinux <span style="color:#0000cf;font-weight:bold">8</span> - AppStream
+</span></span><span style="display:flex;"><span>Name  Stream      Profiles                                  Summary                                                       
+</span></span><span style="display:flex;"><span>idm   DL1         adtrust, client, common <span style="color:#ce5c00;font-weight:bold">[</span>d<span style="color:#ce5c00;font-weight:bold">]</span>, dns, server  The Red Hat Enterprise Linux Identity Management system module
+</span></span><span style="display:flex;"><span>idm   client <span style="color:#ce5c00;font-weight:bold">[</span>d<span style="color:#ce5c00;font-weight:bold">]</span>  common <span style="color:#ce5c00;font-weight:bold">[</span>d<span style="color:#ce5c00;font-weight:bold">]</span>                                RHEL IdM long term support client module                      
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hint: <span style="color:#ce5c00;font-weight:bold">[</span>d<span style="color:#ce5c00;font-weight:bold">]</span>efault, <span style="color:#ce5c00;font-weight:bold">[</span>e<span style="color:#ce5c00;font-weight:bold">]</span>nabled, <span style="color:#ce5c00;font-weight:bold">[</span>x<span style="color:#ce5c00;font-weight:bold">]</span>disabled, <span style="color:#ce5c00;font-weight:bold">[</span>i<span style="color:#ce5c00;font-weight:bold">]</span>nstalled
+</span></span></code></pre></div><p>2.2. Включаем модуль, в котором находится всё необходимое для установки FreeIPA-сервера:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf -y module <span style="color:#204a87">enable</span> idm:DL1
+</span></span></code></pre></div><details>
 <pre tabindex="0"><code>Dependencies resolved.
 ==========================================================================================================================
  Package                      Architecture                Version                      Repository                    Size
@@ -568,8 +568,8 @@ dule_name>&rsquo; command. After you reset the module, you can install the other
 <code>sudo dnf -y module reset idm:DL1 &amp;&amp; sudo dnf -y module enable idm:DL1</code></p>
 </blockquote>
 <p>2.3. Переключаем получение необходимых для установки FreeIPA пакетов на доставку из модуля &lsquo;idm:DL1&rsquo;, одновременно синхронизируя уже полученные пакеты:</p>
-<pre tabindex="0"><code>sudo dnf -y distro-sync
-</code></pre><details>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf -y distro-sync
+</span></span></code></pre></div><details>
 <pre tabindex="0"><code>Dependencies resolved.
 ==========================================================================================================================
  Package                       Architecture     Version                                         Repository           Size
@@ -593,8 +593,8 @@ Upgrade  10 Packages
 Total download size: 3.1 M
 </code></pre></details><br>
 <p>2.4. Добавляем в систему пакеты для последующей установки FreeIPA-сервера со встроенным DNS-резольвером:</p>
-<pre tabindex="0"><code>sudo dnf -y module install idm:DL1/dns
-</code></pre><details>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf -y module install idm:DL1/dns
+</span></span></code></pre></div><details>
 <pre tabindex="0"><code>Dependencies resolved.
 ==========================================================================================================================
  Package                              Arch        Version                                            Repository      Size

@@ -53,13 +53,6 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</loc>
-    <lastmod>2021-12-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
     <loc>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</loc>
     <lastmod>2021-11-26T00:00:00+00:00</lastmod>
   </url>
@@ -151,7 +144,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</loc>
+    <loc>https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</loc>
     <lastmod>2021-08-11T00:00:00+00:00</lastmod>
   </url>
   
@@ -891,7 +884,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</loc>
+    <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</loc>
     <lastmod>2022-03-31T00:00:00+00:00</lastmod>
   </url>
   
@@ -900,6 +893,13 @@
   <url>
     <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</loc>
     <lastmod>2022-03-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</loc>
+    <lastmod>2021-12-24T00:00:00+00:00</lastmod>
   </url>
   
   
@@ -963,6 +963,20 @@
   <url>
     <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas/</loc>
     <lastmod>2021-12-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</loc>
+    <lastmod>2021-07-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</loc>
+    <lastmod>2021-07-09T00:00:00+00:00</lastmod>
   </url>
   
   
@@ -1073,6 +1087,13 @@
   
   
   <url>
+    <loc>https://debuntu.ru/manuals/bigdata/apachezookeeper/</loc>
+    <lastmod>2021-08-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/manuals/bigdata/apacheairflow/</loc>
     <lastmod>2021-02-23T00:00:00+00:00</lastmod>
   </url>
@@ -1122,6 +1143,8 @@
     <loc>https://debuntu.ru/</loc>
     <lastmod>2022-04-04T00:00:00+00:00</lastmod>
   </url>
+  
+  
   
   
   

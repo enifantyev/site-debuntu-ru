@@ -1,0 +1,68 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Apache ZooKeeper</title>
+    <link>https://debuntu.ru/manuals/bigdata/apachezookeeper/</link>
+    <description>Recent content in Apache ZooKeeper on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 11 Aug 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="https://debuntu.ru/manuals/bigdata/apachezookeeper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Manuals: Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</title>
+      <link>https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
+      <pubDate>Wed, 11 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-08-11&lt;/p&gt;
+&lt;h2 id=&#34;введение&#34;&gt;Введение&lt;/h2&gt;
+&lt;p&gt;При удалении ноды &lt;code&gt;/solr&lt;/code&gt; через &lt;code&gt;zookeeper-client&lt;/code&gt; выводилась ошибка:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[zk: localhost:2181(CONNECTED) 0] rmr /solr
+The command &amp;#39;rmr&amp;#39; has been deprecated. Please use &amp;#39;deleteall&amp;#39; instead.
+Authentication is not valid : /solr/security
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Решение этой проблемы нашёл здесь: &lt;a href=&#34;https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421&#34;&gt;https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;алгоритм-получения-прав-superuserа&#34;&gt;Алгоритм получения прав superuser&amp;rsquo;а&lt;/h2&gt;
+&lt;p&gt;Переходим в домашний каталог Zookeeper&amp;rsquo;а и запускаем генерацию дайджеста пароля для только что придуманного логина, под которым возобладаем superuser-правами в Zookeeper&amp;rsquo;е, например &amp;lsquo;zoosu:TsKlydBdycdq&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# cd /usr/lib/zookeeper &amp;amp;&amp;amp; \
+  /usr/java/jdk1.8.0_181-cloudera/bin/java -cp &amp;#34;./zookeeper.jar:lib/slf4j-api-1.7.25.jar&amp;#34; org.apache.zookeeper.server.auth.DigestAuthenticationProvider zoosu:TsKlydBdycdq
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В выводе команды видим дайджест &amp;lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;SLF4J: Failed to load class &amp;#34;org.slf4j.impl.StaticLoggerBinder&amp;#34;.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+zoosu:TsKlydBdycdq-&amp;gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Вставляем эти учётные данные (&amp;lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&amp;rsquo;) в строку параметров для java-машины ZooKeeper&amp;rsquo;а (&amp;rsquo;&lt;span style=&#34;color:blue&#34;&gt;-Dzookeeper.DigestAuthenticationProvider.superDigest=zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&lt;/span&gt;&amp;rsquo;), которую размещаем в настройках ZooKeeper&amp;rsquo;а в Cloudera Manager.&lt;/p&gt;
+&lt;p&gt;В настройках ZooKeeper, используя фильтр &amp;lsquo;Java Configuration Options for Zookeeper Server&amp;rsquo;, изменяем следующие параметры:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;
+&lt;tr valign=top&gt;
+&lt;td&gt;&lt;b&gt;Java Configuration Options for Zookeeper Server&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color:blue&#34;&gt;-Dzookeeper.DigestAuthenticationProvider.superDigest=&lt;br&gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/p&gt;
+&lt;p&gt;Или останавливаем кластер и запускаем только сервис ZooKeeper&amp;rsquo;а, если, конечно, хотим удалить вышеуказанную строку из настроек, после выполнения удаления ноды. После чего останавливаем ZooKeeper и запускаем весь кластер.&lt;/p&gt;
+&lt;h2 id=&#34;удаление-ноды&#34;&gt;Удаление ноды&lt;/h2&gt;
+&lt;p&gt;На ZooKeeper-узле запускаем &lt;code&gt;zookeeper-client&lt;/code&gt;, авторизуемся с помощью команды &lt;code&gt;addauth digest zoosu:TsKlydBdycdq&lt;/code&gt;, и выполняем удаление ноды &lt;code&gt;/solr&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[zk: localhost:2181(CONNECTED) 0] ls /solr
+[configs, overseer, security.json, solr.xml, autoscaling.json, security, aliases.json, live_nodes, collections, overseer_elect, clusterstate.json, autoscaling, clusterprops.json]
+[zk: localhost:2181(CONNECTED) 1] addauth digest zoosu:TsKlydBdycdq
+[zk: localhost:2181(CONNECTED) 2] deleteall /solr
+[zk: localhost:2181(CONNECTED) 3] ls /
+[zookeeper, hadoop-ha, kafka, hive_zookeeper_namespace_hive, hbase]
+[zk: localhost:2181(CONNECTED) 4]
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -25,29 +25,29 @@
         
         &lt;p&gt;2022-03-14&lt;/p&gt;
 &lt;h3 id=&#34;установка-borg-1117&#34;&gt;Установка borg 1.1.17&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install borg
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-borg-12&#34;&gt;Установка borg 1.2&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo apt-get install python3-module-pkgconfig python3-module-setuptools \
-python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
-libacl-devel libacl libssl-devel liblz4-devel libzstd-devel libxxhash-devel
-
-Reading Package Lists... Done
-Building Dependency Tree... Done
-libacl is already the newest version.
-The following extra packages will be installed:
-  libncurses-devel libtinfo-devel libxxhash rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs
-The following NEW packages will be installed:
-  libacl-devel liblz4-devel libncurses-devel libssl-devel libtinfo-devel libxxhash libxxhash-devel libzstd-devel
-  python3-dev python3-module-msgpack python3-module-pkgconfig python3-module-setuptools python3-module-wheel
-  rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs
-0 upgraded, 16 newly installed, 0 removed and 0 not upgraded.
-Need to get 2010kB of archives.
-After unpacking 8373kB of additional disk space will be used.
-Do you want to continue? [Y/n]
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install borgbackup
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg -V
-borg 1.2.0
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-get install borg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;установка-borg-12&#34;&gt;Установка borg 1.2&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ sudo apt-get install python3-module-pkgconfig python3-module-setuptools &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;python3-module-wheel python3-module-msgpack libssl-devel python3-dev &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;libacl-devel libacl libssl-devel liblz4-devel libzstd-devel libxxhash-devel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Reading Package Lists... Done
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Building Dependency Tree... Done
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;libacl is already the newest version.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;The following extra packages will be installed:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  libncurses-devel libtinfo-devel libxxhash rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;The following NEW packages will be installed:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  libacl-devel liblz4-devel libncurses-devel libssl-devel libtinfo-devel libxxhash libxxhash-devel libzstd-devel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  python3-dev python3-module-msgpack python3-module-pkgconfig python3-module-setuptools python3-module-wheel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; upgraded, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16&lt;/span&gt; newly installed, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; removed and &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; not upgraded.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Need to get 2010kB of archives.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;After unpacking 8373kB of additional disk space will be used.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Do you want to &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;continue&lt;/span&gt;? &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;Y/n&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pip install borgbackup
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg -V
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg 1.2.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -61,24 +61,24 @@ borg 1.2.0
         
         
         &lt;p&gt;&lt;a href=&#34;https://help.72to.ru/projects/alt-linux/wiki/%D0%9E%D1%82%D0%BA%D0%B0%D1%82_%D0%BD%D0%B0_%D1%81%D1%82%D0%B0%D1%80%D1%83%D1%8E_%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8E_%D1%8F%D0%B4%D1%80%D0%B0&#34;&gt;https://help.72to.ru/projects/alt-linux/wiki/Откат_на_старую_версию_ядра&lt;/a&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ uname -r
-5.10.82-std-def-alt1
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ x86_64 classic
-
-apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ noarch classic
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo apt-cache show kernel-image-std-def
-
-Package kernel-image-std-def is a virtual package provided by:
-  kernel-image-std-def#2:5.10.82-alt1:p10+290646.100.3.1@1638544255 2:5.10.82-alt1:p10+290646.100.3.1@1638544255
-  kernel-image-std-def#2:5.10.102-alt1:p10+295939.100.1.1@1645810219 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
-You should explicitly select one to show.
-E: Package kernel-image-std-def is a virtual package with multiple providers.
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;update-kernel -t std-def -r 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;reboot
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ uname -r
-5.10.102-std-def-alt1
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;remove-old-kernels
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ uname -r
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;5.10.82-std-def-alt1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ x86_64 classic
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ noarch classic
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ sudo apt-cache show kernel-image-std-def
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Package kernel-image-std-def is a virtual package provided by:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  kernel-image-std-def#2:5.10.82-alt1:p10+290646.100.3.1@1638544255 2:5.10.82-alt1:p10+290646.100.3.1@1638544255
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  kernel-image-std-def#2:5.10.102-alt1:p10+295939.100.1.1@1645810219 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;You should explicitly &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;select&lt;/span&gt; one to show.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;E: Package kernel-image-std-def is a virtual package with multiple providers.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;update-kernel -t std-def -r 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ uname -r
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;5.10.102-std-def-alt1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;remove-old-kernels
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     

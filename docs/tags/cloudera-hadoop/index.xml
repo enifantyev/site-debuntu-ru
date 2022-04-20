@@ -35,32 +35,32 @@
 &lt;p&gt;Сейчас мы подготовим на командной машине отдельный каталог с файлами, где с помощью ansible развернём новый Hadoop-кластер.&lt;/p&gt;
 &lt;h2 id=&#34;2-преднастройка-и-подготовка-к-проверкам&#34;&gt;2. Преднастройка и подготовка к проверкам&lt;/h2&gt;
 &lt;p&gt;На командной машине в каталоге &lt;code&gt;~/hadoop&lt;/code&gt; подготовим файлы для ансибла с ip-адресами машин будущего кластера:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir hadoop &amp;amp;&amp;amp; cd hadoop
-printf &amp;#39;[defaults]\nhost_key_checking=false\n&amp;#39; &amp;gt; ansible.cfg
-
-printf &amp;#39;[all:var]\nansible_user=jenkins\n#ansible_password=\n&amp;#39; &amp;gt; cluster.inv
-printf &amp;#39;ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n&amp;#39; &amp;gt;&amp;gt; cluster.inv
-cat &amp;lt;&amp;lt; EOF | tee -a cluster.inv &amp;gt; cluster.ips
-10.1.4.1
-10.1.4.2
-10.1.4.3
-10.1.4.5
-10.1.4.6
-10.1.4.7
-10.1.4.8
-10.1.4.9
-10.1.4.10
-EOF
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir hadoop &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; hadoop
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[defaults]\nhost_key_checking=false\n&amp;#39;&lt;/span&gt; &amp;gt; ansible.cfg
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[all:var]\nansible_user=jenkins\n#ansible_password=\n&amp;#39;&lt;/span&gt; &amp;gt; cluster.inv
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; cluster.inv
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF | tee -a cluster.inv &amp;gt; cluster.ips
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.3
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.5
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.6
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.7
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.8
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.9
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.10
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;&lt;code&gt;cluster.inv&lt;/code&gt; — inventory-файл для ансибла;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;cluster.ips&lt;/code&gt; — простой список ip-адресов узлов будущего кластера.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;3-обновление-и-перезагрузка-машин&#34;&gt;3. Обновление и перезагрузка машин&lt;/h2&gt;
 &lt;p&gt;&lt;span style=&#34;color:red&#34;&gt;Перед началом проверки обязательная перезагрузка машин! Этот шаг выполняется для применения всех постоянных настроек и отмены всех временных настроек машины.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;Выполняем обновление и перезагрузку всех машин:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m yum -a &amp;#34;name=* state=latest&amp;#34; --become
-ansible all -i cluster.inv -m reboot --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;4-настройка-и-проверка-сетевых-настроек&#34;&gt;4. Настройка и проверка сетевых настроек&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m yum -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=* state=latest&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m reboot --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;4-настройка-и-проверка-сетевых-настроек&#34;&gt;4. Настройка и проверка сетевых настроек&lt;/h2&gt;
 &lt;p&gt;Необходимо проверить и привести к надлежащему виду сетевые настройки в следующих местах:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;/etc/sysconfig/network-scripts/ifcfg-ens32&lt;/code&gt;&lt;/li&gt;
@@ -91,21 +91,21 @@ check_link_down() {
 &lt;/ul&gt;
 &lt;/p&gt;&lt;/details&gt;&lt;br&gt;
 &lt;p&gt;Проверку и, если необходимо, удаление лишних строк производим командами:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Смотрим
-ansible all -i cluster.inv -m shell -a &amp;#34;cat /etc/sysconfig/network-scripts/ifcfg-ens32&amp;#34; --become
-
-# Удаляем записи DNS
-ansible all -i cluster.inv -m lineinfile -a &amp;#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&amp;#39;^DNS=&amp;#39; state=absent&amp;#34; --become
-# Удаляем запись DOMAIN
-ansible all -i cluster.inv -m lineinfile -a &amp;#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&amp;#39;^DOMAIN=&amp;#39; state=absent&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;42-файл-etcsysconfignetwork&#34;&gt;4.2. Файл &lt;code&gt;/etc/sysconfig/network&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Смотрим&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cat /etc/sysconfig/network-scripts/ifcfg-ens32&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Удаляем записи DNS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m lineinfile -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&amp;#39;^DNS=&amp;#39; state=absent&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Удаляем запись DOMAIN&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m lineinfile -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&amp;#39;^DOMAIN=&amp;#39; state=absent&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;42-файл-etcsysconfignetwork&#34;&gt;4.2. Файл &lt;code&gt;/etc/sysconfig/network&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;Информация из этого файла — &lt;code&gt;/etc/sysconfig/network&lt;/code&gt; — используется скриптами при запуске машины, или перезапуске демона network,  и частично замещает/добавляет информацию в файле &lt;code&gt;/etc/resolv.conf&lt;/code&gt;. Поэтому необходимо сделать этот файл пустым.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Смотрим
-ansible all -i cluster.inv -m shell -a &amp;#34;cat /etc/sysconfig/network&amp;#34; --become
-
-# Очищаем
-ansible all -i cluster.inv -m shell -a &amp;#34;&amp;gt; /etc/sysconfig/network&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;43-автоматически-обновляемый-файл-etcresolvconf&#34;&gt;4.3. Автоматически обновляемый файл &lt;code&gt;/etc/resolv.conf&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Смотрим&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cat /etc/sysconfig/network&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Очищаем&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;gt; /etc/sysconfig/network&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;43-автоматически-обновляемый-файл-etcresolvconf&#34;&gt;4.3. Автоматически обновляемый файл &lt;code&gt;/etc/resolv.conf&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;Информация в этом файле может добавляться/замещаться данными полученными из двух предыдущих файлов, а так же из DHCP при отсутствии параметра &amp;ldquo;PEERDNS=no&amp;rdquo; в файле &lt;code&gt;/etc/sysconfig/network-scripts/ifcfg-ens32&lt;/code&gt;.&lt;/p&gt;
 &lt;summary&gt;Образец содержимого файла &#39;/etc/resolv.conf&#39;...&lt;/summary&gt;
 &lt;details&gt;&lt;p&gt;
@@ -122,61 +122,61 @@ nameserver 10.1.85.7
 &lt;/ul&gt;
 &lt;/p&gt;&lt;/details&gt;&lt;br&gt;
 &lt;p&gt;Проверку и, если необходимо, добавление опций производим командами:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Смотрим
-ansible all -i cluster.inv -m shell -a &amp;#34;cat /etc/resolv.conf&amp;#34;
-
-# Обновляем resolv.conf
-ansible all -i cluster.inv -m shell -a &amp;#34;echo &amp;#39;options rotate timeout:1 attempts:1&amp;#39; &amp;gt; /etc/resolv.conf&amp;#34; --become
-ansible all -i cluster.inv -m systemd -a &amp;#34;name=network state=restarted&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;5-проверка-обратного-разрешения-dns-имён&#34;&gt;5. Проверка обратного разрешения dns-имён&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Смотрим&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cat /etc/resolv.conf&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Обновляем resolv.conf&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;echo &amp;#39;options rotate timeout:1 attempts:1&amp;#39; &amp;gt; /etc/resolv.conf&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m systemd -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=network state=restarted&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5-проверка-обратного-разрешения-dns-имён&#34;&gt;5. Проверка обратного разрешения dns-имён&lt;/h2&gt;
 &lt;p&gt;С пульта управления, при помощи ансибла, пытаемся выполнить обратное разрешение dns-имён:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;while read line; \
-  do ansible all -i cluster.inv -m shell -a &amp;#34;host $line&amp;#34;; \
-  done &amp;lt; cluster.ips
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;6-проверка-настроек-и-работы-сервиса-точного-времени&#34;&gt;6. Проверка настроек и работы сервиса точного времени&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;read&lt;/span&gt; line&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;host &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$line&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;done&lt;/span&gt; &amp;lt; cluster.ips
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;6-проверка-настроек-и-работы-сервиса-точного-времени&#34;&gt;6. Проверка настроек и работы сервиса точного времени&lt;/h2&gt;
 &lt;p&gt;Визуально проверяем наличие синхронизации с серверами точного времени:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m shell -a &amp;#34;chronyc sources&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;7-подготовка-файла-etchosts&#34;&gt;7. Подготовка файла /etc/hosts&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;chronyc sources&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;7-подготовка-файла-etchosts&#34;&gt;7. Подготовка файла /etc/hosts&lt;/h2&gt;
 &lt;p&gt;Проверку и, если необходимо, обновление файла производим командами:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Смотрим
-ansible all -i cluster.inv -m shell -a &amp;#34;cat /etc/hosts&amp;#34; --become
-
-# Обновляем /etc/hosts на всех узлах через следующие команды...
-# Подготавливаем скрипт
-cat &amp;lt;&amp;lt; EOF &amp;gt; updatehosts.sh
-#!/bin/bash
-echo &amp;#39;127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4&amp;#39; &amp;gt; /etc/hosts
-while read line; do
-    TMPNAME=\$(host \$line | awk &amp;#39;{print \$5}&amp;#39;) # prod-01.example.org.
-    LONGNAME=\${TMPNAME%.}    # prod-01.example.org
-    SHORTNAME=\${TMPNAME%%.*} # prod-01
-    echo &amp;#34;\${line} \${LONGNAME} \${SHORTNAME}&amp;#34; &amp;gt;&amp;gt; /etc/hosts
-done &amp;lt; /root/tmp/cluster.ips
-EOF
-
-# список ip-адресов и подготовленный скрипт забрасываем на все узлы
-ansible all -i cluster.inv -m copy -a &amp;#34;src=cluster.ips dest=/root/tmp/&amp;#34; --become
-ansible all -i cluster.inv -m copy -a &amp;#34;src=updatehosts.sh dest=/root/tmp/&amp;#34; --become
-
-# запускаем выполнение скрипта на всех узлах
-ansible all -i cluster.inv -m shell -a &amp;#34;/bin/bash /root/tmp/updatehosts.sh&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;8-создание-tmp-каталога-для-дампов-java-машин&#34;&gt;8. Создание tmp-каталога для дампов java-машин&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Смотрим&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cat /etc/hosts&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Обновляем /etc/hosts на всех узлах через следующие команды...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Подготавливаем скрипт&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; updatehosts.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;echo &amp;#39;127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4&amp;#39; &amp;gt; /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;while read line; do
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    TMPNAME=\$(host \$line | awk &amp;#39;{print \$5}&amp;#39;) # prod-01.example.org.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    LONGNAME=\${TMPNAME%.}    # prod-01.example.org
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    SHORTNAME=\${TMPNAME%%.*} # prod-01
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    echo &amp;#34;\${line} \${LONGNAME} \${SHORTNAME}&amp;#34; &amp;gt;&amp;gt; /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;done &amp;lt; /root/tmp/cluster.ips
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# список ip-адресов и подготовленный скрипт забрасываем на все узлы&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m copy -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;src=cluster.ips dest=/root/tmp/&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m copy -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;src=updatehosts.sh dest=/root/tmp/&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# запускаем выполнение скрипта на всех узлах&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/bin/bash /root/tmp/updatehosts.sh&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;8-создание-tmp-каталога-для-дампов-java-машин&#34;&gt;8. Создание tmp-каталога для дампов java-машин&lt;/h2&gt;
 &lt;p&gt;По умолчанию, в настройках сервисов указан каталог &lt;code&gt;/tmp&lt;/code&gt;, который используется для создания дампов java-машин, в случае их падения при ошибке &amp;ldquo;OutOfMemoryError&amp;rdquo;. Cоздадим новый каталог для этих целей на большем разделе, так как корневой раздел обычно слишком мал, чтобы разместить полный дамп java-машины:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m file -a &amp;#39;path=/data/tmp state=directory mode=1777&amp;#39; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;9-заключительная-перезагрузка-машин&#34;&gt;9. Заключительная перезагрузка машин&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m file -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;path=/data/tmp state=directory mode=1777&amp;#39;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;9-заключительная-перезагрузка-машин&#34;&gt;9. Заключительная перезагрузка машин&lt;/h2&gt;
 &lt;p&gt;&lt;span style=&#34;color:red&#34;&gt;Если были изменения на узлах будущего кластера, то обязательная перезагрузка машин. Этот шаг выполняется для применения всех постоянных настроек и отмены всех временных настроек машины.&lt;/span&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m reboot --become
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если есть какие-либо подозрения на счёт правильности настроек, то повторяем проверки.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m reboot --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Если есть какие-либо подозрения на счёт правильности настроек, то повторяем проверки.&lt;/p&gt;
 
       </description>
     </item>
     
     <item>
-      <title>N: Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
+      <title>Manuals: Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</title>
+      <link>https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
       <pubDate>Wed, 11 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/n/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
       <description>
         
         

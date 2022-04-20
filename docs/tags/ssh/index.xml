@@ -376,20 +376,20 @@ MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-
 &lt;p&gt;Находясь на AWX-хосте, выбираем призвольную машину в удалённой третьей ИС с бэкап-клиентами, и модернизируем на ней настройки sshd для возможности создания ssh-шлюза. Напомню, что такая возможность по умолчанию ограничена открытием порта на lo-интерфейсе 127.0.0.1, вместо интересующего нас 0.0.0.0.&lt;/p&gt;
 &lt;h3 id=&#34;backup-client1-включение-ssh-gateway&#34;&gt;&amp;lsquo;backup-client1&amp;rsquo;. Включение ssh gateway&lt;/h3&gt;
 &lt;p&gt;Итак, на хосте &amp;lsquo;backup-client1&amp;rsquo; включаем опцию &amp;lsquo;GatewayPorts&amp;rsquo; и перезапускаем демон sshd:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i &amp;#39;s/#GatewayPorts no/GatewayPorts yes/&amp;#39; /etc/ssh/sshd_config
-systemctl restart sshd
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверка:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sshd -T | grep gatewayports
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;awx-host-прокидывание-временного-туннеля-шлюза-между-backup-client1-и-backup-server&#34;&gt;&amp;lsquo;awx-host&amp;rsquo;. Прокидывание временного туннеля-шлюза между &amp;lsquo;backup-client1&amp;rsquo; и &amp;lsquo;backup-server&amp;rsquo;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/#GatewayPorts no/GatewayPorts yes/&amp;#39;&lt;/span&gt; /etc/ssh/sshd_config
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart sshd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Проверка:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sshd -T &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep gatewayports
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;awx-host-прокидывание-временного-туннеля-шлюза-между-backup-client1-и-backup-server&#34;&gt;&amp;lsquo;awx-host&amp;rsquo;. Прокидывание временного туннеля-шлюза между &amp;lsquo;backup-client1&amp;rsquo; и &amp;lsquo;backup-server&amp;rsquo;&lt;/h3&gt;
 &lt;p&gt;На машине &amp;lsquo;awx-host&amp;rsquo; выполняем создание туннеля-шлюза. Для удобства последующего закрытия туннеля, используем мультиплексирование с созданием управляющего сокета, через который сможем подать команду на закрытие туннеля. Кроме того, запретим подачу команд через этот туннель удалённой машине, а также переведём соединение в фоновый режим:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh -MS /tmp/borg-is3 -Nf -R 0.0.0.0:2222:backup-server:22 eugene@backup-client1
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После окончания операций бэкапа, через управляющий сокет, подаём команду закрыть туннель:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh -S /tmp/borg-is3 -O exit eugene@backup-client1
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-клиентов&#34;&gt;Настройка клиентов&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -MS /tmp/borg-is3 -Nf -R 0.0.0.0:2222:backup-server:22 eugene@backup-client1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;После окончания операций бэкапа, через управляющий сокет, подаём команду закрыть туннель:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -S /tmp/borg-is3 -O &lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; eugene@backup-client1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;настройка-клиентов&#34;&gt;Настройка клиентов&lt;/h3&gt;
 &lt;p&gt;Ключ ssh для доступа к borg-репозиторию создаём в &lt;code&gt;~/.ssh&lt;/code&gt;, а в &lt;code&gt;~/.bashrc&lt;/code&gt; добавляем переменные для работы с borg-репозиторием:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORG_RSH=&amp;#34;ssh -i /root/.ssh/borg1&amp;#34;
-export BORG_REPO=&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i /root/.ssh/borg1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     

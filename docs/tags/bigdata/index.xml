@@ -39,8 +39,8 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;11-установка-maven&#34;&gt;1.1. Установка Maven&lt;/h3&gt;
 &lt;p&gt;Сначала устанавливаем maven 3.0.5-17.el7 из стандартных репо для CentOS7:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install maven
-&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum install maven
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;details&gt;
 &lt;summary&gt;Click here to expand...&lt;/summary&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;...
 Dependencies Resolved
@@ -195,165 +195,165 @@ Complete!
 &lt;br&gt;
 &lt;p&gt;На данный момент последняя версия maven равна 3.8.1, но с этой версией сборка Atlas&amp;rsquo;а 2.1.0 прерывалась ошибками, тогда как Atlas 2.2.0 собирался без ошибок. Поэтому для сборки Atlas&amp;rsquo;а 2.1.0 выбираем Maven 3.6.3, а для Atlas 2.2.0 выбираем версию Maven 3.8.1.&lt;/p&gt;
 &lt;p&gt;Скачиваем и устанавливаем переменные:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;MVNVER=&amp;#34;3.8.1&amp;#34;
-curl -LO https://archive.apache.org/dist/maven/maven-3/${MVNVER}/binaries/apache-maven-${MVNVER}-bin.tar.gz
-sudo tar -xvf apache-maven-${MVNVER}-bin.tar.gz -C /opt
-
-sudo ln -s /opt/apache-maven-${MVNVER} /opt/maven
-
-cat &amp;lt;&amp;lt; EOF | sudo tee /etc/profile.d/maven.sh
-# Apache Maven Environmental Variables
-# MAVEN_HOME for Maven 1 - M2_HOME for Maven 2
-
-#export JAVA_HOME=/usr/lib/jvm/jre-openjdk
-export JAVA_HOME=usr/java/jdk1.8.0_181-cloudera
-
-export M2_HOME=/opt/maven
-export MAVEN_HOME=/opt/maven
-export PATH=\${M2_HOME}/bin:\${PATH}
-EOF
-
-sudo chmod +x /etc/profile.d/maven.sh
-
-source /etc/profile.d/maven.sh
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяем версию Maven&amp;rsquo;а и используемую версию Java:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ mvn --version
-
-Apache Maven 3.8.1 (05c21c65bdfed0f71a2f2ada8b84da59348c4c5d)
-Maven home: /opt/maven
-Java version: 1.8.0_181, vendor: Oracle Corporation, runtime: /usr/java/jdk1.8.0_181-cloudera/jre
-Default locale: en_US, platform encoding: UTF-8
-OS name: &amp;#34;linux&amp;#34;, version: &amp;#34;3.10.0-1160.36.2.el7.x86_64&amp;#34;, arch: &amp;#34;amd64&amp;#34;, family: &amp;#34;unix&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;12-установка-nodejs&#34;&gt;1.2. Установка NodeJS&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;MVNVER&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;3.8.1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -LO https://archive.apache.org/dist/maven/maven-3/&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;MVNVER&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/binaries/apache-maven-&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;MVNVER&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;-bin.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tar -xvf apache-maven-&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;MVNVER&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;-bin.tar.gz -C /opt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ln -s /opt/apache-maven-&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;MVNVER&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /opt/maven
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF | sudo tee /etc/profile.d/maven.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;# Apache Maven Environmental Variables
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;# MAVEN_HOME for Maven 1 - M2_HOME for Maven 2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#export JAVA_HOME=/usr/lib/jvm/jre-openjdk
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;export JAVA_HOME=usr/java/jdk1.8.0_181-cloudera
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;export M2_HOME=/opt/maven
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;export MAVEN_HOME=/opt/maven
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;export PATH=\${M2_HOME}/bin:\${PATH}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo chmod +x /etc/profile.d/maven.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;source&lt;/span&gt; /etc/profile.d/maven.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Проверяем версию Maven&amp;rsquo;а и используемую версию Java:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mvn --version
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Apache Maven 3.8.1 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;05c21c65bdfed0f71a2f2ada8b84da59348c4c5d&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Maven home: /opt/maven
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Java version: 1.8.0_181, vendor: Oracle Corporation, runtime: /usr/java/jdk1.8.0_181-cloudera/jre
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Default locale: en_US, platform encoding: UTF-8
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;OS name: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;linux&amp;#34;&lt;/span&gt;, version: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;3.10.0-1160.36.2.el7.x86_64&amp;#34;&lt;/span&gt;, arch: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;amd64&amp;#34;&lt;/span&gt;, family: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;unix&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;12-установка-nodejs&#34;&gt;1.2. Установка NodeJS&lt;/h3&gt;
 &lt;p&gt;Добавляем репо:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;USERNAME=nx-pubrepo-r
-PASSWORD=xSAR1zZi7dQzs3QBx2vthdyk2qQrXv
-
-cat &amp;lt;&amp;lt; EOF | sudo tee /etc/yum.repos.d/nodejs-el7.repo
-[nodejs16]
-username=$USERNAME
-password=$PASSWORD
-name=Node.js Packages for Enterprise Linux 7 - \$basearch
-baseurl=http://nexus.example.org:8081/repository/all_nodejs_yum/pub_16.x/el/7/\$basearch
-failovermethod=priority
-enabled=0
-gpgcheck=0
-EOF
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Устанавливаем NodeJS:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install -y --enablerepo=nodejs16 nodejs
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-подготовка-к-сборке&#34;&gt;2. Подготовка к сборке&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;USERNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;nx-pubrepo-r
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;xSAR1zZi7dQzs3QBx2vthdyk2qQrXv
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF | sudo tee /etc/yum.repos.d/nodejs-el7.repo
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;[nodejs16]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;username=$USERNAME
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;password=$PASSWORD
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;name=Node.js Packages for Enterprise Linux 7 - \$basearch
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;baseurl=http://nexus.example.org:8081/repository/all_nodejs_yum/pub_16.x/el/7/\$basearch
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;failovermethod=priority
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;enabled=0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;gpgcheck=0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Устанавливаем NodeJS:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo yum install -y --enablerepo&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;nodejs16 nodejs
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-подготовка-к-сборке&#34;&gt;2. Подготовка к сборке&lt;/h2&gt;
 &lt;h3 id=&#34;21-скачивание-и-распаковка-исходников&#34;&gt;2.1. Скачивание и распаковка исходников&lt;/h3&gt;
 &lt;p&gt;Сайт проекта находится здесь &lt;a href=&#34;https://atlas.apache.org/&#34;&gt;https://atlas.apache.org/&lt;/a&gt;. Находим и скачиваем исходники Apache Atlas:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src &amp;amp;&amp;amp; cd ~/src
-curl -LO https://mirror.linux-ia64.org/apache/atlas/2.2.0/apache-atlas-2.2.0-sources.tar.gz
-tar -xvf apache-atlas-2.2.0-sources.tar.gz
-cd ~/src/apache-atlas-sources-2.2.0
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;22-изменения-в-файле-pomxml&#34;&gt;2.2. Изменения в файле &lt;code&gt;pom.xml&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir ~/src &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; ~/src
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -LO https://mirror.linux-ia64.org/apache/atlas/2.2.0/apache-atlas-2.2.0-sources.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -xvf apache-atlas-2.2.0-sources.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; ~/src/apache-atlas-sources-2.2.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;22-изменения-в-файле-pomxml&#34;&gt;2.2. Изменения в файле &lt;code&gt;pom.xml&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;В файл &amp;lsquo;pom.xml&amp;rsquo;, в раздел &lt;repository&gt;, добавляем клаудеровский репозиторий с maven-артефактами:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;repository&amp;gt;
-    &amp;lt;id&amp;gt;cloudera&amp;lt;/id&amp;gt;
-    &amp;lt;url&amp;gt;https://repository.cloudera.com/artifactory/cloudera-repos&amp;lt;/url&amp;gt;
-    &amp;lt;releases&amp;gt;
-        &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;
-    &amp;lt;/releases&amp;gt;
-    &amp;lt;snapshots&amp;gt;
-        &amp;lt;enabled&amp;gt;false&amp;lt;/enabled&amp;gt;
-    &amp;lt;/snapshots&amp;gt;
-&amp;lt;/repository&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В этом же файле находим и меняем версии продуктов на следующие:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;elasticsearch.version&amp;gt;6.8.20&amp;lt;/elasticsearch.version&amp;gt;
-&amp;lt;hadoop.version&amp;gt;3.0.0-cdh6.3.2&amp;lt;/hadoop.version&amp;gt;
-&amp;lt;hbase.version&amp;gt;2.1.0-cdh6.3.2&amp;lt;/hbase.version&amp;gt;
-&amp;lt;hive.version&amp;gt;2.1.1-cdh6.3.2&amp;lt;/hive.version&amp;gt;
-&amp;lt;kafka.scala.binary.version&amp;gt;2.11&amp;lt;/kafka.scala.binary.version&amp;gt;
-&amp;lt;kafka.version&amp;gt;2.2.1-cdh6.3.2&amp;lt;/kafka.version&amp;gt;
-&amp;lt;lucene-solr.version&amp;gt;7.4.0&amp;lt;/lucene-solr.version&amp;gt;
-&amp;lt;solr.version&amp;gt;7.4.0-cdh6.3.2&amp;lt;/solr.version&amp;gt;
-&amp;lt;sqoop.version&amp;gt;1.4.7-cdh6.3.2&amp;lt;/sqoop.version&amp;gt;
-&amp;lt;zookeeper.version&amp;gt;3.4.5-cdh6.3.2&amp;lt;/zookeeper.version&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В этом же файле меняем версию артефакта &amp;lsquo;atlas-buildtools&amp;rsquo; cо значения &amp;lsquo;1.0&amp;rsquo; на значение &amp;lsquo;0.8.1&amp;rsquo;, так как артефакт &amp;lsquo;atlas-buildtools-1.0&amp;rsquo; не может быть найден. Но можно попробовать версию  &amp;lsquo;1.0.0-alpha&amp;rsquo;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;artifactId&amp;gt;maven-checkstyle-plugin&amp;lt;/artifactId&amp;gt;
-    &amp;lt;dependencies&amp;gt;
-        &amp;lt;dependency&amp;gt;
-            &amp;lt;groupId&amp;gt;org.apache.atlas&amp;lt;/groupId&amp;gt;
-            &amp;lt;artifactId&amp;gt;atlas-buildtools&amp;lt;/artifactId&amp;gt;
-            &amp;lt;version&amp;gt;1.0.0-alpha&amp;lt;/version&amp;gt;
-        &amp;lt;/dependency&amp;gt;
-    &amp;lt;/dependencies&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;23-изменения-в-других-файлах&#34;&gt;2.3. Изменения в других файлах&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;repository&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cloudera&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;url&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;https&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//repository.cloudera.com/artifactory/cloudera-repos&amp;lt;/url&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;releases&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;enabled&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;enabled&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;releases&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;snapshots&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;enabled&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;enabled&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;snapshots&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;repository&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;В этом же файле находим и меняем версии продуктов на следующие:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;elasticsearch&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;6&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;8&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;20&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;elasticsearch&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hadoop&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cdh6&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hadoop&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hbase&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cdh6&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hbase&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hive&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cdh6&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hive&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kafka&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;scala&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;binary&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;11&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kafka&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;scala&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;binary&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kafka&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cdh6&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;kafka&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;lucene&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;solr&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;7&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;lucene&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;solr&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;solr&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;7&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cdh6&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;solr&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sqoop&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;7&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cdh6&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sqoop&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;zookeeper&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;cdh6&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;zookeeper&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;В этом же файле меняем версию артефакта &amp;lsquo;atlas-buildtools&amp;rsquo; cо значения &amp;lsquo;1.0&amp;rsquo; на значение &amp;lsquo;0.8.1&amp;rsquo;, так как артефакт &amp;lsquo;atlas-buildtools-1.0&amp;rsquo; не может быть найден. Но можно попробовать версию  &amp;lsquo;1.0.0-alpha&amp;rsquo;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;artifactId&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;maven&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;checkstyle&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;plugin&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;artifactId&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;dependencies&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;dependency&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;groupId&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;org&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;apache&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;atlas&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;groupId&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;artifactId&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;atlas&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;buildtools&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;artifactId&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;alpha&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;version&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;dependency&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;dependencies&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;23-изменения-в-других-файлах&#34;&gt;2.3. Изменения в других файлах&lt;/h3&gt;
 &lt;p&gt;В файле &amp;lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/bridge/HiveMetaStoreBridge.java&amp;rsquo; переходим на 577 строку, комментируем &amp;ldquo;String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;&amp;rdquo; и добавляем &amp;ldquo;String catalogName = null;&amp;rdquo;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;public static String getDatabaseName(Database hiveDB) {
-    String dbName      = hiveDB.getName().toLowerCase();
-    //String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;
-    String catalogName = null;
-
-    if (StringUtils.isNotEmpty(catalogName) &amp;amp;&amp;amp; !StringUtils.equals(catalogName, DEFAULT_METASTORE_CATALOG)) {
-        dbName = catalogName + SEP + dbName;
-    }
-
-    return dbName;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &amp;lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/AtlasHiveHookContext.java&amp;rsquo; переходим на 81 строку &amp;ldquo;this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;&amp;rdquo;, комментируем её и добавляем &amp;ldquo;this.metastoreHandler = null;&amp;rdquo;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;public AtlasHiveHookContext(HiveHook hook, HiveOperation hiveOperation, HookContext hiveContext, HiveHookObjectNamesCache knownObjects,
-                            HiveMetastoreHook metastoreHook, ListenerEvent listenerEvent) throws Exception {
-    this.hook             = hook;
-    this.hiveOperation    = hiveOperation;
-    this.hiveContext      = hiveContext;
-    this.hive             = hiveContext != null ? Hive.get(hiveContext.getConf()) : null;
-    this.knownObjects     = knownObjects;
-    this.metastoreHook    = metastoreHook;
-    this.metastoreEvent   = listenerEvent;
-    //this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;
-    this.metastoreHandler = null;
-
-
-    init();
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/events/CreateHiveProcess.java&lt;/code&gt; комментируем строку 263 с упоминанием &amp;lsquo;MATERIALIZED_VIEW&amp;rsquo;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;private boolean isDdlOperation(AtlasEntity entity) {
-    return entity != null &amp;amp;&amp;amp; !context.isMetastoreHook()
-        &amp;amp;&amp;amp; (context.getHiveOperation().equals(HiveOperation.CREATETABLE_AS_SELECT)
-         || context.getHiveOperation().equals(HiveOperation.CREATEVIEW)
-         || context.getHiveOperation().equals(HiveOperation.ALTERVIEW_AS));
-         //|| context.getHiveOperation().equals(HiveOperation.CREATE_MATERIALIZED_VIEW));
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В файле &lt;code&gt;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/HiveHook.java&lt;/code&gt; комментируем строки 212 и 217  с упоминанием &amp;lsquo;MATERIALIZED_VIEW&amp;rsquo;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;case DROPTABLE:
-case DROPVIEW:
-//case DROP_MATERIALIZED_VIEW:
-    event = new DropTable(context);
-break;
-
-case CREATETABLE_AS_SELECT:
-//case CREATE_MATERIALIZED_VIEW:
-case CREATEVIEW:
-case ALTERVIEW_AS:
-case LOAD:
-case EXPORT:
-case IMPORT:
-case QUERY:
-    event = new CreateHiveProcess(context);
-break;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Заготовка bash-скрипта для автоматизации изменений в файлах:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed &amp;#39;s|&amp;lt;elasticsearch.version&amp;gt;6.8.15|&amp;lt;elasticsearch.version&amp;gt;6.8.20|&amp;#39;  pom.xml
-sed &amp;#39;s|&amp;lt;hadoop.version&amp;gt;3.3.0|&amp;lt;hadoop.version&amp;gt;3.0.0-cdh6.3.2|&amp;#39; pom.xml
-sed &amp;#39;s|&amp;lt;hbase.version&amp;gt;2.3.3|&amp;lt;hbase.version&amp;gt;2.1.0-cdh6.3.2|&amp;#39; pom.xml
-sed &amp;#39;s|&amp;lt;hive.version&amp;gt;3.1.0|&amp;lt;hive.version&amp;gt;2.1.1-cdh6.3.2|&amp;#39; pom.xml
-sed &amp;#39;s|&amp;lt;kafka.scala.binary.version&amp;gt;2.12|&amp;lt;kafka.scala.binary.version&amp;gt;2.11|&amp;#39; pom.xml
-sed &amp;#39;s|&amp;lt;kafka.version&amp;gt;2.5.0|&amp;lt;kafka.version&amp;gt;2.2.1-cdh6.3.2|&amp;#39; pom.xml
-sed &amp;#39;s|&amp;lt;lucene-solr.version&amp;gt;8.6.3|&amp;lt;lucene-solr.version&amp;gt;7.4.0|&amp;#39; pom.xml
-sed &amp;#39;|&amp;lt;solr.version&amp;gt;8.6.3|&amp;lt;solr.version&amp;gt;7.4.0-cdh6.3.2|&amp;#39; pom.xml
-sed &amp;#39;|&amp;lt;sqoop.version&amp;gt;1.4.6.2.3.99.0-195|&amp;lt;sqoop.version&amp;gt;1.4.7-cdh6.3.2|&amp;#39; pom.xml
-sed &amp;#39;|&amp;lt;zookeeper.version&amp;gt;3.5.7|&amp;lt;zookeeper.version&amp;gt;3.4.5-cdh6.3.2|&amp;#39; pom.xml
-sed -i &amp;#39;/&amp;lt;artifactId&amp;gt;atlas-buildtools|{n;s/&amp;lt;version&amp;gt;1.0/&amp;lt;version&amp;gt;1.0.0-alpha/}&amp;#39; pom.xml
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-сборка-apache-atlas&#34;&gt;3. Сборка Apache Atlas&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;getDatabaseName&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Database&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hiveDB&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dbName&lt;/span&gt;      &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hiveDB&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;getName&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;toLowerCase&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000&#34;&gt;String&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;catalogName&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;StringUtils&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;isNotEmpty&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;catalogName&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;StringUtils&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;catalogName&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;DEFAULT_METASTORE_CATALOG&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;))&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#000&#34;&gt;dbName&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;catalogName&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;SEP&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dbName&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;dbName&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;В файле &amp;lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/AtlasHiveHookContext.java&amp;rsquo; переходим на 81 строку &amp;ldquo;this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;&amp;rdquo;, комментируем её и добавляем &amp;ldquo;this.metastoreHandler = null;&amp;rdquo;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;AtlasHiveHookContext&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;HiveHook&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hook&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HiveOperation&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hiveOperation&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HookContext&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hiveContext&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;HiveHookObjectNamesCache&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;knownObjects&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                            &lt;span style=&#34;color:#000&#34;&gt;HiveMetastoreHook&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;metastoreHook&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ListenerEvent&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;listenerEvent&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;throws&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Exception&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;hook&lt;/span&gt;             &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hook&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;hiveOperation&lt;/span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hiveOperation&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;hiveContext&lt;/span&gt;      &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hiveContext&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;hive&lt;/span&gt;             &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;hiveContext&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;null&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;Hive&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;hiveContext&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;getConf&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;())&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;knownObjects&lt;/span&gt;     &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;knownObjects&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;metastoreHook&lt;/span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;metastoreHook&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;metastoreEvent&lt;/span&gt;   &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;listenerEvent&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;metastoreHandler&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;init&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;В файле &lt;code&gt;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/events/CreateHiveProcess.java&lt;/code&gt; комментируем строку 263 с упоминанием &amp;lsquo;MATERIALIZED_VIEW&amp;rsquo;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;isDdlOperation&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;AtlasEntity&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;entity&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;entity&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;null&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;!&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;isMetastoreHook&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;getHiveOperation&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;HiveOperation&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;CREATETABLE_AS_SELECT&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;getHiveOperation&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;HiveOperation&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;CREATEVIEW&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;getHiveOperation&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;().&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;HiveOperation&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#c4a000&#34;&gt;ALTERVIEW_AS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;         &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//|| context.getHiveOperation().equals(HiveOperation.CREATE_MATERIALIZED_VIEW));
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;В файле &lt;code&gt;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/HiveHook.java&lt;/code&gt; комментируем строки 212 и 217  с упоминанием &amp;lsquo;MATERIALIZED_VIEW&amp;rsquo;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;DROPTABLE&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;DROPVIEW&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//case DROP_MATERIALIZED_VIEW:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000&#34;&gt;event&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;DropTable&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;CREATETABLE_AS_SELECT&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;//case CREATE_MATERIALIZED_VIEW:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;CREATEVIEW&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;ALTERVIEW_AS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;LOAD&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;EXPORT&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;IMPORT&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;QUERY&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#000&#34;&gt;event&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;CreateHiveProcess&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;context&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Заготовка bash-скрипта для автоматизации изменений в файлах:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s|&amp;lt;elasticsearch.version&amp;gt;6.8.15|&amp;lt;elasticsearch.version&amp;gt;6.8.20|&amp;#39;&lt;/span&gt;  pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s|&amp;lt;hadoop.version&amp;gt;3.3.0|&amp;lt;hadoop.version&amp;gt;3.0.0-cdh6.3.2|&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s|&amp;lt;hbase.version&amp;gt;2.3.3|&amp;lt;hbase.version&amp;gt;2.1.0-cdh6.3.2|&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s|&amp;lt;hive.version&amp;gt;3.1.0|&amp;lt;hive.version&amp;gt;2.1.1-cdh6.3.2|&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s|&amp;lt;kafka.scala.binary.version&amp;gt;2.12|&amp;lt;kafka.scala.binary.version&amp;gt;2.11|&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s|&amp;lt;kafka.version&amp;gt;2.5.0|&amp;lt;kafka.version&amp;gt;2.2.1-cdh6.3.2|&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s|&amp;lt;lucene-solr.version&amp;gt;8.6.3|&amp;lt;lucene-solr.version&amp;gt;7.4.0|&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;|&amp;lt;solr.version&amp;gt;8.6.3|&amp;lt;solr.version&amp;gt;7.4.0-cdh6.3.2|&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;|&amp;lt;sqoop.version&amp;gt;1.4.6.2.3.99.0-195|&amp;lt;sqoop.version&amp;gt;1.4.7-cdh6.3.2|&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;|&amp;lt;zookeeper.version&amp;gt;3.5.7|&amp;lt;zookeeper.version&amp;gt;3.4.5-cdh6.3.2|&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/&amp;lt;artifactId&amp;gt;atlas-buildtools|{n;s/&amp;lt;version&amp;gt;1.0/&amp;lt;version&amp;gt;1.0.0-alpha/}&amp;#39;&lt;/span&gt; pom.xml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;3-сборка-apache-atlas&#34;&gt;3. Сборка Apache Atlas&lt;/h2&gt;
 &lt;p&gt;Переходим в каталог с исходниками и собираем пакеты с сохранением цветного stderr и stdout в файл &lt;code&gt;install.log&lt;/code&gt; (X — debug, T — количество потоков):&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd ~/src/apache-atlas-sources-2.2.0
-unbuffer mvn clean -DskipTests package -Pdist -X -T 4 2&amp;gt;&amp;amp;1 | tee install.log
-
-# Посмотреть лог-файл в цвете.
-less -r install.log
-&lt;/code&gt;&lt;/pre&gt;&lt;details&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; ~/src/apache-atlas-sources-2.2.0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;unbuffer mvn clean -DskipTests package -Pdist -X -T &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4&lt;/span&gt; 2&amp;gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; tee install.log
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Посмотреть лог-файл в цвете.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;less -r install.log
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;details&gt;
 &lt;summary&gt;Click here to expand...&lt;/summary&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[DEBUG] Adding file-set in: /data/src/apache-atlas-sources-2.2.0_elastic-6.8.20/distro/../addons/hbase-bridge/target/dependency/hook
 to archive location: apache-atlas-hbase-hook-2.2.0/hook/
@@ -607,32 +607,32 @@ Caused by: java.util.NoSuchElementException
 &lt;p&gt;Сейчас мы подготовим на командной машине отдельный каталог с файлами, где с помощью ansible развернём новый Hadoop-кластер.&lt;/p&gt;
 &lt;h2 id=&#34;2-преднастройка-и-подготовка-к-проверкам&#34;&gt;2. Преднастройка и подготовка к проверкам&lt;/h2&gt;
 &lt;p&gt;На командной машине в каталоге &lt;code&gt;~/hadoop&lt;/code&gt; подготовим файлы для ансибла с ip-адресами машин будущего кластера:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir hadoop &amp;amp;&amp;amp; cd hadoop
-printf &amp;#39;[defaults]\nhost_key_checking=false\n&amp;#39; &amp;gt; ansible.cfg
-
-printf &amp;#39;[all:var]\nansible_user=jenkins\n#ansible_password=\n&amp;#39; &amp;gt; cluster.inv
-printf &amp;#39;ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n&amp;#39; &amp;gt;&amp;gt; cluster.inv
-cat &amp;lt;&amp;lt; EOF | tee -a cluster.inv &amp;gt; cluster.ips
-10.1.4.1
-10.1.4.2
-10.1.4.3
-10.1.4.5
-10.1.4.6
-10.1.4.7
-10.1.4.8
-10.1.4.9
-10.1.4.10
-EOF
-&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir hadoop &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; hadoop
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[defaults]\nhost_key_checking=false\n&amp;#39;&lt;/span&gt; &amp;gt; ansible.cfg
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;[all:var]\nansible_user=jenkins\n#ansible_password=\n&amp;#39;&lt;/span&gt; &amp;gt; cluster.inv
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; cluster.inv
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF | tee -a cluster.inv &amp;gt; cluster.ips
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.3
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.5
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.6
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.7
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.8
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.9
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;10.1.4.10
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;&lt;code&gt;cluster.inv&lt;/code&gt; — inventory-файл для ансибла;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;cluster.ips&lt;/code&gt; — простой список ip-адресов узлов будущего кластера.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;3-обновление-и-перезагрузка-машин&#34;&gt;3. Обновление и перезагрузка машин&lt;/h2&gt;
 &lt;p&gt;&lt;span style=&#34;color:red&#34;&gt;Перед началом проверки обязательная перезагрузка машин! Этот шаг выполняется для применения всех постоянных настроек и отмены всех временных настроек машины.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;Выполняем обновление и перезагрузку всех машин:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m yum -a &amp;#34;name=* state=latest&amp;#34; --become
-ansible all -i cluster.inv -m reboot --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;4-настройка-и-проверка-сетевых-настроек&#34;&gt;4. Настройка и проверка сетевых настроек&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m yum -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=* state=latest&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m reboot --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;4-настройка-и-проверка-сетевых-настроек&#34;&gt;4. Настройка и проверка сетевых настроек&lt;/h2&gt;
 &lt;p&gt;Необходимо проверить и привести к надлежащему виду сетевые настройки в следующих местах:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;/etc/sysconfig/network-scripts/ifcfg-ens32&lt;/code&gt;&lt;/li&gt;
@@ -663,21 +663,21 @@ check_link_down() {
 &lt;/ul&gt;
 &lt;/p&gt;&lt;/details&gt;&lt;br&gt;
 &lt;p&gt;Проверку и, если необходимо, удаление лишних строк производим командами:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Смотрим
-ansible all -i cluster.inv -m shell -a &amp;#34;cat /etc/sysconfig/network-scripts/ifcfg-ens32&amp;#34; --become
-
-# Удаляем записи DNS
-ansible all -i cluster.inv -m lineinfile -a &amp;#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&amp;#39;^DNS=&amp;#39; state=absent&amp;#34; --become
-# Удаляем запись DOMAIN
-ansible all -i cluster.inv -m lineinfile -a &amp;#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&amp;#39;^DOMAIN=&amp;#39; state=absent&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;42-файл-etcsysconfignetwork&#34;&gt;4.2. Файл &lt;code&gt;/etc/sysconfig/network&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Смотрим&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cat /etc/sysconfig/network-scripts/ifcfg-ens32&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Удаляем записи DNS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m lineinfile -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&amp;#39;^DNS=&amp;#39; state=absent&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Удаляем запись DOMAIN&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m lineinfile -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&amp;#39;^DOMAIN=&amp;#39; state=absent&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;42-файл-etcsysconfignetwork&#34;&gt;4.2. Файл &lt;code&gt;/etc/sysconfig/network&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;Информация из этого файла — &lt;code&gt;/etc/sysconfig/network&lt;/code&gt; — используется скриптами при запуске машины, или перезапуске демона network,  и частично замещает/добавляет информацию в файле &lt;code&gt;/etc/resolv.conf&lt;/code&gt;. Поэтому необходимо сделать этот файл пустым.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Смотрим
-ansible all -i cluster.inv -m shell -a &amp;#34;cat /etc/sysconfig/network&amp;#34; --become
-
-# Очищаем
-ansible all -i cluster.inv -m shell -a &amp;#34;&amp;gt; /etc/sysconfig/network&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;43-автоматически-обновляемый-файл-etcresolvconf&#34;&gt;4.3. Автоматически обновляемый файл &lt;code&gt;/etc/resolv.conf&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Смотрим&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cat /etc/sysconfig/network&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Очищаем&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;gt; /etc/sysconfig/network&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;43-автоматически-обновляемый-файл-etcresolvconf&#34;&gt;4.3. Автоматически обновляемый файл &lt;code&gt;/etc/resolv.conf&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;Информация в этом файле может добавляться/замещаться данными полученными из двух предыдущих файлов, а так же из DHCP при отсутствии параметра &amp;ldquo;PEERDNS=no&amp;rdquo; в файле &lt;code&gt;/etc/sysconfig/network-scripts/ifcfg-ens32&lt;/code&gt;.&lt;/p&gt;
 &lt;summary&gt;Образец содержимого файла &#39;/etc/resolv.conf&#39;...&lt;/summary&gt;
 &lt;details&gt;&lt;p&gt;
@@ -694,51 +694,51 @@ nameserver 10.1.85.7
 &lt;/ul&gt;
 &lt;/p&gt;&lt;/details&gt;&lt;br&gt;
 &lt;p&gt;Проверку и, если необходимо, добавление опций производим командами:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Смотрим
-ansible all -i cluster.inv -m shell -a &amp;#34;cat /etc/resolv.conf&amp;#34;
-
-# Обновляем resolv.conf
-ansible all -i cluster.inv -m shell -a &amp;#34;echo &amp;#39;options rotate timeout:1 attempts:1&amp;#39; &amp;gt; /etc/resolv.conf&amp;#34; --become
-ansible all -i cluster.inv -m systemd -a &amp;#34;name=network state=restarted&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;5-проверка-обратного-разрешения-dns-имён&#34;&gt;5. Проверка обратного разрешения dns-имён&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Смотрим&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cat /etc/resolv.conf&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Обновляем resolv.conf&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;echo &amp;#39;options rotate timeout:1 attempts:1&amp;#39; &amp;gt; /etc/resolv.conf&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m systemd -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=network state=restarted&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5-проверка-обратного-разрешения-dns-имён&#34;&gt;5. Проверка обратного разрешения dns-имён&lt;/h2&gt;
 &lt;p&gt;С пульта управления, при помощи ансибла, пытаемся выполнить обратное разрешение dns-имён:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;while read line; \
-  do ansible all -i cluster.inv -m shell -a &amp;#34;host $line&amp;#34;; \
-  done &amp;lt; cluster.ips
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;6-проверка-настроек-и-работы-сервиса-точного-времени&#34;&gt;6. Проверка настроек и работы сервиса точного времени&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;read&lt;/span&gt; line&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;do&lt;/span&gt; ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;host &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;$line&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;done&lt;/span&gt; &amp;lt; cluster.ips
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;6-проверка-настроек-и-работы-сервиса-точного-времени&#34;&gt;6. Проверка настроек и работы сервиса точного времени&lt;/h2&gt;
 &lt;p&gt;Визуально проверяем наличие синхронизации с серверами точного времени:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m shell -a &amp;#34;chronyc sources&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;7-подготовка-файла-etchosts&#34;&gt;7. Подготовка файла /etc/hosts&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;chronyc sources&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;7-подготовка-файла-etchosts&#34;&gt;7. Подготовка файла /etc/hosts&lt;/h2&gt;
 &lt;p&gt;Проверку и, если необходимо, обновление файла производим командами:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Смотрим
-ansible all -i cluster.inv -m shell -a &amp;#34;cat /etc/hosts&amp;#34; --become
-
-# Обновляем /etc/hosts на всех узлах через следующие команды...
-# Подготавливаем скрипт
-cat &amp;lt;&amp;lt; EOF &amp;gt; updatehosts.sh
-#!/bin/bash
-echo &amp;#39;127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4&amp;#39; &amp;gt; /etc/hosts
-while read line; do
-    TMPNAME=\$(host \$line | awk &amp;#39;{print \$5}&amp;#39;) # prod-01.example.org.
-    LONGNAME=\${TMPNAME%.}    # prod-01.example.org
-    SHORTNAME=\${TMPNAME%%.*} # prod-01
-    echo &amp;#34;\${line} \${LONGNAME} \${SHORTNAME}&amp;#34; &amp;gt;&amp;gt; /etc/hosts
-done &amp;lt; /root/tmp/cluster.ips
-EOF
-
-# список ip-адресов и подготовленный скрипт забрасываем на все узлы
-ansible all -i cluster.inv -m copy -a &amp;#34;src=cluster.ips dest=/root/tmp/&amp;#34; --become
-ansible all -i cluster.inv -m copy -a &amp;#34;src=updatehosts.sh dest=/root/tmp/&amp;#34; --become
-
-# запускаем выполнение скрипта на всех узлах
-ansible all -i cluster.inv -m shell -a &amp;#34;/bin/bash /root/tmp/updatehosts.sh&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;8-создание-tmp-каталога-для-дампов-java-машин&#34;&gt;8. Создание tmp-каталога для дампов java-машин&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Смотрим&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cat /etc/hosts&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Обновляем /etc/hosts на всех узлах через следующие команды...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Подготавливаем скрипт&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; updatehosts.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;echo &amp;#39;127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4&amp;#39; &amp;gt; /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;while read line; do
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    TMPNAME=\$(host \$line | awk &amp;#39;{print \$5}&amp;#39;) # prod-01.example.org.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    LONGNAME=\${TMPNAME%.}    # prod-01.example.org
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    SHORTNAME=\${TMPNAME%%.*} # prod-01
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;    echo &amp;#34;\${line} \${LONGNAME} \${SHORTNAME}&amp;#34; &amp;gt;&amp;gt; /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;done &amp;lt; /root/tmp/cluster.ips
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# список ip-адресов и подготовленный скрипт забрасываем на все узлы&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m copy -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;src=cluster.ips dest=/root/tmp/&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m copy -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;src=updatehosts.sh dest=/root/tmp/&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# запускаем выполнение скрипта на всех узлах&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/bin/bash /root/tmp/updatehosts.sh&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;8-создание-tmp-каталога-для-дампов-java-машин&#34;&gt;8. Создание tmp-каталога для дампов java-машин&lt;/h2&gt;
 &lt;p&gt;По умолчанию, в настройках сервисов указан каталог &lt;code&gt;/tmp&lt;/code&gt;, который используется для создания дампов java-машин, в случае их падения при ошибке &amp;ldquo;OutOfMemoryError&amp;rdquo;. Cоздадим новый каталог для этих целей на большем разделе, так как корневой раздел обычно слишком мал, чтобы разместить полный дамп java-машины:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m file -a &amp;#39;path=/data/tmp state=directory mode=1777&amp;#39; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;9-заключительная-перезагрузка-машин&#34;&gt;9. Заключительная перезагрузка машин&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m file -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;path=/data/tmp state=directory mode=1777&amp;#39;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;9-заключительная-перезагрузка-машин&#34;&gt;9. Заключительная перезагрузка машин&lt;/h2&gt;
 &lt;p&gt;&lt;span style=&#34;color:red&#34;&gt;Если были изменения на узлах будущего кластера, то обязательная перезагрузка машин. Этот шаг выполняется для применения всех постоянных настроек и отмены всех временных настроек машины.&lt;/span&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m reboot --become
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если есть какие-либо подозрения на счёт правильности настроек, то повторяем проверки.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m reboot --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Если есть какие-либо подозрения на счёт правильности настроек, то повторяем проверки.&lt;/p&gt;
 
       </description>
     </item>
@@ -759,53 +759,53 @@ ansible all -i cluster.inv -m shell -a &amp;#34;/bin/bash /root/tmp/updatehosts.
 &lt;p&gt;Все операции выполняем на командной машине с помощью ансибла из ранее подготовленного каталога &lt;code&gt;hadoop&lt;/code&gt;, где созданы все необходимые файлы.&lt;/p&gt;
 &lt;h2 id=&#34;2-выделение-машины-управления-кластером&#34;&gt;2. Выделение машины управления кластером&lt;/h2&gt;
 &lt;p&gt;Машина управления кластером имеет название, которое включает в себя буквы &amp;lsquo;mgm&amp;rsquo;. Определив ip-адрес этой машины, добавим новые строки в инвентори файл ансибла:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;printf &amp;#39;\n[mgm]\n10.1.4.6\n&amp;#39; &amp;gt;&amp;gt; cluster.inv
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-добавление-файлов-repo-на-машину-управления&#34;&gt;3. Добавление файлов repo на машину управления&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;printf&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;\n[mgm]\n10.1.4.6\n&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; cluster.inv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;3-добавление-файлов-repo-на-машину-управления&#34;&gt;3. Добавление файлов repo на машину управления&lt;/h2&gt;
 &lt;p&gt;При установке компонента Hue, потребуется пакет &lt;code&gt;libtidy&lt;/code&gt;, который находится в EPEL-репозитории. Поэтому подготавливаем не только файлы репозиториев cloudera, но и epel. Файлы Cloudera-репо будут заброшены на машину управления кластером, тогда как epel-репо на все машины кластера:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd hadoop
-
-cat &amp;lt;&amp;lt; EOF &amp;gt; cloudera-manager.repo
-[cloudera-manager]
-USERNAME=nx-pubrepo-reader
-PASSWORD=xxxxxxxxxxxxxxxxx
-name = Cloudera Manager, Version cloudera-cm-6.3.1-hosted
-baseurl = http://10.1.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
-gpgcheck = 0
-EOF
-
-cat &amp;lt;&amp;lt; EOF &amp;gt; cloudera-cdh.repo
-[cloudera-cdh]
-USERNAME=nx-pubrepo-reader
-PASSWORD=xxxxxxxxxxxxxxxxx
-name = Cloudera Manager, Version cloudera-cdh-6.3.2-hosted
-baseurl = http://10.1.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
-gpgcheck = 0
-EOF
-
-cat &amp;lt;&amp;lt; EOF &amp;gt; epel.repo
-[epel7]
-USERNAME=nx-pubrepo-reader
-PASSWORD=xxxxxxxxxxxxxxxxx
-name=Extra Packages for Enterprise Linux \$releasever - \$basearch
-baseurl=http://10.1.1.1:8081/repository/all_epel/\$releasever/\$basearch
-failovermethod=priority
-enabled=1
-gpgcheck=0
-gpgkey=http://10.1.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
-EOF
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Копируем CM репо-файл на машину cloudera server и epel repo-файл на все машины:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible mgm -i cluster.inv -m copy -a &amp;#34;src=cloudera-manager.repo dest=&amp;#39;/etc/yum.repos.d/&amp;#39;&amp;#34; --become
-ansible all -i cluster.inv -m copy -a &amp;#34;src=epel.repo dest=&amp;#39;/etc/yum.repos.d/&amp;#39;&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;4-установка-jdk-и-cloudera-manager&#34;&gt;4. Установка JDK и Cloudera Manager&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible mgm -i cluster.inv -m yum -a &amp;#34;name=oracle-j2sdk1.8 state=latest&amp;#34; --become
-ansible mgm -i cluster.inv -m yum -a &amp;#34;name=cloudera-manager-daemons,cloudera-manager-agent,cloudera-manager-server,cloudera-manager-server-db-2 state=latest&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;5-установка-дополнительных-пакетов&#34;&gt;5. Установка дополнительных пакетов&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; hadoop
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; cloudera-manager.repo
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;[cloudera-manager]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;USERNAME=nx-pubrepo-reader
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;PASSWORD=xxxxxxxxxxxxxxxxx
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;name = Cloudera Manager, Version cloudera-cm-6.3.1-hosted
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;baseurl = http://10.1.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;gpgcheck = 0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; cloudera-cdh.repo
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;[cloudera-cdh]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;USERNAME=nx-pubrepo-reader
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;PASSWORD=xxxxxxxxxxxxxxxxx
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;name = Cloudera Manager, Version cloudera-cdh-6.3.2-hosted
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;baseurl = http://10.1.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;gpgcheck = 0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; epel.repo
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;[epel7]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;USERNAME=nx-pubrepo-reader
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;PASSWORD=xxxxxxxxxxxxxxxxx
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;name=Extra Packages for Enterprise Linux \$releasever - \$basearch
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;baseurl=http://10.1.1.1:8081/repository/all_epel/\$releasever/\$basearch
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;failovermethod=priority
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;enabled=1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;gpgcheck=0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;gpgkey=http://10.1.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Копируем CM репо-файл на машину cloudera server и epel repo-файл на все машины:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible mgm -i cluster.inv -m copy -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;src=cloudera-manager.repo dest=&amp;#39;/etc/yum.repos.d/&amp;#39;&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m copy -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;src=epel.repo dest=&amp;#39;/etc/yum.repos.d/&amp;#39;&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;4-установка-jdk-и-cloudera-manager&#34;&gt;4. Установка JDK и Cloudera Manager&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible mgm -i cluster.inv -m yum -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=oracle-j2sdk1.8 state=latest&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible mgm -i cluster.inv -m yum -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=cloudera-manager-daemons,cloudera-manager-agent,cloudera-manager-server,cloudera-manager-server-db-2 state=latest&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;5-установка-дополнительных-пакетов&#34;&gt;5. Установка дополнительных пакетов&lt;/h2&gt;
 &lt;p&gt;Дополнительно устанавливаем свежие версии python-пакета &lt;code&gt;psycopg2-binary&lt;/code&gt; и &lt;code&gt;python-snappy&lt;/code&gt;, которые используется Hue-компонентом. Так как неизвестно точно на каких хостах будут добавлены экземпляры Hue, то устанавливаем пакеты на все хосты.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m pip -a &amp;#34;name=psycopg2-binary,python-snappy state=latest&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;6-запуск-postgresql-и-cloudera-manager&#34;&gt;6. Запуск PostgreSQL и Cloudera Manager&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible mgm -i cluster.inv -m systemd -a &amp;#34;name=cloudera-scm-server-db enabled=yes state=started&amp;#34; --become
-ansible mgm -i cluster.inv -m systemd -a &amp;#34;name=cloudera-scm-server enabled=yes state=started&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Web-интерфейс доступен по адресу:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m pip -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=psycopg2-binary,python-snappy state=latest&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;6-запуск-postgresql-и-cloudera-manager&#34;&gt;6. Запуск PostgreSQL и Cloudera Manager&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible mgm -i cluster.inv -m systemd -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=cloudera-scm-server-db enabled=yes state=started&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible mgm -i cluster.inv -m systemd -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=cloudera-scm-server enabled=yes state=started&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Web-интерфейс доступен по адресу:&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://dev-mgm01p.example.org:7180/&#34;&gt;http://dev-mgm01p.example.org:7180/&lt;/a&gt;&lt;/p&gt;
 
       </description>
@@ -881,9 +881,9 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
 &lt;p&gt;Сейчас же дожидаемся окончания процесса с другими хостами и только тогда нажимаем &amp;ldquo;Retry Failed Hosts&amp;rdquo;. В этом случае, с большой вероятностью, визард сможет успешно завершиться.&lt;/p&gt;
 &lt;h2 id=&#34;inspect-cluster&#34;&gt;Inspect Cluster&lt;/h2&gt;
 &lt;p&gt;Перед проверкой Inspect Network Performance и Inspect Hosts, исправляем на всех машинах шебанг в файле &lt;code&gt;/opt/cloudera/cm-agent/service/perf/host_perf_diag.py&lt;/code&gt;, иначе проверка Inspect Network Performance завершится ошибкой, так как по умолчанию на машинах используется python3.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ansible all -i cluster.inv -m replace \
--a &amp;#39;path=/opt/cloudera/cm-agent/service/perf/host_perf_diag.py regexp=^#!\/usr\/bin\/python replace=#!/usr/bin/python2&amp;#39; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Далее запускаем обе проверки одновременно и ожидаем успеха.
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible all -i cluster.inv -m replace &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;-a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;path=/opt/cloudera/cm-agent/service/perf/host_perf_diag.py regexp=^#!\/usr\/bin\/python replace=#!/usr/bin/python2&amp;#39;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Далее запускаем обе проверки одновременно и ожидаем успеха.
 &lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_3_7.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;select-services&#34;&gt;Select Services&lt;/h2&gt;
 &lt;p&gt;Здесь указываем &amp;lsquo;Custom Services&amp;rsquo;, после чего выбираем основные компоненты:&lt;/p&gt;
@@ -2494,19 +2494,19 @@ This configuration &lt;b&gt;overrides&lt;/b&gt; the value set for Hive Proxy Use
 &lt;p&gt;Установка TLS-сертификатов выполняется на каждом узле кластера. Так как все узлы кластера добавлены во FreeIPA-домен, то запрос сертификата в Центре Сертификации и автоматическое обновление имеющихся сертификатов грамотней будет поручить Certmonger&amp;rsquo;у, а не следовать инструкции от Cloudera. Это, а также добавление ключей и сертификатов в java-хранилища, удобней сделать через Ansible-плэйбук cloudera_setup_tls.&lt;/p&gt;
 &lt;p&gt;Плэйбук выполняет операцию &lt;code&gt;ipa-getcert request -k HTTP/$(hostname -f) ...&lt;/code&gt; с размещением ключа и TLS-сертификата к нему в каталоге &lt;code&gt;/opt/cloudera/security/pki/&lt;/code&gt;. К выпуску сертификата привязано выполнение bash-скрипта, который разместит сертификат в надлежащих хранилищах, используемых при выполнении java-приложений. После выпуска сертификата и выполнения скрипта, плэйбук перенастраивает Cloudera Manager Agents на использование TLS-сертификатов и перезапускает агентов.&lt;/p&gt;
 &lt;p&gt;&lt;span style=&#34;color: red&#34;&gt;Перед разбросом ключей и сертификатов, остановливаем кластер и менеджмент, так как будет потеряна связь с агентами!!!&lt;/span&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Скачиваем весь ansible из gitlab&amp;#39;а
-git clone git@git.example.org:adm/ansible.git
-# Подправляем плэйбук
-sed -i s/all-root/cl/ ansible/playbooks/cloudera_setup_tls.yml
-
-cd ansible
-
-# Выполняем тестовый --check прогон
-ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &amp;#39;{&amp;#34;IPA_CERT_MANAGER&amp;#34;:&amp;#34;admin&amp;#34;}&amp;#39; --become --check
-
-# Выполняем плэйбук
-ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &amp;#39;{&amp;#34;IPA_CERT_MANAGER&amp;#34;:&amp;#34;admin&amp;#34;}&amp;#39; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Замечу, что выполняя сейчас все действия из ансибл-плэйбука, мы слегка опережаем клаудеровскую инструкцию. Поэтому очерёдность операция в этой инструкции не совпадает с клаудеровскими инструкциями.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Скачиваем весь ansible из gitlab&amp;#39;а&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git clone git@git.example.org:adm/ansible.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Подправляем плэйбук&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i s/all-root/cl/ ansible/playbooks/cloudera_setup_tls.yml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; ansible
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Выполняем тестовый --check прогон&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{&amp;#34;IPA_CERT_MANAGER&amp;#34;:&amp;#34;admin&amp;#34;}&amp;#39;&lt;/span&gt; --become --check
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Выполняем плэйбук&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{&amp;#34;IPA_CERT_MANAGER&amp;#34;:&amp;#34;admin&amp;#34;}&amp;#39;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Замечу, что выполняя сейчас все действия из ансибл-плэйбука, мы слегка опережаем клаудеровскую инструкцию. Поэтому очерёдность операция в этой инструкции не совпадает с клаудеровскими инструкциями.&lt;/p&gt;
 &lt;p&gt;Не запуская остановленные Cloudera Management Service и кластер, продолжаем выполнять шаги этой инструкции.&lt;/p&gt;
 &lt;h2 id=&#34;2-настройка-tls-для-cm-клиентов-и-связи-между-cm-и-агентами&#34;&gt;2. Настройка TLS для CM, клиентов, и связи между CM и агентами&lt;/h2&gt;
 &lt;ol&gt;
@@ -2594,10 +2594,10 @@ ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars
 &lt;/blockquote&gt;
 &lt;ol start=&#34;9&#34;&gt;
 &lt;li&gt;Выходим из каталога &lt;code&gt;ansible&lt;/code&gt;, где чуть ранее запускалась задача разброса сертификатов, в наш рабочий каталог, и  перезапускаем Cloudera Manager server:
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd ..
-ansible mgm -i cluster.inv -m systemd \
--a &amp;#34;name=cloudera-scm-server state=restarted&amp;#34; --become
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; ..
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ansible mgm -i cluster.inv -m systemd &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;-a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;name=cloudera-scm-server state=restarted&amp;#34;&lt;/span&gt; --become
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;Через несколько минут поключаемся к Cloudera Manager Admin Console используя HTTPS на 7183 порту: &lt;a href=&#34;https://dev-mgm01p.test.lan:7183&#34;&gt;https://dev-mgm01p.test.lan:7183&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Сначала запускаем Cloudera Management Service:
 &lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_10_1.png&#34; alt=&#34;&#34;&gt;&lt;br&gt;
@@ -2615,8 +2615,8 @@ For this scenario, make sure that your DNS and /etc/hosts file are configured co
 &lt;h3 id=&#34;прочее&#34;&gt;Прочее&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;Проверка TLS-работоспособности Cloudera Agent&amp;rsquo;ов на хостах:
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;openssl s_client -connect &amp;lt;hostname&amp;gt;:9000
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl s_client -connect &amp;lt;hostname&amp;gt;:9000
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;Можно обнаружить в логах Cloudera Manager Server запись &amp;ldquo;com.cloudera.cmf.command.CmdNoopPropagateException: All roles are unlicensed and cannot be started&amp;rdquo;. Внимания можно не обращать, так как последствий не обнаружено. Проблема была в использовании ip-адреса CM, вместо его FQDN-имени в файле настройки агентов.&lt;br&gt;
 Проверить в &amp;lsquo;/etc/cloudera-scm-agent/config.ini&amp;rsquo; параметр &amp;lsquo;server_host&amp;rsquo; должен содержать полное FQDN-имя, как в TLS-сертификате, например:
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;server_host=dev-mgm01p.test.lan
@@ -4200,8 +4200,7 @@ $yarn rmadmin -refreshUserToGroupsMappings
       <description>
         
         
-        &lt;p&gt;2021-06-17&lt;br&gt;
-2021-10-14&lt;/p&gt;
+        &lt;p&gt;2021-06-17 – 2021-10-14&lt;/p&gt;
 &lt;h2 id=&#34;1-использованные-материалы&#34;&gt;1. Использованные материалы&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/latest/topics/cm_sg_using_cm_sec_config.html&#34;&gt;How to Configure Clusters to Use Kerberos for Authentication&lt;/a&gt;&lt;/li&gt;
@@ -4273,20 +4272,20 @@ This should list port 749 on your master KDC. Support for it is not complete at 
 &lt;h3 id=&#34;24-установка-jce-policy-файлы-для-aes-256-шифрования&#34;&gt;2.4. Установка JCE Policy файлы для AES-256 шифрования&lt;/h3&gt;
 &lt;p&gt;Этот шаг мы можем пропустить, так как &amp;ldquo;этот шаг не требуется в случае использования JDK =&amp;gt; 1.8.0_161. В JDK 1.8.0_161 по умолчанию включено сильное шифрование без всякого ограничения.&amp;rdquo;&lt;/p&gt;
 &lt;p&gt;Проверяем наличие поддержки AES256:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo rpm -qa *1.8
-oracle-j2sdk1.8-1.8.0+update181-1.x86_64
-
-$ kinit nifanteve
-Password for nifanteve@TEST.LAN:
-
-$ klist -e
-Ticket cache: KEYRING:persistent:1000:1000
-Default principal: nifanteve@TEST.LAN
-
-Valid starting       Expires              Service principal
-02/03/2021 11:16:42  02/04/2021 11:16:34  krbtgt/TEST.LAN@TEST.LAN
-        Etype (skey, tkt): aes256-cts-hmac-sha1-96, aes256-cts-hmac-sha1-96
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Видим &amp;lsquo;aes256-cts-hmac-sha1-96&amp;rsquo;, поэтому пропускаем этот шаг.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ sudo rpm -qa *1.8
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;oracle-j2sdk1.8-1.8.0+update181-1.x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ kinit nifanteve
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Password &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; nifanteve@TEST.LAN:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ klist -e
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Ticket cache: KEYRING:persistent:1000:1000
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Default principal: nifanteve@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Valid starting       Expires              Service principal
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;02/03/2021 11:16:42  02/04/2021 11:16:34  krbtgt/TEST.LAN@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        Etype &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;skey, tkt&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;: aes256-cts-hmac-sha1-96, aes256-cts-hmac-sha1-96
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Видим &amp;lsquo;aes256-cts-hmac-sha1-96&amp;rsquo;, поэтому пропускаем этот шаг.&lt;/p&gt;
 &lt;h3 id=&#34;25-kerberos-принципал-для-cloudera-manager-server-во-freeipa&#34;&gt;2.5. Kerberos-принципал для Cloudera Manager Server во FreeIPA&lt;/h3&gt;
 &lt;p&gt;Забегая вперёд отметим, что в конце выполнения &amp;ldquo;мастера включения Kerberos&amp;rdquo; Cloudera Manager Server создаст host-принципалы и загрузит keytab&amp;rsquo;ы для всех сервисов в кластере. Для этого Cloudera Manager Server нуждается в отдельном принципале с соответствующими правами, позволяющими проделать эту работу.&lt;/p&gt;
 &lt;p&gt;Если вы используете FreeIPA, визард создаст свой собственный аккаунт с необходимыми привилегиями. Для этого потребуется ввод учётных данных администратора FreeIPA. Эти учетные данные не сохраняются и используются только для создания нового пользователя и роли (с именами cmadin- &amp;lt;random_id&amp;gt; и cmadminrole соответственно) и получения его keytab. Cloudera Manager сохраняет этот keytab для будущих операций Kerberos, таких как восстановление учетных данных аккаунтов служб CDH.&lt;/p&gt;
@@ -4635,6 +4634,283 @@ Took 0.7221 seconds
 &lt;p&gt;При случае дописать.&lt;/p&gt;
 &lt;h2 id=&#34;4-возможно-полезные-ссылки&#34;&gt;4. Возможно полезные ссылки&lt;/h2&gt;
 &lt;p&gt;4.1. &lt;a href=&#34;https://community.cloudera.com/t5/Community-Articles/Using-Apache-Atlas-to-view-Data-Lineage/ta-p/246305&#34;&gt;https://community.cloudera.com/t5/Community-Articles/Using-Apache-Atlas-to-view-Data-Lineage/ta-p/246305&lt;/a&gt;&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 13. Zookeeper. Настройка</title>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</link>
+      <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-09&lt;/p&gt;
+&lt;h2 id=&#34;настройка-tls-для-zookeeper&#34;&gt;Настройка TLS для ZooKeeper&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span style=&#34;color: red&#34;&gt;Напомню, что перед включением TLS-настроек для Zookeeper&amp;rsquo;а должен быть включён TLS для Firehose Debug Server в Cloudera Manager. Иначе Zookeeper будет работать, но статус ролей перестаёт отображаться корректно и высвечивается ошибка &amp;ldquo;Quorum Membership&amp;rdquo;.&lt;/span&gt;
+&lt;img src=&#34;https://debuntu.ru/img/zookeeper-nastroyka/zookeeper.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках сервиса ZooKeeper, используя фильтр по слову &amp;lsquo;JMX&amp;rsquo;, изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable Authenticated Communication with the JMX Agent&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Enables authentication when interacting with the JMX agent on the ZooKeeper server.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable TLS/SSL for ZooKeeper JMX&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Encrypt communication between clients and ZooKeeper JMX using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ZooKeeper JMX TLS/SSL Server JKS Keystore File Location&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/server.jks&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when ZooKeeper JMX is acting as a TLS/SSL server. The keystore must be in JKS format.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ZooKeeper JMX TLS/SSL Server JKS Keystore File Password&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;The password for the ZooKeeper JMX JKS keystore file.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ZooKeeper JMX TLS/SSL Server Trust Store File&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that ZooKeeper JMX might connect to. This is used when ZooKeeper JMX is the server in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ZooKeeper JMX TLS/SSL Server Trust Store Password&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;The password for the ZooKeeper JMX TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable TLS client authentication for JMX port&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;If enabled, a valid client certificate must be presented by the JMX client in order to connect to the JMX port. Ensure that the trusted CA certificates are present in either the ZooKeeper JMX TLS/SSL Server Trust Store File or the global trust store.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;ссылки-по-теме&#34;&gt;Ссылки по теме&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/&#34;&gt;Получение прав Superuser&amp;rsquo;а в ZooKeeper&amp;rsquo;е Cloudera CDH 6.3.2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 14. HDFS. Настройка</title>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</link>
+      <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-09 – 2021-10-15&lt;/p&gt;
+&lt;h2 id=&#34;enable-high-availability&#34;&gt;Enable High Availability&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_hag_hdfs_ha_enabling.html&#34;&gt;Enabling HDFS HA&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках сервиса HDFS, используя фильтр по слову «dfs.journalnode.edits.dir», изменяем следующий параметр:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;JournalNode Edits Directory&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;dfs.journalnode.edits.dir&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;JournalNode Default Group:&lt;br&gt;
+&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/dfs/jn&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Directory on the local file system where NameNode edits are written.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем Save Changes.&lt;/li&gt;
+&lt;li&gt;На странице службы HDFS, через кнопку Actions, запускаем wizard включения HA:
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-1.png&#34; style=&#34;height:500px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Getting Started.&lt;/strong&gt;
+Задаём уникальное имя для Nameservice:
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-2.png&#34; style=&#34;width:600px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Assign Roles&lt;/strong&gt;.&lt;br&gt;
+JournalNodes должны работать на хостах с такими же hardware specification, как NameNodes. Cloudera рекомендует поместить две JournalNode на те же хосты с NameNodes, а третий JournalNode на хост с похожими ресурсами, таким как JobTracker.&lt;br&gt;
+Распределяем роли:
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-3.png&#34; style=&#34;width:600px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Review Changes&lt;/strong&gt;.&lt;br&gt;
+Знакомимся с предварительными результатами и указываем каталог для JournalNode &lt;code&gt;/data/dfs/jn&lt;/code&gt;:
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-4.png&#34; style=&#34;width:600px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Command Details&lt;/strong&gt;.
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-5.png&#34; style=&#34;width:600px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Final Steps&lt;/strong&gt;.
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-6.png&#34; style=&#34;width:300px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;настройка-ldap-аутентификации-в-hdfs&#34;&gt;Настройка LDAP-аутентификации в HDFS&lt;/h2&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;⚠ Описание настройки уже в процессе переработки.&lt;/h4&gt;
+
+    &lt;p&gt;Важно пересмотреть эту настройку прямого подключения Hadoop к LDAP-каталогу. Нужно оставить использование &lt;code&gt;org.apache.hadoop.security.ShellBasedUnixGroupsMapping&lt;/code&gt;, так как прозрачное подключение к LDAP на машинах введённых в домен уже реализовано через SSSD.&lt;/p&gt;
+&lt;p&gt;Переписать инструкцию!&lt;/p&gt;
+&lt;p&gt;Держать в уме, что после отключения HDFS LDAP Mapping, перестала работать аутентификация в Solr! К сожалению, не помню, Solr был добавлен до включения LDAP Mapping или после, что могло бы повлиять на такое его поведение.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;При прямом подключении к LDAP не работают вложенные пользовательские группы?&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;Полезно в /etc/sssd/sssd.conf добавить фильтрацию Hadoop&amp;rsquo;овских УЗ и групп из LDAP в секции [nss], иначе одноимённая доменная УЗ возобладает преимуществом и нарушит работу hadoop-кластера.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[nss]
+filter_groups = root,mysql,hadoop,yarn,hdfs,mapred,kms,httpfs,hbase,hive,sentry,spark,solr,sqoop,oozie,hue,flume,impala,llama,postgres,sqoop2,kudu,kafka,accumulo,zookeeper,cloudera-scm,keytrustee
+filter_users = root,mysql,cloudera-scm,zookeeper,yarn,hdfs,mapred,kms,httpfs,hbase,hive,sentry,spark,solr,sqoop,oozie,hue,flume,impala,llama,sqoop2,postgres,kudu,kafka,accumulo,keytrustee
+reconnection_retries = 3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Возможно, что полезно указывать, если используется прямое подключение к LDAP:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;yarn-nastroyka&#34;&gt;⚠ YARN History Server не отображает отработанные задачи после включения Kerberos&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;В настройках службы HDFS, используя фильтр по слову «hadoop.security.group.mapping.ldap.ssl», изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Truststore&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.ssl.keystore&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;File path to a jks-format truststore containing the TLS/SSL certificate used sign the LDAP server&#39;s certificate. Note that in previous releases this was erroneously referred to as a &#34;keystore&#34;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Truststore Password&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.ssl.keystore.password&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;The password for the TLS/SSL truststore.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;span style=&#34;color: red&#34;&gt;Используем следующие настройки только в случае использования прямого подключения Hadoop&amp;rsquo;а к LDAP, вместо рекомендованного подключения через SSSD.&lt;/span&gt;&lt;br&gt;
+В настройках службы HDFS, используя категорию «Security», изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;details&gt;
+&lt;table border=&#34;1&#34;&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping Implementation&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;
+○&amp;nbsp;org.apache.hadoop.security.JniBasedUnixGroupsMapping&lt;br&gt;
+○&amp;nbsp;org.apache.hadoop.security.ShellBasedUnixGroupsMapping&lt;br&gt;
+&lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;org.apache.hadoop.security.LdapGroupsMapping&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Class for user to group mapping (get groups for a given user).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP URL&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.url&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;ldaps://dev-ipa01p.test.lan ldaps://dev-ipa02p.test.lan ldaps://dev-ipa03p.test.lan&lt;/span&gt;
+&lt;br&gt;Список из URL, разделённых пробелами.&lt;/td&gt;
+&lt;td&gt;The URL of the LDAP server. The URL must be prefixed with ldap:// or ldaps://. The URL can optionally specify a custom port, for example: ldaps://ldap_server.example.com:1636. Note that usernames and passwords will be transmitted in the clear unless either an ldaps:// URL is used, or &#34;Enable LDAP TLS&#34; is turned on (where available). Also note that encryption must be in use between the client and this service for the same reason.
+&lt;p&gt;For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of URLs can be entered; in this case the URLs will each be tried in turn until one replies.&lt;/td&gt;&lt;/p&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Enabled&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.use.ssl&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Whether or not to use TLS/SSL when connecting to the LDAP server.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Truststore&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.ssl.keystore&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;File path to a jks-format truststore containing the TLS/SSL certificate used sign the LDAP server&#39;s certificate. Note that in previous releases this was erroneously referred to as a &#34;keystore&#34;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Truststore Password&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.ssl.keystore.password&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;The password for the TLS/SSL truststore.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Bind User Distinguished Name&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.bind.user&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;uid=binddn_test2,cn=sysaccounts,cn=etc,dc=test2,dc=lan&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Distinguished name of the user to bind as. This is used to connect to LDAP/AD for searching user and group information. This may be left blank if the LDAP server supports anonymous binds.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Bind User Password&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.bind.password&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;Пароль для вышеуказанного системного аккаунта binddn_test2.&lt;/td&gt;
+&lt;td&gt;The password of the bind user.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping Search Base&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.base&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;cn=accounts,dc=test2,dc=lan&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The search base for the LDAP connection. This is a distinguished name, and will typically be the root of the LDAP directory.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP User Search Filter&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.search.filter.user&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;(&amp;(objectClass=person)(uid={0}))&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;An additional filter to use when searching for LDAP users. The default will usually be appropriate for Active Directory installations. If connecting to a generic LDAP server, &#39;&#39;sAMAccountName&#39;&#39; will likely be replaced with &#39;&#39;uid&#39;&#39;. {0} is a special string used to denote where the username fits into the filter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Group Search Filter&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.search.filter.group&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;(objectClass=ipausergroup)&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;An additional filter to use when searching for groups.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Group Membership Attribute&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.search.attr.member&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;member&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The attribute of the group object that identifies the users that are members of the group. The default will usually be appropriate for any LDAP installation.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Group Name Attribute&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.search.attr.group.name&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;cn&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The attribute of the group object that identifies the group name. The default will usually be appropriate for all LDAP systems.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Нажимаем Save Changes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/details&gt;
+&lt;h2 id=&#34;создание-группы-для-доступа-в-hdfs-с-правами-superuser&#34;&gt;Создание группы для доступа в HDFS с правами superuser&lt;/h2&gt;
 
       </description>
     </item>

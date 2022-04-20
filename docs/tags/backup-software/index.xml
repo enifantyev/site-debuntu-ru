@@ -27,108 +27,108 @@
 &lt;h2 id=&#34;1-установка-borgbackup&#34;&gt;1. Установка BorgBackup&lt;/h2&gt;
 &lt;h3 id=&#34;11-добавление-epel&#34;&gt;1.1. Добавление EPEL&lt;/h3&gt;
 &lt;p&gt;На CentOS необходим репо EPEL.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo yum install epel-release
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;12-установка-borgbackup-в-centos7&#34;&gt;1.2. Установка BorgBackup в CentOS7&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo yum install borg
-...
-Dependencies Resolved
-
-=============================================================================
- Package                             Arch    Version       Repository  Size
-=============================================================================
-Installing:
- borgbackup                          x86_64  1.1.17-2.el7  epel7       1.0 M
-Installing for dependencies:
- libb2                               x86_64  0.98.1-2.el7  epel7       20 k
- libzstd                             x86_64  1.5.2-1.el7   epel7       282 k
- python36-llfuse                     x86_64  1.0-2.el7     epel7       351 k
- python36-msgpack                    x86_64  0.5.6-5.el7   epel7       98 k
- python36-packaging                  noarch  16.8-6.el7    epel7       43 k
- python36-pyparsing                  noarch  2.4.0-1.el7   epel7       145 k
- python36-six                        noarch  1.14.0-3.el7  epel7       34 k
- xxhash-libs                         x86_64  0.8.1-1.el7   epel7       32 k
-
-Transaction Summary
-=============================================================================
-Install  1 Package (+8 Dependent packages)
-
-Total size: 2.0 M
-Total download size
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;13-ubuntu&#34;&gt;1.3. Ubuntu&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ sudo yum install epel-release
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;12-установка-borgbackup-в-centos7&#34;&gt;1.2. Установка BorgBackup в CentOS7&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ sudo yum install borg
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Dependencies &lt;span style=&#34;color:#000&#34;&gt;Resolved&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=============================================================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; Package                             Arch    Version       Repository  &lt;span style=&#34;color:#000&#34;&gt;Size&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=============================================================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Installing:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; borgbackup                          x86_64  1.1.17-2.el7  epel7       1.0 M
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Installing &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;for&lt;/span&gt; dependencies:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; libb2                               x86_64  0.98.1-2.el7  epel7       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;20&lt;/span&gt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; libzstd                             x86_64  1.5.2-1.el7   epel7       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;282&lt;/span&gt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; python36-llfuse                     x86_64  1.0-2.el7     epel7       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;351&lt;/span&gt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; python36-msgpack                    x86_64  0.5.6-5.el7   epel7       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;98&lt;/span&gt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; python36-packaging                  noarch  16.8-6.el7    epel7       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;43&lt;/span&gt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; python36-pyparsing                  noarch  2.4.0-1.el7   epel7       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;145&lt;/span&gt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; python36-six                        noarch  1.14.0-3.el7  epel7       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;34&lt;/span&gt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; xxhash-libs                         x86_64  0.8.1-1.el7   epel7       &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;32&lt;/span&gt; k
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Transaction &lt;span style=&#34;color:#000&#34;&gt;Summary&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=============================================================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Install  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; Package &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;+8 Dependent packages&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Total size: 2.0 M
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Total download size
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;13-ubuntu&#34;&gt;1.3. Ubuntu&lt;/h3&gt;
 &lt;p&gt;На Ubuntu добавляем PPA:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo add-apt-repository ppa:costamagnagianfranco/borgbackup
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;2-настройка-borg-сервера&#34;&gt;2. Настройка Borg-сервера&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo add-apt-repository ppa:costamagnagianfranco/borgbackup
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-настройка-borg-сервера&#34;&gt;2. Настройка Borg-сервера&lt;/h2&gt;
 &lt;p&gt;2.1. Добавляем системного пользователя &amp;lsquo;_borg&amp;rsquo;, под которым клиенты будут подключаться по ssh к серверу и запускать приложение &lt;code&gt;borg&lt;/code&gt;. Пароль для этой УЗ не запоминаем, так как он не потребуется в дальнейшем, но без наличия пароля будет невозможно подключиться к borg-аккаунту через ssh.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORGUSERNAME=&amp;#34;_borg&amp;#34;
-
-set +o history
-useradd -r -s /bin/sh \
-  -m -p $(pwgen 21 1) ${BORGUSERNAME}
-set -o history
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.2. Создаём папку &lt;code&gt;.ssh&lt;/code&gt;, где позже разместим файлы необходимые для подключения по ssh.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo -u ${BORGUSERNAME} /bin/bash -c &amp;#39;mkdir -p ~/.ssh &amp;amp;&amp;amp; chmod 700 ~/.ssh&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;2.3. Создаём ssh-ключи для будущих клиентов этого репо. Кстати, здесь их хранить не обязательно. Наверное, будет правильней для каждого репо создавать отдельные ключи.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export SSHKEYNAME=&amp;#34;borg_repo1&amp;#34;
-
-sudo -u ${BORGUSERNAME} /bin/bash -c &amp;#34;ssh-keygen -t ed25519 -q -N &amp;#39;&amp;#39; -f ~/.ssh/${SSHKEYNAME}&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;3-настройка-первого-репо-для-бэкапов&#34;&gt;3. Настройка первого репо для бэкапов&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;_borg&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; +o &lt;span style=&#34;color:#204a87&#34;&gt;history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;useradd -r -s /bin/sh &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  -m -p &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;pwgen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;21&lt;/span&gt; 1&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; -o &lt;span style=&#34;color:#204a87&#34;&gt;history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;2.2. Создаём папку &lt;code&gt;.ssh&lt;/code&gt;, где позже разместим файлы необходимые для подключения по ssh.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;mkdir -p ~/.ssh &amp;amp;&amp;amp; chmod 700 ~/.ssh&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;2.3. Создаём ssh-ключи для будущих клиентов этого репо. Кстати, здесь их хранить не обязательно. Наверное, будет правильней для каждого репо создавать отдельные ключи.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;borg_repo1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh-keygen -t ed25519 -q -N &amp;#39;&amp;#39; -f ~/.ssh/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;3-настройка-первого-репо-для-бэкапов&#34;&gt;3. Настройка первого репо для бэкапов&lt;/h2&gt;
 &lt;p&gt;3.1. Создаём первый каталог для хранения первого репо и пробрасываем линк к нему в домашний каталог. По этой короткой ссылке будет удобно указывать название репо для архивов, вместо длинного полного пути к бэкап-каталогу.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export REPODIR=&amp;#34;/data/borg/repo1&amp;#34;
-
-sudo mkdir -p ${REPODIR}
-sudo chown ${BORGUSERNAME}.${BORGUSERNAME} ${REPODIR}
-sudo -u ${BORGUSERNAME} /bin/bash -c &amp;#34;ln -s ${REPODIR} ~/&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.2. Если файл &lt;code&gt;authorized_keys&lt;/code&gt; отсутствует, то создаём его с единственной записью-комментом &amp;ldquo;&lt;em&gt;Требуется указывать полный путь к каждому репо&lt;/em&gt;&amp;rdquo;.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo -u ${BORGUSERNAME} /bin/bash -c &amp;#34;cd ~/.ssh; echo &amp;#39;# Требуется указывать полный путь к каждому репо&amp;#39; &amp;gt; authorized_keys&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.3. Добавляем в &lt;code&gt;authorized_keys&lt;/code&gt; запись для доступа к репо:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo -u ${BORGUSERNAME} /bin/bash -c &amp;#34;cd ~/.ssh; echo -e &amp;#39;command=\&amp;#34;/usr/bin/borg serve --restrict-to-path ${REPODIR}\&amp;#34;,restrict $(cat ${SSHKEYNAME}.pub)&amp;#39; &amp;gt;&amp;gt; authorized_keys&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.4. Инициализируем первый репо без шифрования:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;REPOLINKNAME=&amp;#34;repo1&amp;#34; # Имя ссылки в home на репо
-export BORG_RSH=&amp;#34;ssh -i ~/.ssh/${SSHKEYNAME}&amp;#34;
-export BORG_REPO=&amp;#34;${BORGUSERNAME}@localhost:${REPOLINKNAME}&amp;#34;
-
-# Вызываем sudo -EH для передачи переменных
-# окружения в borg и смены HOME.
-sudo -EH -u ${BORGUSERNAME} /bin/bash -c &amp;#39;borg init -e none&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3.5. Проверяем, что в каталоге первого репо создана структура:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ ls -al ${REPODIR}
-total 72
-drwxr-xr-x 3 _borg _borg  4096 мар 11 17:30 .
-drwxr-xr-x 3 root        root         4096 мар 10 15:42 ..
--rw------- 1 _borg _borg   209 мар 11 17:30 config
-drwx------ 3 _borg _borg  4096 мар 11 17:30 data
--rw------- 1 _borg _borg    52 мар 11 17:30 hints.1
--rw------- 1 _borg _borg 41258 мар 11 17:30 index.1
--rw------- 1 _borg _borg   190 мар 11 17:30 integrity.1
--rw------- 1 _borg _borg    73 мар 11 17:30 README
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/data/borg/repo1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mkdir -p &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo chown &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;.&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ln -s &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; ~/&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;3.2. Если файл &lt;code&gt;authorized_keys&lt;/code&gt; отсутствует, то создаём его с единственной записью-комментом &amp;ldquo;&lt;em&gt;Требуется указывать полный путь к каждому репо&lt;/em&gt;&amp;rdquo;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cd ~/.ssh; echo &amp;#39;# Требуется указывать полный путь к каждому репо&amp;#39; &amp;gt; authorized_keys&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;3.3. Добавляем в &lt;code&gt;authorized_keys&lt;/code&gt; запись для доступа к репо:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cd ~/.ssh; echo -e &amp;#39;command=\&amp;#34;/usr/bin/borg serve --restrict-to-path &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;\&amp;#34;,restrict &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;.pub&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &amp;gt;&amp;gt; authorized_keys&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;3.4. Инициализируем первый репо без шифрования:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPOLINKNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;repo1&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Имя ссылки в home на репо&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i ~/.ssh/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;@localhost:&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPOLINKNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Вызываем sudo -EH для передачи переменных&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# окружения в borg и смены HOME.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -EH -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;borg init -e none&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;3.5. Проверяем, что в каталоге первого репо создана структура:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ls -al &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;total &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;72&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;drwxr-xr-x &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; _borg _borg  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 .
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;drwxr-xr-x &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; root        root         &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt; 15:42 ..
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;209&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 config
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;drwx------ &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; _borg _borg  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 data
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;52&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 hints.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;41258&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 index.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;190&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 integrity.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;73&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 README
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
     <item>
       <title>Manuals: 11. Установка BorgBackup в AltLinux 9</title>
-      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</link>
       <pubDate>Thu, 31 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</guid>
       <description>
         
         
         &lt;p&gt;2022-03-31&lt;/p&gt;
 &lt;h3 id=&#34;установка-из-apt&#34;&gt;Установка из APT&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install borg
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ borg -V
-borg 1.1.10
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-из-pip&#34;&gt;Установка из pip&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install python3-module-pkgconfig python3-module-setuptools \
-python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
-libacl-devel libacl libssl-devel liblz4-devel libzstd-devel \
-libxxhash-devel gcc-c++ python3-module-setuptools_scm
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install --upgrade pip
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install borgbackup
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ borg -V
-borg 1.1.17
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-get install borg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ borg -V
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg 1.1.10
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;установка-из-pip&#34;&gt;Установка из pip&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-get install python3-module-pkgconfig python3-module-setuptools &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;python3-module-wheel python3-module-msgpack libssl-devel python3-dev &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;libacl-devel libacl libssl-devel liblz4-devel libzstd-devel &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;libxxhash-devel gcc-c++ python3-module-setuptools_scm
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 -m pip install --upgrade pip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 -m pip install borgbackup
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ borg -V
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg 1.1.17
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -143,29 +143,29 @@ borg 1.1.17
         
         &lt;p&gt;2022-03-14&lt;/p&gt;
 &lt;h3 id=&#34;установка-borg-1117&#34;&gt;Установка borg 1.1.17&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-get install borg
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-borg-12&#34;&gt;Установка borg 1.2&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo apt-get install python3-module-pkgconfig python3-module-setuptools \
-python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
-libacl-devel libacl libssl-devel liblz4-devel libzstd-devel libxxhash-devel
-
-Reading Package Lists... Done
-Building Dependency Tree... Done
-libacl is already the newest version.
-The following extra packages will be installed:
-  libncurses-devel libtinfo-devel libxxhash rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs
-The following NEW packages will be installed:
-  libacl-devel liblz4-devel libncurses-devel libssl-devel libtinfo-devel libxxhash libxxhash-devel libzstd-devel
-  python3-dev python3-module-msgpack python3-module-pkgconfig python3-module-setuptools python3-module-wheel
-  rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs
-0 upgraded, 16 newly installed, 0 removed and 0 not upgraded.
-Need to get 2010kB of archives.
-After unpacking 8373kB of additional disk space will be used.
-Do you want to continue? [Y/n]
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install borgbackup
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg -V
-borg 1.2.0
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-get install borg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;установка-borg-12&#34;&gt;Установка borg 1.2&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ sudo apt-get install python3-module-pkgconfig python3-module-setuptools &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;python3-module-wheel python3-module-msgpack libssl-devel python3-dev &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;libacl-devel libacl libssl-devel liblz4-devel libzstd-devel libxxhash-devel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Reading Package Lists... Done
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Building Dependency Tree... Done
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;libacl is already the newest version.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;The following extra packages will be installed:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  libncurses-devel libtinfo-devel libxxhash rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;The following NEW packages will be installed:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  libacl-devel liblz4-devel libncurses-devel libssl-devel libtinfo-devel libxxhash libxxhash-devel libzstd-devel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  python3-dev python3-module-msgpack python3-module-pkgconfig python3-module-setuptools python3-module-wheel
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; upgraded, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;16&lt;/span&gt; newly installed, &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; removed and &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;0&lt;/span&gt; not upgraded.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Need to get 2010kB of archives.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;After unpacking 8373kB of additional disk space will be used.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Do you want to &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;continue&lt;/span&gt;? &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;Y/n&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pip install borgbackup
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg -V
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg 1.2.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -180,14 +180,14 @@ borg 1.2.0
         
         &lt;p&gt;2022-03-17&lt;/p&gt;
 &lt;h2 id=&#34;установка-пакетов-необходимых-для-сборки-borgbackup&#34;&gt;Установка пакетов, необходимых для сборки borgbackup&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;yum -y install openssl-devel python3-devel libacl-devel libacl lz4-devel \
-libzstd-devel libxxhash-devel gcc-c++
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;обновляем-pip&#34;&gt;Обновляем pip&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install -U pip
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;добавляем-borgbackup-в-roolocalbin&#34;&gt;Добавляем borgbackup в /roo/.local/bin&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yum -y install openssl-devel python3-devel libacl-devel libacl lz4-devel &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;libzstd-devel libxxhash-devel gcc-c++
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;обновляем-pip&#34;&gt;Обновляем pip&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 -m pip install -U pip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;добавляем-borgbackup-в-roolocalbin&#34;&gt;Добавляем borgbackup в /roo/.local/bin&lt;/h2&gt;
 &lt;h3 id=&#34;пакеты-pkgconfig-setuptools-wheel-msgpack&#34;&gt;Пакеты pkgconfig setuptools wheel msgpack&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install --user pkgconfig setuptools wheel msgpack
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 -m pip install --user pkgconfig setuptools wheel msgpack
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;stdout:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;WARNING: Running pip install with root privileges is generally not a good idea. Try `__main__.py install --user` instead.
 Collecting pip
   Downloading https://files.pythonhosted.org/packages/a4/6d/6463d49a933f547439d6b5b98b46af8742cc03ae83543e4d7688c2420f8b/pip-21.3.1-py3-none-any.whl (1.7MB)
@@ -212,8 +212,8 @@ Installing collected packages: wheel, pkgconfig, msgpack
 Successfully installed msgpack-1.0.3 pkgconfig-1.5.5 wheel-0.37.1
 WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;установка-утилиты-borgbackup&#34;&gt;Установка утилиты borgbackup&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3 -m pip install --user borgbackup
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 -m pip install --user borgbackup
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;stdout:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Collecting borgbackup
   Downloading borgbackup-1.1.17.tar.gz (3.8 MB)
      |████████████████████████████████| 3.8 MB 59 kB/s             
@@ -286,20 +286,20 @@ WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken per
 &lt;p&gt;Находясь на AWX-хосте, выбираем призвольную машину в удалённой третьей ИС с бэкап-клиентами, и модернизируем на ней настройки sshd для возможности создания ssh-шлюза. Напомню, что такая возможность по умолчанию ограничена открытием порта на lo-интерфейсе 127.0.0.1, вместо интересующего нас 0.0.0.0.&lt;/p&gt;
 &lt;h3 id=&#34;backup-client1-включение-ssh-gateway&#34;&gt;&amp;lsquo;backup-client1&amp;rsquo;. Включение ssh gateway&lt;/h3&gt;
 &lt;p&gt;Итак, на хосте &amp;lsquo;backup-client1&amp;rsquo; включаем опцию &amp;lsquo;GatewayPorts&amp;rsquo; и перезапускаем демон sshd:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sed -i &amp;#39;s/#GatewayPorts no/GatewayPorts yes/&amp;#39; /etc/ssh/sshd_config
-systemctl restart sshd
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверка:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sshd -T | grep gatewayports
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;awx-host-прокидывание-временного-туннеля-шлюза-между-backup-client1-и-backup-server&#34;&gt;&amp;lsquo;awx-host&amp;rsquo;. Прокидывание временного туннеля-шлюза между &amp;lsquo;backup-client1&amp;rsquo; и &amp;lsquo;backup-server&amp;rsquo;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/#GatewayPorts no/GatewayPorts yes/&amp;#39;&lt;/span&gt; /etc/ssh/sshd_config
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart sshd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Проверка:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sshd -T &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep gatewayports
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;awx-host-прокидывание-временного-туннеля-шлюза-между-backup-client1-и-backup-server&#34;&gt;&amp;lsquo;awx-host&amp;rsquo;. Прокидывание временного туннеля-шлюза между &amp;lsquo;backup-client1&amp;rsquo; и &amp;lsquo;backup-server&amp;rsquo;&lt;/h3&gt;
 &lt;p&gt;На машине &amp;lsquo;awx-host&amp;rsquo; выполняем создание туннеля-шлюза. Для удобства последующего закрытия туннеля, используем мультиплексирование с созданием управляющего сокета, через который сможем подать команду на закрытие туннеля. Кроме того, запретим подачу команд через этот туннель удалённой машине, а также переведём соединение в фоновый режим:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh -MS /tmp/borg-is3 -Nf -R 0.0.0.0:2222:backup-server:22 eugene@backup-client1
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После окончания операций бэкапа, через управляющий сокет, подаём команду закрыть туннель:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ssh -S /tmp/borg-is3 -O exit eugene@backup-client1
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;настройка-клиентов&#34;&gt;Настройка клиентов&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -MS /tmp/borg-is3 -Nf -R 0.0.0.0:2222:backup-server:22 eugene@backup-client1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;После окончания операций бэкапа, через управляющий сокет, подаём команду закрыть туннель:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -S /tmp/borg-is3 -O &lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; eugene@backup-client1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;настройка-клиентов&#34;&gt;Настройка клиентов&lt;/h3&gt;
 &lt;p&gt;Ключ ssh для доступа к borg-репозиторию создаём в &lt;code&gt;~/.ssh&lt;/code&gt;, а в &lt;code&gt;~/.bashrc&lt;/code&gt; добавляем переменные для работы с borg-репозиторием:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORG_RSH=&amp;#34;ssh -i /root/.ssh/borg1&amp;#34;
-export BORG_REPO=&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i /root/.ssh/borg1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -338,85 +338,85 @@ export BORG_REPO=&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# parted /dev/sda unit mib print free
-Model: VMware Virtual disk (scsi)
-Disk /dev/sda: 51200MiB
-Sector size (logical/physical): 512B/512B
-Partition Table: msdos
-Disk Flags:
-
-Number  Start    End       Size      Type     File system  Flags
- 1      1,00MiB  1025MiB   1024MiB   primary  xfs          boot
- 2      1025MiB  51200MiB  50175MiB  primary               lvm
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;добавление-пространства-в-volume-group&#34;&gt;Добавление пространства в Volume Group&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# parted /dev/sda unit mib print free&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Model: VMware Virtual disk &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;scsi&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Disk /dev/sda: 51200MiB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Sector size &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;logical/physical&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;: 512B/512B
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Partition Table: msdos
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Disk Flags:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Number  Start    End       Size      Type     File system  Flags
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;      1,00MiB  1025MiB   1024MiB   primary  xfs          boot
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2&lt;/span&gt;      1025MiB  51200MiB  50175MiB  primary               lvm
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;добавление-пространства-в-volume-group&#34;&gt;Добавление пространства в Volume Group&lt;/h3&gt;
 &lt;p&gt;Если требуется бэкап LV-томов на одном VG, то разбивать дополнительный диск на разделы не требуется. Достаточно будет добавить в VG весь новый диск командой &lt;code&gt;vgextend /dev/vg /dev/sdb&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;В противном случае, когда восстанавливаемые тома находятся на разных VG, потребуется разбивка дополнительного диска на отдельные разделы и добавление этих новых PV в свои VG.&lt;/p&gt;
 &lt;h2 id=&#34;процесс-резервного-копирования&#34;&gt;Процесс резервного копирования&lt;/h2&gt;
 &lt;h3 id=&#34;отключение-работающих-демонов&#34;&gt;Отключение работающих демонов&lt;/h3&gt;
 &lt;p&gt;Останавливаем и выключаем главные сервисы, работающие на хосте, чтобы предотвратить автоматический запуск демонов после восстановления системы. Например:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ipactl stop
-systemctl disable --now dirsrv@TEST4.LAN.service
-systemctl disable --now pki-tomcatd
-systemctl disable --now named
-systemctl disable --now httpd
-systemctl disable --now ipa-otpd
-systemctl disable --now ipa-dnskeysyncd
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl stop postfix
-systemctl stop rsyslog
-service auditd stop
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-временных-lvm-snapshotов&#34;&gt;Создание временных LVM snapshot&amp;rsquo;ов&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ipactl stop
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl disable --now dirsrv@TEST4.LAN.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl disable --now pki-tomcatd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl disable --now named
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl disable --now httpd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl disable --now ipa-otpd
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl disable --now ipa-dnskeysyncd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl stop postfix
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl stop rsyslog
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;service auditd stop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;создание-временных-lvm-snapshotов&#34;&gt;Создание временных LVM snapshot&amp;rsquo;ов&lt;/h3&gt;
 &lt;p&gt;Помним, что в Volume Group должно быть достаточно свободного места для размещения снэпшотов.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -L 500M -s -n snap_root /dev/vg/root
-lvcreate -L 500M -s -n snap_var /dev/vg/var
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Если требуется освободить немного места в VG, то можно попробовать освободить пару гигабайтов за счёт уменьшения, например &lt;code&gt;/dev/vg/data&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/sbin/lvreduce -L -2G -r /dev/vg/data
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;После завершения бэкапа вновь увеличиваем LV:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/usr/sbin/lvextend -l +100%FREE -r /dev/vg/data
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 500M -s -n snap_root /dev/vg/root
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 500M -s -n snap_var /dev/vg/var
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Если требуется освободить немного места в VG, то можно попробовать освободить пару гигабайтов за счёт уменьшения, например &lt;code&gt;/dev/vg/data&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/usr/sbin/lvreduce -L -2G -r /dev/vg/data
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;После завершения бэкапа вновь увеличиваем LV:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/usr/sbin/lvextend -l +100%FREE -r /dev/vg/data
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;При монтировании xfs используем опцию &lt;code&gt;nouuid&lt;/code&gt;, поэтому проверяем тип файловой системы:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Mounting root on /mnt
-LV=&amp;#39;/dev/vg/snap_root&amp;#39;
-FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
-if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
-  mount -o nouuid,ro ${LV} /mnt
-elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
-  mount -o ro ${LV} /mnt
-fi
-
-# Mounting /var on /mnt/var
-LV=&amp;#39;/dev/vg/snap_var&amp;#39;
-FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
-if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
-  mount -o nouuid,ro ${LV} /mnt/var
-elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
-  mount -o ro ${LV} /mnt/var
-fi
-
-# Mounting /boot on /mnt/boot
-mount -o bind,ro /boot /mnt/boot
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;проверка-монтирования&#34;&gt;Проверка монтирования&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount | grep &amp;#39;/mnt&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пример вывода:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting root on /mnt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/dev/vg/snap_root&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;df -T &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/snap_/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; egrep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4|xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount -o nouuid,ro &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount -o ro &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting /var on /mnt/var&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/dev/vg/snap_var&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;df -T &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/snap_/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; egrep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4|xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount -o nouuid,ro &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt/var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount -o ro &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt/var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting /boot on /mnt/boot&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -o bind,ro /boot /mnt/boot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;проверка-монтирования&#34;&gt;Проверка монтирования&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/mnt&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Пример вывода:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
 /dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
 /dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;резервное-копирование&#34;&gt;Резервное копирование&lt;/h3&gt;
 &lt;p&gt;Устанавливаем переменные, чтобы не вводить параметры дважды:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORG_RSH=&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;
-export BORG_REPO=&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Выполняем бэкап со сжатием передовым компрессором &lt;a href=&#34;https://ru.wikipedia.org/wiki/Zstandard&#34;&gt;Zstandard&lt;/a&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg create -C zstd --stats --progress ::full_{hostname}_{now} /mnt
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-временных-снэпшотов&#34;&gt;Удаление временных снэпшотов&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;umount -R /mnt
-lvremove -y /dev/vg/snap_var
-lvremove -y /dev/vg/snap_root
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;запуск-остановленных-демонов&#34;&gt;Запуск остановленных демонов&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Выполняем бэкап со сжатием передовым компрессором &lt;a href=&#34;https://ru.wikipedia.org/wiki/Zstandard&#34;&gt;Zstandard&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg create -C zstd --stats --progress ::full_&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;hostname&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;_&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;now&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt; /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;удаление-временных-снэпшотов&#34;&gt;Удаление временных снэпшотов&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;umount -R /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvremove -y /dev/vg/snap_var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvremove -y /dev/vg/snap_root
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;запуск-остановленных-демонов&#34;&gt;Запуск остановленных демонов&lt;/h3&gt;
 &lt;p&gt;Запускаем ранее остановленные локальные демоны:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl start postfix
-systemctl start rsyslog
-service auditd start
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl start postfix
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl start rsyslog
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;service auditd start
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -440,97 +440,97 @@ service auditd start
 &lt;h2 id=&#34;процесс-восстановления&#34;&gt;Процесс восстановления&lt;/h2&gt;
 &lt;h3 id=&#34;отключение-работающих-демонов&#34;&gt;Отключение работающих демонов&lt;/h3&gt;
 &lt;p&gt;В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl stop postfix
-systemctl stop rsyslog
-service auditd stop
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-lvm-snapshot&#34;&gt;Создание LVM snapshot&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl stop postfix
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl stop rsyslog
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;service auditd stop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;создание-lvm-snapshot&#34;&gt;Создание LVM snapshot&lt;/h3&gt;
 &lt;p&gt;Помним, что в Volume Group должно быть достаточно свободного места для размещения данных из бэкапов. В отличие от процесса создания бэкапа, в этом случае нужно много места, чтобы уместить сюда весь бэкап.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -L 4G -s -n snap_root /dev/vg/root
-lvcreate -L 4G -s -n snap_var /dev/vg/var
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 4G -s -n snap_root /dev/vg/root
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 4G -s -n snap_var /dev/vg/var
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;При монтировании xfs используем опцию &lt;code&gt;nouuid&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Mounting root on /mnt
-LV=&amp;#39;/dev/vg/snap_root&amp;#39;
-FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
-if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
-  mount -o nouuid ${LV} /mnt
-elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
-  mount ${LV} /mnt
-fi
-
-# Mounting /var on /mnt/var
-LV=&amp;#39;/dev/vg/snap_var&amp;#39;
-FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
-if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
-  mount -o nouuid ${LV} /mnt/var
-elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
-  mount ${LV} /mnt/var
-fi
-
-# Mounting /boot on /mnt/boot
-mount -o bind /boot /mnt/boot
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;проверка-монтирования&#34;&gt;Проверка монтирования&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount | grep &amp;#39;/mnt&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пример вывода:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting root on /mnt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/dev/vg/snap_root&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;df -T &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/snap_/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; egrep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4|xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount -o nouuid &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting /var on /mnt/var&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/dev/vg/snap_var&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;df -T &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/snap_/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; egrep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4|xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount -o nouuid &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt/var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt/var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting /boot on /mnt/boot&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -o &lt;span style=&#34;color:#204a87&#34;&gt;bind&lt;/span&gt; /boot /mnt/boot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;проверка-монтирования&#34;&gt;Проверка монтирования&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/mnt&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Пример вывода:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
 /dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
 /dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-содержимого-снэпшотов-и-boot&#34;&gt;Удаление содержимого снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;Удаляем всё содержимое снэпшотов и каталога &lt;code&gt;/boot&lt;/code&gt; с проверкой:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf /mnt/*
-du /mnt
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Результат:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -rf /mnt/*
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;du /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Результат:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;0	/mnt/boot
 0	/mnt/var
 0	/mnt
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;восстановление-бэкапа-в-пространство-снэпшотов-и-boot&#34;&gt;Восстановление бэкапа в пространство снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;Устанавливаем переменные, чтобы не вводить параметры дважды:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORG_RSH=&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;
-export BORG_REPO=&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Выбираем нужный архив из списка. Пример списка:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg list
-...
-full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 [f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Переходим в корень и восстанавливаем архив &lt;code&gt;full_img211202_2022-03-11T10:54:32&lt;/code&gt;, который заполнит файлами готовый для приёма каталог &lt;code&gt;/mnt&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd /
-borg extract --list --progress --numeric-owner \
-  ::full_img211202_2022-03-11T12:53:10
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;исправление-загрузки&#34;&gt;Исправление загрузки&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Выбираем нужный архив из списка. Пример списка:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg list
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Переходим в корень и восстанавливаем архив &lt;code&gt;full_img211202_2022-03-11T10:54:32&lt;/code&gt;, который заполнит файлами готовый для приёма каталог &lt;code&gt;/mnt&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; /
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg extract --list --progress --numeric-owner &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  ::full_img211202_2022-03-11T12:53:10
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;исправление-загрузки&#34;&gt;Исправление загрузки&lt;/h2&gt;
 &lt;h3 id=&#34;chroot-для-исправления-загрузки&#34;&gt;chroot для исправления загрузки&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount -t proc /proc /mnt/proc/
-mount -t sysfs /sys /mnt/sys/
-mount --bind /dev /mnt/dev/
-mount --bind /run /mnt/run
-chroot /mnt
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;обновление-initramfs&#34;&gt;Обновление initramfs&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -t proc /proc /mnt/proc/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -t sysfs /sys /mnt/sys/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount --bind /dev /mnt/dev/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount --bind /run /mnt/run
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chroot /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;обновление-initramfs&#34;&gt;Обновление initramfs&lt;/h3&gt;
 &lt;p&gt;При восстановлении старого снимка этой машины с предыдущей версией Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.&lt;/p&gt;
 &lt;p&gt;Версию текущего ядра можно узнать через команду &lt;code&gt;uname -r&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Версии Linux-ядер в восстанавливаемом снимке видны в каталоге &lt;code&gt;/boot&lt;/code&gt;.&lt;/p&gt;
 &lt;h4 id=&#34;centos-7-redos-72&#34;&gt;CentOS 7, RedOS 7.2&lt;/h4&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dracut -f -v
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dracut -f -v /boot/initramfs-4.19.204-2.el7.x86_64.img 4.19.204-2.el7.x86_64
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;altlinux-10&#34;&gt;AltLinux 10&lt;/h4&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;make-initrd
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или при необходимости указания версии ядра:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;make-initrd --kernel=&amp;#39;5.10.82-std-def-alt1&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;проверяем-сетевые-настройки&#34;&gt;Проверяем сетевые настройки&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dracut -f -v
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dracut -f -v /boot/initramfs-4.19.204-2.el7.x86_64.img 4.19.204-2.el7.x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;altlinux-10&#34;&gt;AltLinux 10&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;make-initrd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;или при необходимости указания версии ядра:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;make-initrd --kernel&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;5.10.82-std-def-alt1&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;проверяем-сетевые-настройки&#34;&gt;Проверяем сетевые настройки&lt;/h3&gt;
 &lt;p&gt;Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.&lt;/p&gt;
 &lt;h3 id=&#34;выход-из-песочницы&#34;&gt;Выход из песочницы&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;exit
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;заключительные-операции&#34;&gt;Заключительные операции&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;заключительные-операции&#34;&gt;Заключительные операции&lt;/h2&gt;
 &lt;h3 id=&#34;объединение-снэпшотов&#34;&gt;Объединение снэпшотов&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;umount -R /mnt
-lvconvert --merge /dev/vg/snap_var
-lvconvert --merge /dev/vg/snap_root
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout пример:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  Delaying merge since origin is open.
-  Merging of snapshot vg/snap_var will occur on next activation of vg/var.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Stdout последних команд говорит о том, что объединение произойдёт на следующей активации lv-томов, то есть, в нашем случае, после перезагрузки сервера.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;umount -R /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvconvert --merge /dev/vg/snap_var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvconvert --merge /dev/vg/snap_root
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;stdout пример:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  Delaying merge since origin is open.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  Merging of snapshot vg/snap_var will occur on next activation of vg/var.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Stdout последних команд говорит о том, что объединение произойдёт на следующей активации lv-томов, то есть, в нашем случае, после перезагрузки сервера.&lt;/p&gt;
 &lt;h3 id=&#34;reboot&#34;&gt;reboot&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sync
-sleep 10
-reboot -f
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sync
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sleep &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot -f
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -553,98 +553,98 @@ reboot -f
 &lt;h2 id=&#34;процесс-восстановления&#34;&gt;Процесс восстановления&lt;/h2&gt;
 &lt;h3 id=&#34;отключение-работающих-демонов&#34;&gt;Отключение работающих демонов&lt;/h3&gt;
 &lt;p&gt;В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl stop postfix
-systemctl stop rsyslog
-service auditd stop
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;создание-lvm-snapshot&#34;&gt;Создание LVM snapshot&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl stop postfix
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl stop rsyslog
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;service auditd stop
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;создание-lvm-snapshot&#34;&gt;Создание LVM snapshot&lt;/h3&gt;
 &lt;p&gt;Помним, что в Volume Group должно быть достаточно свободного места для размещения данных из бэкапов. В отличие от процесса создания бэкапа, в этом случае нужно много места, чтобы уместить сюда весь бэкап.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;lvcreate -L 4G -s -n snap_root /dev/vg/root
-lvcreate -L 4G -s -n snap_var /dev/vg/var
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;проверяем-детали-восстанавливаемого-снимка&#34;&gt;Проверяем детали восстанавливаемого снимка&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 4G -s -n snap_root /dev/vg/root
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 4G -s -n snap_var /dev/vg/var
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;проверяем-детали-восстанавливаемого-снимка&#34;&gt;Проверяем детали восстанавливаемого снимка&lt;/h3&gt;
 &lt;h4 id=&#34;выбор-восстанавливаемого-снимка&#34;&gt;Выбор восстанавливаемого снимка&lt;/h4&gt;
 &lt;p&gt;Устанавливаем переменные, чтобы не вводить параметры дважды:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export BORG_RSH=&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;
-export BORG_REPO=&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Выбираем нужный архив из списка. Пример списка:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg list
-...
-full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 [f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4]
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;подключение-восстанавливаемого-снимка&#34;&gt;Подключение восстанавливаемого снимка&lt;/h4&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg mount ::full_img211202_2022-03-11T10:54:32 /mnt
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;проверка-etcfstab&#34;&gt;Проверка &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Выбираем нужный архив из списка. Пример списка:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg list
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;подключение-восстанавливаемого-снимка&#34;&gt;Подключение восстанавливаемого снимка&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg mount ::full_img211202_2022-03-11T10:54:32 /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;проверка-etcfstab&#34;&gt;Проверка &lt;code&gt;/etc/fstab&lt;/code&gt;&lt;/h4&gt;
 &lt;p&gt;Отмечаем имена подключаемых разделов и тип файловой системы (ext4 или xfs) у восстанавливаемого снимка:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cat /mnt/etc/fstab
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяем файловые снимки на хосте:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;df -T
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;отмонтируем-снимок&#34;&gt;Отмонтируем снимок&lt;/h4&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;borg umount /mnt
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat /mnt/etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Проверяем файловые снимки на хосте:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;df -T
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;отмонтируем-снимок&#34;&gt;Отмонтируем снимок&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg umount /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;h4 id=&#34;если-типы-файловых-систем-совпадают&#34;&gt;Если типы файловых систем совпадают&lt;/h4&gt;
 &lt;p&gt;При монтировании xfs используем опцию &lt;code&gt;nouuid&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# Mounting root on /mnt
-LV=&amp;#39;/dev/vg/snap_root&amp;#39;
-FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
-if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
-  mount -o nouuid ${LV} /mnt
-elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
-  mount ${LV} /mnt
-fi
-
-# Mounting /var on /mnt/var
-LV=&amp;#39;/dev/vg/snap_var&amp;#39;
-FSTYPE=$(df -T ${LV/snap_/} | egrep &amp;#34;ext4|xfs&amp;#34; | awk &amp;#39;{print $2}&amp;#39;)
-if [[ ${FSTYPE} = &amp;#34;xfs&amp;#34; ]]; then
-  mount -o nouuid ${LV} /mnt/var
-elif [[ ${FSTYPE} = &amp;#34;ext4&amp;#34; ]]; then
-  mount ${LV} /mnt/var
-fi
-
-# Mounting /boot on /mnt/boot
-mount -o bind /boot /mnt/boot
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;если-типы-файловых-систем-различны&#34;&gt;Если типы файловых систем различны&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting root on /mnt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/dev/vg/snap_root&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;df -T &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/snap_/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; egrep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4|xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount -o nouuid &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting /var on /mnt/var&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/dev/vg/snap_var&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;df -T &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/snap_/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; egrep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4|xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; awk &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;xfs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount -o nouuid &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt/var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;elif&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;FSTYPE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ext4&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  mount &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;LV&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /mnt/var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting /boot on /mnt/boot&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -o &lt;span style=&#34;color:#204a87&#34;&gt;bind&lt;/span&gt; /boot /mnt/boot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;если-типы-файловых-систем-различны&#34;&gt;Если типы файловых систем различны&lt;/h4&gt;
 &lt;p&gt;Форматируем разделы. Например, если восстанавливаемый снимок создан на машине с &amp;rsquo;ext4&#39;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# /dev/sda1 --&amp;gt; /boot
-umount /boot
-mkfs.ext4 /dev/sda1
-# /dev/vg/root --&amp;gt; /
-mkfs.ext4 /dev/vg/snap_root
-# /dev/vg/var --&amp;gt; /var
-mkfs.ext4 /dev/vg/snap_var
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Монтируем вручную отформатированные разделы к каталогу &lt;code&gt;/mnt&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount /dev/vg/snap_root /mnt
-mkdir /mnt/{boot,var}
-mount /dev/sda1 /mnt/boot
-mount /dev/vg/snap_var /mnt/var
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;проверка-монтирования&#34;&gt;Проверка монтирования&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount | grep &amp;#39;/mnt&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Пример вывода:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
-/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
-/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-содержимого-снэпшотов-и-boot&#34;&gt;Удаление содержимого снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# /dev/sda1 --&amp;gt; /boot&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;umount /boot
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkfs.ext4 /dev/sda1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# /dev/vg/root --&amp;gt; /&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkfs.ext4 /dev/vg/snap_root
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# /dev/vg/var --&amp;gt; /var&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkfs.ext4 /dev/vg/snap_var
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Монтируем вручную отформатированные разделы к каталогу &lt;code&gt;/mnt&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount /dev/vg/snap_root /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir /mnt/&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;boot,var&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount /dev/sda1 /mnt/boot
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount /dev/vg/snap_var /mnt/var
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;проверка-монтирования&#34;&gt;Проверка монтирования&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;/mnt&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Пример вывода:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/dev/mapper/vg-snap_root on /mnt &lt;span style=&#34;color:#204a87&#34;&gt;type&lt;/span&gt; ext4 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;rw,relatime,seclabel&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/dev/mapper/vg-snap_var on /mnt/var &lt;span style=&#34;color:#204a87&#34;&gt;type&lt;/span&gt; ext4 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;rw,relatime,seclabel&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;/dev/sda1 on /mnt/boot &lt;span style=&#34;color:#204a87&#34;&gt;type&lt;/span&gt; ext4 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;rw,relatime,seclabel&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;удаление-содержимого-снэпшотов-и-boot&#34;&gt;Удаление содержимого снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Если разделы были отформатированы на одном из предыдущих пунктов, то удаление содержимого разделов можно пропустить.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;Иначе удаляем всё содержимое снэпшотов и каталога &lt;code&gt;/boot&lt;/code&gt; с проверкой:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf /mnt/*
-du /mnt
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Результат:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;0	/mnt/boot
-0	/mnt/var
-0	/mnt
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;восстановление-бэкапа-в-пространство-снэпшотов-и-boot&#34;&gt;Восстановление бэкапа в пространство снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -rf /mnt/*
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;du /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Результат:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0	/mnt/boot
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0	/mnt/var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0	/mnt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;восстановление-бэкапа-в-пространство-снэпшотов-и-boot&#34;&gt;Восстановление бэкапа в пространство снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;Переходим в корень и восстанавливаем архив &lt;code&gt;full_img211202_2022-03-11T10:54:32&lt;/code&gt;, который заполнит файлами готовый для приёма каталог &lt;code&gt;/mnt&lt;/code&gt;:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd /
-borg extract --list --progress --numeric-owner \
-  ::full_img211202_2022-03-11T12:53:10
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;исправление-загрузки&#34;&gt;Исправление загрузки&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; /
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg extract --list --progress --numeric-owner &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  ::full_img211202_2022-03-11T12:53:10
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;исправление-загрузки&#34;&gt;Исправление загрузки&lt;/h2&gt;
 &lt;h3 id=&#34;chroot-для-исправления-загрузки&#34;&gt;chroot для исправления загрузки&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mount -t proc /proc /mnt/proc/
-mount -t sysfs /sys /mnt/sys/
-mount --bind /dev /mnt/dev/
-mount --bind /run /mnt/run
-chroot /mnt
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;обновление-grub&#34;&gt;Обновление GRUB&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -t proc /proc /mnt/proc/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount -t sysfs /sys /mnt/sys/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount --bind /dev /mnt/dev/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mount --bind /run /mnt/run
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chroot /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;обновление-grub&#34;&gt;Обновление GRUB&lt;/h3&gt;
 &lt;p&gt;В некоторых случаях, например при восстановлении снимка с другой операционной системой, потребуется обновить GRUB.&lt;/p&gt;
 &lt;p&gt;Общая схема обновления GRUB такая:&lt;/p&gt;
 &lt;ol&gt;
@@ -679,44 +679,44 @@ Installation finished. No error reported.
 &lt;p&gt;Версию текущего ядра можно узнать через команду &lt;code&gt;uname -r&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Версии Linux-ядер в восстанавливаемом снимке видны в каталоге &lt;code&gt;/boot&lt;/code&gt;.&lt;/p&gt;
 &lt;h4 id=&#34;centos-7-redos-72&#34;&gt;CentOS 7, RedOS 7.2&lt;/h4&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dracut -f -v
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;dracut -f -v /boot/initramfs-4.19.204-2.el7.x86_64.img 4.19.204-2.el7.x86_64
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;altlinux-10&#34;&gt;AltLinux 10&lt;/h4&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;make-initrd
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;или при необходимости указания версии ядра:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;make-initrd --kernel=&amp;#39;5.10.82-std-def-alt1&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;исправляем-сетевые-настройки&#34;&gt;Исправляем сетевые настройки&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dracut -f -v
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dracut -f -v /boot/initramfs-4.19.204-2.el7.x86_64.img 4.19.204-2.el7.x86_64
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;altlinux-10&#34;&gt;AltLinux 10&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;make-initrd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;или при необходимости указания версии ядра:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;make-initrd --kernel&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;5.10.82-std-def-alt1&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;исправляем-сетевые-настройки&#34;&gt;Исправляем сетевые настройки&lt;/h3&gt;
 &lt;p&gt;Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.&lt;/p&gt;
 &lt;h3 id=&#34;генерируем-новые-sshd-ключи&#34;&gt;Генерируем новые sshd-ключи&lt;/h3&gt;
 &lt;p&gt;Требуется в случае, например, массового восстановления снимка одной машины на некоторое количество машин.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#DIR=&amp;#34;/etc/openssh&amp;#34; # AltLinux
-DIR=&amp;#34;/etc/ssh&amp;#34;
-rm -f ${DIR}/ssh_host_*
-ssh-keygen -t rsa -b 4096 -f ${DIR}/ssh_host_rsa_key -N &amp;#34;&amp;#34;
-ssh-keygen -t ed25519 -a 100 -f ${DIR}/ssh_host_ed25519_key -N &amp;#34;&amp;#34;
-systemctl restart sshd
-&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;#DIR=&amp;#34;/etc/openssh&amp;#34; # AltLinux&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;DIR&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/etc/ssh&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -f &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;DIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/ssh_host_*
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh-keygen -t rsa -b &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; -f &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;DIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/ssh_host_rsa_key -N &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh-keygen -t ed25519 -a &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;100&lt;/span&gt; -f &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;DIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/ssh_host_ed25519_key -N &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart sshd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
 &lt;p&gt;Предполагается, что ключи DSA и ECDSA закомментированы в &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; по причине своей устарелости и дырявости.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;выход-из-песочницы&#34;&gt;Выход из песочницы&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;exit
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;заключительные-операции&#34;&gt;Заключительные операции&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;заключительные-операции&#34;&gt;Заключительные операции&lt;/h2&gt;
 &lt;h3 id=&#34;объединение-снэпшотов&#34;&gt;Объединение снэпшотов&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;umount -R /mnt
-lvconvert --merge /dev/vg/snap_var
-lvconvert --merge /dev/vg/snap_root
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;stdout пример:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  Delaying merge since origin is open.
-  Merging of snapshot vg/snap_var will occur on next activation of vg/var.
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Stdout последних команд говорит о том, что объединение произойдёт на следующей активации lv-томов, то есть, в нашем случае, после перезагрузки сервера.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;umount -R /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvconvert --merge /dev/vg/snap_var
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvconvert --merge /dev/vg/snap_root
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;stdout пример:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  Delaying merge since origin is open.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  Merging of snapshot vg/snap_var will occur on next activation of vg/var.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Stdout последних команд говорит о том, что объединение произойдёт на следующей активации lv-томов, то есть, в нашем случае, после перезагрузки сервера.&lt;/p&gt;
 &lt;h3 id=&#34;reboot&#34;&gt;reboot&lt;/h3&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sync
-sleep 10
-reboot -f
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;после-перезагрузки&#34;&gt;После перезагрузки&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sync
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sleep &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot -f
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;после-перезагрузки&#34;&gt;После перезагрузки&lt;/h2&gt;
 &lt;p&gt;В случае установленной на машине ОС &amp;lsquo;AltLinux 10&amp;rsquo;, потребуется ещё одна перезагрузка машины по той причине, что следы от ранее созданных сеэпшотов, по неясной причине, остаются в &lt;code&gt;/dev/mapper/&lt;/code&gt;, но не в &lt;code&gt;/dev/vg/&lt;/code&gt;.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;reboot
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -730,24 +730,24 @@ reboot -f
         
         
         &lt;p&gt;&lt;a href=&#34;https://help.72to.ru/projects/alt-linux/wiki/%D0%9E%D1%82%D0%BA%D0%B0%D1%82_%D0%BD%D0%B0_%D1%81%D1%82%D0%B0%D1%80%D1%83%D1%8E_%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8E_%D1%8F%D0%B4%D1%80%D0%B0&#34;&gt;https://help.72to.ru/projects/alt-linux/wiki/Откат_на_старую_версию_ядра&lt;/a&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ uname -r
-5.10.82-std-def-alt1
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ x86_64 classic
-
-apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ noarch classic
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo apt-cache show kernel-image-std-def
-
-Package kernel-image-std-def is a virtual package provided by:
-  kernel-image-std-def#2:5.10.82-alt1:p10+290646.100.3.1@1638544255 2:5.10.82-alt1:p10+290646.100.3.1@1638544255
-  kernel-image-std-def#2:5.10.102-alt1:p10+295939.100.1.1@1645810219 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
-You should explicitly select one to show.
-E: Package kernel-image-std-def is a virtual package with multiple providers.
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;update-kernel -t std-def -r 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;reboot
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ uname -r
-5.10.102-std-def-alt1
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;remove-old-kernels
-&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ uname -r
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;5.10.82-std-def-alt1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ x86_64 classic
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt-repo add  http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ noarch classic
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ sudo apt-cache show kernel-image-std-def
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Package kernel-image-std-def is a virtual package provided by:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  kernel-image-std-def#2:5.10.82-alt1:p10+290646.100.3.1@1638544255 2:5.10.82-alt1:p10+290646.100.3.1@1638544255
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  kernel-image-std-def#2:5.10.102-alt1:p10+295939.100.1.1@1645810219 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;You should explicitly &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;select&lt;/span&gt; one to show.
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;E: Package kernel-image-std-def is a virtual package with multiple providers.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;update-kernel -t std-def -r 2:5.10.102-alt1:p10+295939.100.1.1@1645810219
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ uname -r
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;5.10.102-std-def-alt1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;remove-old-kernels
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     

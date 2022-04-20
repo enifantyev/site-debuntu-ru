@@ -35,8 +35,8 @@
 
 
 
-<link rel="preload" href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" as="style">
-<link href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.scss" as="style">
+<link href="/scss/main.scss" rel="stylesheet" integrity="">
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1HVBCPETY0"></script>
@@ -158,7 +158,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.27dd182b6bc58e0a2e9e46f0f9e7d42a.json"
+  data-offline-search-index-json-src="/offline-search-index.42636af9ad6c1ba00c03854f39a5aa54.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -414,6 +414,22 @@ This is the multi-page printable view of this section.
 
     
   
+    
+    
+	
+<li>2.8: <a href="#pg-630aba4f610765adb405e0db3a12b20d">13. Zookeeper. Настройка</a></li>
+
+
+    
+  
+    
+    
+	
+<li>2.9: <a href="#pg-abb873eb50e7f023906653b61d5f5c31">14. HDFS. Настройка</a></li>
+
+
+    
+  
 
     </ul>
     
@@ -421,7 +437,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3: <a href="#pg-ec8392bfbe669cc91ecaf0e9358f772b">Apache Airflow</a></li>
+<li>3: <a href="#pg-7b3ff8836d3bbea6ee30d038c27838ca">Apache ZooKeeper</a></li>
 
 
     
@@ -436,7 +452,34 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.1: <a href="#pg-bc24936305eaf00e578203376daca2b2">Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</a></li>
+<li>3.1: <a href="#pg-f33717f7389a0f1cc5fde133e4aae299">Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</a></li>
+
+
+    
+  
+
+    </ul>
+    
+  
+    
+    
+	
+<li>4: <a href="#pg-ec8392bfbe669cc91ecaf0e9358f772b">Apache Airflow</a></li>
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+<li>4.1: <a href="#pg-bc24936305eaf00e578203376daca2b2">Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</a></li>
 
 
     
@@ -444,7 +487,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.2: <a href="#pg-0fb647e9c05de338c7649baac62463d9">Установка Apache Airflow и настройка его для работы с Apache Hadoop (устарело)</a></li>
+<li>4.2: <a href="#pg-0fb647e9c05de338c7649baac62463d9">Установка Apache Airflow и настройка его для работы с Apache Hadoop (устарело)</a></li>
 
 
     
@@ -522,8 +565,8 @@ This is the multi-page printable view of this section.
 </ul>
 <h3 id="11-установка-maven">1.1. Установка Maven</h3>
 <p>Сначала устанавливаем maven 3.0.5-17.el7 из стандартных репо для CentOS7:</p>
-<pre tabindex="0"><code>sudo yum install maven
-</code></pre><details>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo yum install maven
+</span></span></code></pre></div><details>
 <summary>Click here to expand...</summary>
 <pre tabindex="0"><code>...
 Dependencies Resolved
@@ -678,165 +721,165 @@ Complete!
 <br>
 <p>На данный момент последняя версия maven равна 3.8.1, но с этой версией сборка Atlas&rsquo;а 2.1.0 прерывалась ошибками, тогда как Atlas 2.2.0 собирался без ошибок. Поэтому для сборки Atlas&rsquo;а 2.1.0 выбираем Maven 3.6.3, а для Atlas 2.2.0 выбираем версию Maven 3.8.1.</p>
 <p>Скачиваем и устанавливаем переменные:</p>
-<pre tabindex="0"><code>MVNVER=&#34;3.8.1&#34;
-curl -LO https://archive.apache.org/dist/maven/maven-3/${MVNVER}/binaries/apache-maven-${MVNVER}-bin.tar.gz
-sudo tar -xvf apache-maven-${MVNVER}-bin.tar.gz -C /opt
-
-sudo ln -s /opt/apache-maven-${MVNVER} /opt/maven
-
-cat &lt;&lt; EOF | sudo tee /etc/profile.d/maven.sh
-# Apache Maven Environmental Variables
-# MAVEN_HOME for Maven 1 - M2_HOME for Maven 2
-
-#export JAVA_HOME=/usr/lib/jvm/jre-openjdk
-export JAVA_HOME=usr/java/jdk1.8.0_181-cloudera
-
-export M2_HOME=/opt/maven
-export MAVEN_HOME=/opt/maven
-export PATH=\${M2_HOME}/bin:\${PATH}
-EOF
-
-sudo chmod +x /etc/profile.d/maven.sh
-
-source /etc/profile.d/maven.sh
-</code></pre><p>Проверяем версию Maven&rsquo;а и используемую версию Java:</p>
-<pre tabindex="0"><code>$ mvn --version
-
-Apache Maven 3.8.1 (05c21c65bdfed0f71a2f2ada8b84da59348c4c5d)
-Maven home: /opt/maven
-Java version: 1.8.0_181, vendor: Oracle Corporation, runtime: /usr/java/jdk1.8.0_181-cloudera/jre
-Default locale: en_US, platform encoding: UTF-8
-OS name: &#34;linux&#34;, version: &#34;3.10.0-1160.36.2.el7.x86_64&#34;, arch: &#34;amd64&#34;, family: &#34;unix&#34;
-</code></pre><h3 id="12-установка-nodejs">1.2. Установка NodeJS</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">MVNVER</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;3.8.1&#34;</span>
+</span></span><span style="display:flex;"><span>curl -LO https://archive.apache.org/dist/maven/maven-3/<span style="color:#4e9a06">${</span><span style="color:#000">MVNVER</span><span style="color:#4e9a06">}</span>/binaries/apache-maven-<span style="color:#4e9a06">${</span><span style="color:#000">MVNVER</span><span style="color:#4e9a06">}</span>-bin.tar.gz
+</span></span><span style="display:flex;"><span>sudo tar -xvf apache-maven-<span style="color:#4e9a06">${</span><span style="color:#000">MVNVER</span><span style="color:#4e9a06">}</span>-bin.tar.gz -C /opt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo ln -s /opt/apache-maven-<span style="color:#4e9a06">${</span><span style="color:#000">MVNVER</span><span style="color:#4e9a06">}</span> /opt/maven
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#4e9a06">&lt;&lt; EOF | sudo tee /etc/profile.d/maven.sh
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"># Apache Maven Environmental Variables
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"># MAVEN_HOME for Maven 1 - M2_HOME for Maven 2
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">#export JAVA_HOME=/usr/lib/jvm/jre-openjdk
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">export JAVA_HOME=usr/java/jdk1.8.0_181-cloudera
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">export M2_HOME=/opt/maven
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">export MAVEN_HOME=/opt/maven
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">export PATH=\${M2_HOME}/bin:\${PATH}
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo chmod +x /etc/profile.d/maven.sh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">source</span> /etc/profile.d/maven.sh
+</span></span></code></pre></div><p>Проверяем версию Maven&rsquo;а и используемую версию Java:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mvn --version
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Apache Maven 3.8.1 <span style="color:#ce5c00;font-weight:bold">(</span>05c21c65bdfed0f71a2f2ada8b84da59348c4c5d<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>Maven home: /opt/maven
+</span></span><span style="display:flex;"><span>Java version: 1.8.0_181, vendor: Oracle Corporation, runtime: /usr/java/jdk1.8.0_181-cloudera/jre
+</span></span><span style="display:flex;"><span>Default locale: en_US, platform encoding: UTF-8
+</span></span><span style="display:flex;"><span>OS name: <span style="color:#4e9a06">&#34;linux&#34;</span>, version: <span style="color:#4e9a06">&#34;3.10.0-1160.36.2.el7.x86_64&#34;</span>, arch: <span style="color:#4e9a06">&#34;amd64&#34;</span>, family: <span style="color:#4e9a06">&#34;unix&#34;</span>
+</span></span></code></pre></div><h3 id="12-установка-nodejs">1.2. Установка NodeJS</h3>
 <p>Добавляем репо:</p>
-<pre tabindex="0"><code>USERNAME=nx-pubrepo-r
-PASSWORD=xSAR1zZi7dQzs3QBx2vthdyk2qQrXv
-
-cat &lt;&lt; EOF | sudo tee /etc/yum.repos.d/nodejs-el7.repo
-[nodejs16]
-username=$USERNAME
-password=$PASSWORD
-name=Node.js Packages for Enterprise Linux 7 - \$basearch
-baseurl=http://nexus.example.org:8081/repository/all_nodejs_yum/pub_16.x/el/7/\$basearch
-failovermethod=priority
-enabled=0
-gpgcheck=0
-EOF
-</code></pre><p>Устанавливаем NodeJS:</p>
-<pre tabindex="0"><code>sudo yum install -y --enablerepo=nodejs16 nodejs
-</code></pre><h2 id="2-подготовка-к-сборке">2. Подготовка к сборке</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">USERNAME</span><span style="color:#ce5c00;font-weight:bold">=</span>nx-pubrepo-r
+</span></span><span style="display:flex;"><span><span style="color:#000">PASSWORD</span><span style="color:#ce5c00;font-weight:bold">=</span>xSAR1zZi7dQzs3QBx2vthdyk2qQrXv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#4e9a06">&lt;&lt; EOF | sudo tee /etc/yum.repos.d/nodejs-el7.repo
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">[nodejs16]
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">username=$USERNAME
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">password=$PASSWORD
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">name=Node.js Packages for Enterprise Linux 7 - \$basearch
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">baseurl=http://nexus.example.org:8081/repository/all_nodejs_yum/pub_16.x/el/7/\$basearch
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">failovermethod=priority
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">enabled=0
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">gpgcheck=0
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span></code></pre></div><p>Устанавливаем NodeJS:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo yum install -y --enablerepo<span style="color:#ce5c00;font-weight:bold">=</span>nodejs16 nodejs
+</span></span></code></pre></div><h2 id="2-подготовка-к-сборке">2. Подготовка к сборке</h2>
 <h3 id="21-скачивание-и-распаковка-исходников">2.1. Скачивание и распаковка исходников</h3>
 <p>Сайт проекта находится здесь <a href="https://atlas.apache.org/">https://atlas.apache.org/</a>. Находим и скачиваем исходники Apache Atlas:</p>
-<pre tabindex="0"><code>mkdir ~/src &amp;&amp; cd ~/src
-curl -LO https://mirror.linux-ia64.org/apache/atlas/2.2.0/apache-atlas-2.2.0-sources.tar.gz
-tar -xvf apache-atlas-2.2.0-sources.tar.gz
-cd ~/src/apache-atlas-sources-2.2.0
-</code></pre><h3 id="22-изменения-в-файле-pomxml">2.2. Изменения в файле <code>pom.xml</code></h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir ~/src <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">cd</span> ~/src
+</span></span><span style="display:flex;"><span>curl -LO https://mirror.linux-ia64.org/apache/atlas/2.2.0/apache-atlas-2.2.0-sources.tar.gz
+</span></span><span style="display:flex;"><span>tar -xvf apache-atlas-2.2.0-sources.tar.gz
+</span></span><span style="display:flex;"><span><span style="color:#204a87">cd</span> ~/src/apache-atlas-sources-2.2.0
+</span></span></code></pre></div><h3 id="22-изменения-в-файле-pomxml">2.2. Изменения в файле <code>pom.xml</code></h3>
 <p>В файл &lsquo;pom.xml&rsquo;, в раздел <repository>, добавляем клаудеровский репозиторий с maven-артефактами:</p>
-<pre tabindex="0"><code>&lt;repository&gt;
-    &lt;id&gt;cloudera&lt;/id&gt;
-    &lt;url&gt;https://repository.cloudera.com/artifactory/cloudera-repos&lt;/url&gt;
-    &lt;releases&gt;
-        &lt;enabled&gt;true&lt;/enabled&gt;
-    &lt;/releases&gt;
-    &lt;snapshots&gt;
-        &lt;enabled&gt;false&lt;/enabled&gt;
-    &lt;/snapshots&gt;
-&lt;/repository&gt;
-</code></pre><p>В этом же файле находим и меняем версии продуктов на следующие:</p>
-<pre tabindex="0"><code>&lt;elasticsearch.version&gt;6.8.20&lt;/elasticsearch.version&gt;
-&lt;hadoop.version&gt;3.0.0-cdh6.3.2&lt;/hadoop.version&gt;
-&lt;hbase.version&gt;2.1.0-cdh6.3.2&lt;/hbase.version&gt;
-&lt;hive.version&gt;2.1.1-cdh6.3.2&lt;/hive.version&gt;
-&lt;kafka.scala.binary.version&gt;2.11&lt;/kafka.scala.binary.version&gt;
-&lt;kafka.version&gt;2.2.1-cdh6.3.2&lt;/kafka.version&gt;
-&lt;lucene-solr.version&gt;7.4.0&lt;/lucene-solr.version&gt;
-&lt;solr.version&gt;7.4.0-cdh6.3.2&lt;/solr.version&gt;
-&lt;sqoop.version&gt;1.4.7-cdh6.3.2&lt;/sqoop.version&gt;
-&lt;zookeeper.version&gt;3.4.5-cdh6.3.2&lt;/zookeeper.version&gt;
-</code></pre><p>В этом же файле меняем версию артефакта &lsquo;atlas-buildtools&rsquo; cо значения &lsquo;1.0&rsquo; на значение &lsquo;0.8.1&rsquo;, так как артефакт &lsquo;atlas-buildtools-1.0&rsquo; не может быть найден. Но можно попробовать версию  &lsquo;1.0.0-alpha&rsquo;:</p>
-<pre tabindex="0"><code>&lt;artifactId&gt;maven-checkstyle-plugin&lt;/artifactId&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.apache.atlas&lt;/groupId&gt;
-            &lt;artifactId&gt;atlas-buildtools&lt;/artifactId&gt;
-            &lt;version&gt;1.0.0-alpha&lt;/version&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-</code></pre><h3 id="23-изменения-в-других-файлах">2.3. Изменения в других файлах</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">repository</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">cloudera</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">id</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">url</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">https</span><span style="color:#ce5c00;font-weight:bold">:</span><span style="color:#8f5902;font-style:italic">//repository.cloudera.com/artifactory/cloudera-repos&lt;/url&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">releases</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">enabled</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#204a87;font-weight:bold">true</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">enabled</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">releases</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">snapshots</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">enabled</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#204a87;font-weight:bold">false</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">enabled</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">snapshots</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">repository</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span></code></pre></div><p>В этом же файле находим и меняем версии продуктов на следующие:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">elasticsearch</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">8</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">20</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">elasticsearch</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">hadoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">hadoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">hbase</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">1</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">hbase</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">hive</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">1</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">1</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">hive</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">scala</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">binary</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">11</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">scala</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">binary</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">1</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">lucene</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">7</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">4</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">lucene</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">7</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">4</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">sqoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">1</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">4</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">7</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">sqoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">zookeeper</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">4</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">5</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">zookeeper</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span></code></pre></div><p>В этом же файле меняем версию артефакта &lsquo;atlas-buildtools&rsquo; cо значения &lsquo;1.0&rsquo; на значение &lsquo;0.8.1&rsquo;, так как артефакт &lsquo;atlas-buildtools-1.0&rsquo; не может быть найден. Но можно попробовать версию  &lsquo;1.0.0-alpha&rsquo;:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">artifactId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">maven</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">checkstyle</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">plugin</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">artifactId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">dependencies</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">dependency</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">groupId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">org</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">apache</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">atlas</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">groupId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">artifactId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">atlas</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">buildtools</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">artifactId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">1</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">alpha</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">dependency</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">dependencies</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span></code></pre></div><h3 id="23-изменения-в-других-файлах">2.3. Изменения в других файлах</h3>
 <p>В файле &lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/bridge/HiveMetaStoreBridge.java&rsquo; переходим на 577 строку, комментируем &ldquo;String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;&rdquo; и добавляем &ldquo;String catalogName = null;&rdquo;:</p>
-<pre tabindex="0"><code>public static String getDatabaseName(Database hiveDB) {
-    String dbName      = hiveDB.getName().toLowerCase();
-    //String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;
-    String catalogName = null;
-
-    if (StringUtils.isNotEmpty(catalogName) &amp;&amp; !StringUtils.equals(catalogName, DEFAULT_METASTORE_CATALOG)) {
-        dbName = catalogName + SEP + dbName;
-    }
-
-    return dbName;
-}
-</code></pre><p>В файле &lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/AtlasHiveHookContext.java&rsquo; переходим на 81 строку &ldquo;this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;&rdquo;, комментируем её и добавляем &ldquo;this.metastoreHandler = null;&rdquo;:</p>
-<pre tabindex="0"><code>public AtlasHiveHookContext(HiveHook hook, HiveOperation hiveOperation, HookContext hiveContext, HiveHookObjectNamesCache knownObjects,
-                            HiveMetastoreHook metastoreHook, ListenerEvent listenerEvent) throws Exception {
-    this.hook             = hook;
-    this.hiveOperation    = hiveOperation;
-    this.hiveContext      = hiveContext;
-    this.hive             = hiveContext != null ? Hive.get(hiveContext.getConf()) : null;
-    this.knownObjects     = knownObjects;
-    this.metastoreHook    = metastoreHook;
-    this.metastoreEvent   = listenerEvent;
-    //this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;
-    this.metastoreHandler = null;
-
-
-    init();
-}
-</code></pre><p>В файле <code>~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/events/CreateHiveProcess.java</code> комментируем строку 263 с упоминанием &lsquo;MATERIALIZED_VIEW&rsquo;:</p>
-<pre tabindex="0"><code>private boolean isDdlOperation(AtlasEntity entity) {
-    return entity != null &amp;&amp; !context.isMetastoreHook()
-        &amp;&amp; (context.getHiveOperation().equals(HiveOperation.CREATETABLE_AS_SELECT)
-         || context.getHiveOperation().equals(HiveOperation.CREATEVIEW)
-         || context.getHiveOperation().equals(HiveOperation.ALTERVIEW_AS));
-         //|| context.getHiveOperation().equals(HiveOperation.CREATE_MATERIALIZED_VIEW));
-}
-</code></pre><p>В файле <code>~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/HiveHook.java</code> комментируем строки 212 и 217  с упоминанием &lsquo;MATERIALIZED_VIEW&rsquo;:</p>
-<pre tabindex="0"><code>case DROPTABLE:
-case DROPVIEW:
-//case DROP_MATERIALIZED_VIEW:
-    event = new DropTable(context);
-break;
-
-case CREATETABLE_AS_SELECT:
-//case CREATE_MATERIALIZED_VIEW:
-case CREATEVIEW:
-case ALTERVIEW_AS:
-case LOAD:
-case EXPORT:
-case IMPORT:
-case QUERY:
-    event = new CreateHiveProcess(context);
-break;
-</code></pre><p>Заготовка bash-скрипта для автоматизации изменений в файлах:</p>
-<pre tabindex="0"><code>sed &#39;s|&lt;elasticsearch.version&gt;6.8.15|&lt;elasticsearch.version&gt;6.8.20|&#39;  pom.xml
-sed &#39;s|&lt;hadoop.version&gt;3.3.0|&lt;hadoop.version&gt;3.0.0-cdh6.3.2|&#39; pom.xml
-sed &#39;s|&lt;hbase.version&gt;2.3.3|&lt;hbase.version&gt;2.1.0-cdh6.3.2|&#39; pom.xml
-sed &#39;s|&lt;hive.version&gt;3.1.0|&lt;hive.version&gt;2.1.1-cdh6.3.2|&#39; pom.xml
-sed &#39;s|&lt;kafka.scala.binary.version&gt;2.12|&lt;kafka.scala.binary.version&gt;2.11|&#39; pom.xml
-sed &#39;s|&lt;kafka.version&gt;2.5.0|&lt;kafka.version&gt;2.2.1-cdh6.3.2|&#39; pom.xml
-sed &#39;s|&lt;lucene-solr.version&gt;8.6.3|&lt;lucene-solr.version&gt;7.4.0|&#39; pom.xml
-sed &#39;|&lt;solr.version&gt;8.6.3|&lt;solr.version&gt;7.4.0-cdh6.3.2|&#39; pom.xml
-sed &#39;|&lt;sqoop.version&gt;1.4.6.2.3.99.0-195|&lt;sqoop.version&gt;1.4.7-cdh6.3.2|&#39; pom.xml
-sed &#39;|&lt;zookeeper.version&gt;3.5.7|&lt;zookeeper.version&gt;3.4.5-cdh6.3.2|&#39; pom.xml
-sed -i &#39;/&lt;artifactId&gt;atlas-buildtools|{n;s/&lt;version&gt;1.0/&lt;version&gt;1.0.0-alpha/}&#39; pom.xml
-</code></pre><h2 id="3-сборка-apache-atlas">3. Сборка Apache Atlas</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">public</span> <span style="color:#204a87;font-weight:bold">static</span> <span style="color:#000">String</span> <span style="color:#000">getDatabaseName</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">Database</span> <span style="color:#000">hiveDB</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">String</span> <span style="color:#000">dbName</span>      <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">hiveDB</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">getName</span><span style="color:#ce5c00;font-weight:bold">().</span><span style="color:#c4a000">toLowerCase</span><span style="color:#ce5c00;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">//String catalogName = hiveDB.getCatalogName() != null ? hiveDB.getCatalogName().toLowerCase() : null;
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">String</span> <span style="color:#000">catalogName</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">null</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">StringUtils</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">isNotEmpty</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">catalogName</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">StringUtils</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">equals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">catalogName</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">DEFAULT_METASTORE_CATALOG</span><span style="color:#ce5c00;font-weight:bold">))</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">dbName</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">catalogName</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">SEP</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">dbName</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">dbName</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span></code></pre></div><p>В файле &lsquo;~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/AtlasHiveHookContext.java&rsquo; переходим на 81 строку &ldquo;this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;&rdquo;, комментируем её и добавляем &ldquo;this.metastoreHandler = null;&rdquo;:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">public</span> <span style="color:#000">AtlasHiveHookContext</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">HiveHook</span> <span style="color:#000">hook</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">HiveOperation</span> <span style="color:#000">hiveOperation</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">HookContext</span> <span style="color:#000">hiveContext</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">HiveHookObjectNamesCache</span> <span style="color:#000">knownObjects</span><span style="color:#ce5c00;font-weight:bold">,</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#000">HiveMetastoreHook</span> <span style="color:#000">metastoreHook</span><span style="color:#ce5c00;font-weight:bold">,</span> <span style="color:#000">ListenerEvent</span> <span style="color:#000">listenerEvent</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">throws</span> <span style="color:#000">Exception</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">this</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">hook</span>             <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">hook</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">this</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">hiveOperation</span>    <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">hiveOperation</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">this</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">hiveContext</span>      <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">hiveContext</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">this</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">hive</span>             <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">hiveContext</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">null</span> <span style="color:#ce5c00;font-weight:bold">?</span> <span style="color:#000">Hive</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">get</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">hiveContext</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">getConf</span><span style="color:#ce5c00;font-weight:bold">())</span> <span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#204a87;font-weight:bold">null</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">this</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">knownObjects</span>     <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">knownObjects</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">this</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">metastoreHook</span>    <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">metastoreHook</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">this</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">metastoreEvent</span>   <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">listenerEvent</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8f5902;font-style:italic">//this.metastoreHandler = (listenerEvent != null) ? metastoreEvent.getIHMSHandler() : null;
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#204a87;font-weight:bold">this</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">metastoreHandler</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">null</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">init</span><span style="color:#ce5c00;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span></code></pre></div><p>В файле <code>~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/events/CreateHiveProcess.java</code> комментируем строку 263 с упоминанием &lsquo;MATERIALIZED_VIEW&rsquo;:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">private</span> <span style="color:#204a87;font-weight:bold">boolean</span> <span style="color:#000">isDdlOperation</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">AtlasEntity</span> <span style="color:#000">entity</span><span style="color:#ce5c00;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">entity</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#204a87;font-weight:bold">null</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">context</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">isMetastoreHook</span><span style="color:#ce5c00;font-weight:bold">()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">getHiveOperation</span><span style="color:#ce5c00;font-weight:bold">().</span><span style="color:#c4a000">equals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">HiveOperation</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">CREATETABLE_AS_SELECT</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#000">context</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">getHiveOperation</span><span style="color:#ce5c00;font-weight:bold">().</span><span style="color:#c4a000">equals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">HiveOperation</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">CREATEVIEW</span><span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ce5c00;font-weight:bold">||</span> <span style="color:#000">context</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">getHiveOperation</span><span style="color:#ce5c00;font-weight:bold">().</span><span style="color:#c4a000">equals</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">HiveOperation</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">ALTERVIEW_AS</span><span style="color:#ce5c00;font-weight:bold">));</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#8f5902;font-style:italic">//|| context.getHiveOperation().equals(HiveOperation.CREATE_MATERIALIZED_VIEW));
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span></code></pre></div><p>В файле <code>~/src/apache-atlas-sources-2.2.0/addons/hive-bridge/src/main/java/org/apache/atlas/hive/hook/HiveHook.java</code> комментируем строки 212 и 217  с упоминанием &lsquo;MATERIALIZED_VIEW&rsquo;:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">DROPTABLE</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">DROPVIEW</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">//case DROP_MATERIALIZED_VIEW:
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">event</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">DropTable</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#ce5c00;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">break</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">CREATETABLE_AS_SELECT</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">//case CREATE_MATERIALIZED_VIEW:
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">CREATEVIEW</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">ALTERVIEW_AS</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">LOAD</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">EXPORT</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">IMPORT</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">case</span> <span style="color:#000">QUERY</span><span style="color:#ce5c00;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">event</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">CreateHiveProcess</span><span style="color:#ce5c00;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#ce5c00;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">break</span><span style="color:#ce5c00;font-weight:bold">;</span>
+</span></span></code></pre></div><p>Заготовка bash-скрипта для автоматизации изменений в файлах:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;s|&lt;elasticsearch.version&gt;6.8.15|&lt;elasticsearch.version&gt;6.8.20|&#39;</span>  pom.xml
+</span></span><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;s|&lt;hadoop.version&gt;3.3.0|&lt;hadoop.version&gt;3.0.0-cdh6.3.2|&#39;</span> pom.xml
+</span></span><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;s|&lt;hbase.version&gt;2.3.3|&lt;hbase.version&gt;2.1.0-cdh6.3.2|&#39;</span> pom.xml
+</span></span><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;s|&lt;hive.version&gt;3.1.0|&lt;hive.version&gt;2.1.1-cdh6.3.2|&#39;</span> pom.xml
+</span></span><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;s|&lt;kafka.scala.binary.version&gt;2.12|&lt;kafka.scala.binary.version&gt;2.11|&#39;</span> pom.xml
+</span></span><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;s|&lt;kafka.version&gt;2.5.0|&lt;kafka.version&gt;2.2.1-cdh6.3.2|&#39;</span> pom.xml
+</span></span><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;s|&lt;lucene-solr.version&gt;8.6.3|&lt;lucene-solr.version&gt;7.4.0|&#39;</span> pom.xml
+</span></span><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;|&lt;solr.version&gt;8.6.3|&lt;solr.version&gt;7.4.0-cdh6.3.2|&#39;</span> pom.xml
+</span></span><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;|&lt;sqoop.version&gt;1.4.6.2.3.99.0-195|&lt;sqoop.version&gt;1.4.7-cdh6.3.2|&#39;</span> pom.xml
+</span></span><span style="display:flex;"><span>sed <span style="color:#4e9a06">&#39;|&lt;zookeeper.version&gt;3.5.7|&lt;zookeeper.version&gt;3.4.5-cdh6.3.2|&#39;</span> pom.xml
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#39;/&lt;artifactId&gt;atlas-buildtools|{n;s/&lt;version&gt;1.0/&lt;version&gt;1.0.0-alpha/}&#39;</span> pom.xml
+</span></span></code></pre></div><h2 id="3-сборка-apache-atlas">3. Сборка Apache Atlas</h2>
 <p>Переходим в каталог с исходниками и собираем пакеты с сохранением цветного stderr и stdout в файл <code>install.log</code> (X — debug, T — количество потоков):</p>
-<pre tabindex="0"><code>cd ~/src/apache-atlas-sources-2.2.0
-unbuffer mvn clean -DskipTests package -Pdist -X -T 4 2&gt;&amp;1 | tee install.log
-
-# Посмотреть лог-файл в цвете.
-less -r install.log
-</code></pre><details>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">cd</span> ~/src/apache-atlas-sources-2.2.0
+</span></span><span style="display:flex;"><span>unbuffer mvn clean -DskipTests package -Pdist -X -T <span style="color:#0000cf;font-weight:bold">4</span> 2&gt;<span style="color:#000;font-weight:bold">&amp;</span><span style="color:#0000cf;font-weight:bold">1</span> <span style="color:#000;font-weight:bold">|</span> tee install.log
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Посмотреть лог-файл в цвете.</span>
+</span></span><span style="display:flex;"><span>less -r install.log
+</span></span></code></pre></div><details>
 <summary>Click here to expand...</summary>
 <pre tabindex="0"><code>[DEBUG] Adding file-set in: /data/src/apache-atlas-sources-2.2.0_elastic-6.8.20/distro/../addons/hbase-bridge/target/dependency/hook
 to archive location: apache-atlas-hbase-hook-2.2.0/hook/
@@ -3098,32 +3141,32 @@ Took 0.7221 seconds
 <p>Сейчас мы подготовим на командной машине отдельный каталог с файлами, где с помощью ansible развернём новый Hadoop-кластер.</p>
 <h2 id="2-преднастройка-и-подготовка-к-проверкам">2. Преднастройка и подготовка к проверкам</h2>
 <p>На командной машине в каталоге <code>~/hadoop</code> подготовим файлы для ансибла с ip-адресами машин будущего кластера:</p>
-<pre tabindex="0"><code>mkdir hadoop &amp;&amp; cd hadoop
-printf &#39;[defaults]\nhost_key_checking=false\n&#39; &gt; ansible.cfg
-
-printf &#39;[all:var]\nansible_user=jenkins\n#ansible_password=\n&#39; &gt; cluster.inv
-printf &#39;ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n&#39; &gt;&gt; cluster.inv
-cat &lt;&lt; EOF | tee -a cluster.inv &gt; cluster.ips
-10.1.4.1
-10.1.4.2
-10.1.4.3
-10.1.4.5
-10.1.4.6
-10.1.4.7
-10.1.4.8
-10.1.4.9
-10.1.4.10
-EOF
-</code></pre><ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir hadoop <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#204a87">cd</span> hadoop
+</span></span><span style="display:flex;"><span><span style="color:#204a87">printf</span> <span style="color:#4e9a06">&#39;[defaults]\nhost_key_checking=false\n&#39;</span> &gt; ansible.cfg
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">printf</span> <span style="color:#4e9a06">&#39;[all:var]\nansible_user=jenkins\n#ansible_password=\n&#39;</span> &gt; cluster.inv
+</span></span><span style="display:flex;"><span><span style="color:#204a87">printf</span> <span style="color:#4e9a06">&#39;ansible_python_interpreter=/usr/bin/python2\n\n[cluster]\n&#39;</span> &gt;&gt; cluster.inv
+</span></span><span style="display:flex;"><span>cat <span style="color:#4e9a06">&lt;&lt; EOF | tee -a cluster.inv &gt; cluster.ips
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">10.1.4.1
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">10.1.4.2
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">10.1.4.3
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">10.1.4.5
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">10.1.4.6
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">10.1.4.7
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">10.1.4.8
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">10.1.4.9
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">10.1.4.10
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span></code></pre></div><ul>
 <li><code>cluster.inv</code> — inventory-файл для ансибла;</li>
 <li><code>cluster.ips</code> — простой список ip-адресов узлов будущего кластера.</li>
 </ul>
 <h2 id="3-обновление-и-перезагрузка-машин">3. Обновление и перезагрузка машин</h2>
 <p><span style="color:red">Перед началом проверки обязательная перезагрузка машин! Этот шаг выполняется для применения всех постоянных настроек и отмены всех временных настроек машины.</span></p>
 <p>Выполняем обновление и перезагрузку всех машин:</p>
-<pre tabindex="0"><code>ansible all -i cluster.inv -m yum -a &#34;name=* state=latest&#34; --become
-ansible all -i cluster.inv -m reboot --become
-</code></pre><h2 id="4-настройка-и-проверка-сетевых-настроек">4. Настройка и проверка сетевых настроек</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ansible all -i cluster.inv -m yum -a <span style="color:#4e9a06">&#34;name=* state=latest&#34;</span> --become
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m reboot --become
+</span></span></code></pre></div><h2 id="4-настройка-и-проверка-сетевых-настроек">4. Настройка и проверка сетевых настроек</h2>
 <p>Необходимо проверить и привести к надлежащему виду сетевые настройки в следующих местах:</p>
 <ul>
 <li><code>/etc/sysconfig/network-scripts/ifcfg-ens32</code></li>
@@ -3154,21 +3197,21 @@ check_link_down() {
 </ul>
 </p></details><br>
 <p>Проверку и, если необходимо, удаление лишних строк производим командами:</p>
-<pre tabindex="0"><code># Смотрим
-ansible all -i cluster.inv -m shell -a &#34;cat /etc/sysconfig/network-scripts/ifcfg-ens32&#34; --become
-
-# Удаляем записи DNS
-ansible all -i cluster.inv -m lineinfile -a &#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&#39;^DNS=&#39; state=absent&#34; --become
-# Удаляем запись DOMAIN
-ansible all -i cluster.inv -m lineinfile -a &#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&#39;^DOMAIN=&#39; state=absent&#34; --become
-</code></pre><h3 id="42-файл-etcsysconfignetwork">4.2. Файл <code>/etc/sysconfig/network</code></h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Смотрим</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;cat /etc/sysconfig/network-scripts/ifcfg-ens32&#34;</span> --become
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Удаляем записи DNS</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m lineinfile -a <span style="color:#4e9a06">&#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&#39;^DNS=&#39; state=absent&#34;</span> --become
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Удаляем запись DOMAIN</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m lineinfile -a <span style="color:#4e9a06">&#34;path=/etc/sysconfig/network-scripts/ifcfg-ens32 regexp=&#39;^DOMAIN=&#39; state=absent&#34;</span> --become
+</span></span></code></pre></div><h3 id="42-файл-etcsysconfignetwork">4.2. Файл <code>/etc/sysconfig/network</code></h3>
 <p>Информация из этого файла — <code>/etc/sysconfig/network</code> — используется скриптами при запуске машины, или перезапуске демона network,  и частично замещает/добавляет информацию в файле <code>/etc/resolv.conf</code>. Поэтому необходимо сделать этот файл пустым.</p>
-<pre tabindex="0"><code># Смотрим
-ansible all -i cluster.inv -m shell -a &#34;cat /etc/sysconfig/network&#34; --become
-
-# Очищаем
-ansible all -i cluster.inv -m shell -a &#34;&gt; /etc/sysconfig/network&#34; --become
-</code></pre><h3 id="43-автоматически-обновляемый-файл-etcresolvconf">4.3. Автоматически обновляемый файл <code>/etc/resolv.conf</code></h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Смотрим</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;cat /etc/sysconfig/network&#34;</span> --become
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Очищаем</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;&gt; /etc/sysconfig/network&#34;</span> --become
+</span></span></code></pre></div><h3 id="43-автоматически-обновляемый-файл-etcresolvconf">4.3. Автоматически обновляемый файл <code>/etc/resolv.conf</code></h3>
 <p>Информация в этом файле может добавляться/замещаться данными полученными из двух предыдущих файлов, а так же из DHCP при отсутствии параметра &ldquo;PEERDNS=no&rdquo; в файле <code>/etc/sysconfig/network-scripts/ifcfg-ens32</code>.</p>
 <summary>Образец содержимого файла '/etc/resolv.conf'...</summary>
 <details><p>
@@ -3185,51 +3228,51 @@ nameserver 10.1.85.7
 </ul>
 </p></details><br>
 <p>Проверку и, если необходимо, добавление опций производим командами:</p>
-<pre tabindex="0"><code># Смотрим
-ansible all -i cluster.inv -m shell -a &#34;cat /etc/resolv.conf&#34;
-
-# Обновляем resolv.conf
-ansible all -i cluster.inv -m shell -a &#34;echo &#39;options rotate timeout:1 attempts:1&#39; &gt; /etc/resolv.conf&#34; --become
-ansible all -i cluster.inv -m systemd -a &#34;name=network state=restarted&#34; --become
-</code></pre><h2 id="5-проверка-обратного-разрешения-dns-имён">5. Проверка обратного разрешения dns-имён</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Смотрим</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;cat /etc/resolv.conf&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Обновляем resolv.conf</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;echo &#39;options rotate timeout:1 attempts:1&#39; &gt; /etc/resolv.conf&#34;</span> --become
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m systemd -a <span style="color:#4e9a06">&#34;name=network state=restarted&#34;</span> --become
+</span></span></code></pre></div><h2 id="5-проверка-обратного-разрешения-dns-имён">5. Проверка обратного разрешения dns-имён</h2>
 <p>С пульта управления, при помощи ансибла, пытаемся выполнить обратное разрешение dns-имён:</p>
-<pre tabindex="0"><code>while read line; \
-  do ansible all -i cluster.inv -m shell -a &#34;host $line&#34;; \
-  done &lt; cluster.ips
-</code></pre><h2 id="6-проверка-настроек-и-работы-сервиса-точного-времени">6. Проверка настроек и работы сервиса точного времени</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">while</span> <span style="color:#204a87">read</span> line<span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  <span style="color:#204a87;font-weight:bold">do</span> ansible all -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;host </span><span style="color:#000">$line</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  <span style="color:#204a87;font-weight:bold">done</span> &lt; cluster.ips
+</span></span></code></pre></div><h2 id="6-проверка-настроек-и-работы-сервиса-точного-времени">6. Проверка настроек и работы сервиса точного времени</h2>
 <p>Визуально проверяем наличие синхронизации с серверами точного времени:</p>
-<pre tabindex="0"><code>ansible all -i cluster.inv -m shell -a &#34;chronyc sources&#34; --become
-</code></pre><h2 id="7-подготовка-файла-etchosts">7. Подготовка файла /etc/hosts</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ansible all -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;chronyc sources&#34;</span> --become
+</span></span></code></pre></div><h2 id="7-подготовка-файла-etchosts">7. Подготовка файла /etc/hosts</h2>
 <p>Проверку и, если необходимо, обновление файла производим командами:</p>
-<pre tabindex="0"><code># Смотрим
-ansible all -i cluster.inv -m shell -a &#34;cat /etc/hosts&#34; --become
-
-# Обновляем /etc/hosts на всех узлах через следующие команды...
-# Подготавливаем скрипт
-cat &lt;&lt; EOF &gt; updatehosts.sh
-#!/bin/bash
-echo &#39;127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4&#39; &gt; /etc/hosts
-while read line; do
-    TMPNAME=\$(host \$line | awk &#39;{print \$5}&#39;) # prod-01.example.org.
-    LONGNAME=\${TMPNAME%.}    # prod-01.example.org
-    SHORTNAME=\${TMPNAME%%.*} # prod-01
-    echo &#34;\${line} \${LONGNAME} \${SHORTNAME}&#34; &gt;&gt; /etc/hosts
-done &lt; /root/tmp/cluster.ips
-EOF
-
-# список ip-адресов и подготовленный скрипт забрасываем на все узлы
-ansible all -i cluster.inv -m copy -a &#34;src=cluster.ips dest=/root/tmp/&#34; --become
-ansible all -i cluster.inv -m copy -a &#34;src=updatehosts.sh dest=/root/tmp/&#34; --become
-
-# запускаем выполнение скрипта на всех узлах
-ansible all -i cluster.inv -m shell -a &#34;/bin/bash /root/tmp/updatehosts.sh&#34; --become
-</code></pre><h2 id="8-создание-tmp-каталога-для-дампов-java-машин">8. Создание tmp-каталога для дампов java-машин</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Смотрим</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;cat /etc/hosts&#34;</span> --become
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Обновляем /etc/hosts на всех узлах через следующие команды...</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Подготавливаем скрипт</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#4e9a06">&lt;&lt; EOF &gt; updatehosts.sh
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo &#39;127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4&#39; &gt; /etc/hosts
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">while read line; do
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    TMPNAME=\$(host \$line | awk &#39;{print \$5}&#39;) # prod-01.example.org.
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    LONGNAME=\${TMPNAME%.}    # prod-01.example.org
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    SHORTNAME=\${TMPNAME%%.*} # prod-01
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">    echo &#34;\${line} \${LONGNAME} \${SHORTNAME}&#34; &gt;&gt; /etc/hosts
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">done &lt; /root/tmp/cluster.ips
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># список ip-адресов и подготовленный скрипт забрасываем на все узлы</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m copy -a <span style="color:#4e9a06">&#34;src=cluster.ips dest=/root/tmp/&#34;</span> --become
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m copy -a <span style="color:#4e9a06">&#34;src=updatehosts.sh dest=/root/tmp/&#34;</span> --become
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># запускаем выполнение скрипта на всех узлах</span>
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;/bin/bash /root/tmp/updatehosts.sh&#34;</span> --become
+</span></span></code></pre></div><h2 id="8-создание-tmp-каталога-для-дампов-java-машин">8. Создание tmp-каталога для дампов java-машин</h2>
 <p>По умолчанию, в настройках сервисов указан каталог <code>/tmp</code>, который используется для создания дампов java-машин, в случае их падения при ошибке &ldquo;OutOfMemoryError&rdquo;. Cоздадим новый каталог для этих целей на большем разделе, так как корневой раздел обычно слишком мал, чтобы разместить полный дамп java-машины:</p>
-<pre tabindex="0"><code>ansible all -i cluster.inv -m file -a &#39;path=/data/tmp state=directory mode=1777&#39; --become
-</code></pre><h2 id="9-заключительная-перезагрузка-машин">9. Заключительная перезагрузка машин</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ansible all -i cluster.inv -m file -a <span style="color:#4e9a06">&#39;path=/data/tmp state=directory mode=1777&#39;</span> --become
+</span></span></code></pre></div><h2 id="9-заключительная-перезагрузка-машин">9. Заключительная перезагрузка машин</h2>
 <p><span style="color:red">Если были изменения на узлах будущего кластера, то обязательная перезагрузка машин. Этот шаг выполняется для применения всех постоянных настроек и отмены всех временных настроек машины.</span></p>
-<pre tabindex="0"><code>ansible all -i cluster.inv -m reboot --become
-</code></pre><p>Если есть какие-либо подозрения на счёт правильности настроек, то повторяем проверки.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ansible all -i cluster.inv -m reboot --become
+</span></span></code></pre></div><p>Если есть какие-либо подозрения на счёт правильности настроек, то повторяем проверки.</p>
 
 </div>
 
@@ -3254,53 +3297,53 @@ ansible all -i cluster.inv -m shell -a &#34;/bin/bash /root/tmp/updatehosts.sh&#
 <p>Все операции выполняем на командной машине с помощью ансибла из ранее подготовленного каталога <code>hadoop</code>, где созданы все необходимые файлы.</p>
 <h2 id="2-выделение-машины-управления-кластером">2. Выделение машины управления кластером</h2>
 <p>Машина управления кластером имеет название, которое включает в себя буквы &lsquo;mgm&rsquo;. Определив ip-адрес этой машины, добавим новые строки в инвентори файл ансибла:</p>
-<pre tabindex="0"><code>printf &#39;\n[mgm]\n10.1.4.6\n&#39; &gt;&gt; cluster.inv
-</code></pre><h2 id="3-добавление-файлов-repo-на-машину-управления">3. Добавление файлов repo на машину управления</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">printf</span> <span style="color:#4e9a06">&#39;\n[mgm]\n10.1.4.6\n&#39;</span> &gt;&gt; cluster.inv
+</span></span></code></pre></div><h2 id="3-добавление-файлов-repo-на-машину-управления">3. Добавление файлов repo на машину управления</h2>
 <p>При установке компонента Hue, потребуется пакет <code>libtidy</code>, который находится в EPEL-репозитории. Поэтому подготавливаем не только файлы репозиториев cloudera, но и epel. Файлы Cloudera-репо будут заброшены на машину управления кластером, тогда как epel-репо на все машины кластера:</p>
-<pre tabindex="0"><code>cd hadoop
-
-cat &lt;&lt; EOF &gt; cloudera-manager.repo
-[cloudera-manager]
-USERNAME=nx-pubrepo-reader
-PASSWORD=xxxxxxxxxxxxxxxxx
-name = Cloudera Manager, Version cloudera-cm-6.3.1-hosted
-baseurl = http://10.1.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
-gpgcheck = 0
-EOF
-
-cat &lt;&lt; EOF &gt; cloudera-cdh.repo
-[cloudera-cdh]
-USERNAME=nx-pubrepo-reader
-PASSWORD=xxxxxxxxxxxxxxxxx
-name = Cloudera Manager, Version cloudera-cdh-6.3.2-hosted
-baseurl = http://10.1.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
-gpgcheck = 0
-EOF
-
-cat &lt;&lt; EOF &gt; epel.repo
-[epel7]
-USERNAME=nx-pubrepo-reader
-PASSWORD=xxxxxxxxxxxxxxxxx
-name=Extra Packages for Enterprise Linux \$releasever - \$basearch
-baseurl=http://10.1.1.1:8081/repository/all_epel/\$releasever/\$basearch
-failovermethod=priority
-enabled=1
-gpgcheck=0
-gpgkey=http://10.1.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
-EOF
-</code></pre><p>Копируем CM репо-файл на машину cloudera server и epel repo-файл на все машины:</p>
-<pre tabindex="0"><code>ansible mgm -i cluster.inv -m copy -a &#34;src=cloudera-manager.repo dest=&#39;/etc/yum.repos.d/&#39;&#34; --become
-ansible all -i cluster.inv -m copy -a &#34;src=epel.repo dest=&#39;/etc/yum.repos.d/&#39;&#34; --become
-</code></pre><h2 id="4-установка-jdk-и-cloudera-manager">4. Установка JDK и Cloudera Manager</h2>
-<pre tabindex="0"><code>ansible mgm -i cluster.inv -m yum -a &#34;name=oracle-j2sdk1.8 state=latest&#34; --become
-ansible mgm -i cluster.inv -m yum -a &#34;name=cloudera-manager-daemons,cloudera-manager-agent,cloudera-manager-server,cloudera-manager-server-db-2 state=latest&#34; --become
-</code></pre><h2 id="5-установка-дополнительных-пакетов">5. Установка дополнительных пакетов</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">cd</span> hadoop
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#4e9a06">&lt;&lt; EOF &gt; cloudera-manager.repo
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">[cloudera-manager]
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">USERNAME=nx-pubrepo-reader
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">PASSWORD=xxxxxxxxxxxxxxxxx
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">name = Cloudera Manager, Version cloudera-cm-6.3.1-hosted
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">baseurl = http://10.1.1.1:8081/repository/cloudera-cm-6.3.1-hosted/
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">gpgcheck = 0
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#4e9a06">&lt;&lt; EOF &gt; cloudera-cdh.repo
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">[cloudera-cdh]
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">USERNAME=nx-pubrepo-reader
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">PASSWORD=xxxxxxxxxxxxxxxxx
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">name = Cloudera Manager, Version cloudera-cdh-6.3.2-hosted
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">baseurl = http://10.1.1.1:8081/repository/cloudera-cdh-6.3.2-hosted/
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">gpgcheck = 0
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#4e9a06">&lt;&lt; EOF &gt; epel.repo
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">[epel7]
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">USERNAME=nx-pubrepo-reader
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">PASSWORD=xxxxxxxxxxxxxxxxx
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">name=Extra Packages for Enterprise Linux \$releasever - \$basearch
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">baseurl=http://10.1.1.1:8081/repository/all_epel/\$releasever/\$basearch
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">failovermethod=priority
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">enabled=1
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">gpgcheck=0
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">gpgkey=http://10.1.1.1:8081/repository/all_epel/RPM-GPG-KEY-EPEL-\$releasever
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span></code></pre></div><p>Копируем CM репо-файл на машину cloudera server и epel repo-файл на все машины:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ansible mgm -i cluster.inv -m copy -a <span style="color:#4e9a06">&#34;src=cloudera-manager.repo dest=&#39;/etc/yum.repos.d/&#39;&#34;</span> --become
+</span></span><span style="display:flex;"><span>ansible all -i cluster.inv -m copy -a <span style="color:#4e9a06">&#34;src=epel.repo dest=&#39;/etc/yum.repos.d/&#39;&#34;</span> --become
+</span></span></code></pre></div><h2 id="4-установка-jdk-и-cloudera-manager">4. Установка JDK и Cloudera Manager</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ansible mgm -i cluster.inv -m yum -a <span style="color:#4e9a06">&#34;name=oracle-j2sdk1.8 state=latest&#34;</span> --become
+</span></span><span style="display:flex;"><span>ansible mgm -i cluster.inv -m yum -a <span style="color:#4e9a06">&#34;name=cloudera-manager-daemons,cloudera-manager-agent,cloudera-manager-server,cloudera-manager-server-db-2 state=latest&#34;</span> --become
+</span></span></code></pre></div><h2 id="5-установка-дополнительных-пакетов">5. Установка дополнительных пакетов</h2>
 <p>Дополнительно устанавливаем свежие версии python-пакета <code>psycopg2-binary</code> и <code>python-snappy</code>, которые используется Hue-компонентом. Так как неизвестно точно на каких хостах будут добавлены экземпляры Hue, то устанавливаем пакеты на все хосты.</p>
-<pre tabindex="0"><code>ansible all -i cluster.inv -m pip -a &#34;name=psycopg2-binary,python-snappy state=latest&#34; --become
-</code></pre><h2 id="6-запуск-postgresql-и-cloudera-manager">6. Запуск PostgreSQL и Cloudera Manager</h2>
-<pre tabindex="0"><code>ansible mgm -i cluster.inv -m systemd -a &#34;name=cloudera-scm-server-db enabled=yes state=started&#34; --become
-ansible mgm -i cluster.inv -m systemd -a &#34;name=cloudera-scm-server enabled=yes state=started&#34; --become
-</code></pre><p>Web-интерфейс доступен по адресу:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ansible all -i cluster.inv -m pip -a <span style="color:#4e9a06">&#34;name=psycopg2-binary,python-snappy state=latest&#34;</span> --become
+</span></span></code></pre></div><h2 id="6-запуск-postgresql-и-cloudera-manager">6. Запуск PostgreSQL и Cloudera Manager</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ansible mgm -i cluster.inv -m systemd -a <span style="color:#4e9a06">&#34;name=cloudera-scm-server-db enabled=yes state=started&#34;</span> --become
+</span></span><span style="display:flex;"><span>ansible mgm -i cluster.inv -m systemd -a <span style="color:#4e9a06">&#34;name=cloudera-scm-server enabled=yes state=started&#34;</span> --become
+</span></span></code></pre></div><p>Web-интерфейс доступен по адресу:</p>
 <p><a href="http://dev-mgm01p.example.org:7180/">http://dev-mgm01p.example.org:7180/</a></p>
 
 </div>
@@ -3380,9 +3423,9 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
 <p>Сейчас же дожидаемся окончания процесса с другими хостами и только тогда нажимаем &ldquo;Retry Failed Hosts&rdquo;. В этом случае, с большой вероятностью, визард сможет успешно завершиться.</p>
 <h2 id="inspect-cluster">Inspect Cluster</h2>
 <p>Перед проверкой Inspect Network Performance и Inspect Hosts, исправляем на всех машинах шебанг в файле <code>/opt/cloudera/cm-agent/service/perf/host_perf_diag.py</code>, иначе проверка Inspect Network Performance завершится ошибкой, так как по умолчанию на машинах используется python3.</p>
-<pre tabindex="0"><code>ansible all -i cluster.inv -m replace \
--a &#39;path=/opt/cloudera/cm-agent/service/perf/host_perf_diag.py regexp=^#!\/usr\/bin\/python replace=#!/usr/bin/python2&#39; --become
-</code></pre><p>Далее запускаем обе проверки одновременно и ожидаем успеха.
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ansible all -i cluster.inv -m replace <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>-a <span style="color:#4e9a06">&#39;path=/opt/cloudera/cm-agent/service/perf/host_perf_diag.py regexp=^#!\/usr\/bin\/python replace=#!/usr/bin/python2&#39;</span> --become
+</span></span></code></pre></div><p>Далее запускаем обе проверки одновременно и ожидаем успеха.
 <img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_3_7.png" alt=""></p>
 <h2 id="select-services">Select Services</h2>
 <p>Здесь указываем &lsquo;Custom Services&rsquo;, после чего выбираем основные компоненты:</p>
@@ -3459,19 +3502,19 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
 <p>Установка TLS-сертификатов выполняется на каждом узле кластера. Так как все узлы кластера добавлены во FreeIPA-домен, то запрос сертификата в Центре Сертификации и автоматическое обновление имеющихся сертификатов грамотней будет поручить Certmonger&rsquo;у, а не следовать инструкции от Cloudera. Это, а также добавление ключей и сертификатов в java-хранилища, удобней сделать через Ansible-плэйбук cloudera_setup_tls.</p>
 <p>Плэйбук выполняет операцию <code>ipa-getcert request -k HTTP/$(hostname -f) ...</code> с размещением ключа и TLS-сертификата к нему в каталоге <code>/opt/cloudera/security/pki/</code>. К выпуску сертификата привязано выполнение bash-скрипта, который разместит сертификат в надлежащих хранилищах, используемых при выполнении java-приложений. После выпуска сертификата и выполнения скрипта, плэйбук перенастраивает Cloudera Manager Agents на использование TLS-сертификатов и перезапускает агентов.</p>
 <p><span style="color: red">Перед разбросом ключей и сертификатов, остановливаем кластер и менеджмент, так как будет потеряна связь с агентами!!!</span></p>
-<pre tabindex="0"><code># Скачиваем весь ansible из gitlab&#39;а
-git clone git@git.example.org:adm/ansible.git
-# Подправляем плэйбук
-sed -i s/all-root/cl/ ansible/playbooks/cloudera_setup_tls.yml
-
-cd ansible
-
-# Выполняем тестовый --check прогон
-ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &#39;{&#34;IPA_CERT_MANAGER&#34;:&#34;admin&#34;}&#39; --become --check
-
-# Выполняем плэйбук
-ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars &#39;{&#34;IPA_CERT_MANAGER&#34;:&#34;admin&#34;}&#39; --become
-</code></pre><p>Замечу, что выполняя сейчас все действия из ансибл-плэйбука, мы слегка опережаем клаудеровскую инструкцию. Поэтому очерёдность операция в этой инструкции не совпадает с клаудеровскими инструкциями.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Скачиваем весь ansible из gitlab&#39;а</span>
+</span></span><span style="display:flex;"><span>git clone git@git.example.org:adm/ansible.git
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Подправляем плэйбук</span>
+</span></span><span style="display:flex;"><span>sed -i s/all-root/cl/ ansible/playbooks/cloudera_setup_tls.yml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">cd</span> ansible
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Выполняем тестовый --check прогон</span>
+</span></span><span style="display:flex;"><span>ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars <span style="color:#4e9a06">&#39;{&#34;IPA_CERT_MANAGER&#34;:&#34;admin&#34;}&#39;</span> --become --check
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Выполняем плэйбук</span>
+</span></span><span style="display:flex;"><span>ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars <span style="color:#4e9a06">&#39;{&#34;IPA_CERT_MANAGER&#34;:&#34;admin&#34;}&#39;</span> --become
+</span></span></code></pre></div><p>Замечу, что выполняя сейчас все действия из ансибл-плэйбука, мы слегка опережаем клаудеровскую инструкцию. Поэтому очерёдность операция в этой инструкции не совпадает с клаудеровскими инструкциями.</p>
 <p>Не запуская остановленные Cloudera Management Service и кластер, продолжаем выполнять шаги этой инструкции.</p>
 <h2 id="2-настройка-tls-для-cm-клиентов-и-связи-между-cm-и-агентами">2. Настройка TLS для CM, клиентов, и связи между CM и агентами</h2>
 <ol>
@@ -3559,10 +3602,10 @@ ansible-playbook -i ../cluster.inv playbooks/cloudera_setup_tls.yml --extra-vars
 </blockquote>
 <ol start="9">
 <li>Выходим из каталога <code>ansible</code>, где чуть ранее запускалась задача разброса сертификатов, в наш рабочий каталог, и  перезапускаем Cloudera Manager server:
-<pre tabindex="0"><code>cd ..
-ansible mgm -i cluster.inv -m systemd \
--a &#34;name=cloudera-scm-server state=restarted&#34; --become
-</code></pre></li>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">cd</span> ..
+</span></span><span style="display:flex;"><span>ansible mgm -i cluster.inv -m systemd <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>-a <span style="color:#4e9a06">&#34;name=cloudera-scm-server state=restarted&#34;</span> --become
+</span></span></code></pre></div></li>
 <li>Через несколько минут поключаемся к Cloudera Manager Admin Console используя HTTPS на 7183 порту: <a href="https://dev-mgm01p.test.lan:7183">https://dev-mgm01p.test.lan:7183</a>.</li>
 <li>Сначала запускаем Cloudera Management Service:
 <img src="/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_10_1.png" alt=""><br>
@@ -3580,8 +3623,8 @@ For this scenario, make sure that your DNS and /etc/hosts file are configured co
 <h3 id="прочее">Прочее</h3>
 <ol>
 <li>Проверка TLS-работоспособности Cloudera Agent&rsquo;ов на хостах:
-<pre tabindex="0"><code>openssl s_client -connect &lt;hostname&gt;:9000
-</code></pre></li>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>openssl s_client -connect &lt;hostname&gt;:9000
+</span></span></code></pre></div></li>
 <li>Можно обнаружить в логах Cloudera Manager Server запись &ldquo;com.cloudera.cmf.command.CmdNoopPropagateException: All roles are unlicensed and cannot be started&rdquo;. Внимания можно не обращать, так как последствий не обнаружено. Проблема была в использовании ip-адреса CM, вместо его FQDN-имени в файле настройки агентов.<br>
 Проверить в &lsquo;/etc/cloudera-scm-agent/config.ini&rsquo; параметр &lsquo;server_host&rsquo; должен содержать полное FQDN-имя, как в TLS-сертификате, например:
 <pre tabindex="0"><code>server_host=dev-mgm01p.test.lan
@@ -3806,9 +3849,8 @@ General Error(s)<br><br>
 <div class="td-content" style="page-break-before: always">
     
 	<h1 id="pg-202f7f65fec1b9fa15c1b65da3b9d1e8">2.7 - 12. Включение Kerberos в Cloudera CDH 6.3.2</h1>
-    <div class="lead">В этой части описывается настройка TLS для HDFS и YARN.</div>
-	<p>2021-06-17<br>
-2021-10-14</p>
+    <div class="lead">В этой части описывается включение Kerberos в кластере Hadoop.</div>
+	<p>2021-06-17 – 2021-10-14</p>
 <h2 id="1-использованные-материалы">1. Использованные материалы</h2>
 <ol>
 <li><a href="https://docs.cloudera.com/documentation/enterprise/latest/topics/cm_sg_using_cm_sec_config.html">How to Configure Clusters to Use Kerberos for Authentication</a></li>
@@ -3880,20 +3922,20 @@ This should list port 749 on your master KDC. Support for it is not complete at 
 <h3 id="24-установка-jce-policy-файлы-для-aes-256-шифрования">2.4. Установка JCE Policy файлы для AES-256 шифрования</h3>
 <p>Этот шаг мы можем пропустить, так как &ldquo;этот шаг не требуется в случае использования JDK =&gt; 1.8.0_161. В JDK 1.8.0_161 по умолчанию включено сильное шифрование без всякого ограничения.&rdquo;</p>
 <p>Проверяем наличие поддержки AES256:</p>
-<pre tabindex="0"><code>$ sudo rpm -qa *1.8
-oracle-j2sdk1.8-1.8.0+update181-1.x86_64
-
-$ kinit nifanteve
-Password for nifanteve@TEST.LAN:
-
-$ klist -e
-Ticket cache: KEYRING:persistent:1000:1000
-Default principal: nifanteve@TEST.LAN
-
-Valid starting       Expires              Service principal
-02/03/2021 11:16:42  02/04/2021 11:16:34  krbtgt/TEST.LAN@TEST.LAN
-        Etype (skey, tkt): aes256-cts-hmac-sha1-96, aes256-cts-hmac-sha1-96
-</code></pre><p>Видим &lsquo;aes256-cts-hmac-sha1-96&rsquo;, поэтому пропускаем этот шаг.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo rpm -qa *1.8
+</span></span><span style="display:flex;"><span>oracle-j2sdk1.8-1.8.0+update181-1.x86_64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ kinit nifanteve
+</span></span><span style="display:flex;"><span>Password <span style="color:#204a87;font-weight:bold">for</span> nifanteve@TEST.LAN:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ klist -e
+</span></span><span style="display:flex;"><span>Ticket cache: KEYRING:persistent:1000:1000
+</span></span><span style="display:flex;"><span>Default principal: nifanteve@TEST.LAN
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Valid starting       Expires              Service principal
+</span></span><span style="display:flex;"><span>02/03/2021 11:16:42  02/04/2021 11:16:34  krbtgt/TEST.LAN@TEST.LAN
+</span></span><span style="display:flex;"><span>        Etype <span style="color:#ce5c00;font-weight:bold">(</span>skey, tkt<span style="color:#ce5c00;font-weight:bold">)</span>: aes256-cts-hmac-sha1-96, aes256-cts-hmac-sha1-96
+</span></span></code></pre></div><p>Видим &lsquo;aes256-cts-hmac-sha1-96&rsquo;, поэтому пропускаем этот шаг.</p>
 <h3 id="25-kerberos-принципал-для-cloudera-manager-server-во-freeipa">2.5. Kerberos-принципал для Cloudera Manager Server во FreeIPA</h3>
 <p>Забегая вперёд отметим, что в конце выполнения &ldquo;мастера включения Kerberos&rdquo; Cloudera Manager Server создаст host-принципалы и загрузит keytab&rsquo;ы для всех сервисов в кластере. Для этого Cloudera Manager Server нуждается в отдельном принципале с соответствующими правами, позволяющими проделать эту работу.</p>
 <p>Если вы используете FreeIPA, визард создаст свой собственный аккаунт с необходимыми привилегиями. Для этого потребуется ввод учётных данных администратора FreeIPA. Эти учетные данные не сохраняются и используются только для создания нового пользователя и роли (с именами cmadin- &lt;random_id&gt; и cmadminrole соответственно) и получения его keytab. Cloudera Manager сохраняет этот keytab для будущих операций Kerberos, таких как восстановление учетных данных аккаунтов служб CDH.</p>
@@ -4072,6 +4114,76 @@ Role is missing Kerberos keytab. Go to the Kerberos Credentials page and click t
     
 	
   
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-630aba4f610765adb405e0db3a12b20d">2.8 - 13. Zookeeper. Настройка</h1>
+    <div class="lead">В этой части описывается настройка TLS для Zookeper&rsquo;а.</div>
+	<p>2021-07-09</p>
+<h2 id="настройка-tls-для-zookeeper">Настройка TLS для ZooKeeper</h2>
+<blockquote>
+<p><span style="color: red">Напомню, что перед включением TLS-настроек для Zookeeper&rsquo;а должен быть включён TLS для Firehose Debug Server в Cloudera Manager. Иначе Zookeeper будет работать, но статус ролей перестаёт отображаться корректно и высвечивается ошибка &ldquo;Quorum Membership&rdquo;.</span>
+<img src="/img/zookeeper-nastroyka/zookeeper.png" alt=""></p>
+</blockquote>
+<ol>
+<li>В настройках сервиса ZooKeeper, используя фильтр по слову &lsquo;JMX&rsquo;, изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Enable Authenticated Communication with the JMX Agent</b></td>
+<td><span style="color: blue">☑</span></td>
+<td>Enables authentication when interacting with the JMX agent on the ZooKeeper server.</td>
+</tr>
+<tr>
+<td><b>Enable TLS/SSL for ZooKeeper JMX</b></td>
+<td><span style="color: blue">☑</span></td>
+<td>Encrypt communication between clients and ZooKeeper JMX using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).</td>
+</tr>
+<tr>
+<td><b>ZooKeeper JMX TLS/SSL Server JKS Keystore File Location</b></td>
+<td><span style="color: blue"><code>/opt/cloudera/security/pki/server.jks</code></span></td>
+<td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when ZooKeeper JMX is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
+</tr>
+<tr>
+<td><b>ZooKeeper JMX TLS/SSL Server JKS Keystore File Password</b></td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password for the ZooKeeper JMX JKS keystore file.</td>
+</tr>
+<tr>
+<td><b>ZooKeeper JMX TLS/SSL Server Trust Store File</b></td>
+<td><span style="color: blue"><code>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</code></span></td>
+<td>The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that ZooKeeper JMX might connect to. This is used when ZooKeeper JMX is the server in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.</td>
+</tr>
+<tr>
+<td><b>ZooKeeper JMX TLS/SSL Server Trust Store Password</b></td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password for the ZooKeeper JMX TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
+</tr>
+<tr>
+<td><b>Enable TLS client authentication for JMX port</b></td>
+<td><span style="color: blue">☑</span></td>
+<td>If enabled, a valid client certificate must be presented by the JMX client in order to connect to the JMX port. Ensure that the trusted CA certificates are present in either the ZooKeeper JMX TLS/SSL Server Trust Store File or the global trust store.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+<li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
+</ol>
+<h2 id="ссылки-по-теме">Ссылки по теме</h2>
+<ul>
+<li><a href="/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/">Получение прав Superuser&rsquo;а в ZooKeeper&rsquo;е Cloudera CDH 6.3.2</a></li>
+</ul>
+
+</div>
+
+
 
     
 	
@@ -4083,7 +4195,222 @@ Role is missing Kerberos keytab. Go to the Kerberos Credentials page and click t
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-ec8392bfbe669cc91ecaf0e9358f772b">3 - Apache Airflow</h1>
+	<h1 id="pg-abb873eb50e7f023906653b61d5f5c31">2.9 - 14. HDFS. Настройка</h1>
+    <div class="lead">В этой части описывается настройка HDFS.</div>
+	<p>2021-07-09 – 2021-10-15</p>
+<h2 id="enable-high-availability">Enable High Availability</h2>
+<p><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_hag_hdfs_ha_enabling.html">Enabling HDFS HA</a></p>
+<ol>
+<li>В настройках сервиса HDFS, используя фильтр по слову «dfs.journalnode.edits.dir», изменяем следующий параметр:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>JournalNode Edits Directory</b><br>
+<i>dfs.journalnode.edits.dir</i></td>
+<td>JournalNode Default Group:<br>
+<span style="color: blue"><code>/data/dfs/jn</code></span></td>
+<td>Directory on the local file system where NameNode edits are written.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем Save Changes.</li>
+<li>На странице службы HDFS, через кнопку Actions, запускаем wizard включения HA:
+ <center><img src="/img/hdfs-nastroyka/img14-1.png" style="height:500px"></center>
+</li>
+<li><strong>Getting Started.</strong>
+Задаём уникальное имя для Nameservice:
+ <center><img src="/img/hdfs-nastroyka/img14-2.png" style="width:600px"></center>
+</li>
+<li><strong>Assign Roles</strong>.<br>
+JournalNodes должны работать на хостах с такими же hardware specification, как NameNodes. Cloudera рекомендует поместить две JournalNode на те же хосты с NameNodes, а третий JournalNode на хост с похожими ресурсами, таким как JobTracker.<br>
+Распределяем роли:
+ <center><img src="/img/hdfs-nastroyka/img14-3.png" style="width:600px"></center>
+</li>
+<li><strong>Review Changes</strong>.<br>
+Знакомимся с предварительными результатами и указываем каталог для JournalNode <code>/data/dfs/jn</code>:
+ <center><img src="/img/hdfs-nastroyka/img14-4.png" style="width:600px"></center>
+</li>
+<li><strong>Command Details</strong>.
+ <center><img src="/img/hdfs-nastroyka/img14-5.png" style="width:600px"></center>
+</li>
+<li><strong>Final Steps</strong>.
+ <center><img src="/img/hdfs-nastroyka/img14-6.png" style="width:300px"></center>
+</li>
+</ol>
+<h2 id="настройка-ldap-аутентификации-в-hdfs">Настройка LDAP-аутентификации в HDFS</h2>
+
+
+<div class="alert alert-warning" role="alert">
+<h4 class="alert-heading">⚠ Описание настройки уже в процессе переработки.</h4>
+
+    <p>Важно пересмотреть эту настройку прямого подключения Hadoop к LDAP-каталогу. Нужно оставить использование <code>org.apache.hadoop.security.ShellBasedUnixGroupsMapping</code>, так как прозрачное подключение к LDAP на машинах введённых в домен уже реализовано через SSSD.</p>
+<p>Переписать инструкцию!</p>
+<p>Держать в уме, что после отключения HDFS LDAP Mapping, перестала работать аутентификация в Solr! К сожалению, не помню, Solr был добавлен до включения LDAP Mapping или после, что могло бы повлиять на такое его поведение.</p>
+
+
+</div>
+
+
+
+<div class="pageinfo pageinfo-primary">
+<p>При прямом подключении к LDAP не работают вложенные пользовательские группы?</p>
+
+</div>
+
+
+
+<div class="pageinfo pageinfo-primary">
+<p>Полезно в /etc/sssd/sssd.conf добавить фильтрацию Hadoop&rsquo;овских УЗ и групп из LDAP в секции [nss], иначе одноимённая доменная УЗ возобладает преимуществом и нарушит работу hadoop-кластера.</p>
+<pre tabindex="0"><code>[nss]
+filter_groups = root,mysql,hadoop,yarn,hdfs,mapred,kms,httpfs,hbase,hive,sentry,spark,solr,sqoop,oozie,hue,flume,impala,llama,postgres,sqoop2,kudu,kafka,accumulo,zookeeper,cloudera-scm,keytrustee
+filter_users = root,mysql,cloudera-scm,zookeeper,yarn,hdfs,mapred,kms,httpfs,hbase,hive,sentry,spark,solr,sqoop,oozie,hue,flume,impala,llama,sqoop2,postgres,kudu,kafka,accumulo,keytrustee
+reconnection_retries = 3
+</code></pre><p>Возможно, что полезно указывать, если используется прямое подключение к LDAP:</p>
+<ul>
+<li><a href="yarn-nastroyka">⚠ YARN History Server не отображает отработанные задачи после включения Kerberos</a></li>
+</ul>
+
+</div>
+
+<ol>
+<li>В настройках службы HDFS, используя фильтр по слову «hadoop.security.group.mapping.ldap.ssl», изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP TLS/SSL Truststore</b><br>
+<i>hadoop.security.group.mapping.ldap.ssl.keystore</i>
+</td>
+<td><span style="color: blue"><code>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</code></span></td>
+<td>File path to a jks-format truststore containing the TLS/SSL certificate used sign the LDAP server's certificate. Note that in previous releases this was erroneously referred to as a "keystore".</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP TLS/SSL Truststore Password</b><br>
+<i>hadoop.security.group.mapping.ldap.ssl.keystore.password</i>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password for the TLS/SSL truststore.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+<li><span style="color: red">Используем следующие настройки только в случае использования прямого подключения Hadoop&rsquo;а к LDAP, вместо рекомендованного подключения через SSSD.</span><br>
+В настройках службы HDFS, используя категорию «Security», изменяем следующие параметры:</li>
+</ol>
+<details>
+<table border="1">
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping Implementation</b><br>
+<i>hadoop.security.group.mapping</i>
+</td>
+<td>
+○&nbsp;org.apache.hadoop.security.JniBasedUnixGroupsMapping<br>
+○&nbsp;org.apache.hadoop.security.ShellBasedUnixGroupsMapping<br>
+<span style="color: blue">◉&nbsp;org.apache.hadoop.security.LdapGroupsMapping</span></td>
+<td>Class for user to group mapping (get groups for a given user).</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP URL</b><br>
+<i>hadoop.security.group.mapping.ldap.url</i></td>
+<td><span style="color: blue">ldaps://dev-ipa01p.test.lan ldaps://dev-ipa02p.test.lan ldaps://dev-ipa03p.test.lan</span>
+<br>Список из URL, разделённых пробелами.</td>
+<td>The URL of the LDAP server. The URL must be prefixed with ldap:// or ldaps://. The URL can optionally specify a custom port, for example: ldaps://ldap_server.example.com:1636. Note that usernames and passwords will be transmitted in the clear unless either an ldaps:// URL is used, or "Enable LDAP TLS" is turned on (where available). Also note that encryption must be in use between the client and this service for the same reason.
+<p>For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of URLs can be entered; in this case the URLs will each be tried in turn until one replies.</td></p>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP TLS/SSL Enabled</b><br>
+<i>hadoop.security.group.mapping.ldap.use.ssl</i></td>
+<td><span style="color: blue">☑</span></td>
+<td>Whether or not to use TLS/SSL when connecting to the LDAP server.</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP TLS/SSL Truststore</b><br>
+<i>hadoop.security.group.mapping.ldap.ssl.keystore</i></td>
+<td><span style="color: blue"><code>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</code></span></td>
+<td>File path to a jks-format truststore containing the TLS/SSL certificate used sign the LDAP server's certificate. Note that in previous releases this was erroneously referred to as a "keystore".</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP TLS/SSL Truststore Password</b><br>
+<i>hadoop.security.group.mapping.ldap.ssl.keystore.password</i></td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password for the TLS/SSL truststore.</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP Bind User Distinguished Name</b><br>
+<i>hadoop.security.group.mapping.ldap.bind.user</i></td>
+<td><span style="color: blue">uid=binddn_test2,cn=sysaccounts,cn=etc,dc=test2,dc=lan</span></td>
+<td>Distinguished name of the user to bind as. This is used to connect to LDAP/AD for searching user and group information. This may be left blank if the LDAP server supports anonymous binds.</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP Bind User Password</b><br>
+<i>hadoop.security.group.mapping.ldap.bind.password</i></td>
+<td>Пароль для вышеуказанного системного аккаунта binddn_test2.</td>
+<td>The password of the bind user.</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping Search Base</b><br>
+<i>hadoop.security.group.mapping.ldap.base</i></td>
+<td><span style="color: blue">cn=accounts,dc=test2,dc=lan</span></td>
+<td>The search base for the LDAP connection. This is a distinguished name, and will typically be the root of the LDAP directory.</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP User Search Filter</b><br>
+<i>hadoop.security.group.mapping.ldap.search.filter.user</i></td>
+<td><span style="color: blue">(&(objectClass=person)(uid={0}))</span></td>
+<td>An additional filter to use when searching for LDAP users. The default will usually be appropriate for Active Directory installations. If connecting to a generic LDAP server, ''sAMAccountName'' will likely be replaced with ''uid''. {0} is a special string used to denote where the username fits into the filter.</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP Group Search Filter</b><br>
+<i>hadoop.security.group.mapping.ldap.search.filter.group</i></td>
+<td><span style="color: blue">(objectClass=ipausergroup)</span></td>
+<td>An additional filter to use when searching for groups.</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP Group Membership Attribute</b><br>
+<i>hadoop.security.group.mapping.ldap.search.attr.member</i></td>
+<td><span style="color: blue">member</span></td>
+<td>The attribute of the group object that identifies the users that are members of the group. The default will usually be appropriate for any LDAP installation.</td>
+</tr>
+<tr>
+<td><b>Hadoop User Group Mapping LDAP Group Name Attribute</b><br>
+<i>hadoop.security.group.mapping.ldap.search.attr.group.name</i></td>
+<td><span style="color: blue">cn</span></td>
+<td>The attribute of the group object that identifies the group name. The default will usually be appropriate for all LDAP systems.</td>
+</tr>
+</table>
+<ul>
+<li>Нажимаем Save Changes.</li>
+</ul>
+</details>
+<h2 id="создание-группы-для-доступа-в-hdfs-с-правами-superuser">Создание группы для доступа в HDFS с правами superuser</h2>
+
+</div>
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-7b3ff8836d3bbea6ee30d038c27838ca">3 - Apache ZooKeeper</h1>
     
 	
 </div>
@@ -4108,7 +4435,90 @@ Role is missing Kerberos keytab. Go to the Kerberos Credentials page and click t
 
 <div class="td-content" style="">
     
-	<h1 id="pg-bc24936305eaf00e578203376daca2b2">3.1 - Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</h1>
+	<h1 id="pg-f33717f7389a0f1cc5fde133e4aae299">3.1 - Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</h1>
+    <div class="lead">Иногда в ZooKeeper&rsquo;е требуется удалить неудаляемое.</div>
+	<p>2021-08-11</p>
+<h2 id="введение">Введение</h2>
+<p>При удалении ноды <code>/solr</code> через <code>zookeeper-client</code> выводилась ошибка:</p>
+<pre tabindex="0"><code>[zk: localhost:2181(CONNECTED) 0] rmr /solr
+The command &#39;rmr&#39; has been deprecated. Please use &#39;deleteall&#39; instead.
+Authentication is not valid : /solr/security
+</code></pre><p>Решение этой проблемы нашёл здесь: <a href="https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421">https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421</a></p>
+<h2 id="алгоритм-получения-прав-superuserа">Алгоритм получения прав superuser&rsquo;а</h2>
+<p>Переходим в домашний каталог Zookeeper&rsquo;а и запускаем генерацию дайджеста пароля для только что придуманного логина, под которым возобладаем superuser-правами в Zookeeper&rsquo;е, например &lsquo;zoosu:TsKlydBdycdq&rsquo;:</p>
+<pre tabindex="0"><code># cd /usr/lib/zookeeper &amp;&amp; \
+  /usr/java/jdk1.8.0_181-cloudera/bin/java -cp &#34;./zookeeper.jar:lib/slf4j-api-1.7.25.jar&#34; org.apache.zookeeper.server.auth.DigestAuthenticationProvider zoosu:TsKlydBdycdq
+</code></pre><p>В выводе команды видим дайджест &lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&rsquo;:</p>
+<pre tabindex="0"><code>SLF4J: Failed to load class &#34;org.slf4j.impl.StaticLoggerBinder&#34;.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+zoosu:TsKlydBdycdq-&gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=
+</code></pre><p>Вставляем эти учётные данные (&lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&rsquo;) в строку параметров для java-машины ZooKeeper&rsquo;а (&rsquo;<span style="color:blue">-Dzookeeper.DigestAuthenticationProvider.superDigest=zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=</span>&rsquo;), которую размещаем в настройках ZooKeeper&rsquo;а в Cloudera Manager.</p>
+<p>В настройках ZooKeeper, используя фильтр &lsquo;Java Configuration Options for Zookeeper Server&rsquo;, изменяем следующие параметры:</p>
+<table>
+<tr><th>Property</th><th>Value</th><th>Description</th></tr>
+<tr valign=top>
+<td><b>Java Configuration Options for Zookeeper Server</b></td>
+<td><span style="color:blue">-Dzookeeper.DigestAuthenticationProvider.superDigest=<br>zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=</span></td>
+<td>These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.</td></tr>
+</table>
+<p>Нажимаем <strong>Save Changes</strong>.</p>
+<p>Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</p>
+<p>Или останавливаем кластер и запускаем только сервис ZooKeeper&rsquo;а, если, конечно, хотим удалить вышеуказанную строку из настроек, после выполнения удаления ноды. После чего останавливаем ZooKeeper и запускаем весь кластер.</p>
+<h2 id="удаление-ноды">Удаление ноды</h2>
+<p>На ZooKeeper-узле запускаем <code>zookeeper-client</code>, авторизуемся с помощью команды <code>addauth digest zoosu:TsKlydBdycdq</code>, и выполняем удаление ноды <code>/solr</code>:</p>
+<pre tabindex="0"><code>[zk: localhost:2181(CONNECTED) 0] ls /solr
+[configs, overseer, security.json, solr.xml, autoscaling.json, security, aliases.json, live_nodes, collections, overseer_elect, clusterstate.json, autoscaling, clusterprops.json]
+[zk: localhost:2181(CONNECTED) 1] addauth digest zoosu:TsKlydBdycdq
+[zk: localhost:2181(CONNECTED) 2] deleteall /solr
+[zk: localhost:2181(CONNECTED) 3] ls /
+[zookeeper, hadoop-ha, kafka, hive_zookeeper_namespace_hive, hbase]
+[zk: localhost:2181(CONNECTED) 4]
+</code></pre>
+</div>
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-ec8392bfbe669cc91ecaf0e9358f772b">4 - Apache Airflow</h1>
+    
+	
+</div>
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+<div class="td-content" style="">
+    
+	<h1 id="pg-bc24936305eaf00e578203376daca2b2">4.1 - Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</h1>
     <div class="lead">Описание установки на Cloudera Hadoop узел экземпляра Airflow второй версии с назначением ролей из FreeIPA.</div>
 	<h2 id="использованные-материалы">Использованные материалы</h2>
 <ul>
@@ -4781,7 +5191,7 @@ ipa group-del ${IPAGROUP}
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-0fb647e9c05de338c7649baac62463d9">3.2 - Установка Apache Airflow и настройка его для работы с Apache Hadoop (устарело)</h1>
+	<h1 id="pg-0fb647e9c05de338c7649baac62463d9">4.2 - Установка Apache Airflow и настройка его для работы с Apache Hadoop (устарело)</h1>
     <div class="lead">Описывается процесс установки Apache Airflow и настройка его для работы с керберизированным кластером Cloudera CDH на машину, находящуюся в домене FreeIPA. Airflow переключается в режим работы LocalExecutor с хранением метаданных в PostgreSQL.</div>
 	<p>2020-10-23</p>
 <p><span style="color: red;"><strong>Эта версия Airflow устарела. Установка актуальной, второй версии, <a href="/a/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya">описана здесь</a>.</strong></span></p>

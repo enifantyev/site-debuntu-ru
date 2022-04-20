@@ -1,0 +1,88 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Zookeper</title>
+    <link>https://debuntu.ru/tags/zookeper/</link>
+    <description>Recent content in Zookeper on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 09 Jul 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="https://debuntu.ru/tags/zookeper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Manuals: 13. Zookeeper. Настройка</title>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</link>
+      <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-09&lt;/p&gt;
+&lt;h2 id=&#34;настройка-tls-для-zookeeper&#34;&gt;Настройка TLS для ZooKeeper&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;span style=&#34;color: red&#34;&gt;Напомню, что перед включением TLS-настроек для Zookeeper&amp;rsquo;а должен быть включён TLS для Firehose Debug Server в Cloudera Manager. Иначе Zookeeper будет работать, но статус ролей перестаёт отображаться корректно и высвечивается ошибка &amp;ldquo;Quorum Membership&amp;rdquo;.&lt;/span&gt;
+&lt;img src=&#34;https://debuntu.ru/img/zookeeper-nastroyka/zookeeper.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках сервиса ZooKeeper, используя фильтр по слову &amp;lsquo;JMX&amp;rsquo;, изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable Authenticated Communication with the JMX Agent&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Enables authentication when interacting with the JMX agent on the ZooKeeper server.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable TLS/SSL for ZooKeeper JMX&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Encrypt communication between clients and ZooKeeper JMX using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ZooKeeper JMX TLS/SSL Server JKS Keystore File Location&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/server.jks&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when ZooKeeper JMX is acting as a TLS/SSL server. The keystore must be in JKS format.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ZooKeeper JMX TLS/SSL Server JKS Keystore File Password&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;The password for the ZooKeeper JMX JKS keystore file.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ZooKeeper JMX TLS/SSL Server Trust Store File&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that ZooKeeper JMX might connect to. This is used when ZooKeeper JMX is the server in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ZooKeeper JMX TLS/SSL Server Trust Store Password&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;The password for the ZooKeeper JMX TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable TLS client authentication for JMX port&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;If enabled, a valid client certificate must be presented by the JMX client in order to connect to the JMX port. Ensure that the trusted CA certificates are present in either the ZooKeeper JMX TLS/SSL Server Trust Store File or the global trust store.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;ссылки-по-теме&#34;&gt;Ссылки по теме&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/&#34;&gt;Получение прав Superuser&amp;rsquo;а в ZooKeeper&amp;rsquo;е Cloudera CDH 6.3.2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

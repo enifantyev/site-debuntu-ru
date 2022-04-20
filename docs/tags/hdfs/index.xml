@@ -4,7 +4,7 @@
     <link>https://debuntu.ru/tags/hdfs/</link>
     <description>Recent content in HDFS on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 14 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jul 2021 00:00:00 +0000</lastBuildDate>
     
 	  <atom:link href="https://debuntu.ru/tags/hdfs/index.xml" rel="self" type="application/rss+xml" />
     
@@ -323,6 +323,213 @@ hdfs dfs -rm -r -f -skipTrash SqoopTestSales .staging
 
 kdestroy
 &lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 14. HDFS. Настройка</title>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</link>
+      <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-09 – 2021-10-15&lt;/p&gt;
+&lt;h2 id=&#34;enable-high-availability&#34;&gt;Enable High Availability&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_hag_hdfs_ha_enabling.html&#34;&gt;Enabling HDFS HA&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках сервиса HDFS, используя фильтр по слову «dfs.journalnode.edits.dir», изменяем следующий параметр:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;JournalNode Edits Directory&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;dfs.journalnode.edits.dir&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;JournalNode Default Group:&lt;br&gt;
+&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/dfs/jn&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Directory on the local file system where NameNode edits are written.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем Save Changes.&lt;/li&gt;
+&lt;li&gt;На странице службы HDFS, через кнопку Actions, запускаем wizard включения HA:
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-1.png&#34; style=&#34;height:500px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Getting Started.&lt;/strong&gt;
+Задаём уникальное имя для Nameservice:
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-2.png&#34; style=&#34;width:600px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Assign Roles&lt;/strong&gt;.&lt;br&gt;
+JournalNodes должны работать на хостах с такими же hardware specification, как NameNodes. Cloudera рекомендует поместить две JournalNode на те же хосты с NameNodes, а третий JournalNode на хост с похожими ресурсами, таким как JobTracker.&lt;br&gt;
+Распределяем роли:
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-3.png&#34; style=&#34;width:600px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Review Changes&lt;/strong&gt;.&lt;br&gt;
+Знакомимся с предварительными результатами и указываем каталог для JournalNode &lt;code&gt;/data/dfs/jn&lt;/code&gt;:
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-4.png&#34; style=&#34;width:600px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Command Details&lt;/strong&gt;.
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-5.png&#34; style=&#34;width:600px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Final Steps&lt;/strong&gt;.
+ &lt;center&gt;&lt;img src=&#34;https://debuntu.ru/img/hdfs-nastroyka/img14-6.png&#34; style=&#34;width:300px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;настройка-ldap-аутентификации-в-hdfs&#34;&gt;Настройка LDAP-аутентификации в HDFS&lt;/h2&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;⚠ Описание настройки уже в процессе переработки.&lt;/h4&gt;
+
+    &lt;p&gt;Важно пересмотреть эту настройку прямого подключения Hadoop к LDAP-каталогу. Нужно оставить использование &lt;code&gt;org.apache.hadoop.security.ShellBasedUnixGroupsMapping&lt;/code&gt;, так как прозрачное подключение к LDAP на машинах введённых в домен уже реализовано через SSSD.&lt;/p&gt;
+&lt;p&gt;Переписать инструкцию!&lt;/p&gt;
+&lt;p&gt;Держать в уме, что после отключения HDFS LDAP Mapping, перестала работать аутентификация в Solr! К сожалению, не помню, Solr был добавлен до включения LDAP Mapping или после, что могло бы повлиять на такое его поведение.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;При прямом подключении к LDAP не работают вложенные пользовательские группы?&lt;/p&gt;
+
+&lt;/div&gt;
+
+
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;Полезно в /etc/sssd/sssd.conf добавить фильтрацию Hadoop&amp;rsquo;овских УЗ и групп из LDAP в секции [nss], иначе одноимённая доменная УЗ возобладает преимуществом и нарушит работу hadoop-кластера.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[nss]
+filter_groups = root,mysql,hadoop,yarn,hdfs,mapred,kms,httpfs,hbase,hive,sentry,spark,solr,sqoop,oozie,hue,flume,impala,llama,postgres,sqoop2,kudu,kafka,accumulo,zookeeper,cloudera-scm,keytrustee
+filter_users = root,mysql,cloudera-scm,zookeeper,yarn,hdfs,mapred,kms,httpfs,hbase,hive,sentry,spark,solr,sqoop,oozie,hue,flume,impala,llama,sqoop2,postgres,kudu,kafka,accumulo,keytrustee
+reconnection_retries = 3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Возможно, что полезно указывать, если используется прямое подключение к LDAP:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;yarn-nastroyka&#34;&gt;⚠ YARN History Server не отображает отработанные задачи после включения Kerberos&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;В настройках службы HDFS, используя фильтр по слову «hadoop.security.group.mapping.ldap.ssl», изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Truststore&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.ssl.keystore&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;File path to a jks-format truststore containing the TLS/SSL certificate used sign the LDAP server&#39;s certificate. Note that in previous releases this was erroneously referred to as a &#34;keystore&#34;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Truststore Password&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.ssl.keystore.password&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;The password for the TLS/SSL truststore.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;span style=&#34;color: red&#34;&gt;Используем следующие настройки только в случае использования прямого подключения Hadoop&amp;rsquo;а к LDAP, вместо рекомендованного подключения через SSSD.&lt;/span&gt;&lt;br&gt;
+В настройках службы HDFS, используя категорию «Security», изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;details&gt;
+&lt;table border=&#34;1&#34;&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping Implementation&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;
+○&amp;nbsp;org.apache.hadoop.security.JniBasedUnixGroupsMapping&lt;br&gt;
+○&amp;nbsp;org.apache.hadoop.security.ShellBasedUnixGroupsMapping&lt;br&gt;
+&lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;org.apache.hadoop.security.LdapGroupsMapping&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Class for user to group mapping (get groups for a given user).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP URL&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.url&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;ldaps://dev-ipa01p.test.lan ldaps://dev-ipa02p.test.lan ldaps://dev-ipa03p.test.lan&lt;/span&gt;
+&lt;br&gt;Список из URL, разделённых пробелами.&lt;/td&gt;
+&lt;td&gt;The URL of the LDAP server. The URL must be prefixed with ldap:// or ldaps://. The URL can optionally specify a custom port, for example: ldaps://ldap_server.example.com:1636. Note that usernames and passwords will be transmitted in the clear unless either an ldaps:// URL is used, or &#34;Enable LDAP TLS&#34; is turned on (where available). Also note that encryption must be in use between the client and this service for the same reason.
+&lt;p&gt;For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of URLs can be entered; in this case the URLs will each be tried in turn until one replies.&lt;/td&gt;&lt;/p&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Enabled&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.use.ssl&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Whether or not to use TLS/SSL when connecting to the LDAP server.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Truststore&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.ssl.keystore&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;File path to a jks-format truststore containing the TLS/SSL certificate used sign the LDAP server&#39;s certificate. Note that in previous releases this was erroneously referred to as a &#34;keystore&#34;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP TLS/SSL Truststore Password&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.ssl.keystore.password&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;The password for the TLS/SSL truststore.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Bind User Distinguished Name&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.bind.user&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;uid=binddn_test2,cn=sysaccounts,cn=etc,dc=test2,dc=lan&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Distinguished name of the user to bind as. This is used to connect to LDAP/AD for searching user and group information. This may be left blank if the LDAP server supports anonymous binds.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Bind User Password&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.bind.password&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;Пароль для вышеуказанного системного аккаунта binddn_test2.&lt;/td&gt;
+&lt;td&gt;The password of the bind user.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping Search Base&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.base&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;cn=accounts,dc=test2,dc=lan&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The search base for the LDAP connection. This is a distinguished name, and will typically be the root of the LDAP directory.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP User Search Filter&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.search.filter.user&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;(&amp;(objectClass=person)(uid={0}))&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;An additional filter to use when searching for LDAP users. The default will usually be appropriate for Active Directory installations. If connecting to a generic LDAP server, &#39;&#39;sAMAccountName&#39;&#39; will likely be replaced with &#39;&#39;uid&#39;&#39;. {0} is a special string used to denote where the username fits into the filter.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Group Search Filter&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.search.filter.group&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;(objectClass=ipausergroup)&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;An additional filter to use when searching for groups.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Group Membership Attribute&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.search.attr.member&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;member&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The attribute of the group object that identifies the users that are members of the group. The default will usually be appropriate for any LDAP installation.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hadoop User Group Mapping LDAP Group Name Attribute&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.security.group.mapping.ldap.search.attr.group.name&lt;/i&gt;&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;cn&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The attribute of the group object that identifies the group name. The default will usually be appropriate for all LDAP systems.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Нажимаем Save Changes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/details&gt;
+&lt;h2 id=&#34;создание-группы-для-доступа-в-hdfs-с-правами-superuser&#34;&gt;Создание группы для доступа в HDFS с правами superuser&lt;/h2&gt;
+
       </description>
     </item>
     

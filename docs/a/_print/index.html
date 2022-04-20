@@ -35,8 +35,8 @@
 
 
 
-<link rel="preload" href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" as="style">
-<link href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" rel="stylesheet" integrity="">
+<link rel="preload" href="/scss/main.scss" as="style">
+<link href="/scss/main.scss" rel="stylesheet" integrity="">
 
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-1HVBCPETY0"></script>
@@ -158,7 +158,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.27dd182b6bc58e0a2e9e46f0f9e7d42a.json"
+  data-offline-search-index-json-src="/offline-search-index.42636af9ad6c1ba00c03854f39a5aa54.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -2209,26 +2209,26 @@ Installed size: 5.2 M
 <h2 id="работы-на-исходном-сервере">Работы на исходном сервере</h2>
 <h3 id="сбор-сведений-перед-созданием-дампа">Сбор сведений перед созданием дампа</h3>
 <p>На исходном сервере запоминаем версию postgresql:</p>
-<pre tabindex="0"><code># rpm -qa|grep sql
-postgresql11-server-11.4-1PGDG.rhel7.x86_64
-postgresql11-11.4-1PGDG.rhel7.x86_64
-postgresql11-libs-11.4-1PGDG.rhel7.x86_64
-</code></pre><p>Смотрим <code>who</code> и активные сетевые подключения через <code>ss -tul</code>, чтобы удостовериться в своём одиноком присутствии на сервере.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># rpm -qa|grep sql</span>
+</span></span><span style="display:flex;"><span>postgresql11-server-11.4-1PGDG.rhel7.x86_64
+</span></span><span style="display:flex;"><span>postgresql11-11.4-1PGDG.rhel7.x86_64
+</span></span><span style="display:flex;"><span>postgresql11-libs-11.4-1PGDG.rhel7.x86_64
+</span></span></code></pre></div><p>Смотрим <code>who</code> и активные сетевые подключения через <code>ss -tul</code>, чтобы удостовериться в своём одиноком присутствии на сервере.</p>
 <p>Ознакомимся со свободным местом на сервере, где увидим, что есть свободные 340G:</p>
-<pre tabindex="0"><code># df -h
-Filesystem             Size  Used Avail Use% Mounted on
-/dev/mapper/rhel-root  1.3T  906G  340G  73% /
-devtmpfs                16G     0   16G   0% /dev
-tmpfs                   16G  8.0K   16G   1% /dev/shm
-tmpfs                   16G  353M   16G   3% /run
-tmpfs                   16G     0   16G   0% /sys/fs/cgroup
-/dev/sda1              950M  251M  700M  27% /boot
-tmpfs                  3.2G     0  3.2G   0% /run/user/1000
-tmpfs                  3.2G     0  3.2G   0% /run/user/1007
-</code></pre><p>Ищем postgresql в обычном месте <code>/var/lib</code> и находим экземпляр в <code>/var/lib/pgsql/11/data</code>. Узнаём размер каталога:</p>
-<pre tabindex="0"><code># du -hs du -hs /var/lib/pgsql/11/data
-895G    du -hs /var/lib/pgsql/11/data
-</code></pre><p>Огромная база в 900 Гигабайт и свободное место на 340 Гигабайт. Интересуемся у ответственного лица о содержимом базы:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># df -h</span>
+</span></span><span style="display:flex;"><span>Filesystem             Size  Used Avail Use% Mounted on
+</span></span><span style="display:flex;"><span>/dev/mapper/rhel-root  1.3T  906G  340G  73% /
+</span></span><span style="display:flex;"><span>devtmpfs                16G     <span style="color:#0000cf;font-weight:bold">0</span>   16G   0% /dev
+</span></span><span style="display:flex;"><span>tmpfs                   16G  8.0K   16G   1% /dev/shm
+</span></span><span style="display:flex;"><span>tmpfs                   16G  353M   16G   3% /run
+</span></span><span style="display:flex;"><span>tmpfs                   16G     <span style="color:#0000cf;font-weight:bold">0</span>   16G   0% /sys/fs/cgroup
+</span></span><span style="display:flex;"><span>/dev/sda1              950M  251M  700M  27% /boot
+</span></span><span style="display:flex;"><span>tmpfs                  3.2G     <span style="color:#0000cf;font-weight:bold">0</span>  3.2G   0% /run/user/1000
+</span></span><span style="display:flex;"><span>tmpfs                  3.2G     <span style="color:#0000cf;font-weight:bold">0</span>  3.2G   0% /run/user/1007
+</span></span></code></pre></div><p>Ищем postgresql в обычном месте <code>/var/lib</code> и находим экземпляр в <code>/var/lib/pgsql/11/data</code>. Узнаём размер каталога:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># du -hs du -hs /var/lib/pgsql/11/data</span>
+</span></span><span style="display:flex;"><span>895G    du -hs /var/lib/pgsql/11/data
+</span></span></code></pre></div><p>Огромная база в 900 Гигабайт и свободное место на 340 Гигабайт. Интересуемся у ответственного лица о содержимом базы:</p>
 <pre tabindex="0"><code>&gt; Ещё вопрос, пожалуйста. Внутри базы postgres хорошо сжимаемые данные, типа текста, или что-нибудь несжимаемое, типа jpg?
 
 &lt; картинок нет точно. в основном это csvшки с данными
@@ -2240,10 +2240,10 @@ tmpfs                  3.2G     0  3.2G   0% /run/user/1007
 <p>После знакомства со структурой каталогов на сервере, решаем попробовать задампиться в <code>/var/lib/pgsql/11/backups</code>. Мне кажется, что выбор этого места логичен в данном случае.</p>
 <h3 id="создание-полного-дампа-исходного-экземпляра-posgresql">Создание полного дампа исходного экземпляра posgresql</h3>
 <p>Определяем количество ядер у процессора (через <code>top</code>, <code>htop</code>, <code>cat /proc/cpuinfo</code>) и запускаем создание дампа со сжатием через lbzip2, с указанием найденного количества ядер для ускорения работы (в данном случае восемь потоков):</p>
-<pre tabindex="0"><code>sudo su
-su - postgres
-time pg_dumpall -v | lbzip2 -n 8 -9 &gt; /var/lib/pgsql/11/backups/pgsql_dumpall_$(date -u +%Y%m%d-%H%M%S).bz2
-</code></pre><p>Забегая вперёд покажу затраченное время:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo su
+</span></span><span style="display:flex;"><span>su - postgres
+</span></span><span style="display:flex;"><span><span style="color:#204a87">time</span> pg_dumpall -v <span style="color:#000;font-weight:bold">|</span> lbzip2 -n <span style="color:#0000cf;font-weight:bold">8</span> -9 &gt; /var/lib/pgsql/11/backups/pgsql_dumpall_<span style="color:#204a87;font-weight:bold">$(</span>date -u +%Y%m%d-%H%M%S<span style="color:#204a87;font-weight:bold">)</span>.bz2
+</span></span></code></pre></div><p>Забегая вперёд покажу затраченное время:</p>
 <pre tabindex="0"><code>real    88m17.100s
 user    463m50.451s
 sys     16m31.101s
@@ -2258,61 +2258,61 @@ sys     16m31.101s
 <li>подключение репо postgresql</li>
 </ul>
 <p>Памятуя о версии на исходном сервере, производим установку конкретной версии posgresql:</p>
-<pre tabindex="0"><code># yum install postgresql11-server-11.4-1PGDG.rhel7.x86_64
-...
-=======================================================================================
- Package                        Arch       Version            Repository     Size
-=======================================================================================
-Installing:
- postgresql11-server            x86_64     11.4-1PGDG.rhel7   postgres11     4.7 M
-Installing for dependencies:
- postgresql11                   x86_64     11.4-1PGDG.rhel7   postgres11     1.6 M
- postgresql11-libs              x86_64     11.4-1PGDG.rhel7   postgres11     361 k
-...
-</code></pre><p>Устанавливаем пакет <code>yum-plugin-versionlock</code> для возможности блокировки пакетов от апгрейда и выполняем блокировку пакетов <code>postgresql11*</code>:</p>
-<pre tabindex="0"><code># yum install yum-plugin-versionlock
-# yum versionlock postgresql11*
-Loaded plugins: product-id, rhnplugin, search-disabled-repos, versionlock
-This system is receiving updates from RHN Classic or Red Hat Satellite.
-Adding versionlock on: 0:postgresql11-libs-11.4-1PGDG.rhel7
-Adding versionlock on: 0:postgresql11-server-11.4-1PGDG.rhel7
-Adding versionlock on: 0:postgresql11-11.4-1PGDG.rhel7
-versionlock added: 3
-</code></pre><p>При необходимости, актуальный список залоченных пакетов смотрим здесь <code>cat /etc/yum/pluginconf.d/versionlock.list</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># yum install postgresql11-server-11.4-1PGDG.rhel7.x86_64</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">=======================================================================================</span>
+</span></span><span style="display:flex;"><span> Package                        Arch       Version            Repository     <span style="color:#000">Size</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">=======================================================================================</span>
+</span></span><span style="display:flex;"><span>Installing:
+</span></span><span style="display:flex;"><span> postgresql11-server            x86_64     11.4-1PGDG.rhel7   postgres11     4.7 M
+</span></span><span style="display:flex;"><span>Installing <span style="color:#204a87;font-weight:bold">for</span> dependencies:
+</span></span><span style="display:flex;"><span> postgresql11                   x86_64     11.4-1PGDG.rhel7   postgres11     1.6 M
+</span></span><span style="display:flex;"><span> postgresql11-libs              x86_64     11.4-1PGDG.rhel7   postgres11     <span style="color:#0000cf;font-weight:bold">361</span> k
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>Устанавливаем пакет <code>yum-plugin-versionlock</code> для возможности блокировки пакетов от апгрейда и выполняем блокировку пакетов <code>postgresql11*</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># yum install yum-plugin-versionlock</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># yum versionlock postgresql11*</span>
+</span></span><span style="display:flex;"><span>Loaded plugins: product-id, rhnplugin, search-disabled-repos, versionlock
+</span></span><span style="display:flex;"><span>This system is receiving updates from RHN Classic or Red Hat Satellite.
+</span></span><span style="display:flex;"><span>Adding versionlock on: 0:postgresql11-libs-11.4-1PGDG.rhel7
+</span></span><span style="display:flex;"><span>Adding versionlock on: 0:postgresql11-server-11.4-1PGDG.rhel7
+</span></span><span style="display:flex;"><span>Adding versionlock on: 0:postgresql11-11.4-1PGDG.rhel7
+</span></span><span style="display:flex;"><span>versionlock added: <span style="color:#0000cf;font-weight:bold">3</span>
+</span></span></code></pre></div><p>При необходимости, актуальный список залоченных пакетов смотрим здесь <code>cat /etc/yum/pluginconf.d/versionlock.list</code>.</p>
 <h3 id="монтирование-большого-раздела-к-varlibpgsql">Монтирование большого раздела к /var/lib/pgsql</h3>
 <p>На новом сервер наблюдаем отдельный большой раздел 1.5TB подмонтрованный к <code>/data</code>. Создадим на нём каталог pgsql и прочее:</p>
-<pre tabindex="0"><code>mkdir -p /data/pgsql/11/{data,backup}
-chown postgres:postgres /data/pgsql -R
-chmod 700 /data/pgsql -R
-cp /var/lib/pgsql/.bash_profile /data/pgsql
-</code></pre><p>Добавим в /etc/fstab следующую строку для автоматического биндинга <code>/data/pgsql</code> к <code>/var/lib/pgsql</code>:</p>
-<pre tabindex="0"><code>/data/pgsql /var/lib/pgsql none defaults,bind 0 0
-</code></pre><p>Важно!!! Если после последней строки в файле <code>/etc/fstab</code> не будет добавлена пустая строка, то сервер зависнет на этапе загрузки системы. Не помню причины этого явления, поэтому примите на веру, если не знали.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p /data/pgsql/11/<span style="color:#ce5c00;font-weight:bold">{</span>data,backup<span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>chown postgres:postgres /data/pgsql -R
+</span></span><span style="display:flex;"><span>chmod <span style="color:#0000cf;font-weight:bold">700</span> /data/pgsql -R
+</span></span><span style="display:flex;"><span>cp /var/lib/pgsql/.bash_profile /data/pgsql
+</span></span></code></pre></div><p>Добавим в /etc/fstab следующую строку для автоматического биндинга <code>/data/pgsql</code> к <code>/var/lib/pgsql</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/data/pgsql /var/lib/pgsql none defaults,bind <span style="color:#0000cf;font-weight:bold">0</span> <span style="color:#0000cf;font-weight:bold">0</span>
+</span></span></code></pre></div><p>Важно!!! Если после последней строки в файле <code>/etc/fstab</code> не будет добавлена пустая строка, то сервер зависнет на этапе загрузки системы. Не помню причины этого явления, поэтому примите на веру, если не знали.</p>
 <h3 id="инициализация-и-запуск">Инициализация и запуск</h3>
-<pre tabindex="0"><code>/usr/pgsql-11/bin/postgresql-11-setup initdb
-systemctl start postgresql-11
-</code></pre><h2 id="завершающие-действия">Завершающие действия</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/pgsql-11/bin/postgresql-11-setup initdb
+</span></span><span style="display:flex;"><span>systemctl start postgresql-11
+</span></span></code></pre></div><h2 id="завершающие-действия">Завершающие действия</h2>
 <h3 id="копирование-дампа-на-новый-сервер">Копирование дампа на новый сервер</h3>
 <p>В нашем случае прямое ssh-соединение между серверами отсутствует, поэтому скопируем полученный дамп через форпост, который доступен из обоих сегментов сети.</p>
 <p>Сейчас мы находимся на промежуточном сервере. Сначала подключаемся по ssh к одному из серверов, на каковом сервере открывается локальный порт 50000, который связывается с портом 22 другого сервера (через промежуточный сервер!):</p>
-<pre tabindex="0"><code># ssh -R 127.0.0.1:50000:10.0.0.2:22 root@10.0.0.1
-[root@10.0.0.1]# _
-</code></pre><p>Теперь, находясь на сервере 10.0.0.1 (что видно по приглашению командной строки) помним, что постучавшись на локальный порт <code>127.0.0.1:50000</code>, мы, на самом деле, стучимся на <code>10.0.0.2:22</code>, но не на прямую, а через промежуточный сервер.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># ssh -R 127.0.0.1:50000:10.0.0.2:22 root@10.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>root@10.0.0.1<span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#8f5902;font-style:italic"># _</span>
+</span></span></code></pre></div><p>Теперь, находясь на сервере 10.0.0.1 (что видно по приглашению командной строки) помним, что постучавшись на локальный порт <code>127.0.0.1:50000</code>, мы, на самом деле, стучимся на <code>10.0.0.2:22</code>, но не на прямую, а через промежуточный сервер.</p>
 <p>Поэтому здесь же запускаем процесс копирования с докачкой и проверкой. Копируем дамп и файлы настроек:</p>
-<pre tabindex="0"><code>rsync -avP -e &#34;ssh -p50000&#34; /var/lib/pgsql/11/backup/pgsql_dumpall_20200421-103341.bz2 127.0.0.1:/data/pgsql/11/backup/
-rsync -vP -e &#34;ssh -p50000&#34; /var/lib/pgsql/11/data/* 127.0.0.1:/data/pgsql/11/backup/data
-</code></pre><p>В результате этой команды, наш дамп, через промежуточный сервер, будет залит на новый сервер.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -avP -e <span style="color:#4e9a06">&#34;ssh -p50000&#34;</span> /var/lib/pgsql/11/backup/pgsql_dumpall_20200421-103341.bz2 127.0.0.1:/data/pgsql/11/backup/
+</span></span><span style="display:flex;"><span>rsync -vP -e <span style="color:#4e9a06">&#34;ssh -p50000&#34;</span> /var/lib/pgsql/11/data/* 127.0.0.1:/data/pgsql/11/backup/data
+</span></span></code></pre></div><p>В результате этой команды, наш дамп, через промежуточный сервер, будет залит на новый сервер.</p>
 <h3 id="восстановление-дампа-на-новом-сервере">Восстановление дампа на новом сервере</h3>
-<pre tabindex="0"><code>sudo su
-su - postgres
-lbzip2 -c -d /data/pgsql/11/backup/psql_dumpall_20200421-103341.bz2 | psql postgres
-</code></pre><h3 id="восстановление-настроек-экземпляра-postresgql">Восстановление настроек экземпляра postresgql</h3>
-<pre tabindex="0"><code>cp /data/pgsql/11/backup/data/* /data/pgsql/11/data/
-</code></pre><h3 id="настройка-атозапуска-postgesql">Настройка атозапуска postgesql</h3>
-<pre tabindex="0"><code>systemctl enable postgresql-11
-</code></pre><h3 id="перезагрузка-для-проверки">Перезагрузка для проверки</h3>
-<pre tabindex="0"><code>reboot
-</code></pre><p>Использованный материал:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo su
+</span></span><span style="display:flex;"><span>su - postgres
+</span></span><span style="display:flex;"><span>lbzip2 -c -d /data/pgsql/11/backup/psql_dumpall_20200421-103341.bz2 <span style="color:#000;font-weight:bold">|</span> psql postgres
+</span></span></code></pre></div><h3 id="восстановление-настроек-экземпляра-postresgql">Восстановление настроек экземпляра postresgql</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp /data/pgsql/11/backup/data/* /data/pgsql/11/data/
+</span></span></code></pre></div><h3 id="настройка-атозапуска-postgesql">Настройка атозапуска postgesql</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> postgresql-11
+</span></span></code></pre></div><h3 id="перезагрузка-для-проверки">Перезагрузка для проверки</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>reboot
+</span></span></code></pre></div><p>Использованный материал:
 <a href="https://access.redhat.com/solutions/98873">How to restrict yum to install or upgrade a package to a fixed specific package version?</a>
 <a href="https://www.postgresql.org/docs/11/backup-dump.html">25.1. SQL Dump Chapter 25. Backup and Restore</a></p>
 
