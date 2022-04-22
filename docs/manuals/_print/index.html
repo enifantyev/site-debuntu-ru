@@ -158,7 +158,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.42636af9ad6c1ba00c03854f39a5aa54.json"
+  data-offline-search-index-json-src="/offline-search-index.955e53c573e2cac85ddd382fe6366c5c.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -594,6 +594,14 @@ This is the multi-page printable view of this section.
     
 	
 <li>3.2.9: <a href="#pg-abb873eb50e7f023906653b61d5f5c31">14. HDFS. Настройка</a></li>
+
+
+    
+  
+    
+    
+	
+<li>3.2.10: <a href="#pg-378b3dc44431a3498d547130ccf95921">15. YARN. Настройка</a></li>
 
 
     
@@ -5912,7 +5920,7 @@ filter_users = root,mysql,cloudera-scm,zookeeper,yarn,hdfs,mapred,kms,httpfs,hba
 reconnection_retries = 3
 </code></pre><p>Возможно, что полезно указывать, если используется прямое подключение к LDAP:</p>
 <ul>
-<li><a href="yarn-nastroyka">⚠ YARN History Server не отображает отработанные задачи после включения Kerberos</a></li>
+<li><a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka">⚠ YARN History Server не отображает отработанные задачи после включения Kerberos</a></li>
 </ul>
 
 </div>
@@ -6033,6 +6041,230 @@ reconnection_retries = 3
 </ul>
 </details>
 <h2 id="создание-группы-для-доступа-в-hdfs-с-правами-superuser">Создание группы для доступа в HDFS с правами superuser</h2>
+
+
+<div class="pageinfo pageinfo-primary">
+<p>Проверено в кластере TEST2 в домене test2.lan.</p>
+<ul>
+<li>HDFS-сервис не был переведён на &lsquo;org.apache.hadoop.security.LdapGroupsMapping&rsquo;, то есть испытания проводились в режиме &lsquo;org.apache.hadoop.security.ShellBasedUnixGroupsMapping&rsquo;.</li>
+<li>Posix-группа &rsquo;test2_hdfs_su&rsquo; создана во FreeIPA и указана в параметре &lsquo;dfs.permissions.superusergroup&rsquo;. Non-posix группа не сработала.</li>
+<li>В группу &rsquo;test2_hdfs_su&rsquo; была вложена группа &lsquo;dom_admins&rsquo;, участником которой была УЗ &rsquo;eugene&rsquo;.</li>
+</ul>
+<p>В результате, наблюдаем, что УЗ &rsquo;eugene&rsquo;, которая является участником группы &lsquo;dom_admins&rsquo;, также распознаётся hadoop&rsquo;ом, как участник и родительской группы &rsquo;test2_hdfs_su&rsquo;:</p>
+<p>$ hdfs groups eugene
+eugene : eugene test2_hdfs_su dom_admins</p>
+
+</div>
+
+
+
+<div class="pageinfo pageinfo-primary">
+<p>В другом кластере применил схему eugene &ndash;&gt; dom_admins &ndash;&gt; test01_superadmins. А нруппа test01_superadmins является участником всех кластерных групп. Результат:</p>
+<p>hdfs groups eugene
+eugene : eugene dom_admins test01_yarn_admins test01_hbase_su test01_hdfs_su test01_superadmins test01_sentry_admins test01_hue_admins</p>
+
+</div>
+
+<h3 id="добавление-группы-во-freeipa">Добавление группы во FreeIPA</h3>
+<p>Чтобы иметь возможность, например, создавать в HDFS home-каталоги для пользователей, нам нужен доступ к HDFS-superuser аккаунту. Напомню, что CDH автоматически создаёт HDFS superuser аккаунт — &lsquo;hdfs&rsquo; — на каждом узле кластера в процессе первичной инстралляции. Но после включения Kerberos для HDFS служб, мы теряем доступ к использованию <code>sudo -u hdfs</code>. Поэтому, мы создадим в IPA posix-группу &rsquo;test1_hdfs_su&rsquo;, укажем её в соответствующей настройке HDFS-сервиса, в результате чего участники этой группы, а также участники подгрупп, возобладают правами superuser&rsquo;а в HDFS.</p>
+<ol>
+<li>Добавление группы во FreeIPA. Так как установка кластера производится с машины, домен которой отличен от домена настраиваемых машин, то вновь используем ansible:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">ADM_USER</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;eugene&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ADM_PASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;JL9d]qtw$p=2=M2K=~z?|EU,&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">CL_NAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;TEST1&#34;</span>          <span style="color:#8f5902;font-style:italic"># UPPERCASE</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">CL_NAME_L</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">CL_NAME</span><span style="color:#000;font-weight:bold">,,</span><span style="color:#4e9a06">}</span>   <span style="color:#8f5902;font-style:italic"># lowercase</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ansible mgm -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;echo &#39;</span><span style="color:#4e9a06">${</span><span style="color:#000">ADM_PASS</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39; | kinit </span><span style="color:#4e9a06">${</span><span style="color:#000">ADM_USER</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06"> &amp;&amp; \
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">ipa group-add --desc=&#39;HDFS superusers for cluster </span><span style="color:#4e9a06">${</span><span style="color:#000">CL_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39; </span><span style="color:#4e9a06">${</span><span style="color:#000">CL_NAME_L</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">_hdfs_su&#34;</span>
+</span></span></code></pre></div><details><summary>stdout...</summary>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>10.15.120.140 <span style="color:#000;font-weight:bold">|</span> CHANGED <span style="color:#000;font-weight:bold">|</span> <span style="color:#000">rc</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">0</span> &gt;&gt;
+</span></span><span style="display:flex;"><span>Password <span style="color:#204a87;font-weight:bold">for</span> admin@TEST.LAN:
+</span></span><span style="display:flex;"><span>---------------------------
+</span></span><span style="display:flex;"><span>Added group <span style="color:#4e9a06">&#34;test1_hdfs_su&#34;</span>
+</span></span><span style="display:flex;"><span>---------------------------
+</span></span><span style="display:flex;"><span>  Group name: test1_hdfs_su
+</span></span><span style="display:flex;"><span>  Description: HDFS superusers <span style="color:#204a87;font-weight:bold">for</span> cluster TEST1
+</span></span><span style="display:flex;"><span>  GID: <span style="color:#0000cf;font-weight:bold">1262100012</span>
+</span></span></code></pre></div></details>
+<h3 id="указание-non-default-superuser-group">Указание Non-Default Superuser Group</h3>
+<ol>
+<li>В настройках службы HDFS, используя фильтр по слову «dfs.permissions.superusergroup», изменяем следующий параметр:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Superuser Group</b><br>
+<i>dfs.permissions.superusergroup</i>
+</td>
+<td><span style="color: blue">test1_hdfs_su</span></td>
+<td>The name of the group of superusers.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+<h2 id="configuring-encrypted-transport-for-hdfs">Configuring Encrypted Transport for HDFS</h2>
+<p>Перед настройкой передачи зашифрованных данных HDFS необходимо включить Kerberos. См. Инструкции в разделе «Аутентификация».</p>
+<ol>
+<li>В настройках службы HDFS, используя фильтр «Protection», изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>DataNode Data Transfer Protection</b><br>
+<i>dfs.data.transfer.protection</i>
+</td>
+<td>
+<span style="color: gray">HDFS (Service-Wide)</span><br>
+○ Authentication<br>
+○ Integrity<br>
+<span style="color: blue">◉ Privacy</span></td>
+<td>SASL protection mode for secured connections to the DataNodes when reading or writing data. Value is the type of SASL protection to be used for secured connections to the DataNode when reading or writing block data. Possible values are 'authentication', 'integrity' and 'privacy'. <b>authentication</b> means authentication only and no integrity or privacy; <b>integrity</b> implies that only authentication and integrity are enabled; and <b>privacy</b> implies all of authentication, integrity and privacy are enabled. If "Enable Data Transfer Encryption" is set to true, then it supersedes the setting for this parameter and enforces that all connections must use a specialized encrypted SASL handshake. This property is ignored for connections to a DataNode listening on a privileged port. In this case, it is assumed that the use of a privileged port establishes sufficient trust.</td>
+</tr>
+<tr>
+<td><b>Hadoop RPC Protection</b><br>
+<i>hadoop.rpc.protection</i>
+</td>
+<td>
+○ authentication<br>
+○ integrity<br>
+<span style="color: blue">◉ privacy</span></td>
+<td>Quality of protection for secured RPC connections between NameNode and HDFS clients. For effective RPC protection, enable Kerberos authentication.</td>
+</tr>
+<tr>
+<td><b>Enable Data Transfer Encryption</b><br>
+<i>dfs.encrypt.data.transfer</i>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Enable encryption of data transfer between DataNodes and clients, and among DataNodes. When enabled, block data that is read/written from/to HDFS will be encrypted on the wire. For effective data transfer protection, enable Kerberos authentication and pick privacy for "Hadoop RPC Protection".</td>
+</tr>
+</table>
+<ol start="2">
+<li>В настройках службы HDFS, используя фильтр «dfs.encrypt.data.transfer.algorithm», проверяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Data Transfer Encryption Algorithm</b><br>
+<i>dfs.encrypt.data.transfer.algorithm</i>
+</td>
+<td>
+<span style="color: gray">HDFS (Service-Wide)</span>
+○ 3des<br>
+○ rc4<br>
+<span style="color: blue">◉ AES/CTR/NoPadding</span></td>
+<td>Algorithm to encrypt data transfer between DataNodes and clients, and among DataNodes. If 3des or rc4 are chosen, the entire communication is encrypted with that algorithm. In CDH 5.4 and higher, if AES/CTR/NoPadding is chosen, 3des is used for the initial key exchange, and then AES/CTR/NoPadding is used for the transfer of data. This is the most secure option, and is recommended for clusters running CDH 5.4 or higher. It also requires that the "openssl-devel" package be installed on all machines in the cluster. When this parameter is changed, a full, nonrolling restart of the cluster must be performed.</td>
+</tr>
+</table>
+<ol start="3">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+<li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
+</ol>
+<h2 id="включение-acl-для-hdfs">Включение ACL для HDFS</h2>
+<p>В настройках роли HDFS, используя фильтр «dfs.namenode.acls.enabled», включаем параметр «Enable Access Control Lists».</p>
+<center><img src="/img/hdfs-nastroyka/img14-7.png"></center>
+<h2 id="настройка-tls-для-httpfs">Настройка TLS для HttpFS</h2>
+<ol>
+<li>В настройках службы HDFS, используя фильтр «HttpFS TLS», изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Signature Secret</b><br>
+<i>hdfs.httpfs.signature.secret</i>
+</td>
+<td>???? (разобраться, что здесь указано или надо указывать) (этот параметр пересекается с таким же параметром из Hue)</td>
+<td>The secret to use for signing client authentication tokens.</td>
+</tr>
+<tr>
+<td><b>Enable TLS/SSL for HttpFS</b><br>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Encrypt communication between clients and HttpFS using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).</td>
+</tr>
+<tr>
+<td><b>HttpFS TLS/SSL Server JKS Keystore File Location</b><br>
+</td>
+<td><span style="color: blue"><code>/opt/cloudera/security/pki/server.jks</code></span></td>
+<td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when HttpFS is acting as a TLS/SSL server. The keystore must be in JKS format.</td>
+</tr>
+<tr>
+<td><b>HttpFS TLS/SSL Server JKS Keystore File Password</b><br>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password for the HttpFS JKS keystore file.</td>
+</tr>
+<tr>
+<td><b>HttpFS TLS/SSL Client Trust Store File</b><br>
+</td>
+<td><span style="color: blue"><code>/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</code></span></td>
+<td>The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that HttpFS might connect to. This is used when HttpFS is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.</td>
+</tr>
+<tr>
+<td><b>HttpFS TLS/SSL Client Trust Store Password</b><br>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password for the HttpFS TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
+</tr>
+</table>
+<center><img src="/img/hdfs-nastroyka/img14-8.png" style="width:500px"></center>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.
+
+
+<div class="pageinfo pageinfo-primary">
+<p>Connect to the HttpFS Web UI using TLS/SSL (HTTPS)</p>
+<p>Use https://&lt;httpfs_server_hostname&gt;:14000/webhdfs/v1/, though most browsers should automatically redirect you if you use http://&lt;httpfs_server_hostname&gt;:14000/webhdfs/v1/</p>
+
+</div>
+</li>
+</ol>
+<h2 id="настройка-hsts-для-hdfs">Настройка HSTS для HDFS</h2>
+<p>Настройка строгой транспортной безопасности HTTP (HSTS) для HDFS гарантирует, что веб-браузер не загружает служебную информацию с помощью HTTP. Кроме того, все попытки загрузить информацию с помощью HTTP будут автоматически преобразованы в HTTPS.</p>
+<p>Perform the following steps to configure HSTS for HDFS:</p>
+<ol>
+<li>Go to the <strong>HDFS</strong> service.</li>
+<li>Click the Configuration tab.</li>
+<li>Set the HSTS credentials in Cluster-wide Advanced Configuration Snippet (Safety Valve) for core-site.xml.</li>
+</ol>
+<pre tabindex="0"><code>&lt;property&gt;
+&lt;name&gt;hadoop.http.header.Strict_Transport_Security&lt;/name&gt;
+&lt;value&gt;max-age=63072000;includeSubDomains;preload&lt;/value&gt;
+&lt;/property&gt;
+</code></pre><ol start="4">
+<li>If required, configure additional headers by using the safety value specified in the previous step for the hadoop.http.header.http-header property.
+ <center><img src="/img/hdfs-nastroyka/img14-9.png" style="width:500px"></center>
+</li>
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+<li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
+</ol>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-378b3dc44431a3498d547130ccf95921">3.2.10 - 15. YARN. Настройка</h1>
+    <div class="lead">В этой части описывается настройка YARN.</div>
+	<p>2021-07-09</p>
 
 </div>
 
