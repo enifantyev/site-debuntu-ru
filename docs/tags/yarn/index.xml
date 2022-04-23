@@ -24,6 +24,255 @@
         
         
         &lt;p&gt;2021-07-09&lt;/p&gt;
+&lt;h2 id=&#34;1-перенастройка-размещения-logов&#34;&gt;1. Перенастройка размещения log&amp;rsquo;ов&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках YARN, используя фильтр &amp;lsquo;/var/log&amp;rsquo;, изменяем только следующие параметры, добавляя имя каталога &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;JobHistory Server Log Directory&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.log.dir&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/hadoop-mapreduce&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Directory where JobHistory Server will place its log files.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;NodeManager Log Directory&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.log.dir&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/hadoop-yarn&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Directory where NodeManager will place its log files.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ResourceManager Log Directory&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.log.dir&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/hadoop-yarn&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Directory where ResourceManager will place its log files.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;2-настройка-acl&#34;&gt;2. Настройка ACL&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cm_mc_yarn_acl.html&#34;&gt;Managing YARN ACLs&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Во FreeIPA добавляем группу &amp;rsquo;test1_yarn_admins&amp;rsquo;:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ADM_USER=&amp;#39;eugene&amp;#39; \
+ADM_PASS=&amp;#39;JL9d]qtw$p=2=M2K=~z?|EU,&amp;#39; \
+CL_NAME=&amp;#34;TEST1&amp;#34;          # UPPERCASE \
+CL_NAME_L=${CL_NAME,,}   # lowercase
+
+ansible mgm -i cluster.inv -m shell -a &amp;#34;echo &amp;#39;${ADM_PASS}&amp;#39; | kinit ${ADM_USER} &amp;amp;&amp;amp; \
+ipa group-add --desc=&amp;#39;YARN admins for cluster ${CL_NAME}&amp;#39; ${CL_NAME_L}_yarn_admins&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;В настройках YARN, используя фильтр «acl», изменяем только следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable ResourceManager ACLs&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;yarn.acl.enable&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Whether users and groups specified in Admin ACL should be checked for authorization to perform admin operations.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Admin ACL&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;yarn.admin.acl&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt; test1_yarn_admins&lt;/code&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Так как указываем только группу, то в начале строки вставляем пробел, разделяющий пользователей и группы.&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color: red&#34;&gt;На данный момент нет понимания работы этого параметра. Необходимы дополнительные изыскания.&lt;/span&gt;&lt;/p&gt;
+&lt;/td&gt;
+&lt;td&gt;ACL that determines which users and groups can submit and kill applications in any pool, and can issue commands on ResourceManager roles.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ACL For Viewing A Job&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;mapreduce.job.acl-view-job&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt; &lt;/code&gt;&lt;/span&gt;&lt;br&gt;
+По умолчанию установлен пробел.&lt;/td&gt;
+&lt;td&gt;Specifies a list of users and/or groups that are allowed to view private job details. For specifying a list of users and groups the format to use is &#34;user1,user2 group1,group&#34;. If set to &#39;*&#39;, it allows all users/groups to modify this job. If set to &#39; &#39;(i.e. space), it allows none. Irrespective of this ACL configuration, (a) job-owner, (b) the user who started the cluster, (c) members of an admin configured supergroup configured via mapreduce.cluster.permissions.supergroup and (d) queue administrators of the queue to which this job was submitted to configured via acl-administer-jobs for the specific queue in mapred-queues.xml can do all the view operations on a job. Ignored unless mapreduce.cluster.acls.enabled is true.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ACL For Modifying A Job&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;mapreduce.job.acl-modify-job&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt; &lt;/code&gt;&lt;/span&gt;&lt;br&gt;
+По умолчанию установлен пробел.&lt;/td&gt;
+&lt;td&gt;Specifies a list of users and/or groups that are allowed to modify job operations. For specifying a list of users and groups the format to use is &#34;user1,user2 group1,group&#34;. If set to &#39;*&#39;, it allows all users/groups to modify this job. If set to &#39; &#39;(i.e. space), it allows none. Irrespective of this ACL configuration, (a) job-owner, (b) the user who started the cluster, (c) members of an admin configured supergroup configured via mapreduce.cluster.permissions.supergroup and (d) queue administrators of the queue to which this job was submitted to configured via acl-administer-jobs for the specific queue in mapred-queues.xml can do all the modification operations on a job. Ignored unless mapreduce.clouster.acls.enabled is true.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable Job ACL&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;mapreduce.cluster.acls.enabled&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Specifies whether ACLs should be checked for authorization when users perform various operations. If enabled, access control checks are made by MapReduce when requests are made by users for queue operations and job operations. Queue operations include submitting job to a queue or killing a job in the queue. Job operations include viewing the job-details (See mapreduce.job.acl-view-job), or modifying a job (See mapreduce.job.acl-modify-job).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;В настройках YARN, используя фильтр «Admin Users Applications List», изменяем только следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Admin Users Applications List Visibility Settings&lt;/b&gt;&lt;br&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;All&lt;/span&gt;&lt;br&gt;
+○&amp;nbsp;Their&amp;nbsp;own&amp;nbsp;only&lt;br&gt;
+○&amp;nbsp;None
+&lt;/td&gt;
+&lt;td&gt;Controls which applications an admin user can see in the applications list view&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Non-Admin Users Applications List Visibility Settings&lt;/b&gt;&lt;br&gt;
+&lt;/td&gt;
+&lt;td&gt;
+○&amp;nbsp;All&lt;br&gt;
+&lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;Their&amp;nbsp;own&amp;nbsp;only&lt;/span&gt;&lt;br&gt;
+○&amp;nbsp;None
+&lt;/td&gt;
+&lt;td&gt;Controls which applications non-admin users can see in the applications list view&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;3-выполнение-тестового-задания&#34;&gt;3. Выполнение тестового задания&lt;/h2&gt;
+&lt;p&gt;Попробуем запустить sleep или pi задание из предоставленных примеров Hadoop (&lt;code&gt;/usr/lib/hadoop/hadoop-examples.jar&lt;/code&gt;) на машине с ролью &amp;lsquo;YARN Gateway&amp;rsquo;.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Продолжаем использовать ansible, с помощью которого на mgm-машине получаем kerberos-тикет и запускаем тестовое задание вычисления числа Пи. Наблюдаем приблизительный результат вычислений:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ &lt;span style=&#34;color:#000&#34;&gt;ADM_USER&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;eugene&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#000&#34;&gt;ADM_PASS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;JL9d]qtw$p=2=M2K=~z?|EU,&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ansible mgm -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;echo &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_PASS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; | kinit &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_USER&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &amp;amp;&amp;amp; \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  hadoop jar /usr/lib/hue/apps/oozie/examples/lib/hadoop-examples.jar pi 10 10000 2&amp;gt;&amp;amp;1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Job Finished in 2.938 seconds
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Estimated value of Pi is 3.14120000000000000000
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Ради любопытства, запустил вычисление числа Пи с другими значениями и результат оказался ближе к истине:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ansible mgm -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;echo &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_PASS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; | kinit &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_USER&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &amp;amp;&amp;amp; \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  hadoop jar /usr/lib/hue/apps/oozie/examples/lib/hadoop-examples.jar pi 50 10000 2&amp;gt;&amp;amp;1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Job Finished in 5.528 seconds
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Estimated value of Pi is 3.14159200000000000000
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Проверяем процесс и результаты в WebUI.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;4-встреченные-проблемы&#34;&gt;4. Встреченные проблемы&lt;/h2&gt;
+&lt;h3 id=&#34;41-yarn-history-server-не-отображает-отработанные-задачи-после-включения-kerberos&#34;&gt;4.1. YARN History Server не отображает отработанные задачи после включения Kerberos&lt;/h3&gt;
+&lt;h4 id=&#34;411-симптомы&#34;&gt;4.1.1. Симптомы&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;На странице YARN History Server пустая таблица задач:&lt;/p&gt;
+ &lt;center&gt;&lt;img src=&#34;empty_job_history_yarn.png&#34; width=500px&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;В логах записи:&lt;/p&gt;
+ &lt;pre&gt;
+ HistoryFileManager
+ Error while trying to scan the directory hdfs://test1:8020/user/history/done_intermediate/eugene
+ org.apache.hadoop.security.AccessControlException: Permission denied: user=mapred, access=READ_EXECUTE, inode=&#34;/user/history/done_intermediate/eugene&#34;:eugene:hadoop:drwxrwx---
+ ...
+ Caused by: org.apache.hadoop.ipc.RemoteException(org.apache.hadoop.security.AccessControlException): Permission denied: user=mapred, access=READ_EXECUTE, inode=&#34;/user/history/done_intermediate/eugene&#34;:eugene:hadoop:drwxrwx---
+ &lt;/pre&gt;
+ &lt;pre&gt;
+ AggregatedLogDeletionService
+ Could not read the contents of hdfs://test1/tmp/logs/eugene/logs Permission denied: user=mapred, access=EXECUTE, inode=&#34;/tmp/logs/eugene&#34;:eugene:hadoop:drwxrwx---
+ &lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;412-сбор-информации&#34;&gt;4.1.2. Сбор информации&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Проверяем права на каталоги:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;drwxr-xr-x   - hdfs supergroup        0 2021-07-21 16:37 /
+
+# Ветка каталогов, где создаётся временный каталог с файлами выполняющегося задания. Информация не удаляется?
+drwxrwxrwt   - hdfs supergroup        0 2021-07-28 10:23 /tmp
+drwxrwxrwt   - mapred hadoop          0 2021-05-07 18:43 /tmp/logs
+
+# Ветка хранения истории yarn и spark заданий - /user/history.
+drwxr-xr-x   - hdfs supergroup        0 2021-07-12 16:09 /user
+drwxrwxrwx   - mapred hadoop          0 2021-06-30 15:15 /user/history
+
+# Ветка done_intermediate/, где сохраняются файлы заданиями между /tmp/logs/ и /user/history/done/. Зачем? Пока не знаю.
+drwxrwxrwt   - mapred hadoop          0 2021-07-30 10:56 /user/history/done_intermediate
+drwxrwx---   - eugene hadoop      0 2021-07-30 10:56 /user/history/done_intermediate/eugene
+
+-rwxrwx---   3 eugene hadoop      56883 2021-07-30 10:56 /user/history/done_intermediate/eugene/job_16...SUC...7.jhist
+-rwxrwx---   3 eugene hadoop        453 2021-07-30 10:56 /user/history/done_intermediate/eugene/job_16...1.summary
+-rwxrwx---   3 eugene hadoop     222521 2021-07-30 10:56 /user/history/done_intermediate/eugene/job_16...1_conf.xml
+
+# Ветка done/, где сохраняются завершённые задания. Срок хранение по умолчанию 7 дней?
+drwxrwx--x   - mapred hadoop          0 2021-04-22 21:55 /user/history/done
+drwxrwx--x   - mapred hadoop          0 2021-08-01 12:56 /user/history/done/2021/08/01/000000
+-rwxrwx---  3 eugenetest hadoop  56814 2021-08-01 12:33 /user/history/done/2021/08/01/000000/job_16...SUС...56.jhist
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Изначальная УЗ &amp;lsquo;mapred&amp;rsquo;, ещё до включения Kerberos, являлась участником локальной группы &amp;lsquo;hadoop&amp;rsquo;, поэтому имела доступ каталогам с группой-владельцем  &amp;lsquo;hadoop&amp;rsquo;, типа &lt;code&gt;/user/history/done_intermediate/eugene&lt;/code&gt;. Но, похоже,  после включения Kerberos, бывшая УЗ mapred становится отображением kerberos-УЗ &amp;lsquo;&lt;a href=&#34;mailto:mapred@TEST.LAN&#34;&gt;mapred@TEST.LAN&lt;/a&gt;&amp;rsquo;. А так как новая УЗ &amp;lsquo;&lt;a href=&#34;mailto:mapred@TEST.LAN&#34;&gt;mapred@TEST.LAN&lt;/a&gt;&amp;rsquo; не является участником LDAP-группы &amp;lsquo;hadoop&amp;rsquo; (такой группы вообще нет во FreeIPA, то и доступ к каталогам с группой-владельцем &amp;lsquo;hadoop&amp;rsquo; перестаёт работать.&lt;br&gt;
+Получим тикет для УЗ mapred и посмотрим членство в группах:&lt;br&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# klist -kt /var/run/cloudera-scm-agent/process/1729-yarn-JOBHISTORY/mapred.keytab&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Keytab name: FILE:/var/run/cloudera-scm-agent/process/1729-yarn-JOBHISTORY/mapred.keytab
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;KVNO Timestamp           Principal
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;---- ------------------- ------------------------------------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 HTTP/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 HTTP/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 HTTP/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 HTTP/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 HTTP/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 HTTP/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 mapred/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 mapred/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 mapred/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 mapred/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 mapred/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; 30.07.2021 12:45:11 mapred/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# kinit -kt /var/run/cloudera-scm-agent/process/1729-yarn-JOBHISTORY/mapred.keytab mapred/dev-hbr91p.test.lan@TEST.LAN&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# klist&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Ticket cache: FILE:/tmp/krb5cc_0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Default principal: mapred/dev-hbr91p.test.lan@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Valid starting       Expires              Service principal
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;01.08.2021 13:46:45  02.08.2021 13:46:45  krbtgt/TEST.LAN@TEST.LAN
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        renew &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;until&lt;/span&gt; 08.08.2021 13:46:45
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# hdfs groups&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mapred/dev-hbr91p.test.lan@TEST.LAN :
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# id mapred&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;uid&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;993&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;mapred&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;gid&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;989&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;mapred&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;groups&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;989&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;mapred&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;,991&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;hadoop&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;В последних строках листинга видно, что kerberos-УЗ &amp;lsquo;&lt;a href=&#34;mailto:mapred/dev-hbr91p.test.lan@TEST.LAN&#34;&gt;mapred/dev-hbr91p.test.lan@TEST.LAN&lt;/a&gt;&amp;rsquo; не имеет членства в какой-либо группе, тогда как локальная группа &amp;lsquo;mapred&amp;rsquo; на хосте &amp;lsquo;dev-hbr91p.test.lan&amp;rsquo; принимает участие в группе &amp;lsquo;hadoop&amp;rsquo;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Во FreeIPA не наблюдаются пользователи и группы, которые бы отображались в такие-же на кластере.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;413-лечение&#34;&gt;4.1.3. Лечение&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strike&gt;Необходимо добавить во FreeIPA УЗ и группы для отображения их на соответствующие УЗ и группы Хадупа.&lt;/strike&gt;&lt;/li&gt;
+&lt;li&gt;Это произошло после включения прямого LDAP Mapping в сервисе HDFS, тогда как правильней не включать &amp;lsquo;org.apache.hadoop.security.LdapGroupsMapping&amp;rsquo;, а оставить использование стандартной &amp;lsquo;org.apache.hadoop.security.ShellBasedUnixGroupsMapping&amp;rsquo; с авторизацией во FreeIPA через SSSD.&lt;/li&gt;
+&lt;li&gt;В &lt;code&gt;/etc/sssd/sssd.conf&lt;/code&gt; добавить фильтрацию Hadoop&amp;rsquo;овских УЗ и групп из LDAP в секции [nss]:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[nss]
+filter_groups = root,mysql,hadoop,yarn,hdfs,mapred,kms,httpfs,hbase,hive,sentry,spark,solr,sqoop,oozie,hue,flume,impala,llama,postgres,sqoop2,kudu,kafka,accumulo,zookeeper,cloudera-scm,keytrustee
+filter_users = root,mysql,cloudera-scm,zookeeper,yarn,hdfs,mapred,kms,httpfs,hbase,hive,sentry,spark,solr,sqoop,oozie,hue,flume,impala,llama,sqoop2,postgres,kudu,kafka,accumulo,keytrustee
+reconnection_retries = 3
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
 
       </description>
     </item>

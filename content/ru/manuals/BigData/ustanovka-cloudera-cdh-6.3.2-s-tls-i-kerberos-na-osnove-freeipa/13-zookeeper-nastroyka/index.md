@@ -17,8 +17,8 @@ slug: zookeeper-nastroyka
 2021-07-09
 
 ## Настройка TLS для ZooKeeper
-> <span style="color: red">Напомню, что перед включением TLS-настроек для Zookeeper'а должен быть включён TLS для Firehose Debug Server в Cloudera Manager. Иначе Zookeeper будет работать, но статус ролей перестаёт отображаться корректно и высвечивается ошибка "Quorum Membership".</span>
-![](/img/zookeeper-nastroyka/zookeeper.png)
+> <span style="color: red">Напомню, что перед включением TLS-настроек для Zookeeper'а должен быть включён TLS для «Firehose Debug Server» в Cloudera Manager. Иначе Zookeeper будет работать, но статус ролей перестаёт отображаться корректно и высвечивается ошибка "Quorum Membership".</span>
+    <center><img src="zookeeper.png" style="width: 400px"></center>
 
 1. В настройках сервиса ZooKeeper, используя фильтр по слову 'JMX', изменяем следующие параметры:
 <table>

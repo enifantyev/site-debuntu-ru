@@ -16,10 +16,10 @@ slug: hdfs-nastroyka
 
 2021-07-09&nbsp;&ndash;&nbsp;2021-10-15
 
-## Enable High Availability
+## 1. Enable High Availability
 [Enabling HDFS HA](https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_hag_hdfs_ha_enabling.html)
 
-1. В настройках сервиса HDFS, используя фильтр по слову &laquo;dfs.journalnode.edits.dir&raquo;, изменяем следующий параметр:
+1. В настройках сервиса HDFS, используя фильтр по слову «dfs.journalnode.edits.dir», изменяем следующий параметр:
 <table>
 <tr>
 <th>Property</th><th>Value</th><th>Description</th>
@@ -35,23 +35,23 @@ slug: hdfs-nastroyka
 
 2. Нажимаем Save Changes.
 3. На странице службы HDFS, через кнопку Actions, запускаем wizard включения HA:
-    <center><img src="/img/hdfs-nastroyka/img14-1.png" style="height:500px"></center>
+    <center><img src="img14-1.png" style="height:500px"></center>
 4. **Getting Started.**
     Задаём уникальное имя для Nameservice:
-    <center><img src="/img/hdfs-nastroyka/img14-2.png" style="width:600px"></center>
+    <center><img src="img14-2.png" style="width:600px"></center>
 5. **Assign Roles**.<br>
     JournalNodes должны работать на хостах с такими же hardware specification, как NameNodes. Cloudera рекомендует поместить две JournalNode на те же хосты с NameNodes, а третий JournalNode на хост с похожими ресурсами, таким как JobTracker.<br>
     Распределяем роли:
-    <center><img src="/img/hdfs-nastroyka/img14-3.png" style="width:600px"></center>
+    <center><img src="img14-3.png" style="width:600px"></center>
 6. **Review Changes**.<br>
     Знакомимся с предварительными результатами и указываем каталог для JournalNode `/data/dfs/jn`:
-    <center><img src="/img/hdfs-nastroyka/img14-4.png" style="width:600px"></center>
+    <center><img src="img14-4.png" style="width:600px"></center>
 7. **Command Details**.
-    <center><img src="/img/hdfs-nastroyka/img14-5.png" style="width:600px"></center>
+    <center><img src="img14-5.png" style="width:600px"></center>
 8. **Final Steps**.
-    <center><img src="/img/hdfs-nastroyka/img14-6.png" style="width:300px"></center>
+    <center><img src="img14-6.png" style="width:300px"></center>
 
-## Настройка LDAP-аутентификации в HDFS
+## 2. Настройка LDAP-аутентификации в HDFS
 {{% alert title="⚠ Описание настройки уже в процессе переработки." color="warning" %}}
 Важно пересмотреть эту настройку прямого подключения Hadoop к LDAP-каталогу. Нужно оставить использование `org.apache.hadoop.security.ShellBasedUnixGroupsMapping`, так как прозрачное подключение к LDAP на машинах введённых в домен уже реализовано через SSSD.
 
@@ -65,7 +65,7 @@ slug: hdfs-nastroyka
 {{% /pageinfo %}}
 
 {{% pageinfo %}}
-Полезно в /etc/sssd/sssd.conf добавить фильтрацию Hadoop'овских УЗ и групп из LDAP в секции [nss], иначе одноимённая доменная УЗ возобладает преимуществом и нарушит работу hadoop-кластера.
+Полезно в `/etc/sssd/sssd.conf` добавить фильтрацию Hadoop'овских УЗ и групп из LDAP в секции '[nss]', иначе одноимённая доменная УЗ возобладает преимуществом и нарушит работу hadoop-кластера.
 
 ```
 [nss]
@@ -78,7 +78,7 @@ reconnection_retries = 3
 - [⚠ YARN History Server не отображает отработанные задачи после включения Kerberos](/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka)
 {{% /pageinfo %}}
 
-1. В настройках службы HDFS, используя фильтр по слову &laquo;hadoop.security.group.mapping.ldap.ssl&raquo;, изменяем следующие параметры:
+1. В настройках службы HDFS, используя фильтр по слову «hadoop.security.group.mapping.ldap.ssl», изменяем следующие параметры:
 <table>
 <tr>
 <th>Property</th><th>Value</th><th>Description</th>
@@ -194,7 +194,7 @@ For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of
 
 </details>
 
-## Создание группы для доступа в HDFS с правами superuser
+## 3. Создание группы для доступа в HDFS с правами superuser
 {{% pageinfo %}}
 Проверено в кластере TEST2 в домене test2.lan.
 
@@ -215,7 +215,7 @@ hdfs groups eugene
 eugene : eugene dom_admins test01_yarn_admins test01_hbase_su test01_hdfs_su test01_superadmins test01_sentry_admins test01_hue_admins
 {{% /pageinfo %}}
 
-### Добавление группы во FreeIPA
+### 3.1. Добавление группы во FreeIPA
 Чтобы иметь возможность, например, создавать в HDFS home-каталоги для пользователей, нам нужен доступ к HDFS-superuser аккаунту. Напомню, что CDH автоматически создаёт HDFS superuser аккаунт&nbsp;&mdash;&nbsp;'hdfs'&nbsp;&mdash;&nbsp;на каждом узле кластера в процессе первичной инстралляции. Но после включения Kerberos для HDFS служб, мы теряем доступ к использованию `sudo -u hdfs`. Поэтому, мы создадим в IPA posix-группу 'test1_hdfs_su', укажем её в соответствующей настройке HDFS-сервиса, в результате чего участники этой группы, а также участники подгрупп, возобладают правами superuser'а в HDFS.
 
 1. Добавление группы во FreeIPA. Так как установка кластера производится с машины, домен которой отличен от домена настраиваемых машин, то вновь используем ansible:
@@ -244,7 +244,7 @@ Added group "test1_hdfs_su"
 
 </details>
 
-### Указание Non-Default Superuser Group
+### 3.2. Указание Non-Default Superuser Group
 1. В настройках службы HDFS, используя фильтр по слову &laquo;dfs.permissions.superusergroup&raquo;, изменяем следующий параметр:
 <table>
 <tr>
@@ -261,7 +261,7 @@ Added group "test1_hdfs_su"
 
 2. Нажимаем **Save Changes**.
 
-## Configuring Encrypted Transport for HDFS
+## 4. Configuring Encrypted Transport for HDFS
 Перед настройкой передачи зашифрованных данных HDFS необходимо включить Kerberos. См. Инструкции в разделе «Аутентификация».
 
 1. В настройках службы HDFS, используя фильтр «Protection», изменяем следующие параметры:
@@ -275,9 +275,9 @@ Added group "test1_hdfs_su"
 </td>
 <td>
 <span style="color: gray">HDFS (Service-Wide)</span><br>
-○ Authentication<br>
-○ Integrity<br>
-<span style="color: blue">◉ Privacy</span></td>
+○&nbsp;Authentication<br>
+○&nbsp;Integrity<br>
+<span style="color: blue">◉&nbsp;Privacy</span></td>
 <td>SASL protection mode for secured connections to the DataNodes when reading or writing data. Value is the type of SASL protection to be used for secured connections to the DataNode when reading or writing block data. Possible values are 'authentication', 'integrity' and 'privacy'. <b>authentication</b> means authentication only and no integrity or privacy; <b>integrity</b> implies that only authentication and integrity are enabled; and <b>privacy</b> implies all of authentication, integrity and privacy are enabled. If "Enable Data Transfer Encryption" is set to true, then it supersedes the setting for this parameter and enforces that all connections must use a specialized encrypted SASL handshake. This property is ignored for connections to a DataNode listening on a privileged port. In this case, it is assumed that the use of a privileged port establishes sufficient trust.</td>
 </tr>
 <tr>
@@ -285,9 +285,9 @@ Added group "test1_hdfs_su"
 <i>hadoop.rpc.protection</i>
 </td>
 <td>
-○ authentication<br>
-○ integrity<br>
-<span style="color: blue">◉ privacy</span></td>
+○&nbsp;authentication<br>
+○&nbsp;integrity<br>
+<span style="color: blue">◉&nbsp;privacy</span></td>
 <td>Quality of protection for secured RPC connections between NameNode and HDFS clients. For effective RPC protection, enable Kerberos authentication.</td>
 </tr>
 <tr>
@@ -309,10 +309,10 @@ Added group "test1_hdfs_su"
 <i>dfs.encrypt.data.transfer.algorithm</i>
 </td>
 <td>
-<span style="color: gray">HDFS (Service-Wide)</span>
-○ 3des<br>
-○ rc4<br>
-<span style="color: blue">◉ AES/CTR/NoPadding</span></td>
+<span style="color: gray">HDFS (Service-Wide)</span><br>
+○&nbsp;3des<br>
+○&nbsp;rc4<br>
+<span style="color: blue">◉&nbsp;AES/CTR/NoPadding</span></td>
 <td>Algorithm to encrypt data transfer between DataNodes and clients, and among DataNodes. If 3des or rc4 are chosen, the entire communication is encrypted with that algorithm. In CDH 5.4 and higher, if AES/CTR/NoPadding is chosen, 3des is used for the initial key exchange, and then AES/CTR/NoPadding is used for the transfer of data. This is the most secure option, and is recommended for clusters running CDH 5.4 or higher. It also requires that the "openssl-devel" package be installed on all machines in the cluster. When this parameter is changed, a full, nonrolling restart of the cluster must be performed.</td>
 </tr>
 </table>
@@ -320,11 +320,11 @@ Added group "test1_hdfs_su"
 3. Нажимаем **Save Changes**.
 4. ![](/img/clouderabutton.png)Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.
 
-## Включение ACL для HDFS
+## 5. Включение ACL для HDFS
 В настройках роли HDFS, используя фильтр «dfs.namenode.acls.enabled», включаем параметр «Enable Access Control Lists».
-<center><img src="/img/hdfs-nastroyka/img14-7.png"></center>
+<center><img src="img14-7.png"></center>
 
-## Настройка TLS для HttpFS
+## 6. Настройка TLS для HttpFS
 1. В настройках службы HDFS, используя фильтр «HttpFS TLS», изменяем следующие параметры:
 <table>
 <tr>
@@ -368,7 +368,7 @@ Added group "test1_hdfs_su"
 <td>The password for the HttpFS TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
 </tr>
 </table>
-<center><img src="/img/hdfs-nastroyka/img14-8.png" style="width:500px"></center>
+<center><img src="img14-8.png" style="width:500px"></center>
 
 2. Нажимаем **Save Changes**.
 {{% pageinfo %}}
@@ -377,7 +377,7 @@ Connect to the HttpFS Web UI using TLS/SSL (HTTPS)
 Use https://<httpfs_server_hostname>:14000/webhdfs/v1/, though most browsers should automatically redirect you if you use http://<httpfs_server_hostname>:14000/webhdfs/v1/
 {{% /pageinfo %}}
 
-## Настройка HSTS для HDFS
+## 7. Настройка HSTS для HDFS
 Настройка строгой транспортной безопасности HTTP (HSTS) для HDFS гарантирует, что веб-браузер не загружает служебную информацию с помощью HTTP. Кроме того, все попытки загрузить информацию с помощью HTTP будут автоматически преобразованы в HTTPS.
 
 Perform the following steps to configure HSTS for HDFS:
@@ -392,6 +392,6 @@ Perform the following steps to configure HSTS for HDFS:
 </property>
 ```
 4. If required, configure additional headers by using the safety value specified in the previous step for the hadoop.http.header.http-header property.
-    <center><img src="/img/hdfs-nastroyka/img14-9.png" style="width:500px"></center>
+    <center><img src="img14-9.png" style="width:500px"></center>
 5. Нажимаем **Save Changes**.
 6. ![](/img/clouderabutton.png)Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.
