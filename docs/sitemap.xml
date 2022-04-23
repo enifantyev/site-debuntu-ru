@@ -982,6 +982,13 @@
   
   
   <url>
+    <loc>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</loc>
+    <lastmod>2022-03-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</loc>
     <lastmod>2021-07-09T00:00:00+00:00</lastmod>
   </url>
@@ -989,8 +996,8 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</loc>
-    <lastmod>2022-03-16T00:00:00+00:00</lastmod>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/</loc>
+    <lastmod>2021-07-02T00:00:00+00:00</lastmod>
   </url>
   
   
@@ -1150,6 +1157,8 @@
     <loc>https://debuntu.ru/</loc>
     <lastmod>2022-04-04T00:00:00+00:00</lastmod>
   </url>
+  
+  
   
   
   

@@ -1,7 +1,7 @@
 ---
 title: "15. YARN. Настройка"
 date: 2021-07-09
-weight: 14
+weight: 15
 description: >
   В этой части описывается настройка YARN.
 tags:

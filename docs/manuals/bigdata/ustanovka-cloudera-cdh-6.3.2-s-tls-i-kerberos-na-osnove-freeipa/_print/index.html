@@ -158,7 +158,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.affeb79bd324968f002aaaf781097f7c.json"
+  data-offline-search-index-json-src="/offline-search-index.b3520e05ec57d2570698af55754b9423.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -277,6 +277,14 @@ This is the multi-page printable view of this section.
     
 	
 <li>10: <a href="#pg-23ae71df5bf2f1fe0278c7006903eb72">15. YARN. Настройка</a></li>
+
+
+    
+  
+    
+    
+	
+<li>11: <a href="#pg-0334f6e8937dbac05b5a9db735c71b10">16. HBase. Установка и настройка</a></li>
 
 
     
@@ -1450,7 +1458,7 @@ filter_users = root,mysql,cloudera-scm,zookeeper,yarn,hdfs,mapred,kms,httpfs,hba
 reconnection_retries = 3
 </code></pre><p>Возможно, что полезно указывать, если используется прямое подключение к LDAP:</p>
 <ul>
-<li><a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka">⚠ YARN History Server не отображает отработанные задачи после включения Kerberos</a></li>
+<li><a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/#41-yarn-history-server-%D0%BD%D0%B5-%D0%BE%D1%82%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B0%D0%B5%D1%82-%D0%BE%D1%82%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8-%D0%BF%D0%BE%D1%81%D0%BB%D0%B5-%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D1%8F-kerberos">⚠ YARN History Server не отображает отработанные задачи после включения Kerberos</a></li>
 </ul>
 
 </div>
@@ -2044,6 +2052,290 @@ filter_users = root,mysql,cloudera-scm,zookeeper,yarn,hdfs,mapred,kms,httpfs,hba
 reconnection_retries = 3
 </code></pre></li>
 </ol>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-0334f6e8937dbac05b5a9db735c71b10">11 - 16. HBase. Установка и настройка</h1>
+    <div class="lead">В этой части описывается настройка HBase.</div>
+	<h2 id="использованные-материалы">Использованные материалы</h2>
+<ol>
+<li><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cm_sg_hadoop_ssl_cm.html">Manually Configuring TLS/SSL Encryption for CDH Services</a></li>
+</ol>
+<h2 id="1-добавление-сервиса-hbase">1. Добавление сервиса HBase</h2>
+<ol>
+<li>В консоли Cloudera Manager в меню выбираем «Add Service»:
+ <center><img src="img-16-1.png" width=300px></center>
+</li>
+<li>Выбираем HBase.</li>
+<li>Распределяем роли. Хосты с именем hbr под HBase Region Servers&hellip;
+ <center><img src="img-16-2.png" width=500px></center>
+</li>
+<li>На следующем шаге оставляем настройки без изменений:
+ <center><img src="img-16-3.png" width=500px></center>
+</li>
+<li>Ждём добавления сервиса в кластер.</li>
+<li>После успешного завершения процесса заканчиваем мастер нажатием на &lsquo;Finish&rsquo;.</li>
+<li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
+</ol>
+<h2 id="2-перенастройка-размещения-logов">2. Перенастройка размещения log&rsquo;ов</h2>
+<ol>
+<li>В настройках HBase, используя фильтр &lsquo;/var/&rsquo;, изменяем следующие параметры, добавляя &lsquo;/data&rsquo; вместо &lsquo;/var&rsquo;:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>HBase REST Server Log Directory</b><br>
+<i>hadoop.log.dir</i>
+</td>
+<td><span style="color: blue"><code>/data/log/hbase</code></span></td>
+<td>Directory where HBase REST Server will place its log files.</td>
+</tr>
+<tr>
+<td><b>HBase Thrift Server Log Directory</b><br>
+<i>hadoop.log.dir</i>
+</td>
+<td><span style="color: blue"><code>/data/log/hbase</code></span></td>
+<td>Directory where HBase Thrift Server will place its log files.</td>
+</tr>
+<tr>
+<td><b>Master Log Directory</b><br>
+<i>hadoop.log.dir</i>
+</td>
+<td><span style="color: blue"><code>/data/log/hbase</code></span></td>
+<td>Directory where Master will place its log files.</td>
+</tr>
+<tr>
+<td><b>RegionServer Log Directory</b><br>
+<i>hadoop.log.dir</i>
+</td>
+<td><span style="color: blue"><code>/data/log/hbase</code></span></td>
+<td>Directory where RegionServer will place its log files.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Change</strong>.</li>
+</ol>
+<h2 id="3-настройка-tls-для-hbase">3. Настройка TLS для HBase</h2>
+<h3 id="31-прежде-чем-вы-начнете">3.1. Прежде чем вы начнете</h3>
+<ul>
+<li>Перед включением TLS убедитесь, что хранилища ключей, содержащие сертификаты, привязанные к соответствующим доменным именам, должны быть доступны на всех хостах, на которых работает хотя бы одна роль демона HBase.
+Хранилища ключей для HBase должны принадлежать группе hbase и иметь разрешения 0440 (то есть быть доступными для чтения владельцем и группой).</li>
+<li>Вы должны указать абсолютные пути к файлам хранилища ключей и доверенных сертификатов. Эти настройки применяются ко всем хостам, на которых выполняются роли демонов службы HBase. Следовательно, выбранные вами пути должны быть действительны на всех хостах.</li>
+<li>Cloudera Manager поддерживает конфигурацию TLS для HBase на уровне сервиса. Убедитесь, что вы указали абсолютные пути к файлам хранилища ключей и доверенных сертификатов. Эти настройки применяются ко всем хостам, на которых выполняются роли демонов рассматриваемой службы. Следовательно, выбранные вами пути должны быть действительны на всех хостах.</li>
+<li>Следствием этого является то, что имена файлов хранилища ключей для данной службы должны быть одинаковыми на всех хостах. Если, например, вы получили отдельные сертификаты для демонов HBase на хостах node1.example.com и node2.example.com, вы могли выбрать для хранения этих сертификатов файлы с именами hbase-node1.keystore и hbase-node2.keystore ( соответственно). При развертывании этих хранилищ ключей вы должны дать им одинаковое имя на целевом хосте, например, hbase.keystore.</li>
+</ul>
+<h3 id="32-настройка-tls-для-hbase">3.2. Настройка TLS для HBase</h3>
+<p>В настройках службы HBase, используя фильтр «TLS», изменяем следующие параметры:</p>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Web UI TLS/SSL Encryption Enabled</b><br>
+<i>hadoop.ssl.enabled, hbase.ssl.enabled</i>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Enable TLS/SSL encryption for the HBase Master, RegionServer, Thrift Server, and REST Server web UIs.</td>
+</tr>
+<tr>
+<td><b>HBase TLS/SSL Server JKS Keystore File Location</b><br>
+<i>ssl.server.keystore.location</i>
+</td>
+<td><span style="color: blue"><code>/opt/cloudera/security/pki/server.jks</code></span></td>
+<td>Path to the keystore file containing the server certificate and private key used for encrypted web UIs.</td>
+</tr>
+<tr>
+<td><b>HBase TLS/SSL Server JKS Keystore File Password</b><br>
+<i>ssl.server.keystore.password</i>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>Password for the server keystore file used for encrypted web UIs.</td>
+</tr>
+<tr>
+<td><b>HBase TLS/SSL Server JKS Keystore Key Password</b><br>
+<i>ssl.server.keystore.keypassword</i>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>Password that protects the private key contained in the server keystore used for encrypted web UIs.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Настройка TLS для HBase REST Server.</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Enable TLS/SSL for HBase REST Server</b><br>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Encrypt communication between clients and HBase REST Server using Transport Layer Security (TLS).</td>
+</tr>
+<tr>
+<td><b>HBase REST Server TLS/SSL Server JKS Keystore File Location</b><br>
+</td>
+<td><span style="color: blue"><code>/opt/cloudera/security/pki/server.jks</code></span></td>
+<td>The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when HBase REST Server is acting as a TLS/SSL server. The keystore must be in JKS format.file.</td>
+</tr>
+<tr>
+<td><b>HBase REST Server TLS/SSL Server JKS Keystore File Password</b><br>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password for the HBase REST Server JKS keystore file.</td>
+</tr>
+<tr>
+<td><b>HBase REST Server TLS/SSL Server JKS Keystore Key Password</b><br>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password that protects the private key contained in the JKS keystore used when HBase REST Server is acting as a TLS/SSL server.</td>
+</tr>
+</table>
+<ol start="3">
+<li>Настройка TLS для HBase Thrift Server.</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Enable TLS/SSL for HBase Thrift Server over HTTP</b><br>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Encrypt communication between clients and HBase Thrift Server over HTTP using Transport Layer Security (TLS).</td>
+</tr>
+<tr>
+<td><b>HBase Thrift Server over HTTP TLS/SSL Server JKS Keystore File Location</b><br>
+</td>
+<td><span style="color: blue"><code>/opt/cloudera/security/pki/server.jks</code></span></td>
+<td>Path to the TLS/SSL keystore file (in JKS format) with the TLS/SSL server certificate and private key. Used when HBase Thrift Server over HTTP acts as a TLS/SSL server.</td>
+</tr>
+<tr>
+<td><b>HBase Thrift Server over HTTP TLS/SSL Server JKS Keystore File Password</b><br>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>Password for the HBase Thrift Server JKS keystore file.</td>
+</tr>
+<tr>
+<td><b>HBase Thrift Server over HTTP TLS/SSL Server JKS Keystore Key Password</b><br>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>Password that protects the private key contained in the JKS keystore used when HBase Thrift Server over HTTP acts as a TLS/SSL server.</td>
+</tr>
+</table>
+<ol start="4">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+<h2 id="4-configuring-encrypted-transport-for-hbase">4. Configuring Encrypted Transport for HBase</h2>
+<ol>
+<li>В настройках службы HBase, используя категорию &lsquo;Security&rsquo;, изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>HBase Secure Authentication</b><br>
+<i>hbase.security.authentication</i>
+</td>
+<td>
+<span style="color: gray">HBase (Service-Wide)</span><br>
+○&nbsp;simple<br>
+<span style="color: blue">◉&nbsp;kerberos</span></td>
+<td>Choose the authentication mechanism used by HBase.</td>
+</tr>
+<tr>
+<td><b>HBase Secure Authorization</b><br>
+<i>hbase.security.authorization</i>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Enable HBase authorization.</td>
+</tr>
+<tr>
+<td><b>HBase Thrift Authentication</b><br>
+<i>hbase.thrift.security.qop</i>
+</td>
+<td>
+<span style="color: gray">HBase (Service-Wide)</span><br>
+○&nbsp;none<br>
+○&nbsp;auth<br>
+○&nbsp;auth-int<br>
+<span style="color: blue">◉&nbsp;auth-conf</span></td>
+<td>
+<p>If this is set, HBase Thrift Server authenticates its clients. HBase Proxy User Hosts and Groups should be configured to allow specific users to access HBase through Thrift Server.</p>
+<p>Установка этого параметра вызывает предупреждение в логах: "Use authentication/integrity/privacy as value for rpc protection configurations instead of auth/auth-int/auth-conf."</p>
+<p><span style="color: red">Возможно правильно оставить в 'none'</span>.</p></td>
+</tr>
+<tr>
+<td><b>HBase REST Authentication</b><br>
+<i>hbase.rest.authentication.type</i>
+</td>
+<td>
+<span style="color: gray">HBase (Service-Wide)</span><br>
+<br>
+○&nbsp;simple
+<span style="color: blue">◉&nbsp;kerberos</span></td>
+<td>If this is set to "kerberos", HBase REST Server will authenticate its clients. HBase Proxy User Hosts and Groups should be configured to allow specific users to access HBase through REST Server.</td>
+</tr>
+<tr>
+<td><b>HBase Transport Security</b><br>
+<i>hbase.rpc.protection</i>
+</td>
+<td>
+<span style="color: gray">HBase (Service-Wide)</span><br>
+○&nbsp;authentication<br>
+○&nbsp;integrity<br>
+<span style="color: blue">◉&nbsp;privacy</span></td>
+<td>Configure the type of encrypted communication to be used with RPC.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+<h2 id="7-настройка-аутентификации">7. Настройка аутентификации</h2>
+<p>Дополнительно разобраться с этой темой.</p>
+<p><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_sg_hbase_authorization.html">https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_sg_hbase_authorization.html</a></p>
+<ol>
+<li>В настройках службы HBase изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>HBase Service Advanced Configuration Snippet (Safety Valve) for hbase-site.xml</b><br>
+</td>
+<td>
+<b>Name:</b><br>
+<span style="color: blue">hbase.security.exec.permission.checks</span><br>
+<b>Value:</b><br>
+<span style="color: blue">true</span><br>
+<b>Description:</b><br>
+<span style="color: blue">Without this option, all users will continue to have access to execute endpoint coprocessors.</span>
+</td>
+<td>For advanced use only, a string to be inserted into <b>hbase-site.xml</b>. Applies to configurations of all roles in this service except client configuration.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+<h2 id="5-настройка-доступа-к-hbase-таблицам-из-hue">5. Настройка доступа к HBase-таблицам из Hue</h2>
+<p>По умолчанию, HBase Thrift Server Compact Protocol включён, что мешает доступу к HBase-таблицам из браузера Hue. При попытке увидеть таблицы HBase из Hue, выводится транспарант &lsquo;Api Error: TSocket read 0 bytes&rsquo;. Решение нашёл здесь: <a href="https://gethue.com/how-to-create-a-hbase-table-on-kerberized-hadoop-clusters/">How to create a HBase table on Kerberized Hadoop clusters</a>.</p>
+<p>1.В настройках службы HBase изменяем/добавляем следующие параметры:</p>
 
 </div>
 

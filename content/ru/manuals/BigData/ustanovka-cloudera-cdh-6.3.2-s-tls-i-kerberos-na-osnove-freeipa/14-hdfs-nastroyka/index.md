@@ -75,7 +75,7 @@ reconnection_retries = 3
 ```
 
 Возможно, что полезно указывать, если используется прямое подключение к LDAP:
-- [⚠ YARN History Server не отображает отработанные задачи после включения Kerberos](/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka)
+- [⚠ YARN History Server не отображает отработанные задачи после включения Kerberos](/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/#41-yarn-history-server-%D0%BD%D0%B5-%D0%BE%D1%82%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B0%D0%B5%D1%82-%D0%BE%D1%82%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8-%D0%BF%D0%BE%D1%81%D0%BB%D0%B5-%D0%B2%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D1%8F-kerberos)
 {{% /pageinfo %}}
 
 1. В настройках службы HDFS, используя фильтр по слову «hadoop.security.group.mapping.ldap.ssl», изменяем следующие параметры:
