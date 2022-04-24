@@ -7597,14 +7597,14 @@ SASL configuration failed: javax.security.auth.login.LoginException: Zookeeper c
 &lt;td&gt;&lt;b&gt;GATEWAY Lineage Log Directory&lt;/b&gt;&lt;br&gt;
 &lt;i&gt; &lt;/i&gt;
 &lt;/td&gt;
-&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/data&lt;/span&gt;/log/spark/lineage&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;span style=&#34;color: blue&#34;&gt;/data&lt;/span&gt;/log/spark/lineage&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;The directory in which GATEWAY lineage log files are written. If changed from the default, Cloudera Manager will not be able to provide lineage information without restarting the Cloudera Manager Agent(s).&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;b&gt;History Server Log Directory&lt;/b&gt;&lt;br&gt;
 &lt;i&gt;log_dir&lt;/i&gt;
 &lt;/td&gt;
-&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/data&lt;/span&gt;/log/spark&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&lt;span style=&#34;color: blue&#34;&gt;/data&lt;/span&gt;/log/spark&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;The log directory for log files of the role History Server.&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
