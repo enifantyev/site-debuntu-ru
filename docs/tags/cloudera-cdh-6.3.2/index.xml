@@ -4718,8 +4718,207 @@ SASL configuration failed: javax.security.auth.login.LoginException: Zookeeper c
 &lt;/ol&gt;
 &lt;h2 id=&#34;1-добавление-сервиса-spark&#34;&gt;1. Добавление сервиса Spark&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;:&lt;/li&gt;
+&lt;li&gt;В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;:
+ &lt;center&gt;&lt;img src=&#34;spark-1.png&#34; style=&#34;width:300px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;Выбираем Spark.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Select Dependencies&lt;/strong&gt;.
+ &lt;center&gt;&lt;img src=&#34;spark-2.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Assign Roles&lt;/strong&gt;.&lt;br&gt;
+Распределяем роли. History Server размещаем на одном из дополнительных aux узлов, а шлюзы на dn-узлах и других по необходимости:
+ &lt;center&gt;&lt;img src=&#34;spark-3.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;Сразу включаем TLS для роли.&lt;/li&gt;
 &lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable TLS/SSL for History Server&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;spark.ssl.historyServer.enabled&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Encrypt communication between clients and History Server using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;History Server TLS/SSL Server JKS Keystore File Location&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;spark.ssl.historyServer.keyStore&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/server.jks&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when History Server is acting as a TLS/SSL server. The keystore must be in JKS format.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;History Server TLS/SSL Server JKS Keystore File Password&lt;/b&gt;&lt;br&gt;
+&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;The password for the History Server JKS keystore file.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;center&gt;&lt;img src=&#34;spark-4.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Наблюдаем добавление Spark&amp;rsquo;а.&lt;/li&gt;
+&lt;li&gt;Заключительный шаг мастера:
+ &lt;center&gt;&lt;img src=&#34;spark-5.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;2-перенастройка-размещения-logов&#34;&gt;2. Перенастройка размещения log&amp;rsquo;ов&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках Spark, используя фильтр &amp;lsquo;/var/&amp;rsquo;, изменяем только следующие параметры, добавляя имя каталога &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;GATEWAY Lineage Log Directory&lt;/b&gt;&lt;br&gt;
+&lt;i&gt; &lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/data&lt;/span&gt;/log/spark/lineage&lt;/td&gt;
+&lt;td&gt;The directory in which GATEWAY lineage log files are written. If changed from the default, Cloudera Manager will not be able to provide lineage information without restarting the Cloudera Manager Agent(s).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;History Server Log Directory&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;log_dir&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/data&lt;/span&gt;/log/spark&lt;/td&gt;
+&lt;td&gt;The log directory for log files of the role History Server.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;3-включение-spark-encryption&#34;&gt;3. Включение Spark Encryption&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Spark изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Spark Authentication&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;spark.authenticate&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;span style=&#34;color: gray&#34;&gt; Spark (Service-Wide)&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Enable whether the Spark communication protocols do authentication using a shared secret.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable Network Encryption&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;spark.network.crypto.enabled&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;span style=&#34;color: gray&#34;&gt; Spark (Service-Wide)&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Whether to encrypt communication between Spark processes belonging to the same application. Requires authentication (spark.authenticate) to be enabled.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable I/O Encryption&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;spark.io.encryption.enabled&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;span style=&#34;color: gray&#34;&gt; Spark (Service-Wide)&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Whether to encrypt temporary shuffle and cache files stored by Spark on the local disks.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;center&gt;&lt;img src=&#34;spark-6.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+&lt;center&gt;&lt;img src=&#34;spark-7.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;включение-аутентификации-в-spark&#34;&gt;Включение аутентификации в Spark&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Spark изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable User Authentication&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;history_server_spnego_enabled&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Enables user authentication using SPNEGO (requires Kerberos), and enables access control to application history data.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Admin Users&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;spark.history.ui.admin.acls&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;eugene,user_da&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Comma-separated list of users who can view all applications when authentication is enabled.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;установка-зависимостей&#34;&gt;Установка зависимостей&lt;/h2&gt;
+&lt;p&gt;Этот шаг был ещё на этапе добавления сервиса в кластер, так что можно проигнорировать.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Spark изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HBase Service&lt;/b&gt;&lt;br&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;HBase&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Name of the HBase service that this Spark service instance depends on&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;выполнение-тестовой-задачи&#34;&gt;Выполнение тестовой задачи&lt;/h2&gt;
+&lt;p&gt;На машине с ролью &amp;lsquo;Spark Gateway&amp;rsquo; находим местоположение тестового jar-файла и выполняем его:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ find /usr -name spark-examples*
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  /usr/lib/spark/examples/jars/spark-examples_2.11-2.4.0-cdh6.3.2.jar
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ spark-submit --class org.apache.spark.examples.SparkPi  &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --master yarn &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --num-executors &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --driver-memory 512m &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --executor-memory 512m  &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --executor-cores &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  /usr/lib/spark/examples/jars/spark-examples_2.11-2.4.0-cdh6.3.2.jar
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Получаем результат:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;22/04/07 17:45:33 INFO scheduler.DAGScheduler: Job 0 finished: reduce at SparkPi.scala:38, took 1.461295 s
+Pi is roughly 3.146675733378667
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Проверяем её отображение в Spark History, Yarn History, &amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;встреченные-проблемы&#34;&gt;Встреченные проблемы&lt;/h2&gt;
+&lt;h3 id=&#34;на-странице-spark-history-server-не-отображается-история-задач&#34;&gt;На странице Spark History Server не отображается история задач&lt;/h3&gt;
+&lt;h4 id=&#34;симптомы&#34;&gt;Симптомы&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;На странице Spark History Server не видно история задач:
+ &lt;center&gt;&lt;img src=&#34;spark-8.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;В логе Spark History Server видны записи:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;FsHistoryProvider
+Unable to read log hdfs://test1/user/spark/applicationHistory/application_1627632320956_0001
+org.apache.hadoop.security.AccessControlException: Permission denied: user=spark, access=READ, inode=&amp;#34;/user/spark/applicationHistory/application_1627632320956_0001&amp;#34;:eugene:spark:-rwxrwx---
+...
+Caused by: org.apache.hadoop.ipc.RemoteException(org.apache.hadoop.security.AccessControlException): Permission denied: user=spark, access=READ, inode=&amp;#34;/user/spark/applicationHistory/application_1627632320956_0001&amp;#34;:eugene:spark:-rwxrwx---
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;сбор-данных&#34;&gt;Сбор данных&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Проверяем права на каталоги:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;drwxr-xr-x   - hdfs supergroup      0     2021-07-21 16:37 /
+drwxr-xr-x   - hdfs supergroup      0     2021-07-12 16:09 /user
+drwxr-x--x   - spark spark          0     2021-07-02 16:22 /user/spark
+drwxrwxrwt   - spark spark          0     2021-07-30 11:15 /user/spark/applicationHistory
+-rwxrwx---   3 eugene spark     45499     2021-07-30 11:15 /user/spark/applicationHistory/application_1627632320956_0001
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Исходные файлы истории создаются в &lt;code&gt;/tmp/logs/eugene/logs&lt;/code&gt;. После чего копируются в &lt;code&gt;/user/spark/applicationHistory&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ hdfs dfs -ls /tmp/logs/eugene/logs
+drwxrwx---   - eugene hadoop          0 2021-07-30 11:15 /tmp/logs/eugene/logs/application_1627632320956_0001
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;лечение&#34;&gt;Лечение&lt;/h4&gt;
 
       </description>
     </item>
