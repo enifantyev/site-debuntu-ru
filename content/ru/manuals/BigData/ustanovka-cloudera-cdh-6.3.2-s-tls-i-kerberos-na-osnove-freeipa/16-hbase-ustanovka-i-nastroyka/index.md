@@ -270,3 +270,164 @@ slug: hbase-ustanovka-i-nastroyka
 По умолчанию, HBase Thrift Server Compact Protocol включён, что мешает доступу к HBase-таблицам из браузера Hue. При попытке увидеть таблицы HBase из Hue, выводится транспарант 'Api Error: TSocket read 0 bytes'. Решение нашёл здесь: [How to create a HBase table on Kerberized Hadoop clusters](https://gethue.com/how-to-create-a-hbase-table-on-kerberized-hadoop-clusters/).
 
 1.В настройках службы HBase изменяем/добавляем следующие параметры:
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Enable HBase Thrift Http Server</b><br>
+<i>hbase.regionserver.thrift.http</i>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Use this to enable Http server usage on thrift, which is mainly needed for "doAs" functionality.</td>
+</tr>
+<tr>
+<td><b>Enable HBase Thrift Proxy Users</b><br>
+<i>hbase.thrift.support.proxyuser</i>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Use this to allow proxy users on thrift gateway, which is mainly needed for "doAs" functionality.</td>
+</tr>
+<tr>
+<td><b>Enable HBase Thrift Server Compact Protocol</b><br>
+<i>hbase.regionserver.thrift.compact</i>
+</td>
+<td><span style="color: blue">☐</span></td>
+<td>Use the TCompactProtocol instead of the default TBinaryProtocol. TCompactProtocol is a binary protocol that is more compact than the default and typically more efficient.</td>
+</tr>
+<tr>
+<td><b>Enable HBase Thrift Server Framed Transport</b><br>
+<i>hbase.regionserver.thrift.framed</i>
+</td>
+<td><span style="color: blue">☐</span></td>
+<td>Use framed transport. When using the THsHaServer or TNonblockingServer, framed transport is always used irrespective of this configuration value.</td>
+</tr>
+<tr>
+<td><b>HBase Service Advanced Configuration Snippet (Safety Valve) for hbase-site.xml</b><br>
+</td>
+<td><b>Name:&nbsp;</b><span style="color: blue">hbase.thrift.spnego.principal</span><br>
+<b>Value:&nbsp;</b><span style="color: blue">HTTP/dev-hbr91p.test.lan@TEST.LAN</span><br>
+<b>Description:&nbsp;</b><span style="color: blue">Principal of Thrift Server. Use for access from Hue.</span><br>
+<hr>
+<b>Name:&nbsp;</b><span style="color: blue">hbase.thrift.spnego.keytab.file</span><br>
+<b>Value:&nbsp;</b><span style="color: blue">hbase.keytab</span><br>
+<b>Description:&nbsp;</b><span style="color: blue">Use for access from Hue.</span>
+</td>
+<td>For advanced use only, a string to be inserted into hbase-site.xml. Applies to configurations of all roles in this service except client configuration.</td>
+</tr>
+<tr>
+<td><b>HBase Proxy User Groups</b><br>
+<i>hadoop.proxyuser.hbase.groups</i>
+</td>
+<td><span style="color: blue">*</span></td>
+<td>Comma-delimited list of groups that you want to allow the HBase user to impersonate. The default '*' allows all groups. To disable entirely, use a string that does not correspond to a group name, such as '_no_group_'. Note: This property is used only if HBase REST/Thrift Server Authentication is enabled.</td>
+</tr>
+<tr>
+<td><b>HBase Proxy User Hosts</b><br>
+<i>hadoop.proxyuser.hbase.hosts</i>
+</td>
+<td><span style="color: blue">*</span></td>
+<td>Comma-delimited list of hosts where you want to allow the HBase user to impersonate other users. The default '*' allows all hosts. To disable entirely, use a string that does not correspond to a host name, such as '_no_host'. Note: This property is used only if HBase REST/Thrift Server Authentication is enabled.</td>
+</tr>
+</table>
+
+2. Нажимаем **Save Changes**.
+
+После применения этих настроек становится возможным управлять таблицами HBase из интерфейса Hue.
+
+## 6. Создание группы для доступа в HBase с правами superuser
+1. Добавление группы во FreeIPA. Так как установка кластера производится с машины, домен которой отличен от домена настраиваемых машин, то вновь используем ansible:
+```bash
+$ ADM_USER='nifantevea' \
+ADM_PASS='JL9d]qtw$p=2=M2K=~z?|EU,' \
+CL_NAME="TEST1"          # UPPERCASE \
+CL_NAME_L=${CL_NAME,,}   # lowercase
+
+$ ansible mgm -i cluster.inv -m shell -a "echo '${ADM_PASS}' | kinit ${ADM_USER} && \
+  ipa group-add --desc='HBase superusers for cluster ${CL_NAME}' ${CL_NAME_L}_hbase_su"
+```
+
+2. В настройках службы HBase изменяем следующие параметры, указывая пользователей и/или группы (группы указываются с префиксом @):
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>HBase Superusers</b><br>
+<i>hbase.superuser</i>
+</td>
+<td><span style="color: blue">@test1_hbase_su</span> (@ — признак указания группы)<br>
+<span style="color: blue">eugene</span> (если требуется указать пользователя)
+<hr>
+Идентично командам:<br>
+<pre><code>$ echo "grant '@test1_hbase_su', 'RWXCA'" | hbase shell
+$ echo "grant 'nifantevea', 'RWXCA'" | hbase shell</code></pre>
+Но <span style="color: red">группа '@test1_hbase_su', добавленная через 'hbase.superuser', не видна в списке команды 'user_permission', в отличии от пользователя 'nifantevea'. Также, обе эти записи невозможно удалить командой 'revoke'</span>.
+</td>
+<td>List of users or groups, who are allowed full privileges, regardless of stored ACLs, across the cluster. Only used when HBase security is enabled.</td>
+</tr>
+
+</table>
+
+3. Нажимаем **Save Changes**.
+4. ![](/img/clouderabutton.png)Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.
+
+## 7. Добавление jaas.conf для HBase Thrift Server для связи с ZooKeeper'ом
+В логах HBase Thrift Server'а, например, при добавлении базы, обнаруживаются ошибки:
+```
+ClientCnxn
+SASL configuration failed: javax.security.auth.login.LoginException: Zookeeper client cannot authenticate using the 'Client' section of the supplied JAAS configuration: '/var/run/cloudera-scm-agent/process/4323-hbase-HBASETHRIFTSERVER/jaas.conf' because of a RuntimeException: java.lang.SecurityException: java.io.IOException: /var/run/cloudera-scm-agent/process/4323-hbase-HBASETHRIFTSERVER/jaas.conf (No such file or directory) Will continue connection to Zookeeper server without SASL authentication, if Zookeeper server allows it.
+```
+
+Действительно, файл `jaas.conf` для этой роли не создаётся автоматически. Я не смог найти настройки, которые помогли бы решить эту проблему, поэтому пошёл обходным путём.
+1. На узле с ролью 'HBase Thrift Server' cоздаём необходимые файлы:
+```bash
+USERNAME="eugene"
+DIR="/opt/hbase"
+PRINCIPAL="hbase"
+REALMNAME="TEST.LAN"
+
+mkdir -p $DIR
+cd $DIR
+
+ipa service-allow-retrieve-keytab $PRINCIPAL/$(hostname) --users=${USERNAME}
+ipa-getkeytab -r -p $PRINCIPAL/$(hostname) -k $DIR/$PRINCIPAL.keytab
+ipa service-disallow-retrieve-keytab $PRINCIPAL/$(hostname) --users=${USERNAME}
+
+cat << EOF > jaas.conf
+Client {
+  com.sun.security.auth.module.Krb5LoginModule required
+  useKeyTab=true
+  useTicketCache=false
+  keyTab="$DIR/$PRINCIPAL.keytab"
+  principal="$PRINCIPAL/$(hostname)@${REALMNAME}";
+};
+EOF
+
+chmod 640 $DIR/jaas.conf
+chown hbase.hbase $DIR/*
+
+kdestroy
+```
+
+2. В настройках службы HBase изменяем следующих параметры:
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Java Configuration Options for HBase Thrift Server</b><br>
+</td>
+<td>{{JAVA_GC_ARGS}} <span style="color: blue">-Djava.security.auth.login.config=/opt/hbase/jaas.conf</span><br><hr>
+<span style="color: red">В одну строку!</span>
+</td>
+<td>These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.</td>
+</tr>
+</table>
+
+3. Нажимаем **Save Changes**.
+4. ![](/img/clouderabutton.png)Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.
+
+{{% alert title="⚠" color="warning" %}}
+В случае проведения перегенерации Kerberos-принципалов, используемых кластером, необходимо будет перезапросить новый keytab для hbase principal.
+{{% /alert %}}

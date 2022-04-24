@@ -7355,6 +7355,192 @@ reconnection_retries = 3
 &lt;h2 id=&#34;5-настройка-доступа-к-hbase-таблицам-из-hue&#34;&gt;5. Настройка доступа к HBase-таблицам из Hue&lt;/h2&gt;
 &lt;p&gt;По умолчанию, HBase Thrift Server Compact Protocol включён, что мешает доступу к HBase-таблицам из браузера Hue. При попытке увидеть таблицы HBase из Hue, выводится транспарант &amp;lsquo;Api Error: TSocket read 0 bytes&amp;rsquo;. Решение нашёл здесь: &lt;a href=&#34;https://gethue.com/how-to-create-a-hbase-table-on-kerberized-hadoop-clusters/&#34;&gt;How to create a HBase table on Kerberized Hadoop clusters&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;1.В настройках службы HBase изменяем/добавляем следующие параметры:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable HBase Thrift Http Server&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hbase.regionserver.thrift.http&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Use this to enable Http server usage on thrift, which is mainly needed for &#34;doAs&#34; functionality.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable HBase Thrift Proxy Users&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hbase.thrift.support.proxyuser&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Use this to allow proxy users on thrift gateway, which is mainly needed for &#34;doAs&#34; functionality.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable HBase Thrift Server Compact Protocol&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hbase.regionserver.thrift.compact&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☐&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Use the TCompactProtocol instead of the default TBinaryProtocol. TCompactProtocol is a binary protocol that is more compact than the default and typically more efficient.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable HBase Thrift Server Framed Transport&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hbase.regionserver.thrift.framed&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☐&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Use framed transport. When using the THsHaServer or TNonblockingServer, framed transport is always used irrespective of this configuration value.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HBase Service Advanced Configuration Snippet (Safety Valve) for hbase-site.xml&lt;/b&gt;&lt;br&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;b&gt;Name:&amp;nbsp;&lt;/b&gt;&lt;span style=&#34;color: blue&#34;&gt;hbase.thrift.spnego.principal&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Value:&amp;nbsp;&lt;/b&gt;&lt;span style=&#34;color: blue&#34;&gt;HTTP/dev-hbr91p.test.lan@TEST.LAN&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Description:&amp;nbsp;&lt;/b&gt;&lt;span style=&#34;color: blue&#34;&gt;Principal of Thrift Server. Use for access from Hue.&lt;/span&gt;&lt;br&gt;
+&lt;hr&gt;
+&lt;b&gt;Name:&amp;nbsp;&lt;/b&gt;&lt;span style=&#34;color: blue&#34;&gt;hbase.thrift.spnego.keytab.file&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Value:&amp;nbsp;&lt;/b&gt;&lt;span style=&#34;color: blue&#34;&gt;hbase.keytab&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Description:&amp;nbsp;&lt;/b&gt;&lt;span style=&#34;color: blue&#34;&gt;Use for access from Hue.&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;For advanced use only, a string to be inserted into hbase-site.xml. Applies to configurations of all roles in this service except client configuration.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HBase Proxy User Groups&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.proxyuser.hbase.groups&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;*&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Comma-delimited list of groups that you want to allow the HBase user to impersonate. The default &#39;*&#39; allows all groups. To disable entirely, use a string that does not correspond to a group name, such as &#39;_no_group_&#39;. Note: This property is used only if HBase REST/Thrift Server Authentication is enabled.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HBase Proxy User Hosts&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hadoop.proxyuser.hbase.hosts&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;*&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Comma-delimited list of hosts where you want to allow the HBase user to impersonate other users. The default &#39;*&#39; allows all hosts. To disable entirely, use a string that does not correspond to a host name, such as &#39;_no_host&#39;. Note: This property is used only if HBase REST/Thrift Server Authentication is enabled.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;После применения этих настроек становится возможным управлять таблицами HBase из интерфейса Hue.&lt;/p&gt;
+&lt;h2 id=&#34;6-создание-группы-для-доступа-в-hbase-с-правами-superuser&#34;&gt;6. Создание группы для доступа в HBase с правами superuser&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Добавление группы во FreeIPA. Так как установка кластера производится с машины, домен которой отличен от домена настраиваемых машин, то вновь используем ansible:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ &lt;span style=&#34;color:#000&#34;&gt;ADM_USER&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;nifantevea&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_PASS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;JL9d]qtw$p=2=M2K=~z?|EU,&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;TEST1&amp;#34;&lt;/span&gt;          &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# UPPERCASE \&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME_L&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,,&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# lowercase&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ansible mgm -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;echo &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_PASS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; | kinit &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_USER&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; &amp;amp;&amp;amp; \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  ipa group-add --desc=&amp;#39;HBase superusers for cluster &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME_L&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;_hbase_su&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;В настройках службы HBase изменяем следующие параметры, указывая пользователей и/или группы (группы указываются с префиксом @):&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;HBase Superusers&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;hbase.superuser&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;@test1_hbase_su&lt;/span&gt; (@ — признак указания группы)&lt;br&gt;
+&lt;span style=&#34;color: blue&#34;&gt;eugene&lt;/span&gt; (если требуется указать пользователя)
+&lt;hr&gt;
+Идентично командам:&lt;br&gt;
+&lt;pre&gt;&lt;code&gt;$ echo &#34;grant &#39;@test1_hbase_su&#39;, &#39;RWXCA&#39;&#34; | hbase shell
+$ echo &#34;grant &#39;nifantevea&#39;, &#39;RWXCA&#39;&#34; | hbase shell&lt;/code&gt;&lt;/pre&gt;
+Но &lt;span style=&#34;color: red&#34;&gt;группа &#39;@test1_hbase_su&#39;, добавленная через &#39;hbase.superuser&#39;, не видна в списке команды &#39;user_permission&#39;, в отличии от пользователя &#39;nifantevea&#39;. Также, обе эти записи невозможно удалить командой &#39;revoke&#39;&lt;/span&gt;.
+&lt;/td&gt;
+&lt;td&gt;List of users or groups, who are allowed full privileges, regardless of stored ACLs, across the cluster. Only used when HBase security is enabled.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;7-добавление-jaasconf-для-hbase-thrift-server-для-связи-с-zookeeperом&#34;&gt;7. Добавление jaas.conf для HBase Thrift Server для связи с ZooKeeper&amp;rsquo;ом&lt;/h2&gt;
+&lt;p&gt;В логах HBase Thrift Server&amp;rsquo;а, например, при добавлении базы, обнаруживаются ошибки:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ClientCnxn
+SASL configuration failed: javax.security.auth.login.LoginException: Zookeeper client cannot authenticate using the &amp;#39;Client&amp;#39; section of the supplied JAAS configuration: &amp;#39;/var/run/cloudera-scm-agent/process/4323-hbase-HBASETHRIFTSERVER/jaas.conf&amp;#39; because of a RuntimeException: java.lang.SecurityException: java.io.IOException: /var/run/cloudera-scm-agent/process/4323-hbase-HBASETHRIFTSERVER/jaas.conf (No such file or directory) Will continue connection to Zookeeper server without SASL authentication, if Zookeeper server allows it.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Действительно, файл &lt;code&gt;jaas.conf&lt;/code&gt; для этой роли не создаётся автоматически. Я не смог найти настройки, которые помогли бы решить эту проблему, поэтому пошёл обходным путём.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;На узле с ролью &amp;lsquo;HBase Thrift Server&amp;rsquo; cоздаём необходимые файлы:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;USERNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;eugene&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;DIR&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/opt/hbase&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;PRINCIPAL&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;hbase&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;REALMNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;TEST.LAN&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir -p &lt;span style=&#34;color:#000&#34;&gt;$DIR&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$DIR&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ipa service-allow-retrieve-keytab &lt;span style=&#34;color:#000&#34;&gt;$PRINCIPAL&lt;/span&gt;/&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;hostname&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt; --users&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;USERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ipa-getkeytab -r -p &lt;span style=&#34;color:#000&#34;&gt;$PRINCIPAL&lt;/span&gt;/&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;hostname&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt; -k &lt;span style=&#34;color:#000&#34;&gt;$DIR&lt;/span&gt;/&lt;span style=&#34;color:#000&#34;&gt;$PRINCIPAL&lt;/span&gt;.keytab
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ipa service-disallow-retrieve-keytab &lt;span style=&#34;color:#000&#34;&gt;$PRINCIPAL&lt;/span&gt;/&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;hostname&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt; --users&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;USERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; jaas.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;Client {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  com.sun.security.auth.module.Krb5LoginModule required
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  useKeyTab=true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  useTicketCache=false
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  keyTab=&amp;#34;$DIR/$PRINCIPAL.keytab&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  principal=&amp;#34;$PRINCIPAL/$(hostname)@${REALMNAME}&amp;#34;;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;640&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;$DIR&lt;/span&gt;/jaas.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chown hbase.hbase &lt;span style=&#34;color:#000&#34;&gt;$DIR&lt;/span&gt;/*
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kdestroy
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;В настройках службы HBase изменяем следующих параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Java Configuration Options for HBase Thrift Server&lt;/b&gt;&lt;br&gt;
+&lt;/td&gt;
+&lt;td&gt;{{JAVA_GC_ARGS}} &lt;span style=&#34;color: blue&#34;&gt;-Djava.security.auth.login.config=/opt/hbase/jaas.conf&lt;/span&gt;&lt;br&gt;&lt;hr&gt;
+&lt;span style=&#34;color: red&#34;&gt;В одну строку!&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;⚠&lt;/h4&gt;
+
+    В случае проведения перегенерации Kerberos-принципалов, используемых кластером, необходимо будет перезапросить новый keytab для hbase principal.
+
+&lt;/div&gt;
+
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 17. Spark. Установка и настройка</title>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</link>
+      <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cm_sg_hadoop_ssl_cm.html&#34;&gt;Manually Configuring TLS/SSL Encryption for CDH Services&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/sg_spark_encryption.html&#34;&gt;Spark Encryption&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;1-добавление-сервиса-spark&#34;&gt;1. Добавление сервиса Spark&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;:&lt;/li&gt;
+&lt;/ol&gt;
 
       </description>
     </item>

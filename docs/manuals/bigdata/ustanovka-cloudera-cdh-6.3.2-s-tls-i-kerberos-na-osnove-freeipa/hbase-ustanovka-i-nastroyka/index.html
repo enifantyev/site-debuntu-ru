@@ -33,7 +33,7 @@
 <meta itemprop="description" content="В этой части описывается настройка HBase.
 "><meta itemprop="datePublished" content="2021-07-02T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-07-02T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1021">
+<meta itemprop="wordCount" content="1725">
 <meta itemprop="keywords" content="Cloudera CDH 6.3.2,Apache Hadoop,HBase,CentOS,CentOS 7,BigData," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="16. HBase. Установка и настройка"/>
 <meta name="twitter:description" content="В этой части описывается настройка HBase.
@@ -165,7 +165,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.b3520e05ec57d2570698af55754b9423.json"
+  data-offline-search-index-json-src="/offline-search-index.af568c4c8d07850851fbeb1d1630f378.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -187,7 +187,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.b3520e05ec57d2570698af55754b9423.json"
+  data-offline-search-index-json-src="/offline-search-index.af568c4c8d07850851fbeb1d1630f378.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -303,6 +303,8 @@ if (!doNotTrack) {
   <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipayarn-nastroyka"><span class="">15. YARN. Настройка</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahbase-ustanovka-i-nastroyka-li">
   <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahbase-ustanovka-i-nastroyka"><span class="td-sidebar-nav-active-item">16. HBase. Установка и настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaspark-ustanovka-i-nastroyka-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaspark-ustanovka-i-nastroyka"><span class="">17. Spark. Установка и настройка</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapachezookeeper-li">
@@ -377,6 +379,8 @@ if (!doNotTrack) {
     <li><a href="#4-configuring-encrypted-transport-for-hbase">4. Configuring Encrypted Transport for HBase</a></li>
     <li><a href="#7-настройка-аутентификации">7. Настройка аутентификации</a></li>
     <li><a href="#5-настройка-доступа-к-hbase-таблицам-из-hue">5. Настройка доступа к HBase-таблицам из Hue</a></li>
+    <li><a href="#6-создание-группы-для-доступа-в-hbase-с-правами-superuser">6. Создание группы для доступа в HBase с правами superuser</a></li>
+    <li><a href="#7-добавление-jaasconf-для-hbase-thrift-server-для-связи-с-zookeeperом">7. Добавление jaas.conf для HBase Thrift Server для связи с ZooKeeper&rsquo;ом</a></li>
   </ul>
 </nav></div>
 
@@ -421,7 +425,7 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-atlas/" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">22</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop/" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">23</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hbase/" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
         
@@ -459,21 +463,21 @@ if (!doNotTrack) {
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/beeline/" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">38</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata/" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">39</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/borgbackup/" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">9</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/btrfs/" data-taxonomy-term="btrfs"><span class="taxonomy-label">Btrfs</span><span class="taxonomy-count">3</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos/" data-taxonomy-term="centos"><span class="taxonomy-label">CentOS</span><span class="taxonomy-count">22</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos/" data-taxonomy-term="centos"><span class="taxonomy-label">CentOS</span><span class="taxonomy-count">23</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos-7/" data-taxonomy-term="centos-7"><span class="taxonomy-label">CentOS 7</span><span class="taxonomy-count">19</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos-7/" data-taxonomy-term="centos-7"><span class="taxonomy-label">CentOS 7</span><span class="taxonomy-count">20</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/chroot/" data-taxonomy-term="chroot"><span class="taxonomy-label">chroot</span><span class="taxonomy-count">1</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ci/cd/" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">29</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-cdh-6.3.2/" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">30</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-hadoop/" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span><span class="taxonomy-count">2</span></a></li>
         
@@ -654,6 +658,8 @@ if (!doNotTrack) {
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/root/" data-taxonomy-term="root"><span class="taxonomy-label">root</span><span class="taxonomy-count">1</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/rsync/" data-taxonomy-term="rsync"><span class="taxonomy-label">rsync</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/spark/" data-taxonomy-term="spark"><span class="taxonomy-label">Spark</span><span class="taxonomy-count">1</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/squid/" data-taxonomy-term="squid"><span class="taxonomy-label">Squid</span><span class="taxonomy-count">1</span></a></li>
         
@@ -1064,6 +1070,170 @@ if (!doNotTrack) {
 <h2 id="5-настройка-доступа-к-hbase-таблицам-из-hue">5. Настройка доступа к HBase-таблицам из Hue</h2>
 <p>По умолчанию, HBase Thrift Server Compact Protocol включён, что мешает доступу к HBase-таблицам из браузера Hue. При попытке увидеть таблицы HBase из Hue, выводится транспарант &lsquo;Api Error: TSocket read 0 bytes&rsquo;. Решение нашёл здесь: <a href="https://gethue.com/how-to-create-a-hbase-table-on-kerberized-hadoop-clusters/">How to create a HBase table on Kerberized Hadoop clusters</a>.</p>
 <p>1.В настройках службы HBase изменяем/добавляем следующие параметры:</p>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Enable HBase Thrift Http Server</b><br>
+<i>hbase.regionserver.thrift.http</i>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Use this to enable Http server usage on thrift, which is mainly needed for "doAs" functionality.</td>
+</tr>
+<tr>
+<td><b>Enable HBase Thrift Proxy Users</b><br>
+<i>hbase.thrift.support.proxyuser</i>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Use this to allow proxy users on thrift gateway, which is mainly needed for "doAs" functionality.</td>
+</tr>
+<tr>
+<td><b>Enable HBase Thrift Server Compact Protocol</b><br>
+<i>hbase.regionserver.thrift.compact</i>
+</td>
+<td><span style="color: blue">☐</span></td>
+<td>Use the TCompactProtocol instead of the default TBinaryProtocol. TCompactProtocol is a binary protocol that is more compact than the default and typically more efficient.</td>
+</tr>
+<tr>
+<td><b>Enable HBase Thrift Server Framed Transport</b><br>
+<i>hbase.regionserver.thrift.framed</i>
+</td>
+<td><span style="color: blue">☐</span></td>
+<td>Use framed transport. When using the THsHaServer or TNonblockingServer, framed transport is always used irrespective of this configuration value.</td>
+</tr>
+<tr>
+<td><b>HBase Service Advanced Configuration Snippet (Safety Valve) for hbase-site.xml</b><br>
+</td>
+<td><b>Name:&nbsp;</b><span style="color: blue">hbase.thrift.spnego.principal</span><br>
+<b>Value:&nbsp;</b><span style="color: blue">HTTP/dev-hbr91p.test.lan@TEST.LAN</span><br>
+<b>Description:&nbsp;</b><span style="color: blue">Principal of Thrift Server. Use for access from Hue.</span><br>
+<hr>
+<b>Name:&nbsp;</b><span style="color: blue">hbase.thrift.spnego.keytab.file</span><br>
+<b>Value:&nbsp;</b><span style="color: blue">hbase.keytab</span><br>
+<b>Description:&nbsp;</b><span style="color: blue">Use for access from Hue.</span>
+</td>
+<td>For advanced use only, a string to be inserted into hbase-site.xml. Applies to configurations of all roles in this service except client configuration.</td>
+</tr>
+<tr>
+<td><b>HBase Proxy User Groups</b><br>
+<i>hadoop.proxyuser.hbase.groups</i>
+</td>
+<td><span style="color: blue">*</span></td>
+<td>Comma-delimited list of groups that you want to allow the HBase user to impersonate. The default '*' allows all groups. To disable entirely, use a string that does not correspond to a group name, such as '_no_group_'. Note: This property is used only if HBase REST/Thrift Server Authentication is enabled.</td>
+</tr>
+<tr>
+<td><b>HBase Proxy User Hosts</b><br>
+<i>hadoop.proxyuser.hbase.hosts</i>
+</td>
+<td><span style="color: blue">*</span></td>
+<td>Comma-delimited list of hosts where you want to allow the HBase user to impersonate other users. The default '*' allows all hosts. To disable entirely, use a string that does not correspond to a host name, such as '_no_host'. Note: This property is used only if HBase REST/Thrift Server Authentication is enabled.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+<p>После применения этих настроек становится возможным управлять таблицами HBase из интерфейса Hue.</p>
+<h2 id="6-создание-группы-для-доступа-в-hbase-с-правами-superuser">6. Создание группы для доступа в HBase с правами superuser</h2>
+<ol>
+<li>Добавление группы во FreeIPA. Так как установка кластера производится с машины, домен которой отличен от домена настраиваемых машин, то вновь используем ansible:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ <span style="color:#000">ADM_USER</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;nifantevea&#39;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000">ADM_PASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;JL9d]qtw$p=2=M2K=~z?|EU,&#39;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000">CL_NAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;TEST1&#34;</span>          <span style="color:#8f5902;font-style:italic"># UPPERCASE \</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">CL_NAME_L</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">CL_NAME</span><span style="color:#000;font-weight:bold">,,</span><span style="color:#4e9a06">}</span>   <span style="color:#8f5902;font-style:italic"># lowercase</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ ansible mgm -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;echo &#39;</span><span style="color:#4e9a06">${</span><span style="color:#000">ADM_PASS</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39; | kinit </span><span style="color:#4e9a06">${</span><span style="color:#000">ADM_USER</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06"> &amp;&amp; \
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  ipa group-add --desc=&#39;HBase superusers for cluster </span><span style="color:#4e9a06">${</span><span style="color:#000">CL_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39; </span><span style="color:#4e9a06">${</span><span style="color:#000">CL_NAME_L</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">_hbase_su&#34;</span>
+</span></span></code></pre></div><ol start="2">
+<li>В настройках службы HBase изменяем следующие параметры, указывая пользователей и/или группы (группы указываются с префиксом @):</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>HBase Superusers</b><br>
+<i>hbase.superuser</i>
+</td>
+<td><span style="color: blue">@test1_hbase_su</span> (@ — признак указания группы)<br>
+<span style="color: blue">eugene</span> (если требуется указать пользователя)
+<hr>
+Идентично командам:<br>
+<pre><code>$ echo "grant '@test1_hbase_su', 'RWXCA'" | hbase shell
+$ echo "grant 'nifantevea', 'RWXCA'" | hbase shell</code></pre>
+Но <span style="color: red">группа '@test1_hbase_su', добавленная через 'hbase.superuser', не видна в списке команды 'user_permission', в отличии от пользователя 'nifantevea'. Также, обе эти записи невозможно удалить командой 'revoke'</span>.
+</td>
+<td>List of users or groups, who are allowed full privileges, regardless of stored ACLs, across the cluster. Only used when HBase security is enabled.</td>
+</tr>
+</table>
+<ol start="3">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+<li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
+</ol>
+<h2 id="7-добавление-jaasconf-для-hbase-thrift-server-для-связи-с-zookeeperом">7. Добавление jaas.conf для HBase Thrift Server для связи с ZooKeeper&rsquo;ом</h2>
+<p>В логах HBase Thrift Server&rsquo;а, например, при добавлении базы, обнаруживаются ошибки:</p>
+<pre tabindex="0"><code>ClientCnxn
+SASL configuration failed: javax.security.auth.login.LoginException: Zookeeper client cannot authenticate using the &#39;Client&#39; section of the supplied JAAS configuration: &#39;/var/run/cloudera-scm-agent/process/4323-hbase-HBASETHRIFTSERVER/jaas.conf&#39; because of a RuntimeException: java.lang.SecurityException: java.io.IOException: /var/run/cloudera-scm-agent/process/4323-hbase-HBASETHRIFTSERVER/jaas.conf (No such file or directory) Will continue connection to Zookeeper server without SASL authentication, if Zookeeper server allows it.
+</code></pre><p>Действительно, файл <code>jaas.conf</code> для этой роли не создаётся автоматически. Я не смог найти настройки, которые помогли бы решить эту проблему, поэтому пошёл обходным путём.</p>
+<ol>
+<li>На узле с ролью &lsquo;HBase Thrift Server&rsquo; cоздаём необходимые файлы:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">USERNAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;eugene&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/opt/hbase&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PRINCIPAL</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;hbase&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">REALMNAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;TEST.LAN&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#000">$DIR</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">cd</span> <span style="color:#000">$DIR</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ipa service-allow-retrieve-keytab <span style="color:#000">$PRINCIPAL</span>/<span style="color:#204a87;font-weight:bold">$(</span>hostname<span style="color:#204a87;font-weight:bold">)</span> --users<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">USERNAME</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>ipa-getkeytab -r -p <span style="color:#000">$PRINCIPAL</span>/<span style="color:#204a87;font-weight:bold">$(</span>hostname<span style="color:#204a87;font-weight:bold">)</span> -k <span style="color:#000">$DIR</span>/<span style="color:#000">$PRINCIPAL</span>.keytab
+</span></span><span style="display:flex;"><span>ipa service-disallow-retrieve-keytab <span style="color:#000">$PRINCIPAL</span>/<span style="color:#204a87;font-weight:bold">$(</span>hostname<span style="color:#204a87;font-weight:bold">)</span> --users<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">USERNAME</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#4e9a06">&lt;&lt; EOF &gt; jaas.conf
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">Client {
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  com.sun.security.auth.module.Krb5LoginModule required
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  useKeyTab=true
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  useTicketCache=false
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  keyTab=&#34;$DIR/$PRINCIPAL.keytab&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  principal=&#34;$PRINCIPAL/$(hostname)@${REALMNAME}&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">};
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#0000cf;font-weight:bold">640</span> <span style="color:#000">$DIR</span>/jaas.conf
+</span></span><span style="display:flex;"><span>chown hbase.hbase <span style="color:#000">$DIR</span>/*
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kdestroy
+</span></span></code></pre></div><ol start="2">
+<li>В настройках службы HBase изменяем следующих параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Java Configuration Options for HBase Thrift Server</b><br>
+</td>
+<td>{{JAVA_GC_ARGS}} <span style="color: blue">-Djava.security.auth.login.config=/opt/hbase/jaas.conf</span><br><hr>
+<span style="color: red">В одну строку!</span>
+</td>
+<td>These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.</td>
+</tr>
+</table>
+<ol start="3">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+<li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
+</ol>
+
+
+<div class="alert alert-warning" role="alert">
+<h4 class="alert-heading">⚠</h4>
+
+    В случае проведения перегенерации Kerberos-принципалов, используемых кластером, необходимо будет перезапросить новый keytab для hbase principal.
+
+</div>
+
 
 	
 	
