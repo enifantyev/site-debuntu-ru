@@ -1010,6 +1010,13 @@
   
   
   <url>
+    <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/</loc>
+    <lastmod>2021-07-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/manuals/borgbackup/</loc>
     <lastmod>2022-04-04T00:00:00+00:00</lastmod>
   </url>
@@ -1164,6 +1171,8 @@
     <loc>https://debuntu.ru/</loc>
     <lastmod>2022-04-04T00:00:00+00:00</lastmod>
   </url>
+  
+  
   
   
   

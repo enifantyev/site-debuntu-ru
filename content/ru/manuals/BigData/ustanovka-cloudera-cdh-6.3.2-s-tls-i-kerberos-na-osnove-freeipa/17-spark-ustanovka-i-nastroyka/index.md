@@ -3,7 +3,7 @@ title: "17. Spark. Установка и настройка"
 date: 2021-07-02
 weight: 17
 description: >
-  В этой части описывается настройка HBase.
+  В этой части описывается настройка Spark.
 tags:
   - Cloudera CDH 6.3.2
   - Apache Hadoop
