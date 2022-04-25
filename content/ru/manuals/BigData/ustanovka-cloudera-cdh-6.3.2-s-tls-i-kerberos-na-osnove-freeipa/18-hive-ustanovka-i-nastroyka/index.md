@@ -1,7 +1,7 @@
 ---
 title: "18. Hive. Установка и настройка"
 date: 2021-07-02
-weight: 17
+weight: 18
 description: >
   В этой части описывается настройка Hive.
 tags:

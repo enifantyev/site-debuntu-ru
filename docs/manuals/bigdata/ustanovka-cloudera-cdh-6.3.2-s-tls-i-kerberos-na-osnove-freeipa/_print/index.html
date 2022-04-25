@@ -158,7 +158,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.a066ab08fdf8df02fe31cd559eda7c4f.json"
+  data-offline-search-index-json-src="/offline-search-index.758e776fba62c501caa0a1729e4092ab.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -301,6 +301,14 @@ This is the multi-page printable view of this section.
     
 	
 <li>13: <a href="#pg-962f5433bca1b5dc29236e5262de21a3">18. Hive. Установка и настройка</a></li>
+
+
+    
+  
+    
+    
+	
+<li>14: <a href="#pg-19093fe7f1a4ecc8762715284de7a9a8">19. Sentry. Установка и настройка</a></li>
 
 
     
@@ -2978,6 +2986,172 @@ HiveServer2 TLS/SSL Certificate Trust Store File</span>
 <li>Нажимаем <strong>Save Changes</strong>.</li>
 <li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
 </ol>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-19093fe7f1a4ecc8762715284de7a9a8">14 - 19. Sentry. Установка и настройка</h1>
+    <div class="lead">В этой части описывается настройка Hive.</div>
+	<h2 id="добавление-сервиса-sentry">Добавление сервиса Sentry</h2>
+<ol>
+<li>В консоли Cloudera Manager в меню выбираем &lsquo;Add Service&rsquo;:
+ <center><img src="sentry-1.png" style="width:300px"></center>
+</li>
+<li>Выбираем <strong>Sentry</strong>.</li>
+<li>Распределяем роли:
+ <center><img src="sentry-2.png" style="width:500px"></center>
+</li>
+<li>Настройка базы данных. Так как сейчас используется встроенная база данных, то никаких дополнительных действий не производим, а нажимаем кнопку &lsquo;Test Connection&rsquo;.</li>
+<li>Наблюдаем запуск ролей.</li>
+<li>Визард успешно закончен.</li>
+</ol>
+<h2 id="перенастройка-размещения-logов">Перенастройка размещения log&rsquo;ов</h2>
+<ol>
+<li>В настройках Sentry, используя категорию &lsquo;Logs&rsquo;, изменяем следующие параметры, добавляя &lsquo;/data&rsquo; вместо &lsquo;/var&rsquo;:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Sentry Server Log Directory</b>
+</td>
+<td><span style="color: blue"><code>/data/log/sentry</code></span></td>
+<td>Directory where Sentry Server will place its log files.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+<h2 id="создание-группы-администраторов-sentry">Создание группы администраторов Sentry</h2>
+<ol>
+<li>
+<p>Добавление группы во FreeIPA. Так как установка кластера производится с машины, домен которой отличен от домена настраиваемых машин, то вновь используем ansible:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ <span style="color:#000">ADM_USER</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;eugene&#39;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000">ADM_PASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;JL9d]qtw$p=2=M2K=~z?|EU,1&#39;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#000">CL_NAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;TEST1&#34;</span>          <span style="color:#8f5902;font-style:italic"># UPPERCASE \</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">CL_NAME_L</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">CL_NAME</span><span style="color:#000;font-weight:bold">,,</span><span style="color:#4e9a06">}</span>   <span style="color:#8f5902;font-style:italic"># lowercase</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ ansible mgm -i cluster.inv -m shell -a <span style="color:#4e9a06">&#34;echo &#39;</span><span style="color:#4e9a06">${</span><span style="color:#000">ADM_PASS</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39; | kinit </span><span style="color:#4e9a06">${</span><span style="color:#000">ADM_USER</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06"> &amp;&amp; \
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">  ipa group-add --desc=&#39;Sentry admins for cluster </span><span style="color:#4e9a06">${</span><span style="color:#000">CL_NAME</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39; </span><span style="color:#4e9a06">${</span><span style="color:#000">CL_NAME_L</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">_sentry_admins&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>10.15.120.140 <span style="color:#000;font-weight:bold">|</span> CHANGED <span style="color:#000;font-weight:bold">|</span> <span style="color:#000">rc</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">0</span> &gt;&gt;
+</span></span><span style="display:flex;"><span>Password <span style="color:#204a87;font-weight:bold">for</span> admin@TEST.LAN:
+</span></span><span style="display:flex;"><span>---------------------------------
+</span></span><span style="display:flex;"><span>Added group <span style="color:#4e9a06">&#34;test1_sentry_admins&#34;</span>
+</span></span><span style="display:flex;"><span>---------------------------------
+</span></span><span style="display:flex;"><span>  Group name: test1_sentry_admins
+</span></span><span style="display:flex;"><span>  Description: Sentry admins <span style="color:#204a87;font-weight:bold">for</span> cluster TEST1
+</span></span><span style="display:flex;"><span>  GID: <span style="color:#0000cf;font-weight:bold">1262100013</span>
+</span></span></code></pre></div></li>
+<li>
+<p>В настройках службы Sentry изменяем следующие параметры:</p>
+</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Admin Groups</b><br>
+<i>sentry.service.admin.group</i>
+</td>
+<td>Добавляем созданную ранее группу:<br>
+<span style="color: blue">test1_sentry_admins</span></td>
+<td>If an end user is in one of these admin groups, that user has administrative privileges on the Sentry Server.</td>
+</tr>
+<tr>
+<td><b>Allowed Connecting Users</b><br>
+<i>sentry.service.allow.connect</i>
+</td>
+<td><span style="color: blue">nifantevea<br>
+user_da</span><br>
+Сюда добавляем УЗ (обязательно являющиеся участниками группы 'test1_sentry_admins'), из-под которых будет производиться администрирование Sentry с помощью CLI.</td>
+<td>List of users allowed to connect to the Sentry Server. These are usually service users such as hive and impala, and the list does not usually need to include end users.</td>
+</tr>
+</table>
+<center><img src="sentry-3.png" style="width:500px"></center>
+<center><img src="sentry-4.png" style="width:500px"></center>
+<ol start="3">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+<h2 id="настройка-других-сервисов-для-работы-с-sentry">Настройка других сервисов для работы с Sentry</h2>
+<h3 id="hive">Hive</h3>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Enable Stored Notifications in Database</b>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Enable stored notifications of metadata changes. When enabled, each metadata change will be stored in NOTIFICATION_LOG.</td>
+</tr>
+<tr>
+<td><b>HiveServer2 Enable Impersonation</b><br>
+<i>hive.server2.enable.doAs</i>
+</td>
+<td><span style="color: blue">☐</span></td>
+<td>HiveServer2 will impersonate the beeline client user when talking to other services such as MapReduce and HDFS.</td>
+</tr>
+<tr>
+<td><b>Sentry Service</b>
+</td>
+<td><span style="color: blue">◉&nbsp;Sentry</span>
+○&nbsp;None</td>
+<td>Name of the Sentry service that this Hive service instance depends on. If selected, Hive uses this Sentry service to look up authorization privileges. Before enabling Sentry, read the requirements and configuration steps in Setting Up The Sentry Service.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+<h3 id="hdfs">HDFS</h3>
+
+
+<div class="alert alert-warning" role="alert">
+<h4 class="alert-heading">⚠</h4>
+
+    Включение синхронизации доступно только после добавления сервиса Hive.
+
+</div>
+
+<ol>
+<li>В настройках HDFS изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Sentry Service</b>
+</td>
+<td><span style="color: blue">◉&nbsp;Sentry</span><br>
+○&nbsp;None</td>
+<td>Name of the Sentry service that this Hue service instance depends on</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+<li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
+</ol>
+
+
+<div class="pageinfo pageinfo-primary">
+<p>&ldquo;Отключение доступа внешних приложений к Hive Metastore&rdquo; описал на странице <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/#%D0%BE%D1%82%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%B0-%D0%B2%D0%BD%D0%B5%D1%88%D0%BD%D0%B8%D1%85-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9-%D0%BA-hive-metastore-disabling-hive-cli-etc">&ldquo;18. Hive. Установка и настройка&rdquo;</a>.</p>
+
+</div>
+
 
 </div>
 
