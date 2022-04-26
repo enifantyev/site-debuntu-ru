@@ -164,7 +164,7 @@ HiveServer2 TLS/SSL Certificate Trust Store File&lt;/span&gt;
 &lt;i&gt;hive.server2.authentication.ldap.url&lt;/i&gt;
 &lt;/td&gt;
 &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;ldaps://dev-ipa03p.test.lan ldaps://dev-ipa02p.test.lan ldaps://dev-ipa01p.test.lan&lt;/code&gt;&lt;/span&gt;&lt;br&gt;
-Три адреса разделённые проблелами.&lt;/td&gt;
+Три адреса разделённые пробелами в одну строку.&lt;/td&gt;
 &lt;td&gt;The URL of the LDAP server. The URL must be prefixed with ldap:// or ldaps://. The URL can optionally specify a custom port, for example: ldaps://ldap_server.example.com:1636. Note that usernames and passwords will be transmitted in the clear unless either an ldaps:// URL is used, or &#34;Enable LDAP TLS&#34; is turned on (where available). Also note that encryption must be in use between the client and this service for the same reason.
 &lt;p&gt;For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of URLs can be entered; in this case the URLs will each be tried in turn until one replies.&lt;/td&gt;&lt;/p&gt;
 &lt;/tr&gt;

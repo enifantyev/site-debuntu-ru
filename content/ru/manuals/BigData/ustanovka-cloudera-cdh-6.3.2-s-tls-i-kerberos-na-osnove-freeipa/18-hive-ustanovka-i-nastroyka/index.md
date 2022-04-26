@@ -143,7 +143,7 @@ Starting with CDH 5.7 and later, clusters running LDAP-enabled HiveServer2 deplo
 <i>hive.server2.authentication.ldap.url</i>
 </td>
 <td><span style="color: blue"><code>ldaps://dev-ipa03p.test.lan ldaps://dev-ipa02p.test.lan ldaps://dev-ipa01p.test.lan</code></span><br>
-Три адреса разделённые проблелами.</td>
+Три адреса разделённые пробелами в одну строку.</td>
 <td>The URL of the LDAP server. The URL must be prefixed with ldap:// or ldaps://. The URL can optionally specify a custom port, for example: ldaps://ldap_server.example.com:1636. Note that usernames and passwords will be transmitted in the clear unless either an ldaps:// URL is used, or "Enable LDAP TLS" is turned on (where available). Also note that encryption must be in use between the client and this service for the same reason.
 
 For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of URLs can be entered; in this case the URLs will each be tried in turn until one replies.</td>

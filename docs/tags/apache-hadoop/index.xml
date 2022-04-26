@@ -4307,7 +4307,7 @@ HiveServer2 TLS/SSL Certificate Trust Store File&lt;/span&gt;
 &lt;i&gt;hive.server2.authentication.ldap.url&lt;/i&gt;
 &lt;/td&gt;
 &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;ldaps://dev-ipa03p.test.lan ldaps://dev-ipa02p.test.lan ldaps://dev-ipa01p.test.lan&lt;/code&gt;&lt;/span&gt;&lt;br&gt;
-Три адреса разделённые проблелами.&lt;/td&gt;
+Три адреса разделённые пробелами в одну строку.&lt;/td&gt;
 &lt;td&gt;The URL of the LDAP server. The URL must be prefixed with ldap:// or ldaps://. The URL can optionally specify a custom port, for example: ldaps://ldap_server.example.com:1636. Note that usernames and passwords will be transmitted in the clear unless either an ldaps:// URL is used, or &#34;Enable LDAP TLS&#34; is turned on (where available). Also note that encryption must be in use between the client and this service for the same reason.
 &lt;p&gt;For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of URLs can be entered; in this case the URLs will each be tried in turn until one replies.&lt;/td&gt;&lt;/p&gt;
 &lt;/tr&gt;
@@ -4548,6 +4548,474 @@ user_da&lt;/span&gt;&lt;br&gt;
 
 &lt;/div&gt;
 
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 20. Hue. Установка и настройка</title>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</link>
+      <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;использованные-материалы&#34;&gt;Использованные материалы&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cm_sg_hadoop_ssl_cm.html&#34;&gt;Manually Configuring TLS/SSL Encryption for CDH Services&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;добавление-сервиса-hue&#34;&gt;Добавление сервиса Hue&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;:&lt;/li&gt;
+&lt;/ol&gt;
+  &lt;center&gt;&lt;img src=&#34;hue-1.png&#34; style=&#34;width:300px&#34;&gt;&lt;/center&gt;
+2. Выбираем Hue.
+3. Выбираем зависимости:
+  &lt;center&gt;&lt;img src=&#34;hue-2.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+4. Распределяем роли:
+  &lt;center&gt;&lt;img src=&#34;hue-3.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+5. Настройка базы данных. Так как сейчас используется встроенная база данных, то никаких дополнительных действий не производим, а нажимаем кнопку &#39;Test Connection&#39;.
+6. Наблюдаем запуск ролей.
+7. Визард успешно закончен.
+&lt;h2 id=&#34;перенастройка-размещения-logов&#34;&gt;Перенастройка размещения log&amp;rsquo;ов&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках Hue, используя категорию &amp;lsquo;Logs&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;:&lt;/li&gt;
+&lt;/ol&gt;
+  &lt;table&gt;
+  &lt;tr&gt;
+  &lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+  &lt;td&gt;&lt;b&gt;Hue Server Log Directory&lt;/b&gt;
+  &lt;/td&gt;
+  &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/hue&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+  &lt;td&gt;Directory where Hue Server will place its log files.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+  &lt;td&gt;&lt;b&gt;Kerberos Ticket Renewer Log Directory&lt;/b&gt;
+  &lt;/td&gt;
+  &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/hue&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+  &lt;td&gt;Directory where Kerberos Ticket Renewer will place its log files.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+  &lt;td&gt;&lt;b&gt;Hue Load Balancer Log Directory&lt;/b&gt;
+  &lt;/td&gt;
+  &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/hue-httpd&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+  &lt;td&gt;Directory where Hue Load Balancer will place its log files.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;4-настройка-tls-для-hue&#34;&gt;4. Настройка TLS для Hue&lt;/h2&gt;
+&lt;h3 id=&#34;hue-как-клиент-tls&#34;&gt;Hue как клиент TLS&lt;/h3&gt;
+&lt;p&gt;Hue действует как клиент TLS при взаимодействии с другими сервисами, такими как Hadoop, HBase, Oozie и Amazon S3. Это означает, что Hue должен аутентифицировать демонов HDFS, MapReduce, YARN, сервер HBase Thrift и т. Д. Для этого Hue нужны цепочки сертификатов их хостов в своем хранилище доверенных сертификатов.
+Хранилище доверенных сертификатов Hue - это один файл PEM, содержащий корень CA и все промежуточные сертификаты для аутентификации сертификата, установленного на каждом сервере с поддержкой TLS. На этих серверах размещаются различные службы, с которыми общается Hue.
+Примечание. Сертификат зависит от хоста. Он подписан центром сертификации (CA) и сообщает запрашивающему клиенту (Hue), что «этот хост» является тем же, что представлен открытым ключом хоста. Hue использует цепочку подписывающих центров в своем хранилище доверенных сертификатов для проверки ЦС, подписавшего сертификат хоста.&lt;/p&gt;
+&lt;h3 id=&#34;41-создание-hue-truststore-file-в-pem-формате&#34;&gt;4.1. Создание Hue Truststore File в PEM формате&lt;/h3&gt;
+&lt;p&gt;Сертификаты сервера хранятся в формате JKS и должны быть преобразованы в PEM. Чтобы создать хранилище доверенных сертификатов Hue, извлеките каждый сертификат из хранилища ключей с помощью keytool, преобразуйте его в формат PEM с помощью openssl и добавьте в хранилище доверенных сертификатов.&lt;/p&gt;
+&lt;p&gt;Этот шаг уже выполнен при раскидывании ключей и сертификатов с помощью ансибль-плэйбука  cloudera_setup_tls.&lt;/p&gt;
+&lt;h3 id=&#34;42-enabling-tlsssl-for-the-hue-server-with-cloudera-manager&#34;&gt;4.2. Enabling TLS/SSL for the Hue Server with Cloudera Manager&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Hue, используя фильтр &amp;lsquo;TLS&amp;rsquo;, изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable LDAP TLS&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;use_start_tls&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☐&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;If true, attempts to establish a TLS (Transport Layer Security) connection with an LDAP server that was specified with ldap://. Not required when using an LDAP URL with prefix ldaps://, because that already specifies TLS. This option is also known as &#34;Use StartTLS&#34;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable TLS/SSL for Hue&lt;/b&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Encrypt communication between clients and Hue with TLS/SSL.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hue TLS/SSL Server Certificate File (PEM Format)&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;ssl_certificate&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/agent.pem&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Path to TLS/SSL certificate on host running Hue web server.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hue TLS/SSL Server Private Key File (PEM Format)&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;ssl_private_key&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/agent.key&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Path to TLS/SSL private key on host running Hue web server.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hue TLS/SSL Private Key Password&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;ssl_password&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+&lt;td&gt;Password for private key in Hue TLS/SSL Server Certificate and Private Key file.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;You can also store ssl_password more securely in a script and set this parameter instead:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ssl_password_script=&amp;lt;your_hue_passwords_script.sh&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;For more, see &lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cm_sg_ssl_hue.html#concept_l3k_xg4_c5&#34;&gt;Storing Hue Passwords in a Script&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To apply this configuration property to other role groups as needed, edit the value for the appropriate role group. See &lt;a href=&#34;https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cm_mc_mod_configs.html#cmug_topic_5_3&#34;&gt;Modifying Configuration Properties Using Cloudera Manager&lt;/a&gt;.&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;43-настройка-hue-как-tls-клиент&#34;&gt;4.3. Настройка Hue, как TLS клиент&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Hue изменяем следующий параметр:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hue TLS/SSL Server CA Certificate (PEM Format)&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;ssl_cacerts&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/etc/ipa/ca.crt&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The path to the TLS/SSL file containing the certificate of the certificate authority (CA) and any intermediate certificates used to sign the server certificate. Used when Hue is acting as a TLS/SSL server. The certificate file must be in PEM format, and is usually created by concatenating all of the appropriate root and intermediate certificates.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;44-включение-tls-для-hue-load-balancer&#34;&gt;4.4. Включение TLS для Hue Load Balancer&lt;/h3&gt;
+&lt;p&gt;Чтобы настроить балансировщик нагрузки Hue для использования HTTPS или для работы в качестве сервера TLS, вам потребуется самозаверяющий сертификат SSL и файл закрытого ключа. Если файл закрытого ключа защищен паролем, вам необходимо настроить Hue Load Balancer на использование соответствующего ключевого пароля.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Hue изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hue Load Balancer TLS/SSL Server Certificate File (PEM Format)&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;SSLCertificateFile&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/agent.pem&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The path to the TLS/SSL file containing the server certificate key used for TLS/SSL. Used when Hue Load Balancer is acting as a TLS/SSL server. The certificate file must be in PEM format.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hue Load Balancer TLS/SSL Server Private Key File (PEM Format)&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;SSLCertificateKeyFile&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/agent.key&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The path to the TLS/SSL file containing the private key used for TLS/SSL. Used when Hue Load Balancer is acting as a TLS/SSL server. The certificate file must be in PEM format.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hue Load Balancer TLS/SSL Server SSLPassPhraseDialog&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;SSLPassPhraseDialog&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/tls_key.pass&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The path to the file containing the passphrase used to encrypt the private key of the Hue Load Balancer server. The passphrase file is optional.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;45-включение-tls-связи-hue-с-hiveserver2&#34;&gt;4.5. Включение TLS связи Hue с HiveServer2&lt;/h3&gt;
+&lt;p&gt;В CDH 5.5.x и более поздних версиях HiveServer2 по умолчанию включен для связи TLS.&lt;/p&gt;
+&lt;p&gt;Чтобы обеспечить связь между Hue и HiveServer2 с использованием TLS, Hue требуется сертификат Hive и цепочка сертификатов.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Hue ищем &amp;ldquo;Hue Service Advanced Configuration Snippet (Safety Valve) for hue_safety_valve.ini&amp;rdquo; и добавляем сюда:
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[beeswax]
+  [[ssl]]
+    #enabled=true # Эта опция отсутствует в исходниках
+    # https://github.com/cloudera/hue/blob/master/apps/beeswax/src/beeswax/conf.py#L251
+    cacerts=/etc/ipa/ca.crt
+    validate=true
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;47-securing-database-connections-using-tlsssl&#34;&gt;4.7. Securing Database Connections using TLS/SSL&lt;/h3&gt;
+&lt;p&gt;Hue использует разных клиентов для внутренней связи с каждой базой данных. Параметры для конкретного клиента, такие как безопасное соединение, можно настроить с помощью Cloudera Manager.&lt;/p&gt;
+&lt;p&gt;Не понял этот шаг. Позже разберёмся.&lt;/p&gt;
+&lt;h2 id=&#34;настройка-ldap-аутентификации-в-cloudera-hue&#34;&gt;Настройка LDAP-аутентификации в Cloudera Hue&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Hue изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hue Service Advanced Configuration Snippet (Safety Valve) for hue_safety_valve.ini&lt;/b&gt;&lt;br&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;
+&lt;pre&gt;&lt;code&gt;[desktop]
+[[ldap]]
+sync_groups_on_login=true
+[useradmin]
+home_dir_permissions=0750
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;
+Обновление участников локальных групп участниками групп из FreeIPA при попытке входа.
+&lt;p&gt;Для новых пользовательских каталогов в HDFS устанавливать режим 750, вместо дефолтного 755.&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color: red&#34;&gt;Режим 750 будет препятствовать импорту данных в Hive-таблицу из файла. При импорте  средствами Hue, создаётся каталог /user/eugene/.scratchdir с правами 777, куда копируется файл перед его импортом. Но hive не сможет этот файл прочесть, так как на родительском каталоге установлен режим 750.&lt;/p&gt;
+&lt;p&gt;И что делать?
+&lt;/span&gt;&lt;/p&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Hue Server Advanced Configuration Snippet (Safety Valve) for hive-site.xml&lt;/b&gt;&lt;br&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;b&gt;Nama&lt;/b&gt;: &lt;span style=&#34;color: blue&#34;&gt;hive.server2.authentication&lt;/span&gt;
+&lt;br&gt;
+&lt;b&gt;Value&lt;/b&gt;: &lt;span style=&#34;color: blue&#34;&gt;KERBEROS&lt;/span&gt;&lt;br&gt; (Обязательно (?) заглавными буквами, иначе случалось, что добавление ролей, списки существующих ролей, какая-то ещё информация была недоступна.)
+&lt;/td&gt;
+&lt;td&gt;Иначе при входе в Hue высвечивается ошибка:&lt;br&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;⚠&lt;/h4&gt;
+
+    Bad status: 3 (PLAIN auth failed: javax.security.sasl.AuthenticationException: Error validating LDAP user [Caused by javax.naming.AuthenticationException: [LDAP: error code 49 - Invalid Credentials]]) (code THRIFTTRANSPORT): TTransportException(&amp;lsquo;Bad status: 3 (PLAIN auth failed: javax.security.sasl.AuthenticationException: Error validating LDAP user [Caused by javax.naming.AuthenticationException: [LDAP: error code 49 - Invalid Credentials]])&amp;rsquo;,)
+
+&lt;/div&gt;
+
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;В настройках службы Hue, используя категорию &amp;lsquo;Security&amp;rsquo;, изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Authentication Backend&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;backend&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;desktop.auth.backend.LdapBackend&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Mode of authenticating login credentials. Select desktop.auth.backend.LdapBackend to use LDAP to authenticate login credentials. LDAP requires you to also set the LDAP URL, Active Directory Domain, and optionally LDAP certificate if you are using secure LDAP. Select desktop.auth.backend.PamBackend to use PAM to authenticate login credentials.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP URL&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;ldap_url&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;ldaps://dev-ipa01p.test.lan ldaps://dev-ipa02p.test.lan ldaps://dev-ipa03p.test.lan&lt;/code&gt;&lt;/span&gt;&lt;br&gt;
+&lt;br&gt;
+Адреса IPA разделённые пробелом в одну строку.
+&lt;/td&gt;
+&lt;td&gt;
+The URL of the LDAP server. The URL must be prefixed with ldap:// or ldaps://. The URL can optionally specify a custom port, for example: ldaps://ldap_server.example.com:1636. Note that usernames and passwords will be transmitted in the clear unless either an ldaps:// URL is used, or &#34;Enable LDAP TLS&#34; is turned on (where available). Also note that encryption must be in use between the client and this service for the same reason.
+&lt;br&gt;&lt;br&gt;
+For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of URLs can be entered; in this case the URLs will each be tried in turn until one replies.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Server CA Certificate&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;ldap_cert&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/etc/ipa/ca.crt&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The location on disk of the certificate, in .pem format, used to confirm the authenticity of the LDAP server certificate. This is the Certificate Authority (CA) certificate, and it was used to sign the LDAP server certificate. If not set, all certificates are trusted, which means that an attacker could potentially intercept otherwise encrypted usernames and passwords.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable LDAP TLS&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;use_start_tls&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: blue&#34;&gt;☐&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Отключаем StartTLS, так как используем &lt;code&gt;ldaps://&lt;/code&gt;.&lt;/p&gt;
+&lt;/td&gt;
+&lt;td&gt;If true, attempts to establish a TLS (Transport Layer Security) connection with an LDAP server that was specified with ldap://. Not required when using an LDAP URL with prefix ldaps://, because that already specifies TLS. This option is also known as &#34;Use StartTLS&#34;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Username Pattern&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;ldap_username_pattern&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;uid=&lt;username&gt;,cn=users,cn=accounts,dc=test,dc=lan&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;LDAP Username Pattern for use with non-Active Directory LDAP implementations. Must contain the special &#39;&lt;username&gt;&#39; string for replacement during authentication.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Use Search Bind Authentication&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;search_bind_authentication&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Search Bind Authentication connects to the LDAP server using credentials provided in the &#39;bind_dn&#39; and &#39;bind_password&#39; configurations. If these configurations are not set, then an anonymous search is performed.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Create LDAP users on login&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;create_users_on_login&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Create users in Hue when they try to login with their LDAP credentials. For use when using LdapBackend for Hue authentication.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Search Base&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;base_dn&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;cn=accounts,&lt;br&gt;dc=example,dc=org&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The distinguished name to use as a search base for finding users and groups. This should be similar to &#39;dc=hadoop,dc=mycompany,dc=com&#39;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Bind User Distinguished Name&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;bind_dn&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;uid=binddn_cluser1,cn=sysaccounts,&lt;br&gt;cn=etc,dc=example,dc=org&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;p&gt;В одну строку.&lt;/p&gt;
+&lt;/td&gt;
+&lt;td&gt;Distinguished name of the user to bind as. This is used to connect to LDAP/AD for searching user and group information. This may be left blank if the LDAP server supports anonymous binds.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Bind Password&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;bind_password&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;**********&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The password of the bind user.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Username for Test LDAP Configuration&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;test_ldap_user&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;eugene&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;An optional user name for validating LDAP user configurations. If a test user name is provided, Hue&#39;s LDAP library uses it as a search parameter when running the command, Test Hue LDAP Configuration (under Hue &gt; Actions). For example, (&amp;(objectClass=*)(sAMAccountName=test_ldap_user)). If &#34;*&#34; is provided, then all user attributes are returned. If test user name is not provided then Test Hue LDAP Configuration action will check only LDAP server connectivity.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Group Name for Test LDAP Configuration&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;test_ldap_group&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;cluster1_hue_users&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;An optional group name for validating LDAP group configurations. If a test group name is provided, Hue&#39;s LDAP library uses it as a search parameter when running the command, Test Hue LDAP Configuration (under Hue &gt; Actions). For example, (&amp;(objectClass=*)(sAMAccountName=test_ldap_group)). If test group name is not provided then Hue LDAP Configuration action will check only LDAP server connectivity.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP User Filter&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;user_filter&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;(&amp;(objectClass=person)(memberOf=cn=cluster1_hue_*,&lt;br&gt;cn=groups,cn=accounts,dc=example,dc=org))&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;p&gt;В одну строку.&lt;/p&gt;&lt;/td&gt;
+&lt;td&gt;The base filter for searching for users. For Active Directory, this is typically &#39;(objectClass=user)&#39;.
+&lt;br&gt;&lt;br&gt;
+В Hue будут допущены только участники групп cluster1_hue_admins, cluster1_hue_users, etc. В том числе участники вложенных групп.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Username Attribute&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;user_name_attr&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;uid&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The username attribute in the LDAP schema. For Active Directory, this is typically &#39;sAMAccountName&#39;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Group Filter&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;group_filter&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;(objectClass=ipausergroup)&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Base filter for searching for groups. For Active Directory, this is typically &#39;(objectClass=group)&#39;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Group Name Attribute&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;group_name_attr&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;cn&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The group name attribute in the LDAP schema. For Active Directory, this is typically &#39;cn&#39;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;LDAP Group Membership Attribute&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;group_member_attr&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;member&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The attribute of the group object that identifies the members of the group. For Active Directory, this is typically &#39;member&#39;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;li&gt;Во FreeIPA создаём необходимые группы для аутентификации в Hue. Авторизация к таблицам будет обеспечиваться с помощью Sentry, через WEB UI сервиса Hue.
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ &lt;span style=&#34;color:#000&#34;&gt;ADM_USER&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;eugene&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_PASS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;JL9d]qtw$p=2=M2K=~z?|EU,1&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;CLUSTER1&amp;#34;&lt;/span&gt;          &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# UPPERCASE \&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME_L&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,,&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;   &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# lowercase&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ansible mgm -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;echo &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_PASS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; | kinit &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_USER&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; &amp;amp;&amp;amp; \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  ipa group-add --desc=&amp;#39;Hue admins for cluster &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME_L&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;_hue_admins&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ansible mgm -i cluster.inv -m shell -a &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;echo &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_PASS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; | kinit &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADM_USER&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; &amp;amp;&amp;amp; \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;  ipa group-add --desc=&amp;#39;Hue users for cluster &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CL_NAME_L&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;_hue_users&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Создаём администраторскую роль:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;enabling-spnego-as-an-authentication-backend-for-hue-обычно-не-требуется&#34;&gt;Enabling SPNEGO as an Authentication Backend for Hue (обычно не требуется)&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;In Cloudera Manager, set the authentication backend to SpnegoDjangoBackend.
+&lt;ul&gt;
+&lt;li&gt;Go to the Cloudera Manager Admin Console. From the Clusters tab, select the Hue service.&lt;/li&gt;
+&lt;li&gt;Click the Configuration tab.&lt;/li&gt;
+&lt;li&gt;Select Scope &amp;gt; Service-Wide.&lt;/li&gt;
+&lt;li&gt;Select Category &amp;gt; Security.&lt;/li&gt;
+&lt;li&gt;Locate the Authentication Backend property and select desktop.auth.backend.SpnegoDjangoBackend.&lt;/li&gt;
+&lt;li&gt;Click Save Changes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Restart the Hue service.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Так как Hue был переключён на SPNEGO, то я зашёл в его WEB UI без пароля через Firefox и Chromium, настроенными на kerberos. В HDFS появилась папка /home/eugene.&lt;/p&gt;
+
+
+&lt;div class=&#34;alert alert-warning&#34; role=&#34;alert&#34;&gt;
+&lt;h4 class=&#34;alert-heading&#34;&gt;⚠&lt;/h4&gt;
+
+    &lt;p&gt;При переключении Hue на SPNEGO высветилась ошибка:&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color: red&#34;&gt;General Error(s)&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span style=&#34;color: red&#34;&gt;Role is missing Kerberos keytab. Go to the Kerberos Credentials page and click the Generate Missing Credentials button.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;После перезапуска кластера, всё в норме.&lt;/p&gt;
+
+
+&lt;/div&gt;
+
+&lt;h2 id=&#34;прочие-настройки&#34;&gt;Прочие настройки&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках службы Hue изменяем следующие параметры:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Time Zone&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;time_zone&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;span style=&#34;color: gray&#34;&gt;Hue (Service-Wide)&lt;/span&gt;
+&lt;br&gt;
+&lt;span style=&#34;color: blue&#34;&gt;Europe/Moscow&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Time zone name.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Top Banner Custom HTML&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;banner_top_html&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;
+&lt;xmp&gt;&lt;div align=&#34;center&#34;&gt;&lt;h1&gt;TEST1 cluster&lt;/h1&gt;&lt;/div&gt;&lt;/xmp&gt;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;An optional, custom one-line HTML code to display as a banner on top of all Hue Server web pages. Useful in displaying cluster identity of the Hue Server.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Secret Key&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;secret_key&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;span style=&#34;color: gray&#34;&gt;Hue Server Default Group&lt;/span&gt;&lt;br&gt;
+&lt;span style=&#34;color: blue&#34;&gt;2]&lt;,OXrfT!7AxuYw}\g0LZz#@76J%t&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+Рекомендованная длина этой строки из случайных смиволов равна от 30 до 60.
+&lt;/td&gt;
+&lt;td&gt;Random string used for secure hashing in the session store.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
 
       </description>
     </item>
