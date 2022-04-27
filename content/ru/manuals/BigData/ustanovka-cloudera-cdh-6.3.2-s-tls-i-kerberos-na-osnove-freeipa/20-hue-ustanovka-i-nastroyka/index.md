@@ -3,7 +3,7 @@ title: "20. Hue. Установка и настройка"
 date: 2021-07-02
 weight: 20
 description: >
-  В этой части описывается настройка Hive.
+  В этой части описывается настройка Hue.
 tags:
   - Cloudera CDH 6.3.2
   - Apache Hadoop

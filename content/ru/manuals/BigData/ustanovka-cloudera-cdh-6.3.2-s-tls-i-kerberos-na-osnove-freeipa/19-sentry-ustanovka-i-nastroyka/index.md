@@ -3,7 +3,7 @@ title: "19. Sentry. Установка и настройка"
 date: 2021-07-09
 weight: 19
 description: >
-  В этой части описывается настройка Hive.
+  В этой части описывается настройка Sentry.
 tags:
   - Cloudera CDH 6.3.2
   - Apache Hadoop
