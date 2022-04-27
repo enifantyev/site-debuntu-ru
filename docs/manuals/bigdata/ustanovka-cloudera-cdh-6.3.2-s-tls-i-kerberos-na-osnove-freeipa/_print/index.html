@@ -158,7 +158,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.40f44f17cc43738652d2053ffc72bcd4.json"
+  data-offline-search-index-json-src="/offline-search-index.9c9fe16c51a2d1103dbcb7d0c56ec672.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -324,7 +324,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>16: <a href="#pg-b56261d454674913f0b8a76005d2d092"></a></li>
+<li>16: <a href="#pg-b56261d454674913f0b8a76005d2d092">21. Solr. Установка и настройка</a></li>
 
 
     
@@ -3655,34 +3655,499 @@ For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-b56261d454674913f0b8a76005d2d092">16 - </h1>
-    
-	<p>title: &ldquo;21. Solr. Установка и настройка&rdquo;
-date: 2021-07-21
-weight: 21
-description: &gt;
-В этой части описывается настройка Solr.
-tags:</p>
-<ul>
-<li>Cloudera CDH 6.3.2</li>
-<li>Apache Hadoop</li>
-<li>Solr</li>
-<li>CentOS</li>
-<li>CentOS 7</li>
-<li>BigData
-slug: solr-ustanovka-i-nastroyka</li>
-</ul>
-<hr>
-<h2 id="1-использованные-материалы">1. Использованные материалы</h2>
+	<h1 id="pg-b56261d454674913f0b8a76005d2d092">16 - 21. Solr. Установка и настройка</h1>
+    <div class="lead">В этой части описывается настройка Solr.</div>
+	<h2 id="1-использованные-материалы">1. Использованные материалы</h2>
 <ol>
 <li><a href="https://docs.cloudera.com/documentation/enterprise/latest/topics/sg_solr_ssl.html">Configuring TLS/SSL for Solr</a></li>
 <li><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_sg_search_security.html">Cloudera Search Authentication</a></li>
 </ol>
 <h2 id="2-добавление-сервиса-solr">2. Добавление сервиса Solr</h2>
 <ol>
-<li>В консоли Cloudera Manager в меню выбираем &lsquo;Add Service&rsquo;:</li>
+<li>В консоли Cloudera Manager в меню выбираем &lsquo;Add Service&rsquo;:
+ <center><img src="solr-1.png" style="width:300px"></center>
+</li>
+<li>Выбираем Solr.</li>
+<li>Выбираем зависимости:
+ <center><img src="solr-2.png" style="width:500px"></center>
+</li>
+<li>Распределяем роли.</li>
+<li>Пути к каталогам оставляем без изменений:
+ <center><img src="solr-3.png" style="width:500px"></center>
+</li>
+<li>Наблюдаем запуск ролей.</li>
+<li>Визард успешно закончен.</li>
 </ol>
-<center><img src="solr-1.png" style="width:300px"></center>
+<h2 id="3-перенастройка-размещения-logов">3. Перенастройка размещения log&rsquo;ов</h2>
+<ol>
+<li>В настройках Solr, используя категорию &lsquo;Logs&rsquo;, изменяем следующие параметры, добавляя &lsquo;/data&rsquo; вместо &lsquo;/var&rsquo;:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Solr Server Log Directory</b>
+</td>
+<td><span style="color: blue">/data/log/solr</span></td>
+<td>Directory where Solr Server will place its log files.</td>
+</tr>
+</table>
+<p>2.Нажимаем <strong>Save Changes</strong>.</p>
+<h2 id="4-настройка-tls">4. Настройка TLS</h2>
+<p>Так как на данный момент в сертификатах хостов отсутствует SAN с ip-адресами узлов, то в дополнение к TLS-параметрам добавляем отключение проверки имён узлов.</p>
+
+
+<div class="pageinfo pageinfo-primary">
+<p><a href="https://solr.apache.org/guide/6_6/enabling-ssl.html">https://solr.apache.org/guide/6_6/enabling-ssl.html</a></p>
+<p>If you created your SSL key without all DNS names/IP addresses on which Solr nodes will run, you can tell Solr to skip hostname verification for inter-Solr-node communications by setting the <code>solr.ssl.checkPeerName</code> system property to false:<br>
+*nix command</p>
+<p>bin/solr -cloud -s cloud/node1 -z localhost:2181 -p 8984 -Dsolr.ssl.checkPeerName=false</p>
+
+</div>
+
+<ol>
+<li>В настройках Solr, используя фильтр &lsquo;TLS&rsquo;, изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Enable TLS/SSL for Solr</b>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Encrypt communication between clients and Solr using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)). Additional manual steps must be performed; see <a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/cdh_sg_search_security.html" target="_blank">Enabling TLS/SSL for Solr</a>.</td>
+</tr>
+<tr>
+<td><b>Solr TLS/SSL Server JKS Keystore File Location</b>
+</td>
+<td><span style="color: blue">/opt/cloudera/security/pki/server.jks</span></td>
+<td> </td>
+</tr>
+<tr>
+<td><b>Solr TLS/SSL Server JKS Keystore File Password</b><br>
+<i>solr.jetty.keystore.password,</i>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password for the Solr JKS keystore file.</td>
+</tr>
+<tr>
+<td><b>Solr TLS/SSL Client Trust Store File</b>
+</td>
+<td><span style="color: blue">/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts</span></td>
+<td>The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that Solr might connect to. This is used when Solr is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.</td>
+</tr>
+<tr>
+<td><b>Solr TLS/SSL Client Trust Store Password</b><br>
+<i>solr.jetty.truststore.password,</i>
+</td>
+<td>По умолчанию: <span style="color: blue">changeit</span>.</td>
+<td>The password for the Solr TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Отключаем проверку имён узлов:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Java Configuration Options for Solr Server</b>
+</td>
+<td><p>{{JAVA_GC_ARGS}} <span style="color: blue">-Dsolr.ssl.checkPeerName=false</span></p><br>
+<p>Одной строкой!</p>
+</td>
+<td>These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.</td>
+</tr>
+</table>
+<ol start="3">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+
+
+<div class="pageinfo pageinfo-primary">
+<p>При наличии установленных сервисов Key-Value Store Indexer и/или Flume требуется настройка этих сервисов, как указано в использованном материале по ссылке номер один.</p>
+
+</div>
+
+<h2 id="5-настройка-аутентификации">5. Настройка аутентификации</h2>
+<p>Solr поддерживает одновременную аутентификацию по протоколам Kerberos и LDAP.</p>
+<ol>
+<li>В настройках Solr, используя категорию &lsquo;Security&rsquo;, изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Solr Secure Authentication</b>
+</td>
+<td>○&nbsp;simple<br>
+<span style="color: blue">◉&nbsp;kerberos</span></td>
+<td>Choose the authentication mechanism used by Solr.</td>
+</tr>
+<tr>
+<td><b>Enable LDAP Authentication</b>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>When checked, LDAP-based authentication for users is enabled.</td>
+</tr>
+<tr>
+<td><b>LDAP URL</b>
+</td>
+<td><p><span style="color: blue">ldaps://dev-ipa03p.test.lan ldaps://dev-ipa02p.test.lan ldaps://dev-ipa01p.test.lan</span></p>
+<p>Три адреса разделённые проблелами. <span style="color: red">Но это не работает (см. п.8.1.). Поэтому указываем один сервер.</span></p>
+</td>
+<td><p>The URL of the LDAP server. The URL must be prefixed with ldap:// or ldaps://. The URL can optionally specify a custom port, for example: ldaps://ldap_server.example.com:1636. Note that usernames and passwords will be transmitted in the clear unless either an ldaps:// URL is used, or "Enable LDAP TLS" is turned on (where available). Also note that encryption must be in use between the client and this service for the same reason.</p>
+<p>For more detail on the LDAP URL format, see RFC 2255 . A space-separated list of URLs can be entered; in this case the URLs will each be tried in turn until one replies.</p></td>
+</tr>
+<tr>
+<td><b>LDAP BaseDN</b>
+</td>
+<td><span style="color: blue">cn=users,cn=accounts,dc=test,dc=lan</span></td>
+<td>This parameter is useful when authenticating against a non-Active Directory server, such as OpenLDAP. When set, this parameter is used to convert the username into the LDAP Distinguished Name (DN), so that the resulting DN looks like uid=username,<this parameter>. For example, if this parameter is set to "ou=People,dc=cloudera,dc=com", and the username passed in is "mike", the resulting authentication passed to the LDAP server look like "uid=mike,ou=People,dc=cloudera,dc=com". This parameter is mutually exclusive with Active Directory Domain.</td>
+</tr>
+<tr>
+<td><b>Enable LDAP TLS</b>
+</td>
+<td><span style="color: blue">☐</span></td>
+<td>If true, attempts to establish a TLS (Transport Layer Security) connection with an LDAP server that was specified with ldap://. Not required when using an LDAP URL with prefix ldaps://, because that already specifies TLS. This option is also known as "Use StartTLS".</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+<li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
+</ol>
+<h2 id="настройка-зависмости-hue-от-solr">Настройка зависмости Hue от Solr</h2>
+<ol>
+<li>В настройках Hue изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Solr Service</b>
+</td>
+<td><span style="color: blue">◉&nbsp;Solr</span><br>
+○&nbsp;none</td>
+<td>Name of the Solr service that this Hue service instance depends on</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+<li><img src="/img/clouderabutton.png" alt="">Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</li>
+</ol>
+<h2 id="6-утилита-управления-solrctl">6. Утилита управления solrctl</h2>
+<details><summary>solrctl</summary>
+<pre tabindex="0"><code>usage: /usr/lib/solr/bin/solrctl.sh [options] command [command-arg] [command [command-arg]] ...
+
+Options:
+    --solr solr_uri
+    --zk   zk_ensemble
+    --jaas jaas.conf
+    --help
+    --quiet
+    --debug Prints error output of calls
+    --trace Prints executed commands
+
+Commands:
+    init        [--force]
+
+    instancedir [--generate path [-schemaless]]
+                [--create name path]
+                [--update name path]
+                [--get name path]
+                [--delete name]
+                [--list]  
+
+    config      [--create name baseConfig [-p name=value]...]
+                [--delete name]
+
+    collection  [--create name -s &lt;numShards&gt;
+                              [-a Create collection with autoAddReplicas=true]
+                              [-c &lt;collection.configName&gt;]
+                              [-r &lt;replicationFactor&gt;]
+                              [-m &lt;maxShardsPerNode&gt;]
+                              [-n &lt;createNodeSet&gt;]]
+                [--delete name]
+                [--reload name]
+                [--stat name]
+                [--deletedocs name]
+                [--list]
+                [--create-snapshot snapshotName -c &lt;collectionName&gt;]
+                [--delete-snapshot snapshotName -c &lt;collectionName&gt;]
+                [--list-snapshots collectionName]
+                [--describe-snapshot snapshotName -c &lt;collectionName&gt;]
+                [--prepare-snapshot-export snapshotName -c &lt;collectionName&gt; -d &lt;destDir&gt; [-p &lt;fsPathPrefix&gt;]]
+                [--export-snapshot snapshotName [-s &lt;sourceDir&gt;] [-c &lt;collectionName&gt;] -d &lt;destDir&gt;]
+                [--restore name  -b &lt;backupName&gt; -l &lt;backupLocation&gt; -i &lt;requestId&gt;
+                                 [-a Restore collection with autoAddReplicas=true]
+                                 [-c &lt;collection.configName&gt;]
+                                 [-r &lt;replicationFactor&gt;]
+                                 [-m &lt;maxShardsPerNode&gt;]]
+                [--request-status requestId]
+
+    core        [--create name [-p name=value]...]
+                [--reload name]
+                [--unload name]
+                [--status name]
+
+    cluster     [--get-solrxml file]
+                [--put-solrxml file]
+                [--set-property name value]
+                [--remove-property name]
+                [--get-clusterstate file]
+                [--get-securityconf file]
+                [--put-securityconf file]
+
+    sentry      [--create-role role]
+                [--drop-role role]
+                [--add-role-group role group]
+                [--delete-role-group role group]
+                [--list-roles [-g group]]
+                [--grant-privilege role privilege]
+                [--revoke-privilege role privilege]
+                [--list-privileges role]
+                [--convert-policy-file file [-dry-run]]
+</code></pre></details>
+<h2 id="7-настройка-аутентификации-и-авторизации">7. Настройка аутентификации и авторизации</h2>
+<h3 id="примеры-solrctl-sentry---grant-privilege">Примеры solrctl sentry &ndash;grant-privilege</h3>
+<p>entity name specified for the admin entity type. Valid names are [*, collections, cores, security, metrics, autoscaling]</p>
+<ol>
+<li><code>solrctl sentry --grant-privilege adm_role 'admin=*-&gt;action=*'</code></li>
+<li><code>solrctl sentry --grant-privilege adm_role 'admin=collections→action=*'</code>
+<ul>
+<li><code>solrctl sentry --grant-privilege adm_role 'collection=*-&gt;action=*</code></li>
+</ul>
+</li>
+<li><code>solrctl sentry --grant-privilege adm_role 'admin=cores-&gt;action=*'</code></li>
+<li><code>solrctl sentry --grant-privilege adm_role 'admin=security-&gt;action=*'</code></li>
+<li><code>solrctl sentry --grant-privilege adm_role 'admin=metrics-&gt;action=*'</code></li>
+<li><code>solrctl sentry --grant-privilege adm_role 'admin=autoscaling→action=*'</code></li>
+</ol>
+<h3 id="пример-solrctl-sentry---revoke-privilege">Пример solrctl sentry &ndash;revoke-privilege</h3>
+<ol>
+<li><code>solrctl sentry --revoke-privilege adm_role 'admin=collections-&gt;action=*</code></li>
+</ol>
+<h3 id="создание-для-solr-роли-с-привилегиями-администратора">Создание для Solr роли с привилегиями администратора</h3>
+<ul>
+<li><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_m2p_knc_3w">Using Solr with the Sentry Service</a></li>
+<li><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/sentry_privileges_solr.html">Authorization Privilege Model for Cloudera Search</a></li>
+</ul>
+<ol>
+<li>Добавляем во FreeIPA группу test1_solr_admins:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>eugene@localhost hadoop<span style="color:#ce5c00;font-weight:bold">]</span>$ ansible mgm -i cluster.inv -m shell -a <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span><span style="color:#4e9a06">&#34;echo &#39;PassWord&#39; | kinit admin &amp;&amp; ipa group-add --desc=&#39;Solr admins for cluster TEST1&#39; test1_solr_admins&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>10.5.120.140 <span style="color:#000;font-weight:bold">|</span> CHANGED <span style="color:#000;font-weight:bold">|</span> <span style="color:#000">rc</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#0000cf;font-weight:bold">0</span> &gt;&gt;
+</span></span><span style="display:flex;"><span>Password <span style="color:#204a87;font-weight:bold">for</span> admin@TEST.LAN:
+</span></span><span style="display:flex;"><span>---------------------------
+</span></span><span style="display:flex;"><span>Added group <span style="color:#4e9a06">&#34;temp1_solr_admins&#34;</span>
+</span></span><span style="display:flex;"><span>---------------------------
+</span></span><span style="display:flex;"><span>  Group name: temp1_solr_admins
+</span></span><span style="display:flex;"><span>  Description: Solr admins <span style="color:#204a87;font-weight:bold">for</span> cluster TEST1
+</span></span><span style="display:flex;"><span>  GID: <span style="color:#0000cf;font-weight:bold">1262100017</span>
+</span></span></code></pre></div></li>
+<li>На машине с ролью Solr Gateway выполняем:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>eugene@localhost ~<span style="color:#ce5c00;font-weight:bold">]</span>$ kinit
+</span></span><span style="display:flex;"><span>Password <span style="color:#204a87;font-weight:bold">for</span> eugene@TEST.LAN:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>eugene@localhost ~<span style="color:#ce5c00;font-weight:bold">]</span>$ solrctl sentry --list-roles
+</span></span><span style="display:flex;"><span>21/07/27 16:42:39 INFO thrift.SentryGenericServiceClientFactory: Using UserGroupInformation authentication
+</span></span><span style="display:flex;"><span>21/07/27 16:42:39 INFO transport.SentryTransportPool: Creating pool <span style="color:#204a87;font-weight:bold">for</span> dev-mgm90p.test.lan:8038 with default port <span style="color:#0000cf;font-weight:bold">8038</span>
+</span></span><span style="display:flex;"><span>21/07/27 16:42:39 INFO transport.SentryTransportPool: Adding endpoint dev-mgm90p.test.lan:8038
+</span></span><span style="display:flex;"><span>21/07/27 16:42:39 INFO transport.SentryTransportPool: Connection pooling is enabled
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>eugene@localhost ~<span style="color:#ce5c00;font-weight:bold">]</span>$ solrctl sentry --create-role solradm_role
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>eugene@localhost ~<span style="color:#ce5c00;font-weight:bold">]</span>$ solrctl sentry --list-roles
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>solradm_role
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>eugene@localhost ~<span style="color:#ce5c00;font-weight:bold">]</span>$ solrctl sentry --add-role-group solradm_role test1_solr_admins
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>eugene@localhost ~<span style="color:#ce5c00;font-weight:bold">]</span>$ solrctl sentry --grant-privilege solradm_role <span style="color:#4e9a06">&#39;admin=*-&gt;action=*&#39;</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>eugene@localhost ~<span style="color:#ce5c00;font-weight:bold">]</span>$ solrctl sentry --grant-privilege solradm_role <span style="color:#4e9a06">&#39;collection=*-&gt;action=*&#39;</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>eugene@localhost ~<span style="color:#ce5c00;font-weight:bold">]</span>$ solrctl sentry --grant-privilege solradm_role <span style="color:#4e9a06">&#39;config=*-&gt;action=*&#39;</span>
+</span></span></code></pre></div></li>
+<li>В Hue наблюдаем только что созданную роль:
+ <center><img src="solr-4.png" style="width:500px"></center>
+</li>
+</ol>
+<h2 id="8-тюнинг">8. Тюнинг</h2>
+<h3 id="включение-кэширования-для-запросов-в-sentry">Включение кэширования для запросов в Sentry</h3>
+<p><a href="https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_qwr_vvh_hbb">https://docs.cloudera.com/documentation/enterprise/6/6.3/topics/search_sentry.html#concept_qwr_vvh_hbb</a></p>
+<ol>
+<li>В настройках Solr изменяем следующие параметры:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>Solr Service Advanced Configuration Snippet (Safety Valve) for sentry-site.xml</b>
+</td>
+<td>
+<p><b>Name</b>:&nbsp;<span style="color: blue">sentry.provider.backend.generic.cache.enabled</span><br>
+<b>Value</b>:&nbsp;<span style="color: blue">true</span><br>
+<b>Description</b>:</p>
+<p><b>Name</b>:&nbsp;<span style="color: blue">sentry.provider.backend.generic.cache.ttl.ms</span><br>
+<b>Value</b>:&nbsp;<span style="color: blue">30000</span><br>
+<b>Description</b>:</p>
+</td>
+<td>For advanced use only, a string to be inserted into sentry-site.xml. Applies to configurations of all roles in this service except client configuration.</td>
+</tr>
+</table>
+<ol start="2">
+<li>Нажимаем <strong>Save Changes</strong>.</li>
+</ol>
+<h2 id="9-замеченные-проблемы">9. Замеченные проблемы</h2>
+<h3 id="91-error-could-not-find-or-load-main-class-ldapsdev-ipa02ptestlan">9.1. Error: Could not find or load main class ldaps:..dev-ipa02p.test.lan</h3>
+<h4 id="симптомы">Симптомы</h4>
+<p>При первом перезапуске сервиса высветилась ошибка:</p>
+<p>*** [WARN] *** Your open file limit is currently 32768. It should be set to 65000 to avoid operational disruption.</p>
+<details><summary>stdout...</summary>
+<pre tabindex="0"><code>Thu Jul 22 16:39:28 MSK 2021
+JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera
+using 6 as CDH_VERSION
+CONF_DIR=/var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER
+CMF_CONF_DIR=
+Successfully configured urlScheme property for Solr cluster in Zookeeper
+Successfully configured security for Solr cluster in Zookeeper
+Thu Jul 22 16:39:32 MSK 2021
+JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera
+using 6 as CDH_VERSION
+CONF_DIR=/var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER
+CMF_CONF_DIR=
+Successfully configured urlScheme property for Solr cluster in Zookeeper
+Successfully configured security for Solr cluster in Zookeeper
+Thu Jul 22 16:39:37 MSK 2021
+JAVA_HOME=/usr/java/jdk1.8.0_181-cloudera
+using 6 as CDH_VERSION
+CONF_DIR=/var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER
+CMF_CONF_DIR=
+Successfully configured urlScheme property for Solr cluster in Zookeeper
+Successfully configured security for Solr cluster in Zookeeper
+</code></pre></details>
+<details><summary>stderr...</summary>
+<pre tabindex="0"><code>+ export SOLR_HDFS_CONFIG=/var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER/hadoop-conf
++ SOLR_HDFS_CONFIG=/var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER/hadoop-conf
++ export SENTRY_CONF_DIR=/var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER/sentry-conf
++ SENTRY_CONF_DIR=/var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER/sentry-conf
++ export HDFS_BIN=/usr/lib/hadoop/../../bin/hdfs
++ HDFS_BIN=/usr/lib/hadoop/../../bin/hdfs
++ &#39;[&#39; &#39;&#39; = true &#39;]&#39;
++ &#39;[&#39; true = true &#39;]&#39;
++ export SOLR_AUTHORIZATION_SENTRY_SITE=/var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER/sentry-conf/sentry-site.xml
++ SOLR_AUTHORIZATION_SENTRY_SITE=/var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER/sentry-conf/sentry-site.xml
++ &#39;[&#39; stop = &#39;&#39; &#39;]&#39;
++ &#39;[&#39; upgrade = &#39;&#39; &#39;]&#39;
++ &#39;[&#39; true = true &#39;]&#39;
++ SOLR_HOME_TMP=/var/lib/solr
++ export SOLR_HOME=/usr/lib/solr
++ SOLR_HOME=/usr/lib/solr
++ &#39;[&#39; true = true &#39;]&#39;
++ eval /usr/lib/solr/bin/solrctl.sh --zk dev-zk90p.test.lan:2181,dev-zk91p.test.lan:2181,dev-zk92p.test.lan:2181/solr --jaas /var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER/jaas.conf cluster --set-property urlScheme https
+++ /usr/lib/solr/bin/solrctl.sh --zk dev-zk90p.test.lan:2181,dev-zk91p.test.lan:2181,dev-zk92p.test.lan:2181/solr --jaas /var/run/cloudera-scm-agent/process/1383-solr-SOLR_SERVER/jaas.conf cluster --set-property urlScheme https
++ &#39;[&#39; 0 == 0 &#39;]&#39;
++ echo &#39;Successfully configured urlScheme property for Solr cluster in Zookeeper&#39;
++ &#39;[&#39; 6 -ge 6 &#39;]&#39;
++ export SOLR_SEC_CONFIG_FILE=/usr/lib/solr/clusterconfig/hadoop_multi_scheme_config.json
++ SOLR_SEC_CONFIG_FILE=/usr/lib/solr/clusterconfig/hadoop_multi_scheme_config.json
++ /usr/lib/solr/bin/zksynctool.sh
++ echo &#39;Successfully configured security for Solr cluster in Zookeeper&#39;
++ export SOLR_STOP_WAIT=2592000
++ SOLR_STOP_WAIT=2592000
++ export SOLR_HOME=/var/lib/solr
++ SOLR_HOME=/var/lib/solr
++ &#39;[&#39; 6 -lt 6 &#39;]&#39;
++ exec /usr/lib/solr/bin/solrd run
+Error: Could not find or load main class ldaps:..dev-ipa02p.test.lan
+</code></pre></details>
+<h4 id="лечение">Лечение</h4>
+<p>Оказалось, что сообщение не является проблемой. Для поиска ошибки необходимо смотреть вывод не stdout, а stderr. В последней строке stderr видно, что при запуске строка с адресами трёх ldap-серверов не читается должным образом. Если указать только один адрес, то Solr запускается нормально.</p>
+<p>Предупреждение же &lsquo;Your open file limit is currently 32768. It should be set to 65000 to avoid operational disruption.&rsquo; необходимо лечить другим способом, пока мне непонятным, так как в системе установлены лимиты значительно большие, чем 65000.</p>
+<h3 id="92-warn-solrclientnodestateprovider-could-not-get-tags-from-node-dev-hbr90ptestlan8985_solr">9.2. WARN SolrClientNodeStateProvider could not get tags from node dev-hbr90p.test.lan:8985_solr</h3>
+<h4 id="симптомы-1">Симптомы</h4>
+<p>В логах Solr-сервера наблюдаются повторяющиеся сообщения:</p>
+<p>WARN SolrClientNodeStateProvider could not get tags from node dev-hbr90p.test.lan:8985_solr</p>
+<details><summary>log...</summary>
+<pre tabindex="0"><code>12:41:59.411 PMINFOCollectionsHandlerInvoked Collection Action :clusterstatus with params doAs=solr&amp;action=CLUSTERSTATUS&amp;wt=json and sendToOCPQueue=true
+12:41:59.412 PMINFOHttpSolrCall[admin] webapp=null path=/admin/collections params={doAs=solr&amp;action=CLUSTERSTATUS&amp;wt=json} status=0 QTime=1
+12:42:04.473 PMINFOHttpSolrCall[admin] webapp=null path=/admin/metrics params={} status=0 QTime=8
+12:42:04.534 PMINFOHttpSolrCall[admin] webapp=null path=/admin/cores params={action=STATUS&amp;wt=json} status=0 QTime=0
+12:42:25.937 PMWARNSolrClientNodeStateProvidercould not get tags from node dev-hbr90p.test.lan:8985_solr
+java.lang.ClassCastException: [B cannot be cast to java.lang.String
+    at org.apache.http.conn.ssl.DefaultHostnameVerifier.getSubjectAltNames(DefaultHostnameVerifier.java:309)
+    at org.apache.http.conn.ssl.DefaultHostnameVerifier.verify(DefaultHostnameVerifier.java:112)
+    at org.apache.http.conn.ssl.DefaultHostnameVerifier.verify(DefaultHostnameVerifier.java:99)
+    at org.apache.http.conn.ssl.SSLConnectionSocketFactory.verifyHostname(SSLConnectionSocketFactory.java:463)
+    at org.apache.http.conn.ssl.SSLConnectionSocketFactory.createLayeredSocket(SSLConnectionSocketFactory.java:397)
+    at org.apache.http.conn.ssl.SSLConnectionSocketFactory.connectSocket(SSLConnectionSocketFactory.java:355)
+    at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:142)
+    at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:359)
+    at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:381)
+    at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:237)
+    at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:185)
+    at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:89)
+    at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:111)
+    at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:185)
+    at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:83)
+    at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)
+    at org.apache.solr.client.solrj.impl.HttpSolrClient.executeMethod(HttpSolrClient.java:542)
+    at org.apache.solr.client.solrj.impl.HttpSolrClient.request(HttpSolrClient.java:255)
+    at org.apache.solr.client.solrj.impl.HttpSolrClient.request(HttpSolrClient.java:244)
+    at org.apache.solr.client.solrj.SolrClient.request(SolrClient.java:1219)
+    at org.apache.solr.client.solrj.impl.SolrClientNodeStateProvider$ClientSnitchCtx.invoke(SolrClientNodeStateProvider.java:292)
+    at org.apache.solr.client.solrj.impl.SolrClientNodeStateProvider.fetchMetrics(SolrClientNodeStateProvider.java:150)
+    at org.apache.solr.client.solrj.impl.SolrClientNodeStateProvider$AutoScalingSnitch.getRemoteInfo(SolrClientNodeStateProvider.java:199)
+    at org.apache.solr.common.cloud.rule.ImplicitSnitch.getTags(ImplicitSnitch.java:76)
+    at org.apache.solr.client.solrj.impl.SolrClientNodeStateProvider.getNodeValues(SolrClientNodeStateProvider.java:111)
+    at org.apache.solr.handler.admin.MetricsHistoryHandler.collectGlobalMetrics(MetricsHistoryHandler.java:498)
+    at org.apache.solr.handler.admin.MetricsHistoryHandler.collectMetrics(MetricsHistoryHandler.java:371)
+    at org.apache.solr.handler.admin.MetricsHistoryHandler.lambda$new$0(MetricsHistoryHandler.java:231)
+    at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+    at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+    at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+    at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+    at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+    at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+    at java.lang.Thread.run(Thread.java:748)
+</code></pre></details>
+<h4 id="лечение-1">Лечение</h4>
+<p>После установки второго Solr-сервера и перезапуска сервиса, ошибки в логах временно пропали, но вновь появились через несколько часов. Отключение Sentry не помогает.</p>
+<h3 id="93-401-authentication-required-http11">9.3. 401 Authentication required HTTP/1.1</h3>
+<h4 id="симптомы-2">Симптомы</h4>
+<p>В Web UI наблюдаем красные рамки:
+<center><img src="solr-5.png" style="width:500px"></center></p>
+<p>Невозможно добавление коллекции и т.п.</p>
+<p>В логах Solr-сервера, при уровне логгирования DEBUG, можно найти записи:</p>
+<pre tabindex="0"><code>3:38:29.476 PM DEBUG HttpChannel
+COMMIT for /solr/admin/metrics on HttpChannelOverHttp@36e7dd24{r=1,c=true,a=DISPATCHED,uri=https://dev-dn91p.test.lan:8985/solr/admin/metrics}
+401 Authentication required HTTP/1.1
+Connection: close
+WWW-Authenticate: Negotiate
+Set-Cookie: hadoop.auth=; Secure; HttpOnly
+Cache-Control: must-revalidate,no-cache,no-store
+Content-Type: text/html;charset=iso-8859-1
+</code></pre><h4 id="лечение-2">Лечение</h4>
+<p>Отключить или настроить Sentry.</p>
+
+
+<div class="pageinfo pageinfo-primary">
+<p>Необходимо дополнить.</p>
+
+</div>
+
 
 </div>
 
