@@ -50,11 +50,11 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3517323381341731"
      crossorigin="anonymous"></script>
 <script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  src="/js/jquery-3.6.0.min.js"
   integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
   crossorigin="anonymous"></script>
 <script
-  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  src="/js/lunr.min.js"
   integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
   crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/css/prism.css"/>
@@ -158,7 +158,7 @@ if (!doNotTrack) {
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.9c9fe16c51a2d1103dbcb7d0c56ec672.json"
+  data-offline-search-index-json-src="/offline-search-index.e6517f765961706decd2544bc0f9b435.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -650,6 +650,14 @@ This is the multi-page printable view of this section.
     
 	
 <li>3.2.16: <a href="#pg-b56261d454674913f0b8a76005d2d092">21. Solr. Установка и настройка</a></li>
+
+
+    
+  
+    
+    
+	
+<li>3.2.17: <a href="#pg-31967f5c5d0f70db6f9d81bcd0e194a9">22. Kafka. Установка и настройка</a></li>
 
 
     
@@ -8626,6 +8634,137 @@ Content-Type: text/html;charset=iso-8859-1
     
 	
   
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-31967f5c5d0f70db6f9d81bcd0e194a9">3.2.17 - 22. Kafka. Установка и настройка</h1>
+    <div class="lead">В этой части описывается настройка Kafka.</div>
+	<p>2021-07-23</p>
+<h2 id="добавление-сервиса-kafka">Добавление сервиса Kafka</h2>
+<ol>
+<li>В консоли Cloudera Manager в меню выбираем &lsquo;Add Service&rsquo;:
+ <center><img src="kafka-1.png" style="width:200px"></center>
+</li>
+<li>Выбираем Kafka.</li>
+<li>Выбираем зависимости:
+ <center><img src="kafka-2.png" style="width:500px"></center>
+</li>
+<li>Распределяем роли с некоторыми условиями:
+<ul>
+<li>Из-за особенностей работы, которая приводит к высокой утилизации ресурсов системы, под Kafka Brokers лучше выделить отдельные хосты. Чрезвычайно не рекомендуется размещать Kafka на ZooKeeper-узлах.</li>
+</ul>
+</li>
+<li>Изменяем настройки:</li>
+</ol>
+<table>
+<tr>
+<th>Property</th><th>Value</th><th>Description</th>
+</tr>
+<tr>
+<td><b>ZooKeeper Root</b><br>
+<i>zookeeper.chroot</i>
+</td>
+<td><span style="color: blue">/kafka</span></td>
+<td>The znode in ZooKeeper used as a root for this Kafka cluster.</td>
+</tr>
+<tr>
+<td><b>Enable Kerberos Authentication</b><br>
+<i>kerberos.auth.enable</i>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Enables Kerberos authentication for this Kafka service.</td>
+</tr>
+<tr>
+<td><b>Data Directories</b><br>
+<i>log.dirs</i>
+</td>
+<td><span style="color: blue">/data/kafka/data</span></td>
+<td>A list of one or more directories in which Kafka data is stored. Each new partition created is placed in the directory that currently has the least amount of partitions. Each directory should be on its own separate drive.</td>
+</tr>
+<tr>
+<td><b>Enable TLS/SSL for Kafka Broker</b><br>
+<i>ssl_enabled</i>
+</td>
+<td><span style="color: blue">☑</span></td>
+<td>Encrypt communication between clients and Kafka Broker using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).</td>
+</tr>
+</table>
+<pre tabindex="0"><code class="language-mermaid" data-lang="mermaid">graph LR
+  Start --&gt; Need{&#34;Do I need diagrams&#34;}
+  Need -- No --&gt; Off[&#34;Set params.mermaid.enable = false&#34;]
+  Need -- Yes --&gt; HaveFun[&#34;Great!  Enjoy!&#34;]
+</code></pre><pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">participant participant as Foo
+actor       actor       as Foo1
+boundary    boundary    as Foo2
+control     control     as Foo3
+entity      entity      as Foo4
+database    database    as Foo5
+collections collections as Foo6
+queue       queue       as Foo7
+Foo -&gt; Foo1 : To actor
+Foo -&gt; Foo2 : To boundary
+Foo -&gt; Foo3 : To control
+Foo -&gt; Foo4 : To entity
+Foo -&gt; Foo5 : To database
+Foo -&gt; Foo6 : To collections
+Foo -&gt; Foo7: To queue
+</code></pre><ol start="3">
+<li>Диаграмма3</li>
+</ol>
+<pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">nwdiag {
+group nightly {
+color = &#34;#FFAAAA&#34;;
+description = &#34;&lt;&amp;clock&gt; Restarted nightly &lt;&amp;clock&gt;&#34;;
+web02;
+db01;
+}
+network dmz {
+address = &#34;210.x.x.x/24&#34;
+user [description = &#34;&lt;&amp;person*4.5&gt;\n user1&#34;];
+// set multiple addresses (using comma)
+web01 [address = &#34;210.x.x.1, 210.x.x.20&#34;, description = &#34;&lt;&amp;cog*4&gt;\nweb01&#34;]
+web02 [address = &#34;210.x.x.2&#34;, description = &#34;&lt;&amp;cog*4&gt;\nweb02&#34;];
+}
+network internal {
+address = &#34;172.x.x.x/24&#34;;
+web01 [address = &#34;172.x.x.1&#34;];
+web02 [address = &#34;172.x.x.2&#34;];
+db01 [address = &#34;172.x.x.100&#34;, description = &#34;&lt;&amp;spreadsheet*4&gt;\n db01&#34;];
+db02 [address = &#34;172.x.x.101&#34;, description = &#34;&lt;&amp;spreadsheet*4&gt;\n db02&#34;];
+ptr [address = &#34;172.x.x.110&#34;, description = &#34;&lt;&amp;print*4&gt;\n ptr01&#34;];
+}
+}
+</code></pre><ol start="4">
+<li>ваыв</li>
+</ol>
+<pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">@startsalt
+{
+Just plain text
+[This is my button]
+() Unchecked radio
+(X) Checked radio
+[] Unchecked box
+[X] Checked box
+&#34;Enter text here &#34;
+^This is a droplist^
+}
+@endsalt
+</code></pre><ol start="5">
+<li>ydty</li>
+</ol>
+<pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">listopeniconic
+</code></pre>
+</div>
+
+
+
+    
+	
+  
 
     
 	
@@ -10934,6 +11073,8 @@ error 23 at 0 depth lookup:certificate revoked
     crossorigin="anonymous"></script>
 
 
+<script src="https://cdn.jsdelivr.net/npm/mermaid@8.13.4/dist/mermaid.min.js" integrity="sha512-JERecFUBbsm75UpkVheAuDOE8NdHjQBrPACfEQYPwvPG+fjgCpHAz1Jw2ci9EXmd3DdfiWth3O3CQvcfEg8gsA==" crossorigin="anonymous"></script>
+
 
 
 
@@ -10941,6 +11082,7 @@ error 23 at 0 depth lookup:certificate revoked
 
 
 
+<script src='/js/deflate.js'></script>
 
 
 
@@ -10958,7 +11100,8 @@ error 23 at 0 depth lookup:certificate revoked
 
 
 
-<script src="/js/main.min.fc1551b8c1b40a6eaa08f3cb9c76f12ccd9aebc436cecdaf2341c890206d024a.js" integrity="sha256-/BVRuMG0Cm6qCPPLnHbxLM2a68Q2zs2vI0HIkCBtAko=" crossorigin="anonymous"></script>
+
+<script src="/js/main.min.fb811d5528587e965bd15c050f698593da88020d2e3c553ecce5c8a5e772fe2e.js" integrity="sha256-&#43;4EdVShYfpZb0VwFD2mFk9qIAg0uPFU&#43;zOXIpedy/i4=" crossorigin="anonymous"></script>
 
 
 

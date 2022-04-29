@@ -1,0 +1,145 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Debuntarium – Kafka</title>
+    <link>https://debuntu.ru/tags/kafka/</link>
+    <description>Recent content in Kafka on Debuntarium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 23 Jul 2021 00:00:00 +0000</lastBuildDate>
+    
+	  <atom:link href="https://debuntu.ru/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Manuals: 22. Kafka. Установка и настройка</title>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</link>
+      <pubDate>Fri, 23 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2021-07-23&lt;/p&gt;
+&lt;h2 id=&#34;добавление-сервиса-kafka&#34;&gt;Добавление сервиса Kafka&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;:
+ &lt;center&gt;&lt;img src=&#34;kafka-1.png&#34; style=&#34;width:200px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;Выбираем Kafka.&lt;/li&gt;
+&lt;li&gt;Выбираем зависимости:
+ &lt;center&gt;&lt;img src=&#34;kafka-2.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
+&lt;/li&gt;
+&lt;li&gt;Распределяем роли с некоторыми условиями:
+&lt;ul&gt;
+&lt;li&gt;Из-за особенностей работы, которая приводит к высокой утилизации ресурсов системы, под Kafka Brokers лучше выделить отдельные хосты. Чрезвычайно не рекомендуется размещать Kafka на ZooKeeper-узлах.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Изменяем настройки:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;ZooKeeper Root&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;zookeeper.chroot&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/kafka&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;The znode in ZooKeeper used as a root for this Kafka cluster.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable Kerberos Authentication&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;kerberos.auth.enable&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Enables Kerberos authentication for this Kafka service.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Data Directories&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;log.dirs&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/data/kafka/data&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;A list of one or more directories in which Kafka data is stored. Each new partition created is placed in the directory that currently has the least amount of partitions. Each directory should be on its own separate drive.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;b&gt;Enable TLS/SSL for Kafka Broker&lt;/b&gt;&lt;br&gt;
+&lt;i&gt;ssl_enabled&lt;/i&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;Encrypt communication between clients and Kafka Broker using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-mermaid&#34; data-lang=&#34;mermaid&#34;&gt;graph LR
+  Start --&amp;gt; Need{&amp;#34;Do I need diagrams&amp;#34;}
+  Need -- No --&amp;gt; Off[&amp;#34;Set params.mermaid.enable = false&amp;#34;]
+  Need -- Yes --&amp;gt; HaveFun[&amp;#34;Great!  Enjoy!&amp;#34;]
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-plantuml&#34; data-lang=&#34;plantuml&#34;&gt;participant participant as Foo
+actor       actor       as Foo1
+boundary    boundary    as Foo2
+control     control     as Foo3
+entity      entity      as Foo4
+database    database    as Foo5
+collections collections as Foo6
+queue       queue       as Foo7
+Foo -&amp;gt; Foo1 : To actor
+Foo -&amp;gt; Foo2 : To boundary
+Foo -&amp;gt; Foo3 : To control
+Foo -&amp;gt; Foo4 : To entity
+Foo -&amp;gt; Foo5 : To database
+Foo -&amp;gt; Foo6 : To collections
+Foo -&amp;gt; Foo7: To queue
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Диаграмма3&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-plantuml&#34; data-lang=&#34;plantuml&#34;&gt;nwdiag {
+group nightly {
+color = &amp;#34;#FFAAAA&amp;#34;;
+description = &amp;#34;&amp;lt;&amp;amp;clock&amp;gt; Restarted nightly &amp;lt;&amp;amp;clock&amp;gt;&amp;#34;;
+web02;
+db01;
+}
+network dmz {
+address = &amp;#34;210.x.x.x/24&amp;#34;
+user [description = &amp;#34;&amp;lt;&amp;amp;person*4.5&amp;gt;\n user1&amp;#34;];
+// set multiple addresses (using comma)
+web01 [address = &amp;#34;210.x.x.1, 210.x.x.20&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;cog*4&amp;gt;\nweb01&amp;#34;]
+web02 [address = &amp;#34;210.x.x.2&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;cog*4&amp;gt;\nweb02&amp;#34;];
+}
+network internal {
+address = &amp;#34;172.x.x.x/24&amp;#34;;
+web01 [address = &amp;#34;172.x.x.1&amp;#34;];
+web02 [address = &amp;#34;172.x.x.2&amp;#34;];
+db01 [address = &amp;#34;172.x.x.100&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;spreadsheet*4&amp;gt;\n db01&amp;#34;];
+db02 [address = &amp;#34;172.x.x.101&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;spreadsheet*4&amp;gt;\n db02&amp;#34;];
+ptr [address = &amp;#34;172.x.x.110&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;print*4&amp;gt;\n ptr01&amp;#34;];
+}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;ваыв&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-plantuml&#34; data-lang=&#34;plantuml&#34;&gt;@startsalt
+{
+Just plain text
+[This is my button]
+() Unchecked radio
+(X) Checked radio
+[] Unchecked box
+[X] Checked box
+&amp;#34;Enter text here &amp;#34;
+^This is a droplist^
+}
+@endsalt
+&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;ydty&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-plantuml&#34; data-lang=&#34;plantuml&#34;&gt;listopeniconic
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>
