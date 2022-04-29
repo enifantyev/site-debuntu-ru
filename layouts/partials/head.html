@@ -38,15 +38,9 @@
 </script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3517323381341731"
      crossorigin="anonymous"></script>
-<script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
-  crossorigin="anonymous"></script>
+<script src='{{ "/js/jquery-3.6.0.min.js" | relURL }}'></script>
 {{ if .Site.Params.offlineSearch -}}
-<script
-  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
-  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
-  crossorigin="anonymous"></script>
+<script src='{{ "/js/lunr.min.js" | relURL }}'></script>
 {{ end -}}
 
 {{ if .Site.Params.prism_syntax_highlighting -}}
