@@ -223,7 +223,7 @@ slug: kafka-ustanovka-i-nastroyka
     <td><b>Name of User with read-only access to the JMX Agent</b><br>
     <i>jmx.monitor.user</i>
     </td>
-    <td><span style="color: blue">Default value: monitorRole</span></td>
+    <td>Default value: <span style="color: blue">monitorRole</span></td>
     <td>Specifies the name of the user that has read-only privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.</td>
   </tr>
   <tr>
@@ -239,7 +239,7 @@ slug: kafka-ustanovka-i-nastroyka
     <td><b>Name of User with Read-Write Access to the JMX Agent</b><br>
     <i>jmx.control.user</i>
     </td>
-    <td><span style="color: blue">Default value: controlRole</span></td>
+    <td>Default value: <span style="color: blue">controlRole</span></td>
     <td>Specifies the name of the user that has read-write privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.</td>
   </tr>
   <tr>
