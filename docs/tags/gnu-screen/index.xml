@@ -157,8 +157,8 @@
 &lt;td&gt;разделить горизонтально активное окно/регион на два региона.&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; `&lt;/td&gt;
-&lt;td&gt;`&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;|&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;разделить вертикально активное окно/регион на два региона.&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;&lt;code&gt;Ctrl+a&lt;/code&gt; &lt;code&gt;Tab&lt;/code&gt;  (или &lt;code&gt;Shift Tab&lt;/code&gt;)&lt;/td&gt;
