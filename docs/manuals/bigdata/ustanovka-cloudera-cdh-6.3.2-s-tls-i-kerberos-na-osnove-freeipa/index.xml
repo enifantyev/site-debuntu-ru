@@ -3785,103 +3785,354 @@ Content-Type: text/html;charset=iso-8859-1
 &lt;li&gt;Изменяем настройки:&lt;/li&gt;
 &lt;/ol&gt;
 &lt;table&gt;
-&lt;tr&gt;
-&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;b&gt;ZooKeeper Root&lt;/b&gt;&lt;br&gt;
-&lt;i&gt;zookeeper.chroot&lt;/i&gt;
-&lt;/td&gt;
-&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/kafka&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;The znode in ZooKeeper used as a root for this Kafka cluster.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;b&gt;Enable Kerberos Authentication&lt;/b&gt;&lt;br&gt;
-&lt;i&gt;kerberos.auth.enable&lt;/i&gt;
-&lt;/td&gt;
-&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;Enables Kerberos authentication for this Kafka service.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;b&gt;Data Directories&lt;/b&gt;&lt;br&gt;
-&lt;i&gt;log.dirs&lt;/i&gt;
-&lt;/td&gt;
-&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/data/kafka/data&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;A list of one or more directories in which Kafka data is stored. Each new partition created is placed in the directory that currently has the least amount of partitions. Each directory should be on its own separate drive.&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;b&gt;Enable TLS/SSL for Kafka Broker&lt;/b&gt;&lt;br&gt;
-&lt;i&gt;ssl_enabled&lt;/i&gt;
-&lt;/td&gt;
-&lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-&lt;td&gt;Encrypt communication between clients and Kafka Broker using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
-&lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;th&gt;#&lt;/th&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;1.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;ZooKeeper Root&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;zookeeper.chroot&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/kafka&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;The znode in ZooKeeper used as a root for this Kafka cluster.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;2.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Enable Kerberos Authentication&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;kerberos.auth.enable&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Enables Kerberos authentication for this Kafka service.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;3.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Data Directories&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;log.dirs&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/data/kafka/data&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;A list of one or more directories in which Kafka data is stored. Each new partition created is placed in the directory that currently has the least amount of partitions. Each directory should be on its own separate drive.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;4.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Enable TLS/SSL for Kafka Broker&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl_enabled&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Encrypt communication between clients and Kafka Broker using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;5.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Server JKS Keystore File Location&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.keystore.location&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/server.jks&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Kafka Broker is acting as a TLS/SSL server. The keystore must be in JKS format.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;6.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Server JKS Keystore File Password&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.keystore.password.generator&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+    &lt;td&gt;The password for the Kafka Broker JKS keystore file.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;7.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Server JKS Keystore Key Password&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.key.password.generator&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+    &lt;td&gt;The password that protects the private key contained in the JKS keystore used when Kafka Broker is acting as a TLS/SSL server.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;8.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Client Trust Store File&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.truststore.location&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that Kafka Broker might connect to. This is used when Kafka Broker is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;9.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Client Trust Store Password&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.truststore.password.generator&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+    &lt;td&gt;The password for the Kafka Broker TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;10.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Enable TLS/SSL for Kafka MirrorMaker&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl_enabled&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Encrypt communication between clients and Kafka MirrorMaker using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;11.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Server JKS Keystore File Location&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.keystore.location&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/server.jks&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Kafka MirrorMaker is acting as a TLS/SSL server. The keystore must be in JKS format.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;12.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Server JKS Keystore File Password&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.keystore.password.generator&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+    &lt;td&gt;The password for the Kafka MirrorMaker JKS keystore file.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;13.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Server JKS Keystore Key Password&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.key.password.generator&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+    &lt;td&gt;The password that protects the private key contained in the JKS keystore used when Kafka MirrorMaker is acting as a TLS/SSL server.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;14.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Client Trust Store File&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.truststore.location&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that Kafka MirrorMaker might connect to. This is used when Kafka MirrorMaker is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;15.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Client Trust Store Password&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.truststore.password.generator&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
+    &lt;td&gt;The password for the Kafka MirrorMaker TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.&lt;/td&gt;
+  &lt;/tr&gt;
 &lt;/table&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-mermaid&#34; data-lang=&#34;mermaid&#34;&gt;graph LR
-  Start --&amp;gt; Need{&amp;#34;Do I need diagrams&amp;#34;}
-  Need -- No --&amp;gt; Off[&amp;#34;Set params.mermaid.enable = false&amp;#34;]
-  Need -- Yes --&amp;gt; HaveFun[&amp;#34;Great!  Enjoy!&amp;#34;]
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-plantuml&#34; data-lang=&#34;plantuml&#34;&gt;participant participant as Foo
-actor       actor       as Foo1
-boundary    boundary    as Foo2
-control     control     as Foo3
-entity      entity      as Foo4
-database    database    as Foo5
-collections collections as Foo6
-queue       queue       as Foo7
-Foo -&amp;gt; Foo1 : To actor
-Foo -&amp;gt; Foo2 : To boundary
-Foo -&amp;gt; Foo3 : To control
-Foo -&amp;gt; Foo4 : To entity
-Foo -&amp;gt; Foo5 : To database
-Foo -&amp;gt; Foo6 : To collections
-Foo -&amp;gt; Foo7: To queue
-&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;Диаграмма3&lt;/li&gt;
+&lt;ol start=&#34;6&#34;&gt;
+&lt;li&gt;Наблюдаем запуск ролей.&lt;/li&gt;
+&lt;li&gt;Визард успешно закончен.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-plantuml&#34; data-lang=&#34;plantuml&#34;&gt;nwdiag {
-group nightly {
-color = &amp;#34;#FFAAAA&amp;#34;;
-description = &amp;#34;&amp;lt;&amp;amp;clock&amp;gt; Restarted nightly &amp;lt;&amp;amp;clock&amp;gt;&amp;#34;;
-web02;
-db01;
-}
-network dmz {
-address = &amp;#34;210.x.x.x/24&amp;#34;
-user [description = &amp;#34;&amp;lt;&amp;amp;person*4.5&amp;gt;\n user1&amp;#34;];
-// set multiple addresses (using comma)
-web01 [address = &amp;#34;210.x.x.1, 210.x.x.20&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;cog*4&amp;gt;\nweb01&amp;#34;]
-web02 [address = &amp;#34;210.x.x.2&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;cog*4&amp;gt;\nweb02&amp;#34;];
-}
-network internal {
-address = &amp;#34;172.x.x.x/24&amp;#34;;
-web01 [address = &amp;#34;172.x.x.1&amp;#34;];
-web02 [address = &amp;#34;172.x.x.2&amp;#34;];
-db01 [address = &amp;#34;172.x.x.100&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;spreadsheet*4&amp;gt;\n db01&amp;#34;];
-db02 [address = &amp;#34;172.x.x.101&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;spreadsheet*4&amp;gt;\n db02&amp;#34;];
-ptr [address = &amp;#34;172.x.x.110&amp;#34;, description = &amp;#34;&amp;lt;&amp;amp;print*4&amp;gt;\n ptr01&amp;#34;];
-}
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;ваыв&lt;/li&gt;
+&lt;h2 id=&#34;3-перенастройка-размещения-logов&#34;&gt;3. Перенастройка размещения log&amp;rsquo;ов&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках Kafka, используя категорию &amp;lsquo;Logs&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;:&lt;/li&gt;
 &lt;/ol&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-plantuml&#34; data-lang=&#34;plantuml&#34;&gt;@startsalt
-{
-Just plain text
-[This is my button]
-() Unchecked radio
-(X) Checked radio
-[] Unchecked box
-[X] Checked box
-&amp;#34;Enter text here &amp;#34;
-^This is a droplist^
-}
-@endsalt
-&lt;/code&gt;&lt;/pre&gt;&lt;ol start=&#34;5&#34;&gt;
-&lt;li&gt;ydty&lt;/li&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;#&lt;/th&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;1.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka Broker Log Directory&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;kafka.log4j.dir&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/kafka&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;The log directory for log files of the role Kafka Broker.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;2.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker Log Directory&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;kafka_mirrormaker.log4j.dir&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/kafka&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;The log directory for log files of the role Kafka MirrorMaker.&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-plantuml&#34; data-lang=&#34;plantuml&#34;&gt;listopeniconic
-&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;4-дополнительные-настройки&#34;&gt;4. Дополнительные настройки&lt;/h2&gt;
+&lt;p&gt;Так как сервера стоят в отдельном VLAN и перехват трафика маловероятен, то выбираем протокол безопасности без шифрования трафика SASL_PLAINTEXT, так как TLS-шифрование является ресурсоёмкой операцией. При существования риска перехвата трафика необходимо выбрать протокол SASL_SSL.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;В настройках Kafka следующие параметры приводим к указанному виду:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;#&lt;/th&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;1.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Sentry Service&lt;/b&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;Sentry&lt;/span&gt;&lt;br&gt;
+    ○&amp;nbsp;none&lt;/td&gt;
+    &lt;td&gt;Name of the Sentry service that this Kafka service instance depends on&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;2.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Enable Kerberos Authentication&lt;/b&gt;&lt;br&gt;
+      &lt;i&gt;kerberos.auth.enable&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Enables Kerberos authentication for this Kafka service.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;3.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Enable Sentry Privileges Caching&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;sentry.kafka.caching.enable&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Enables Sentry privilege caching. Only applicable if authorization via Sentry is enabled.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;4.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Enable Authenticated Communication with the JMX Agent&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;jmx.auth.enabled&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Enables Authenticated Communication with the JMX Agent.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;5.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Name of User with read-only access to the JMX Agent&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;jmx.monitor.user&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;Default value: monitorRole&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Specifies the name of the user that has read-only privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;6.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Password of User with read-only Access to the JMX agent&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;jmx.monitor.user.passwd&lt;/i&gt;
+  &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;************&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Specifies the password of the user that has read-only privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;7.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Name of User with Read-Write Access to the JMX Agent&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;jmx.control.user&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;Default value: controlRole&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Specifies the name of the user that has read-write privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;8.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Password of user with read-write access to the JMX agent&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;jmx.control.user.passwd&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;************&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Specifies the password of the user that has read-write privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;9.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Enable TLS/SSL for Kafka JMX&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;jmx.ssl.enabled&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Encrypt communication between clients and Kafka JMX using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;10.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Enable TLS client authentication for JMX port&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;jmx.ssl.client.auth.enabled&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;If enabled, a valid client certificate must be presented by the JMX client in order to connect to the JMX port. Ensure that the trusted CA certificates are present in either the Kafka JMX TLS/SSL Server Trust Store file or the global trust store.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;11.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;SSL Client Authentication&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;ssl.client.auth&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
+    &lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;none&lt;/span&gt;&lt;br&gt;
+    ○&amp;nbsp;required&lt;br&gt;
+    ○&amp;nbsp;requested
+    &lt;/td&gt;
+    &lt;td&gt;Client authentication mode for SSL connections. This configuration has three valid values, &#34;required&#34;, &#34;requested&#34; and &#34;none&#34;. If set to &#34;required&#34;, client authentication is required. If set to &#34;requested&#34;, client authentication is requested and clients without certificates can still connect. If set to &#34;none&#34;, which is the default value, no client authentication is required.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;12.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Inter Broker Protocol&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;security.inter.broker.protocol&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
+    ○&amp;nbsp;INFERRED&lt;br&gt;
+    ○&amp;nbsp;PLAINTEXT&lt;br&gt;
+    ○&amp;nbsp;SSL&lt;br&gt;
+    &lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;SASL_PLAINTEXT&lt;/span&gt;&lt;br&gt;
+    ○&amp;nbsp;SASL_SSL
+    &lt;/td&gt;
+    &lt;td&gt;Protocol to be used for inter-broker communication. INFERRED uses the same protocol that is configured for external clients.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;13.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;b&gt;Authenticate Zookeeper Connection&lt;/b&gt;&lt;br&gt;
+    &lt;i&gt;authenticate.zookeeper.connection&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
+    &lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Enables authentication of SASL connections with zookeeper, if Kerberos authentication is enabled. It also allows a broker to set SASL ACL on zookeeper nodes, which locks these nodes down so that only a Kafka broker can modify it.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;14.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;
+      &lt;b&gt;Super users&lt;/b&gt;&lt;br&gt;
+      &lt;i&gt;super.users&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
+    kafka&lt;br&gt;
+    &lt;span style=&#34;color: blue&#34;&gt;nifantevea&lt;/span&gt;&lt;br&gt;
+    &lt;span style=&#34;color: blue&#34;&gt;atlas&lt;/span&gt; (на время попытки внедрения Apache Atlas в кластер)&lt;/td&gt;
+    &lt;td&gt;Users who are allowed to perform any action on the Kafka cluster.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;15.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;
+      &lt;b&gt;Source Kafka Cluster&#39;s Security Protocol&lt;/b&gt;&lt;br&gt;
+      &lt;i&gt;source.security.protocol&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
+      ○&amp;nbsp;INFERRED&lt;br&gt;
+      ○&amp;nbsp;PLAINTEXT&lt;br&gt;
+      ○&amp;nbsp;SSL&lt;br&gt;
+      &lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;SASL_PLAINTEXT&lt;/span&gt;&lt;br&gt;
+      ○&amp;nbsp;SASL_SSL
+    &lt;/td&gt;
+    &lt;td&gt;Protocol used for communication with source Kafka cluster.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;16.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;
+      &lt;b&gt;Destination Kafka Cluster&#39;s Security Protocol&lt;/b&gt;&lt;br&gt;
+      &lt;i&gt;destination.security.protocol&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
+      ○&amp;nbsp;INFERRED&lt;br&gt;
+      ○&amp;nbsp;PLAINTEXT&lt;br&gt;
+      ○&amp;nbsp;SSL&lt;br&gt;
+      &lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;SASL_PLAINTEXT&lt;/span&gt;&lt;br&gt;
+      ○&amp;nbsp;SASL_SSL
+    &lt;/td&gt;
+    &lt;td&gt;Protocol used for communication with destination Kafka cluster.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;17.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;
+      &lt;b&gt;Source Kafka Cluster&#39;s Client Auth&lt;/b&gt;&lt;br&gt;
+      &lt;i&gt;source.ssl.client.auth&lt;/i&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Only required if the source Kafka cluster requires client authentication.&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;&lt;i&gt;18.&lt;/i&gt;&lt;/td&gt;
+    &lt;td&gt;
+      &lt;b&gt;Destination Kafka Cluster&#39;s Client Auth&lt;/b&gt;&lt;br&gt;
+      &lt;i&gt;destination.ssl.client.auth&lt;/i&gt;
+      &lt;/td&gt;
+      &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;Only required if destination Kafka cluster requires client authentication.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
+&lt;/ol&gt;
+
       </description>
     </item>
     
