@@ -6005,7 +6005,7 @@ Content-Type: text/html;charset=iso-8859-1
     &lt;td&gt;&lt;b&gt;Name of User with read-only access to the JMX Agent&lt;/b&gt;&lt;br&gt;
     &lt;i&gt;jmx.monitor.user&lt;/i&gt;
     &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;Default value: monitorRole&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Default value: &lt;span style=&#34;color: blue&#34;&gt;monitorRole&lt;/span&gt;&lt;/td&gt;
     &lt;td&gt;Specifies the name of the user that has read-only privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
@@ -6021,7 +6021,7 @@ Content-Type: text/html;charset=iso-8859-1
     &lt;td&gt;&lt;b&gt;Name of User with Read-Write Access to the JMX Agent&lt;/b&gt;&lt;br&gt;
     &lt;i&gt;jmx.control.user&lt;/i&gt;
     &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;Default value: controlRole&lt;/span&gt;&lt;/td&gt;
+    &lt;td&gt;Default value: &lt;span style=&#34;color: blue&#34;&gt;controlRole&lt;/span&gt;&lt;/td&gt;
     &lt;td&gt;Specifies the name of the user that has read-write privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
