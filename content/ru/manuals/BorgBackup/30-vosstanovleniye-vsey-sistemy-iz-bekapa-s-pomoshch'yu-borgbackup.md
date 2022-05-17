@@ -11,8 +11,7 @@ tags:
 slug: vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup
 ---
 
-2022-03-11
-2022-03-18
+2022-03-11&nbsp;&ndash;&nbsp;2022-03-18
 
 ## Подготовительные мероприятия
 В минимальной комплектации необходимо восстановить системные разделы `/`, `/boot`, `/var`. В максимальной комплектации потребуется восстановить ранее забэкапированные `/data` и прочее.
@@ -25,6 +24,44 @@ slug: vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup
 В противном случае, когда восстанавливаемые тома находятся на разных VG, потребуется разбивка дополнительного диска на отдельные разделы и добавление этих новых PV в свои VG.
 
 ## Процесс восстановления
+### Узнаём требуемый размер диска для восстановления архива
+Устанавливаем переменные, чтобы не вводить параметры дважды:
+```bash
+export BORG_RSH="ssh -i ~/.ssh/borg1"
+export BORG_REPO="_borg@192.168.50.10:home-ipa"
+```
+
+Выбираем нужный архив из списка. Пример списка:
+```bash
+borg list
+...
+full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 [f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4]
+```
+
+Узнаём размер распакованных файлов:
+```bash
+Archive name: full_img211202_2022-03-11T10:54:32
+Archive fingerprint: f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4
+Comment:
+Hostname: img211202
+Username: root
+Time (start): Mon, 2022-03-11 10:54:35
+Time (end): Mon, 2022-04-11 10:55:25
+Duration: 50.01 seconds
+Number of files: 68781
+Command line: /root/.local/bin/borg create -C zstd --stats --progress '::full_{hostname}_{now}' /mnt
+Utilization of maximum supported archive size: 0%
+------------------------------------------------------------------------------
+                       Original size      Compressed size    Deduplicated size
+This archive:                5.08 GB              1.82 GB            101.91 MB
+All archives:              192.91 GB            115.34 GB              9.20 GB
+
+                       Unique chunks         Total chunks
+Chunk index:                  165331              2033810
+```
+
+Видим, что потребуется создать снэпшот размером не менее 5.08 GB.
+
 ### Отключение работающих демонов
 В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:
 ```bash
@@ -36,8 +73,8 @@ service auditd stop
 ### Создание LVM snapshot
 Помним, что в Volume Group должно быть достаточно свободного места для размещения данных из бэкапов. В отличие от процесса создания бэкапа, в этом случае нужно много места, чтобы уместить сюда весь бэкап.
 ```bash
-lvcreate -L 4G -s -n snap_root /dev/vg/root
-lvcreate -L 4G -s -n snap_var /dev/vg/var
+lvcreate -L 6G -s -n snap_root /dev/vg/root
+lvcreate -L 6G -s -n snap_var /dev/vg/var
 ```
 
 ### Монтирование снэпшотов + директорию `/boot`
@@ -80,30 +117,18 @@ mount | grep '/mnt'
 Удаляем всё содержимое снэпшотов и каталога `/boot` с проверкой:
 ```bash
 rm -rf /mnt/*
-du /mnt
+tree -h /mnt
 ```
 
 Результат:
 ```
-0	/mnt/boot
-0	/mnt/var
-0	/mnt
+/mnt
+└── [4.0K]  boot
+
+1 directory, 0 files
 ```
 
 ### Восстановление бэкапа в пространство снэпшотов и `/boot`
-Устанавливаем переменные, чтобы не вводить параметры дважды:
-```bash
-export BORG_RSH="ssh -i ~/.ssh/borg1"
-export BORG_REPO="_borg@192.168.50.10:home-ipa"
-```
-
-Выбираем нужный архив из списка. Пример списка:
-```bash
-borg list
-...
-full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 [f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4]
-```
-
 Переходим в корень и восстанавливаем архив `full_img211202_2022-03-11T10:54:32`, который заполнит файлами готовый для приёма каталог `/mnt`:
 ```bash
 cd /

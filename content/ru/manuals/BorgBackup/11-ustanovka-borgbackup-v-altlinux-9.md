@@ -9,7 +9,7 @@ tags:
   - Backup SoftWare
   - AltLinux 9
   - AltLinux
-slug: ustanovka-i-nastroyka-borgbackup
+slug: ustanovka-borgbackup-v-altlinux-9
 ---
 
 2022-03-31

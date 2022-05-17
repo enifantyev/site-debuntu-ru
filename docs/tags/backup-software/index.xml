@@ -107,10 +107,10 @@
     
     <item>
       <title>Manuals: 11. Установка BorgBackup в AltLinux 9</title>
-      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</link>
       <pubDate>Thu, 31 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</guid>
       <description>
         
         
@@ -429,8 +429,7 @@ WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken per
       <description>
         
         
-        &lt;p&gt;2022-03-11
-2022-03-18&lt;/p&gt;
+        &lt;p&gt;2022-03-11 – 2022-03-18&lt;/p&gt;
 &lt;h2 id=&#34;подготовительные-мероприятия&#34;&gt;Подготовительные мероприятия&lt;/h2&gt;
 &lt;p&gt;В минимальной комплектации необходимо восстановить системные разделы &lt;code&gt;/&lt;/code&gt;, &lt;code&gt;/boot&lt;/code&gt;, &lt;code&gt;/var&lt;/code&gt;. В максимальной комплектации потребуется восстановить ранее забэкапированные &lt;code&gt;/data&lt;/code&gt; и прочее.&lt;/p&gt;
 &lt;p&gt;В любом случае, &lt;strong&gt;для распаковки этих данных потребуется достаточное незанятое место на Volume Group&amp;rsquo;ах&lt;/strong&gt;, несущих восстанавливаемые Logical Volume&amp;rsquo;ы. В простейшем случае для этого необходимо добавить к машине дополнительный диск вместимостью перекрывающим объём восстанавливаемых данных.&lt;/p&gt;
@@ -438,6 +437,34 @@ WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken per
 &lt;p&gt;Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется. Достаточно будет добавить в VG весь новый диск командой &lt;code&gt;vgextend /dev/vg /dev/sdb&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;В противном случае, когда восстанавливаемые тома находятся на разных VG, потребуется разбивка дополнительного диска на отдельные разделы и добавление этих новых PV в свои VG.&lt;/p&gt;
 &lt;h2 id=&#34;процесс-восстановления&#34;&gt;Процесс восстановления&lt;/h2&gt;
+&lt;h3 id=&#34;узнаём-требуемый-размер-диска-для-восстановления-архива&#34;&gt;Узнаём требуемый размер диска для восстановления архива&lt;/h3&gt;
+&lt;p&gt;Устанавливаем переменные, чтобы не вводить параметры дважды:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Выбираем нужный архив из списка. Пример списка:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg list
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Узнаём размер распакованных файлов:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Archive name: full_img211202_2022-03-11T10:54:32
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Archive fingerprint: f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Comment:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Hostname: img211202
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Username: root
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Time &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;start&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;: Mon, 2022-03-11 10:54:35
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Time &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;(&lt;/span&gt;end&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;)&lt;/span&gt;: Mon, 2022-04-11 10:55:25
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Duration: 50.01 seconds
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Number of files: &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;68781&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Command line: /root/.local/bin/borg create -C zstd --stats --progress &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;::full_{hostname}_{now}&amp;#39;&lt;/span&gt; /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Utilization of maximum supported archive size: 0%
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;------------------------------------------------------------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                       Original size      Compressed size    Deduplicated size
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;This archive:                5.08 GB              1.82 GB            101.91 MB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;All archives:              192.91 GB            115.34 GB              9.20 GB
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                       Unique chunks         Total chunks
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Chunk index:                  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;165331&lt;/span&gt;              &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;2033810&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Видим, что потребуется создать снэпшот размером не менее 5.08 GB.&lt;/p&gt;
 &lt;h3 id=&#34;отключение-работающих-демонов&#34;&gt;Отключение работающих демонов&lt;/h3&gt;
 &lt;p&gt;В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl stop postfix
@@ -445,8 +472,8 @@ WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken per
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;service auditd stop
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;создание-lvm-snapshot&#34;&gt;Создание LVM snapshot&lt;/h3&gt;
 &lt;p&gt;Помним, что в Volume Group должно быть достаточно свободного места для размещения данных из бэкапов. В отличие от процесса создания бэкапа, в этом случае нужно много места, чтобы уместить сюда весь бэкап.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 4G -s -n snap_root /dev/vg/root
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 4G -s -n snap_var /dev/vg/var
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 6G -s -n snap_root /dev/vg/root
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lvcreate -L 6G -s -n snap_var /dev/vg/var
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;монтирование-снэпшотов--директорию-boot&#34;&gt;Монтирование снэпшотов + директорию &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;При монтировании xfs используем опцию &lt;code&gt;nouuid&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Mounting root on /mnt&lt;/span&gt;
@@ -478,20 +505,14 @@ WARNING: Running pip as the &amp;#39;root&amp;#39; user can result in broken per
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;удаление-содержимого-снэпшотов-и-boot&#34;&gt;Удаление содержимого снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;Удаляем всё содержимое снэпшотов и каталога &lt;code&gt;/boot&lt;/code&gt; с проверкой:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rm -rf /mnt/*
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;du /mnt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tree -h /mnt
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Результат:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;0	/mnt/boot
-0	/mnt/var
-0	/mnt
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/mnt
+└── [4.0K]  boot
+
+1 directory, 0 files
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;восстановление-бэкапа-в-пространство-снэпшотов-и-boot&#34;&gt;Восстановление бэкапа в пространство снэпшотов и &lt;code&gt;/boot&lt;/code&gt;&lt;/h3&gt;
-&lt;p&gt;Устанавливаем переменные, чтобы не вводить параметры дважды:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i ~/.ssh/borg1&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;_borg@192.168.50.10:home-ipa&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Выбираем нужный архив из списка. Пример списка:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg list
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;...
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;full_img211202_2022-03-11T10:54:32   Fri, 2022-03-11 10:54:35 &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;f681b040b6f7579e424cc328207e44aac50205ffaaa6d6923417ec598807b4b4&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Переходим в корень и восстанавливаем архив &lt;code&gt;full_img211202_2022-03-11T10:54:32&lt;/code&gt;, который заполнит файлами готовый для приёма каталог &lt;code&gt;/mnt&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Переходим в корень и восстанавливаем архив &lt;code&gt;full_img211202_2022-03-11T10:54:32&lt;/code&gt;, который заполнит файлами готовый для приёма каталог &lt;code&gt;/mnt&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;cd&lt;/span&gt; /
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;borg extract --list --progress --numeric-owner &lt;span style=&#34;color:#4e9a06&#34;&gt;\
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  ::full_img211202_2022-03-11T12:53:10
