@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса установки утилиты для дедуплицированного бэкапа BorgBackup в AltLinux 9.
 "><meta itemprop="datePublished" content="2022-03-31T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-03-31T00:00:00+00:00" />
-<meta itemprop="wordCount" content="50">
+<meta itemprop="wordCount" content="52">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,AltLinux 9,AltLinux," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="11. Установка BorgBackup в AltLinux 9"/>
 <meta name="twitter:description" content="Описание процесса установки утилиты для дедуплицированного бэкапа BorgBackup в AltLinux 9.
@@ -142,7 +142,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.0d6255a49644f65cfee52720dcc6b176.json"
+  data-offline-search-index-json-src="/offline-search-index.362f60d015e8061047c077165eb5074e.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -164,7 +164,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.0d6255a49644f65cfee52720dcc6b176.json"
+  data-offline-search-index-json-src="/offline-search-index.362f60d015e8061047c077165eb5074e.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -197,7 +197,7 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup-li">
   <a href="/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup"><span class="">31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup-li">
-  <a href="/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup"><span class="">40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</span></a>
+  <a href="/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup"><span class="">40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsfreeipa-li">
@@ -793,8 +793,8 @@
 </span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>python3-module-wheel python3-module-msgpack libssl-devel python3-dev <span style="color:#4e9a06">\
 </span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>libacl-devel libacl libssl-devel liblz4-devel libzstd-devel <span style="color:#4e9a06">\
 </span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>libxxhash-devel gcc-c++ python3-module-setuptools_scm
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m pip install --upgrade pip
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m pip install borgbackup
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m pip install --user --upgrade pip
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m pip install --user borgbackup
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ borg -V
 </span></span><span style="display:flex;"><span>borg 1.1.17
 </span></span></code></pre></div>

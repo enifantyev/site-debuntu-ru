@@ -429,9 +429,10 @@ user@wks01:~$ sudo killall -u eugene
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Узнать к какой версии Python принадлежит &lt;code&gt;pip&lt;/code&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@wks1 ~]$ pip -V
 pip 20.3.4 from /usr/lib/python2.7/site-packages/pip (python 2.7)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Исключающее ошибку в версии Python установка пакетов с использованием &lt;code&gt;pip&lt;/code&gt;:&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Исключающее ошибку в выборе версии Python, установка пакетов с использованием &lt;code&gt;pip&lt;/code&gt;:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;python3.8 -m pip install airflow
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;ручная-сборка-python-пакета&#34;&gt;Ручная сборка python-пакета&lt;/h3&gt;
+&lt;p&gt;-&amp;quot;- дописать.&lt;/p&gt;
 &lt;h3 id=&#34;установка-пакетов-в-виртуальное-окружение&#34;&gt;Установка пакетов в виртуальное окружение&lt;/h3&gt;
 &lt;p&gt;Создадим каталог для Python-проекта, где развернём виртуальное окружение, активируем его, после чего установим пакет wheel:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[eugene@wks1 ~]$ mkdir -p ~/pythonprojects/airflow
@@ -447,15 +448,18 @@ Installing collected packages: wheel
 Successfully installed wheel-0.37.1
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;адреса-директорий-с-установленными-пакетами&#34;&gt;Адреса директорий с установленными пакетами&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;yum&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;/usr/lib/python3.6&lt;/code&gt; и доступны для всей системы.&lt;/li&gt;
-&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;sudo pip install&lt;/code&gt;, размещаются там же, как в примере выше.&lt;/li&gt;
-&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;sudo pip install --user&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;/root/.local/lib/python3.8&lt;/code&gt;, и доступны только для аккаунта &lt;code&gt;root&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;yum&lt;/code&gt;, устанавливаются в зависимости от версии Python в каталог &lt;code&gt;/usr/lib/python3.x&lt;/code&gt; и доступны для всей системы. Напомню, что пакеты устанавливаемые с помощью &lt;code&gt;pip install&lt;/code&gt; или &lt;code&gt;python3 -m pip install&lt;/code&gt; из-под &amp;lsquo;root&amp;rsquo;а , устанавливаются также в &lt;code&gt;/usr/lib/python3.x&lt;/code&gt;. Чтобы исключить такое поведение, необходимо устанавливать такие пакеты с опцией &lt;code&gt;--user&lt;/code&gt;. В этом случае, сам пакет установится в &lt;code&gt;/root/.local/lib/python3.6&lt;/code&gt;. Исполняемые же файлы размещаются в &lt;code&gt;/root/.local/bin&lt;/code&gt;. Системные пакеты останутся нетронутыми, как и их зависимости.&lt;/li&gt;
+&lt;li&gt;Пакеты, добавляемые через &lt;code&gt;sudo pip install&lt;/code&gt;, размещаются там же, как в примере выше и переписывают файлы, установленные через &lt;code&gt;yum&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Пакеты, добавляемые из-под &amp;lsquo;root&amp;rsquo;а через &lt;code&gt;sudo pip install --user&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;/root/.local/lib/python3.8&lt;/code&gt;, и доступны только для аккаунта &lt;code&gt;root&lt;/code&gt;.&lt;/li&gt;
 &lt;li&gt;Пакеты, добавляемые через &lt;code&gt;pip install&lt;/code&gt;, устанавливаются в зависимости от версии Python, например в &lt;code&gt;~/.local/lib/python3.8&lt;/code&gt;, то есть в домашний каталог пользователя и доступны только пользователю.&lt;/li&gt;
 &lt;li&gt;Пакеты, устанавливаемые в виртуальном окружении, размещаются в этом же каталоге, где развёрнут &amp;lsquo;venv&amp;rsquo;, точнее в подкаталоге &lt;code&gt;./lib/python3.8&lt;/code&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;способы-обновления-пакетов&#34;&gt;Способы обновления пакетов&lt;/h2&gt;
 &lt;h3 id=&#34;обновление-pip&#34;&gt;Обновление pip&lt;/h3&gt;
+&lt;p&gt;Запуск из-под обычного пользователя:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install --upgrade pip
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Запуск из-под &amp;lsquo;root&amp;rsquo;а:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;pip install --user --upgrade pip
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;принудительное-обновление-пакета-который-установлен-через-yum&#34;&gt;Принудительное обновление пакета, который установлен через yum&lt;/h3&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ERROR: Cannot uninstall &amp;#39;systemd-python&amp;#39;. It is a distutils installed project
 and thus we cannot accurately determine which files belong to it which would

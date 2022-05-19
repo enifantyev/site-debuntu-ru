@@ -135,7 +135,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.0d6255a49644f65cfee52720dcc6b176.json"
+  data-offline-search-index-json-src="/offline-search-index.362f60d015e8061047c077165eb5074e.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -796,9 +796,10 @@ echo &#34;enable &#39;MyTableName&#39;&#34; | hbase shell
 </code></pre><p>Узнать к какой версии Python принадлежит <code>pip</code>:</p>
 <pre tabindex="0"><code>[eugene@wks1 ~]$ pip -V
 pip 20.3.4 from /usr/lib/python2.7/site-packages/pip (python 2.7)
-</code></pre><p>Исключающее ошибку в версии Python установка пакетов с использованием <code>pip</code>:</p>
+</code></pre><p>Исключающее ошибку в выборе версии Python, установка пакетов с использованием <code>pip</code>:</p>
 <pre tabindex="0"><code>python3.8 -m pip install airflow
 </code></pre><h3 id="ручная-сборка-python-пакета">Ручная сборка python-пакета</h3>
+<p>-&quot;- дописать.</p>
 <h3 id="установка-пакетов-в-виртуальное-окружение">Установка пакетов в виртуальное окружение</h3>
 <p>Создадим каталог для Python-проекта, где развернём виртуальное окружение, активируем его, после чего установим пакет wheel:</p>
 <pre tabindex="0"><code>[eugene@wks1 ~]$ mkdir -p ~/pythonprojects/airflow
@@ -814,15 +815,18 @@ Installing collected packages: wheel
 Successfully installed wheel-0.37.1
 </code></pre><h2 id="адреса-директорий-с-установленными-пакетами">Адреса директорий с установленными пакетами</h2>
 <ol>
-<li>Пакеты, добавляемые через <code>yum</code>, устанавливаются в зависимости от версии Python, например в <code>/usr/lib/python3.6</code> и доступны для всей системы.</li>
-<li>Пакеты, добавляемые через <code>sudo pip install</code>, размещаются там же, как в примере выше.</li>
-<li>Пакеты, добавляемые через <code>sudo pip install --user</code>, устанавливаются в зависимости от версии Python, например в <code>/root/.local/lib/python3.8</code>, и доступны только для аккаунта <code>root</code>.</li>
+<li>Пакеты, добавляемые через <code>yum</code>, устанавливаются в зависимости от версии Python в каталог <code>/usr/lib/python3.x</code> и доступны для всей системы. Напомню, что пакеты устанавливаемые с помощью <code>pip install</code> или <code>python3 -m pip install</code> из-под &lsquo;root&rsquo;а , устанавливаются также в <code>/usr/lib/python3.x</code>. Чтобы исключить такое поведение, необходимо устанавливать такие пакеты с опцией <code>--user</code>. В этом случае, сам пакет установится в <code>/root/.local/lib/python3.6</code>. Исполняемые же файлы размещаются в <code>/root/.local/bin</code>. Системные пакеты останутся нетронутыми, как и их зависимости.</li>
+<li>Пакеты, добавляемые через <code>sudo pip install</code>, размещаются там же, как в примере выше и переписывают файлы, установленные через <code>yum</code>.</li>
+<li>Пакеты, добавляемые из-под &lsquo;root&rsquo;а через <code>sudo pip install --user</code>, устанавливаются в зависимости от версии Python, например в <code>/root/.local/lib/python3.8</code>, и доступны только для аккаунта <code>root</code>.</li>
 <li>Пакеты, добавляемые через <code>pip install</code>, устанавливаются в зависимости от версии Python, например в <code>~/.local/lib/python3.8</code>, то есть в домашний каталог пользователя и доступны только пользователю.</li>
 <li>Пакеты, устанавливаемые в виртуальном окружении, размещаются в этом же каталоге, где развёрнут &lsquo;venv&rsquo;, точнее в подкаталоге <code>./lib/python3.8</code>.</li>
 </ol>
 <h2 id="способы-обновления-пакетов">Способы обновления пакетов</h2>
 <h3 id="обновление-pip">Обновление pip</h3>
+<p>Запуск из-под обычного пользователя:</p>
 <pre tabindex="0"><code>pip install --upgrade pip
+</code></pre><p>Запуск из-под &lsquo;root&rsquo;а:</p>
+<pre tabindex="0"><code>pip install --user --upgrade pip
 </code></pre><h3 id="принудительное-обновление-пакета-который-установлен-через-yum">Принудительное обновление пакета, который установлен через yum</h3>
 <pre tabindex="0"><code>ERROR: Cannot uninstall &#39;systemd-python&#39;. It is a distutils installed project
 and thus we cannot accurately determine which files belong to it which would

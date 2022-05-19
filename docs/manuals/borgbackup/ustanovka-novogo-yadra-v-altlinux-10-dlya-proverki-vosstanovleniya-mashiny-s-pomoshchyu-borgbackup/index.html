@@ -18,25 +18,25 @@
 <link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
 <link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
 
-<title>40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup | Debuntarium</title>
-<meta name="description" content="Описание способа установки нового Linux-ядра в AltLinux-машину для последующей попытке возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.
+<title>40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup | Debuntarium</title>
+<meta name="description" content="Описание способа установки нового Linux-ядра в AltLinux-машину после снятия снимка. С последующей попыткой возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.
 ">
-<meta property="og:title" content="40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup" />
-<meta property="og:description" content="Описание способа установки нового Linux-ядра в AltLinux-машину для последующей попытке возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.
+<meta property="og:title" content="40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup" />
+<meta property="og:description" content="Описание способа установки нового Linux-ядра в AltLinux-машину после снятия снимка. С последующей попыткой возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/" /><meta property="article:section" content="manuals" />
 <meta property="article:published_time" content="2022-03-18T00:00:00+00:00" />
 <meta property="article:modified_time" content="2022-03-18T00:00:00+00:00" /><meta property="og:site_name" content="Debuntarium" />
 
-<meta itemprop="name" content="40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup">
-<meta itemprop="description" content="Описание способа установки нового Linux-ядра в AltLinux-машину для последующей попытке возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.
+<meta itemprop="name" content="40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup">
+<meta itemprop="description" content="Описание способа установки нового Linux-ядра в AltLinux-машину после снятия снимка. С последующей попыткой возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.
 "><meta itemprop="datePublished" content="2022-03-18T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-03-18T00:00:00+00:00" />
 <meta itemprop="wordCount" content="60">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM,AltLinux 10,AltLinux,Linux Kernel," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup"/>
-<meta name="twitter:description" content="Описание способа установки нового Linux-ядра в AltLinux-машину для последующей попытке возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.
+<meta name="twitter:title" content="40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup"/>
+<meta name="twitter:description" content="Описание способа установки нового Linux-ядра в AltLinux-машину после снятия снимка. С последующей попыткой возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.
 "/>
 
 
@@ -142,7 +142,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.0d6255a49644f65cfee52720dcc6b176.json"
+  data-offline-search-index-json-src="/offline-search-index.362f60d015e8061047c077165eb5074e.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -164,7 +164,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.0d6255a49644f65cfee52720dcc6b176.json"
+  data-offline-search-index-json-src="/offline-search-index.362f60d015e8061047c077165eb5074e.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -197,7 +197,7 @@
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup-li">
   <a href="/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup"><span class="">31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup-li">
-  <a href="/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup"><span class="td-sidebar-nav-active-item">40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</span></a>
+  <a href="/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup"><span class="td-sidebar-nav-active-item">40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsfreeipa-li">
@@ -343,7 +343,7 @@
 <a href="https://github.com/google/docsy-example/tree/main/content/ru/manuals/BorgBackup/40-ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshch%27yu-borgbackup.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa fa-file-alt fa-fw"></i> [i18n] post_view_this</a>
   <a href="https://github.com/google/docsy-example/edit/main/content/ru/manuals/BorgBackup/40-ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshch%27yu-borgbackup.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Отредактировать страницу</a>
   <a href="https://github.com/google/docsy-example/new/main/content/ru/manuals/BorgBackup/40-ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshch%27yu-borgbackup.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Create child page</a>
-  <a href="https://github.com/google/docsy-example/issues/new?title=40.%20%d0%a3%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%ba%d0%b0%20%d0%bd%d0%be%d0%b2%d0%be%d0%b3%d0%be%20%d1%8f%d0%b4%d1%80%d0%b0%20%d0%b2%20AltLinux%2010%20%d0%b4%d0%bb%d1%8f%20%d0%bf%d1%80%d0%be%d0%b2%d0%b5%d1%80%d0%ba%d0%b8%20%d0%b2%d0%be%d1%81%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%bb%d0%b5%d0%bd%d0%b8%d1%8f%20%d0%bc%d0%b0%d1%88%d0%b8%d0%bd%d1%8b%20%d1%81%20%d0%bf%d0%be%d0%bc%d0%be%d1%89%d1%8c%d1%8e%20BorgBackup" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Предложить изменения документации</a>
+  <a href="https://github.com/google/docsy-example/issues/new?title=40.%20%d0%a3%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%ba%d0%b0%20%d0%bd%d0%be%d0%b2%d0%be%d0%b3%d0%be%20%d1%8f%d0%b4%d1%80%d0%b0%20%d0%b2%20AltLinux%2010%20%d0%b4%d0%bb%d1%8f%20%d0%bf%d1%80%d0%be%d0%b2%d0%b5%d1%80%d0%ba%d0%b8%20%d0%bf%d1%80%d0%b0%d0%b2%d0%b8%d0%bb%d1%8c%d0%bd%d0%be%d1%81%d1%82%d0%b8%20%d0%b2%d0%be%d1%81%d1%81%d1%82%d0%b0%d0%bd%d0%be%d0%b2%d0%bb%d0%b5%d0%bd%d0%b8%d1%8f%20%d0%bc%d0%b0%d1%88%d0%b8%d0%bd%d1%8b%20%d1%81%20%d0%bf%d0%be%d0%bc%d0%be%d1%89%d1%8c%d1%8e%20BorgBackup" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Предложить изменения документации</a>
   <a href="https://github.com/google/docsy/issues/new" class="td-page-meta--project-issue" target="_blank" rel="noopener"><i class="fas fa-tasks fa-fw"></i> Предложить доработки по проекту</a>
   <a id="print" href="https://debuntu.ru/manuals/borgbackup/_print/"><i class="fa fa-print fa-fw"></i> Print entire section</a>
 
@@ -732,14 +732,14 @@
     <a href="https://debuntu.ru/manuals/borgbackup/">BorgBackup</a>
   </li>
   <li class="breadcrumb-item active" aria-current="page">
-    <a href="https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/">40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</a>
+    <a href="https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/">40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup</a>
   </li>
   </ol>
 </nav>
             
 <div class="td-content">
-	<h1>40. Установка нового ядра в AltLinux 10 для проверки восстановления машины с помощью BorgBackup</h1>
-	<div class="lead">Описание способа установки нового Linux-ядра в AltLinux-машину для последующей попытке возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.</div>
+	<h1>40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup</h1>
+	<div class="lead">Описание способа установки нового Linux-ядра в AltLinux-машину после снятия снимка. С последующей попыткой возврата машины к ранее созданному снимку с помощью связки LVM и BorgBackup.</div>
 	<header class="article-meta">
 		
 
