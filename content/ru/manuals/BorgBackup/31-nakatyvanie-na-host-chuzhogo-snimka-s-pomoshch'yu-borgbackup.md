@@ -170,12 +170,24 @@ chroot /mnt
 В некоторых случаях, например при восстановлении снимка с другой операционной системой, потребуется обновить GRUB.
 
 Общая схема обновления GRUB такая:
-1. Генерируем новый `/boot/grub/grub.cfg`. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID'ы разделов на диске.<br>
-`grub-mkconfig -o /boot/grub/grub.cfg` или `grub2-mkconfig -o /boot/grub2/grub.cfg`
-2. Так как песочница, в которой производилась генерация `grub.cfg`, находится на LV с именами `snap_root` и `snap_var`, то исправляем в сгенерированном `/boot/grub/grub.cfg` названия разделов:<br>
-`sed -i 's/vg-snap_root/vg-root/g' /boot/grub/grub.cfg` или ` sed -i 's/vg-snap_root/vg-root/g' /boot/grub2/grub.cfg`
-3. На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):<br>
-`grub-install /dev/sda` или `grub2-install /dev/sda`.
+1. Генерируем новый `/boot/grub/grub.cfg`. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID'ы разделов на диске.
+    ```bash
+    grub-mkconfig -o /boot/grub/grub.cfg
+    # или
+    grub2-mkconfig -o /boot/grub2/grub.cfg
+    ```
+2. Так как песочница, в которой производилась генерация `grub.cfg`, находится на LV с именами `snap_root` и `snap_var`, то исправляем в сгенерированном `/boot/grub/grub.cfg` названия разделов:
+    ```bash
+    sed -i 's/vg-snap_root/vg-root/g' /boot/grub/grub.cfg
+    # или
+    sed -i 's/vg-snap_root/vg-root/g' /boot/grub2/grub.cfg
+    ```
+3. На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):
+    ```bash
+    grub-install /dev/sda
+    # или
+    grub2-install /dev/sda
+    ```
 
 ---
 Эталонный вывод после `grub-install`:

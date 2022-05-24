@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.96.0" />
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2 | Debuntarium</title>
+<meta name="description" content="Иногда в ZooKeeper&#39;е требуется удалить неудаляемое.
+">
+<meta property="og:title" content="Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2" />
+<meta property="og:description" content="Иногда в ZooKeeper&#39;е требуется удалить неудаляемое.
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2.html" /><meta property="article:section" content="manuals" />
+<meta property="article:published_time" content="2021-08-11T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-08-11T00:00:00+00:00" /><meta property="og:site_name" content="Debuntarium" />
+
+<meta itemprop="name" content="Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2">
+<meta itemprop="description" content="Иногда в ZooKeeper&#39;е требуется удалить неудаляемое.
+"><meta itemprop="datePublished" content="2021-08-11T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-08-11T00:00:00+00:00" />
+<meta itemprop="wordCount" content="292">
+<meta itemprop="keywords" content="Apache Zookeeper,Apache Hadoop,Cloudera Hadoop," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2"/>
+<meta name="twitter:description" content="Иногда в ZooKeeper&#39;е требуется удалить неудаляемое.
+"/>
+
+
+
+
+<link rel="preload" href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" as="style">
+<link href="/scss/main.min.7b7ec8a4645d9c4900c74d8981337a48025ff2ac72ee40bb14c9d649c4f4100a.css" rel="stylesheet" integrity="">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3517323381341731"
+     crossorigin="anonymous"></script>
+<script src='/js/jquery-3.6.0.min.js'></script>
+<script
+  src="https://unpkg.com/lunr@2.3.9/lunr.min.js"
+  integrity="sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli"
+  crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/prism.css"/>
+
+<script type="text/javascript">
+  (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+  m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+  (window, document, "script", "/js/yandex/tag.js", "ym");
+  ym(69157720, "init", {
+    clickmap:true,
+    trackLinks:true,
+    accurateTrackBounce:true
+  });
+</script>
+<noscript>
+    <div>
+        <img src="https://mc.yandex.ru/watch/69157720" style="position:absolute; left:-9999px;" alt="" />
+    </div>
+</noscript>
+
+
+  </head>
+  <body class="td-page">
+    <header>
+      
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-column flex-md-row td-navbar">
+        <a class="navbar-brand" href="/">
+		<span class="navbar-logo"><svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 500" style="enable-background:new 0 0 500 500"><g><path style="fill:#fff" d="M116.8525 421.9722c-5.7041.0-10.3442-4.3127-10.3442-9.6129V88.183c0-5.3002 4.6401-9.6117 10.3442-9.6117H320.858c3.0347.0 9.3959.5498 11.7506 2.6302l.3545.3442 58.905 63.2912c2.3101 2.491 2.9202 8.4928 2.9202 11.3184v256.2039c0 5.3002-4.6407 9.6129-10.3436 9.6129H116.8525z"/><g><g><g><path style="fill:#767676" d="M384.4445 423.2066H116.852c-6.3839.0-11.5786-4.8658-11.5786-10.8474V88.1831c0-5.9804 5.1947-10.8461 11.5786-10.8461h204.0062c.377.0 9.2786.0329 12.568 2.9389l.3947.3833 58.9508 63.337c3.2135 3.4652 3.2514 11.7924 3.2514 12.1593v256.2036C396.0231 418.3408 390.8284 423.2066 384.4445 423.2066zM116.5079 411.9189c.0848.0278.1999.0531.3441.0531h267.5925c.1442.0.2581-.0253.3441-.0531V156.1556c-.0076-.9033-.3593-3.7347-.7034-5.0037l-57.6527-61.9416c-1.4651-.3176-4.4533-.6389-5.5742-.6389H116.852c-.143.0-.2594.024-.3441.0531V411.9189zm267.4533-261.149zM327.0321 89.371v.0013V89.371z"/></g></g></g><g><g><path style="fill:#5b7fc0" d="M189.0874 210.1754l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.025 2.454-11.4897 6.4116-15.4473C177.5953 212.627 183.0601 210.1742 189.0874 210.1754zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403S197.0816 234.1722 197.0804 232.033z"/><path style="opacity:.3;fill:#fff" d="M189.0898 210.176c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 212.6276 183.0612 210.176 189.0898 210.176zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 236.239 197.0839 234.2399 197.0839 232.0372z"/><g><defs><path id="SVGID_1_" d="M194.7376 237.6875c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.999 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 234.2399 196.1861 236.239 194.7376 237.6875z"/></defs><clipPath id="SVGID_2_"><use xlink:href="#SVGID_1_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_2_);fill:#fff" d="M190.0704 225.0237c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 225.7247 191.9774 225.0237 190.0704 225.0237z"/><path style="opacity:.13;clip-path:url(#SVGID_2_);fill:#020202" d="M190.0704 225.0237c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 225.7247 191.9774 225.0237 190.0704 225.0237z"/></g><g><defs><path id="SVGID_3_" d="M189.0898 210.176c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 212.6276 183.0612 210.176 189.0898 210.176zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 236.239 197.0839 234.2399 197.0839 232.0372z"/></defs><clipPath id="SVGID_4_"><use xlink:href="#SVGID_3_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_4_);fill:#5b7fc0" d="M172.6595 215.6045c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8612 12.0547.0024 21.8636-9.797 21.8613-21.8612.0024-3.8475-1.0151-7.6326-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 209.1953 176.6171 211.647 172.6595 215.6045z"/></g></g><rect x="198.8952" y="225.1043" style="fill:#5b7fc0" width="122.6266" height="13.8671"/></g><g><path style="fill:#d95140" d="M189.0874 155.7611l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.0249 2.454-11.4897 6.4116-15.4473C177.5953 158.2128 183.0601 155.7599 189.0874 155.7611zm7.993 21.8577c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403C196.2508 181.7667 197.0816 179.758 197.0804 177.6188z"/><path style="opacity:.3;fill:#fff" d="M189.0898 155.7617c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 158.2134 183.0612 155.7617 189.0898 155.7617zm7.9941 21.8613c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 181.8248 197.0839 179.8256 197.0839 177.623z"/><g><defs><path id="SVGID_5_" d="M194.7376 183.2733c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.9989 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 179.8256 196.1861 181.8248 194.7376 183.2733z"/></defs><clipPath id="SVGID_6_"><use xlink:href="#SVGID_5_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_6_);fill:#fff" d="M190.0704 170.6095c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 171.3104 191.9774 170.6095 190.0704 170.6095z"/><path style="opacity:.13;clip-path:url(#SVGID_6_);fill:#020202" d="M190.0704 170.6095c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9546.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.663-2.8588-6.116.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C193.7885 171.3104 191.9774 170.6095 190.0704 170.6095z"/></g><g><defs><path id="SVGID_7_" d="M189.0898 155.7617c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8066-21.8612-21.8613.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 158.2134 183.0612 155.7617 189.0898 155.7617zm7.9941 21.8613c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 181.8248 197.0839 179.8256 197.0839 177.623z"/></defs><clipPath id="SVGID_8_"><use xlink:href="#SVGID_7_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_8_);fill:#d95140" d="M172.6595 161.1903c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8613 12.0547.0024 21.8636-9.797 21.8613-21.8613.0024-3.8474-1.0151-7.6326-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 154.7811 176.6171 157.2327 172.6595 161.1903z"/></g><rect x="198.8952" y="170.69" style="fill:#d95140" width="122.6266" height="13.8671"/></g><g><g><path style="fill:#56a55c" d="M189.5379 264.6147l.0012-.0012c7.7751.0012 15.0294 4.1862 18.932 10.9235 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3304-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032-5.8394.0-11.3281-2.2733-15.458-6.4032-4.13-4.13-6.4032-9.6186-6.4056-15.4628.0012-6.0249 2.454-11.4897 6.4116-15.4472C178.0458 267.0663 183.5105 264.6135 189.5379 264.6147zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6538 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403C196.7013 290.6202 197.5321 288.6115 197.5309 286.4723z"/><path style="opacity:.3;fill:#fff" d="M189.5403 264.6153c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8065-21.8612-21.8613.0-6.0285 2.4516-11.492 6.4116-15.452C178.0482 267.0669 183.5117 264.6153 189.5403 264.6153zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.6366 290.6783 197.5344 288.6792 197.5344 286.4765z"/><g><defs><path id="SVGID_9_" d="M195.1881 292.1268c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.9989 7.9942-7.9941 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.5344 288.6792 196.6366 290.6783 195.1881 292.1268z"/></defs><clipPath id="SVGID_10_"><use xlink:href="#SVGID_9_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_10_);fill:#fff" d="M190.5209 279.463c-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7446-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9941 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C194.239 280.164 192.4279 279.463 190.5209 279.463z"/><path style="opacity:.13;clip-path:url(#SVGID_10_);fill:#020202" d="M190.5209 279.463c-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7446-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9941 2.3802-1e-4 4.616 1.0833 6.1218 2.8788C194.239 280.164 192.4279 279.463 190.5209 279.463z"/></g><g><defs><path id="SVGID_11_" d="M189.5403 264.6153c7.7763.0 15.0283 4.1826 18.926 10.9151 1.9201 3.3135 2.9377 7.0987 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8613-12.0547.0024-21.8636-9.8065-21.8612-21.8613.0-6.0285 2.4516-11.492 6.4116-15.452C178.0482 267.0669 183.5117 264.6153 189.5403 264.6153zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9941.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.6366 290.6783 197.5344 288.6792 197.5344 286.4765z"/></defs><clipPath id="SVGID_12_"><use xlink:href="#SVGID_11_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_12_);fill:#56a55c" d="M173.11 270.0439c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8613 12.0547.0024 21.8636-9.797 21.8613-21.8613.0024-3.8474-1.0151-7.6326-2.9353-10.9462-3.8977-6.7325-11.1497-10.9151-18.926-10.9151C182.5311 263.6346 177.0676 266.0863 173.11 270.0439z"/></g></g><rect x="199.3456" y="279.5436" style="fill:#56a55c" width="122.6266" height="13.8671"/></g><g><g><path style="fill:#f1bc42" d="M189.0874 318.7208l.0012-.0012c7.7751.0012 15.0295 4.1862 18.932 10.9234 1.9177 3.3159 2.9305 7.1011 2.9293 10.9378.0 5.8394-2.2733 11.3305-6.4032 15.4604-4.1288 4.1288-9.6186 6.4032-15.458 6.4032s-11.328-2.2733-15.458-6.4032-6.4032-9.6186-6.4056-15.4628c.0012-6.025 2.454-11.4897 6.4116-15.4472C177.5953 321.1724 183.0601 318.7196 189.0874 318.7208zm7.993 21.8576c.0012-1.4042-.3687-2.7868-1.063-3.9887-1.4293-2.4684-4.0833-3.9995-6.9299-4.0019-4.4077.0024-7.993 3.5877-7.993 7.993.0 2.1356.832 4.1431 2.3427 5.6539 1.5083 1.5083 3.5159 2.3403 5.6503 2.3415 2.1356.0 4.1443-.8308 5.6539-2.3403S197.0816 342.7176 197.0804 340.5784z"/><path style="opacity:.3;fill:#fff" d="M189.0898 318.7214c7.7763.0 15.0283 4.1826 18.926 10.915 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8612-12.0547.0024-21.8636-9.8065-21.8612-21.8612.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 321.173 183.0612 318.7214 189.0898 318.7214zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 344.7844 197.0839 342.7853 197.0839 340.5826z"/><g><defs><path id="SVGID_13_" d="M194.7376 346.2329c-1.4461 1.4461-3.4452 2.3439-5.6479 2.3439-4.4077-.0024-7.9918-3.5865-7.9942-7.9942.0024-4.4125 3.5937-7.999 7.9942-7.9942 2.8443.0 5.497 1.5323 6.924 3.9983.6991 1.2067 1.0702 2.5881 1.0702 3.9959C197.0839 342.7853 196.1861 344.7844 194.7376 346.2329z"/></defs><clipPath id="SVGID_14_"><use xlink:href="#SVGID_13_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_14_);fill:#fff" d="M190.0704 333.5691c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0834 6.1218 2.8788C193.7885 334.2701 191.9774 333.5691 190.0704 333.5691z"/><path style="opacity:.13;clip-path:url(#SVGID_14_);fill:#020202" d="M190.0704 333.5691c-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0011 1.9547.7088 3.7452 1.8782 5.1354-1.7447-1.4674-2.8575-3.6631-2.8588-6.1161.0024-4.4125 3.5936-7.999 7.9942-7.9942 2.3802-1e-4 4.616 1.0834 6.1218 2.8788C193.7885 334.2701 191.9774 333.5691 190.0704 333.5691z"/></g><g><defs><path id="SVGID_15_" d="M189.0898 318.7214c7.7763.0 15.0283 4.1826 18.926 10.915 1.9201 3.3136 2.9377 7.0988 2.9353 10.9462.0024 12.0643-9.8065 21.8636-21.8613 21.8612-12.0547.0024-21.8636-9.8065-21.8612-21.8612.0-6.0285 2.4516-11.4921 6.4116-15.452C177.5977 321.173 183.0612 318.7214 189.0898 318.7214zm7.9941 21.8612c0-1.4078-.3711-2.7892-1.0702-3.9959-1.4269-2.466-4.0797-3.9983-6.924-3.9983-4.4005-.0048-7.9918 3.5817-7.9942 7.9942.0024 4.4077 3.5865 7.9918 7.9942 7.9942 2.2027.0 4.2018-.8978 5.6479-2.3439C196.1861 344.7844 197.0839 342.7853 197.0839 340.5826z"/></defs><clipPath id="SVGID_16_"><use xlink:href="#SVGID_15_" style="overflow:visible"/></clipPath><path style="clip-path:url(#SVGID_16_);fill:#f1bc42" d="M172.6595 324.15c-3.96 3.96-6.4116 9.4235-6.4116 15.452-.0024 12.0547 9.8066 21.8636 21.8613 21.8612 12.0547.0024 21.8636-9.797 21.8613-21.8612.0024-3.8474-1.0151-7.6327-2.9353-10.9462-3.8977-6.7324-11.1497-10.9151-18.926-10.9151C182.0806 317.7407 176.6171 320.1924 172.6595 324.15z"/></g></g><rect x="198.8952" y="333.6497" style="fill:#f1bc42" width="122.6266" height="13.8671"/></g></g></svg></span><span class="font-weight-bold">Debuntarium</span>
+	</a>
+	<div class="td-navbar-nav-scroll ml-md-auto" id="main_navbar">
+		<ul class="navbar-nav mt-2 mt-lg-0">
+			
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/n.html" ><span>Заметки</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				
+				
+				<a class="nav-link active" href="/manuals.html" ><span class="active">Инструкции</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/refbooks.html" ><span>Справочники</span></a>
+			</li>
+			
+			<li class="nav-item mr-4 mb-2 mb-lg-0">
+				
+				
+				
+				
+				
+				
+				
+				
+				<a class="nav-link" href="/a.html" ><span>Статьи</span></a>
+			</li>
+			
+			
+			
+		</ul>
+	</div>
+	<div class="navbar-nav d-none d-lg-block"><input
+  type="search"
+  class="form-control td-search-input"
+  placeholder="&#xf002; Поиск по сайту…"
+  aria-label="Поиск по сайту…"
+  autocomplete="off"
+  
+  data-offline-search-index-json-src="/offline-search-index.46f111476114643acd9c021486116e7a.json"
+  data-offline-search-base-href="/"
+  data-offline-search-max-results="10"
+>
+</div>
+</nav>
+
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+            
+<div id="td-sidebar-menu" class="td-sidebar__inner">
+  <form class="td-sidebar__search d-flex align-items-center">
+    <input
+  type="search"
+  class="form-control td-search-input"
+  placeholder="&#xf002; Поиск по сайту…"
+  aria-label="Поиск по сайту…"
+  autocomplete="off"
+  
+  data-offline-search-index-json-src="/offline-search-index.46f111476114643acd9c021486116e7a.json"
+  data-offline-search-base-href="/"
+  data-offline-search-max-results="10"
+>
+
+    <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </form>
+  <nav class="collapse td-sidebar-nav" id="td-section-nav">
+    <ul class="td-sidebar-nav__section pr-md-3 ul-0">
+      <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manualshtml-li">
+  <a href="/manuals.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-manualshtml"><span class="">Инструкции</span></a>
+  <ul class="ul-1">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsborgbackuphtml-li">
+  <a href="/manuals/borgbackup.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsborgbackuphtml"><span class="">BorgBackup</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsborgbackupustanovka-i-nastroyka-borgbackuphtml-li">
+  <a href="/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-i-nastroyka-borgbackuphtml"><span class="">10. Установка и настройка BorgBackup</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsborgbackupustanovka-borgbackup-v-altlinux-9html-li">
+  <a href="/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-borgbackup-v-altlinux-9html"><span class="">11. Установка BorgBackup в AltLinux 9</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsborgbackupustanovka-borgbackup-v-altlinux-10html-li">
+  <a href="/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-borgbackup-v-altlinux-10html"><span class="">12. Установка BorgBackup в AltLinux 10</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsborgbackupustanovka-borgbackup-v-redos-72html-li">
+  <a href="/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-borgbackup-v-redos-72html"><span class="">13. Установка BorgBackup в RedOS 7.2</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsborgbackupsozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveruhtml-li">
+  <a href="/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupsozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveruhtml"><span class="">15. Создание шлюза в удалённой ИС для доступа хостов к бэкап-серверу</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsborgbackupsozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackuphtml-li">
+  <a href="/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupsozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackuphtml"><span class="">20. Создание бэкапа всей системы с помощью LVM и BorgBackup</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsborgbackupvosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackuphtml-li">
+  <a href="/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupvosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackuphtml"><span class="">30. Восстановление всей системы из бэкапа с помощью LVM и BorgBackup</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackuphtml-li">
+  <a href="/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupnakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackuphtml"><span class="">31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackuphtml-li">
+  <a href="/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsborgbackupustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackuphtml"><span class="">40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsfreeipahtml-li">
+  <a href="/manuals/freeipa.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsfreeipahtml"><span class="">FreeIPA</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsfreeipacheckipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipahtml-li">
+  <a href="/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsfreeipacheckipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipahtml"><span class="">Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5html-li">
+  <a href="/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5html"><span class="">Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5udaleniye-replikihtml-li">
+  <a href="/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5udaleniye-replikihtml"><span class="">00. Удаление реплики</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5podgotovka-khostov-k-ustanovke-replikatsii-freeipahtml-li">
+  <a href="/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5podgotovka-khostov-k-ustanovke-replikatsii-freeipahtml"><span class="">01. Подготовка хостов к установке реплик FreeIPA</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manualsbigdatahtml-li">
+  <a href="/manuals/bigdata.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdatahtml"><span class="">BigData</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapacheatlashtml-li">
+  <a href="/manuals/bigdata/apacheatlas.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataapacheatlashtml"><span class="">Apache Atlas</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlassborka-apache-atlas-220-dlya-cloudera-cdh-632html-li">
+  <a href="/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlassborka-apache-atlas-220-dlya-cloudera-cdh-632html"><span class="">Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlassborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2html-li">
+  <a href="/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlassborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2html"><span class="">Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220html-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220html"><span class="">Установка Apache Atlas 2.2.0</span></a>
+  <ul class="ul-4 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220podgotovitelnyye-raboty-dlya-ustanovki-atlashtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovitelnyye-raboty-dlya-ustanovki-atlas.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220podgotovitelnyye-raboty-dlya-ustanovki-atlashtml"><span class="">01. Подготовительные работы для установки Atlas&#39;а</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlashtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlas.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220podgotovka-sluzhb-hadoop-klastera-k-razvortyvaniyu-atlashtml"><span class="">02. Подготовка служб Hadoop-кластера к развёртыванию Atlas&#39;а</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlashtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlas.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220vybor-i-podgotovka-poiskovogo-dvizhka-dlya-ispolzovaniya-atlashtml"><span class="">03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220raspakovka-i-nastroyka-apache-atlashtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/raspakovka-i-nastroyka-apache-atlas.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220raspakovka-i-nastroyka-apache-atlashtml"><span class="">04. Распаковка и настройка Apache Atlas</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hivehtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hivehtml"><span class="">05. 🎣 Заброс Hook&#39;а в Apache Hive</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hbasehtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hbase.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-apache-hbasehtml"><span class="">06. 🎣 Заброс Hook&#39;а в Apache HBase</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-sparkhtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220zabros-hook-v-sparkhtml"><span class="">07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervyy-zapusk-apache-atlas-i-yego-otladkahtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervyy-zapusk-apache-atlas-i-yego-otladka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervyy-zapusk-apache-atlas-i-yego-otladkahtml"><span class="">08. Первый запуск Apache Atlas и его отладка при необходимости</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervonachalnyy-import-soderzhimogo-hivehtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervonachalnyy-import-soderzhimogo-hivehtml"><span class="">10. Первоначальный импорт содержимого Hive</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervonachalnyy-import-soderzhimogo-hbasehtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hbase.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220pervonachalnyy-import-soderzhimogo-hbasehtml"><span class="">11. Первоначальный импорт содержимого HBase</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220testirovaniye-rabotosposobnosti-apache-atlashtml-li">
+  <a href="/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/testirovaniye-rabotosposobnosti-apache-atlas.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheatlasustanovka-apache-atlas-220testirovaniye-rabotosposobnosti-apache-atlashtml"><span class="">20. 🔬 Тестирование работоспособности Apache Atlas</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahtml"><span class="">Установка Cloudera CDH 6.3.2 с TLS и Kerberos на основе FreeIPA</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipapodgotovka-k-ustanovke-klastera-cloudera-cdh-6-32html-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipapodgotovka-k-ustanovke-klastera-cloudera-cdh-6-32html"><span class="">01. Подготовка к установке кластера Cloudera CDH 6.3.2</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaustanovka-cloudera-manager-6-31html-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaustanovka-cloudera-manager-6-31html"><span class="">02. Установка Cloudera Manager 6.3.1</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaustanovka-osnovnykh-komponentov-cloudera-cdh-632html-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaustanovka-osnovnykh-komponentov-cloudera-cdh-632html"><span class="">03. Установка основных компонентов Cloudera CDH 6.3.2</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaposle-ustanovki-osnovnykh-komponentovhtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaposle-ustanovki-osnovnykh-komponentovhtml"><span class="">04. После установки основных компонентов</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipanastroyka-tls-dlya-cloudera-manager-server-i-yego-agentovhtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipanastroyka-tls-dlya-cloudera-manager-server-i-yego-agentovhtml"><span class="">10. Настройка TLS для Cloudera Manager Server и его агентов</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipanastroyka-tls-dlya-hdfs-i-yarnhtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipanastroyka-tls-dlya-hdfs-i-yarnhtml"><span class="">11. Настройка TLS для HDFS и YARN</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipavklyucheniye-kerberos-v-cloudera-cdh-632html-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipavklyucheniye-kerberos-v-cloudera-cdh-632html"><span class="">12. Включение Kerberos в Cloudera CDH 6.3.2</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipazookeeper-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipazookeeper-nastroykahtml"><span class="">13. Zookeeper. Настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahdfs-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahdfs-nastroykahtml"><span class="">14. HDFS. Настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipayarn-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipayarn-nastroykahtml"><span class="">15. YARN. Настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahbase-ustanovka-i-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahbase-ustanovka-i-nastroykahtml"><span class="">16. HBase. Установка и настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaspark-ustanovka-i-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipaspark-ustanovka-i-nastroykahtml"><span class="">17. Spark. Установка и настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahive-ustanovka-i-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahive-ustanovka-i-nastroykahtml"><span class="">18. Hive. Установка и настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipasentry-ustanovka-i-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/sentry-ustanovka-i-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipasentry-ustanovka-i-nastroykahtml"><span class="">19. Sentry. Установка и настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahue-ustanovka-i-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipahue-ustanovka-i-nastroykahtml"><span class="">20. Hue. Установка и настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipasolr-ustanovka-i-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/solr-ustanovka-i-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipasolr-ustanovka-i-nastroykahtml"><span class="">21. Solr. Установка и настройка</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipakafka-ustanovka-i-nastroykahtml-li">
+  <a href="/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataustanovka-cloudera-cdh-632-s-tls-i-kerberos-na-osnove-freeipakafka-ustanovka-i-nastroykahtml"><span class="">22. Kafka. Установка и настройка</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manualsbigdataapachezookeeperhtml-li">
+  <a href="/manuals/bigdata/apachezookeeper.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataapachezookeeperhtml"><span class="">Apache ZooKeeper</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id="m-manualsbigdataapachezookeeperpoluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-32html-li">
+  <a href="/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2.html" class="align-left pl-0 active td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapachezookeeperpoluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-32html"><span class="td-sidebar-nav-active-item">Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsbigdataapacheairflowhtml-li">
+  <a href="/manuals/bigdata/apacheairflow.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsbigdataapacheairflowhtml"><span class="">Apache Airflow</span></a>
+  <ul class="ul-3 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheairflowustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniyahtml-li">
+  <a href="/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheairflowustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniyahtml"><span class="">Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsbigdataapacheairflowustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoophtml-li">
+  <a href="/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsbigdataapacheairflowustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoophtml"><span class="">Установка Apache Airflow и настройка его для работы с Apache Hadoop (устарело)</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-manualsvpnhtml-li">
+  <a href="/manuals/vpn.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__section" id="m-manualsvpnhtml"><span class="">VPN</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsvpnobfuskaciya-ssh-trafika-s-pomoschyu-stunnelhtml-li">
+  <a href="/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsvpnobfuskaciya-ssh-trafika-s-pomoschyu-stunnelhtml"><span class="">Обфускация ssh-трафика с помощью stunnel</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsvpnrazvyortyvanie-seti-openvpnhtml-li">
+  <a href="/manuals/vpn/razvyortyvanie-seti-openvpn.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsvpnrazvyortyvanie-seti-openvpnhtml"><span class="">Развёртывание сети OpenVPN</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsvpnopenvpn-eto-prostohtml-li">
+  <a href="/manuals/vpn/openvpn-eto-prosto.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsvpnopenvpn-eto-prostohtml"><span class="">OpenVPN — это просто</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsvpnperevod-easy-rsa-3-quickstart-readmehtml-li">
+  <a href="/manuals/vpn/perevod-easy-rsa-3-quickstart-readme.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsvpnperevod-easy-rsa-3-quickstart-readmehtml"><span class="">Перевод Easy-RSA 3 Quickstart README</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsvpnprostoi-centr-sertifikacii-dlya-strongswan-ipsechtml-li">
+  <a href="/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsvpnprostoi-centr-sertifikacii-dlya-strongswan-ipsechtml"><span class="">Простой Центр Сертификации для strongSwan IPsec</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsvpnnastraivaem-openvpn-server-na-podklyucheniya-klientovhtml-li">
+  <a href="/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov.html" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsvpnnastraivaem-openvpn-server-na-podklyucheniya-klientovhtml"><span class="">Настраиваем OpenVPN сервер на подключение клиентов</span></a>
+</li>
+  </ul>
+</li>
+  </ul>
+</li>
+    </ul>
+  </nav>
+</div>
+
+          </aside>
+          <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            
+<div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
+<a href="https://github.com/google/docsy-example/tree/main/content/ru/manuals/BigData/ApacheZooKeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2.md" class="td-page-meta--view" target="_blank" rel="noopener"><i class="fa fa-file-alt fa-fw"></i> [i18n] post_view_this</a>
+  <a href="https://github.com/google/docsy-example/edit/main/content/ru/manuals/BigData/ApacheZooKeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2.md" class="td-page-meta--edit" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Отредактировать страницу</a>
+  <a href="https://github.com/google/docsy-example/new/main/content/ru/manuals/BigData/ApacheZooKeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2.md?filename=change-me.md&amp;value=---%0Atitle%3A&#43;%22Long&#43;Page&#43;Title%22%0AlinkTitle%3A&#43;%22Short&#43;Nav&#43;Title%22%0Aweight%3A&#43;100%0Adescription%3A&#43;%3E-%0A&#43;&#43;&#43;&#43;&#43;Page&#43;description&#43;for&#43;heading&#43;and&#43;indexes.%0A---%0A%0A%23%23&#43;Heading%0A%0AEdit&#43;this&#43;template&#43;to&#43;create&#43;your&#43;new&#43;page.%0A%0A%2A&#43;Give&#43;it&#43;a&#43;good&#43;name%2C&#43;ending&#43;in&#43;%60.md%60&#43;-&#43;e.g.&#43;%60getting-started.md%60%0A%2A&#43;Edit&#43;the&#43;%22front&#43;matter%22&#43;section&#43;at&#43;the&#43;top&#43;of&#43;the&#43;page&#43;%28weight&#43;controls&#43;how&#43;its&#43;ordered&#43;amongst&#43;other&#43;pages&#43;in&#43;the&#43;same&#43;directory%3B&#43;lowest&#43;number&#43;first%29.%0A%2A&#43;Add&#43;a&#43;good&#43;commit&#43;message&#43;at&#43;the&#43;bottom&#43;of&#43;the&#43;page&#43;%28%3C80&#43;characters%3B&#43;use&#43;the&#43;extended&#43;description&#43;field&#43;for&#43;more&#43;detail%29.%0A%2A&#43;Create&#43;a&#43;new&#43;branch&#43;so&#43;you&#43;can&#43;preview&#43;your&#43;new&#43;file&#43;and&#43;request&#43;a&#43;review&#43;via&#43;Pull&#43;Request.%0A" class="td-page-meta--child" target="_blank" rel="noopener"><i class="fa fa-edit fa-fw"></i> Create child page</a>
+  <a href="https://github.com/google/docsy-example/issues/new?title=%d0%9f%d0%be%d0%bb%d1%83%d1%87%d0%b5%d0%bd%d0%b8%d0%b5%20%d0%bf%d1%80%d0%b0%d0%b2%20Superuser%27%d0%b0%20%d0%b2%20ZooKeeper%27%d0%b5%20Cloudera%20CDH%206.3.2" class="td-page-meta--issue" target="_blank" rel="noopener"><i class="fab fa-github fa-fw"></i> Предложить изменения документации</a>
+  <a href="https://github.com/google/docsy/issues/new" class="td-page-meta--project-issue" target="_blank" rel="noopener"><i class="fas fa-tasks fa-fw"></i> Предложить доработки по проекту</a>
+  <a id="print" href="https://debuntu.ru/manuals/bigdata/apachezookeeper/_print.html"><i class="fa fa-print fa-fw"></i> Print entire section</a>
+
+</div>
+
+            
+
+
+<div class="td-toc"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#введение">Введение</a></li>
+    <li><a href="#алгоритм-получения-прав-superuserа">Алгоритм получения прав superuser&rsquo;а</a></li>
+    <li><a href="#удаление-ноды">Удаление ноды</a></li>
+  </ul>
+</nav></div>
+
+
+
+            
+
+	
+		
+			
+				
+			
+			
+
+
+
+  
+  
+    <div class="taxonomy taxonomy-terms-cloud taxo-tags">
+      
+        <h5 class="taxonomy-title">Tag Cloud</h5>
+      
+      <ul class="taxonomy-terms">
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/acl.html" data-taxonomy-term="acl"><span class="taxonomy-label">ACL</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/almalinux-8.5.html" data-taxonomy-term="almalinux-8.5"><span class="taxonomy-label">AlmaLinux 8.5</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/alpine-linux.html" data-taxonomy-term="alpine-linux"><span class="taxonomy-label">Alpine Linux</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/altlinux.html" data-taxonomy-term="altlinux"><span class="taxonomy-label">AltLinux</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/altlinux-10.html" data-taxonomy-term="altlinux-10"><span class="taxonomy-label">AltLinux 10</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/altlinux-9.html" data-taxonomy-term="altlinux-9"><span class="taxonomy-label">AltLinux 9</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ansible.html" data-taxonomy-term="ansible"><span class="taxonomy-label">Ansible</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ansible-ad-hoc.html" data-taxonomy-term="ansible-ad-hoc"><span class="taxonomy-label">Ansible ad-hoc</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-airflow.html" data-taxonomy-term="apache-airflow"><span class="taxonomy-label">Apache Airflow</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-atlas.html" data-taxonomy-term="apache-atlas"><span class="taxonomy-label">Apache Atlas</span><span class="taxonomy-count">13</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop.html" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span><span class="taxonomy-count">28</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hbase.html" data-taxonomy-term="apache-hbase"><span class="taxonomy-label">Apache HBase</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hive.html" data-taxonomy-term="apache-hive"><span class="taxonomy-label">Apache Hive</span><span class="taxonomy-count">6</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-kafka.html" data-taxonomy-term="apache-kafka"><span class="taxonomy-label">Apache Kafka</span><span class="taxonomy-count">5</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-spark.html" data-taxonomy-term="apache-spark"><span class="taxonomy-label">Apache Spark</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-sqoop.html" data-taxonomy-term="apache-sqoop"><span class="taxonomy-label">Apache Sqoop</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-tomcat.html" data-taxonomy-term="apache-tomcat"><span class="taxonomy-label">Apache Tomcat</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-zookeeper.html" data-taxonomy-term="apache-zookeeper"><span class="taxonomy-label">Apache Zookeeper</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apc.html" data-taxonomy-term="apc"><span class="taxonomy-label">APC</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apparmor.html" data-taxonomy-term="apparmor"><span class="taxonomy-label">AppArmor</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/approx.html" data-taxonomy-term="approx"><span class="taxonomy-label">Approx</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apt.html" data-taxonomy-term="apt"><span class="taxonomy-label">apt</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apt-cache.html" data-taxonomy-term="apt-cache"><span class="taxonomy-label">apt-cache</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apt-get.html" data-taxonomy-term="apt-get"><span class="taxonomy-label">apt-get</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/aptitude.html" data-taxonomy-term="aptitude"><span class="taxonomy-label">aptitude</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/automation.html" data-taxonomy-term="automation"><span class="taxonomy-label">Automation</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/backup-software.html" data-taxonomy-term="backup-software"><span class="taxonomy-label">Backup SoftWare</span><span class="taxonomy-count">9</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bash.html" data-taxonomy-term="bash"><span class="taxonomy-label">Bash</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/beeline.html" data-taxonomy-term="beeline"><span class="taxonomy-label">beeline</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/bigdata.html" data-taxonomy-term="bigdata"><span class="taxonomy-label">BigData</span><span class="taxonomy-count">44</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/borgbackup.html" data-taxonomy-term="borgbackup"><span class="taxonomy-label">BorgBackup</span><span class="taxonomy-count">9</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/btrfs.html" data-taxonomy-term="btrfs"><span class="taxonomy-label">Btrfs</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos.html" data-taxonomy-term="centos"><span class="taxonomy-label">CentOS</span><span class="taxonomy-count">28</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/centos-7.html" data-taxonomy-term="centos-7"><span class="taxonomy-label">CentOS 7</span><span class="taxonomy-count">25</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/chroot.html" data-taxonomy-term="chroot"><span class="taxonomy-label">chroot</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ci/cd.html" data-taxonomy-term="ci/cd"><span class="taxonomy-label">CI/CD</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-cdh-6.3.2.html" data-taxonomy-term="cloudera-cdh-6.3.2"><span class="taxonomy-label">Cloudera CDH 6.3.2</span><span class="taxonomy-count">35</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-hadoop.html" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-inspect-network-performance.html" data-taxonomy-term="cloudera-inspect-network-performance"><span class="taxonomy-label">Cloudera Inspect Network Performance</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cmak.html" data-taxonomy-term="cmak"><span class="taxonomy-label">CMAK</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cms.html" data-taxonomy-term="cms"><span class="taxonomy-label">CMS</span><span class="taxonomy-count">7</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cockpit.html" data-taxonomy-term="cockpit"><span class="taxonomy-label">Cockpit</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/colorized-stdout.html" data-taxonomy-term="colorized-stdout"><span class="taxonomy-label">colorized stdout</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/composer.html" data-taxonomy-term="composer"><span class="taxonomy-label">Composer</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/console.html" data-taxonomy-term="console"><span class="taxonomy-label">console</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cryptsetup.html" data-taxonomy-term="cryptsetup"><span class="taxonomy-label">cryptsetup</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/db.html" data-taxonomy-term="db"><span class="taxonomy-label">DB</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/dd-wrt.html" data-taxonomy-term="dd-wrt"><span class="taxonomy-label">DD-WRT</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/debian-lenny.html" data-taxonomy-term="debian-lenny"><span class="taxonomy-label">Debian Lenny</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/devops.html" data-taxonomy-term="devops"><span class="taxonomy-label">DevOps</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/dm-setup.html" data-taxonomy-term="dm-setup"><span class="taxonomy-label">dm-setup</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/dns.html" data-taxonomy-term="dns"><span class="taxonomy-label">DNS</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/docker.html" data-taxonomy-term="docker"><span class="taxonomy-label">Docker</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/drupal.html" data-taxonomy-term="drupal"><span class="taxonomy-label">Drupal</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/easy-rsa.html" data-taxonomy-term="easy-rsa"><span class="taxonomy-label">Easy-RSA</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/eclipse.html" data-taxonomy-term="eclipse"><span class="taxonomy-label">Eclipse</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/egroupware.html" data-taxonomy-term="egroupware"><span class="taxonomy-label">EGroupWare</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/encfs.html" data-taxonomy-term="encfs"><span class="taxonomy-label">EncFS</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/filesystem.html" data-taxonomy-term="filesystem"><span class="taxonomy-label">FileSystem</span><span class="taxonomy-count">6</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/freebsd.html" data-taxonomy-term="freebsd"><span class="taxonomy-label">FreeBSD</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/freeipa.html" data-taxonomy-term="freeipa"><span class="taxonomy-label">FreeIPA</span><span class="taxonomy-count">17</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/freeipa-4.9.6.html" data-taxonomy-term="freeipa-4.9.6"><span class="taxonomy-label">FreeIPA 4.9.6</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/gnu-screen.html" data-taxonomy-term="gnu-screen"><span class="taxonomy-label">GNU Screen</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/groupware.html" data-taxonomy-term="groupware"><span class="taxonomy-label">groupware</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/hbase.html" data-taxonomy-term="hbase"><span class="taxonomy-label">HBase</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/hdfs.html" data-taxonomy-term="hdfs"><span class="taxonomy-label">HDFS</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/history.html" data-taxonomy-term="history"><span class="taxonomy-label">History</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/hive.html" data-taxonomy-term="hive"><span class="taxonomy-label">Hive</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/hue.html" data-taxonomy-term="hue"><span class="taxonomy-label">Hue</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ide.html" data-taxonomy-term="ide"><span class="taxonomy-label">IDE</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/infosec.html" data-taxonomy-term="infosec"><span class="taxonomy-label">InfoSec</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ipsec.html" data-taxonomy-term="ipsec"><span class="taxonomy-label">IPsec</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/jenkins.html" data-taxonomy-term="jenkins"><span class="taxonomy-label">Jenkins</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/jupiterhub.html" data-taxonomy-term="jupiterhub"><span class="taxonomy-label">JupiterHub</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/kafdrop.html" data-taxonomy-term="kafdrop"><span class="taxonomy-label">Kafdrop</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/kafka.html" data-taxonomy-term="kafka"><span class="taxonomy-label">Kafka</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/kafka-mirror-maker.html" data-taxonomy-term="kafka-mirror-maker"><span class="taxonomy-label">kafka-mirror-maker</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/kerberos.html" data-taxonomy-term="kerberos"><span class="taxonomy-label">Kerberos</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/keytab.html" data-taxonomy-term="keytab"><span class="taxonomy-label">keytab</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/kvm.html" data-taxonomy-term="kvm"><span class="taxonomy-label">KVM</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/l2tp.html" data-taxonomy-term="l2tp"><span class="taxonomy-label">L2TP</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ldap.html" data-taxonomy-term="ldap"><span class="taxonomy-label">LDAP</span><span class="taxonomy-count">4</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/less.html" data-taxonomy-term="less"><span class="taxonomy-label">less</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/libreoffice.html" data-taxonomy-term="libreoffice"><span class="taxonomy-label">LibreOffice</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/linux-kernel.html" data-taxonomy-term="linux-kernel"><span class="taxonomy-label">Linux Kernel</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/linux-process.html" data-taxonomy-term="linux-process"><span class="taxonomy-label">Linux process</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/logitech.html" data-taxonomy-term="logitech"><span class="taxonomy-label">Logitech</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/luks.html" data-taxonomy-term="luks"><span class="taxonomy-label">LUKS</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/lvm.html" data-taxonomy-term="lvm"><span class="taxonomy-label">LVM</span><span class="taxonomy-count">6</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/lvm2.html" data-taxonomy-term="lvm2"><span class="taxonomy-label">LVM2</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/lvresize.html" data-taxonomy-term="lvresize"><span class="taxonomy-label">lvresize</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/lxde.html" data-taxonomy-term="lxde"><span class="taxonomy-label">LXDE</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/make.html" data-taxonomy-term="make"><span class="taxonomy-label">make</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/meshnet.html" data-taxonomy-term="meshnet"><span class="taxonomy-label">meshnet</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/mikrotik.html" data-taxonomy-term="mikrotik"><span class="taxonomy-label">Mikrotik</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/modx.html" data-taxonomy-term="modx"><span class="taxonomy-label">MODx</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/mokey.html" data-taxonomy-term="mokey"><span class="taxonomy-label">Mokey</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/monitoring.html" data-taxonomy-term="monitoring"><span class="taxonomy-label">Monitoring</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/monitorix.html" data-taxonomy-term="monitorix"><span class="taxonomy-label">Monitorix</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/multic.html" data-taxonomy-term="multic"><span class="taxonomy-label">Multic</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/nat.html" data-taxonomy-term="nat"><span class="taxonomy-label">NAT</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/networking.html" data-taxonomy-term="networking"><span class="taxonomy-label">Networking</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/nextcloud.html" data-taxonomy-term="nextcloud"><span class="taxonomy-label">NextCloud</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/nexus-repository-manager.html" data-taxonomy-term="nexus-repository-manager"><span class="taxonomy-label">Nexus Repository Manager</span><span class="taxonomy-count">4</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/nginx.html" data-taxonomy-term="nginx"><span class="taxonomy-label">Nginx</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/nokia-e52.html" data-taxonomy-term="nokia-e52"><span class="taxonomy-label">Nokia E52</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/nut.html" data-taxonomy-term="nut"><span class="taxonomy-label">NUT</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/nxrm.html" data-taxonomy-term="nxrm"><span class="taxonomy-label">NXRM</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/oauth2.html" data-taxonomy-term="oauth2"><span class="taxonomy-label">OAuth2</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/obfuscation.html" data-taxonomy-term="obfuscation"><span class="taxonomy-label">Obfuscation</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/openssh.html" data-taxonomy-term="openssh"><span class="taxonomy-label">OpenSSH</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/openvpn.html" data-taxonomy-term="openvpn"><span class="taxonomy-label">OpenVPN</span><span class="taxonomy-count">5</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/openwrt.html" data-taxonomy-term="openwrt"><span class="taxonomy-label">OpenWRT</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/path-mtu-discovery.html" data-taxonomy-term="path-mtu-discovery"><span class="taxonomy-label">Path MTU Discovery</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/pip.html" data-taxonomy-term="pip"><span class="taxonomy-label">pip</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/pkgng.html" data-taxonomy-term="pkgng"><span class="taxonomy-label">pkgng</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/pki.html" data-taxonomy-term="pki"><span class="taxonomy-label">PKI</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/plone.html" data-taxonomy-term="plone"><span class="taxonomy-label">Plone</span><span class="taxonomy-count">5</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/portsnap.html" data-taxonomy-term="portsnap"><span class="taxonomy-label">portsnap</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/postgresql.html" data-taxonomy-term="postgresql"><span class="taxonomy-label">PostgreSQL</span><span class="taxonomy-count">4</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/python.html" data-taxonomy-term="python"><span class="taxonomy-label">Python</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/qemu.html" data-taxonomy-term="qemu"><span class="taxonomy-label">QEMU</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/qemu.html" data-taxonomy-term="qemu"><span class="taxonomy-label">QEMU</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/raid.html" data-taxonomy-term="raid"><span class="taxonomy-label">RAID</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/redos.html" data-taxonomy-term="redos"><span class="taxonomy-label">RedOS</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/redos-7.2.html" data-taxonomy-term="redos-7.2"><span class="taxonomy-label">RedOS 7.2</span><span class="taxonomy-count">3</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/resolv.conf.html" data-taxonomy-term="resolv.conf"><span class="taxonomy-label">resolv.conf</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/root.html" data-taxonomy-term="root"><span class="taxonomy-label">root</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/rsync.html" data-taxonomy-term="rsync"><span class="taxonomy-label">rsync</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/sentry.html" data-taxonomy-term="sentry"><span class="taxonomy-label">Sentry</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/solr.html" data-taxonomy-term="solr"><span class="taxonomy-label">Solr</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/spark.html" data-taxonomy-term="spark"><span class="taxonomy-label">Spark</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/squid.html" data-taxonomy-term="squid"><span class="taxonomy-label">Squid</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/squidguard.html" data-taxonomy-term="squidguard"><span class="taxonomy-label">SquidGuard</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ssh.html" data-taxonomy-term="ssh"><span class="taxonomy-label">ssh</span><span class="taxonomy-count">5</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/strongswan.html" data-taxonomy-term="strongswan"><span class="taxonomy-label">strongSwan</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/stunnel.html" data-taxonomy-term="stunnel"><span class="taxonomy-label">stunnel</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/sudo.html" data-taxonomy-term="sudo"><span class="taxonomy-label">sudo</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/syslinux.html" data-taxonomy-term="syslinux"><span class="taxonomy-label">syslinux</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/terminal.html" data-taxonomy-term="terminal"><span class="taxonomy-label">terminal</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/traditional-unix-permission.html" data-taxonomy-term="traditional-unix-permission"><span class="taxonomy-label">Traditional Unix Permission</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/translation.html" data-taxonomy-term="translation"><span class="taxonomy-label">translation</span><span class="taxonomy-count">10</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/truecrypt.html" data-taxonomy-term="truecrypt"><span class="taxonomy-label">TrueCrypt</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/ubuntu.html" data-taxonomy-term="ubuntu"><span class="taxonomy-label">Ubuntu</span><span class="taxonomy-count">4</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/unix.html" data-taxonomy-term="unix"><span class="taxonomy-label">Unix</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/venv.html" data-taxonomy-term="venv"><span class="taxonomy-label">venv</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/vertica.html" data-taxonomy-term="vertica"><span class="taxonomy-label">Vertica</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/vfs.html" data-taxonomy-term="vfs"><span class="taxonomy-label">VFS</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/virtualization.html" data-taxonomy-term="virtualization"><span class="taxonomy-label">Virtualization</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/visual-studio-code.html" data-taxonomy-term="visual-studio-code"><span class="taxonomy-label">Visual Studio Code</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/vmware-server.html" data-taxonomy-term="vmware-server"><span class="taxonomy-label">VMWare Server</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/void-linux.html" data-taxonomy-term="void-linux"><span class="taxonomy-label">Void Linux</span><span class="taxonomy-count">4</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/voip.html" data-taxonomy-term="voip"><span class="taxonomy-label">VoIP</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/vpn.html" data-taxonomy-term="vpn"><span class="taxonomy-label">VPN</span><span class="taxonomy-count">5</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/windows-xp.html" data-taxonomy-term="windows-xp"><span class="taxonomy-label">Windows XP</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/xfs.html" data-taxonomy-term="xfs"><span class="taxonomy-label">XFS</span><span class="taxonomy-count">2</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/yarn.html" data-taxonomy-term="yarn"><span class="taxonomy-label">YARN</span><span class="taxonomy-count">1</span></a></li>
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/zookeper.html" data-taxonomy-term="zookeper"><span class="taxonomy-label">Zookeper</span><span class="taxonomy-count">1</span></a></li>
+        
+      </ul>
+    </div>
+  
+
+		
+			
+				
+			
+			
+
+
+
+  
+  
+    <div class="taxonomy taxonomy-terms-cloud taxo-categories">
+      
+        <h5 class="taxonomy-title">Categories</h5>
+      
+      <ul class="taxonomy-terms">
+        
+          <li><a class="taxonomy-term" href="https://debuntu.ru/categories/development.html" data-taxonomy-term="development"><span class="taxonomy-label">Development</span><span class="taxonomy-count">1</span></a></li>
+        
+      </ul>
+    </div>
+  
+
+		
+	
+
+          </aside>
+          <main class="col-12 col-md-9 col-xl-8 pl-md-5" role="main">
+            
+  
+
+            <nav aria-label="breadcrumb" class="td-breadcrumbs">
+  <ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="https://debuntu.ru/manuals.html">Инструкции</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a href="https://debuntu.ru/manuals/bigdata.html">BigData</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a href="https://debuntu.ru/manuals/bigdata/apachezookeeper.html">Apache ZooKeeper</a>
+  </li>
+  <li class="breadcrumb-item active" aria-current="page">
+    <a href="https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2.html">Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</a>
+  </li>
+  </ol>
+</nav>
+            
+<div class="td-content">
+	<h1>Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</h1>
+	<div class="lead">Иногда в ZooKeeper&rsquo;е требуется удалить неудаляемое.</div>
+	<header class="article-meta">
+		
+
+  
+    
+      
+
+
+<div class="taxonomy taxonomy-terms-article taxo-tags">
+  <h5 class="taxonomy-title">Tags:</h5>
+  <ul class="taxonomy-terms">
+    
+      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-zookeeper.html" data-taxonomy-term="apache-zookeeper"><span class="taxonomy-label">Apache Zookeeper</span></a></li>
+    
+      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/apache-hadoop.html" data-taxonomy-term="apache-hadoop"><span class="taxonomy-label">Apache Hadoop</span></a></li>
+    
+      <li><a class="taxonomy-term" href="https://debuntu.ru/tags/cloudera-hadoop.html" data-taxonomy-term="cloudera-hadoop"><span class="taxonomy-label">Cloudera Hadoop</span></a></li>
+    
+  </ul>
+</div>
+
+    
+      
+
+
+    
+  
+
+		
+	</header>    
+	<p>2021-08-11</p>
+<h2 id="введение">Введение</h2>
+<p>При удалении ноды <code>/solr</code> через <code>zookeeper-client</code> выводилась ошибка:</p>
+<pre tabindex="0"><code>[zk: localhost:2181(CONNECTED) 0] rmr /solr
+The command &#39;rmr&#39; has been deprecated. Please use &#39;deleteall&#39; instead.
+Authentication is not valid : /solr/security
+</code></pre><p>Решение этой проблемы нашёл здесь: <a href="https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421">https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421</a></p>
+<h2 id="алгоритм-получения-прав-superuserа">Алгоритм получения прав superuser&rsquo;а</h2>
+<p>Переходим в домашний каталог Zookeeper&rsquo;а и запускаем генерацию дайджеста пароля для только что придуманного логина, под которым возобладаем superuser-правами в Zookeeper&rsquo;е, например &lsquo;zoosu:TsKlydBdycdq&rsquo;:</p>
+<pre tabindex="0"><code># cd /usr/lib/zookeeper &amp;&amp; \
+  /usr/java/jdk1.8.0_181-cloudera/bin/java -cp &#34;./zookeeper.jar:lib/slf4j-api-1.7.25.jar&#34; org.apache.zookeeper.server.auth.DigestAuthenticationProvider zoosu:TsKlydBdycdq
+</code></pre><p>В выводе команды видим дайджест &lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&rsquo;:</p>
+<pre tabindex="0"><code>SLF4J: Failed to load class &#34;org.slf4j.impl.StaticLoggerBinder&#34;.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+zoosu:TsKlydBdycdq-&gt;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=
+</code></pre><p>Вставляем эти учётные данные (&lsquo;zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=&rsquo;) в строку параметров для java-машины ZooKeeper&rsquo;а (&rsquo;<span style="color:blue">-Dzookeeper.DigestAuthenticationProvider.superDigest=zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=</span>&rsquo;), которую размещаем в настройках ZooKeeper&rsquo;а в Cloudera Manager.</p>
+<p>В настройках ZooKeeper, используя фильтр &lsquo;Java Configuration Options for Zookeeper Server&rsquo;, изменяем следующие параметры:</p>
+<table>
+<tr><th>Property</th><th>Value</th><th>Description</th></tr>
+<tr valign=top>
+<td><b>Java Configuration Options for Zookeeper Server</b></td>
+<td><span style="color:blue">-Dzookeeper.DigestAuthenticationProvider.superDigest=<br>zoosu:LC4PzmQLqFSlkfUMsN4oYrUGaM8=</span></td>
+<td>These arguments will be passed as part of the Java command line. Commonly, garbage collection flags, PermGen, or extra debugging flags would be passed here. Note: When CM version is 6.3.0 or greater, {{JAVA_GC_ARGS}} will be replaced by JVM Garbage Collection arguments based on the runtime Java JVM version.</td></tr>
+</table>
+<p>Нажимаем <strong>Save Changes</strong>.</p>
+<p>Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.</p>
+<p>Или останавливаем кластер и запускаем только сервис ZooKeeper&rsquo;а, если, конечно, хотим удалить вышеуказанную строку из настроек, после выполнения удаления ноды. После чего останавливаем ZooKeeper и запускаем весь кластер.</p>
+<h2 id="удаление-ноды">Удаление ноды</h2>
+<p>На ZooKeeper-узле запускаем <code>zookeeper-client</code>, авторизуемся с помощью команды <code>addauth digest zoosu:TsKlydBdycdq</code>, и выполняем удаление ноды <code>/solr</code>:</p>
+<pre tabindex="0"><code>[zk: localhost:2181(CONNECTED) 0] ls /solr
+[configs, overseer, security.json, solr.xml, autoscaling.json, security, aliases.json, live_nodes, collections, overseer_elect, clusterstate.json, autoscaling, clusterprops.json]
+[zk: localhost:2181(CONNECTED) 1] addauth digest zoosu:TsKlydBdycdq
+[zk: localhost:2181(CONNECTED) 2] deleteall /solr
+[zk: localhost:2181(CONNECTED) 3] ls /
+[zookeeper, hadoop-ha, kafka, hive_zookeeper_namespace_hive, hbase]
+[zk: localhost:2181(CONNECTED) 4]
+</code></pre>
+	
+	
+	
+</div>
+
+
+          </main>
+        </div>
+      </div>
+      
+<footer class="bg-dark py-5 row d-print-none">
+  <div class="container-fluid mx-sm-5">
+    <div class="row">
+      <div class="col-6 col-sm-4 text-xs-center order-sm-2">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="User mailing list" aria-label="User mailing list">
+    <a class="text-white" target="_blank" rel="noopener" href="https://example.org/mail" aria-label="User mailing list">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Twitter" aria-label="Twitter">
+    <a class="text-white" target="_blank" rel="noopener" href="https://example.org/twitter" aria-label="Twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Stack Overflow" aria-label="Stack Overflow">
+    <a class="text-white" target="_blank" rel="noopener" href="https://example.org/stack" aria-label="Stack Overflow">
+      <i class="fab fa-stack-overflow"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-6 col-sm-4 text-right text-xs-center order-sm-3">
+        
+        
+        
+<ul class="list-inline mb-0">
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="GitHub" aria-label="GitHub">
+    <a class="text-white" target="_blank" rel="noopener" href="https://github.com/google/docsy" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Slack" aria-label="Slack">
+    <a class="text-white" target="_blank" rel="noopener" href="https://example.org/slack" aria-label="Slack">
+      <i class="fab fa-slack"></i>
+    </a>
+  </li>
+  
+  <li class="list-inline-item mx-2 h3" data-toggle="tooltip" data-placement="top" title="Developer mailing list" aria-label="Developer mailing list">
+    <a class="text-white" target="_blank" rel="noopener" href="https://example.org/mail" aria-label="Developer mailing list">
+      <i class="fa fa-envelope"></i>
+    </a>
+  </li>
+  
+</ul>
+
+        
+        
+      </div>
+      <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
+        <small class="text-white">&copy;&nbsp;2009&nbsp;&ndash;&nbsp;2022 Evgeny Nifantyev <br /><a href="https://t.me/debuntu_ru">Telegram</a><br> Все права защищены</small>
+        
+	
+		
+	
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+    integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+    crossorigin="anonymous"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@8.13.4/dist/mermaid.min.js" integrity="sha512-JERecFUBbsm75UpkVheAuDOE8NdHjQBrPACfEQYPwvPG+fjgCpHAz1Jw2ci9EXmd3DdfiWth3O3CQvcfEg8gsA==" crossorigin="anonymous"></script>
+
+
+
+
+<script src='/js/tabpane-persist.js'></script>
+
+
+
+<script src='/js/deflate.js'></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.min.fb811d5528587e965bd15c050f698593da88020d2e3c553ecce5c8a5e772fe2e.js" integrity="sha256-&#43;4EdVShYfpZb0VwFD2mFk9qIAg0uPFU&#43;zOXIpedy/i4=" crossorigin="anonymous"></script>
+
+
+
+<script src='/js/prism.js'></script>
+
+
+
+  </body>
+</html>

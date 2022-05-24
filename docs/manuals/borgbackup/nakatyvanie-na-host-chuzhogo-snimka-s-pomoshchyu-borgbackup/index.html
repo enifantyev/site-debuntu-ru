@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса восстановления на хост чужого снимка всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
 "><meta itemprop="datePublished" content="2022-04-04T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-04-04T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1062">
+<meta itemprop="wordCount" content="1065">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup"/>
 <meta name="twitter:description" content="Описание процесса восстановления на хост чужого снимка всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
@@ -142,7 +142,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.0f415ff51b1524b3932167d536134c4e.json"
+  data-offline-search-index-json-src="/offline-search-index.84c8bd72a91569b882075395356c58f6.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -164,7 +164,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.0f415ff51b1524b3932167d536134c4e.json"
+  data-offline-search-index-json-src="/offline-search-index.84c8bd72a91569b882075395356c58f6.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -915,12 +915,21 @@
 <p>В некоторых случаях, например при восстановлении снимка с другой операционной системой, потребуется обновить GRUB.</p>
 <p>Общая схема обновления GRUB такая:</p>
 <ol>
-<li>Генерируем новый <code>/boot/grub/grub.cfg</code>. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&rsquo;ы разделов на диске.<br>
-<code>grub-mkconfig -o /boot/grub/grub.cfg</code> или <code>grub2-mkconfig -o /boot/grub2/grub.cfg</code></li>
-<li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов:<br>
-<code>sed -i 's/vg-snap_root/vg-root/g' /boot/grub/grub.cfg</code> или <code> sed -i 's/vg-snap_root/vg-root/g' /boot/grub2/grub.cfg</code></li>
-<li>На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):<br>
-<code>grub-install /dev/sda</code> или <code>grub2-install /dev/sda</code>.</li>
+<li>Генерируем новый <code>/boot/grub/grub.cfg</code>. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&rsquo;ы разделов на диске.
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grub-mkconfig -o /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># или</span>
+</span></span><span style="display:flex;"><span>grub2-mkconfig -o /boot/grub2/grub.cfg
+</span></span></code></pre></div></li>
+<li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># или</span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub2/grub.cfg
+</span></span></code></pre></div></li>
+<li>На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grub-install /dev/sda
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># или</span>
+</span></span><span style="display:flex;"><span>grub2-install /dev/sda
+</span></span></code></pre></div></li>
 </ol>
 <hr>
 <p>Эталонный вывод после <code>grub-install</code>:</p>
