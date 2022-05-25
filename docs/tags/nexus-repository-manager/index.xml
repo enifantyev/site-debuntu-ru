@@ -4,7 +4,7 @@
     <link>https://debuntu.ru/tags/nexus-repository-manager/</link>
     <description>Recent content in Nexus Repository Manager on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 05 Mar 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 May 2022 00:00:00 +0000</lastBuildDate>
     
 	  <atom:link href="https://debuntu.ru/tags/nexus-repository-manager/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,6 +13,54 @@
         
       
     
+    
+    <item>
+      <title>N: Download all assets from Nexus&#39;s repository using curl</title>
+      <link>https://debuntu.ru/n/download-all-assets-from-nexus-repository-using-curl/</link>
+      <pubDate>Wed, 25 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/n/download-all-assets-from-nexus-repository-using-curl/</guid>
+      <description>
+        
+        
+        &lt;p&gt;На скорую руку приготовил скрипт выкачивающий все файлы из какого-нибудь репо.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/bin/bash -e
+
+NXRM=&amp;#34;http://10.15.61.1:8081&amp;#34;
+USERPASS=&amp;#34;nx-pubrepo-reader:iWnZ0Ho7JNV03df1zgEj6&amp;#34;
+REPO=&amp;#34;cloudera-cm-6.3.1-hosted&amp;#34;
+FILEEXT=&amp;#34;rpm&amp;#34;
+FILENAME=&amp;#34;${REPO}.list&amp;#34;
+TOKEN=&amp;#34;&amp;#34;
+
+get_token(){
+    TOKEN=&amp;#34;&amp;#34;
+    TMPTOKEN=&amp;#34;&amp;#34;
+    TMPTOKEN=$(tail ${FILENAME} | grep &amp;#34;continuationToken&amp;#34;)
+    TOKEN=&amp;#34;$(echo $TMPTOKEN | awk &amp;#39;{print $3}&amp;#39; | awk -F\&amp;#34; &amp;#39;{print $2}&amp;#39;)&amp;#34;
+    if [[ &amp;#34;$TOKEN&amp;#34; = &amp;#34;&amp;#34; ]]; then return; fi
+    TOKENFULL=&amp;#34;continuationToken=${TOKEN}&amp;amp;&amp;#34;
+    echo $TOKEN
+}
+
+&amp;gt; ${FILENAME}
+while : ; do
+    curl -u${USERPASS} -X &amp;#39;GET&amp;#39; \
+        &amp;#34;${NXRM}/service/rest/v1/assets?${TOKENFULL}repository=${REPO}&amp;#34; \
+        -H &amp;#39;accept: application/json&amp;#39; &amp;gt;&amp;gt; ${FILENAME}
+    get_token
+    if [[ &amp;#34;$TOKEN&amp;#34; = &amp;#34;&amp;#34; ]]; then break; fi
+done
+
+grep -n &amp;#34;downloadUrl&amp;#34; ${REPO}.list | grep ${FILEEXT} | awk &amp;#39;{print $4}&amp;#39; | awk -F\&amp;#34; &amp;#39;{print $2}&amp;#39; &amp;gt; ${REPO}.urls
+mkdir -p ${REPO}
+cd ${REPO}
+while read -r URL; do
+    curl -u${USERPASS} -LO -C - &amp;#34;${URL}&amp;#34;
+done&amp;lt;../${REPO}.urls
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
     
     <item>
       <title>N: Организация беспарольного зеркала registry-1.docker.io</title>

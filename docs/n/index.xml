@@ -4,7 +4,7 @@
     <link>https://debuntu.ru/n/</link>
     <description>Recent content in Заметки on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 26 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 May 2022 00:00:00 +0000</lastBuildDate>
     
 	  <atom:link href="https://debuntu.ru/n/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,6 +13,54 @@
         
       
     
+    
+    <item>
+      <title>N: Download all assets from Nexus&#39;s repository using curl</title>
+      <link>https://debuntu.ru/n/download-all-assets-from-nexus-repository-using-curl/</link>
+      <pubDate>Wed, 25 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/n/download-all-assets-from-nexus-repository-using-curl/</guid>
+      <description>
+        
+        
+        &lt;p&gt;На скорую руку приготовил скрипт выкачивающий все файлы из какого-нибудь репо.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/bin/bash -e
+
+NXRM=&amp;#34;http://10.15.61.1:8081&amp;#34;
+USERPASS=&amp;#34;nx-pubrepo-reader:iWnZ0Ho7JNV03df1zgEj6&amp;#34;
+REPO=&amp;#34;cloudera-cm-6.3.1-hosted&amp;#34;
+FILEEXT=&amp;#34;rpm&amp;#34;
+FILENAME=&amp;#34;${REPO}.list&amp;#34;
+TOKEN=&amp;#34;&amp;#34;
+
+get_token(){
+    TOKEN=&amp;#34;&amp;#34;
+    TMPTOKEN=&amp;#34;&amp;#34;
+    TMPTOKEN=$(tail ${FILENAME} | grep &amp;#34;continuationToken&amp;#34;)
+    TOKEN=&amp;#34;$(echo $TMPTOKEN | awk &amp;#39;{print $3}&amp;#39; | awk -F\&amp;#34; &amp;#39;{print $2}&amp;#39;)&amp;#34;
+    if [[ &amp;#34;$TOKEN&amp;#34; = &amp;#34;&amp;#34; ]]; then return; fi
+    TOKENFULL=&amp;#34;continuationToken=${TOKEN}&amp;amp;&amp;#34;
+    echo $TOKEN
+}
+
+&amp;gt; ${FILENAME}
+while : ; do
+    curl -u${USERPASS} -X &amp;#39;GET&amp;#39; \
+        &amp;#34;${NXRM}/service/rest/v1/assets?${TOKENFULL}repository=${REPO}&amp;#34; \
+        -H &amp;#39;accept: application/json&amp;#39; &amp;gt;&amp;gt; ${FILENAME}
+    get_token
+    if [[ &amp;#34;$TOKEN&amp;#34; = &amp;#34;&amp;#34; ]]; then break; fi
+done
+
+grep -n &amp;#34;downloadUrl&amp;#34; ${REPO}.list | grep ${FILEEXT} | awk &amp;#39;{print $4}&amp;#39; | awk -F\&amp;#34; &amp;#39;{print $2}&amp;#39; &amp;gt; ${REPO}.urls
+mkdir -p ${REPO}
+cd ${REPO}
+while read -r URL; do
+    curl -u${USERPASS} -LO -C - &amp;#34;${URL}&amp;#34;
+done&amp;lt;../${REPO}.urls
+&lt;/code&gt;&lt;/pre&gt;
+      </description>
+    </item>
     
     <item>
       <title>N: Компиляция свежего stunnel 5.60 из исходников на CentOS7</title>
@@ -2882,75 +2930,6 @@ verb 3
 &lt;a href=&#34;http://www.linuxcenter.ru/lib/articles/system/kernel26_install.phtml&#34;&gt;http://www.linuxcenter.ru/lib/articles/system/kernel26_install.phtml&lt;/a&gt;
 &lt;a href=&#34;http://www.opennet.ru/base/sys/install_linux_kernel.txt.html&#34;&gt;http://www.opennet.ru/base/sys/install_linux_kernel.txt.html&lt;/a&gt;
 &lt;a href=&#34;http://www.mr-h1z.com/linux/ubuntu/%D0%A1%D0%BE%D0%B1%D0%B8%D1%80%D0%B0%D0%B5%D0%BC-%D1%81%D0%B2%D0%BE%D0%B5-%D1%8F%D0%B4%D1%80%D0%BE-%D0%B4%D0%BB%D1%8F-%D1%83%D0%B1%D1%83%D0%BD%D1%82%D1%8B&#34;&gt;http://www.mr-h1z.com/linux/ubuntu/%D0%A1%D0%BE%D0%B1%D0%B8%D1%80%D0%B0%D0%B5%D0%BC-%D1%81%D0%B2%D0%BE%D0%B5-%D1%8F%D0%B4%D1%80%D0%BE-%D0%B4%D0%BB%D1%8F-%D1%83%D0%B1%D1%83%D0%BD%D1%82%D1%8B&lt;/a&gt;&lt;/p&gt;
-
-      </description>
-    </item>
-    
-    <item>
-      <title>N: Настройка VoIP на Nokia E52</title>
-      <link>https://debuntu.ru/n/nastroika-voip-na-nokia-e52/</link>
-      <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
-      
-      <guid>https://debuntu.ru/n/nastroika-voip-na-nokia-e52/</guid>
-      <description>
-        
-        
-        &lt;p&gt;Скачиваем отсюда &lt;a href=&#34;http://www.forum.nokia.com/info/sw.nokia.com/id/d476061e-90ca-42e9-b3ea-1a852f3808ec/SIP_VoIP_Settings.html&#34;&gt;http://www.forum.nokia.com/info/sw.nokia.com/id/d476061e-90ca-42e9-b3ea-1a852f3808ec/SIP_VoIP_Settings.html&lt;/a&gt; SIP VoIP 3.x Settings (164 kB) и устанавливаем на телефон эту приблуду, которая позволит нам настроить профили для sip провайдеров.&lt;/p&gt;
-&lt;div&gt;
-&lt;h3&gt;&lt;a id=&#34;астраиваем sipnet.ru&#34; name=&#34;астраиваем sipnet.ru&#34;&gt;&lt;/a&gt;Настраиваем sipnet.ru&lt;/h3&gt;
-&lt;div&gt;Меню - Панель управления - Параметры сети - Advanced VoIP settings&lt;/div&gt;
-&lt;div&gt;&lt;strong&gt;SIP settings&lt;/strong&gt;&lt;/div&gt;
-&lt;div&gt;Функции - Новый профиль SIP - Исп. проф. по умолч.&lt;/div&gt;
-&lt;div&gt;Для sipnet.ru:&lt;/div&gt;
-&lt;div&gt;Имя профиля:             Sipnet&lt;/div&gt;
-&lt;div&gt;Профиль услуги:          IETF&lt;/div&gt;
-&lt;div&gt;Назначание по умолч.:    Интернет&lt;/div&gt;
-&lt;div&gt;Открыт. имя польз.:      000000@sipnet.ru (свой номер в сипнете)&lt;/div&gt;
-&lt;div&gt;Использовать сжатие:     нет&lt;/div&gt;
-&lt;div&gt;Регистрация:             Всегда&lt;/div&gt;
-&lt;div&gt;Использовать защиту:     Нет&lt;/div&gt;
-&lt;div&gt;Прокси-сервер:           не заполняем&lt;/div&gt;
-&lt;div&gt;Сервер регистрации:&lt;/div&gt;
-&lt;div&gt;        Адрес сервера рег:    sipnet.ru&lt;/div&gt;
-&lt;div&gt;        Область:              нет&lt;/div&gt;
-&lt;div&gt;        Имя пользователя:     000000 (свой номер в сипнете)&lt;/div&gt;
-&lt;div&gt;        Пароль:               ****   (свой пароль в сипнете)&lt;/div&gt;
-&lt;div&gt;        Тип передачи:         UDP&lt;/div&gt;
-&lt;div&gt;        Порт:                 5060&lt;/div&gt;
-&lt;div&gt;
-&lt;div&gt; &lt;/div&gt;
-&lt;/div&gt;
-&lt;div&gt;Поднимаемся до Параметры сети - Advanced VoIP settings и заходим в&lt;/div&gt;
-&lt;div&gt;&lt;strong&gt;VoIP services&lt;/strong&gt;&lt;/div&gt;
-&lt;div&gt;options - new service - Use default profile - Sipnet (его мы только что делали)&lt;/div&gt;
-&lt;div&gt;аппарат зависнет на несколько секунд и...&lt;/div&gt;
-&lt;div&gt;Вкл. услугу&lt;/div&gt;
-&lt;div&gt;Можно юзать. Надо только помнить, что сипнет.ру берёт за звонки на сотовые телефоны дороже, чем звонить с сотового на сотовый.&lt;/div&gt;
-&lt;div&gt;
-&lt;h3&gt;&lt;a id=&#34;Настраиваем webcalldirect.com&#34; name=&#34;Настраиваем webcalldirect.com&#34;&gt;&lt;/a&gt;Настраиваем webcalldirect.com&lt;/h3&gt;
-&lt;div&gt;Для webcalldirect.com (Voipdiscount.com настраивается аналогично. Думаю, что и прочие, из линейки бетамакса, настраиваются также) :&lt;/div&gt;
-&lt;div&gt;Имя профиля:             Webcalldirect.com&lt;/div&gt;
-&lt;div&gt;Профиль услуги:          IETF&lt;/div&gt;
-&lt;div&gt;Назначание по умолч.:    Интернет&lt;/div&gt;
-&lt;div&gt;Открыт. имя польз.:      user@webcalldirect.com (своё имя в webcalldirect.com)&lt;/div&gt;
-&lt;div&gt;Использовать сжатие:     нет&lt;/div&gt;
-&lt;div&gt;Регистрация:             Всегда&lt;/div&gt;
-&lt;div&gt;Использовать защиту:     Нет&lt;/div&gt;
-&lt;div&gt;Прокси-сервер:           не заполняем&lt;/div&gt;
-&lt;div&gt;Сервер регистрации:&lt;/div&gt;
-&lt;div&gt;        Адрес сервера рег:    sip.webcalldirect.com&lt;/div&gt;
-&lt;div&gt;        Область:              нет&lt;/div&gt;
-&lt;div&gt;        Имя пользователя:     user (своё имя в webcalldirect.com)&lt;/div&gt;
-&lt;div&gt;        Пароль:               ****   (свой пароль в webcalldirect.com)&lt;/div&gt;
-&lt;div&gt;        Тип передачи:         UDP&lt;/div&gt;
-&lt;div&gt;        Порт:                 5060&lt;/div&gt;
-&lt;div&gt;
-&lt;div&gt; &lt;/div&gt;
-&lt;div&gt;Оплачиваю бетамакс через paypal, через Qiwi или Visa/Mastercard&#39;ом напрямую.&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt; &lt;/p&gt;
 
       </description>
     </item>
