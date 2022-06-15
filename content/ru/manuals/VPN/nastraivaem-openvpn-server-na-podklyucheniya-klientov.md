@@ -10,11 +10,10 @@ tags:
   - Ubuntu
 aliases:
   - /nastraivaem-openvpn-server-na-podklyucheniya-klientov
-  - /a/nastraivaem-openvpn-server-na-podklyucheniya-klientov/
 slug: nastraivaem-openvpn-server-na-podklyucheniya-klientov
 ---
 
-2019-12-23 Опубликована свежая статья с упрощённым изложением [OpenVPN - это просто](/a/openvpn-eto-prosto)
+2019-12-23 Опубликована свежая статья с упрощённым изложением [OpenVPN - это просто](/manuals/vpn/openvpn-eto-prosto/)
 
 2014-08-04
 Статья в процессе переделки и дополнений по мере освоения.

@@ -145,6 +145,34 @@ mount --bind /dev /mnt/dev/
 mount --bind /run /mnt/run
 chroot /mnt
 ```
+## Обновление GRUB
+В некоторых случаях, например, если в ОС были обновлены пакеты, отвечающие за загрузку, то потребуется обновить GRUB.
+
+Общая схема обновления GRUB такая:
+1. Генерируем новый `/boot/grub/grub.cfg`. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID'ы разделов на диске.
+2. Так как песочница, в которой производилась генерация `grub.cfg`, находится на LV с именами `snap_root` и `snap_var`, то исправляем в сгенерированном `/boot/grub/grub.cfg` названия разделов.
+3. Переустанавливаем GRUB в MBR (плюс ещё несколько секторов).
+    ```bash
+    if [ -e /usr/sbin/grub-mkconfig ]; then
+      grub-mkconfig -o /boot/grub/grub.cfg
+      sed -i 's/vg-snap_root/vg-root/g' /boot/grub/grub.cfg
+      grub-install /dev/sda
+    elif [ -e /usr/sbin/grub2-mkconfig ]; then
+      grub2-mkconfig -o /boot/grub2/grub.cfg
+      sed -i 's/vg-snap_root/vg-root/g' /boot/grub2/grub.cfg
+      grub2-install /dev/sda
+    else
+      echo "Houston, we have a problem."
+    fi
+    ```
+
+Эталонный вывод после `grub-install`:
+```
+Installing for i386-pc platform.
+Installation finished. No error reported.
+```
+
+> ⚠️ Если произошли ошибки, то машина с большой вероятностью загрузится в 'grub recovery'-режиме.
 
 ### Обновление initramfs
 При восстановлении старого снимка этой машины с предыдущей версией Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.
@@ -173,6 +201,12 @@ make-initrd --kernel='5.10.82-std-def-alt1'
 
 ### Проверяем сетевые настройки
 Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.
+
+### SELinux relabel
+Если используется SELinux, тогда создаём файл `/.autorelabel` для автоматической перемаркировки всех файлов системы:
+```bash
+touch /.autorelabel
+```
 
 ### Выход из песочницы
 ```bash

@@ -106,15 +106,15 @@ sudo npm install -g configurable-http-proxy
   ├── strftime@0.10.0
   └─┬ winston@3.3.3
     ├─┬ @dabh/diagnostics@2.0.2
-    │ ├─┬ colorspace@1.1.2 
-    │ │ ├─┬ color@3.0.0 
-    │ │ │ ├─┬ color-convert@1.9.3 
-    │ │ │ │ └── color-name@1.1.3 
-    │ │ │ └─┬ color-string@1.5.5 
-    │ │ │   └─┬ simple-swizzle@0.2.2 
-    │ │ │     └── is-arrayish@0.3.2 
-    │ │ └── text-hex@1.0.0 
-    │ ├── enabled@2.0.0 
+    │ ├─┬ colorspace@1.1.2
+    │ │ ├─┬ color@3.0.0
+    │ │ │ ├─┬ color-convert@1.9.3
+    │ │ │ │ └── color-name@1.1.3
+    │ │ │ └─┬ color-string@1.5.5
+    │ │ │   └─┬ simple-swizzle@0.2.2
+    │ │ │     └── is-arrayish@0.3.2
+    │ │ └── text-hex@1.0.0
+    │ ├── enabled@2.0.0
     │ └── kuler@2.0.0
     ├── async@3.2.0
     ├── is-stream@2.0.0
@@ -169,7 +169,7 @@ cat << EOF | sudo tee /opt/jupyterhub/etc/systemd/jupyterhub.service
 [Unit]
 Description=JupyterHub
 After=syslog.target network.target
- 
+
 [Service]
 Type=simple
 User=root
@@ -252,8 +252,8 @@ modified      /root/.bashrc
 
 ==> For changes to take effect, close and re-open your current shell. <==
 
-If you'd prefer that conda's base environment not be activated on startup, 
-   set the auto_activate_base parameter to false: 
+If you'd prefer that conda's base environment not be activated on startup,
+   set the auto_activate_base parameter to false:
 
 conda config --set auto_activate_base false
 
@@ -288,7 +288,7 @@ $ sudo mkdir /opt/conda/envs/
 ```
 $ sudo /opt/conda/bin/conda create --prefix /opt/conda/envs/jupyter_env python=3.6 ipykernel
 ...
-jupyter_core-4.7.1   | 68 KB     | ########################################################################################## | 100% 
+jupyter_core-4.7.1   | 68 KB     | ########################################################################################## | 100%
 Preparing transaction: done
 Verifying transaction: done
 Executing transaction: done

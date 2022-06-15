@@ -35,8 +35,8 @@ service auditd stop
 ### Создание LVM snapshot
 Помним, что в Volume Group должно быть достаточно свободного места для размещения данных из бэкапов. В отличие от процесса создания бэкапа, в этом случае нужно много места, чтобы уместить сюда весь бэкап.
 ```bash
-lvcreate -L 4G -s -n snap_root /dev/vg/root
-lvcreate -L 4G -s -n snap_var /dev/vg/var
+lvcreate -L 6G -s -n snap_root /dev/vg/root
+lvcreate -L 6G -s -n snap_var /dev/vg/var
 ```
 
 ### Проверяем детали восстанавливаемого снимка
@@ -138,14 +138,16 @@ mount | grep '/mnt'
 Иначе удаляем всё содержимое снэпшотов и каталога `/boot` с проверкой:
 ```bash
 rm -rf /mnt/*
-du /mnt
+tree /mnt
 ```
 
 Результат:
 ```bash
-0	/mnt/boot
-0	/mnt/var
-0	/mnt
+/mnt
+└── [4.0K]  boot
+└── [4.0K]  var
+
+2 directory, 0 files
 ```
 
 ### Восстановление бэкапа в пространство снэпшотов и `/boot`
@@ -171,25 +173,22 @@ chroot /mnt
 
 Общая схема обновления GRUB такая:
 1. Генерируем новый `/boot/grub/grub.cfg`. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID'ы разделов на диске.
+2. Так как песочница, в которой производилась генерация `grub.cfg`, находится на LV с именами `snap_root` и `snap_var`, то исправляем в сгенерированном `/boot/grub/grub.cfg` названия разделов.
+3. Переустанавливаем GRUB в MBR (плюс ещё несколько секторов).
     ```bash
-    grub-mkconfig -o /boot/grub/grub.cfg
-    # или
-    grub2-mkconfig -o /boot/grub2/grub.cfg
-    ```
-2. Так как песочница, в которой производилась генерация `grub.cfg`, находится на LV с именами `snap_root` и `snap_var`, то исправляем в сгенерированном `/boot/grub/grub.cfg` названия разделов:
-    ```bash
-    sed -i 's/vg-snap_root/vg-root/g' /boot/grub/grub.cfg
-    # или
-    sed -i 's/vg-snap_root/vg-root/g' /boot/grub2/grub.cfg
-    ```
-3. На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):
-    ```bash
-    grub-install /dev/sda
-    # или
-    grub2-install /dev/sda
+    if [ -e /usr/sbin/grub-mkconfig ]; then
+      grub-mkconfig -o /boot/grub/grub.cfg
+      sed -i 's/vg-snap_root/vg-root/g' /boot/grub/grub.cfg
+      grub-install /dev/sda
+    elif [ -e /usr/sbin/grub2-mkconfig ]; then
+      grub2-mkconfig -o /boot/grub2/grub.cfg
+      sed -i 's/vg-snap_root/vg-root/g' /boot/grub2/grub.cfg
+      grub2-install /dev/sda
+    else
+      echo "Houston, we have a problem."
+    fi
     ```
 
----
 Эталонный вывод после `grub-install`:
 ```
 Installing for i386-pc platform.
@@ -253,6 +252,12 @@ systemctl restart sshd
 ```
 
 >Предполагается, что ключи DSA и ECDSA закомментированы в `/etc/ssh/sshd_config` по причине своей устарелости и дырявости.
+
+### SELinux relabel
+Если используется SELinux, тогда создаём файл `/.autorelabel` для автоматической перемаркировки всех файлов системы:
+```bash
+touch /.autorelabel
+```
 
 ### Выход из песочницы
 ```bash

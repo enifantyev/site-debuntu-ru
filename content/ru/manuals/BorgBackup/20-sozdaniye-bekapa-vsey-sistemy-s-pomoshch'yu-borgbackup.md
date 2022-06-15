@@ -52,13 +52,23 @@ Number  Start    End       Size      Type     File system  Flags
 ### Отключение работающих демонов
 Останавливаем и выключаем главные сервисы, работающие на хосте, чтобы предотвратить автоматический запуск демонов после восстановления системы. Например:
 ```bash
+# Останавливаем FreeIPA
 ipactl stop
-systemctl disable --now dirsrv@TEST4.LAN.service
-systemctl disable --now pki-tomcatd
-systemctl disable --now named
+# Блокируем автозапуск служб для перестраховки
+systemctl disable --now ipa
+systemctl disable --now krb5kdc
+systemctl disable --now kadmin
+# Имя домена example.org преобразовываем в EXAMPLE-ORG
+D=$(hostname -d);D=${D/./-};D=${D^^}
+# И останавливаем демон dirsrv@EXAMPLE-ORG
+systemctl disable --now dirsrv@${D}
+systemctl disable --now pki-tomcatd@pki-tomcat
+systemctl disable --now named-pkcs11
 systemctl disable --now httpd
-systemctl disable --now ipa-otpd
 systemctl disable --now ipa-dnskeysyncd
+systemctl disable --now ipa-custodia
+systemctl disable --now certmonger
+systemctl disable --now ipa-otpd.socket
 ```
 
 В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:
@@ -143,7 +153,22 @@ lvremove -y /dev/vg/snap_root
 ### Запуск остановленных демонов
 Запускаем ранее остановленные локальные демоны:
 ```bash
-systemctl start postfix
-systemctl start rsyslog
 service auditd start
+systemctl start rsyslog
+systemctl start postfix
+```
+```bash
+systemctl enable ipa
+systemctl enable krb5kdc
+systemctl enable kadmin
+D=$(hostname -d);D=${D/./-};D=${D^^}
+systemctl enable dirsrv@${D}
+systemctl enable pki-tomcatd@pki-tomcat
+systemctl enable named-pkcs11
+systemctl enable httpd
+systemctl enable ipa-dnskeysyncd
+systemctl enable ipa-custodia
+systemctl enable certmonger
+systemctl enable ipa-otpd.socket
+ipactl start
 ```
