@@ -159,16 +159,16 @@ systemctl start postfix
 ```
 ```bash
 systemctl enable ipa
-systemctl enable krb5kdc
-systemctl enable kadmin
+#systemctl enable krb5kdc
+#systemctl enable kadmin
 D=$(hostname -d);D=${D/./-};D=${D^^}
 systemctl enable dirsrv@${D}
 systemctl enable pki-tomcatd@pki-tomcat
-systemctl enable named-pkcs11
-systemctl enable httpd
-systemctl enable ipa-dnskeysyncd
-systemctl enable ipa-custodia
+#systemctl enable named-pkcs11
+#systemctl enable httpd
+#systemctl enable ipa-dnskeysyncd
+#systemctl enable ipa-custodia
 systemctl enable certmonger
-systemctl enable ipa-otpd.socket
+#systemctl enable ipa-otpd.socket
 ipactl start
 ```
