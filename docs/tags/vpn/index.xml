@@ -622,7 +622,7 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
       <description>
         
         
-        &lt;p&gt;2019-12-23 Опубликована свежая статья с упрощённым изложением &lt;a href=&#34;https://debuntu.ru/a/openvpn-eto-prosto&#34;&gt;OpenVPN - это просто&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;2019-12-23 Опубликована свежая статья с упрощённым изложением &lt;a href=&#34;https://debuntu.ru/manuals/vpn/openvpn-eto-prosto/&#34;&gt;OpenVPN - это просто&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;2014-08-04
 Статья в процессе переделки и дополнений по мере освоения.&lt;/p&gt;
 &lt;p&gt;Дописать:&lt;/p&gt;

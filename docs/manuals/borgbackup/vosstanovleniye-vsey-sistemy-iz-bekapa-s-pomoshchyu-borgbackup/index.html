@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса восстановления всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
 "><meta itemprop="datePublished" content="2022-03-18T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-03-18T00:00:00+00:00" />
-<meta itemprop="wordCount" content="677">
+<meta itemprop="wordCount" content="830">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="30. Восстановление всей системы из бэкапа с помощью LVM и BorgBackup"/>
 <meta name="twitter:description" content="Описание процесса восстановления всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
@@ -142,7 +142,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.1d86dd18344fb2818035116850d44033.json"
+  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -164,7 +164,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.1d86dd18344fb2818035116850d44033.json"
+  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -373,8 +373,13 @@
     <li><a href="#исправление-загрузки">Исправление загрузки</a>
       <ul>
         <li><a href="#chroot-для-исправления-загрузки">chroot для исправления загрузки</a></li>
+      </ul>
+    </li>
+    <li><a href="#обновление-grub">Обновление GRUB</a>
+      <ul>
         <li><a href="#обновление-initramfs">Обновление initramfs</a></li>
         <li><a href="#проверяем-сетевые-настройки">Проверяем сетевые настройки</a></li>
+        <li><a href="#selinux-relabel">SELinux relabel</a></li>
         <li><a href="#выход-из-песочницы">Выход из песочницы</a></li>
       </ul>
     </li>
@@ -901,7 +906,33 @@
 </span></span><span style="display:flex;"><span>mount --bind /dev /mnt/dev/
 </span></span><span style="display:flex;"><span>mount --bind /run /mnt/run
 </span></span><span style="display:flex;"><span>chroot /mnt
-</span></span></code></pre></div><h3 id="обновление-initramfs">Обновление initramfs</h3>
+</span></span></code></pre></div><h2 id="обновление-grub">Обновление GRUB</h2>
+<p>В некоторых случаях, например, если в ОС были обновлены пакеты, отвечающие за загрузку, то потребуется обновить GRUB.</p>
+<p>Общая схема обновления GRUB такая:</p>
+<ol>
+<li>Генерируем новый <code>/boot/grub/grub.cfg</code>. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&rsquo;ы разделов на диске.</li>
+<li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов.</li>
+<li>Переустанавливаем GRUB в MBR (плюс ещё несколько секторов).
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -e /usr/sbin/grub-mkconfig <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>  grub-mkconfig -o /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span>  sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span>  grub-install /dev/sda
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[</span> -e /usr/sbin/grub2-mkconfig <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>  grub2-mkconfig -o /boot/grub2/grub.cfg
+</span></span><span style="display:flex;"><span>  sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub2/grub.cfg
+</span></span><span style="display:flex;"><span>  grub2-install /dev/sda
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Houston, we have a problem.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>Эталонный вывод после <code>grub-install</code>:</p>
+<pre tabindex="0"><code>Installing for i386-pc platform.
+Installation finished. No error reported.
+</code></pre><blockquote>
+<p>⚠️ Если произошли ошибки, то машина с большой вероятностью загрузится в &lsquo;grub recovery&rsquo;-режиме.</p>
+</blockquote>
+<h3 id="обновление-initramfs">Обновление initramfs</h3>
 <p>При восстановлении старого снимка этой машины с предыдущей версией Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.</p>
 <p>Версию текущего ядра можно узнать через команду <code>uname -r</code>.</p>
 <p>Версии Linux-ядер в восстанавливаемом снимке видны в каталоге <code>/boot</code>.</p>
@@ -914,7 +945,10 @@
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>make-initrd --kernel<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;5.10.82-std-def-alt1&#39;</span>
 </span></span></code></pre></div><h3 id="проверяем-сетевые-настройки">Проверяем сетевые настройки</h3>
 <p>Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.</p>
-<h3 id="выход-из-песочницы">Выход из песочницы</h3>
+<h3 id="selinux-relabel">SELinux relabel</h3>
+<p>Если используется SELinux, тогда создаём файл <code>/.autorelabel</code> для автоматической перемаркировки всех файлов системы:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch /.autorelabel
+</span></span></code></pre></div><h3 id="выход-из-песочницы">Выход из песочницы</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">exit</span>
 </span></span></code></pre></div><h2 id="заключительные-операции">Заключительные операции</h2>
 <h3 id="объединение-снэпшотов">Объединение снэпшотов</h3>

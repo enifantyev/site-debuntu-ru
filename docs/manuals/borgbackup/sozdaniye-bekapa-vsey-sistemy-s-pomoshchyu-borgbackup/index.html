@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
 "><meta itemprop="datePublished" content="2022-03-11T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-03-11T00:00:00+00:00" />
-<meta itemprop="wordCount" content="617">
+<meta itemprop="wordCount" content="698">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="20. Создание бэкапа всей системы с помощью LVM и BorgBackup"/>
 <meta name="twitter:description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
@@ -142,7 +142,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.1d86dd18344fb2818035116850d44033.json"
+  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -164,7 +164,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.1d86dd18344fb2818035116850d44033.json"
+  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -836,13 +836,23 @@
 <h2 id="процесс-резервного-копирования">Процесс резервного копирования</h2>
 <h3 id="отключение-работающих-демонов">Отключение работающих демонов</h3>
 <p>Останавливаем и выключаем главные сервисы, работающие на хосте, чтобы предотвратить автоматический запуск демонов после восстановления системы. Например:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ipactl stop
-</span></span><span style="display:flex;"><span>systemctl disable --now dirsrv@TEST4.LAN.service
-</span></span><span style="display:flex;"><span>systemctl disable --now pki-tomcatd
-</span></span><span style="display:flex;"><span>systemctl disable --now named
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Останавливаем FreeIPA</span>
+</span></span><span style="display:flex;"><span>ipactl stop
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Блокируем автозапуск служб для перестраховки</span>
+</span></span><span style="display:flex;"><span>systemctl disable --now ipa
+</span></span><span style="display:flex;"><span>systemctl disable --now krb5kdc
+</span></span><span style="display:flex;"><span>systemctl disable --now kadmin
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Имя домена example.org преобразовываем в EXAMPLE-ORG</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># И останавливаем демон dirsrv@EXAMPLE-ORG</span>
+</span></span><span style="display:flex;"><span>systemctl disable --now dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl disable --now pki-tomcatd@pki-tomcat
+</span></span><span style="display:flex;"><span>systemctl disable --now named-pkcs11
 </span></span><span style="display:flex;"><span>systemctl disable --now httpd
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa-otpd
 </span></span><span style="display:flex;"><span>systemctl disable --now ipa-dnskeysyncd
+</span></span><span style="display:flex;"><span>systemctl disable --now ipa-custodia
+</span></span><span style="display:flex;"><span>systemctl disable --now certmonger
+</span></span><span style="display:flex;"><span>systemctl disable --now ipa-otpd.socket
 </span></span></code></pre></div><p>В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl stop postfix
 </span></span><span style="display:flex;"><span>systemctl stop rsyslog
@@ -895,9 +905,23 @@
 </span></span><span style="display:flex;"><span>lvremove -y /dev/vg/snap_root
 </span></span></code></pre></div><h3 id="запуск-остановленных-демонов">Запуск остановленных демонов</h3>
 <p>Запускаем ранее остановленные локальные демоны:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl start postfix
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>service auditd start
 </span></span><span style="display:flex;"><span>systemctl start rsyslog
-</span></span><span style="display:flex;"><span>service auditd start
+</span></span><span style="display:flex;"><span>systemctl start postfix
+</span></span></code></pre></div><p>FreeIPA:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> ipa
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable krb5kdc</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable kadmin</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> pki-tomcatd@pki-tomcat
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable named-pkcs11</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable httpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-dnskeysyncd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-custodia</span>
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> certmonger
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-otpd.socket</span>
+</span></span><span style="display:flex;"><span>ipactl start
 </span></span></code></pre></div>
 	
 	

@@ -135,7 +135,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.1d86dd18344fb2818035116850d44033.json"
+  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -1180,13 +1180,23 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <h2 id="процесс-резервного-копирования">Процесс резервного копирования</h2>
 <h3 id="отключение-работающих-демонов">Отключение работающих демонов</h3>
 <p>Останавливаем и выключаем главные сервисы, работающие на хосте, чтобы предотвратить автоматический запуск демонов после восстановления системы. Например:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ipactl stop
-</span></span><span style="display:flex;"><span>systemctl disable --now dirsrv@TEST4.LAN.service
-</span></span><span style="display:flex;"><span>systemctl disable --now pki-tomcatd
-</span></span><span style="display:flex;"><span>systemctl disable --now named
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Останавливаем FreeIPA</span>
+</span></span><span style="display:flex;"><span>ipactl stop
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Блокируем автозапуск служб для перестраховки</span>
+</span></span><span style="display:flex;"><span>systemctl disable --now ipa
+</span></span><span style="display:flex;"><span>systemctl disable --now krb5kdc
+</span></span><span style="display:flex;"><span>systemctl disable --now kadmin
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Имя домена example.org преобразовываем в EXAMPLE-ORG</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># И останавливаем демон dirsrv@EXAMPLE-ORG</span>
+</span></span><span style="display:flex;"><span>systemctl disable --now dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl disable --now pki-tomcatd@pki-tomcat
+</span></span><span style="display:flex;"><span>systemctl disable --now named-pkcs11
 </span></span><span style="display:flex;"><span>systemctl disable --now httpd
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa-otpd
 </span></span><span style="display:flex;"><span>systemctl disable --now ipa-dnskeysyncd
+</span></span><span style="display:flex;"><span>systemctl disable --now ipa-custodia
+</span></span><span style="display:flex;"><span>systemctl disable --now certmonger
+</span></span><span style="display:flex;"><span>systemctl disable --now ipa-otpd.socket
 </span></span></code></pre></div><p>В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl stop postfix
 </span></span><span style="display:flex;"><span>systemctl stop rsyslog
@@ -1239,9 +1249,23 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 </span></span><span style="display:flex;"><span>lvremove -y /dev/vg/snap_root
 </span></span></code></pre></div><h3 id="запуск-остановленных-демонов">Запуск остановленных демонов</h3>
 <p>Запускаем ранее остановленные локальные демоны:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl start postfix
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>service auditd start
 </span></span><span style="display:flex;"><span>systemctl start rsyslog
-</span></span><span style="display:flex;"><span>service auditd start
+</span></span><span style="display:flex;"><span>systemctl start postfix
+</span></span></code></pre></div><p>FreeIPA:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> ipa
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable krb5kdc</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable kadmin</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> pki-tomcatd@pki-tomcat
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable named-pkcs11</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable httpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-dnskeysyncd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-custodia</span>
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> certmonger
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-otpd.socket</span>
+</span></span><span style="display:flex;"><span>ipactl start
 </span></span></code></pre></div>
 </div>
 
@@ -1353,7 +1377,33 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 </span></span><span style="display:flex;"><span>mount --bind /dev /mnt/dev/
 </span></span><span style="display:flex;"><span>mount --bind /run /mnt/run
 </span></span><span style="display:flex;"><span>chroot /mnt
-</span></span></code></pre></div><h3 id="обновление-initramfs">Обновление initramfs</h3>
+</span></span></code></pre></div><h2 id="обновление-grub">Обновление GRUB</h2>
+<p>В некоторых случаях, например, если в ОС были обновлены пакеты, отвечающие за загрузку, то потребуется обновить GRUB.</p>
+<p>Общая схема обновления GRUB такая:</p>
+<ol>
+<li>Генерируем новый <code>/boot/grub/grub.cfg</code>. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&rsquo;ы разделов на диске.</li>
+<li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов.</li>
+<li>Переустанавливаем GRUB в MBR (плюс ещё несколько секторов).
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -e /usr/sbin/grub-mkconfig <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>  grub-mkconfig -o /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span>  sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span>  grub-install /dev/sda
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[</span> -e /usr/sbin/grub2-mkconfig <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>  grub2-mkconfig -o /boot/grub2/grub.cfg
+</span></span><span style="display:flex;"><span>  sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub2/grub.cfg
+</span></span><span style="display:flex;"><span>  grub2-install /dev/sda
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Houston, we have a problem.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>Эталонный вывод после <code>grub-install</code>:</p>
+<pre tabindex="0"><code>Installing for i386-pc platform.
+Installation finished. No error reported.
+</code></pre><blockquote>
+<p>⚠️ Если произошли ошибки, то машина с большой вероятностью загрузится в &lsquo;grub recovery&rsquo;-режиме.</p>
+</blockquote>
+<h3 id="обновление-initramfs">Обновление initramfs</h3>
 <p>При восстановлении старого снимка этой машины с предыдущей версией Linux-ядра, возможно потребуется указывать версию ядра, для которого генерируется initramfs.</p>
 <p>Версию текущего ядра можно узнать через команду <code>uname -r</code>.</p>
 <p>Версии Linux-ядер в восстанавливаемом снимке видны в каталоге <code>/boot</code>.</p>
@@ -1366,7 +1416,10 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>make-initrd --kernel<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;5.10.82-std-def-alt1&#39;</span>
 </span></span></code></pre></div><h3 id="проверяем-сетевые-настройки">Проверяем сетевые настройки</h3>
 <p>Предполагается, что системный администратор умеет исправить сетевые настройки должным образом.</p>
-<h3 id="выход-из-песочницы">Выход из песочницы</h3>
+<h3 id="selinux-relabel">SELinux relabel</h3>
+<p>Если используется SELinux, тогда создаём файл <code>/.autorelabel</code> для автоматической перемаркировки всех файлов системы:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch /.autorelabel
+</span></span></code></pre></div><h3 id="выход-из-песочницы">Выход из песочницы</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">exit</span>
 </span></span></code></pre></div><h2 id="заключительные-операции">Заключительные операции</h2>
 <h3 id="объединение-снэпшотов">Объединение снэпшотов</h3>
@@ -1413,8 +1466,8 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 </span></span><span style="display:flex;"><span>service auditd stop
 </span></span></code></pre></div><h3 id="создание-lvm-snapshot">Создание LVM snapshot</h3>
 <p>Помним, что в Volume Group должно быть достаточно свободного места для размещения данных из бэкапов. В отличие от процесса создания бэкапа, в этом случае нужно много места, чтобы уместить сюда весь бэкап.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvcreate -L 4G -s -n snap_root /dev/vg/root
-</span></span><span style="display:flex;"><span>lvcreate -L 4G -s -n snap_var /dev/vg/var
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvcreate -L 6G -s -n snap_root /dev/vg/root
+</span></span><span style="display:flex;"><span>lvcreate -L 6G -s -n snap_var /dev/vg/var
 </span></span></code></pre></div><h3 id="проверяем-детали-восстанавливаемого-снимка">Проверяем детали восстанавливаемого снимка</h3>
 <h4 id="выбор-восстанавливаемого-снимка">Выбор восстанавливаемого снимка</h4>
 <p>Устанавливаем переменные, чтобы не вводить параметры дважды:</p>
@@ -1482,11 +1535,13 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 </blockquote>
 <p>Иначе удаляем всё содержимое снэпшотов и каталога <code>/boot</code> с проверкой:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -rf /mnt/*
-</span></span><span style="display:flex;"><span>du /mnt
+</span></span><span style="display:flex;"><span>tree /mnt
 </span></span></code></pre></div><p>Результат:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>0	/mnt/boot
-</span></span><span style="display:flex;"><span>0	/mnt/var
-</span></span><span style="display:flex;"><span>0	/mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/mnt
+</span></span><span style="display:flex;"><span>└── <span style="color:#ce5c00;font-weight:bold">[</span>4.0K<span style="color:#ce5c00;font-weight:bold">]</span>  boot
+</span></span><span style="display:flex;"><span>└── <span style="color:#ce5c00;font-weight:bold">[</span>4.0K<span style="color:#ce5c00;font-weight:bold">]</span>  var
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">2</span> directory, <span style="color:#0000cf;font-weight:bold">0</span> files
 </span></span></code></pre></div><h3 id="восстановление-бэкапа-в-пространство-снэпшотов-и-boot">Восстановление бэкапа в пространство снэпшотов и <code>/boot</code></h3>
 <p>Переходим в корень и восстанавливаем архив <code>full_img211202_2022-03-11T10:54:32</code>, который заполнит файлами готовый для приёма каталог <code>/mnt</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">cd</span> /
@@ -1503,23 +1558,22 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <p>В некоторых случаях, например при восстановлении снимка с другой операционной системой, потребуется обновить GRUB.</p>
 <p>Общая схема обновления GRUB такая:</p>
 <ol>
-<li>Генерируем новый <code>/boot/grub/grub.cfg</code>. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&rsquo;ы разделов на диске.
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grub-mkconfig -o /boot/grub/grub.cfg
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># или</span>
-</span></span><span style="display:flex;"><span>grub2-mkconfig -o /boot/grub2/grub.cfg
-</span></span></code></pre></div></li>
-<li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов:
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub/grub.cfg
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># или</span>
-</span></span><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub2/grub.cfg
-</span></span></code></pre></div></li>
-<li>На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grub-install /dev/sda
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># или</span>
-</span></span><span style="display:flex;"><span>grub2-install /dev/sda
+<li>Генерируем новый <code>/boot/grub/grub.cfg</code>. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&rsquo;ы разделов на диске.</li>
+<li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов.</li>
+<li>Переустанавливаем GRUB в MBR (плюс ещё несколько секторов).
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -e /usr/sbin/grub-mkconfig <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>  grub-mkconfig -o /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span>  sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span>  grub-install /dev/sda
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[</span> -e /usr/sbin/grub2-mkconfig <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>  grub2-mkconfig -o /boot/grub2/grub.cfg
+</span></span><span style="display:flex;"><span>  sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub2/grub.cfg
+</span></span><span style="display:flex;"><span>  grub2-install /dev/sda
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Houston, we have a problem.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
 </span></span></code></pre></div></li>
 </ol>
-<hr>
 <p>Эталонный вывод после <code>grub-install</code>:</p>
 <pre tabindex="0"><code>Installing for i386-pc platform.
 Installation finished. No error reported.
@@ -1562,7 +1616,10 @@ Installation finished. No error reported.
 </span></span></code></pre></div><blockquote>
 <p>Предполагается, что ключи DSA и ECDSA закомментированы в <code>/etc/ssh/sshd_config</code> по причине своей устарелости и дырявости.</p>
 </blockquote>
-<h3 id="выход-из-песочницы">Выход из песочницы</h3>
+<h3 id="selinux-relabel">SELinux relabel</h3>
+<p>Если используется SELinux, тогда создаём файл <code>/.autorelabel</code> для автоматической перемаркировки всех файлов системы:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch /.autorelabel
+</span></span></code></pre></div><h3 id="выход-из-песочницы">Выход из песочницы</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">exit</span>
 </span></span></code></pre></div><h2 id="заключительные-операции">Заключительные операции</h2>
 <h3 id="объединение-снэпшотов">Объединение снэпшотов</h3>
@@ -10881,7 +10938,7 @@ iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $I
     
 	<h1 id="pg-4d935e53584ac78186d848a47940ca77">4.6 - Настраиваем OpenVPN сервер на подключение клиентов</h1>
     <div class="lead">Описание установки OpenVPN сервера, создание ключей для сервера и клиента и пример конфигурации клиента.</div>
-	<p>2019-12-23 Опубликована свежая статья с упрощённым изложением <a href="/a/openvpn-eto-prosto">OpenVPN - это просто</a></p>
+	<p>2019-12-23 Опубликована свежая статья с упрощённым изложением <a href="/manuals/vpn/openvpn-eto-prosto/">OpenVPN - это просто</a></p>
 <p>2014-08-04
 Статья в процессе переделки и дополнений по мере освоения.</p>
 <p>Дописать:</p>

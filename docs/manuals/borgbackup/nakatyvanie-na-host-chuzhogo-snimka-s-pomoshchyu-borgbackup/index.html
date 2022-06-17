@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса восстановления на хост чужого снимка всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
 "><meta itemprop="datePublished" content="2022-04-04T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-04-04T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1065">
+<meta itemprop="wordCount" content="1098">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup"/>
 <meta name="twitter:description" content="Описание процесса восстановления на хост чужого снимка всей операционной системы из borg-репо в пустой LV-снимок с его последующим объединением с LV-источником.
@@ -142,7 +142,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.1d86dd18344fb2818035116850d44033.json"
+  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -164,7 +164,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.1d86dd18344fb2818035116850d44033.json"
+  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -379,6 +379,7 @@
         <li><a href="#обновление-initramfs">Обновление initramfs</a></li>
         <li><a href="#исправляем-сетевые-настройки">Исправляем сетевые настройки</a></li>
         <li><a href="#генерируем-новые-sshd-ключи">Генерируем новые sshd-ключи</a></li>
+        <li><a href="#selinux-relabel">SELinux relabel</a></li>
         <li><a href="#выход-из-песочницы">Выход из песочницы</a></li>
       </ul>
     </li>
@@ -827,8 +828,8 @@
 </span></span><span style="display:flex;"><span>service auditd stop
 </span></span></code></pre></div><h3 id="создание-lvm-snapshot">Создание LVM snapshot</h3>
 <p>Помним, что в Volume Group должно быть достаточно свободного места для размещения данных из бэкапов. В отличие от процесса создания бэкапа, в этом случае нужно много места, чтобы уместить сюда весь бэкап.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvcreate -L 4G -s -n snap_root /dev/vg/root
-</span></span><span style="display:flex;"><span>lvcreate -L 4G -s -n snap_var /dev/vg/var
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvcreate -L 6G -s -n snap_root /dev/vg/root
+</span></span><span style="display:flex;"><span>lvcreate -L 6G -s -n snap_var /dev/vg/var
 </span></span></code></pre></div><h3 id="проверяем-детали-восстанавливаемого-снимка">Проверяем детали восстанавливаемого снимка</h3>
 <h4 id="выбор-восстанавливаемого-снимка">Выбор восстанавливаемого снимка</h4>
 <p>Устанавливаем переменные, чтобы не вводить параметры дважды:</p>
@@ -896,11 +897,13 @@
 </blockquote>
 <p>Иначе удаляем всё содержимое снэпшотов и каталога <code>/boot</code> с проверкой:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -rf /mnt/*
-</span></span><span style="display:flex;"><span>du /mnt
+</span></span><span style="display:flex;"><span>tree /mnt
 </span></span></code></pre></div><p>Результат:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>0	/mnt/boot
-</span></span><span style="display:flex;"><span>0	/mnt/var
-</span></span><span style="display:flex;"><span>0	/mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/mnt
+</span></span><span style="display:flex;"><span>└── <span style="color:#ce5c00;font-weight:bold">[</span>4.0K<span style="color:#ce5c00;font-weight:bold">]</span>  boot
+</span></span><span style="display:flex;"><span>└── <span style="color:#ce5c00;font-weight:bold">[</span>4.0K<span style="color:#ce5c00;font-weight:bold">]</span>  var
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">2</span> directory, <span style="color:#0000cf;font-weight:bold">0</span> files
 </span></span></code></pre></div><h3 id="восстановление-бэкапа-в-пространство-снэпшотов-и-boot">Восстановление бэкапа в пространство снэпшотов и <code>/boot</code></h3>
 <p>Переходим в корень и восстанавливаем архив <code>full_img211202_2022-03-11T10:54:32</code>, который заполнит файлами готовый для приёма каталог <code>/mnt</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">cd</span> /
@@ -917,23 +920,22 @@
 <p>В некоторых случаях, например при восстановлении снимка с другой операционной системой, потребуется обновить GRUB.</p>
 <p>Общая схема обновления GRUB такая:</p>
 <ol>
-<li>Генерируем новый <code>/boot/grub/grub.cfg</code>. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&rsquo;ы разделов на диске.
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grub-mkconfig -o /boot/grub/grub.cfg
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># или</span>
-</span></span><span style="display:flex;"><span>grub2-mkconfig -o /boot/grub2/grub.cfg
-</span></span></code></pre></div></li>
-<li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов:
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub/grub.cfg
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># или</span>
-</span></span><span style="display:flex;"><span>sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub2/grub.cfg
-</span></span></code></pre></div></li>
-<li>На всякий случай переустанавливаем GRUB в MBR (плюс ещё несколько секторов):
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>grub-install /dev/sda
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># или</span>
-</span></span><span style="display:flex;"><span>grub2-install /dev/sda
+<li>Генерируем новый <code>/boot/grub/grub.cfg</code>. Это необходимо сделать, так как восстанавливаются только файлы, но не UUID&rsquo;ы разделов на диске.</li>
+<li>Так как песочница, в которой производилась генерация <code>grub.cfg</code>, находится на LV с именами <code>snap_root</code> и <code>snap_var</code>, то исправляем в сгенерированном <code>/boot/grub/grub.cfg</code> названия разделов.</li>
+<li>Переустанавливаем GRUB в MBR (плюс ещё несколько секторов).
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[</span> -e /usr/sbin/grub-mkconfig <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>  grub-mkconfig -o /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span>  sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub/grub.cfg
+</span></span><span style="display:flex;"><span>  grub-install /dev/sda
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[</span> -e /usr/sbin/grub2-mkconfig <span style="color:#ce5c00;font-weight:bold">]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>  grub2-mkconfig -o /boot/grub2/grub.cfg
+</span></span><span style="display:flex;"><span>  sed -i <span style="color:#4e9a06">&#39;s/vg-snap_root/vg-root/g&#39;</span> /boot/grub2/grub.cfg
+</span></span><span style="display:flex;"><span>  grub2-install /dev/sda
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;Houston, we have a problem.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
 </span></span></code></pre></div></li>
 </ol>
-<hr>
 <p>Эталонный вывод после <code>grub-install</code>:</p>
 <pre tabindex="0"><code>Installing for i386-pc platform.
 Installation finished. No error reported.
@@ -976,7 +978,10 @@ Installation finished. No error reported.
 </span></span></code></pre></div><blockquote>
 <p>Предполагается, что ключи DSA и ECDSA закомментированы в <code>/etc/ssh/sshd_config</code> по причине своей устарелости и дырявости.</p>
 </blockquote>
-<h3 id="выход-из-песочницы">Выход из песочницы</h3>
+<h3 id="selinux-relabel">SELinux relabel</h3>
+<p>Если используется SELinux, тогда создаём файл <code>/.autorelabel</code> для автоматической перемаркировки всех файлов системы:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>touch /.autorelabel
+</span></span></code></pre></div><h3 id="выход-из-песочницы">Выход из песочницы</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">exit</span>
 </span></span></code></pre></div><h2 id="заключительные-операции">Заключительные операции</h2>
 <h3 id="объединение-снэпшотов">Объединение снэпшотов</h3>
