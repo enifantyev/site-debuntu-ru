@@ -157,6 +157,8 @@ service auditd start
 systemctl start rsyslog
 systemctl start postfix
 ```
+
+FreeIPA:
 ```bash
 systemctl enable ipa
 #systemctl enable krb5kdc
