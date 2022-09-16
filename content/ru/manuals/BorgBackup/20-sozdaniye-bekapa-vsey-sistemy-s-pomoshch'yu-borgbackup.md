@@ -55,20 +55,20 @@ Number  Start    End       Size      Type     File system  Flags
 # Останавливаем FreeIPA
 ipactl stop
 # Блокируем автозапуск служб для перестраховки
-systemctl disable --now ipa
-systemctl disable --now krb5kdc
-systemctl disable --now kadmin
+systemctl disable ipa
+#systemctl disable krb5kdc
+#systemctl disable kadmin
 # Имя домена example.org преобразовываем в EXAMPLE-ORG
 D=$(hostname -d);D=${D/./-};D=${D^^}
 # И останавливаем демон dirsrv@EXAMPLE-ORG
-systemctl disable --now dirsrv@${D}
-systemctl disable --now pki-tomcatd@pki-tomcat
-systemctl disable --now named-pkcs11
-systemctl disable --now httpd
-systemctl disable --now ipa-dnskeysyncd
-systemctl disable --now ipa-custodia
-systemctl disable --now certmonger
-systemctl disable --now ipa-otpd.socket
+systemctl disable dirsrv@${D}
+systemctl disable pki-tomcatd@pki-tomcat
+#systemctl disable named-pkcs11
+#systemctl disable httpd
+#systemctl disable ipa-dnskeysyncd
+#systemctl disable ipa-custodia
+systemctl disable certmonger
+#systemctl disable ipa-otpd.socket
 ```
 
 В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:
@@ -76,6 +76,13 @@ systemctl disable --now ipa-otpd.socket
 systemctl stop postfix
 systemctl stop rsyslog
 service auditd stop
+```
+
+Почистим систему:
+```bash
+dnf clean all
+truncate -s0 /var/log/lastlog
+rm -f /var/log/lastlog.*
 ```
 
 ### Создание временных LVM snapshot'ов
@@ -173,4 +180,13 @@ systemctl enable pki-tomcatd@pki-tomcat
 systemctl enable certmonger
 #systemctl enable ipa-otpd.socket
 ipactl start
+```
+
+В случае проблем с запуском 'pki-tomcatd@pki-tomcat', восстанавливаем ссылку:
+```bash
+ln -s /lib/systemd/system/pki-tomcatd@.service \
+  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
+
+chown -h pkiuser:pkiuser \
+  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
 ```

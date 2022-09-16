@@ -17,7 +17,7 @@ slug: ustanovka-borgbackup-v-redos-7.2
 ## Установка пакетов, необходимых для сборки borgbackup
 ```bash
 yum -y install openssl-devel python3-devel libacl-devel libacl lz4-devel \
-libzstd-devel libxxhash-devel gcc-c++
+libzstd-devel libxxhash-devel gcc-c++ fuse-devel
 ```
 
 ## Обновляем pip
@@ -28,7 +28,7 @@ python3 -m pip install -U pip
 ## Добавляем borgbackup в /roo/.local/bin
 ### Пакеты pkgconfig setuptools wheel msgpack
 ```bash
-python3 -m pip install --user pkgconfig setuptools wheel msgpack
+python3 -m pip install --user pkgconfig setuptools setuptools-scm wheel msgpack
 ```
 stdout:
 ```
@@ -41,7 +41,7 @@ Installing collected packages: pip
     Uninstalling pip-9.0.3:
       Successfully uninstalled pip-9.0.3
 Successfully installed pip-21.3.1
-[root@home-ipa01 ~]# python3 -m pip install --user pkgconfig setuptools wheel msgpack
+[root@home-ipa01 ~]# python3 -m pip install --user pkgconfig setuptools wheel msgpack llfuse
 Collecting pkgconfig
   Downloading pkgconfig-1.5.5-py3-none-any.whl (6.7 kB)
 Requirement already satisfied: setuptools in /usr/lib/python3.6/site-packages (39.2.0)

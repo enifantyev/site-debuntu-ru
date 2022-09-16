@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
 "><meta itemprop="datePublished" content="2022-03-11T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-03-11T00:00:00+00:00" />
-<meta itemprop="wordCount" content="698">
+<meta itemprop="wordCount" content="716">
 <meta itemprop="keywords" content="BorgBackup,Backup SoftWare,LVM," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="20. Создание бэкапа всей системы с помощью LVM и BorgBackup"/>
 <meta name="twitter:description" content="Описание процесса создания LVM-снимка всей операционной системы и его архивирование в borg-репо.
@@ -142,7 +142,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
+  data-offline-search-index-json-src="/offline-search-index.be386b4b4524947a66b165ef4159c330.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -156,6 +156,7 @@
           <aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
             
 <div id="td-sidebar-menu" class="td-sidebar__inner">
+  <div id="content-mobile">
   <form class="td-sidebar__search d-flex align-items-center">
     <input
   type="search"
@@ -164,7 +165,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
+  data-offline-search-index-json-src="/offline-search-index.be386b4b4524947a66b165ef4159c330.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -172,6 +173,8 @@
     <button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
     </button>
   </form>
+  </div>
+  <div id="content-desktop"></div>
   <nav class="collapse td-sidebar-nav" id="td-section-nav">
     <ul class="td-sidebar-nav__section pr-md-3 ul-0">
       <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-manuals-li">
@@ -212,6 +215,10 @@
   <a href="/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5udaleniye-repliki"><span class="">00. Удаление реплики</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5podgotovka-khostov-k-ustanovke-replikatsii-freeipa-li">
   <a href="/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5podgotovka-khostov-k-ustanovke-replikatsii-freeipa"><span class="">01. Подготовка хостов к установке реплик FreeIPA</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5ustanovka-pervogo-freeipa-servera-li">
+  <a href="/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5ustanovka-pervogo-freeipa-servera"><span class="">02. Установка первого FreeIPA-сервера</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child collapse" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5dobavleniye-replik-k-pervomu-serveru-freeipa-li">
+  <a href="/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/" class="align-left pl-0 td-sidebar-link td-sidebar-link__page" id="m-manualsfreeipasozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5dobavleniye-replik-k-pervomu-serveru-freeipa"><span class="">03. Добавление реплик к первому серверу FreeIPA</span></a>
 </li>
   </ul>
 </li>
@@ -397,7 +404,7 @@
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/acl/" data-taxonomy-term="acl"><span class="taxonomy-label">ACL</span><span class="taxonomy-count">1</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/almalinux-8.5/" data-taxonomy-term="almalinux-8.5"><span class="taxonomy-label">AlmaLinux 8.5</span><span class="taxonomy-count">2</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/almalinux-8.5/" data-taxonomy-term="almalinux-8.5"><span class="taxonomy-label">AlmaLinux 8.5</span><span class="taxonomy-count">4</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/alpine-linux/" data-taxonomy-term="alpine-linux"><span class="taxonomy-label">Alpine Linux</span><span class="taxonomy-count">3</span></a></li>
         
@@ -517,9 +524,9 @@
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/freebsd/" data-taxonomy-term="freebsd"><span class="taxonomy-label">FreeBSD</span><span class="taxonomy-count">2</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/freeipa/" data-taxonomy-term="freeipa"><span class="taxonomy-label">FreeIPA</span><span class="taxonomy-count">17</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/freeipa/" data-taxonomy-term="freeipa"><span class="taxonomy-label">FreeIPA</span><span class="taxonomy-count">19</span></a></li>
         
-          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/freeipa-4.9.6/" data-taxonomy-term="freeipa-4.9.6"><span class="taxonomy-label">FreeIPA 4.9.6</span><span class="taxonomy-count">2</span></a></li>
+          <li><a class="taxonomy-term" href="https://debuntu.ru/tags/freeipa-4.9.6/" data-taxonomy-term="freeipa-4.9.6"><span class="taxonomy-label">FreeIPA 4.9.6</span><span class="taxonomy-count">4</span></a></li>
         
           <li><a class="taxonomy-term" href="https://debuntu.ru/tags/gnu-screen/" data-taxonomy-term="gnu-screen"><span class="taxonomy-label">GNU Screen</span><span class="taxonomy-count">1</span></a></li>
         
@@ -839,24 +846,28 @@
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Останавливаем FreeIPA</span>
 </span></span><span style="display:flex;"><span>ipactl stop
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Блокируем автозапуск служб для перестраховки</span>
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa
-</span></span><span style="display:flex;"><span>systemctl disable --now krb5kdc
-</span></span><span style="display:flex;"><span>systemctl disable --now kadmin
+</span></span><span style="display:flex;"><span>systemctl disable ipa
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable krb5kdc</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable kadmin</span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Имя домена example.org преобразовываем в EXAMPLE-ORG</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># И останавливаем демон dirsrv@EXAMPLE-ORG</span>
-</span></span><span style="display:flex;"><span>systemctl disable --now dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
-</span></span><span style="display:flex;"><span>systemctl disable --now pki-tomcatd@pki-tomcat
-</span></span><span style="display:flex;"><span>systemctl disable --now named-pkcs11
-</span></span><span style="display:flex;"><span>systemctl disable --now httpd
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa-dnskeysyncd
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa-custodia
-</span></span><span style="display:flex;"><span>systemctl disable --now certmonger
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa-otpd.socket
+</span></span><span style="display:flex;"><span>systemctl disable dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl disable pki-tomcatd@pki-tomcat
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable named-pkcs11</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable httpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable ipa-dnskeysyncd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable ipa-custodia</span>
+</span></span><span style="display:flex;"><span>systemctl disable certmonger
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable ipa-otpd.socket</span>
 </span></span></code></pre></div><p>В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl stop postfix
 </span></span><span style="display:flex;"><span>systemctl stop rsyslog
 </span></span><span style="display:flex;"><span>service auditd stop
+</span></span></code></pre></div><p>Почистим систему:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dnf clean all
+</span></span><span style="display:flex;"><span>truncate -s0 /var/log/lastlog
+</span></span><span style="display:flex;"><span>rm -f /var/log/lastlog.*
 </span></span></code></pre></div><h3 id="создание-временных-lvm-snapshotов">Создание временных LVM snapshot&rsquo;ов</h3>
 <p>Помним, что в Volume Group должно быть достаточно свободного места для размещения снэпшотов.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvcreate -L 500M -s -n snap_root /dev/vg/root
@@ -922,6 +933,12 @@
 </span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> certmonger
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-otpd.socket</span>
 </span></span><span style="display:flex;"><span>ipactl start
+</span></span></code></pre></div><p>В случае проблем с запуском &lsquo;pki-tomcatd@pki-tomcat&rsquo;, восстанавливаем ссылку:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ln -s /lib/systemd/system/pki-tomcatd@.service <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chown -h pkiuser:pkiuser <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
 </span></span></code></pre></div>
 	
 	

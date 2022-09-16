@@ -91,12 +91,12 @@ rpmrebuild -enp sudo-1.9.5-3.el7.x86_64.rpm
         &lt;p&gt;2022-03-17&lt;/p&gt;
 &lt;h2 id=&#34;установка-пакетов-необходимых-для-сборки-borgbackup&#34;&gt;Установка пакетов, необходимых для сборки borgbackup&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;yum -y install openssl-devel python3-devel libacl-devel libacl lz4-devel &lt;span style=&#34;color:#4e9a06&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;libzstd-devel libxxhash-devel gcc-c++
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;libzstd-devel libxxhash-devel gcc-c++ fuse-devel
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;обновляем-pip&#34;&gt;Обновляем pip&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 -m pip install -U pip
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;добавляем-borgbackup-в-roolocalbin&#34;&gt;Добавляем borgbackup в /roo/.local/bin&lt;/h2&gt;
 &lt;h3 id=&#34;пакеты-pkgconfig-setuptools-wheel-msgpack&#34;&gt;Пакеты pkgconfig setuptools wheel msgpack&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 -m pip install --user pkgconfig setuptools wheel msgpack
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;python3 -m pip install --user pkgconfig setuptools setuptools-scm wheel msgpack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;stdout:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;WARNING: Running pip install with root privileges is generally not a good idea. Try `__main__.py install --user` instead.
 Collecting pip
@@ -107,7 +107,7 @@ Installing collected packages: pip
     Uninstalling pip-9.0.3:
       Successfully uninstalled pip-9.0.3
 Successfully installed pip-21.3.1
-[root@home-ipa01 ~]# python3 -m pip install --user pkgconfig setuptools wheel msgpack
+[root@home-ipa01 ~]# python3 -m pip install --user pkgconfig setuptools wheel msgpack llfuse
 Collecting pkgconfig
   Downloading pkgconfig-1.5.5-py3-none-any.whl (6.7 kB)
 Requirement already satisfied: setuptools in /usr/lib/python3.6/site-packages (39.2.0)

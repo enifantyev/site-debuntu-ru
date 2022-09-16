@@ -1,6 +1,6 @@
 ---
 title: "02. Установка первого FreeIPA-сервера"
-date: 2
+date: 2021-12-24
 weight: 12
 description: >
   Описание процесса установки первого IPA-сервера.
@@ -9,7 +9,7 @@ tags:
   - FreeIPA
   - AlmaLinux 8.5
 slug: ustanovka-pervogo-freeipa-servera
-draft: true
+draft: false
 ---
 
 ## 1. Установка первого FreeIPA-сервера на первом хосте
@@ -122,8 +122,8 @@ REALM_NAME="TEST3.LAN"
 NTP_SERVER1="10.0.0.5"
 NTP_SERVER2="10.0.0.6"
 NTP_SERVER3="10.0.0.7"
-SUBJECT_BASE="O=test3.lan DUD Evolut Group"
-CA_SUBJECT="CN=test3.lan DUD Evolut Group Root CA,O=test3.lan DUD Evolut Group"
+SUBJECT_BASE="O=test3.lan DO Evo Group"
+CA_SUBJECT="CN=test3.lan DO Evo Group Root CA,O=test3.lan DO Evo Group"
 
 sudo ipa-server-install --unattended \
   --ds-password=${DM_PASSWORD} --admin-password=${ADMIN_PASSWORD} \
@@ -173,8 +173,8 @@ Realm name:     TEST3.LAN
 
 
 The CA will be configured with:
-Subject DN:   CN=test3.lan DUD Evolut Group Root CA
-Subject base: O=test3.lan DUD Evolut Group
+Subject DN:   CN=test3.lan DO Evo Group Root CA
+Subject base: O=test3.lan DO Evo Group
 Chaining:     self-signed  
 
 BIND DNS server will be configured to serve IPA domain with:
@@ -462,8 +462,8 @@ CA-сертификат, для добавления нового домена t
 kinit admin<br>
 ipa dnsconfig-mod \
   --allow-sync-ptr=1 \
-  --forwarder="10.8.8.8" \
-  --forwarder="10.8.8.9" \
+  --forwarder="8.8.8.8" \
+  --forwarder="1.1.1.1" \
   --forward-policy='only'
 </code></pre>
   </td>

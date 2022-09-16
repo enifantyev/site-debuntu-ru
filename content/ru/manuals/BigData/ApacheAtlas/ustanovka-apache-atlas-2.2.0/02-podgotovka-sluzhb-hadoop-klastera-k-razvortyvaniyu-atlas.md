@@ -94,7 +94,7 @@ WatchedEvent state:SyncConnected type:None path:null
 ```
 
 ### 3.4. Настройка роли в Sentry для доступа Atlas'а к топикам в Kafka
-3.4.1. На машине с ролью 'Kafka Gateway' создаём в Sentry роль 'kafka4atlas_role:
+3.4.1. На машине с ролью 'Kafka Gateway' и 'Sentry Gateway' создаём в Sentry роль 'kafka4atlas_role:
 ```
 KROLE="kafka4atlas_role"
 

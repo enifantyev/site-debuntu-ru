@@ -135,7 +135,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.c0242073d5a02c68f0aab6a56dec335d.json"
+  data-offline-search-index-json-src="/offline-search-index.be386b4b4524947a66b165ef4159c330.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -319,6 +319,22 @@ This is the multi-page printable view of this section.
     
 	
 <li>2.2.2: <a href="#pg-ceb985c0cebb56da6f001d80b4dfac27">01. Подготовка хостов к установке реплик FreeIPA</a></li>
+
+
+    
+  
+    
+    
+	
+<li>2.2.3: <a href="#pg-0f2af09b7a04bf0c1c805f72d105c2b9">02. Установка первого FreeIPA-сервера</a></li>
+
+
+    
+  
+    
+    
+	
+<li>2.2.4: <a href="#pg-52aa9034f512a49e3e0c3e403c65e7eb">03. Добавление реплик к первому серверу FreeIPA</a></li>
 
 
     
@@ -999,12 +1015,12 @@ This is the multi-page printable view of this section.
 	<p>2022-03-17</p>
 <h2 id="установка-пакетов-необходимых-для-сборки-borgbackup">Установка пакетов, необходимых для сборки borgbackup</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum -y install openssl-devel python3-devel libacl-devel libacl lz4-devel <span style="color:#4e9a06">\
-</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>libzstd-devel libxxhash-devel gcc-c++
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>libzstd-devel libxxhash-devel gcc-c++ fuse-devel
 </span></span></code></pre></div><h2 id="обновляем-pip">Обновляем pip</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m pip install -U pip
 </span></span></code></pre></div><h2 id="добавляем-borgbackup-в-roolocalbin">Добавляем borgbackup в /roo/.local/bin</h2>
 <h3 id="пакеты-pkgconfig-setuptools-wheel-msgpack">Пакеты pkgconfig setuptools wheel msgpack</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m pip install --user pkgconfig setuptools wheel msgpack
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 -m pip install --user pkgconfig setuptools setuptools-scm wheel msgpack
 </span></span></code></pre></div><p>stdout:</p>
 <pre tabindex="0"><code>WARNING: Running pip install with root privileges is generally not a good idea. Try `__main__.py install --user` instead.
 Collecting pip
@@ -1015,7 +1031,7 @@ Installing collected packages: pip
     Uninstalling pip-9.0.3:
       Successfully uninstalled pip-9.0.3
 Successfully installed pip-21.3.1
-[root@home-ipa01 ~]# python3 -m pip install --user pkgconfig setuptools wheel msgpack
+[root@home-ipa01 ~]# python3 -m pip install --user pkgconfig setuptools wheel msgpack llfuse
 Collecting pkgconfig
   Downloading pkgconfig-1.5.5-py3-none-any.whl (6.7 kB)
 Requirement already satisfied: setuptools in /usr/lib/python3.6/site-packages (39.2.0)
@@ -1183,24 +1199,28 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Останавливаем FreeIPA</span>
 </span></span><span style="display:flex;"><span>ipactl stop
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Блокируем автозапуск служб для перестраховки</span>
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa
-</span></span><span style="display:flex;"><span>systemctl disable --now krb5kdc
-</span></span><span style="display:flex;"><span>systemctl disable --now kadmin
+</span></span><span style="display:flex;"><span>systemctl disable ipa
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable krb5kdc</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable kadmin</span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Имя домена example.org преобразовываем в EXAMPLE-ORG</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># И останавливаем демон dirsrv@EXAMPLE-ORG</span>
-</span></span><span style="display:flex;"><span>systemctl disable --now dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
-</span></span><span style="display:flex;"><span>systemctl disable --now pki-tomcatd@pki-tomcat
-</span></span><span style="display:flex;"><span>systemctl disable --now named-pkcs11
-</span></span><span style="display:flex;"><span>systemctl disable --now httpd
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa-dnskeysyncd
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa-custodia
-</span></span><span style="display:flex;"><span>systemctl disable --now certmonger
-</span></span><span style="display:flex;"><span>systemctl disable --now ipa-otpd.socket
+</span></span><span style="display:flex;"><span>systemctl disable dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl disable pki-tomcatd@pki-tomcat
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable named-pkcs11</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable httpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable ipa-dnskeysyncd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable ipa-custodia</span>
+</span></span><span style="display:flex;"><span>systemctl disable certmonger
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable ipa-otpd.socket</span>
 </span></span></code></pre></div><p>В дополнение к остановке главных сервисов, работающих на машине, останавливаем второстепенные, которые могут вызвать переполнение на LV места выделенного под снэпшоты. Пример остановки дополнительных сервисов:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl stop postfix
 </span></span><span style="display:flex;"><span>systemctl stop rsyslog
 </span></span><span style="display:flex;"><span>service auditd stop
+</span></span></code></pre></div><p>Почистим систему:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dnf clean all
+</span></span><span style="display:flex;"><span>truncate -s0 /var/log/lastlog
+</span></span><span style="display:flex;"><span>rm -f /var/log/lastlog.*
 </span></span></code></pre></div><h3 id="создание-временных-lvm-snapshotов">Создание временных LVM snapshot&rsquo;ов</h3>
 <p>Помним, что в Volume Group должно быть достаточно свободного места для размещения снэпшотов.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvcreate -L 500M -s -n snap_root /dev/vg/root
@@ -1266,6 +1286,12 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 </span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> certmonger
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-otpd.socket</span>
 </span></span><span style="display:flex;"><span>ipactl start
+</span></span></code></pre></div><p>В случае проблем с запуском &lsquo;pki-tomcatd@pki-tomcat&rsquo;, восстанавливаем ссылку:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ln -s /lib/systemd/system/pki-tomcatd@.service <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chown -h pkiuser:pkiuser <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
 </span></span></code></pre></div>
 </div>
 
@@ -2244,6 +2270,1018 @@ The token has been initialized and is reassigned to slot 1520725004
 *WARNING* This will erase all data in the database; are you sure? [y/N] Database setup successfully.
 ...
 </code></pre></details>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-0f2af09b7a04bf0c1c805f72d105c2b9">2.2.3 - 02. Установка первого FreeIPA-сервера</h1>
+    <div class="lead">Описание процесса установки первого IPA-сервера.</div>
+	<h2 id="1-установка-первого-freeipa-сервера-на-первом-хосте">1. Установка первого FreeIPA-сервера на первом хосте</h2>
+<h3 id="11-описание-опций-установочного-скрипта">1.1. Описание опций установочного скрипта</h3>
+<p>Установку будем производить в бездиалоговом режиме с заданием всех необходимых опций из командной строки.</p>
+<p>Описание некоторых опций:</p>
+<ul>
+<li><code>--ds-password</code> — задаёт особо секретный пароль аккаунта &lsquo;cn=Directory Manager&rsquo;, на основе которого синхронизируются реплики IPA и зашифрован ключ Центра Сертификации. Так-как этой УЗ доступен весь LDAP-каталог, что позволяет наблюдать содержимое особо секретных веток, то необходимо ограничить известность этого пароля узким кругом лиц.</li>
+<li><code>--admin-password</code> — задаёт пароль первого пользовательского аккаунта во FreeIPA, состоящего в группе &lsquo;admins&rsquo;, с помощью которого будет произведена первичная настройка FreeIPA. Членам группы &lsquo;admins&rsquo; позволительны все доступные операции, что позволяет нанести необратимый вред установленному экземпляру FreeIPA, поэтому после первичной настройки заблокируем эту УЗ, а доступ к паролю ограничим узким кругом лиц.</li>
+<li><code>--ip-address</code> — указывает соновной ip-адрес. Необязательный параметр в случае наличия только одного ip-адреса.</li>
+<li><code>--unattended</code> — подавляет все запросы инсталлятора.</li>
+<li><code>--setup-dns --no-forwarders</code> — добавляет роль DNS-сервера без настройки форвардеров, которые мы настроим позже, после установки первого контроллера.</li>
+<li><code>--auto-reverse --allow-zone-overlap</code> — две опции, которые необходимы для автоматического добавления обратной зоны DNS, в которой находится основной ip-адрес сервера FreeIPA. (<a href="https://access.redhat.com/solutions/4237121">https://access.redhat.com/solutions/4237121</a>)</li>
+<li><code>--no-hbac-allow</code> — запрещает автоматическое добавление HBAC-правила, которое позволяет всем пользователям домена заходить на все машины домена через ssh.</li>
+<li><code>--ntp-server</code> — задаёт ip-адрес NTP-сервера. Адрес будет добавлен в <code>/etc/chrony.conf</code>.</li>
+<li><code>--mkhomedir</code> — опция для скрипта ipa-client-install. Скрипт автоматически вызывается из ipa-server-install после поднятия домена и необходим для введения локальной машины в домен FreeIPA. Опция же добавляет в локальную операционную систему PAM-правило, отвечающее за автоматическое создание домашней директории для входящего на эту машину по ssh пользователю.</li>
+<li><code>--subject-base</code> — the certificate subject base (default O=&lt;realm-name&gt;).</li>
+<li><code>--ca-subject</code> — the CA certificate subject DN (default CN=Certificate Authority,O=&lt;realm-name&gt;).
+Ниже показаны различия в именах сертификатах без использования или с использованием этих опций.</li>
+</ul>
+<table>
+  <tr>
+    <th>Сертификат №1<br>CN=Certificate Authority,O=TEST2.LAN</th>
+    <th>Сертификат №1<br>CN=test3.lan Root CA,O=test3.lan</th>
+  </tr>
+  <tr>
+    <td>
+    <img src="/img/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/cn-certificate-authority.png">
+    </td>
+    <td>
+      <img src="/img/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/cn-certificate-authority.png">
+    </td>
+  </tr>
+</table>
+<p>В Chromium стандартный и специально именованный сертификаты отображаются так:</p>
+<h3 id="12-правила-задания-паролей-для-dm-аккаунта">1.2. Правила задания паролей для DM-аккаунта</h3>
+<p>Судя по исходникам, пароли могут содержать все ASCII-символы, кроме обратного слэша (видим следующее присваивание — bad_characters = &lsquo;\&rsquo; — в регулярных выражениях символ обратного слэша обычно обозначается двумя обратными слэшами). Наверное, наравне с обратным слэшем, лучше будет воздержаться от использования одинарных, обратных и двойных кавычек, а также прямого слэша и вертикальной черты.</p>
+<p>Для генерации пароля, который не будет включать в себя символы слэшей и кавычек (одинарных, двойных и обратных), проще использовать утилиту <code>pwgen</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ pwgen --secure --symbols --remove-chars<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;\\|/\&#34;\&#39;\`&#34;</span> <span style="color:#0000cf;font-weight:bold">42</span> <span style="color:#0000cf;font-weight:bold">1</span>
+</span></span><span style="display:flex;"><span>tD*<span style="color:#000">$6</span>?6F~sBX.Q_8&lt;_7RmR^$~1<span style="color:#ce5c00;font-weight:bold">]</span>sWJs70rY5_TqFyO
+</span></span></code></pre></div><p>Код, отвечающий за проверку паролей, можно найти в файле <code>freeipa-4.9.6/ipaserver/install/server/install.py</code>:</p>
+<details>
+<summary>stdout...</summary>
+<pre tabindex="0"><code>def validate_dm_password(password):
+   if len(password) &lt; 8:
+       raise ValueError(&#34;Password must be at least 8 characters long&#34;)
+   if any(ord(c) &lt; 0x20 for c in password):
+       raise ValueError(&#34;Password must not contain control characters&#34;)
+   if any(ord(c) &gt;= 0x7F for c in password):
+       raise ValueError(&#34;Password must only contain ASCII characters&#34;)
+
+   # Disallow characters that pkisilent doesn&#39;t process properly:
+   bad_characters = &#39;\\&#39;
+   if any(c in bad_characters for c in password):
+       raise ValueError(&#39;Password must not contain these characters: %s&#39; %
+                        &#39;, &#39;.join(&#39;&#34;%s&#34;&#39; % c for c in bad_characters))
+
+   # TODO: Check https://fedorahosted.org/389/ticket/47849
+   # Actual behavior of setup-ds.pl is that it does not accept white
+   # space characters in password when called interactively but does when
+   # provided such password in INF file. But it ignores leading and trailing
+   # whitespaces in INF file.
+
+   # Disallow leading/trailing whaitespaces
+   if password.strip() != password:
+       raise ValueError(&#39;Password must not start or end with whitespace.&#39;)
+
+def validate_admin_password(password):
+   if len(password) &lt; 8:
+       raise ValueError(&#34;Password must be at least 8 characters long&#34;)
+   if any(ord(c) &lt; 0x20 for c in password):
+       raise ValueError(&#34;Password must not contain control characters&#34;)
+   if any(ord(c) &gt;= 0x7F for c in password):
+       raise ValueError(&#34;Password must only contain ASCII characters&#34;)
+
+   # Disallow characters that pkisilent doesn&#39;t process properly:
+   bad_characters = &#39;\\&#39;
+   if any(c in bad_characters for c in password):
+       raise ValueError(&#39;Password must not contain these characters: %s&#39; %
+                        &#39;, &#39;.join(&#39;&#34;%s&#34;&#39; % c for c in bad_characters))
+</code></pre></details>
+<h3 id="13-процесс-установки-первого-сервера-freeipa">1.3. Процесс установки первого сервера FreeIPA</h3>
+<p>Выполняем следующий скрипт и ждём окончания процедуры. В случае наличия на хосте только одного ip-адреса, переменную IP_ADDRESS и опцию <code>--ip-address</code> можно не применять.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Для облегчения дальнейшей генерации паролей устанавливаем пакет pwgen</span>
+</span></span><span style="display:flex;"><span>sudo dnf -y install pwgen
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Generating new passwords</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DM_PASSWORD</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>pwgen --secure --symbols --remove-chars<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;\\|/\&#34;\&#39;\`&#34;</span> <span style="color:#0000cf;font-weight:bold">42</span> 1<span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">ADMIN_PASSWORD</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>pwgen <span style="color:#0000cf;font-weight:bold">14</span> 1<span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Saving new passwords to /root/freeipa_passwords.txt</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span> -f /root/freeipa_passwords.txt <span style="color:#ce5c00;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>sudo mv /root/freeipa_passwords.txt /root/freeipa_passwords.txt.<span style="color:#204a87;font-weight:bold">$(</span>date +%y%m%d-%H%M%S<span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> -e <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">DM_PASSWORD</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">${</span><span style="color:#000">ADMIN_PASSWORD</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> <span style="color:#000;font-weight:bold">|</span> sudo tee /root/freeipa_passwords.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">IP_ADDRESS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;10.1.160.23&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">REALM_NAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;TEST3.LAN&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">NTP_SERVER1</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;10.0.0.5&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">NTP_SERVER2</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;10.0.0.6&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">NTP_SERVER3</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;10.0.0.7&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SUBJECT_BASE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;O=test3.lan DO Evo Group&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">CA_SUBJECT</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;CN=test3.lan DO Evo Group Root CA,O=test3.lan DO Evo Group&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo ipa-server-install --unattended <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --ds-password<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">DM_PASSWORD</span><span style="color:#4e9a06">}</span> --admin-password<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">ADMIN_PASSWORD</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --ip-address<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">IP_ADDRESS</span><span style="color:#4e9a06">}</span> --realm<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">REALM_NAME</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --setup-dns --no-forwarders --auto-reverse --allow-zone-overlap <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --no-hbac-allow --mkhomedir <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --ntp-server<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">NTP_SERVER1</span><span style="color:#4e9a06">}</span> --ntp-server<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">NTP_SERVER2</span><span style="color:#4e9a06">}</span> --ntp-server<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">NTP_SERVER3</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --subject-base<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SUBJECT_BASE</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span> --ca-subject<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">CA_SUBJECT</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#34;</span>
+</span></span></code></pre></div><details>
+<summary>stdout...</summary>
+<pre tabindex="0"><code>The log file for this installation can be found in /var/log/ipaserver-install.log
+==============================================================================
+This program will set up the IPA Server.
+Version 4.9.6
+
+This includes:
+  * Configure a stand-alone CA (dogtag) for certificate management
+  * Configure the NTP client (chronyd)
+  * Create and configure an instance of Directory Server
+  * Create and configure a Kerberos Key Distribution Center (KDC)
+  * Configure Apache (httpd)
+  * Configure DNS (bind)
+  * Configure SID generation
+  * Configure the KDC to enable PKINIT
+
+Warning: skipping DNS resolution of host dev-ipa04.test3.lan
+The domain name has been determined based on the host name.
+
+Checking DNS domain test3.lan., please wait ...
+DNS check for domain test3.lan. failed: The DNS operation timed out after 24.01217746734619 seconds.
+Invalid IP address fe80::250:56ff:fea2:b7ed for dev-ipa04.test3.lan: cannot use link-local IP address fe80::250:56ff:
+fea2:b7ed
+Checking DNS forwarders, please wait ...
+Reverse zone 160.15.10.in-addr.arpa. will be created
+Using reverse zone(s) 160.15.10.in-addr.arpa.
+Trust is configured but no NetBIOS domain name found, setting it now.
+
+The IPA Master Server will be configured with:
+Hostname:       dev-ipa04.test3.lan
+IP address(es): 10.1.160.23
+Domain name:    test3.lan  
+Realm name:     TEST3.LAN  
+
+
+The CA will be configured with:
+Subject DN:   CN=test3.lan DO Evo Group Root CA
+Subject base: O=test3.lan DO Evo Group
+Chaining:     self-signed  
+
+BIND DNS server will be configured to serve IPA domain with:
+Forwarders:       8.8.8.8, 8.8.8.9
+Forward policy:   only
+Reverse zone(s):  160.15.10.in-addr.arpa.
+
+NTP server:     10.0.0.5
+NTP server:     10.0.0.6
+NTP server:     10.0.0.7
+Adding [10.1.160.23 dev-ipa04.test3.lan] to your /etc/hosts file
+Disabled p11-kit-proxy
+Synchronizing time
+Configuration of chrony was changed by installer.
+Attempting to sync time with chronyc.
+Time synchronization was successful.
+Configuring directory server (dirsrv). Estimated time: 30 seconds
+  [1/40]: creating directory server instance
+  [2/40]: tune ldbm plugin
+  [3/40]: adding default schema
+  [4/40]: enabling memberof plugin
+  [5/40]: enabling winsync plugin
+  [6/40]: configure password logging
+  [7/40]: configuring replication version plugin
+  [8/40]: enabling IPA enrollment plugin
+  [9/40]: configuring uniqueness plugin
+  [10/40]: configuring uuid plugin
+  [11/40]: configuring modrdn plugin
+  [12/40]: configuring DNS plugin
+  [13/40]: enabling entryUSN plugin
+  [14/40]: configuring lockout plugin
+  [15/40]: configuring topology plugin
+  [16/40]: creating indices
+  [17/40]: enabling referential integrity plugin
+  [18/40]: configuring certmap.conf
+  [19/40]: configure new location for managed entries
+  [20/40]: configure dirsrv ccache and keytab
+  [21/40]: enabling SASL mapping fallback
+  [22/40]: restarting directory server
+  [23/40]: adding sasl mappings to the directory
+  [24/40]: adding default layout
+  [25/40]: adding delegation layout
+  [26/40]: creating container for managed entries
+  [27/40]: configuring user private groups
+  [28/40]: configuring netgroups from hostgroups
+  [29/40]: creating default Sudo bind user
+  [30/40]: creating default Auto Member layout
+  [31/40]: adding range check plugin
+  [32/40]: adding entries for topology management
+  [33/40]: initializing group membership
+  [34/40]: adding master entry
+  [35/40]: initializing domain level
+  [36/40]: configuring Posix uid/gid generation
+  [37/40]: adding replication acis
+  [38/40]: activating sidgen plugin
+  [39/40]: activating extdom plugin
+  [40/40]: configuring directory to start on boot
+Done configuring directory server (dirsrv).
+Configuring Kerberos KDC (krb5kdc)
+  [1/10]: adding kerberos container to the directory
+  [2/10]: configuring KDC  
+  [3/10]: initialize kerberos container
+  [4/10]: adding default ACIs
+  [5/10]: creating a keytab for the directory
+  [6/10]: creating a keytab for the machine
+  [7/10]: adding the password extension to the directory
+  [8/10]: creating anonymous principal
+  [9/10]: starting the KDC
+  [10/10]: configuring KDC to start on boot
+Done configuring Kerberos KDC (krb5kdc).
+Configuring kadmin
+  [1/2]: starting kadmin
+  [2/2]: configuring kadmin to start on boot
+Done configuring kadmin.
+Configuring ipa-custodia
+  [1/5]: Making sure custodia container exists
+  [2/5]: Generating ipa-custodia config file
+  [3/5]: Generating ipa-custodia keys
+  [4/5]: starting ipa-custodia
+  [5/5]: configuring ipa-custodia to start on boot
+Done configuring ipa-custodia.
+Configuring certificate server (pki-tomcatd). Estimated time: 3 minutes
+  [1/28]: configuring certificate server instance
+  [2/28]: stopping certificate server instance to update CS.cfg
+  [3/28]: backing up CS.cfg
+  [4/28]: Add ipa-pki-wait-running
+  [5/28]: secure AJP connector
+  [6/28]: reindex attributes
+  [7/28]: exporting Dogtag certificate store pin
+  [8/28]: disabling nonces
+  [9/28]: set up CRL publishing
+  [10/28]: enable PKIX certificate path discovery and validation
+  [11/28]: authorizing RA to modify profiles
+  [12/28]: authorizing RA to manage lightweight CAs
+  [13/28]: Ensure lightweight CAs container exists
+  [14/28]: starting certificate server instance
+  [15/28]: configure certmonger for renewals
+  [16/28]: requesting RA certificate from CA
+  [17/28]: publishing the CA certificate
+  [18/28]: adding RA agent as a trusted user
+  [19/28]: configure certificate renewals
+  [20/28]: Configure HTTP to proxy connections
+  [21/28]: updating IPA configuration
+  [22/28]: enabling CA instance
+  [23/28]: importing IPA certificate profiles
+  [24/28]: migrating certificate profiles to LDAP
+  [25/28]: adding default CA ACL
+  [26/28]: adding &#39;ipa&#39; CA entry
+  [27/28]: configuring certmonger renewal for lightweight CAs
+  [28/28]: deploying ACME service
+Done configuring certificate server (pki-tomcatd).
+Configuring directory server (dirsrv)
+  [1/3]: configuring TLS for DS instance
+  [2/3]: adding CA certificate entry
+  [3/3]: restarting directory server
+Done configuring directory server (dirsrv).
+Configuring ipa-otpd
+  [1/2]: starting ipa-otpd
+  [2/2]: configuring ipa-otpd to start on boot
+Done configuring ipa-otpd.
+Configuring the web interface (httpd)
+  [1/21]: stopping httpd
+  [2/21]: backing up ssl.conf
+  [3/21]: disabling nss.conf
+  [4/21]: configuring mod_ssl certificate paths
+  [5/21]: setting mod_ssl protocol list
+  [6/21]: configuring mod_ssl log directory
+  [7/21]: disabling mod_ssl OCSP
+  [8/21]: adding URL rewriting rules
+  [9/21]: configuring httpd
+Nothing to do for configure_httpd_wsgi_conf
+  [10/21]: setting up httpd keytab
+  [11/21]: configuring Gssproxy
+  [12/21]: setting up ssl  
+  [13/21]: configure certmonger for renewals
+  [14/21]: publish CA cert
+  [15/21]: clean up any existing httpd ccaches
+  [16/21]: configuring SELinux for httpd
+  [17/21]: create KDC proxy config
+  [18/21]: enable KDC proxy
+  [19/21]: starting httpd  
+  [20/21]: configuring httpd to start on boot
+  [21/21]: enabling oddjobd
+Done configuring the web interface (httpd).
+Configuring Kerberos KDC (krb5kdc)
+  [1/1]: installing X509 Certificate for PKINIT
+Done configuring Kerberos KDC (krb5kdc).
+Applying LDAP updates
+Upgrading IPA:. Estimated time: 1 minute 30 seconds
+  [1/10]: stopping directory server
+  [2/10]: saving configuration
+  [3/10]: disabling listeners
+  [4/10]: enabling DS global lock
+  [5/10]: disabling Schema Compat
+  [6/10]: starting directory server
+  [7/10]: upgrading server
+Could not get dnaHostname entries in 60 seconds
+  [8/10]: stopping directory server
+  [9/10]: restoring configuration
+  [10/10]: starting directory server
+Done.
+Restarting the KDC
+dnssec-validation yes
+Configuring DNS (named)
+  [1/12]: generating rndc key file
+  [2/12]: adding DNS container
+  [3/12]: setting up our zone
+  [4/12]: setting up reverse zone
+  [5/12]: setting up our own record
+  [6/12]: setting up records for other masters
+  [7/12]: adding NS record to the zones
+  [8/12]: setting up kerberos principal
+  [9/12]: setting up named.conf
+created new /etc/named.conf
+created named user config &#39;/etc/named/ipa-ext.conf&#39;
+created named user config &#39;/etc/named/ipa-options-ext.conf&#39;
+created named user config &#39;/etc/named/ipa-logging-ext.conf&#39;
+  [10/12]: setting up server configuration
+  [11/12]: configuring named to start on boot
+  [12/12]: changing resolv.conf to point to ourselves
+Done configuring DNS (named).
+Restarting the web server to pick up resolv.conf changes
+Configuring DNS key synchronization service (ipa-dnskeysyncd)
+  [1/7]: checking status
+  [2/7]: setting up bind-dyndb-ldap working directory
+  [3/7]: setting up kerberos principal
+  [4/7]: setting up SoftHSM
+  [5/7]: adding DNSSEC containers
+  [6/7]: creating replica keys
+  [7/7]: configuring ipa-dnskeysyncd to start on boot
+Done configuring DNS key synchronization service (ipa-dnskeysyncd).
+Restarting ipa-dnskeysyncd
+Restarting named
+Updating DNS system records
+Configuring SID generation
+  [1/8]: creating samba domain object
+  [2/8]: adding admin(group) SIDs
+  [3/8]: adding RID bases  
+  [4/8]: updating Kerberos config
+&#39;dns_lookup_kdc&#39; already set to &#39;true&#39;, nothing to do.
+  [5/8]: activating sidgen task
+  [6/8]: restarting Directory Server to take MS PAC and LDAP plugins changes into account
+  [7/8]: adding fallback group
+  [8/8]: adding SIDs to existing users and groups
+This step may take considerable amount of time, please wait..
+Done.
+Configuring client side components
+This program will set up IPA client.
+Version 4.9.6
+
+Using existing certificate &#39;/etc/ipa/ca.crt&#39;.
+Client hostname: dev-ipa04.test3.lan
+Realm: TEST3.LAN
+DNS Domain: test3.lan
+IPA Server: dev-ipa04.test3.lan
+BaseDN: dc=test3,dc=lan
+
+Configured sudoers in /etc/authselect/user-nsswitch.conf
+Configured /etc/sssd/sssd.conf
+Systemwide CA database updated.
+Adding SSH public key from /etc/ssh/ssh_host_rsa_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ed25519_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ecdsa_key.pub
+SSSD enabled
+Configured /etc/openldap/ldap.conf
+Configured /etc/ssh/ssh_config
+Configured /etc/ssh/sshd_config
+Configuring test3.lan as NIS domain.
+Client configuration complete.
+The ipa-client-install command was successful
+
+==============================================================================
+Setup complete
+
+Next steps:
+        1. You must make sure these network ports are open:
+                TCP Ports:
+                  * 80, 443: HTTP/HTTPS
+                  * 389, 636: LDAP/LDAPS
+                  * 88, 464: kerberos
+                  * 53: bind
+                UDP Ports:
+                  * 88, 464: kerberos
+                  * 53: bind
+                  * 123: ntp
+
+        2. You can now obtain a kerberos ticket using the command: &#39;kinit admin&#39;
+           This ticket will allow you to use the IPA tools (e.g., ipa user-add)
+           and the web user interface.
+
+Be sure to back up the CA certificates stored in /root/cacert.p12
+These files are required to create replicas. The password for these
+files is the Directory Manager password
+The ipa-server-install command was successful
+</code></pre></details>
+<h3 id="14-вход-в-web-ui-freeipa">1.4. Вход в Web UI FreeIPA</h3>
+<p>Пока отсутствует DNS resolving для нового домена test3.lan, добавляем на свою рабочую машину в файл <code>/etc/hosts</code> запись для FreeIPA-сервера:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;10.1.160.23 dev-ipa04.test3.lan&#34;</span> <span style="color:#000;font-weight:bold">|</span> sudo tee -a /etc/hosts
+</span></span></code></pre></div><p>Теперь можно открыть WEB UI страницу FreeIPA-сервера по адресу &lsquo;<a href="https://dev-ipa04.test3.lan">https://dev-ipa04.test3.lan</a>&rsquo; и зайти в консоль управления под учётными данными аккаунта &lsquo;admin&rsquo;:</p>
+<p>CA-сертификат, для добавления нового домена test3.lan в &ldquo;надёжные&rdquo;, можно скачать здесь:</p>
+<h3 id="15-настройка-dns-перед-добавление-дополнительных-реплик">1.5. Настройка DNS перед добавление дополнительных реплик</h3>
+<p>По умолчанию, при введении новой машины в домен, соответствующая PTR-запись в обратной зоне DNS не создаётся. Если я правильно помню, то это делается в целях сохранения производительности FreeIPA. Видимо, при достаточном количестве машин одновременно меняющих ip-адреса&hellip;. бла-бла-бла. Опция &lsquo;Allow PTR sync&rsquo; доступна для отдельной DNS-зоны и глобально для DNS-сервера. В нашем случае включим опцию для DNS-сервера.</p>
+<p>Также добавим пару форвардеров и переведём политику пересылки DNS-запросов в режим &lsquo;forward only&rsquo;, так как наши FreeIPA-серверы лишены доступа к интернету и не имеют возможности  рекурсивно опрашивать публичные DNS-серверы. Напомню, что в режиме &lsquo;forward first&rsquo;, DNS-сервер сначала отправит запрос форвардер-серверами. В случае не успеха, DNS-сервер начнёт сам опрашивать те самые корневые DNS-сервера и в зависимости от их ответа, дальше рекурсивно постарается дойти до авторитативного DNS-сервера, который держит зону имеющую ответ на первоначальный запрос.</p>
+<p>Включаем опции для DNS-сервера одним из двух способов:</p>
+<table>
+<tr>
+  <th>Через командную строку</th>
+  <th>Через Web UI по адресу</th>
+</tr>
+<tr>
+  <td>
+<pre><code>
+kinit admin<br>
+ipa dnsconfig-mod \
+  --allow-sync-ptr=1 \
+  --forwarder="8.8.8.8" \
+  --forwarder="1.1.1.1" \
+  --forward-policy='only'
+</code></pre>
+  </td>
+  <td>
+https://url-ipa-server.example.org/ipa/ui/#/e/dnsconfig/details
+  </td>
+</tr>
+</table>
+<h3 id="16-отключение-анонимного-доступа-к-ldap-каталогу">1.6. Отключение анонимного доступа к LDAP-каталогу</h3>
+<p>Процедура выполняется для каждого сервера, так как изменения производятся в нереплицируемой части LDAP-каталога &lsquo;cn=config&rsquo;.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">IPAREPLICA</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;dev-ipa04.test3.lan&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> +o <span style="color:#204a87">history</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DMPASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;qMSxV(EvB#o&gt;Brd,0&lt;6n;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> -o <span style="color:#204a87">history</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ldapmodify -x -D <span style="color:#4e9a06">&#34;cn=Directory Manager&#34;</span> -w <span style="color:#4e9a06">${</span><span style="color:#000">DMPASS</span><span style="color:#4e9a06">}</span> -h <span style="color:#4e9a06">${</span><span style="color:#000">IPAREPLICA</span><span style="color:#4e9a06">}</span> -ZZ <span style="color:#4e9a06">&lt;&lt; EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">dn: cn=config
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">changetype: modify
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">replace: nsslapd-allow-anonymous-access
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">nsslapd-allow-anonymous-access: rootdse
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ipactl restart
+</span></span></code></pre></div><h2 id="2-бэкап-важной-особо-секретной-информации">2. Бэкап важной особо секретной информации</h2>
+<p>После первого поднятия домена необходимо сохранить следующую важную информацию в безопасном месте с ограниченным доступом:</p>
+<ol>
+<li>Пароль аккаунта &lsquo;cn=Directory Manager&rsquo;. Находится в первой строке файла <code>/root/freeipa_passwords.txt</code>.</li>
+<li>Пароль аккаунта &lsquo;uid=admin,cn=users,cn=accounts,dc=test3,dc=lan&rsquo;. Находится в второй строке файла <code>/root/freeipa_passwords.txt</code>.</li>
+<li>Файл <code>/root/cacert.p12</code> с приватным ключом и сертификатом от Центра Сертификации. Здесь необходимо продублировать пароль от &lsquo;cn=Directory Manager&rsquo;, так как на его основе, на данный момент, зашифровано содержимое файла <code>cacert.p12</code>.</li>
+</ol>
+<p>Надёжно сохранив пароли для УЗ &lsquo;cn=Directory Manager&rsquo; и &lsquo;uid=admin&rsquo; в надёжном месте, удаляем файл <code>/root/freeipa_passwords.txt</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo shred -u /root/freeipa_passwords.txt
+</span></span></code></pre></div><p>Напомню, что безопасное удаление с помощью утилиты &lsquo;shred&rsquo; может быть обратимо, например, на журналируемых файловых системах. Поэтому, в некоторых случаях, необходимо переработать данный сценарий установки FreeIPA-сервера, где пароли бы не сохранялись в файл на жёсткий диск.</p>
+<h2 id="3-утилита-ipa-healthcheck">3. Утилита ipa-healthcheck</h2>
+<p>Запуск ipa-healtcheck завершается с четырьмя замечаниями:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo ipa-healthcheck
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>                                                                                                                      
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;source&#34;</span>: <span style="color:#4e9a06">&#34;ipahealthcheck.ipa.certs&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;check&#34;</span>: <span style="color:#4e9a06">&#34;IPADogtagCertsMatchCheck&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;result&#34;</span>: <span style="color:#4e9a06">&#34;ERROR&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;uuid&#34;</span>: <span style="color:#4e9a06">&#34;9128d242-ce51-460d-8d86-55327e988f52&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;when&#34;</span>: <span style="color:#4e9a06">&#34;20220110145522Z&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;duration&#34;</span>: <span style="color:#4e9a06">&#34;0.475297&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;kw&#34;</span>: <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;key&#34;</span>: <span style="color:#4e9a06">&#34;ocspSigningCert cert-pki-ca&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;nickname&#34;</span>: <span style="color:#4e9a06">&#34;ocspSigningCert cert-pki-ca&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;dbdir&#34;</span>: <span style="color:#4e9a06">&#34;/etc/pki/pki-tomcat/alias&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;msg&#34;</span>: <span style="color:#4e9a06">&#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;source&#34;</span>: <span style="color:#4e9a06">&#34;ipahealthcheck.ipa.certs&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;check&#34;</span>: <span style="color:#4e9a06">&#34;IPADogtagCertsMatchCheck&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;result&#34;</span>: <span style="color:#4e9a06">&#34;ERROR&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;uuid&#34;</span>: <span style="color:#4e9a06">&#34;19846c1c-a7f5-4dc0-9821-716d644fc063&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;when&#34;</span>: <span style="color:#4e9a06">&#34;20220110145522Z&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;duration&#34;</span>: <span style="color:#4e9a06">&#34;0.523545&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;kw&#34;</span>: <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;key&#34;</span>: <span style="color:#4e9a06">&#34;subsystemCert cert-pki-ca&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;nickname&#34;</span>: <span style="color:#4e9a06">&#34;subsystemCert cert-pki-ca&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;dbdir&#34;</span>: <span style="color:#4e9a06">&#34;/etc/pki/pki-tomcat/alias&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;msg&#34;</span>: <span style="color:#4e9a06">&#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;source&#34;</span>: <span style="color:#4e9a06">&#34;ipahealthcheck.ipa.certs&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;check&#34;</span>: <span style="color:#4e9a06">&#34;IPADogtagCertsMatchCheck&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;result&#34;</span>: <span style="color:#4e9a06">&#34;ERROR&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;uuid&#34;</span>: <span style="color:#4e9a06">&#34;87f5ae43-3460-4aca-8d58-b31a2370b460&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;when&#34;</span>: <span style="color:#4e9a06">&#34;20220110145522Z&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;duration&#34;</span>: <span style="color:#4e9a06">&#34;0.571182&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;kw&#34;</span>: <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;key&#34;</span>: <span style="color:#4e9a06">&#34;auditSigningCert cert-pki-ca&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;nickname&#34;</span>: <span style="color:#4e9a06">&#34;auditSigningCert cert-pki-ca&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;dbdir&#34;</span>: <span style="color:#4e9a06">&#34;/etc/pki/pki-tomcat/alias&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;msg&#34;</span>: <span style="color:#4e9a06">&#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;source&#34;</span>: <span style="color:#4e9a06">&#34;ipahealthcheck.ipa.certs&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;check&#34;</span>: <span style="color:#4e9a06">&#34;IPADogtagCertsMatchCheck&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;result&#34;</span>: <span style="color:#4e9a06">&#34;ERROR&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;uuid&#34;</span>: <span style="color:#4e9a06">&#34;6833a0ac-0e37-4185-b9de-9a01e91bc8e2&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;when&#34;</span>: <span style="color:#4e9a06">&#34;20220110145522Z&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;duration&#34;</span>: <span style="color:#4e9a06">&#34;0.618206&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;kw&#34;</span>: <span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;key&#34;</span>: <span style="color:#4e9a06">&#34;Server-Cert cert-pki-ca&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;nickname&#34;</span>: <span style="color:#4e9a06">&#34;Server-Cert cert-pki-ca&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;dbdir&#34;</span>: <span style="color:#4e9a06">&#34;/etc/pki/pki-tomcat/alias&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;msg&#34;</span>: <span style="color:#4e9a06">&#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">]</span>
+</span></span></code></pre></div><p>Надо будет разрешить эти проблемки.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>certutil -d sql:/etc/pki/pki-tomcat/alias -L
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Certificate Nickname                                         Trust Attributes
+</span></span><span style="display:flex;"><span>                                                             SSL,S/MIME,JAR/XPI
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>caSigningCert cert-pki-ca                                    CTu,Cu,Cu
+</span></span><span style="display:flex;"><span>ocspSigningCert cert-pki-ca                                  u,u,u
+</span></span><span style="display:flex;"><span>auditSigningCert cert-pki-ca                                 u,u,Pu
+</span></span><span style="display:flex;"><span>subsystemCert cert-pki-ca                                    u,u,u
+</span></span><span style="display:flex;"><span>Server-Cert cert-pki-ca                                      u,u,u
+</span></span></code></pre></div>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-52aa9034f512a49e3e0c3e403c65e7eb">2.2.4 - 03. Добавление реплик к первому серверу FreeIPA</h1>
+    <div class="lead">Описание процесса добавления реплик к первому IPA-серверу.</div>
+	<h2 id="1-заметки-по-установке-реплик">1. Заметки по установке реплик</h2>
+<p>В отличие от установки первого FreeIPA-сервере, где скрипт <code>ipa-server-install</code> сначала поднял контроллер домена с новым доменом, а потом ввёл машину в этот домен, то в случае добавления реплик, необходимо сначала ввести машины в домен, а только потом установить на машины ПО контроллеров домена.</p>
+<h2 id="2-введение-машин-в-домен">2. Введение машин в домен</h2>
+<p>На второй и третьей реплике выполняем одинаковые действия. Отличия могут возникнуть в том случае, если на машинах используется несколько ip-адресов. В этом случае, указываем &lsquo;master ip address&rsquo; в опции &lsquo;&ndash;ip-address&rsquo;.</p>
+<h3 id="указание-dns-резолвера">Указание DNS-резолвера</h3>
+<p>На следующем хосте, предназначенном для дополнительной реплики, добавляем запись в <code>/etc/resolv.conf</code>, чтобы система могла найти контроллер домена &rsquo;test.lan&rsquo;:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;nameserver 10.1.160.23&#34;</span> <span style="color:#000;font-weight:bold">|</span> sudo tee /etc/resolv.conf
+</span></span></code></pre></div><h3 id="ввод-хоста-в-домен">Ввод хоста в домен</h3>
+
+
+<div class="pageinfo pageinfo-primary">
+<p>При вводе машины в домен, если на машине один ip-адрес, то опцию &lsquo;&ndash;ip-address&rsquo; можно опустить.</p>
+<p>Также, в большинстве случаев, можно опустить опцию &lsquo;&ndash;realm&rsquo;, так как это значение, при правильно работающем DNS, автоматически разрешится из SRV-записи &lsquo;_kerberos.example.org&rsquo;.</p>
+<p>Опцией &lsquo;&ndash;ntp-server&rsquo; можно пренебречь, если в DNS присутствуют необходимые записи. (Необходимо разобраться в этом вопросе).</p>
+
+</div>
+
+<ol>
+<li>
+<p>Запускаем процедуру ввода машины в домен:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">set</span> +o <span style="color:#204a87">history</span>           <span style="color:#8f5902;font-style:italic"># Отключаем запись history</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PRINCIPAL</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;admin&#39;</span>        <span style="color:#8f5902;font-style:italic"># Принципал с ролью &#39;Enrollment Administrator&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PASSWORD</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;eik3Co2rohnah&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> -o <span style="color:#204a87">history</span>           <span style="color:#8f5902;font-style:italic"># Возвращаем запись history</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">IP_ADDRESS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;10.1.160.24&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">REALM_NAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;TEST3.LAN&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">NTP_SERVER1</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;10.0.0.5&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">NTP_SERVER2</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;10.0.0.6&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">NTP_SERVER3</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;10.0.0.7&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo ipa-client-install --unattended <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --principal<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">PRINCIPAL</span><span style="color:#4e9a06">}</span> --password<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">PASSWORD</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --ip-address<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">IP_ADDRESS</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --realm<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">REALM_NAME</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --ntp-server<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">NTP_SERVER1</span><span style="color:#4e9a06">}</span> --ntp-server<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">NTP_SERVER2</span><span style="color:#4e9a06">}</span> --ntp-server<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">NTP_SERVER3</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --mkhomedir
+</span></span></code></pre></div> <details>
+ <summary>stdout...</summary>
+<pre tabindex="0"><code>This program will set up IPA client.
+Version 4.9.6
+
+Discovery was successful!
+Client hostname: dev-ipa05p.test3.lan
+Realm: TEST3.LAN
+DNS Domain: test3.lan
+IPA Server: dev-ipa04p.test3.lan
+BaseDN: dc=test3,dc=lan
+NTP server: 10.1.85.5
+NTP server: 10.1.85.6
+NTP server: 10.1.85.7
+
+Synchronizing time
+Configuration of chrony was changed by installer.
+Attempting to sync time with chronyc.
+Time synchronization was successful.
+Successfully retrieved CA cert
+    Subject:     CN=test3.lan DO Evo Group Root CA,O=test3.lan DO Evo Group
+    Issuer:      CN=test3.lan DO Evo Group Root CA,O=test3.lan DO Evo Group
+    Valid From:  2021-12-20 17:35:47
+    Valid Until: 2041-12-20 17:35:47
+
+Enrolled in IPA realm TEST3.LAN
+Created /etc/ipa/default.conf
+Configured sudoers in /etc/authselect/user-nsswitch.conf
+Configured /etc/sssd/sssd.conf
+Configured /etc/krb5.conf for IPA realm TEST3.LAN
+Systemwide CA database updated.
+Hostname (dev-ipa05p.test3.lan) does not have A/AAAA record.
+Missing reverse record(s) for address(es): 10.1.160.24.
+Adding SSH public key from /etc/ssh/ssh_host_rsa_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ed25519_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ecdsa_key.pub
+SSSD enabled
+Configured /etc/openldap/ldap.conf
+Configured /etc/ssh/ssh_config
+Configured /etc/ssh/sshd_config
+Configuring test3.lan as NIS domain.
+Client configuration complete.
+The ipa-client-install command was successful
+</code></pre> </details>
+</li>
+</ol>
+<h2 id="3-процесс-установки-дополнительных-реплик-freeipa">3. Процесс установки дополнительных реплик FreeIPA</h2>
+<h3 id="31-установка-ipa-реплики">3.1. Установка IPA-реплики</h3>
+<ol>
+<li>
+<p>На обоих хостах, поочерёдно, выполняем установку FreeIPA-реплик:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Временно выключаем запись history для предотвращения компрометации пароля</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> +o <span style="color:#204a87">history</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Принципал любой, но с правом добавления реплик в домен</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PRINCIPAL</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;admin&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PASSWORD</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;eik3Co2rohnah&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Возвращаем запись history</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">set</span> -o <span style="color:#204a87">history</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000">IP_ADDRESS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;10.1.160.24&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo ipa-replica-install --unattended <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --principal<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">PRINCIPAL</span><span style="color:#4e9a06">}</span> --admin-password<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">PASSWORD</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --ip-address<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">IP_ADDRESS</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --setup-ca <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  --setup-dns --no-forwarders
+</span></span></code></pre></div> <details>
+ <summary>stdout...</summary>
+<pre tabindex="0"><code>Lookup failed: Preferred host dev-ipa05p.test3.lan does not provide DNS.
+Run connection check to master
+Connection check OK
+Disabled p11-kit-proxy
+Configuring directory server (dirsrv). Estimated time: 30 seconds
+  [1/38]: creating directory server instance
+  [2/38]: tune ldbm plugin 
+  [3/38]: adding default schema
+  [4/38]: enabling memberof plugin
+  [5/38]: enabling winsync plugin
+  [6/38]: configure password logging
+  [7/38]: configuring replication version plugin
+  [8/38]: enabling IPA enrollment plugin
+  [9/38]: configuring uniqueness plugin
+  [10/38]: configuring uuid plugin
+  [11/38]: configuring modrdn plugin
+  [12/38]: configuring DNS plugin
+  [13/38]: enabling entryUSN plugin
+  [14/38]: configuring lockout plugin
+  [15/38]: configuring topology plugin
+  [16/38]: creating indices
+  [17/38]: enabling referential integrity plugin
+  [18/38]: configuring certmap.conf
+  [19/38]: configure new location for managed entries
+  [20/38]: configure dirsrv ccache and keytab
+  [21/38]: enabling SASL mapping fallback
+  [22/38]: restarting directory server
+  [23/38]: creating DS keytab
+  [24/38]: ignore time skew for initial replication
+  [25/38]: setting up initial replication
+Starting replication, please wait until this has completed.
+Update in progress, 5 seconds elapsed
+Update succeeded
+
+  [26/38]: prevent time skew after initial replication
+  [27/38]: adding sasl mappings to the directory
+  [28/38]: updating schema 
+  [29/38]: setting Auto Member configuration
+  [30/38]: enabling S4U2Proxy delegation
+  [31/38]: initializing group membership
+  [32/38]: adding master entry
+  [33/38]: initializing domain level
+  [34/38]: configuring Posix uid/gid generation
+  [35/38]: adding replication acis
+  [36/38]: activating sidgen plugin
+  [37/38]: activating extdom plugin
+  [38/38]: configuring directory to start on boot
+Done configuring directory server (dirsrv).
+Replica DNS records could not be added on master: Insufficient access: Insufficient &#39;add&#39; privilege to add the entry &#39;idnsname=dev-ipa05p,idnsname=test3.lan.,cn=dns,dc=test3,dc=lan&#39;.
+Configuring Kerberos KDC (krb5kdc)
+  [1/5]: configuring KDC
+  [2/5]: adding the password extension to the directory
+  [3/5]: creating anonymous principal
+  [4/5]: starting the KDC  
+  [5/5]: configuring KDC to start on boot
+Done configuring Kerberos KDC (krb5kdc).
+Configuring kadmin
+  [1/2]: starting kadmin
+  [2/2]: configuring kadmin to start on boot
+Done configuring kadmin.
+Configuring directory server (dirsrv)
+  [1/3]: configuring TLS for DS instance
+  [2/3]: importing CA certificates from LDAP
+  [3/3]: restarting directory server
+Done configuring directory server (dirsrv).
+Configuring the web interface (httpd)
+  [1/21]: stopping httpd
+  [2/21]: backing up ssl.conf
+  [3/21]: disabling nss.conf
+  [4/21]: configuring mod_ssl certificate paths
+  [5/21]: setting mod_ssl protocol list
+  [6/21]: configuring mod_ssl log directory
+  [7/21]: disabling mod_ssl OCSP
+  [8/21]: adding URL rewriting rules
+  [9/21]: configuring httpd
+Nothing to do for configure_httpd_wsgi_conf
+  [10/21]: setting up httpd keytab
+  [11/21]: configuring Gssproxy
+  [12/21]: setting up ssl  
+  [13/21]: configure certmonger for renewals
+  [14/21]: publish CA cert 
+  [15/21]: clean up any existing httpd ccaches
+  [16/21]: configuring SELinux for httpd
+  [17/21]: create KDC proxy config
+  [18/21]: enable KDC proxy
+  [19/21]: starting httpd  
+  [20/21]: configuring httpd to start on boot
+  [21/21]: enabling oddjobd
+Done configuring the web interface (httpd).
+Configuring ipa-otpd
+  [1/2]: starting ipa-otpd 
+  [2/2]: configuring ipa-otpd to start on boot
+Done configuring ipa-otpd. 
+Custodia uses &#39;dev-ipa04p.test3.lan&#39; as master peer.
+Configuring ipa-custodia
+  [1/4]: Generating ipa-custodia config file
+  [2/4]: Generating ipa-custodia keys
+  [3/4]: starting ipa-custodia
+  [4/4]: configuring ipa-custodia to start on boot
+Done configuring ipa-custodia.
+Configuring certificate server (pki-tomcatd). Estimated time: 3 minutes
+  [1/29]: creating certificate server db
+  [2/29]: setting up initial replication
+Starting replication, please wait until this has completed.
+Update in progress, 7 seconds elapsed
+Update succeeded
+
+  [3/29]: creating ACIs for admin
+  [4/29]: creating installation admin user
+  [5/29]: configuring certificate server instance
+  [6/29]: stopping certificate server instance to update CS.cfg
+  [7/29]: backing up CS.cfg
+  [8/29]: Add ipa-pki-wait-running
+  [9/29]: secure AJP connector
+  [10/29]: reindex attributes
+  [11/29]: exporting Dogtag certificate store pin
+  [12/29]: disabling nonces
+  [13/29]: set up CRL publishing
+  [14/29]: enable PKIX certificate path discovery and validation
+  [15/29]: authorizing RA to modify profiles
+  [16/29]: authorizing RA to manage lightweight CAs
+  [17/29]: Ensure lightweight CAs container exists
+  [18/29]: destroying installation admin user
+  [19/29]: starting certificate server instance
+  [20/29]: Finalize replication settings
+  [21/29]: configure certmonger for renewals
+  [22/29]: Importing RA key
+  [23/29]: configure certificate renewals
+  [24/29]: Configure HTTP to proxy connections
+  [25/29]: updating IPA configuration
+  [26/29]: enabling CA instance
+  [27/29]: importing IPA certificate profiles
+  [28/29]: configuring certmonger renewal for lightweight CAs
+  [29/29]: deploying ACME service
+Done configuring certificate server (pki-tomcatd).
+Configuring Kerberos KDC (krb5kdc)
+  [1/1]: installing X509 Certificate for PKINIT
+Done configuring Kerberos KDC (krb5kdc).
+Applying LDAP updates
+Upgrading IPA:. Estimated time: 1 minute 30 seconds
+  [1/10]: stopping directory server
+  [2/10]: saving configuration
+  [3/10]: disabling listeners
+  [4/10]: enabling DS global lock
+  [5/10]: disabling Schema Compat
+  [6/10]: starting directory server
+  [7/10]: upgrading server 
+  [8/10]: stopping directory server
+  [9/10]: restoring configuration
+  [10/10]: starting directory server
+Done.
+Finalize replication settings
+Restarting the KDC
+dnssec-validation yes
+Configuring DNS (named)
+  [1/8]: generating rndc key file
+  [2/8]: setting up our own record
+  [3/8]: adding NS record to the zones
+  [4/8]: setting up kerberos principal
+  [5/8]: setting up named.conf
+created new /etc/named.conf
+created named user config &#39;/etc/named/ipa-ext.conf&#39;
+created named user config &#39;/etc/named/ipa-options-ext.conf&#39;
+named user config &#39;/etc/named/ipa-logging-ext.conf&#39; already exists
+  [6/8]: setting up server configuration
+  [7/8]: configuring named to start on boot
+  [8/8]: changing resolv.conf to point to ourselves
+Done configuring DNS (named).
+Restarting the web server to pick up resolv.conf changes
+Configuring DNS key synchronization service (ipa-dnskeysyncd)
+  [1/7]: checking status
+  [2/7]: setting up bind-dyndb-ldap working directory
+  [3/7]: setting up kerberos principal
+  [4/7]: setting up SoftHSM
+  [5/7]: adding DNSSEC containers
+DNSSEC container exists (step skipped)
+  [6/7]: creating replica keys
+  [7/7]: configuring ipa-dnskeysyncd to start on boot
+Done configuring DNS key synchronization service (ipa-dnskeysyncd).
+Restarting ipa-dnskeysyncd 
+Restarting named
+Updating DNS system records
+
+Global DNS configuration in LDAP server is not empty
+The following configuration options override local settings in named.conf:
+
+API Version number was not sent, forward compatibility not guaranteed. Assuming server&#39;s API version, 2.245
+  Global forwarders: 8.8.8.8, 1.1.1.1
+  Forward policy: only
+  Allow PTR sync: TRUE
+  IPA DNS servers: dev-ipa04p.test3.lan
+
+Configuring SID generation 
+  [1/7]: creating samba domain object
+Samba domain object already exists
+  [2/7]: adding admin(group) SIDs
+Admin SID already set, nothing to do
+Admin group SID already set, nothing to do
+  [3/7]: adding RID bases  
+RID bases already set, nothing to do
+  [4/7]: updating Kerberos config
+&#39;dns_lookup_kdc&#39; already set to &#39;true&#39;, nothing to do.
+  [5/7]: activating sidgen task
+  [6/7]: restarting Directory Server to take MS PAC and LDAP plugins changes into account
+  [7/7]: adding fallback group
+Fallback group already set, nothing to do
+Done.
+The ipa-replica-install command was successful
+</code></pre> </details><br>
+</li>
+</ol>
+<h3 id="32-отключение-анонимного-доступа-к-ldap-каталогу">3.2. Отключение анонимного доступа к LDAP-каталогу.</h3>
+<ol>
+<li>Процедура выполняется для каждого сервера, так как изменения производятся в нереплицируемой части LDAP-каталога &lsquo;cn=config&rsquo;:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">IPAREPLICA</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname<span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">DMPASS</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;DirectoryManagerPassword&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ldapmodify -x -D <span style="color:#4e9a06">&#34;cn=Directory Manager&#34;</span> -w <span style="color:#4e9a06">${</span><span style="color:#000">DMPASS</span><span style="color:#4e9a06">}</span> -h <span style="color:#4e9a06">${</span><span style="color:#000">IPAREPLICA</span><span style="color:#4e9a06">}</span> -Z <span style="color:#4e9a06">&lt;&lt; EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">dn: cn=config
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">changetype: modify
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">replace: nsslapd-allow-anonymous-access
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">nsslapd-allow-anonymous-access: rootdse
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ipactl restart
+</span></span></code></pre></div></li>
+</ol>
+<h2 id="4-запуск-ipa-healthcheck">4. Запуск ipa-healthcheck</h2>
+<ol>
+<li>
+<p>Запуск ipa-healtcheck завершается с пятью замечаниями:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo ipa-healthcheck
+</span></span></code></pre></div> <details>
+ <summary>stdout...</summary>
+<pre tabindex="0"><code>[
+  {
+    &#34;source&#34;: &#34;ipahealthcheck.ipa.certs&#34;,
+    &#34;check&#34;: &#34;IPADogtagCertsMatchCheck&#34;,
+    &#34;result&#34;: &#34;ERROR&#34;,
+    &#34;uuid&#34;: &#34;9cbe0184-f345-4124-8c2a-984e7054a937&#34;,
+    &#34;when&#34;: &#34;20220110183632Z&#34;,
+    &#34;duration&#34;: &#34;0.493357&#34;,
+    &#34;kw&#34;: {
+      &#34;key&#34;: &#34;ocspSigningCert cert-pki-ca&#34;,
+      &#34;nickname&#34;: &#34;ocspSigningCert cert-pki-ca&#34;,
+      &#34;dbdir&#34;: &#34;/etc/pki/pki-tomcat/alias&#34;,
+      &#34;msg&#34;: &#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&#34;
+    }
+  },
+  {
+    &#34;source&#34;: &#34;ipahealthcheck.ipa.certs&#34;,
+    &#34;check&#34;: &#34;IPADogtagCertsMatchCheck&#34;,
+    &#34;result&#34;: &#34;ERROR&#34;,
+    &#34;uuid&#34;: &#34;02ba1554-6554-4351-bae2-28a136895d97&#34;,
+    &#34;when&#34;: &#34;20220110183632Z&#34;,
+    &#34;duration&#34;: &#34;0.543730&#34;,
+    &#34;kw&#34;: {
+      &#34;key&#34;: &#34;subsystemCert cert-pki-ca&#34;,
+      &#34;nickname&#34;: &#34;subsystemCert cert-pki-ca&#34;,
+      &#34;dbdir&#34;: &#34;/etc/pki/pki-tomcat/alias&#34;,
+      &#34;msg&#34;: &#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&#34;
+    }
+  },
+  {
+    &#34;source&#34;: &#34;ipahealthcheck.ipa.certs&#34;,
+    &#34;check&#34;: &#34;IPADogtagCertsMatchCheck&#34;,
+    &#34;result&#34;: &#34;ERROR&#34;,
+    &#34;uuid&#34;: &#34;5310274f-427c-4d4e-aa8e-bf10a8635102&#34;,
+    &#34;when&#34;: &#34;20220110183632Z&#34;,
+    &#34;duration&#34;: &#34;0.591251&#34;,
+    &#34;kw&#34;: {
+      &#34;key&#34;: &#34;auditSigningCert cert-pki-ca&#34;,
+      &#34;nickname&#34;: &#34;auditSigningCert cert-pki-ca&#34;,
+      &#34;dbdir&#34;: &#34;/etc/pki/pki-tomcat/alias&#34;,
+      &#34;msg&#34;: &#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&#34;
+    }
+  },
+  {
+    &#34;source&#34;: &#34;ipahealthcheck.ipa.certs&#34;,
+    &#34;check&#34;: &#34;IPADogtagCertsMatchCheck&#34;,
+    &#34;result&#34;: &#34;ERROR&#34;,
+    &#34;uuid&#34;: &#34;a07b3794-ff38-4c8e-afa2-e206bff57579&#34;,
+    &#34;when&#34;: &#34;20220110183632Z&#34;,
+    &#34;duration&#34;: &#34;0.639254&#34;,
+    &#34;kw&#34;: {
+      &#34;key&#34;: &#34;Server-Cert cert-pki-ca&#34;,
+      &#34;nickname&#34;: &#34;Server-Cert cert-pki-ca&#34;,
+      &#34;dbdir&#34;: &#34;/etc/pki/pki-tomcat/alias&#34;,
+      &#34;msg&#34;: &#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&#34;
+    }
+  },
+  {
+    &#34;source&#34;: &#34;ipahealthcheck.ipa.dna&#34;,
+    &#34;check&#34;: &#34;IPADNARangeCheck&#34;,
+    &#34;result&#34;: &#34;WARNING&#34;,
+    &#34;uuid&#34;: &#34;4cc6b198-2e6e-45c5-9477-6e6d3661c7e3&#34;,
+    &#34;when&#34;: &#34;20220110183635Z&#34;,
+    &#34;duration&#34;: &#34;0.306345&#34;,
+    &#34;kw&#34;: {
+      &#34;range_start&#34;: 0,
+      &#34;range_max&#34;: 0,
+      &#34;next_start&#34;: 0,
+      &#34;next_max&#34;: 0,
+      &#34;msg&#34;: &#34;No DNA range defined. If no masters define a range then users and groups cannot be created.&#34;
+    }
+  }
+]
+</code></pre> </details>
+</li>
+</ol>
+<h2 id="5-исправление-замечаний">5. Исправление замечаний</h2>
+<h3 id="51-no-dna-range-defined-if-no-masters-define-a-range-then-users-and-groups-cannot-be-created">5.1. &lsquo;No DNA range defined. If no masters define a range then users and groups cannot be created.&rsquo;</h3>
+<p>Сразу после установки новых реплик на данное сообщение можно не реагировать. Диапазоны будут автоматически добавлены после первого же создания новой учётной записи или новой Posix-группы, прозведённого через новую же реплику. Об этом написано в <code>man ipa-replica-manage</code>.</p>
+<blockquote>
+<p>New IPA masters do not automatically get a DNA range assignment.  A  range  assignment  is done only when a user or POSIX group is added on that master.</p>
+</blockquote>
+<p>Для проверки этого утверждения проведём опыт:</p>
+<ol>
+<li>
+<p>На одном из контроллеров домена проверяем текущие диапазоны:</p>
+<pre tabindex="0"><code># ipa-replica-manage dnarange-show
+Directory Manager password:
+
+dev-ipa04p.test3.lan: 1443200004-1443399999
+dev-ipa05p.test3.lan: No range set
+dev-ipa06p.test3.lan: No range set
+</code></pre></li>
+<li>
+<p>С помощью Web UI соответствующих контроллеров доменов добавляем новые пользовательские группы или УЗ.</p>
+</li>
+<li>
+<p>Вновь проверяем текущие диапазоны и убеждаемся в том, что диапазоны были автоматически добавлены:</p>
+<pre tabindex="0"><code># ipa-replica-manage dnarange-show
+Directory Manager password:
+
+dev-ipa04p.test3.lan: 1443200005-1443250499
+dev-ipa05p.test3.lan: 1443300501-1443399999
+dev-ipa06p.test3.lan: 1443250501-1443300499
+</code></pre></li>
+<li>
+<p>Скриншот из Web UI с номерами групп:</p>
+ <div style="text-align:center;"><img src="/img/dobavleniye-replik-k-pervomu-serveru-freeipa/image2022-1-11_12-15-28.png"></div>
+</li>
+</ol>
 
 </div>
 
@@ -3359,7 +4397,7 @@ WatchedEvent state:SyncConnected type:None path:null
 [zk: localhost:2181(CONNECTED) 0] ls /kafka/brokers/topics
 [ATLAS_HOOK, ATLAS_ENTITIES, _HOATLASOK]
 </code></pre><h3 id="34-настройка-роли-в-sentry-для-доступа-atlasа-к-топикам-в-kafka">3.4. Настройка роли в Sentry для доступа Atlas&rsquo;а к топикам в Kafka</h3>
-<p>3.4.1. На машине с ролью &lsquo;Kafka Gateway&rsquo; создаём в Sentry роль &lsquo;kafka4atlas_role:</p>
+<p>3.4.1. На машине с ролью &lsquo;Kafka Gateway&rsquo; и &lsquo;Sentry Gateway&rsquo; создаём в Sentry роль &lsquo;kafka4atlas_role:</p>
 <pre tabindex="0"><code>KROLE=&#34;kafka4atlas_role&#34;
 
 kafka-sentry -cr -r ${KROLE}

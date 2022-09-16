@@ -138,7 +138,7 @@ WatchedEvent state:SyncConnected type:None path:null
 [zk: localhost:2181(CONNECTED) 0] ls /kafka/brokers/topics
 [ATLAS_HOOK, ATLAS_ENTITIES, _HOATLASOK]
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;34-настройка-роли-в-sentry-для-доступа-atlasа-к-топикам-в-kafka&#34;&gt;3.4. Настройка роли в Sentry для доступа Atlas&amp;rsquo;а к топикам в Kafka&lt;/h3&gt;
-&lt;p&gt;3.4.1. На машине с ролью &amp;lsquo;Kafka Gateway&amp;rsquo; создаём в Sentry роль &amp;lsquo;kafka4atlas_role:&lt;/p&gt;
+&lt;p&gt;3.4.1. На машине с ролью &amp;lsquo;Kafka Gateway&amp;rsquo; и &amp;lsquo;Sentry Gateway&amp;rsquo; создаём в Sentry роль &amp;lsquo;kafka4atlas_role:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;KROLE=&amp;#34;kafka4atlas_role&amp;#34;
 
 kafka-sentry -cr -r ${KROLE}

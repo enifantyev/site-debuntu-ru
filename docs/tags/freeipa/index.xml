@@ -2024,5 +2024,1009 @@ The token has been initialized and is reassigned to slot 1520725004
       </description>
     </item>
     
+    <item>
+      <title>Manuals: 02. Установка первого FreeIPA-сервера</title>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</link>
+      <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;1-установка-первого-freeipa-сервера-на-первом-хосте&#34;&gt;1. Установка первого FreeIPA-сервера на первом хосте&lt;/h2&gt;
+&lt;h3 id=&#34;11-описание-опций-установочного-скрипта&#34;&gt;1.1. Описание опций установочного скрипта&lt;/h3&gt;
+&lt;p&gt;Установку будем производить в бездиалоговом режиме с заданием всех необходимых опций из командной строки.&lt;/p&gt;
+&lt;p&gt;Описание некоторых опций:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--ds-password&lt;/code&gt; — задаёт особо секретный пароль аккаунта &amp;lsquo;cn=Directory Manager&amp;rsquo;, на основе которого синхронизируются реплики IPA и зашифрован ключ Центра Сертификации. Так-как этой УЗ доступен весь LDAP-каталог, что позволяет наблюдать содержимое особо секретных веток, то необходимо ограничить известность этого пароля узким кругом лиц.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--admin-password&lt;/code&gt; — задаёт пароль первого пользовательского аккаунта во FreeIPA, состоящего в группе &amp;lsquo;admins&amp;rsquo;, с помощью которого будет произведена первичная настройка FreeIPA. Членам группы &amp;lsquo;admins&amp;rsquo; позволительны все доступные операции, что позволяет нанести необратимый вред установленному экземпляру FreeIPA, поэтому после первичной настройки заблокируем эту УЗ, а доступ к паролю ограничим узким кругом лиц.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--ip-address&lt;/code&gt; — указывает соновной ip-адрес. Необязательный параметр в случае наличия только одного ip-адреса.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--unattended&lt;/code&gt; — подавляет все запросы инсталлятора.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--setup-dns --no-forwarders&lt;/code&gt; — добавляет роль DNS-сервера без настройки форвардеров, которые мы настроим позже, после установки первого контроллера.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--auto-reverse --allow-zone-overlap&lt;/code&gt; — две опции, которые необходимы для автоматического добавления обратной зоны DNS, в которой находится основной ip-адрес сервера FreeIPA. (&lt;a href=&#34;https://access.redhat.com/solutions/4237121&#34;&gt;https://access.redhat.com/solutions/4237121&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--no-hbac-allow&lt;/code&gt; — запрещает автоматическое добавление HBAC-правила, которое позволяет всем пользователям домена заходить на все машины домена через ssh.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--ntp-server&lt;/code&gt; — задаёт ip-адрес NTP-сервера. Адрес будет добавлен в &lt;code&gt;/etc/chrony.conf&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--mkhomedir&lt;/code&gt; — опция для скрипта ipa-client-install. Скрипт автоматически вызывается из ipa-server-install после поднятия домена и необходим для введения локальной машины в домен FreeIPA. Опция же добавляет в локальную операционную систему PAM-правило, отвечающее за автоматическое создание домашней директории для входящего на эту машину по ssh пользователю.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--subject-base&lt;/code&gt; — the certificate subject base (default O=&amp;lt;realm-name&amp;gt;).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--ca-subject&lt;/code&gt; — the CA certificate subject DN (default CN=Certificate Authority,O=&amp;lt;realm-name&amp;gt;).
+Ниже показаны различия в именах сертификатах без использования или с использованием этих опций.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Сертификат №1&lt;br&gt;CN=Certificate Authority,O=TEST2.LAN&lt;/th&gt;
+    &lt;th&gt;Сертификат №1&lt;br&gt;CN=test3.lan Root CA,O=test3.lan&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+    &lt;img src=&#34;https://debuntu.ru/img/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/cn-certificate-authority.png&#34;&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;img src=&#34;https://debuntu.ru/img/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/cn-certificate-authority.png&#34;&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;p&gt;В Chromium стандартный и специально именованный сертификаты отображаются так:&lt;/p&gt;
+&lt;h3 id=&#34;12-правила-задания-паролей-для-dm-аккаунта&#34;&gt;1.2. Правила задания паролей для DM-аккаунта&lt;/h3&gt;
+&lt;p&gt;Судя по исходникам, пароли могут содержать все ASCII-символы, кроме обратного слэша (видим следующее присваивание — bad_characters = &amp;lsquo;\&amp;rsquo; — в регулярных выражениях символ обратного слэша обычно обозначается двумя обратными слэшами). Наверное, наравне с обратным слэшем, лучше будет воздержаться от использования одинарных, обратных и двойных кавычек, а также прямого слэша и вертикальной черты.&lt;/p&gt;
+&lt;p&gt;Для генерации пароля, который не будет включать в себя символы слэшей и кавычек (одинарных, двойных и обратных), проще использовать утилиту &lt;code&gt;pwgen&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ pwgen --secure --symbols --remove-chars&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\\|/\&amp;#34;\&amp;#39;\`&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;42&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tD*&lt;span style=&#34;color:#000&#34;&gt;$6&lt;/span&gt;?6F~sBX.Q_8&amp;lt;_7RmR^$~1&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;sWJs70rY5_TqFyO
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Код, отвечающий за проверку паролей, можно найти в файле &lt;code&gt;freeipa-4.9.6/ipaserver/install/server/install.py&lt;/code&gt;:&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;def validate_dm_password(password):
+   if len(password) &amp;lt; 8:
+       raise ValueError(&amp;#34;Password must be at least 8 characters long&amp;#34;)
+   if any(ord(c) &amp;lt; 0x20 for c in password):
+       raise ValueError(&amp;#34;Password must not contain control characters&amp;#34;)
+   if any(ord(c) &amp;gt;= 0x7F for c in password):
+       raise ValueError(&amp;#34;Password must only contain ASCII characters&amp;#34;)
+
+   # Disallow characters that pkisilent doesn&amp;#39;t process properly:
+   bad_characters = &amp;#39;\\&amp;#39;
+   if any(c in bad_characters for c in password):
+       raise ValueError(&amp;#39;Password must not contain these characters: %s&amp;#39; %
+                        &amp;#39;, &amp;#39;.join(&amp;#39;&amp;#34;%s&amp;#34;&amp;#39; % c for c in bad_characters))
+
+   # TODO: Check https://fedorahosted.org/389/ticket/47849
+   # Actual behavior of setup-ds.pl is that it does not accept white
+   # space characters in password when called interactively but does when
+   # provided such password in INF file. But it ignores leading and trailing
+   # whitespaces in INF file.
+
+   # Disallow leading/trailing whaitespaces
+   if password.strip() != password:
+       raise ValueError(&amp;#39;Password must not start or end with whitespace.&amp;#39;)
+
+def validate_admin_password(password):
+   if len(password) &amp;lt; 8:
+       raise ValueError(&amp;#34;Password must be at least 8 characters long&amp;#34;)
+   if any(ord(c) &amp;lt; 0x20 for c in password):
+       raise ValueError(&amp;#34;Password must not contain control characters&amp;#34;)
+   if any(ord(c) &amp;gt;= 0x7F for c in password):
+       raise ValueError(&amp;#34;Password must only contain ASCII characters&amp;#34;)
+
+   # Disallow characters that pkisilent doesn&amp;#39;t process properly:
+   bad_characters = &amp;#39;\\&amp;#39;
+   if any(c in bad_characters for c in password):
+       raise ValueError(&amp;#39;Password must not contain these characters: %s&amp;#39; %
+                        &amp;#39;, &amp;#39;.join(&amp;#39;&amp;#34;%s&amp;#34;&amp;#39; % c for c in bad_characters))
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;h3 id=&#34;13-процесс-установки-первого-сервера-freeipa&#34;&gt;1.3. Процесс установки первого сервера FreeIPA&lt;/h3&gt;
+&lt;p&gt;Выполняем следующий скрипт и ждём окончания процедуры. В случае наличия на хосте только одного ip-адреса, переменную IP_ADDRESS и опцию &lt;code&gt;--ip-address&lt;/code&gt; можно не применять.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Для облегчения дальнейшей генерации паролей устанавливаем пакет pwgen&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo dnf -y install pwgen
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Generating new passwords&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;DM_PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;pwgen --secure --symbols --remove-chars&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;\\|/\&amp;#34;\&amp;#39;\`&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;42&lt;/span&gt; 1&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADMIN_PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;pwgen &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;14&lt;/span&gt; 1&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Saving new passwords to /root/freeipa_passwords.txt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt; -f /root/freeipa_passwords.txt &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;sudo mv /root/freeipa_passwords.txt /root/freeipa_passwords.txt.&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;date +%y%m%d-%H%M%S&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; -e &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;DM_PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADMIN_PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sudo tee /root/freeipa_passwords.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;IP_ADDRESS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;10.1.160.23&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;REALM_NAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;TEST3.LAN&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;10.0.0.5&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;10.0.0.6&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;10.0.0.7&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;SUBJECT_BASE&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;O=test3.lan DO Evo Group&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;CA_SUBJECT&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;CN=test3.lan DO Evo Group Root CA,O=test3.lan DO Evo Group&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ipa-server-install --unattended &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --ds-password&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;DM_PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; --admin-password&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ADMIN_PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --ip-address&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;IP_ADDRESS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; --realm&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REALM_NAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --setup-dns --no-forwarders --auto-reverse --allow-zone-overlap &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --no-hbac-allow --mkhomedir &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --ntp-server&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; --ntp-server&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER2&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; --ntp-server&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER3&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --subject-base&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SUBJECT_BASE&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; --ca-subject&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;CA_SUBJECT&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;details&gt;
+&lt;summary&gt;stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;The log file for this installation can be found in /var/log/ipaserver-install.log
+==============================================================================
+This program will set up the IPA Server.
+Version 4.9.6
+
+This includes:
+  * Configure a stand-alone CA (dogtag) for certificate management
+  * Configure the NTP client (chronyd)
+  * Create and configure an instance of Directory Server
+  * Create and configure a Kerberos Key Distribution Center (KDC)
+  * Configure Apache (httpd)
+  * Configure DNS (bind)
+  * Configure SID generation
+  * Configure the KDC to enable PKINIT
+
+Warning: skipping DNS resolution of host dev-ipa04.test3.lan
+The domain name has been determined based on the host name.
+
+Checking DNS domain test3.lan., please wait ...
+DNS check for domain test3.lan. failed: The DNS operation timed out after 24.01217746734619 seconds.
+Invalid IP address fe80::250:56ff:fea2:b7ed for dev-ipa04.test3.lan: cannot use link-local IP address fe80::250:56ff:
+fea2:b7ed
+Checking DNS forwarders, please wait ...
+Reverse zone 160.15.10.in-addr.arpa. will be created
+Using reverse zone(s) 160.15.10.in-addr.arpa.
+Trust is configured but no NetBIOS domain name found, setting it now.
+
+The IPA Master Server will be configured with:
+Hostname:       dev-ipa04.test3.lan
+IP address(es): 10.1.160.23
+Domain name:    test3.lan  
+Realm name:     TEST3.LAN  
+
+
+The CA will be configured with:
+Subject DN:   CN=test3.lan DO Evo Group Root CA
+Subject base: O=test3.lan DO Evo Group
+Chaining:     self-signed  
+
+BIND DNS server will be configured to serve IPA domain with:
+Forwarders:       8.8.8.8, 8.8.8.9
+Forward policy:   only
+Reverse zone(s):  160.15.10.in-addr.arpa.
+
+NTP server:     10.0.0.5
+NTP server:     10.0.0.6
+NTP server:     10.0.0.7
+Adding [10.1.160.23 dev-ipa04.test3.lan] to your /etc/hosts file
+Disabled p11-kit-proxy
+Synchronizing time
+Configuration of chrony was changed by installer.
+Attempting to sync time with chronyc.
+Time synchronization was successful.
+Configuring directory server (dirsrv). Estimated time: 30 seconds
+  [1/40]: creating directory server instance
+  [2/40]: tune ldbm plugin
+  [3/40]: adding default schema
+  [4/40]: enabling memberof plugin
+  [5/40]: enabling winsync plugin
+  [6/40]: configure password logging
+  [7/40]: configuring replication version plugin
+  [8/40]: enabling IPA enrollment plugin
+  [9/40]: configuring uniqueness plugin
+  [10/40]: configuring uuid plugin
+  [11/40]: configuring modrdn plugin
+  [12/40]: configuring DNS plugin
+  [13/40]: enabling entryUSN plugin
+  [14/40]: configuring lockout plugin
+  [15/40]: configuring topology plugin
+  [16/40]: creating indices
+  [17/40]: enabling referential integrity plugin
+  [18/40]: configuring certmap.conf
+  [19/40]: configure new location for managed entries
+  [20/40]: configure dirsrv ccache and keytab
+  [21/40]: enabling SASL mapping fallback
+  [22/40]: restarting directory server
+  [23/40]: adding sasl mappings to the directory
+  [24/40]: adding default layout
+  [25/40]: adding delegation layout
+  [26/40]: creating container for managed entries
+  [27/40]: configuring user private groups
+  [28/40]: configuring netgroups from hostgroups
+  [29/40]: creating default Sudo bind user
+  [30/40]: creating default Auto Member layout
+  [31/40]: adding range check plugin
+  [32/40]: adding entries for topology management
+  [33/40]: initializing group membership
+  [34/40]: adding master entry
+  [35/40]: initializing domain level
+  [36/40]: configuring Posix uid/gid generation
+  [37/40]: adding replication acis
+  [38/40]: activating sidgen plugin
+  [39/40]: activating extdom plugin
+  [40/40]: configuring directory to start on boot
+Done configuring directory server (dirsrv).
+Configuring Kerberos KDC (krb5kdc)
+  [1/10]: adding kerberos container to the directory
+  [2/10]: configuring KDC  
+  [3/10]: initialize kerberos container
+  [4/10]: adding default ACIs
+  [5/10]: creating a keytab for the directory
+  [6/10]: creating a keytab for the machine
+  [7/10]: adding the password extension to the directory
+  [8/10]: creating anonymous principal
+  [9/10]: starting the KDC
+  [10/10]: configuring KDC to start on boot
+Done configuring Kerberos KDC (krb5kdc).
+Configuring kadmin
+  [1/2]: starting kadmin
+  [2/2]: configuring kadmin to start on boot
+Done configuring kadmin.
+Configuring ipa-custodia
+  [1/5]: Making sure custodia container exists
+  [2/5]: Generating ipa-custodia config file
+  [3/5]: Generating ipa-custodia keys
+  [4/5]: starting ipa-custodia
+  [5/5]: configuring ipa-custodia to start on boot
+Done configuring ipa-custodia.
+Configuring certificate server (pki-tomcatd). Estimated time: 3 minutes
+  [1/28]: configuring certificate server instance
+  [2/28]: stopping certificate server instance to update CS.cfg
+  [3/28]: backing up CS.cfg
+  [4/28]: Add ipa-pki-wait-running
+  [5/28]: secure AJP connector
+  [6/28]: reindex attributes
+  [7/28]: exporting Dogtag certificate store pin
+  [8/28]: disabling nonces
+  [9/28]: set up CRL publishing
+  [10/28]: enable PKIX certificate path discovery and validation
+  [11/28]: authorizing RA to modify profiles
+  [12/28]: authorizing RA to manage lightweight CAs
+  [13/28]: Ensure lightweight CAs container exists
+  [14/28]: starting certificate server instance
+  [15/28]: configure certmonger for renewals
+  [16/28]: requesting RA certificate from CA
+  [17/28]: publishing the CA certificate
+  [18/28]: adding RA agent as a trusted user
+  [19/28]: configure certificate renewals
+  [20/28]: Configure HTTP to proxy connections
+  [21/28]: updating IPA configuration
+  [22/28]: enabling CA instance
+  [23/28]: importing IPA certificate profiles
+  [24/28]: migrating certificate profiles to LDAP
+  [25/28]: adding default CA ACL
+  [26/28]: adding &amp;#39;ipa&amp;#39; CA entry
+  [27/28]: configuring certmonger renewal for lightweight CAs
+  [28/28]: deploying ACME service
+Done configuring certificate server (pki-tomcatd).
+Configuring directory server (dirsrv)
+  [1/3]: configuring TLS for DS instance
+  [2/3]: adding CA certificate entry
+  [3/3]: restarting directory server
+Done configuring directory server (dirsrv).
+Configuring ipa-otpd
+  [1/2]: starting ipa-otpd
+  [2/2]: configuring ipa-otpd to start on boot
+Done configuring ipa-otpd.
+Configuring the web interface (httpd)
+  [1/21]: stopping httpd
+  [2/21]: backing up ssl.conf
+  [3/21]: disabling nss.conf
+  [4/21]: configuring mod_ssl certificate paths
+  [5/21]: setting mod_ssl protocol list
+  [6/21]: configuring mod_ssl log directory
+  [7/21]: disabling mod_ssl OCSP
+  [8/21]: adding URL rewriting rules
+  [9/21]: configuring httpd
+Nothing to do for configure_httpd_wsgi_conf
+  [10/21]: setting up httpd keytab
+  [11/21]: configuring Gssproxy
+  [12/21]: setting up ssl  
+  [13/21]: configure certmonger for renewals
+  [14/21]: publish CA cert
+  [15/21]: clean up any existing httpd ccaches
+  [16/21]: configuring SELinux for httpd
+  [17/21]: create KDC proxy config
+  [18/21]: enable KDC proxy
+  [19/21]: starting httpd  
+  [20/21]: configuring httpd to start on boot
+  [21/21]: enabling oddjobd
+Done configuring the web interface (httpd).
+Configuring Kerberos KDC (krb5kdc)
+  [1/1]: installing X509 Certificate for PKINIT
+Done configuring Kerberos KDC (krb5kdc).
+Applying LDAP updates
+Upgrading IPA:. Estimated time: 1 minute 30 seconds
+  [1/10]: stopping directory server
+  [2/10]: saving configuration
+  [3/10]: disabling listeners
+  [4/10]: enabling DS global lock
+  [5/10]: disabling Schema Compat
+  [6/10]: starting directory server
+  [7/10]: upgrading server
+Could not get dnaHostname entries in 60 seconds
+  [8/10]: stopping directory server
+  [9/10]: restoring configuration
+  [10/10]: starting directory server
+Done.
+Restarting the KDC
+dnssec-validation yes
+Configuring DNS (named)
+  [1/12]: generating rndc key file
+  [2/12]: adding DNS container
+  [3/12]: setting up our zone
+  [4/12]: setting up reverse zone
+  [5/12]: setting up our own record
+  [6/12]: setting up records for other masters
+  [7/12]: adding NS record to the zones
+  [8/12]: setting up kerberos principal
+  [9/12]: setting up named.conf
+created new /etc/named.conf
+created named user config &amp;#39;/etc/named/ipa-ext.conf&amp;#39;
+created named user config &amp;#39;/etc/named/ipa-options-ext.conf&amp;#39;
+created named user config &amp;#39;/etc/named/ipa-logging-ext.conf&amp;#39;
+  [10/12]: setting up server configuration
+  [11/12]: configuring named to start on boot
+  [12/12]: changing resolv.conf to point to ourselves
+Done configuring DNS (named).
+Restarting the web server to pick up resolv.conf changes
+Configuring DNS key synchronization service (ipa-dnskeysyncd)
+  [1/7]: checking status
+  [2/7]: setting up bind-dyndb-ldap working directory
+  [3/7]: setting up kerberos principal
+  [4/7]: setting up SoftHSM
+  [5/7]: adding DNSSEC containers
+  [6/7]: creating replica keys
+  [7/7]: configuring ipa-dnskeysyncd to start on boot
+Done configuring DNS key synchronization service (ipa-dnskeysyncd).
+Restarting ipa-dnskeysyncd
+Restarting named
+Updating DNS system records
+Configuring SID generation
+  [1/8]: creating samba domain object
+  [2/8]: adding admin(group) SIDs
+  [3/8]: adding RID bases  
+  [4/8]: updating Kerberos config
+&amp;#39;dns_lookup_kdc&amp;#39; already set to &amp;#39;true&amp;#39;, nothing to do.
+  [5/8]: activating sidgen task
+  [6/8]: restarting Directory Server to take MS PAC and LDAP plugins changes into account
+  [7/8]: adding fallback group
+  [8/8]: adding SIDs to existing users and groups
+This step may take considerable amount of time, please wait..
+Done.
+Configuring client side components
+This program will set up IPA client.
+Version 4.9.6
+
+Using existing certificate &amp;#39;/etc/ipa/ca.crt&amp;#39;.
+Client hostname: dev-ipa04.test3.lan
+Realm: TEST3.LAN
+DNS Domain: test3.lan
+IPA Server: dev-ipa04.test3.lan
+BaseDN: dc=test3,dc=lan
+
+Configured sudoers in /etc/authselect/user-nsswitch.conf
+Configured /etc/sssd/sssd.conf
+Systemwide CA database updated.
+Adding SSH public key from /etc/ssh/ssh_host_rsa_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ed25519_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ecdsa_key.pub
+SSSD enabled
+Configured /etc/openldap/ldap.conf
+Configured /etc/ssh/ssh_config
+Configured /etc/ssh/sshd_config
+Configuring test3.lan as NIS domain.
+Client configuration complete.
+The ipa-client-install command was successful
+
+==============================================================================
+Setup complete
+
+Next steps:
+        1. You must make sure these network ports are open:
+                TCP Ports:
+                  * 80, 443: HTTP/HTTPS
+                  * 389, 636: LDAP/LDAPS
+                  * 88, 464: kerberos
+                  * 53: bind
+                UDP Ports:
+                  * 88, 464: kerberos
+                  * 53: bind
+                  * 123: ntp
+
+        2. You can now obtain a kerberos ticket using the command: &amp;#39;kinit admin&amp;#39;
+           This ticket will allow you to use the IPA tools (e.g., ipa user-add)
+           and the web user interface.
+
+Be sure to back up the CA certificates stored in /root/cacert.p12
+These files are required to create replicas. The password for these
+files is the Directory Manager password
+The ipa-server-install command was successful
+&lt;/code&gt;&lt;/pre&gt;&lt;/details&gt;
+&lt;h3 id=&#34;14-вход-в-web-ui-freeipa&#34;&gt;1.4. Вход в Web UI FreeIPA&lt;/h3&gt;
+&lt;p&gt;Пока отсутствует DNS resolving для нового домена test3.lan, добавляем на свою рабочую машину в файл &lt;code&gt;/etc/hosts&lt;/code&gt; запись для FreeIPA-сервера:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;10.1.160.23 dev-ipa04.test3.lan&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sudo tee -a /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Теперь можно открыть WEB UI страницу FreeIPA-сервера по адресу &amp;lsquo;&lt;a href=&#34;https://dev-ipa04.test3.lan&#34;&gt;https://dev-ipa04.test3.lan&lt;/a&gt;&amp;rsquo; и зайти в консоль управления под учётными данными аккаунта &amp;lsquo;admin&amp;rsquo;:&lt;/p&gt;
+&lt;p&gt;CA-сертификат, для добавления нового домена test3.lan в &amp;ldquo;надёжные&amp;rdquo;, можно скачать здесь:&lt;/p&gt;
+&lt;h3 id=&#34;15-настройка-dns-перед-добавление-дополнительных-реплик&#34;&gt;1.5. Настройка DNS перед добавление дополнительных реплик&lt;/h3&gt;
+&lt;p&gt;По умолчанию, при введении новой машины в домен, соответствующая PTR-запись в обратной зоне DNS не создаётся. Если я правильно помню, то это делается в целях сохранения производительности FreeIPA. Видимо, при достаточном количестве машин одновременно меняющих ip-адреса&amp;hellip;. бла-бла-бла. Опция &amp;lsquo;Allow PTR sync&amp;rsquo; доступна для отдельной DNS-зоны и глобально для DNS-сервера. В нашем случае включим опцию для DNS-сервера.&lt;/p&gt;
+&lt;p&gt;Также добавим пару форвардеров и переведём политику пересылки DNS-запросов в режим &amp;lsquo;forward only&amp;rsquo;, так как наши FreeIPA-серверы лишены доступа к интернету и не имеют возможности  рекурсивно опрашивать публичные DNS-серверы. Напомню, что в режиме &amp;lsquo;forward first&amp;rsquo;, DNS-сервер сначала отправит запрос форвардер-серверами. В случае не успеха, DNS-сервер начнёт сам опрашивать те самые корневые DNS-сервера и в зависимости от их ответа, дальше рекурсивно постарается дойти до авторитативного DNS-сервера, который держит зону имеющую ответ на первоначальный запрос.&lt;/p&gt;
+&lt;p&gt;Включаем опции для DNS-сервера одним из двух способов:&lt;/p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+  &lt;th&gt;Через командную строку&lt;/th&gt;
+  &lt;th&gt;Через Web UI по адресу&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+  &lt;td&gt;
+&lt;pre&gt;&lt;code&gt;
+kinit admin&lt;br&gt;
+ipa dnsconfig-mod \
+  --allow-sync-ptr=1 \
+  --forwarder=&#34;8.8.8.8&#34; \
+  --forwarder=&#34;1.1.1.1&#34; \
+  --forward-policy=&#39;only&#39;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/td&gt;
+  &lt;td&gt;
+https://url-ipa-server.example.org/ipa/ui/#/e/dnsconfig/details
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;16-отключение-анонимного-доступа-к-ldap-каталогу&#34;&gt;1.6. Отключение анонимного доступа к LDAP-каталогу&lt;/h3&gt;
+&lt;p&gt;Процедура выполняется для каждого сервера, так как изменения производятся в нереплицируемой части LDAP-каталога &amp;lsquo;cn=config&amp;rsquo;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;IPAREPLICA&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;dev-ipa04.test3.lan&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; +o &lt;span style=&#34;color:#204a87&#34;&gt;history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;DMPASS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;qMSxV(EvB#o&amp;gt;Brd,0&amp;lt;6n;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; -o &lt;span style=&#34;color:#204a87&#34;&gt;history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ldapmodify -x -D &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cn=Directory Manager&amp;#34;&lt;/span&gt; -w &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;DMPASS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; -h &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;IPAREPLICA&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; -ZZ &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;dn: cn=config
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;changetype: modify
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;replace: nsslapd-allow-anonymous-access
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;nsslapd-allow-anonymous-access: rootdse
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ipactl restart
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-бэкап-важной-особо-секретной-информации&#34;&gt;2. Бэкап важной особо секретной информации&lt;/h2&gt;
+&lt;p&gt;После первого поднятия домена необходимо сохранить следующую важную информацию в безопасном месте с ограниченным доступом:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Пароль аккаунта &amp;lsquo;cn=Directory Manager&amp;rsquo;. Находится в первой строке файла &lt;code&gt;/root/freeipa_passwords.txt&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Пароль аккаунта &amp;lsquo;uid=admin,cn=users,cn=accounts,dc=test3,dc=lan&amp;rsquo;. Находится в второй строке файла &lt;code&gt;/root/freeipa_passwords.txt&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Файл &lt;code&gt;/root/cacert.p12&lt;/code&gt; с приватным ключом и сертификатом от Центра Сертификации. Здесь необходимо продублировать пароль от &amp;lsquo;cn=Directory Manager&amp;rsquo;, так как на его основе, на данный момент, зашифровано содержимое файла &lt;code&gt;cacert.p12&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Надёжно сохранив пароли для УЗ &amp;lsquo;cn=Directory Manager&amp;rsquo; и &amp;lsquo;uid=admin&amp;rsquo; в надёжном месте, удаляем файл &lt;code&gt;/root/freeipa_passwords.txt&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo shred -u /root/freeipa_passwords.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Напомню, что безопасное удаление с помощью утилиты &amp;lsquo;shred&amp;rsquo; может быть обратимо, например, на журналируемых файловых системах. Поэтому, в некоторых случаях, необходимо переработать данный сценарий установки FreeIPA-сервера, где пароли бы не сохранялись в файл на жёсткий диск.&lt;/p&gt;
+&lt;h2 id=&#34;3-утилита-ipa-healthcheck&#34;&gt;3. Утилита ipa-healthcheck&lt;/h2&gt;
+&lt;p&gt;Запуск ipa-healtcheck завершается с четырьмя замечаниями:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ipa-healthcheck
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;[&lt;/span&gt;                                                                                                                      
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;source&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ipahealthcheck.ipa.certs&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;check&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;IPADogtagCertsMatchCheck&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;result&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ERROR&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;uuid&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;9128d242-ce51-460d-8d86-55327e988f52&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;when&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;20220110145522Z&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;duration&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;0.475297&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;kw&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;key&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ocspSigningCert cert-pki-ca&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;nickname&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ocspSigningCert cert-pki-ca&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;dbdir&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/etc/pki/pki-tomcat/alias&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;msg&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;source&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ipahealthcheck.ipa.certs&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;check&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;IPADogtagCertsMatchCheck&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;result&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ERROR&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;uuid&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;19846c1c-a7f5-4dc0-9821-716d644fc063&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;when&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;20220110145522Z&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;duration&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;0.523545&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;kw&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;key&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;subsystemCert cert-pki-ca&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;nickname&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;subsystemCert cert-pki-ca&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;dbdir&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/etc/pki/pki-tomcat/alias&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;msg&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;source&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ipahealthcheck.ipa.certs&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;check&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;IPADogtagCertsMatchCheck&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;result&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ERROR&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;uuid&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;87f5ae43-3460-4aca-8d58-b31a2370b460&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;when&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;20220110145522Z&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;duration&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;0.571182&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;kw&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;key&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;auditSigningCert cert-pki-ca&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;nickname&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;auditSigningCert cert-pki-ca&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;dbdir&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/etc/pki/pki-tomcat/alias&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;msg&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;source&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ipahealthcheck.ipa.certs&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;check&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;IPADogtagCertsMatchCheck&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;result&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ERROR&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;uuid&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;6833a0ac-0e37-4185-b9de-9a01e91bc8e2&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;when&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;20220110145522Z&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;duration&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;0.618206&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;kw&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;key&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Server-Cert cert-pki-ca&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;nickname&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;Server-Cert cert-pki-ca&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;dbdir&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/etc/pki/pki-tomcat/alias&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;msg&amp;#34;&lt;/span&gt;: &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Надо будет разрешить эти проблемки.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;certutil -d sql:/etc/pki/pki-tomcat/alias -L
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Certificate Nickname                                         Trust Attributes
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                                                             SSL,S/MIME,JAR/XPI
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;caSigningCert cert-pki-ca                                    CTu,Cu,Cu
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ocspSigningCert cert-pki-ca                                  u,u,u
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;auditSigningCert cert-pki-ca                                 u,u,Pu
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;subsystemCert cert-pki-ca                                    u,u,u
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Server-Cert cert-pki-ca                                      u,u,u
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 03. Добавление реплик к первому серверу FreeIPA</title>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</link>
+      <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;1-заметки-по-установке-реплик&#34;&gt;1. Заметки по установке реплик&lt;/h2&gt;
+&lt;p&gt;В отличие от установки первого FreeIPA-сервере, где скрипт &lt;code&gt;ipa-server-install&lt;/code&gt; сначала поднял контроллер домена с новым доменом, а потом ввёл машину в этот домен, то в случае добавления реплик, необходимо сначала ввести машины в домен, а только потом установить на машины ПО контроллеров домена.&lt;/p&gt;
+&lt;h2 id=&#34;2-введение-машин-в-домен&#34;&gt;2. Введение машин в домен&lt;/h2&gt;
+&lt;p&gt;На второй и третьей реплике выполняем одинаковые действия. Отличия могут возникнуть в том случае, если на машинах используется несколько ip-адресов. В этом случае, указываем &amp;lsquo;master ip address&amp;rsquo; в опции &amp;lsquo;&amp;ndash;ip-address&amp;rsquo;.&lt;/p&gt;
+&lt;h3 id=&#34;указание-dns-резолвера&#34;&gt;Указание DNS-резолвера&lt;/h3&gt;
+&lt;p&gt;На следующем хосте, предназначенном для дополнительной реплики, добавляем запись в &lt;code&gt;/etc/resolv.conf&lt;/code&gt;, чтобы система могла найти контроллер домена &amp;rsquo;test.lan&amp;rsquo;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;nameserver 10.1.160.23&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; sudo tee /etc/resolv.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;ввод-хоста-в-домен&#34;&gt;Ввод хоста в домен&lt;/h3&gt;
+
+
+&lt;div class=&#34;pageinfo pageinfo-primary&#34;&gt;
+&lt;p&gt;При вводе машины в домен, если на машине один ip-адрес, то опцию &amp;lsquo;&amp;ndash;ip-address&amp;rsquo; можно опустить.&lt;/p&gt;
+&lt;p&gt;Также, в большинстве случаев, можно опустить опцию &amp;lsquo;&amp;ndash;realm&amp;rsquo;, так как это значение, при правильно работающем DNS, автоматически разрешится из SRV-записи &amp;lsquo;_kerberos.example.org&amp;rsquo;.&lt;/p&gt;
+&lt;p&gt;Опцией &amp;lsquo;&amp;ndash;ntp-server&amp;rsquo; можно пренебречь, если в DNS присутствуют необходимые записи. (Необходимо разобраться в этом вопросе).&lt;/p&gt;
+
+&lt;/div&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Запускаем процедуру ввода машины в домен:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; +o &lt;span style=&#34;color:#204a87&#34;&gt;history&lt;/span&gt;           &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Отключаем запись history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;PRINCIPAL&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;admin&amp;#39;&lt;/span&gt;        &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Принципал с ролью &amp;#39;Enrollment Administrator&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;eik3Co2rohnah&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; -o &lt;span style=&#34;color:#204a87&#34;&gt;history&lt;/span&gt;           &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Возвращаем запись history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;IP_ADDRESS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;10.1.160.24&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;REALM_NAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;TEST3.LAN&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER1&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;10.0.0.5&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER2&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;10.0.0.6&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER3&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;10.0.0.7&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ipa-client-install --unattended &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --principal&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;PRINCIPAL&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; --password&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --ip-address&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;IP_ADDRESS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --realm&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REALM_NAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --ntp-server&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER1&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; --ntp-server&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER2&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; --ntp-server&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;NTP_SERVER3&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --mkhomedir
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt; &lt;details&gt;
+ &lt;summary&gt;stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;This program will set up IPA client.
+Version 4.9.6
+
+Discovery was successful!
+Client hostname: dev-ipa05p.test3.lan
+Realm: TEST3.LAN
+DNS Domain: test3.lan
+IPA Server: dev-ipa04p.test3.lan
+BaseDN: dc=test3,dc=lan
+NTP server: 10.1.85.5
+NTP server: 10.1.85.6
+NTP server: 10.1.85.7
+
+Synchronizing time
+Configuration of chrony was changed by installer.
+Attempting to sync time with chronyc.
+Time synchronization was successful.
+Successfully retrieved CA cert
+    Subject:     CN=test3.lan DO Evo Group Root CA,O=test3.lan DO Evo Group
+    Issuer:      CN=test3.lan DO Evo Group Root CA,O=test3.lan DO Evo Group
+    Valid From:  2021-12-20 17:35:47
+    Valid Until: 2041-12-20 17:35:47
+
+Enrolled in IPA realm TEST3.LAN
+Created /etc/ipa/default.conf
+Configured sudoers in /etc/authselect/user-nsswitch.conf
+Configured /etc/sssd/sssd.conf
+Configured /etc/krb5.conf for IPA realm TEST3.LAN
+Systemwide CA database updated.
+Hostname (dev-ipa05p.test3.lan) does not have A/AAAA record.
+Missing reverse record(s) for address(es): 10.1.160.24.
+Adding SSH public key from /etc/ssh/ssh_host_rsa_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ed25519_key.pub
+Adding SSH public key from /etc/ssh/ssh_host_ecdsa_key.pub
+SSSD enabled
+Configured /etc/openldap/ldap.conf
+Configured /etc/ssh/ssh_config
+Configured /etc/ssh/sshd_config
+Configuring test3.lan as NIS domain.
+Client configuration complete.
+The ipa-client-install command was successful
+&lt;/code&gt;&lt;/pre&gt; &lt;/details&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;3-процесс-установки-дополнительных-реплик-freeipa&#34;&gt;3. Процесс установки дополнительных реплик FreeIPA&lt;/h2&gt;
+&lt;h3 id=&#34;31-установка-ipa-реплики&#34;&gt;3.1. Установка IPA-реплики&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;На обоих хостах, поочерёдно, выполняем установку FreeIPA-реплик:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Временно выключаем запись history для предотвращения компрометации пароля&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; +o &lt;span style=&#34;color:#204a87&#34;&gt;history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Принципал любой, но с правом добавления реплик в домен&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;PRINCIPAL&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;admin&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;eik3Co2rohnah&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Возвращаем запись history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;set&lt;/span&gt; -o &lt;span style=&#34;color:#204a87&#34;&gt;history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;IP_ADDRESS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;10.1.160.24&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ipa-replica-install --unattended &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --principal&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;PRINCIPAL&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; --admin-password&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;PASSWORD&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --ip-address&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;IP_ADDRESS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --setup-ca &lt;span style=&#34;color:#4e9a06&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  --setup-dns --no-forwarders
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt; &lt;details&gt;
+ &lt;summary&gt;stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Lookup failed: Preferred host dev-ipa05p.test3.lan does not provide DNS.
+Run connection check to master
+Connection check OK
+Disabled p11-kit-proxy
+Configuring directory server (dirsrv). Estimated time: 30 seconds
+  [1/38]: creating directory server instance
+  [2/38]: tune ldbm plugin 
+  [3/38]: adding default schema
+  [4/38]: enabling memberof plugin
+  [5/38]: enabling winsync plugin
+  [6/38]: configure password logging
+  [7/38]: configuring replication version plugin
+  [8/38]: enabling IPA enrollment plugin
+  [9/38]: configuring uniqueness plugin
+  [10/38]: configuring uuid plugin
+  [11/38]: configuring modrdn plugin
+  [12/38]: configuring DNS plugin
+  [13/38]: enabling entryUSN plugin
+  [14/38]: configuring lockout plugin
+  [15/38]: configuring topology plugin
+  [16/38]: creating indices
+  [17/38]: enabling referential integrity plugin
+  [18/38]: configuring certmap.conf
+  [19/38]: configure new location for managed entries
+  [20/38]: configure dirsrv ccache and keytab
+  [21/38]: enabling SASL mapping fallback
+  [22/38]: restarting directory server
+  [23/38]: creating DS keytab
+  [24/38]: ignore time skew for initial replication
+  [25/38]: setting up initial replication
+Starting replication, please wait until this has completed.
+Update in progress, 5 seconds elapsed
+Update succeeded
+
+  [26/38]: prevent time skew after initial replication
+  [27/38]: adding sasl mappings to the directory
+  [28/38]: updating schema 
+  [29/38]: setting Auto Member configuration
+  [30/38]: enabling S4U2Proxy delegation
+  [31/38]: initializing group membership
+  [32/38]: adding master entry
+  [33/38]: initializing domain level
+  [34/38]: configuring Posix uid/gid generation
+  [35/38]: adding replication acis
+  [36/38]: activating sidgen plugin
+  [37/38]: activating extdom plugin
+  [38/38]: configuring directory to start on boot
+Done configuring directory server (dirsrv).
+Replica DNS records could not be added on master: Insufficient access: Insufficient &amp;#39;add&amp;#39; privilege to add the entry &amp;#39;idnsname=dev-ipa05p,idnsname=test3.lan.,cn=dns,dc=test3,dc=lan&amp;#39;.
+Configuring Kerberos KDC (krb5kdc)
+  [1/5]: configuring KDC
+  [2/5]: adding the password extension to the directory
+  [3/5]: creating anonymous principal
+  [4/5]: starting the KDC  
+  [5/5]: configuring KDC to start on boot
+Done configuring Kerberos KDC (krb5kdc).
+Configuring kadmin
+  [1/2]: starting kadmin
+  [2/2]: configuring kadmin to start on boot
+Done configuring kadmin.
+Configuring directory server (dirsrv)
+  [1/3]: configuring TLS for DS instance
+  [2/3]: importing CA certificates from LDAP
+  [3/3]: restarting directory server
+Done configuring directory server (dirsrv).
+Configuring the web interface (httpd)
+  [1/21]: stopping httpd
+  [2/21]: backing up ssl.conf
+  [3/21]: disabling nss.conf
+  [4/21]: configuring mod_ssl certificate paths
+  [5/21]: setting mod_ssl protocol list
+  [6/21]: configuring mod_ssl log directory
+  [7/21]: disabling mod_ssl OCSP
+  [8/21]: adding URL rewriting rules
+  [9/21]: configuring httpd
+Nothing to do for configure_httpd_wsgi_conf
+  [10/21]: setting up httpd keytab
+  [11/21]: configuring Gssproxy
+  [12/21]: setting up ssl  
+  [13/21]: configure certmonger for renewals
+  [14/21]: publish CA cert 
+  [15/21]: clean up any existing httpd ccaches
+  [16/21]: configuring SELinux for httpd
+  [17/21]: create KDC proxy config
+  [18/21]: enable KDC proxy
+  [19/21]: starting httpd  
+  [20/21]: configuring httpd to start on boot
+  [21/21]: enabling oddjobd
+Done configuring the web interface (httpd).
+Configuring ipa-otpd
+  [1/2]: starting ipa-otpd 
+  [2/2]: configuring ipa-otpd to start on boot
+Done configuring ipa-otpd. 
+Custodia uses &amp;#39;dev-ipa04p.test3.lan&amp;#39; as master peer.
+Configuring ipa-custodia
+  [1/4]: Generating ipa-custodia config file
+  [2/4]: Generating ipa-custodia keys
+  [3/4]: starting ipa-custodia
+  [4/4]: configuring ipa-custodia to start on boot
+Done configuring ipa-custodia.
+Configuring certificate server (pki-tomcatd). Estimated time: 3 minutes
+  [1/29]: creating certificate server db
+  [2/29]: setting up initial replication
+Starting replication, please wait until this has completed.
+Update in progress, 7 seconds elapsed
+Update succeeded
+
+  [3/29]: creating ACIs for admin
+  [4/29]: creating installation admin user
+  [5/29]: configuring certificate server instance
+  [6/29]: stopping certificate server instance to update CS.cfg
+  [7/29]: backing up CS.cfg
+  [8/29]: Add ipa-pki-wait-running
+  [9/29]: secure AJP connector
+  [10/29]: reindex attributes
+  [11/29]: exporting Dogtag certificate store pin
+  [12/29]: disabling nonces
+  [13/29]: set up CRL publishing
+  [14/29]: enable PKIX certificate path discovery and validation
+  [15/29]: authorizing RA to modify profiles
+  [16/29]: authorizing RA to manage lightweight CAs
+  [17/29]: Ensure lightweight CAs container exists
+  [18/29]: destroying installation admin user
+  [19/29]: starting certificate server instance
+  [20/29]: Finalize replication settings
+  [21/29]: configure certmonger for renewals
+  [22/29]: Importing RA key
+  [23/29]: configure certificate renewals
+  [24/29]: Configure HTTP to proxy connections
+  [25/29]: updating IPA configuration
+  [26/29]: enabling CA instance
+  [27/29]: importing IPA certificate profiles
+  [28/29]: configuring certmonger renewal for lightweight CAs
+  [29/29]: deploying ACME service
+Done configuring certificate server (pki-tomcatd).
+Configuring Kerberos KDC (krb5kdc)
+  [1/1]: installing X509 Certificate for PKINIT
+Done configuring Kerberos KDC (krb5kdc).
+Applying LDAP updates
+Upgrading IPA:. Estimated time: 1 minute 30 seconds
+  [1/10]: stopping directory server
+  [2/10]: saving configuration
+  [3/10]: disabling listeners
+  [4/10]: enabling DS global lock
+  [5/10]: disabling Schema Compat
+  [6/10]: starting directory server
+  [7/10]: upgrading server 
+  [8/10]: stopping directory server
+  [9/10]: restoring configuration
+  [10/10]: starting directory server
+Done.
+Finalize replication settings
+Restarting the KDC
+dnssec-validation yes
+Configuring DNS (named)
+  [1/8]: generating rndc key file
+  [2/8]: setting up our own record
+  [3/8]: adding NS record to the zones
+  [4/8]: setting up kerberos principal
+  [5/8]: setting up named.conf
+created new /etc/named.conf
+created named user config &amp;#39;/etc/named/ipa-ext.conf&amp;#39;
+created named user config &amp;#39;/etc/named/ipa-options-ext.conf&amp;#39;
+named user config &amp;#39;/etc/named/ipa-logging-ext.conf&amp;#39; already exists
+  [6/8]: setting up server configuration
+  [7/8]: configuring named to start on boot
+  [8/8]: changing resolv.conf to point to ourselves
+Done configuring DNS (named).
+Restarting the web server to pick up resolv.conf changes
+Configuring DNS key synchronization service (ipa-dnskeysyncd)
+  [1/7]: checking status
+  [2/7]: setting up bind-dyndb-ldap working directory
+  [3/7]: setting up kerberos principal
+  [4/7]: setting up SoftHSM
+  [5/7]: adding DNSSEC containers
+DNSSEC container exists (step skipped)
+  [6/7]: creating replica keys
+  [7/7]: configuring ipa-dnskeysyncd to start on boot
+Done configuring DNS key synchronization service (ipa-dnskeysyncd).
+Restarting ipa-dnskeysyncd 
+Restarting named
+Updating DNS system records
+
+Global DNS configuration in LDAP server is not empty
+The following configuration options override local settings in named.conf:
+
+API Version number was not sent, forward compatibility not guaranteed. Assuming server&amp;#39;s API version, 2.245
+  Global forwarders: 8.8.8.8, 1.1.1.1
+  Forward policy: only
+  Allow PTR sync: TRUE
+  IPA DNS servers: dev-ipa04p.test3.lan
+
+Configuring SID generation 
+  [1/7]: creating samba domain object
+Samba domain object already exists
+  [2/7]: adding admin(group) SIDs
+Admin SID already set, nothing to do
+Admin group SID already set, nothing to do
+  [3/7]: adding RID bases  
+RID bases already set, nothing to do
+  [4/7]: updating Kerberos config
+&amp;#39;dns_lookup_kdc&amp;#39; already set to &amp;#39;true&amp;#39;, nothing to do.
+  [5/7]: activating sidgen task
+  [6/7]: restarting Directory Server to take MS PAC and LDAP plugins changes into account
+  [7/7]: adding fallback group
+Fallback group already set, nothing to do
+Done.
+The ipa-replica-install command was successful
+&lt;/code&gt;&lt;/pre&gt; &lt;/details&gt;&lt;br&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;32-отключение-анонимного-доступа-к-ldap-каталогу&#34;&gt;3.2. Отключение анонимного доступа к LDAP-каталогу.&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Процедура выполняется для каждого сервера, так как изменения производятся в нереплицируемой части LDAP-каталога &amp;lsquo;cn=config&amp;rsquo;:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;IPAREPLICA&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;hostname&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;DMPASS&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;DirectoryManagerPassword&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ldapmodify -x -D &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cn=Directory Manager&amp;#34;&lt;/span&gt; -w &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;DMPASS&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; -h &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;IPAREPLICA&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; -Z &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;lt;&amp;lt; EOF
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;dn: cn=config
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;changetype: modify
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;replace: nsslapd-allow-anonymous-access
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;nsslapd-allow-anonymous-access: rootdse
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ipactl restart
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;4-запуск-ipa-healthcheck&#34;&gt;4. Запуск ipa-healthcheck&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Запуск ipa-healtcheck завершается с пятью замечаниями:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo ipa-healthcheck
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt; &lt;details&gt;
+ &lt;summary&gt;stdout...&lt;/summary&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[
+  {
+    &amp;#34;source&amp;#34;: &amp;#34;ipahealthcheck.ipa.certs&amp;#34;,
+    &amp;#34;check&amp;#34;: &amp;#34;IPADogtagCertsMatchCheck&amp;#34;,
+    &amp;#34;result&amp;#34;: &amp;#34;ERROR&amp;#34;,
+    &amp;#34;uuid&amp;#34;: &amp;#34;9cbe0184-f345-4124-8c2a-984e7054a937&amp;#34;,
+    &amp;#34;when&amp;#34;: &amp;#34;20220110183632Z&amp;#34;,
+    &amp;#34;duration&amp;#34;: &amp;#34;0.493357&amp;#34;,
+    &amp;#34;kw&amp;#34;: {
+      &amp;#34;key&amp;#34;: &amp;#34;ocspSigningCert cert-pki-ca&amp;#34;,
+      &amp;#34;nickname&amp;#34;: &amp;#34;ocspSigningCert cert-pki-ca&amp;#34;,
+      &amp;#34;dbdir&amp;#34;: &amp;#34;/etc/pki/pki-tomcat/alias&amp;#34;,
+      &amp;#34;msg&amp;#34;: &amp;#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&amp;#34;
+    }
+  },
+  {
+    &amp;#34;source&amp;#34;: &amp;#34;ipahealthcheck.ipa.certs&amp;#34;,
+    &amp;#34;check&amp;#34;: &amp;#34;IPADogtagCertsMatchCheck&amp;#34;,
+    &amp;#34;result&amp;#34;: &amp;#34;ERROR&amp;#34;,
+    &amp;#34;uuid&amp;#34;: &amp;#34;02ba1554-6554-4351-bae2-28a136895d97&amp;#34;,
+    &amp;#34;when&amp;#34;: &amp;#34;20220110183632Z&amp;#34;,
+    &amp;#34;duration&amp;#34;: &amp;#34;0.543730&amp;#34;,
+    &amp;#34;kw&amp;#34;: {
+      &amp;#34;key&amp;#34;: &amp;#34;subsystemCert cert-pki-ca&amp;#34;,
+      &amp;#34;nickname&amp;#34;: &amp;#34;subsystemCert cert-pki-ca&amp;#34;,
+      &amp;#34;dbdir&amp;#34;: &amp;#34;/etc/pki/pki-tomcat/alias&amp;#34;,
+      &amp;#34;msg&amp;#34;: &amp;#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&amp;#34;
+    }
+  },
+  {
+    &amp;#34;source&amp;#34;: &amp;#34;ipahealthcheck.ipa.certs&amp;#34;,
+    &amp;#34;check&amp;#34;: &amp;#34;IPADogtagCertsMatchCheck&amp;#34;,
+    &amp;#34;result&amp;#34;: &amp;#34;ERROR&amp;#34;,
+    &amp;#34;uuid&amp;#34;: &amp;#34;5310274f-427c-4d4e-aa8e-bf10a8635102&amp;#34;,
+    &amp;#34;when&amp;#34;: &amp;#34;20220110183632Z&amp;#34;,
+    &amp;#34;duration&amp;#34;: &amp;#34;0.591251&amp;#34;,
+    &amp;#34;kw&amp;#34;: {
+      &amp;#34;key&amp;#34;: &amp;#34;auditSigningCert cert-pki-ca&amp;#34;,
+      &amp;#34;nickname&amp;#34;: &amp;#34;auditSigningCert cert-pki-ca&amp;#34;,
+      &amp;#34;dbdir&amp;#34;: &amp;#34;/etc/pki/pki-tomcat/alias&amp;#34;,
+      &amp;#34;msg&amp;#34;: &amp;#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&amp;#34;
+    }
+  },
+  {
+    &amp;#34;source&amp;#34;: &amp;#34;ipahealthcheck.ipa.certs&amp;#34;,
+    &amp;#34;check&amp;#34;: &amp;#34;IPADogtagCertsMatchCheck&amp;#34;,
+    &amp;#34;result&amp;#34;: &amp;#34;ERROR&amp;#34;,
+    &amp;#34;uuid&amp;#34;: &amp;#34;a07b3794-ff38-4c8e-afa2-e206bff57579&amp;#34;,
+    &amp;#34;when&amp;#34;: &amp;#34;20220110183632Z&amp;#34;,
+    &amp;#34;duration&amp;#34;: &amp;#34;0.639254&amp;#34;,
+    &amp;#34;kw&amp;#34;: {
+      &amp;#34;key&amp;#34;: &amp;#34;Server-Cert cert-pki-ca&amp;#34;,
+      &amp;#34;nickname&amp;#34;: &amp;#34;Server-Cert cert-pki-ca&amp;#34;,
+      &amp;#34;dbdir&amp;#34;: &amp;#34;/etc/pki/pki-tomcat/alias&amp;#34;,
+      &amp;#34;msg&amp;#34;: &amp;#34;{nickname} certificate in NSS DB {dbdir} does not match entry in LDAP&amp;#34;
+    }
+  },
+  {
+    &amp;#34;source&amp;#34;: &amp;#34;ipahealthcheck.ipa.dna&amp;#34;,
+    &amp;#34;check&amp;#34;: &amp;#34;IPADNARangeCheck&amp;#34;,
+    &amp;#34;result&amp;#34;: &amp;#34;WARNING&amp;#34;,
+    &amp;#34;uuid&amp;#34;: &amp;#34;4cc6b198-2e6e-45c5-9477-6e6d3661c7e3&amp;#34;,
+    &amp;#34;when&amp;#34;: &amp;#34;20220110183635Z&amp;#34;,
+    &amp;#34;duration&amp;#34;: &amp;#34;0.306345&amp;#34;,
+    &amp;#34;kw&amp;#34;: {
+      &amp;#34;range_start&amp;#34;: 0,
+      &amp;#34;range_max&amp;#34;: 0,
+      &amp;#34;next_start&amp;#34;: 0,
+      &amp;#34;next_max&amp;#34;: 0,
+      &amp;#34;msg&amp;#34;: &amp;#34;No DNA range defined. If no masters define a range then users and groups cannot be created.&amp;#34;
+    }
+  }
+]
+&lt;/code&gt;&lt;/pre&gt; &lt;/details&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;5-исправление-замечаний&#34;&gt;5. Исправление замечаний&lt;/h2&gt;
+&lt;h3 id=&#34;51-no-dna-range-defined-if-no-masters-define-a-range-then-users-and-groups-cannot-be-created&#34;&gt;5.1. &amp;lsquo;No DNA range defined. If no masters define a range then users and groups cannot be created.&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;Сразу после установки новых реплик на данное сообщение можно не реагировать. Диапазоны будут автоматически добавлены после первого же создания новой учётной записи или новой Posix-группы, прозведённого через новую же реплику. Об этом написано в &lt;code&gt;man ipa-replica-manage&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;New IPA masters do not automatically get a DNA range assignment.  A  range  assignment  is done only when a user or POSIX group is added on that master.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Для проверки этого утверждения проведём опыт:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;На одном из контроллеров домена проверяем текущие диапазоны:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa-replica-manage dnarange-show
+Directory Manager password:
+
+dev-ipa04p.test3.lan: 1443200004-1443399999
+dev-ipa05p.test3.lan: No range set
+dev-ipa06p.test3.lan: No range set
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;С помощью Web UI соответствующих контроллеров доменов добавляем новые пользовательские группы или УЗ.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Вновь проверяем текущие диапазоны и убеждаемся в том, что диапазоны были автоматически добавлены:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# ipa-replica-manage dnarange-show
+Directory Manager password:
+
+dev-ipa04p.test3.lan: 1443200005-1443250499
+dev-ipa05p.test3.lan: 1443300501-1443399999
+dev-ipa06p.test3.lan: 1443250501-1443300499
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Скриншот из Web UI с номерами групп:&lt;/p&gt;
+ &lt;div style=&#34;text-align:center;&#34;&gt;&lt;img src=&#34;https://debuntu.ru/img/dobavleniye-replik-k-pervomu-serveru-freeipa/image2022-1-11_12-15-28.png&#34;&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
+    
   </channel>
 </rss>
