@@ -16,7 +16,7 @@ aliases:
 
 2022-03-11
 
-## 1. Установка BorgBackup в CentOS 7
+## 1. Установка BorgBackup в CentOS
 ### 1.1. Добавление EPEL
 На CentOS необходим репо EPEL.
 ```bash
@@ -52,7 +52,7 @@ Total size: 2.0 M
 Total download size
 ```
 
-## 1.3. Установка BorgBackup в Ubuntu
+## 2. Установка BorgBackup в Ubuntu
 На Ubuntu добавляем PPA:
 ```bash
 sudo add-apt-repository ppa:costamagnagianfranco/borgbackup

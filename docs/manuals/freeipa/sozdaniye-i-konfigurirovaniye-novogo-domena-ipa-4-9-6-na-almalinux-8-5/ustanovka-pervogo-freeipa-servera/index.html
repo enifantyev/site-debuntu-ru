@@ -33,7 +33,7 @@
 <meta itemprop="description" content="Описание процесса установки первого IPA-сервера.
 "><meta itemprop="datePublished" content="2021-12-24T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-12-24T00:00:00+00:00" />
-<meta itemprop="wordCount" content="2702">
+<meta itemprop="wordCount" content="2713">
 <meta itemprop="keywords" content="FreeIPA 4.9.6,FreeIPA,AlmaLinux 8.5," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="02. Установка первого FreeIPA-сервера"/>
 <meta name="twitter:description" content="Описание процесса установки первого IPA-сервера.
@@ -142,7 +142,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.721fd1bd31e6e2932ac5d602260aee2c.json"
+  data-offline-search-index-json-src="/offline-search-index.d7a47d66f9ecc0f02d1decdfaf9afd70.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -165,7 +165,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.721fd1bd31e6e2932ac5d602260aee2c.json"
+  data-offline-search-index-json-src="/offline-search-index.d7a47d66f9ecc0f02d1decdfaf9afd70.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -834,7 +834,9 @@
 <p>В Chromium стандартный и специально именованный сертификаты отображаются так:</p>
 <h3 id="12-правила-задания-паролей-для-dm-аккаунта">1.2. Правила задания паролей для DM-аккаунта</h3>
 <p>Судя по исходникам, пароли могут содержать все ASCII-символы, кроме обратного слэша (видим следующее присваивание — bad_characters = &lsquo;\&rsquo; — в регулярных выражениях символ обратного слэша обычно обозначается двумя обратными слэшами). Наверное, наравне с обратным слэшем, лучше будет воздержаться от использования одинарных, обратных и двойных кавычек, а также прямого слэша и вертикальной черты.</p>
-<p>Для генерации пароля, который не будет включать в себя символы слэшей и кавычек (одинарных, двойных и обратных), проще использовать утилиту <code>pwgen</code>:</p>
+<p>Для генерации пароля, который не будет включать в себя символы слэшей и кавычек (одинарных, двойных и обратных), проще использовать bash-строку:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tr -dc <span style="color:#4e9a06">&#39;A-Za-z0-9!#$%&amp;()*+,-.:;&lt;=&gt;?@[]^_{}~&#39;</span> &lt;/dev/urandom <span style="color:#000;font-weight:bold">|</span> head -c 43<span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87">echo</span>
+</span></span></code></pre></div><p>или утилиту <code>pwgen</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ pwgen --secure --symbols --remove-chars<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;\\|/\&#34;\&#39;\`&#34;</span> <span style="color:#0000cf;font-weight:bold">42</span> <span style="color:#0000cf;font-weight:bold">1</span>
 </span></span><span style="display:flex;"><span>tD*<span style="color:#000">$6</span>?6F~sBX.Q_8&lt;_7RmR^$~1<span style="color:#ce5c00;font-weight:bold">]</span>sWJs70rY5_TqFyO
 </span></span></code></pre></div><p>Код, отвечающий за проверку паролей, можно найти в файле <code>freeipa-4.9.6/ipaserver/install/server/install.py</code>:</p>

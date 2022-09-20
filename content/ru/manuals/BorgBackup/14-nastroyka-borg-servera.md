@@ -17,10 +17,8 @@ slug: nastroyka-borg-servera
 ```bash
 export BORGUSERNAME="_borg"
 
-set +o history
 useradd -r -s /bin/sh \
-  -m -p $(pwgen 21 1) ${BORGUSERNAME}
-set -o history
+  -m -p $(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 21; echo) ${BORGUSERNAME}
 ```
 
 1.2. Создаём папку `.ssh`, где позже разместим файлы необходимые для подключения по ssh.
@@ -35,11 +33,18 @@ export SSHKEYNAME="borg_repo1"
 sudo -u ${BORGUSERNAME} /bin/bash -c "ssh-keygen -t ed25519 -q -N '' -f ~/.ssh/${SSHKEYNAME}"
 ```
 
+1.4. Установка borg-утилиты в `/home/_borg/.local/bin`:
+```bash
+sudo -u ${BORGUSERNAME} python3 -m pip --upgrade --user pip
+sudo -u ${BORGUSERNAME} python3 -m pip install --user pkgconfig setuptools setuptools-scm wheel msgpack
+sudo -u ${BORGUSERNAME} python3 -m pip install --user borgbackup
+```
+
 ## 2. Настройка первого репо для бэкапов
 
 2.1. Создаём первый каталог для хранения первого репо и пробрасываем линк к нему в домашний каталог. По этой короткой ссылке будет удобно указывать название репо для архивов, вместо длинного полного пути к бэкап-каталогу.
 ```bash
-export REPODIR="/data/borg/repo1"
+export REPODIR="/data/borgbackup/repo1"
 
 sudo mkdir -p ${REPODIR}
 sudo chown ${BORGUSERNAME}.${BORGUSERNAME} ${REPODIR}
@@ -48,12 +53,13 @@ sudo -u ${BORGUSERNAME} /bin/bash -c "ln -s ${REPODIR} ~/"
 
 2.2. Если файл `authorized_keys` отсутствует, то создаём его с единственной записью-комментом "*Требуется указывать полный путь к каждому репо*".
 ```bash
-sudo -u ${BORGUSERNAME} /bin/bash -c "cd ~/.ssh; echo '# Требуется указывать полный путь к каждому репо' > authorized_keys"
+sudo -u ${BORGUSERNAME} /bin/bash -c "cd ~/.ssh; echo '# Требуется указывать полный путь к каждому репо' > /home/${BORGUSERNAME}/.ssh/authorized_keys"
+chmod 600 /home/${BORGUSERNAME}/.ssh/authorized_keys
 ```
 
 2.3. Добавляем в `authorized_keys` запись для доступа к репо:
 ```bash
-sudo -u ${BORGUSERNAME} /bin/bash -c "cd ~/.ssh; echo -e 'command=\"/usr/bin/borg serve --restrict-to-path ${REPODIR}\",restrict $(cat /home/${BORGUSERNAME}/.ssh/${SSHKEYNAME}.pub)' >> authorized_keys"
+sudo -u ${BORGUSERNAME} /bin/bash -c "cd ~/.ssh; echo -e 'command=\"/home/${BORGUSERNAME}/.local/bin/borg serve --restrict-to-path ${REPODIR}\",restrict $(cat /home/${BORGUSERNAME}/.ssh/${SSHKEYNAME}.pub)' >> authorized_keys"
 ```
 
 2.4. Инициализируем первый репо без шифрования:
