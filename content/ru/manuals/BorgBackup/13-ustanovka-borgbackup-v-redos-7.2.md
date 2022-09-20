@@ -1,7 +1,7 @@
 ---
 title: "13. Установка BorgBackup в RedOS 7.2"
 date: 2022-03-17
-weight: 12
+weight: 13
 description: >
   Описание процесса установки утилиты для дедуплицированного бэкапа BorgBackup в RedOS 7.2.
 tags:

@@ -1,19 +1,24 @@
 ---
-title: "12. Установка BorgBackup в AltLinux 10"
+title: "12. Установка BorgBackup в AltLinux 9/10"
 date: 2022-03-14
-weight: 11
+weight: 12
 description: >
-  Описание процесса установки утилиты для дедуплицированного бэкапа BorgBackup в AltLinux 10.
+  Описание процесса установки утилиты для дедуплицированного бэкапа BorgBackup в AltLinux 9/10.
 tags:
   - BorgBackup
   - Backup SoftWare
   - AltLinux 10
+  - AltLinux 9
   - Altlinux
-slug: ustanovka-borgbackup-v-altlinux-10
+slug: ustanovka-borgbackup-v-altlinux-9-10
+alias:
+  - /manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/
+  - /manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/
 ---
 
 2022-03-14
 
+## Установка BorgBackup в AltLinux 10
 ### Установка borg 1.1.17
 ```bash
 apt-get install borg
@@ -24,7 +29,10 @@ apt-get install borg
 $ sudo apt-get install python3-module-pkgconfig python3-module-setuptools \
 python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
 libacl-devel libacl libssl-devel liblz4-devel libzstd-devel libxxhash-devel
+```
 
+srdout:
+```
 Reading Package Lists... Done
 Building Dependency Tree... Done
 libacl is already the newest version.
@@ -47,4 +55,36 @@ pip install borgbackup
 ```bash
 borg -V
 borg 1.2.0
+```
+
+## Установка BorgBackup в AltLinux 9
+### Установка из APT
+```bash
+apt-get install borg
+```
+
+```bash
+$ borg -V
+borg 1.1.10
+```
+
+### Установка из pip
+```bash
+apt-get install python3-module-pkgconfig python3-module-setuptools \
+python3-module-wheel python3-module-msgpack libssl-devel python3-dev \
+libacl-devel libacl libssl-devel liblz4-devel libzstd-devel \
+libxxhash-devel gcc-c++ python3-module-setuptools_scm
+```
+
+```bash
+python3 -m pip install --user --upgrade pip
+```
+
+```bash
+python3 -m pip install --user borgbackup
+```
+
+```bash
+$ borg -V
+borg 1.1.17
 ```

@@ -46,7 +46,7 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-i-nastroyka-borgbackup/</loc>
+    <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</loc>
     <lastmod>2022-03-11T00:00:00+00:00</lastmod>
   </url>
   
@@ -891,20 +891,6 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9/</loc>
-    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
-    <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-10/</loc>
-    <lastmod>2022-03-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
     <loc>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</loc>
     <lastmod>2021-12-24T00:00:00+00:00</lastmod>
   </url>
@@ -926,8 +912,8 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</loc>
-    <lastmod>2022-03-17T00:00:00+00:00</lastmod>
+    <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9-10/</loc>
+    <lastmod>2022-03-14T00:00:00+00:00</lastmod>
   </url>
   
   
@@ -975,6 +961,13 @@
   
   
   <url>
+    <loc>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</loc>
+    <lastmod>2022-03-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</loc>
     <lastmod>2021-12-24T00:00:00+00:00</lastmod>
   </url>
@@ -991,6 +984,13 @@
   <url>
     <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</loc>
     <lastmod>2021-07-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/borgbackup/nastroyka-borg-servera/</loc>
+    <lastmod>2022-03-11T00:00:00+00:00</lastmod>
   </url>
   
   
