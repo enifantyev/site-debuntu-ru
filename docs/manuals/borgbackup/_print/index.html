@@ -135,7 +135,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.d7a47d66f9ecc0f02d1decdfaf9afd70.json"
+  data-offline-search-index-json-src="/offline-search-index.9658567ccaff27137702d40337e07a98.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -634,15 +634,17 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <h2 id="процесс-резервного-копирования">Процесс резервного копирования</h2>
 <h3 id="отключение-работающих-демонов">Отключение работающих демонов</h3>
 <p>Останавливаем и выключаем главные сервисы, работающие на хосте, чтобы предотвратить автоматический запуск демонов после восстановления системы. Например:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Останавливаем FreeIPA</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Имя домена example.org преобразовываем в EXAMPLE-ORG</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Останавливаем FreeIPA</span>
 </span></span><span style="display:flex;"><span>ipactl stop
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Блокируем автозапуск служб для перестраховки</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Выключаем службы для перестраховки на случай</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># автозапуска после восстановления из бэкапа</span>
 </span></span><span style="display:flex;"><span>systemctl disable ipa
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable krb5kdc</span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable kadmin</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Имя домена example.org преобразовываем в EXAMPLE-ORG</span>
-</span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># И останавливаем демон dirsrv@EXAMPLE-ORG</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Останавливаем демон dirsrv@EXAMPLE-ORG</span>
 </span></span><span style="display:flex;"><span>systemctl disable dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span>systemctl disable pki-tomcatd@pki-tomcat
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl disable named-pkcs11</span>
@@ -655,10 +657,6 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl stop postfix
 </span></span><span style="display:flex;"><span>systemctl stop rsyslog
 </span></span><span style="display:flex;"><span>service auditd stop
-</span></span></code></pre></div><p>Почистим систему:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dnf clean all
-</span></span><span style="display:flex;"><span>truncate -s0 /var/log/lastlog
-</span></span><span style="display:flex;"><span>rm -f /var/log/lastlog.*
 </span></span></code></pre></div><h3 id="создание-временных-lvm-snapshotов">Создание временных LVM snapshot&rsquo;ов</h3>
 <p>Помним, что в Volume Group должно быть достаточно свободного места для размещения снэпшотов.</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lvcreate -L 500M -s -n snap_root /dev/vg/root
@@ -667,6 +665,31 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/sbin/lvreduce -L -2G -r /dev/vg/data
 </span></span></code></pre></div><p>После завершения бэкапа вновь увеличиваем LV:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/sbin/lvextend -l +100%FREE -r /dev/vg/data
+</span></span></code></pre></div><h3 id="запуск-остановленных-демонов">Запуск остановленных демонов</h3>
+<p>Запускаем ранее остановленные локальные демоны:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>service auditd start
+</span></span><span style="display:flex;"><span>systemctl start rsyslog
+</span></span><span style="display:flex;"><span>systemctl start postfix
+</span></span></code></pre></div><p>FreeIPA:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> ipa
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable krb5kdc</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable kadmin</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> pki-tomcatd@pki-tomcat
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable named-pkcs11</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable httpd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-dnskeysyncd</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-custodia</span>
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> certmonger
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-otpd.socket</span>
+</span></span><span style="display:flex;"><span>ipactl start
+</span></span></code></pre></div><p>В случае проблем с запуском &lsquo;pki-tomcatd@pki-tomcat&rsquo;, восстанавливаем ссылку:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ln -s /lib/systemd/system/pki-tomcatd@.service <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>chown -h pkiuser:pkiuser <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
 </span></span></code></pre></div><h3 id="монтирование-снэпшотов--директорию-boot">Монтирование снэпшотов + директорию <code>/boot</code></h3>
 <p>При монтировании xfs используем опцию <code>nouuid</code>, поэтому проверяем тип файловой системы:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting root on /mnt</span>
@@ -695,41 +718,20 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <pre tabindex="0"><code>/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
 /dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
 /dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
-</code></pre><h3 id="резервное-копирование">Резервное копирование</h3>
+</code></pre><h3 id="чистка-системы-в-снимке">Чистка системы в снимке:</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -rf /mnt/var/cache/<span style="color:#ce5c00;font-weight:bold">{</span>yum,dnf<span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>truncate -s0 /mnt/var/log/lastlog
+</span></span><span style="display:flex;"><span>rm -f /mnt/var/log/lastlog.*
+</span></span></code></pre></div><h3 id="резервное-копирование">Резервное копирование</h3>
 <p>Устанавливаем переменные, чтобы не вводить параметры дважды:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">BORG_RSH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ssh -i ~/.ssh/borg1&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">BORG_REPO</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;_borg@192.168.50.10:home-ipa&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">BORG_REPO</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ssh://_borg@192.168.50.10:22/./repo1&#34;</span>
 </span></span></code></pre></div><p>Выполняем бэкап со сжатием передовым компрессором <a href="https://ru.wikipedia.org/wiki/Zstandard">Zstandard</a>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>borg create -C zstd --stats --progress ::full_<span style="color:#ce5c00;font-weight:bold">{</span>hostname<span style="color:#ce5c00;font-weight:bold">}</span>_<span style="color:#ce5c00;font-weight:bold">{</span>now<span style="color:#ce5c00;font-weight:bold">}</span> /mnt
 </span></span></code></pre></div><h3 id="удаление-временных-снэпшотов">Удаление временных снэпшотов</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>umount -R /mnt
 </span></span><span style="display:flex;"><span>lvremove -y /dev/vg/snap_var
 </span></span><span style="display:flex;"><span>lvremove -y /dev/vg/snap_root
-</span></span></code></pre></div><h3 id="запуск-остановленных-демонов">Запуск остановленных демонов</h3>
-<p>Запускаем ранее остановленные локальные демоны:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>service auditd start
-</span></span><span style="display:flex;"><span>systemctl start rsyslog
-</span></span><span style="display:flex;"><span>systemctl start postfix
-</span></span></code></pre></div><p>FreeIPA:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> ipa
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable krb5kdc</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable kadmin</span>
-</span></span><span style="display:flex;"><span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname -d<span style="color:#204a87;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">/./-</span><span style="color:#4e9a06">}</span><span style="color:#000;font-weight:bold">;</span><span style="color:#000">D</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#000;font-weight:bold">^^</span><span style="color:#4e9a06">}</span>
-</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> dirsrv@<span style="color:#4e9a06">${</span><span style="color:#000">D</span><span style="color:#4e9a06">}</span>
-</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> pki-tomcatd@pki-tomcat
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable named-pkcs11</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable httpd</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-dnskeysyncd</span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-custodia</span>
-</span></span><span style="display:flex;"><span>systemctl <span style="color:#204a87">enable</span> certmonger
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#systemctl enable ipa-otpd.socket</span>
-</span></span><span style="display:flex;"><span>ipactl start
-</span></span></code></pre></div><p>В случае проблем с запуском &lsquo;pki-tomcatd@pki-tomcat&rsquo;, восстанавливаем ссылку:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ln -s /lib/systemd/system/pki-tomcatd@.service <span style="color:#4e9a06">\
-</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>chown -h pkiuser:pkiuser <span style="color:#4e9a06">\
-</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
 </span></span></code></pre></div>
 </div>
 

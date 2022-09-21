@@ -52,15 +52,17 @@ Number  Start    End       Size      Type     File system  Flags
 ### Отключение работающих демонов
 Останавливаем и выключаем главные сервисы, работающие на хосте, чтобы предотвратить автоматический запуск демонов после восстановления системы. Например:
 ```bash
+# Имя домена example.org преобразовываем в EXAMPLE-ORG
+D=$(hostname -d);D=${D/./-};D=${D^^}
+
 # Останавливаем FreeIPA
 ipactl stop
-# Блокируем автозапуск служб для перестраховки
+# Выключаем службы для перестраховки на случай
+# автозапуска после восстановления из бэкапа
 systemctl disable ipa
 #systemctl disable krb5kdc
 #systemctl disable kadmin
-# Имя домена example.org преобразовываем в EXAMPLE-ORG
-D=$(hostname -d);D=${D/./-};D=${D^^}
-# И останавливаем демон dirsrv@EXAMPLE-ORG
+# Останавливаем демон dirsrv@EXAMPLE-ORG
 systemctl disable dirsrv@${D}
 systemctl disable pki-tomcatd@pki-tomcat
 #systemctl disable named-pkcs11
@@ -78,13 +80,6 @@ systemctl stop rsyslog
 service auditd stop
 ```
 
-Почистим систему:
-```bash
-dnf clean all
-truncate -s0 /var/log/lastlog
-rm -f /var/log/lastlog.*
-```
-
 ### Создание временных LVM snapshot'ов
 Помним, что в Volume Group должно быть достаточно свободного места для размещения снэпшотов.
 ```bash
@@ -100,6 +95,40 @@ lvcreate -L 500M -s -n snap_var /dev/vg/var
 После завершения бэкапа вновь увеличиваем LV:
 ```bash
 /usr/sbin/lvextend -l +100%FREE -r /dev/vg/data
+```
+
+### Запуск остановленных демонов
+Запускаем ранее остановленные локальные демоны:
+```bash
+service auditd start
+systemctl start rsyslog
+systemctl start postfix
+```
+
+FreeIPA:
+```bash
+systemctl enable ipa
+#systemctl enable krb5kdc
+#systemctl enable kadmin
+D=$(hostname -d);D=${D/./-};D=${D^^}
+systemctl enable dirsrv@${D}
+systemctl enable pki-tomcatd@pki-tomcat
+#systemctl enable named-pkcs11
+#systemctl enable httpd
+#systemctl enable ipa-dnskeysyncd
+#systemctl enable ipa-custodia
+systemctl enable certmonger
+#systemctl enable ipa-otpd.socket
+ipactl start
+```
+
+В случае проблем с запуском 'pki-tomcatd@pki-tomcat', восстанавливаем ссылку:
+```bash
+ln -s /lib/systemd/system/pki-tomcatd@.service \
+  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
+
+chown -h pkiuser:pkiuser \
+  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
 ```
 
 ### Монтирование снэпшотов + директорию `/boot`
@@ -138,11 +167,18 @@ mount | grep '/mnt'
 /dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
 ```
 
+### Чистка системы в снимке:
+```bash
+rm -rf /mnt/var/cache/{yum,dnf}
+truncate -s0 /mnt/var/log/lastlog
+rm -f /mnt/var/log/lastlog.*
+```
+
 ### Резервное копирование
 Устанавливаем переменные, чтобы не вводить параметры дважды:
 ```bash
 export BORG_RSH="ssh -i ~/.ssh/borg1"
-export BORG_REPO="_borg@192.168.50.10:home-ipa"
+export BORG_REPO="ssh://_borg@192.168.50.10:22/./repo1"
 ```
 
 Выполняем бэкап со сжатием передовым компрессором [Zstandard](https://ru.wikipedia.org/wiki/Zstandard):
@@ -157,36 +193,3 @@ lvremove -y /dev/vg/snap_var
 lvremove -y /dev/vg/snap_root
 ```
 
-### Запуск остановленных демонов
-Запускаем ранее остановленные локальные демоны:
-```bash
-service auditd start
-systemctl start rsyslog
-systemctl start postfix
-```
-
-FreeIPA:
-```bash
-systemctl enable ipa
-#systemctl enable krb5kdc
-#systemctl enable kadmin
-D=$(hostname -d);D=${D/./-};D=${D^^}
-systemctl enable dirsrv@${D}
-systemctl enable pki-tomcatd@pki-tomcat
-#systemctl enable named-pkcs11
-#systemctl enable httpd
-#systemctl enable ipa-dnskeysyncd
-#systemctl enable ipa-custodia
-systemctl enable certmonger
-#systemctl enable ipa-otpd.socket
-ipactl start
-```
-
-В случае проблем с запуском 'pki-tomcatd@pki-tomcat', восстанавливаем ссылку:
-```bash
-ln -s /lib/systemd/system/pki-tomcatd@.service \
-  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
-
-chown -h pkiuser:pkiuser \
-  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
-```
