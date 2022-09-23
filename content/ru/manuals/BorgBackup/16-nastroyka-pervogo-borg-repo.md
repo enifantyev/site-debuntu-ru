@@ -51,7 +51,7 @@ export BORG_REPO="${BORGUSERNAME}@localhost:${REPOLINKNAME}"
 
 # Вызываем sudo -EH для передачи переменных
 # окружения в borg и смены HOME.
-sudo -EH -u ${BORGUSERNAME} /bin/bash -c 'borg init -e none ${REPONAME}'
+sudo -EH -u ${BORGUSERNAME} /bin/bash -c 'borg init -e none'
 ```
 
 1.6. Проверяем, что в каталоге первого репо создана структура:
