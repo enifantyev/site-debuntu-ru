@@ -7304,45 +7304,10 @@ Took 0.7221 seconds
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&lt;/span&gt;  -m -p &lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;tr -dc &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;A-Za-z0-9&amp;#39;&lt;/span&gt; &amp;lt;/dev/urandom &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; head -c 21&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#204a87&#34;&gt;echo&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;1.2. Создаём папку &lt;code&gt;.ssh&lt;/code&gt;, где позже разместим файлы необходимые для подключения по ssh.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;mkdir -p ~/.ssh &amp;amp;&amp;amp; chmod 700 ~/.ssh&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;1.3. Создаём ssh-ключи для будущих клиентов этого репо. Кстати, здесь их хранить не обязательно. Наверное, будет правильней для каждого репо создавать отдельные ключи.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;borg_repo1&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh-keygen -t ed25519 -q -N &amp;#39;&amp;#39; -f ~/.ssh/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;1.4. Установка borg-утилиты в &lt;code&gt;/home/_borg/.local/bin&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; python3 -m pip --upgrade --user pip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;1.3. Установка borg-утилиты в &lt;code&gt;/home/_borg/.local/bin&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; python3 -m pip install --upgrade --user pip
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; python3 -m pip install --user pkgconfig setuptools setuptools-scm wheel msgpack
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; python3 -m pip install --user borgbackup
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;2-настройка-первого-репо-для-бэкапов&#34;&gt;2. Настройка первого репо для бэкапов&lt;/h2&gt;
-&lt;p&gt;2.1. Создаём первый каталог для хранения первого репо и пробрасываем линк к нему в домашний каталог. По этой короткой ссылке будет удобно указывать название репо для архивов, вместо длинного полного пути к бэкап-каталогу.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/data/borgbackup/repo1&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mkdir -p &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo chown &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;.&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ln -s &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; ~/&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;2.2. Если файл &lt;code&gt;authorized_keys&lt;/code&gt; отсутствует, то создаём его с единственной записью-комментом &amp;ldquo;&lt;em&gt;Требуется указывать полный путь к каждому репо&lt;/em&gt;&amp;rdquo;.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cd ~/.ssh; echo &amp;#39;# Требуется указывать полный путь к каждому репо&amp;#39; &amp;gt; /home/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;/.ssh/authorized_keys&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;600&lt;/span&gt; /home/&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/.ssh/authorized_keys
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;2.3. Добавляем в &lt;code&gt;authorized_keys&lt;/code&gt; запись для доступа к репо:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cd ~/.ssh; echo -e &amp;#39;command=\&amp;#34;/home/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;/.local/bin/borg serve --restrict-to-path &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;\&amp;#34;,restrict &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;cat /home/&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/.ssh/&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;.pub&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &amp;gt;&amp;gt; authorized_keys&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;2.4. Инициализируем первый репо без шифрования:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPOLINKNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;repo1&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Имя ссылки в home на репо&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i ~/.ssh/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;@localhost:&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPOLINKNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Вызываем sudo -EH для передачи переменных&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# окружения в borg и смены HOME.&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -EH -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;borg init -e none&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;2.5. Проверяем, что в каталоге первого репо создана структура:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ls -al &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;total &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;72&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;drwxr-xr-x &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; _borg _borg  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 .
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;drwxr-xr-x &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; root        root         &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt; 15:42 ..
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;209&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 config
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;drwx------ &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; _borg _borg  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 data
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;52&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 hints.1
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;41258&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 index.1
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;190&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 integrity.1
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;73&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 README
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
@@ -7761,73 +7726,6 @@ eugene : eugene dom_admins test01_yarn_admins test01_hbase_su test01_hdfs_su tes
     </item>
     
     <item>
-      <title>Manuals: 15. Создание шлюза в удалённой ИС для доступа хостов к бэкап-серверу</title>
-      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
-      <pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
-      <description>
-        
-        
-        &lt;p&gt;2022-03-16&lt;/p&gt;
-&lt;h2 id=&#34;топология&#34;&gt;Топология&lt;/h2&gt;
-&lt;p&gt;Имеется четыре машины в трёх Информационных Системах:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Information System 1 (IS1):
-&lt;ul&gt;
-&lt;li&gt;backup server&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Information System 2 (IS2):
-&lt;ul&gt;
-&lt;li&gt;awx host&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Information System 3 (IS3):
-&lt;ul&gt;
-&lt;li&gt;backup client 1&lt;/li&gt;
-&lt;li&gt;backup client 2&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;   +----------------------+
-   |        IS1           |
-+-&amp;gt;| &amp;#39;backup-server&amp;#39;:ssh  |&amp;lt;-X
-|  |                      |  |
-|  +----------------------+  |
-|  |        IS2           |  |
-+-&amp;lt;|   &amp;#39;awx-host&amp;#39;:ssh     |&amp;lt;-X
-|  |                      |  |
-|  +----------------------+  |
-|  |        IS3           |  |
-+-&amp;gt;| &amp;#39;backup-client1&amp;#39;:ssh |&amp;lt;-X
-|  |                      |  |
-+-&amp;gt;| &amp;#39;backup-client2&amp;#39;:ssh |&amp;lt;-X
-   |                      |
-   +----------------------+
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Так как ssh-доступ между &amp;lsquo;Backup Server&amp;rsquo; и &amp;lsquo;Backup Clients&amp;rsquo; отсутствует, тогда как с хоста &amp;lsquo;Awx Host&amp;rsquo; мы можем подключиться к любому хосту, то решением является создание с &amp;lsquo;Awx Host&amp;rsquo; временного туннеля-шлюза между одним из Бэкап-клиентов, например, &amp;lsquo;backup-client1&amp;rsquo;, и Бэкап-сервером. Остальные Бэкап-клиенты смогут обратиться на произвольно выбранный tcp-порт хоста &amp;lsquo;backup-client1&amp;rsquo;, что позволит им общаться с Бэкап-сервером напрямую.&lt;/p&gt;
-&lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
-&lt;p&gt;Находясь на AWX-хосте, выбираем призвольную машину в удалённой третьей ИС с бэкап-клиентами, и модернизируем на ней настройки sshd для возможности создания ssh-шлюза. Напомню, что такая возможность по умолчанию ограничена открытием порта на lo-интерфейсе 127.0.0.1, вместо интересующего нас 0.0.0.0.&lt;/p&gt;
-&lt;h3 id=&#34;backup-client1-включение-ssh-gateway&#34;&gt;&amp;lsquo;backup-client1&amp;rsquo;. Включение ssh gateway&lt;/h3&gt;
-&lt;p&gt;Итак, на хосте &amp;lsquo;backup-client1&amp;rsquo; включаем опцию &amp;lsquo;GatewayPorts&amp;rsquo; и перезапускаем демон sshd:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/#GatewayPorts no/GatewayPorts yes/&amp;#39;&lt;/span&gt; /etc/ssh/sshd_config
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart sshd
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Проверка:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sshd -T &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep gatewayports
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;awx-host-прокидывание-временного-туннеля-шлюза-между-backup-client1-и-backup-server&#34;&gt;&amp;lsquo;awx-host&amp;rsquo;. Прокидывание временного туннеля-шлюза между &amp;lsquo;backup-client1&amp;rsquo; и &amp;lsquo;backup-server&amp;rsquo;&lt;/h3&gt;
-&lt;p&gt;На машине &amp;lsquo;awx-host&amp;rsquo; выполняем создание туннеля-шлюза. Для удобства последующего закрытия туннеля, используем мультиплексирование с созданием управляющего сокета, через который сможем подать команду на закрытие туннеля. Кроме того, запретим подачу команд через этот туннель удалённой машине, а также переведём соединение в фоновый режим:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -MS /tmp/borg-is3 -Nf -R 0.0.0.0:2222:backup-server:22 eugene@backup-client1
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;После окончания операций бэкапа, через управляющий сокет, подаём команду закрыть туннель:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -S /tmp/borg-is3 -O &lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; eugene@backup-client1
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;настройка-клиентов&#34;&gt;Настройка клиентов&lt;/h3&gt;
-&lt;p&gt;Ключ ssh для доступа к borg-репозиторию создаём в &lt;code&gt;~/.ssh&lt;/code&gt;, а в &lt;code&gt;~/.bashrc&lt;/code&gt; добавляем переменные для работы с borg-репозиторием:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i /root/.ssh/borg1&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-      </description>
-    </item>
-    
-    <item>
       <title>Manuals: 15. YARN. Настройка</title>
       <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</link>
       <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
@@ -8087,6 +7985,57 @@ reconnection_retries = 3
 &lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 16. Настройка первого borg-репо</title>
+      <link>https://debuntu.ru/manuals/borgbackup/nastroyka-pervogo-borg-repo/</link>
+      <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/borgbackup/nastroyka-pervogo-borg-repo/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-03-11&lt;/p&gt;
+&lt;h2 id=&#34;1-настройка-первого-репо-для-бэкапов&#34;&gt;1. Настройка первого репо для бэкапов&lt;/h2&gt;
+&lt;p&gt;1.1. Создаём первый каталог для хранения первого репо и пробрасываем линк к нему в домашний каталог. По этой короткой ссылке будет удобно указывать название репо для архивов, вместо длинного полного пути к бэкап-каталогу.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;_borg&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;REPONAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;repo1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;/data/borgbackup/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPONAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo mkdir -p &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo chown &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;.&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ln -s &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt; ~/&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;1.2. Создаём ssh-ключи для будущих клиентов этого репо. Кстати, здесь их хранить не обязательно. Наверное, будет правильней для каждого репо создавать отдельные ключи.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;borg_&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPONAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh-keygen -t ed25519 -q -N &amp;#39;&amp;#39; -f ~/.ssh/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;1.3. Если файл &lt;code&gt;authorized_keys&lt;/code&gt; отсутствует, то создаём его с единственной записью-комментом &amp;ldquo;&lt;em&gt;Требуется указывать полный путь к каждому репо&lt;/em&gt;&amp;rdquo;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cd ~/.ssh; echo &amp;#39;# Требуется указывать полный путь к каждому репо&amp;#39; &amp;gt; /home/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;/.ssh/authorized_keys&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;600&lt;/span&gt; /home/&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/.ssh/authorized_keys
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;1.4. Добавляем в &lt;code&gt;authorized_keys&lt;/code&gt; запись для доступа к репо:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;cd ~/.ssh; echo -e &amp;#39;command=\&amp;#34;/home/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;/.local/bin/borg serve --restrict-to-path &lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;\&amp;#34;,restrict &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;$(&lt;/span&gt;cat /home/&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;/.ssh/&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;.pub&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39; &amp;gt;&amp;gt; authorized_keys&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;1.5. Инициализируем первый репо без шифрования:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPOLINKNAME&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPONAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Имя ссылки в home на репо&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i ~/.ssh/&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;SSHKEYNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;@localhost:&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPOLINKNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# Вызываем sudo -EH для передачи переменных&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#8f5902;font-style:italic&#34;&gt;# окружения в borg и смены HOME.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo -EH -u &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;BORGUSERNAME&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt; /bin/bash -c &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;borg init -e none ${REPONAME}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;1.6. Проверяем, что в каталоге первого репо создана структура:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;$ ls -al &lt;span style=&#34;color:#4e9a06&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;REPODIR&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;total &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;72&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;drwxr-xr-x &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; _borg _borg  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 .
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;drwxr-xr-x &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; root        root         &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;10&lt;/span&gt; 15:42 ..
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;209&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 config
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;drwx------ &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;3&lt;/span&gt; _borg _borg  &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;4096&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 data
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;52&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 hints.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;41258&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 index.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg   &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;190&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 integrity.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;-rw------- &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;1&lt;/span&gt; _borg _borg    &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;73&lt;/span&gt; мар &lt;span style=&#34;color:#0000cf;font-weight:bold&#34;&gt;11&lt;/span&gt; 17:30 README
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -8752,6 +8701,73 @@ drwxrwx---   - eugene hadoop          0 2021-07-30 11:15 /tmp/logs/eugene/logs/a
 &lt;/ol&gt;
 &lt;h4 id=&#34;лечение&#34;&gt;Лечение&lt;/h4&gt;
 
+      </description>
+    </item>
+    
+    <item>
+      <title>Manuals: 18. Создание шлюза в удалённой ИС для доступа хостов к бэкап-серверу</title>
+      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
+      <pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-03-16&lt;/p&gt;
+&lt;h2 id=&#34;топология&#34;&gt;Топология&lt;/h2&gt;
+&lt;p&gt;Имеется четыре машины в трёх Информационных Системах:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Information System 1 (IS1):
+&lt;ul&gt;
+&lt;li&gt;backup server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Information System 2 (IS2):
+&lt;ul&gt;
+&lt;li&gt;awx host&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Information System 3 (IS3):
+&lt;ul&gt;
+&lt;li&gt;backup client 1&lt;/li&gt;
+&lt;li&gt;backup client 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;   +----------------------+
+   |        IS1           |
++-&amp;gt;| &amp;#39;backup-server&amp;#39;:ssh  |&amp;lt;-X
+|  |                      |  |
+|  +----------------------+  |
+|  |        IS2           |  |
++-&amp;lt;|   &amp;#39;awx-host&amp;#39;:ssh     |&amp;lt;-X
+|  |                      |  |
+|  +----------------------+  |
+|  |        IS3           |  |
++-&amp;gt;| &amp;#39;backup-client1&amp;#39;:ssh |&amp;lt;-X
+|  |                      |  |
++-&amp;gt;| &amp;#39;backup-client2&amp;#39;:ssh |&amp;lt;-X
+   |                      |
+   +----------------------+
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Так как ssh-доступ между &amp;lsquo;Backup Server&amp;rsquo; и &amp;lsquo;Backup Clients&amp;rsquo; отсутствует, тогда как с хоста &amp;lsquo;Awx Host&amp;rsquo; мы можем подключиться к любому хосту, то решением является создание с &amp;lsquo;Awx Host&amp;rsquo; временного туннеля-шлюза между одним из Бэкап-клиентов, например, &amp;lsquo;backup-client1&amp;rsquo;, и Бэкап-сервером. Остальные Бэкап-клиенты смогут обратиться на произвольно выбранный tcp-порт хоста &amp;lsquo;backup-client1&amp;rsquo;, что позволит им общаться с Бэкап-сервером напрямую.&lt;/p&gt;
+&lt;h2 id=&#34;решение&#34;&gt;Решение&lt;/h2&gt;
+&lt;p&gt;Находясь на AWX-хосте, выбираем призвольную машину в удалённой третьей ИС с бэкап-клиентами, и модернизируем на ней настройки sshd для возможности создания ssh-шлюза. Напомню, что такая возможность по умолчанию ограничена открытием порта на lo-интерфейсе 127.0.0.1, вместо интересующего нас 0.0.0.0.&lt;/p&gt;
+&lt;h3 id=&#34;backup-client1-включение-ssh-gateway&#34;&gt;&amp;lsquo;backup-client1&amp;rsquo;. Включение ssh gateway&lt;/h3&gt;
+&lt;p&gt;Итак, на хосте &amp;lsquo;backup-client1&amp;rsquo; включаем опцию &amp;lsquo;GatewayPorts&amp;rsquo; и перезапускаем демон sshd:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#39;s/#GatewayPorts no/GatewayPorts yes/&amp;#39;&lt;/span&gt; /etc/ssh/sshd_config
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart sshd
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Проверка:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sshd -T &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;|&lt;/span&gt; grep gatewayports
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;awx-host-прокидывание-временного-туннеля-шлюза-между-backup-client1-и-backup-server&#34;&gt;&amp;lsquo;awx-host&amp;rsquo;. Прокидывание временного туннеля-шлюза между &amp;lsquo;backup-client1&amp;rsquo; и &amp;lsquo;backup-server&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;На машине &amp;lsquo;awx-host&amp;rsquo; выполняем создание туннеля-шлюза. Для удобства последующего закрытия туннеля, используем мультиплексирование с созданием управляющего сокета, через который сможем подать команду на закрытие туннеля. Кроме того, запретим подачу команд через этот туннель удалённой машине, а также переведём соединение в фоновый режим:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -MS /tmp/borg-is3 -Nf -R 0.0.0.0:2222:backup-server:22 eugene@backup-client1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;После окончания операций бэкапа, через управляющий сокет, подаём команду закрыть туннель:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -S /tmp/borg-is3 -O &lt;span style=&#34;color:#204a87&#34;&gt;exit&lt;/span&gt; eugene@backup-client1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;настройка-клиентов&#34;&gt;Настройка клиентов&lt;/h3&gt;
+&lt;p&gt;Ключ ssh для доступа к borg-репозиторию создаём в &lt;code&gt;~/.ssh&lt;/code&gt;, а в &lt;code&gt;~/.bashrc&lt;/code&gt; добавляем переменные для работы с borg-репозиторием:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_RSH&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh -i /root/.ssh/borg1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#000&#34;&gt;BORG_REPO&lt;/span&gt;&lt;span style=&#34;color:#ce5c00;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#4e9a06&#34;&gt;&amp;#34;ssh://_borg@backup-client1:2222/./repo1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
       </description>
     </item>
     
@@ -10271,384 +10287,6 @@ Content-Type: text/html;charset=iso-8859-1
 
 &lt;/div&gt;
 
-
-      </description>
-    </item>
-    
-    <item>
-      <title>Manuals: 22. Kafka. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</link>
-      <pubDate>Fri, 23 Jul 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</guid>
-      <description>
-        
-        
-        &lt;p&gt;2021-07-23&lt;/p&gt;
-&lt;h2 id=&#34;добавление-сервиса-kafka&#34;&gt;Добавление сервиса Kafka&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;:
- &lt;center&gt;&lt;img src=&#34;kafka-1.png&#34; style=&#34;width:200px&#34;&gt;&lt;/center&gt;
-&lt;/li&gt;
-&lt;li&gt;Выбираем Kafka.&lt;/li&gt;
-&lt;li&gt;Выбираем зависимости:
- &lt;center&gt;&lt;img src=&#34;kafka-2.png&#34; style=&#34;width:500px&#34;&gt;&lt;/center&gt;
-&lt;/li&gt;
-&lt;li&gt;Распределяем роли с некоторыми условиями:
-&lt;ul&gt;
-&lt;li&gt;Из-за особенностей работы, которая приводит к высокой утилизации ресурсов системы, под Kafka Brokers лучше выделить отдельные хосты. Чрезвычайно не рекомендуется размещать Kafka на ZooKeeper-узлах.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Изменяем настройки:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;th&gt;#&lt;/th&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;1.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;ZooKeeper Root&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;zookeeper.chroot&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/kafka&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;The znode in ZooKeeper used as a root for this Kafka cluster.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;2.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Enable Kerberos Authentication&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;kerberos.auth.enable&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Enables Kerberos authentication for this Kafka service.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;3.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Data Directories&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;log.dirs&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;/data/kafka/data&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;A list of one or more directories in which Kafka data is stored. Each new partition created is placed in the directory that currently has the least amount of partitions. Each directory should be on its own separate drive.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;4.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Enable TLS/SSL for Kafka Broker&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl_enabled&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Encrypt communication between clients and Kafka Broker using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;5.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Server JKS Keystore File Location&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.keystore.location&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/server.jks&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Kafka Broker is acting as a TLS/SSL server. The keystore must be in JKS format.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;6.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Server JKS Keystore File Password&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.keystore.password.generator&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
-    &lt;td&gt;The password for the Kafka Broker JKS keystore file.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;7.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Server JKS Keystore Key Password&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.key.password.generator&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
-    &lt;td&gt;The password that protects the private key contained in the JKS keystore used when Kafka Broker is acting as a TLS/SSL server.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;8.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Client Trust Store File&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.truststore.location&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that Kafka Broker might connect to. This is used when Kafka Broker is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;9.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka Broker TLS/SSL Client Trust Store Password&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.truststore.password.generator&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
-    &lt;td&gt;The password for the Kafka Broker TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;10.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Enable TLS/SSL for Kafka MirrorMaker&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl_enabled&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Encrypt communication between clients and Kafka MirrorMaker using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;11.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Server JKS Keystore File Location&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.keystore.location&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/opt/cloudera/security/pki/server.jks&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;The path to the TLS/SSL keystore file containing the server certificate and private key used for TLS/SSL. Used when Kafka MirrorMaker is acting as a TLS/SSL server. The keystore must be in JKS format.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;12.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Server JKS Keystore File Password&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.keystore.password.generator&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
-    &lt;td&gt;The password for the Kafka MirrorMaker JKS keystore file.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;13.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Server JKS Keystore Key Password&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.key.password.generator&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
-    &lt;td&gt;The password that protects the private key contained in the JKS keystore used when Kafka MirrorMaker is acting as a TLS/SSL server.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;14.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Client Trust Store File&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.truststore.location&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;The location on disk of the trust store, in .jks format, used to confirm the authenticity of TLS/SSL servers that Kafka MirrorMaker might connect to. This is used when Kafka MirrorMaker is the client in a TLS/SSL connection. This trust store must contain the certificate(s) used to sign the service(s) connected to. If this parameter is not provided, the default list of well-known certificate authorities is used instead.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;15.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker TLS/SSL Client Trust Store Password&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.truststore.password.generator&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;По умолчанию: &lt;span style=&#34;color: blue&#34;&gt;changeit&lt;/span&gt;.&lt;/td&gt;
-    &lt;td&gt;The password for the Kafka MirrorMaker TLS/SSL Certificate Trust Store File. This password is not required to access the trust store; this field can be left blank. This password provides optional integrity checking of the file. The contents of trust stores are certificates, and certificates are public information.&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;ol start=&#34;6&#34;&gt;
-&lt;li&gt;Наблюдаем запуск ролей.&lt;/li&gt;
-&lt;li&gt;Визард успешно закончен.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;3-перенастройка-размещения-logов&#34;&gt;3. Перенастройка размещения log&amp;rsquo;ов&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;В настройках Kafka, используя категорию &amp;lsquo;Logs&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;th&gt;#&lt;/th&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;1.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka Broker Log Directory&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;kafka.log4j.dir&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/kafka&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;The log directory for log files of the role Kafka Broker.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;2.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Kafka MirrorMaker Log Directory&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;kafka_mirrormaker.log4j.dir&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;&lt;code&gt;/data/log/kafka&lt;/code&gt;&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;The log directory for log files of the role Kafka MirrorMaker.&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;4-дополнительные-настройки&#34;&gt;4. Дополнительные настройки&lt;/h2&gt;
-&lt;p&gt;Так как сервера стоят в отдельном VLAN и перехват трафика маловероятен, то выбираем протокол безопасности без шифрования трафика SASL_PLAINTEXT, так как TLS-шифрование является ресурсоёмкой операцией. При существования риска перехвата трафика необходимо выбрать протокол SASL_SSL.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;В настройках Kafka следующие параметры приводим к указанному виду:&lt;/li&gt;
-&lt;/ol&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;th&gt;#&lt;/th&gt;&lt;th&gt;Property&lt;/th&gt;&lt;th&gt;Value&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;1.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Sentry Service&lt;/b&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;Sentry&lt;/span&gt;&lt;br&gt;
-    ○&amp;nbsp;none&lt;/td&gt;
-    &lt;td&gt;Name of the Sentry service that this Kafka service instance depends on&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;2.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Enable Kerberos Authentication&lt;/b&gt;&lt;br&gt;
-      &lt;i&gt;kerberos.auth.enable&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Enables Kerberos authentication for this Kafka service.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;3.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Enable Sentry Privileges Caching&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;sentry.kafka.caching.enable&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Enables Sentry privilege caching. Only applicable if authorization via Sentry is enabled.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;4.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Enable Authenticated Communication with the JMX Agent&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;jmx.auth.enabled&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Enables Authenticated Communication with the JMX Agent.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;5.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Name of User with read-only access to the JMX Agent&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;jmx.monitor.user&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;Default value: &lt;span style=&#34;color: blue&#34;&gt;monitorRole&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Specifies the name of the user that has read-only privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;6.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Password of User with read-only Access to the JMX agent&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;jmx.monitor.user.passwd&lt;/i&gt;
-  &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;************&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Specifies the password of the user that has read-only privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;7.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Name of User with Read-Write Access to the JMX Agent&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;jmx.control.user&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;Default value: &lt;span style=&#34;color: blue&#34;&gt;controlRole&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Specifies the name of the user that has read-write privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;8.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Password of user with read-write access to the JMX agent&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;jmx.control.user.passwd&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;************&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Specifies the password of the user that has read-write privileges when using password file-based authentication for JMX access. JMX authentication must be enabled for this setting to take effect.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;9.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Enable TLS/SSL for Kafka JMX&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;jmx.ssl.enabled&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Encrypt communication between clients and Kafka JMX using Transport Layer Security (TLS) (formerly known as Secure Socket Layer (SSL)).&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;10.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Enable TLS client authentication for JMX port&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;jmx.ssl.client.auth.enabled&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;If enabled, a valid client certificate must be presented by the JMX client in order to connect to the JMX port. Ensure that the trusted CA certificates are present in either the Kafka JMX TLS/SSL Server Trust Store file or the global trust store.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;11.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;SSL Client Authentication&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;ssl.client.auth&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
-    &lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;none&lt;/span&gt;&lt;br&gt;
-    ○&amp;nbsp;required&lt;br&gt;
-    ○&amp;nbsp;requested
-    &lt;/td&gt;
-    &lt;td&gt;Client authentication mode for SSL connections. This configuration has three valid values, &#34;required&#34;, &#34;requested&#34; and &#34;none&#34;. If set to &#34;required&#34;, client authentication is required. If set to &#34;requested&#34;, client authentication is requested and clients without certificates can still connect. If set to &#34;none&#34;, which is the default value, no client authentication is required.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;12.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Inter Broker Protocol&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;security.inter.broker.protocol&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
-    ○&amp;nbsp;INFERRED&lt;br&gt;
-    ○&amp;nbsp;PLAINTEXT&lt;br&gt;
-    ○&amp;nbsp;SSL&lt;br&gt;
-    &lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;SASL_PLAINTEXT&lt;/span&gt;&lt;br&gt;
-    ○&amp;nbsp;SASL_SSL
-    &lt;/td&gt;
-    &lt;td&gt;Protocol to be used for inter-broker communication. INFERRED uses the same protocol that is configured for external clients.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;13.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;b&gt;Authenticate Zookeeper Connection&lt;/b&gt;&lt;br&gt;
-    &lt;i&gt;authenticate.zookeeper.connection&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
-    &lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Enables authentication of SASL connections with zookeeper, if Kerberos authentication is enabled. It also allows a broker to set SASL ACL on zookeeper nodes, which locks these nodes down so that only a Kafka broker can modify it.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;14.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;
-      &lt;b&gt;Super users&lt;/b&gt;&lt;br&gt;
-      &lt;i&gt;super.users&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
-    kafka&lt;br&gt;
-    &lt;span style=&#34;color: blue&#34;&gt;nifantevea&lt;/span&gt;&lt;br&gt;
-    &lt;span style=&#34;color: blue&#34;&gt;atlas&lt;/span&gt; (на время попытки внедрения Apache Atlas в кластер)&lt;/td&gt;
-    &lt;td&gt;Users who are allowed to perform any action on the Kafka cluster.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;15.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;
-      &lt;b&gt;Source Kafka Cluster&#39;s Security Protocol&lt;/b&gt;&lt;br&gt;
-      &lt;i&gt;source.security.protocol&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;
-      &lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
-      ○&amp;nbsp;INFERRED&lt;br&gt;
-      ○&amp;nbsp;PLAINTEXT&lt;br&gt;
-      ○&amp;nbsp;SSL&lt;br&gt;
-      &lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;SASL_PLAINTEXT&lt;/span&gt;&lt;br&gt;
-      ○&amp;nbsp;SASL_SSL
-    &lt;/td&gt;
-    &lt;td&gt;Protocol used for communication with source Kafka cluster.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;16.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;
-      &lt;b&gt;Destination Kafka Cluster&#39;s Security Protocol&lt;/b&gt;&lt;br&gt;
-      &lt;i&gt;destination.security.protocol&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;
-      &lt;p&gt;&lt;span style=&#34;color: gray&#34;&gt;Kafka Broker Default Group&lt;/span&gt;&lt;/p&gt;
-      ○&amp;nbsp;INFERRED&lt;br&gt;
-      ○&amp;nbsp;PLAINTEXT&lt;br&gt;
-      ○&amp;nbsp;SSL&lt;br&gt;
-      &lt;span style=&#34;color: blue&#34;&gt;◉&amp;nbsp;SASL_PLAINTEXT&lt;/span&gt;&lt;br&gt;
-      ○&amp;nbsp;SASL_SSL
-    &lt;/td&gt;
-    &lt;td&gt;Protocol used for communication with destination Kafka cluster.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;17.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;
-      &lt;b&gt;Source Kafka Cluster&#39;s Client Auth&lt;/b&gt;&lt;br&gt;
-      &lt;i&gt;source.ssl.client.auth&lt;/i&gt;
-    &lt;/td&gt;
-    &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;Only required if the source Kafka cluster requires client authentication.&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;i&gt;18.&lt;/i&gt;&lt;/td&gt;
-    &lt;td&gt;
-      &lt;b&gt;Destination Kafka Cluster&#39;s Client Auth&lt;/b&gt;&lt;br&gt;
-      &lt;i&gt;destination.ssl.client.auth&lt;/i&gt;
-      &lt;/td&gt;
-      &lt;td&gt;&lt;span style=&#34;color: blue&#34;&gt;☑&lt;/span&gt;&lt;/td&gt;
-      &lt;td&gt;Only required if destination Kafka cluster requires client authentication.
-    &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;Нажимаем &lt;strong&gt;Save Changes&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;img src=&#34;https://debuntu.ru/img/clouderabutton.png&#34; alt=&#34;&#34;&gt;Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console.&lt;/li&gt;
-&lt;/ol&gt;
 
       </description>
     </item>
