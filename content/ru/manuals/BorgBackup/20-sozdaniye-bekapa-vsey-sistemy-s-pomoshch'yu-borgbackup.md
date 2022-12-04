@@ -138,18 +138,18 @@ chown -h pkiuser:pkiuser \
 LV='/dev/vg/snap_root'
 FSTYPE=$(df -T ${LV/snap_/} | egrep "ext4|xfs" | awk '{print $2}')
 if [[ ${FSTYPE} = "xfs" ]]; then
-  mount -o nouuid,ro ${LV} /mnt
+  mount -o nouuid ${LV} /mnt
 elif [[ ${FSTYPE} = "ext4" ]]; then
-  mount -o ro ${LV} /mnt
+  mount ${LV} /mnt
 fi
 
 # Mounting /var on /mnt/var
 LV='/dev/vg/snap_var'
 FSTYPE=$(df -T ${LV/snap_/} | egrep "ext4|xfs" | awk '{print $2}')
 if [[ ${FSTYPE} = "xfs" ]]; then
-  mount -o nouuid,ro ${LV} /mnt/var
+  mount -o nouuid ${LV} /mnt/var
 elif [[ ${FSTYPE} = "ext4" ]]; then
-  mount -o ro ${LV} /mnt/var
+  mount ${LV} /mnt/var
 fi
 
 # Mounting /boot on /mnt/boot
