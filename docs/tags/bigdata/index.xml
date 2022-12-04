@@ -4,7 +4,7 @@
     <link>https://debuntu.ru/tags/bigdata/</link>
     <description>Recent content in BigData on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 06 Dec 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Dec 2022 00:00:00 +0000</lastBuildDate>
     
 	  <atom:link href="https://debuntu.ru/tags/bigdata/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,6 +13,47 @@
         
       
     
+    
+    <item>
+      <title>Manuals: 01. Важные замечания</title>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</link>
+      <pubDate>Sat, 03 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</guid>
+      <description>
+        
+        
+        &lt;p&gt;2022-12-01&lt;/p&gt;
+&lt;h2 id=&#34;список-замечаний&#34;&gt;Список замечаний&lt;/h2&gt;
+&lt;h3 id=&#34;об-централизованном-использовании-ansible-ad-hoc-команд-для-подготовки-хостов-к-установке-arenadata-кластера&#34;&gt;Об централизованном использовании Ansible Ad-Hoc команд для подготовки хостов к установке ArenaData-кластера&lt;/h3&gt;
+&lt;p&gt;Для удобства работы с множеством машин будущего кластера, в данной инструкции описано создание отдельного каталога с Ansible-файлами на любой машине, откуда по SSH должны быть доступны все целевые хосты. Инструкция доступна здесь &amp;ldquo;Подготовка каталога с файлами для развёртывания ADH с помощью Ansible Ad-Hoc&amp;rdquo;.&lt;/p&gt;
+&lt;h3 id=&#34;о-параллельном-подключении-lvm-тома-vgdata-к-директориям-data-и-srv&#34;&gt;О параллельном подключении lvm-тома &lt;code&gt;vg/data&lt;/code&gt; к директориям &lt;code&gt;/data&lt;/code&gt; и &lt;code&gt;/srv&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;На машинах кластера, lvm-том &amp;lsquo;vg/data&amp;rsquo; монтируется не только к каталогу &lt;code&gt;/data&lt;/code&gt;, но и параллельно к &lt;code&gt;/srv&lt;/code&gt;, так как по умолчанию, в ArenaData каталог &lt;code&gt;/srv&lt;/code&gt; используется для размещения меняющихся данных кластера. В то же время, на данный момент только предположительно, некоторые наши скрипты могут использовать каталог &lt;code&gt;/data&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;Если выяснится, что параллельное подключение не востребовано, то отключение лишней директории от lv-тома легко произвести через редактирование файла &lt;code&gt;/etc/fstab&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Замечу, что на mon-хосте под каталог хранения данных Graphite по умолчанию выделен &lt;code&gt;/opt&lt;/code&gt;. Судя же по инструкции, я изменил в настройках этот параметр на &lt;code&gt;/data&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;об-использовании-одного-ipa-аккаунта-не-только-для-управления-сервисными-записями-при-включённой-в-кластере-kerberos-аутентификации-но-и-выполнения-ansible-задач-из-adcm&#34;&gt;Об использовании одного IPA-аккаунта не только для управления сервисными записями при включённой в кластере Kerberos-аутентификации, но и выполнения ansible-задач из ADCM.&lt;/h3&gt;
+&lt;p&gt;Ранее в этих инструкциях описывалось создание отдельной локальной УЗ на всех машинах кластера, которая использовалась в ADCM для подключения к хостам. Для включения Kerberos добавлялся ещё один IPA-аккаунт для создания сервисов и запросов keytab&amp;rsquo;ов. Теперь этим занимается один IPA-аккаунт.&lt;/p&gt;
+&lt;p&gt;В результате, для каждой ИС, в которой будет разворачиваться отдельный ArenaData-кластер, во FreeIPA необходимо добавить отдельную учётную запись и отдельную host-группу по инструкции 04. Добавление во FreeIPA отдельной роли, УЗ, и hostgroup, для работы ArenaData-кластера. Новую отдельную IPA-роль создавать не требуется.&lt;/p&gt;
+&lt;h3 id=&#34;о-важности-экранирования-на-хостах-существующих-во-freeipa-специальных-уз-типа-hdfs-yarn-hive-и-другие&#34;&gt;О важности экранирования на хостах существующих во FreeIPA специальных УЗ, типа &amp;lsquo;hdfs&amp;rsquo;, &amp;lsquo;yarn&amp;rsquo;, &amp;lsquo;hive&amp;rsquo;, и другие&lt;/h3&gt;
+&lt;p&gt;Так как во FreeIPA имеют быть специальные УЗ с именами, типа &amp;lsquo;hdfs&amp;rsquo;, &amp;lsquo;yarn&amp;rsquo;, &amp;lsquo;hive&amp;rsquo;, и другие, которые используются в продуктовом Hadoop-кластере, то необходимо на всех хостах ArenaData-кластере добавить в &lt;code&gt;/etc/sssd/sssd.conf&lt;/code&gt; следующие строки в раздел &amp;lsquo;[nss]&amp;rsquo;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[nss]
+filter_groups = root,accumulo,apache,atlas,flume,hadoop,hbase,hdfs,hive,httpfs,hue,impala,kafka,keytrustee,kudu,llama,kms,mapred,mysql,oozie,postgres,sentry,solr,spark,sqoop,sqoop2,yarn,zookeeper
+filter_users = root,accumulo,apache,atlas,flume,hbase,hdfs,hive,httpfs,hue,impala,kafka,keytrustee,kudu,llama,kms,mapred,mysql,oozie,postgres,sentry,solr,spark,sqoop,sqoop2,yarn,zookeeper
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Важно, чтобы во FreeIPA не попали и любые другие имена использующихся в Hadoop&amp;rsquo;е учётных записей.&lt;/p&gt;
+&lt;h3 id=&#34;о-важности-использования-по-умолчанию-python-версии-27-на-всех-хостах-с-centos7-на-борту&#34;&gt;О важности использования по умолчанию Python версии 2.7 на всех хостах с CentOS7 на борту&lt;/h3&gt;
+&lt;p&gt;Важно, чтобы на CentOS7 хостах по умолчанию был выставлен python2.7, из-за использования его ansible-пакетом &amp;lsquo;yum&amp;rsquo;, который часто применяется во время выполнения различных ansible-задач через ADCM. Напомню, что ADCM использует Ansible для выполнения различных задач на хостах Hadoop-кластера.&lt;/p&gt;
+&lt;h3 id=&#34;об-отключении-проверки-обычных-unix-прав-на-объекты-hdfs-после-подключения-ranger-к-adh-и-отключении-параметра--xasecureadd-hadoop-authorization&#34;&gt;Об отключении проверки обычных UNIX-прав на объекты HDFS после подключения Ranger к ADH и отключении параметра  &amp;lsquo;xasecure.add-hadoop-authorization&amp;rsquo;&lt;/h3&gt;
+&lt;p&gt;В нашем кластере применяется следующая конфигурация: установлен Apache Ranger и важный параметр &amp;lsquo;xasecure.add-hadoop-authorization&amp;rsquo; установлен в &amp;lsquo;False&amp;rsquo;, то есть отключен. В этом случае традиционные UNIX-права для доступа к объектам HDFS не учитываются и управление правами доступа выполняется с помощью правил Ranger&amp;rsquo;а.&lt;/p&gt;
+&lt;p&gt;Иначе же, если параметр &amp;lsquo;xasecure.add-hadoop-authorization&amp;rsquo; оставить в значении по умолчанию &amp;lsquo;True&amp;rsquo;, то доступ к объектам HDFS регулируется в следующем порядке:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Если есть политика доступа в  Ranger, то и применяется эта политика.&lt;br&gt;
+В Ranger-аудите видим применяемый тип Access Enforcer — ranger-acl.&lt;/li&gt;
+&lt;li&gt;Иначе применяется доступ на основе обычной проверки UNIX разрешений owner/group и mode.&lt;br&gt;
+В Ranger-аудите видим применяемый тип Access Enforcer — hadoop-acl.&lt;/li&gt;
+&lt;/ol&gt;
+
+      </description>
+    </item>
     
     <item>
       <title>Manuals: Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</title>

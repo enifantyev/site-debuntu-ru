@@ -4,7 +4,7 @@
     <link>https://debuntu.ru/manuals/bigdata/</link>
     <description>Recent content in BigData on Debuntarium</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 06 Dec 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Dec 2022 00:00:00 +0000</lastBuildDate>
     
 	  <atom:link href="https://debuntu.ru/manuals/bigdata/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,6 +13,19 @@
         
       
     
+    
+    <item>
+      <title>Manuals: Установка ArenaData Hadoop с TLS и Kerberos на основе FreeIPA</title>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/</link>
+      <pubDate>Sat, 03 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/</guid>
+      <description>
+        
+        
+        
+      </description>
+    </item>
     
     <item>
       <title>Manuals: Apache Atlas</title>

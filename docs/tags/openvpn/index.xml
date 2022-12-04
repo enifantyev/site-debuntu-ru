@@ -372,7 +372,7 @@ echo &amp;#39;&amp;lt;tls-crypt&amp;gt;&amp;#39; &amp;gt;&amp;gt; $FILECONF; sed
 &lt;p&gt;Для генерации клиентских ключей предназначена команда &lt;code&gt;easyrsa build-client-full nopass&lt;/code&gt;. Для первого клиента генерируем беспарольный ключ и сертификат, с копированием набора файлов в каталог &lt;code&gt;kits/cln1&lt;/code&gt;. Здесь же создаём &lt;strong&gt;файл конфигурации &lt;code&gt;cln1.ovpn&lt;/code&gt; со встроенными ключём, сертификатом и разделяемым секретом для подключения к серверу&lt;/strong&gt;. Будет удобно скопировать только этот файл в OpenVPN клиент.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Обязательно меняем переменную VPNHOST на актуальный ip-адрес или доменное имя, с портом VPN-сервера, не трогая кавычек.&lt;/li&gt;
-&lt;li&gt;Изменив значение переменной REQPASS на отличное от &lt;strong&gt;nopass&lt;/strong&gt;, получим запрос ввода пароля для клиентского ключа. Иногда полезно, когда &lt;em&gt;клиент&lt;/em&gt; будет запрашивать пароль от ключа, при попытке подключиться к серверу.&lt;/li&gt;
+&lt;li&gt;Изменив значение переменной REQPASS на отличное от &lt;strong&gt;nopass&lt;/strong&gt;, получим запрос ввода пароля для клиентского ключа. Иногда бывает полезно, чтобы &lt;em&gt;клиент&lt;/em&gt;, при попытке подключиться к серверу, запрашивал пароль от ключа.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;export DN=cln1; \
 export REQPASS=nopass; \
@@ -428,8 +428,7 @@ rsync -avP -e &amp;#34;ssh -p $SSHPORT&amp;#34; $FILENAME root@$SSHADDRESS:/etc/
 chmod 600 /etc/openvpn/*.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;314-запуск-демона&#34;&gt;3.1.4. Запуск демона&lt;/h4&gt;
 &lt;p&gt;Включаем и запускаем демон:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl enable openvpn@srv1
-systemctl start openvpn@srv1
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl enable --now openvpn@srv1
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Замечу что из-за опций &lt;code&gt;persist-tun&lt;/code&gt; и &lt;code&gt;persist-key&lt;/code&gt;, вместо команды &lt;code&gt;systemctl restart openvpn@srv1&lt;/code&gt;, перезапуск демона выполняется двумя командами:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;systemctl stop openvpn@srv1 &amp;amp;&amp;amp; systemctl start openvpn@srv1
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;32-настройка-файрвола&#34;&gt;3.2. Настройка файрвола&lt;/h3&gt;
@@ -462,7 +461,7 @@ iptables -A FORWARD -j REJECT --reject-with icmp-net-unreachable
 iptables -t nat -A POSTROUTING -s 192.168.200.0/24 -o $GW -j SNAT --to-source $IP
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;В случае возникновения проблем на сервере после применения вышеуказанных команд, просто перегружаем сервер через личный кабинет VPS-провайдера.&lt;/p&gt;
 &lt;h2 id=&#34;4-проверка-маршрутизации&#34;&gt;4. Проверка маршрутизации&lt;/h2&gt;
-&lt;p&gt;Проверяем правильность настроек с помощью ранее настроенного OpenVPN-клиента. Подключаемся к серверу и в любом браузере вводим URL &lt;code&gt;https://www.google.com/search?q=ip&lt;/code&gt;. Гугл ответит адресом ip. Если адрес совпадает с адресом OpenVPN-сервера, то настройка сервера верна и переходим к закреплению текущей конфигурации сервера на постоянной основе.&lt;/p&gt;
+&lt;p&gt;Проверяем правильность настроек с помощью ранее настроенного OpenVPN-клиента. Подключаемся к серверу и в любом браузере вводим URL &lt;code&gt;https://www.google.com/search?q=my+ip+address&lt;/code&gt;. Гугл ответит адресом ip. Если адрес совпадает с адресом OpenVPN-сервера, то настройка сервера верна и переходим к закреплению текущей конфигурации сервера на постоянной основе.&lt;/p&gt;
 
       </description>
     </item>
