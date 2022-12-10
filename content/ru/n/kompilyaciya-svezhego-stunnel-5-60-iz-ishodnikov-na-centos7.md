@@ -22,12 +22,14 @@ $ sudo yum groupinstall "Development Tools"
 
 ## Сборка
 ```
+PCKG="stunnel-5.60"
+
 mkdir ~/src && cd ~/src
-curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz
-curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz.sha256
-sha256sum -c stunnel-5.60.tar.gz.sha256
-tar xvf stunnel-5.60.tar.gz
-cd stunnel-5.60
+curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz
+curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz.sha256
+sha256sum -c ${PCKG}.tar.gz.sha256
+tar xvf ${PCKG}.tar.gz
+cd ${PCKG}
 ./configure
 make
 ```

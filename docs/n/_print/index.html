@@ -135,7 +135,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.222cc15ff6748bda725c00e820ee8410.json"
+  data-offline-search-index-json-src="/offline-search-index.0a10f3886a06c9e597dff3bba3460be0.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -767,12 +767,14 @@ done&lt;../${REPO}.urls
 <p>Устанавливаем набор инструментов:</p>
 <pre tabindex="0"><code>$ sudo yum groupinstall &#34;Development Tools&#34;
 </code></pre><h2 id="сборка">Сборка</h2>
-<pre tabindex="0"><code>mkdir ~/src &amp;&amp; cd ~/src
-curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz
-curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz.sha256
-sha256sum -c stunnel-5.60.tar.gz.sha256
-tar xvf stunnel-5.60.tar.gz
-cd stunnel-5.60
+<pre tabindex="0"><code>PCKG=&#34;stunnel-5.60&#34;
+
+mkdir ~/src &amp;&amp; cd ~/src
+curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz
+curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz.sha256
+sha256sum -c ${PCKG}.tar.gz.sha256
+tar xvf ${PCKG}.tar.gz
+cd ${PCKG}
 ./configure
 make
 </code></pre><h2 id="результат">Результат</h2>

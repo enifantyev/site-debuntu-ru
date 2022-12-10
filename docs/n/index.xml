@@ -76,12 +76,14 @@ done&amp;lt;../${REPO}.urls
 &lt;p&gt;Устанавливаем набор инструментов:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo yum groupinstall &amp;#34;Development Tools&amp;#34;
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;сборка&#34;&gt;Сборка&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src &amp;amp;&amp;amp; cd ~/src
-curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz
-curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz.sha256
-sha256sum -c stunnel-5.60.tar.gz.sha256
-tar xvf stunnel-5.60.tar.gz
-cd stunnel-5.60
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;PCKG=&amp;#34;stunnel-5.60&amp;#34;
+
+mkdir ~/src &amp;amp;&amp;amp; cd ~/src
+curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz
+curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz.sha256
+sha256sum -c ${PCKG}.tar.gz.sha256
+tar xvf ${PCKG}.tar.gz
+cd ${PCKG}
 ./configure
 make
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;

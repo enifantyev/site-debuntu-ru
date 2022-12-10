@@ -23,7 +23,7 @@ slug: obfuskaciya-ssh-trafika-s-pomoschyu-stunnel
 sudo yum install stunnel
 ```
 
-Компилируем свежий stunnel по инструкции [Компиляция свежего stunnel 5.60 из исходников на CentOS7](n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7).
+Компилируем свежий stunnel по инструкции [Компиляция свежего stunnel 5.60 из исходников на CentOS7](/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7).
 
 Подменяем установленный stunnel 4.56, новым stunnel 5.60:
 ```

@@ -413,12 +413,14 @@ Caused by: net.schmizz.sshj.userauth.UserAuthException: Unknown packet received 
 &lt;p&gt;Устанавливаем набор инструментов:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ sudo yum groupinstall &amp;#34;Development Tools&amp;#34;
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;сборка&#34;&gt;Сборка&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mkdir ~/src &amp;amp;&amp;amp; cd ~/src
-curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz
-curl -LO https://www.stunnel.org/downloads/stunnel-5.60.tar.gz.sha256
-sha256sum -c stunnel-5.60.tar.gz.sha256
-tar xvf stunnel-5.60.tar.gz
-cd stunnel-5.60
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;PCKG=&amp;#34;stunnel-5.60&amp;#34;
+
+mkdir ~/src &amp;amp;&amp;amp; cd ~/src
+curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz
+curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz.sha256
+sha256sum -c ${PCKG}.tar.gz.sha256
+tar xvf ${PCKG}.tar.gz
+cd ${PCKG}
 ./configure
 make
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;результат&#34;&gt;Результат&lt;/h2&gt;
@@ -534,7 +536,7 @@ a/src/CMAK-3.0.0.5/target/rpm/tmp-buildroot/var /data/src/CMAK-3.0.0.5/target/rp
 &lt;h2 id=&#34;настройка-сервера&#34;&gt;Настройка сервера&lt;/h2&gt;
 &lt;p&gt;Устанавливаем на сервер пакет stunnel:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install stunnel
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Компилируем свежий stunnel по инструкции &lt;a href=&#34;n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7&#34;&gt;Компиляция свежего stunnel 5.60 из исходников на CentOS7&lt;/a&gt;.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Компилируем свежий stunnel по инструкции &lt;a href=&#34;https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7&#34;&gt;Компиляция свежего stunnel 5.60 из исходников на CentOS7&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Подменяем установленный stunnel 4.56, новым stunnel 5.60:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56
 sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin

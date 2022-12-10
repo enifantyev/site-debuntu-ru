@@ -27,7 +27,7 @@
 &lt;h2 id=&#34;настройка-сервера&#34;&gt;Настройка сервера&lt;/h2&gt;
 &lt;p&gt;Устанавливаем на сервер пакет stunnel:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo yum install stunnel
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Компилируем свежий stunnel по инструкции &lt;a href=&#34;n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7&#34;&gt;Компиляция свежего stunnel 5.60 из исходников на CentOS7&lt;/a&gt;.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Компилируем свежий stunnel по инструкции &lt;a href=&#34;https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7&#34;&gt;Компиляция свежего stunnel 5.60 из исходников на CentOS7&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Подменяем установленный stunnel 4.56, новым stunnel 5.60:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56
 sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin
