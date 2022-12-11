@@ -12,6 +12,7 @@ tags:
   - BigData
 aliases:
   - /a/ustanovka-cloudera-manager-6-3.1/
+  - /a/01-ustanovka-cloudera-manager-6-3.1
 slug: ustanovka-cloudera-manager-6-3.1
 ---
 
