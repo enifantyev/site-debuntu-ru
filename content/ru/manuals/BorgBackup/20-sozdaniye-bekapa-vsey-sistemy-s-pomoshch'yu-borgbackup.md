@@ -27,7 +27,6 @@ slug: sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup
     - `/dev/vg/var` - `/var`
   - Второй диск дополнительный. Возможно, что он:
     - диск не разбит или разбит на один раздел. Пространство подключёно к LVM2 и именовано и подключено так `/dev/vg/data` - `/data`;
-    - диск не разбит или разбит на один раздел. Пространство подключёно к LVM2 и именовано и подключено так `/dev/vgdata/data` - `/data`;
     - может быть организован по другому.
 
 ```bash
@@ -134,26 +133,28 @@ chown -h pkiuser:pkiuser \
 ### Монтирование снэпшотов + директорию `/boot`
 При монтировании xfs используем опцию `nouuid`, поэтому проверяем тип файловой системы:
 ```bash
-# Mounting root on /mnt
+# Mounting root on /mnt/sysroot
 LV='/dev/vg/snap_root'
+SYSROOT='/mnt/sysroot'
+mkdir -p ${SYSROOT}
 FSTYPE=$(df -T ${LV/snap_/} | egrep "ext4|xfs" | awk '{print $2}')
 if [[ ${FSTYPE} = "xfs" ]]; then
-  mount -o nouuid ${LV} /mnt
+  mount -o nouuid ${LV} ${SYSROOT}
 elif [[ ${FSTYPE} = "ext4" ]]; then
-  mount ${LV} /mnt
+  mount ${LV} ${SYSROOT}
 fi
 
-# Mounting /var on /mnt/var
+# Mounting /var on /mnt/sysroot/var
 LV='/dev/vg/snap_var'
 FSTYPE=$(df -T ${LV/snap_/} | egrep "ext4|xfs" | awk '{print $2}')
 if [[ ${FSTYPE} = "xfs" ]]; then
-  mount -o nouuid ${LV} /mnt/var
+  mount -o nouuid ${LV} ${SYSROOT}/var
 elif [[ ${FSTYPE} = "ext4" ]]; then
-  mount ${LV} /mnt/var
+  mount ${LV} ${SYSROOT}/var
 fi
 
 # Mounting /boot on /mnt/boot
-mount -o bind,ro /boot /mnt/boot
+mount -o bind,ro /boot ${SYSROOT}/boot
 ```
 
 ### Проверка монтирования
@@ -162,16 +163,16 @@ mount | grep '/mnt'
 ```
 Пример вывода:
 ```
-/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
-/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
-/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_root on /mnt/sysroot type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_var on /mnt/sysroot/var type ext4 (rw,relatime,seclabel)
+/dev/sda1 on /mnt/sysroot/boot type ext4 (rw,relatime,seclabel)
 ```
 
 ### Чистка системы в снимке:
 ```bash
-rm -rf /mnt/var/cache/{yum,dnf}
-truncate -s0 /mnt/var/log/lastlog
-rm -f /mnt/var/log/lastlog.*
+rm -rf ${SYSROOT}/var/cache/{yum,dnf}
+truncate -s0 ${SYSROOT}/var/log/lastlog
+rm -f ${SYSROOT}/var/log/lastlog.*
 ```
 
 ### Резервное копирование
@@ -183,12 +184,12 @@ export BORG_REPO="ssh://_borg@192.168.50.10:22/./repo1"
 
 Выполняем бэкап со сжатием передовым компрессором [Zstandard](https://ru.wikipedia.org/wiki/Zstandard):
 ```bash
-borg create -C zstd --stats --progress ::full_{hostname}_{now} /mnt
+borg create -C zstd --stats --progress ::full_{hostname}_{now} ${SYSROOT}
 ```
 
 ### Удаление временных снэпшотов
 ```bash
-umount -R /mnt
+umount -R ${SYSROOT}
 lvremove -y /dev/vg/snap_var
 lvremove -y /dev/vg/snap_root
 ```

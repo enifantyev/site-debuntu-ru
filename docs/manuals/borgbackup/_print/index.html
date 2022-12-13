@@ -135,7 +135,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.0a10f3886a06c9e597dff3bba3460be0.json"
+  data-offline-search-index-json-src="/offline-search-index.0d774d3a20cfdbf4dd6fa87640c6622a.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -639,7 +639,6 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <li>Второй диск дополнительный. Возможно, что он:
 <ul>
 <li>диск не разбит или разбит на один раздел. Пространство подключёно к LVM2 и именовано и подключено так <code>/dev/vg/data</code> - <code>/data</code>;</li>
-<li>диск не разбит или разбит на один раздел. Пространство подключёно к LVM2 и именовано и подключено так <code>/dev/vgdata/data</code> - <code>/data</code>;</li>
 <li>может быть организован по другому.</li>
 </ul>
 </li>
@@ -720,44 +719,46 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 </span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  /etc/systemd/system/pki-tomcatd.target.wants/pki-tomcatd@pki-tomcat.service
 </span></span></code></pre></div><h3 id="монтирование-снэпшотов--директорию-boot">Монтирование снэпшотов + директорию <code>/boot</code></h3>
 <p>При монтировании xfs используем опцию <code>nouuid</code>, поэтому проверяем тип файловой системы:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting root on /mnt</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting root on /mnt/sysroot</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">LV</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/dev/vg/snap_root&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SYSROOT</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/mnt/sysroot&#39;</span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">FSTYPE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>df -T <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#000;font-weight:bold">/snap_/</span><span style="color:#4e9a06">}</span> <span style="color:#000;font-weight:bold">|</span> egrep <span style="color:#4e9a06">&#34;ext4|xfs&#34;</span> <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $2}&#39;</span><span style="color:#204a87;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;xfs&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt
+</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;ext4&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt
+</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /var on /mnt/var</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /var on /mnt/sysroot/var</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">LV</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/dev/vg/snap_var&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">FSTYPE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>df -T <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#000;font-weight:bold">/snap_/</span><span style="color:#4e9a06">}</span> <span style="color:#000;font-weight:bold">|</span> egrep <span style="color:#4e9a06">&#34;ext4|xfs&#34;</span> <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $2}&#39;</span><span style="color:#204a87;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;xfs&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt/var
+</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;ext4&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt/var
+</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /boot on /mnt/boot</span>
-</span></span><span style="display:flex;"><span>mount -o bind,ro /boot /mnt/boot
+</span></span><span style="display:flex;"><span>mount -o bind,ro /boot <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/boot
 </span></span></code></pre></div><h3 id="проверка-монтирования">Проверка монтирования</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#4e9a06">&#39;/mnt&#39;</span>
 </span></span></code></pre></div><p>Пример вывода:</p>
-<pre tabindex="0"><code>/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
-/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
-/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
+<pre tabindex="0"><code>/dev/mapper/vg-snap_root on /mnt/sysroot type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_var on /mnt/sysroot/var type ext4 (rw,relatime,seclabel)
+/dev/sda1 on /mnt/sysroot/boot type ext4 (rw,relatime,seclabel)
 </code></pre><h3 id="чистка-системы-в-снимке">Чистка системы в снимке:</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -rf /mnt/var/cache/<span style="color:#ce5c00;font-weight:bold">{</span>yum,dnf<span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>truncate -s0 /mnt/var/log/lastlog
-</span></span><span style="display:flex;"><span>rm -f /mnt/var/log/lastlog.*
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -rf <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var/cache/<span style="color:#ce5c00;font-weight:bold">{</span>yum,dnf<span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>truncate -s0 <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var/log/lastlog
+</span></span><span style="display:flex;"><span>rm -f <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var/log/lastlog.*
 </span></span></code></pre></div><h3 id="резервное-копирование">Резервное копирование</h3>
 <p>Устанавливаем переменные, чтобы не вводить параметры дважды:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">BORG_RSH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ssh -i ~/.ssh/borg1&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87">export</span> <span style="color:#000">BORG_REPO</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ssh://_borg@192.168.50.10:22/./repo1&#34;</span>
 </span></span></code></pre></div><p>Выполняем бэкап со сжатием передовым компрессором <a href="https://ru.wikipedia.org/wiki/Zstandard">Zstandard</a>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>borg create -C zstd --stats --progress ::full_<span style="color:#ce5c00;font-weight:bold">{</span>hostname<span style="color:#ce5c00;font-weight:bold">}</span>_<span style="color:#ce5c00;font-weight:bold">{</span>now<span style="color:#ce5c00;font-weight:bold">}</span> /mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>borg create -C zstd --stats --progress ::full_<span style="color:#ce5c00;font-weight:bold">{</span>hostname<span style="color:#ce5c00;font-weight:bold">}</span>_<span style="color:#ce5c00;font-weight:bold">{</span>now<span style="color:#ce5c00;font-weight:bold">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span></code></pre></div><h3 id="удаление-временных-снэпшотов">Удаление временных снэпшотов</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>umount -R /mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>umount -R <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span>lvremove -y /dev/vg/snap_var
 </span></span><span style="display:flex;"><span>lvremove -y /dev/vg/snap_root
 </span></span></code></pre></div>
@@ -782,7 +783,7 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 <p>В минимальной комплектации необходимо восстановить системные разделы <code>/</code>, <code>/boot</code>, <code>/var</code>. В максимальной комплектации потребуется восстановить ранее забэкапированные <code>/data</code> и прочее.</p>
 <p>В любом случае, <strong>для распаковки этих данных потребуется достаточное незанятое место на Volume Group&rsquo;ах</strong>, несущих восстанавливаемые Logical Volume&rsquo;ы. В простейшем случае для этого необходимо добавить к машине дополнительный диск вместимостью перекрывающим объём восстанавливаемых данных.</p>
 <h3 id="добавление-пространства-в-volume-group">Добавление пространства в Volume Group</h3>
-<p>Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется. Достаточно будет добавить в VG весь новый диск командой <code>vgextend /dev/vg /dev/sdb</code>.</p>
+<p>Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется. Достаточно будет добавить в VG весь новый диск командой <code>vgextend vg /dev/sdb</code>.</p>
 <p>В противном случае, когда восстанавливаемые тома находятся на разных VG, потребуется разбивка дополнительного диска на отдельные разделы и добавление этих новых PV в свои VG.</p>
 <h2 id="процесс-восстановления">Процесс восстановления</h2>
 <h3 id="узнаём-требуемый-размер-диска-для-восстановления-архива">Узнаём требуемый размер диска для восстановления архива</h3>
@@ -803,7 +804,7 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 </span></span><span style="display:flex;"><span>Time <span style="color:#ce5c00;font-weight:bold">(</span>end<span style="color:#ce5c00;font-weight:bold">)</span>: Mon, 2022-04-11 10:55:25
 </span></span><span style="display:flex;"><span>Duration: 50.01 seconds
 </span></span><span style="display:flex;"><span>Number of files: <span style="color:#0000cf;font-weight:bold">68781</span>
-</span></span><span style="display:flex;"><span>Command line: /root/.local/bin/borg create -C zstd --stats --progress <span style="color:#4e9a06">&#39;::full_{hostname}_{now}&#39;</span> /mnt
+</span></span><span style="display:flex;"><span>Command line: /root/.local/bin/borg create -C zstd --stats --progress <span style="color:#4e9a06">&#39;::full_{hostname}_{now}&#39;</span> /mnt/sysroot
 </span></span><span style="display:flex;"><span>Utilization of maximum supported archive size: 0%
 </span></span><span style="display:flex;"><span>------------------------------------------------------------------------------
 </span></span><span style="display:flex;"><span>                       Original size      Compressed size    Deduplicated size
@@ -824,53 +825,55 @@ WARNING: Running pip as the &#39;root&#39; user can result in broken permissions
 </span></span><span style="display:flex;"><span>lvcreate -L 6G -s -n snap_var /dev/vg/var
 </span></span></code></pre></div><h3 id="монтирование-снэпшотов--директорию-boot">Монтирование снэпшотов + директорию <code>/boot</code></h3>
 <p>При монтировании xfs используем опцию <code>nouuid</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting root on /mnt</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting root on /mnt/sysroot</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">LV</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/dev/vg/snap_root&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SYSROOT</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/mnt/sysroot&#39;</span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">FSTYPE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>df -T <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#000;font-weight:bold">/snap_/</span><span style="color:#4e9a06">}</span> <span style="color:#000;font-weight:bold">|</span> egrep <span style="color:#4e9a06">&#34;ext4|xfs&#34;</span> <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $2}&#39;</span><span style="color:#204a87;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;xfs&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt
+</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;ext4&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt
+</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /var on /mnt/var</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /var on /mnt/sysroot/var</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">LV</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/dev/vg/snap_var&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">FSTYPE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>df -T <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#000;font-weight:bold">/snap_/</span><span style="color:#4e9a06">}</span> <span style="color:#000;font-weight:bold">|</span> egrep <span style="color:#4e9a06">&#34;ext4|xfs&#34;</span> <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $2}&#39;</span><span style="color:#204a87;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;xfs&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt/var
+</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;ext4&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt/var
+</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /boot on /mnt/boot</span>
-</span></span><span style="display:flex;"><span>mount -o <span style="color:#204a87">bind</span> /boot /mnt/boot
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /boot on /mnt/sysroot/boot</span>
+</span></span><span style="display:flex;"><span>mount -o <span style="color:#204a87">bind</span> /boot <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/boot
 </span></span></code></pre></div><h3 id="проверка-монтирования">Проверка монтирования</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#4e9a06">&#39;/mnt&#39;</span>
 </span></span></code></pre></div><p>Пример вывода:</p>
-<pre tabindex="0"><code>/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
-/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
-/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
+<pre tabindex="0"><code>/dev/mapper/vg-snap_root on /mnt/sysroot type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_var on /mnt/sysroot/var type ext4 (rw,relatime,seclabel)
+/dev/sda1 on /mnt/sysroot/boot type ext4 (rw,relatime,seclabel)
 </code></pre><h3 id="удаление-содержимого-снэпшотов-и-boot">Удаление содержимого снэпшотов и <code>/boot</code></h3>
 <p>Удаляем всё содержимое снэпшотов и каталога <code>/boot</code> с проверкой:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -rf /mnt/*
-</span></span><span style="display:flex;"><span>tree -h /mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -ri <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/*
+</span></span><span style="display:flex;"><span>tree -h <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span></code></pre></div><p>Результат:</p>
-<pre tabindex="0"><code>/mnt
+<pre tabindex="0"><code>/mnt/sysroot
 └── [4.0K]  boot
 
 1 directory, 0 files
 </code></pre><h3 id="восстановление-бэкапа-в-пространство-снэпшотов-и-boot">Восстановление бэкапа в пространство снэпшотов и <code>/boot</code></h3>
-<p>Переходим в корень и восстанавливаем архив <code>full_img211202_2022-03-11T10:54:32</code>, который заполнит файлами готовый для приёма каталог <code>/mnt</code>:</p>
+<p>Переходим в корень и восстанавливаем архив <code>full_img211202_2022-03-11T10:54:32</code>, который заполнит файлами готовый для приёма каталог <code>/mnt/sysroot</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">cd</span> /
 </span></span><span style="display:flex;"><span>borg extract --list --progress --numeric-owner <span style="color:#4e9a06">\
 </span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  ::full_img211202_2022-03-11T12:53:10
 </span></span></code></pre></div><h2 id="исправление-загрузки">Исправление загрузки</h2>
 <h3 id="chroot-для-исправления-загрузки">chroot для исправления загрузки</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount -t proc /proc /mnt/proc/
-</span></span><span style="display:flex;"><span>mount -t sysfs /sys /mnt/sys/
-</span></span><span style="display:flex;"><span>mount --bind /dev /mnt/dev/
-</span></span><span style="display:flex;"><span>mount --bind /run /mnt/run
-</span></span><span style="display:flex;"><span>chroot /mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount -t proc /proc <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/proc/
+</span></span><span style="display:flex;"><span>mount -t sysfs /sys <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/sys/
+</span></span><span style="display:flex;"><span>mount --bind /dev <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/dev/
+</span></span><span style="display:flex;"><span>mount --bind /run <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/run
+</span></span><span style="display:flex;"><span>chroot <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span></code></pre></div><h2 id="обновление-grub">Обновление GRUB</h2>
 <p>В некоторых случаях, например, если в ОС были обновлены пакеты, отвечающие за загрузку, то потребуется обновить GRUB.</p>
 <p>Общая схема обновления GRUB такая:</p>
@@ -917,7 +920,7 @@ Installation finished. No error reported.
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">exit</span>
 </span></span></code></pre></div><h2 id="заключительные-операции">Заключительные операции</h2>
 <h3 id="объединение-снэпшотов">Объединение снэпшотов</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>umount -R /mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>umount -R <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span>lvconvert --merge /dev/vg/snap_var
 </span></span><span style="display:flex;"><span>lvconvert --merge /dev/vg/snap_root
 </span></span></code></pre></div><p>stdout пример:</p>
@@ -983,26 +986,28 @@ Installation finished. No error reported.
 </span></span></code></pre></div><h3 id="монтирование-снэпшотов--директорию-boot">Монтирование снэпшотов + директорию <code>/boot</code></h3>
 <h4 id="если-типы-файловых-систем-совпадают">Если типы файловых систем совпадают</h4>
 <p>При монтировании xfs используем опцию <code>nouuid</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting root on /mnt</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting root on /mnt/sysroot</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">LV</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/dev/vg/snap_root&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">SYSROOT</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/mnt/sysroot&#39;</span>
+</span></span><span style="display:flex;"><span>mkdir -p <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">FSTYPE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>df -T <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#000;font-weight:bold">/snap_/</span><span style="color:#4e9a06">}</span> <span style="color:#000;font-weight:bold">|</span> egrep <span style="color:#4e9a06">&#34;ext4|xfs&#34;</span> <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $2}&#39;</span><span style="color:#204a87;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;xfs&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt
+</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;ext4&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt
+</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /var on /mnt/var</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /var on /mnt/sysroot/var</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">LV</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/dev/vg/snap_var&#39;</span>
 </span></span><span style="display:flex;"><span><span style="color:#000">FSTYPE</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>df -T <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#000;font-weight:bold">/snap_/</span><span style="color:#4e9a06">}</span> <span style="color:#000;font-weight:bold">|</span> egrep <span style="color:#4e9a06">&#34;ext4|xfs&#34;</span> <span style="color:#000;font-weight:bold">|</span> awk <span style="color:#4e9a06">&#39;{print $2}&#39;</span><span style="color:#204a87;font-weight:bold">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">if</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;xfs&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt/var
+</span></span><span style="display:flex;"><span>  mount -o nouuid <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">elif</span> <span style="color:#ce5c00;font-weight:bold">[[</span> <span style="color:#4e9a06">${</span><span style="color:#000">FSTYPE</span><span style="color:#4e9a06">}</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;ext4&#34;</span> <span style="color:#ce5c00;font-weight:bold">]]</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#204a87;font-weight:bold">then</span>
-</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> /mnt/var
+</span></span><span style="display:flex;"><span>  mount <span style="color:#4e9a06">${</span><span style="color:#000">LV</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var
 </span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">fi</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /boot on /mnt/boot</span>
-</span></span><span style="display:flex;"><span>mount -o <span style="color:#204a87">bind</span> /boot /mnt/boot
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Mounting /boot on /mnt/sysroot/boot</span>
+</span></span><span style="display:flex;"><span>mount -o <span style="color:#204a87">bind</span> /boot <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/boot
 </span></span></code></pre></div><h4 id="если-типы-файловых-систем-различны">Если типы файловых систем различны</h4>
 <p>Форматируем разделы. Например, если восстанавливаемый снимок создан на машине с &rsquo;ext4':</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># /dev/sda1 --&gt; /boot</span>
@@ -1013,41 +1018,41 @@ Installation finished. No error reported.
 </span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># /dev/vg/var --&gt; /var</span>
 </span></span><span style="display:flex;"><span>mkfs.ext4 /dev/vg/snap_var
 </span></span></code></pre></div><p>Монтируем вручную отформатированные разделы к каталогу <code>/mnt</code>:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount /dev/vg/snap_root /mnt
-</span></span><span style="display:flex;"><span>mkdir /mnt/<span style="color:#ce5c00;font-weight:bold">{</span>boot,var<span style="color:#ce5c00;font-weight:bold">}</span>
-</span></span><span style="display:flex;"><span>mount /dev/sda1 /mnt/boot
-</span></span><span style="display:flex;"><span>mount /dev/vg/snap_var /mnt/var
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount /dev/vg/snap_root <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>mkdir <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/<span style="color:#ce5c00;font-weight:bold">{</span>boot,var<span style="color:#ce5c00;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>mount /dev/sda1 <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/boot
+</span></span><span style="display:flex;"><span>mount /dev/vg/snap_var <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/var
 </span></span></code></pre></div><h3 id="проверка-монтирования">Проверка монтирования</h3>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount <span style="color:#000;font-weight:bold">|</span> grep <span style="color:#4e9a06">&#39;/mnt&#39;</span>
 </span></span></code></pre></div><p>Пример вывода:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/dev/mapper/vg-snap_root on /mnt <span style="color:#204a87">type</span> ext4 <span style="color:#ce5c00;font-weight:bold">(</span>rw,relatime,seclabel<span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>/dev/mapper/vg-snap_var on /mnt/var <span style="color:#204a87">type</span> ext4 <span style="color:#ce5c00;font-weight:bold">(</span>rw,relatime,seclabel<span style="color:#ce5c00;font-weight:bold">)</span>
-</span></span><span style="display:flex;"><span>/dev/sda1 on /mnt/boot <span style="color:#204a87">type</span> ext4 <span style="color:#ce5c00;font-weight:bold">(</span>rw,relatime,seclabel<span style="color:#ce5c00;font-weight:bold">)</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/dev/mapper/vg-snap_root on /mnt/sysroot <span style="color:#204a87">type</span> ext4 <span style="color:#ce5c00;font-weight:bold">(</span>rw,relatime,seclabel<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>/dev/mapper/vg-snap_var on /mnt/sysroot/var <span style="color:#204a87">type</span> ext4 <span style="color:#ce5c00;font-weight:bold">(</span>rw,relatime,seclabel<span style="color:#ce5c00;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>/dev/sda1 on /mnt/sysroot/boot <span style="color:#204a87">type</span> ext4 <span style="color:#ce5c00;font-weight:bold">(</span>rw,relatime,seclabel<span style="color:#ce5c00;font-weight:bold">)</span>
 </span></span></code></pre></div><h3 id="удаление-содержимого-снэпшотов-и-boot">Удаление содержимого снэпшотов и <code>/boot</code></h3>
 <blockquote>
 <p>Если разделы были отформатированы на одном из предыдущих пунктов, то удаление содержимого разделов можно пропустить.</p>
 </blockquote>
 <p>Иначе удаляем всё содержимое снэпшотов и каталога <code>/boot</code> с проверкой:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -rf /mnt/*
-</span></span><span style="display:flex;"><span>tree /mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm -ri <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/*
+</span></span><span style="display:flex;"><span>tree <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span></code></pre></div><p>Результат:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/mnt/sysroot
 </span></span><span style="display:flex;"><span>└── <span style="color:#ce5c00;font-weight:bold">[</span>4.0K<span style="color:#ce5c00;font-weight:bold">]</span>  boot
 </span></span><span style="display:flex;"><span>└── <span style="color:#ce5c00;font-weight:bold">[</span>4.0K<span style="color:#ce5c00;font-weight:bold">]</span>  var
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#0000cf;font-weight:bold">2</span> directory, <span style="color:#0000cf;font-weight:bold">0</span> files
 </span></span></code></pre></div><h3 id="восстановление-бэкапа-в-пространство-снэпшотов-и-boot">Восстановление бэкапа в пространство снэпшотов и <code>/boot</code></h3>
-<p>Переходим в корень и восстанавливаем архив <code>full_img211202_2022-03-11T10:54:32</code>, который заполнит файлами готовый для приёма каталог <code>/mnt</code>:</p>
+<p>Переходим в корень и восстанавливаем архив <code>full_img211202_2022-03-11T10:54:32</code>, который заполнит файлами готовый для приёма каталог <code>/mnt/sysroot</code>:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">cd</span> /
 </span></span><span style="display:flex;"><span>borg extract --list --progress --numeric-owner <span style="color:#4e9a06">\
 </span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  ::full_img211202_2022-03-11T12:53:10
 </span></span></code></pre></div><h2 id="исправление-загрузки">Исправление загрузки</h2>
 <h3 id="chroot-для-исправления-загрузки">chroot для исправления загрузки</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount -t proc /proc /mnt/proc/
-</span></span><span style="display:flex;"><span>mount -t sysfs /sys /mnt/sys/
-</span></span><span style="display:flex;"><span>mount --bind /dev /mnt/dev/
-</span></span><span style="display:flex;"><span>mount --bind /run /mnt/run
-</span></span><span style="display:flex;"><span>chroot /mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mount -t proc /proc <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/proc/
+</span></span><span style="display:flex;"><span>mount -t sysfs /sys <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/sys/
+</span></span><span style="display:flex;"><span>mount --bind /dev <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/dev/
+</span></span><span style="display:flex;"><span>mount --bind /run <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>/run
+</span></span><span style="display:flex;"><span>chroot <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span></code></pre></div><h3 id="обновление-grub">Обновление GRUB</h3>
 <p>В некоторых случаях, например при восстановлении снимка с другой операционной системой, потребуется обновить GRUB.</p>
 <p>Общая схема обновления GRUB такая:</p>
@@ -1117,7 +1122,7 @@ Installation finished. No error reported.
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">exit</span>
 </span></span></code></pre></div><h2 id="заключительные-операции">Заключительные операции</h2>
 <h3 id="объединение-снэпшотов">Объединение снэпшотов</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>umount -R /mnt
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>umount -R <span style="color:#4e9a06">${</span><span style="color:#000">SYSROOT</span><span style="color:#4e9a06">}</span>
 </span></span><span style="display:flex;"><span>lvconvert --merge /dev/vg/snap_var
 </span></span><span style="display:flex;"><span>lvconvert --merge /dev/vg/snap_root
 </span></span></code></pre></div><p>stdout пример:</p>

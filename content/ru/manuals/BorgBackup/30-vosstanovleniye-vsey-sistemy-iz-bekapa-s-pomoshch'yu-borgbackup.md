@@ -19,7 +19,7 @@ slug: vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup
 В любом случае, **для распаковки этих данных потребуется достаточное незанятое место на Volume Group'ах**, несущих восстанавливаемые Logical Volume'ы. В простейшем случае для этого необходимо добавить к машине дополнительный диск вместимостью перекрывающим объём восстанавливаемых данных.
 
 ### Добавление пространства в Volume Group
-Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется. Достаточно будет добавить в VG весь новый диск командой `vgextend /dev/vg /dev/sdb`.
+Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется. Достаточно будет добавить в VG весь новый диск командой `vgextend vg /dev/sdb`.
 
 В противном случае, когда восстанавливаемые тома находятся на разных VG, потребуется разбивка дополнительного диска на отдельные разделы и добавление этих новых PV в свои VG.
 
@@ -49,7 +49,7 @@ Time (start): Mon, 2022-03-11 10:54:35
 Time (end): Mon, 2022-04-11 10:55:25
 Duration: 50.01 seconds
 Number of files: 68781
-Command line: /root/.local/bin/borg create -C zstd --stats --progress '::full_{hostname}_{now}' /mnt
+Command line: /root/.local/bin/borg create -C zstd --stats --progress '::full_{hostname}_{now}' /mnt/sysroot
 Utilization of maximum supported archive size: 0%
 ------------------------------------------------------------------------------
                        Original size      Compressed size    Deduplicated size
@@ -80,26 +80,28 @@ lvcreate -L 6G -s -n snap_var /dev/vg/var
 ### Монтирование снэпшотов + директорию `/boot`
 При монтировании xfs используем опцию `nouuid`:
 ```bash
-# Mounting root on /mnt
+# Mounting root on /mnt/sysroot
 LV='/dev/vg/snap_root'
+SYSROOT='/mnt/sysroot'
+mkdir -p ${SYSROOT}
 FSTYPE=$(df -T ${LV/snap_/} | egrep "ext4|xfs" | awk '{print $2}')
 if [[ ${FSTYPE} = "xfs" ]]; then
-  mount -o nouuid ${LV} /mnt
+  mount -o nouuid ${LV} ${SYSROOT}
 elif [[ ${FSTYPE} = "ext4" ]]; then
-  mount ${LV} /mnt
+  mount ${LV} ${SYSROOT}
 fi
 
-# Mounting /var on /mnt/var
+# Mounting /var on /mnt/sysroot/var
 LV='/dev/vg/snap_var'
 FSTYPE=$(df -T ${LV/snap_/} | egrep "ext4|xfs" | awk '{print $2}')
 if [[ ${FSTYPE} = "xfs" ]]; then
-  mount -o nouuid ${LV} /mnt/var
+  mount -o nouuid ${LV} ${SYSROOT}/var
 elif [[ ${FSTYPE} = "ext4" ]]; then
-  mount ${LV} /mnt/var
+  mount ${LV} ${SYSROOT}/var
 fi
 
-# Mounting /boot on /mnt/boot
-mount -o bind /boot /mnt/boot
+# Mounting /boot on /mnt/sysroot/boot
+mount -o bind /boot ${SYSROOT}/boot
 ```
 
 ### Проверка монтирования
@@ -108,28 +110,28 @@ mount | grep '/mnt'
 ```
 Пример вывода:
 ```
-/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
-/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
-/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_root on /mnt/sysroot type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_var on /mnt/sysroot/var type ext4 (rw,relatime,seclabel)
+/dev/sda1 on /mnt/sysroot/boot type ext4 (rw,relatime,seclabel)
 ```
 
 ### Удаление содержимого снэпшотов и `/boot`
 Удаляем всё содержимое снэпшотов и каталога `/boot` с проверкой:
 ```bash
-rm -rf /mnt/*
-tree -h /mnt
+rm -ri ${SYSROOT}/*
+tree -h ${SYSROOT}
 ```
 
 Результат:
 ```
-/mnt
+/mnt/sysroot
 └── [4.0K]  boot
 
 1 directory, 0 files
 ```
 
 ### Восстановление бэкапа в пространство снэпшотов и `/boot`
-Переходим в корень и восстанавливаем архив `full_img211202_2022-03-11T10:54:32`, который заполнит файлами готовый для приёма каталог `/mnt`:
+Переходим в корень и восстанавливаем архив `full_img211202_2022-03-11T10:54:32`, который заполнит файлами готовый для приёма каталог `/mnt/sysroot`:
 ```bash
 cd /
 borg extract --list --progress --numeric-owner \
@@ -139,11 +141,11 @@ borg extract --list --progress --numeric-owner \
 ## Исправление загрузки
 ### chroot для исправления загрузки
 ```bash
-mount -t proc /proc /mnt/proc/
-mount -t sysfs /sys /mnt/sys/
-mount --bind /dev /mnt/dev/
-mount --bind /run /mnt/run
-chroot /mnt
+mount -t proc /proc ${SYSROOT}/proc/
+mount -t sysfs /sys ${SYSROOT}/sys/
+mount --bind /dev ${SYSROOT}/dev/
+mount --bind /run ${SYSROOT}/run
+chroot ${SYSROOT}
 ```
 ## Обновление GRUB
 В некоторых случаях, например, если в ОС были обновлены пакеты, отвечающие за загрузку, то потребуется обновить GRUB.
@@ -216,7 +218,7 @@ exit
 ## Заключительные операции
 ### Объединение снэпшотов
 ```bash
-umount -R /mnt
+umount -R ${SYSROOT}
 lvconvert --merge /dev/vg/snap_var
 lvconvert --merge /dev/vg/snap_root
 ```

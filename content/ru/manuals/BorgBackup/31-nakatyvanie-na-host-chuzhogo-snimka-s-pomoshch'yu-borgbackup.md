@@ -79,26 +79,28 @@ borg umount /mnt
 #### Если типы файловых систем совпадают
 При монтировании xfs используем опцию `nouuid`:
 ```bash
-# Mounting root on /mnt
+# Mounting root on /mnt/sysroot
 LV='/dev/vg/snap_root'
+SYSROOT='/mnt/sysroot'
+mkdir -p ${SYSROOT}
 FSTYPE=$(df -T ${LV/snap_/} | egrep "ext4|xfs" | awk '{print $2}')
 if [[ ${FSTYPE} = "xfs" ]]; then
-  mount -o nouuid ${LV} /mnt
+  mount -o nouuid ${LV} ${SYSROOT}
 elif [[ ${FSTYPE} = "ext4" ]]; then
-  mount ${LV} /mnt
+  mount ${LV} ${SYSROOT}
 fi
 
-# Mounting /var on /mnt/var
+# Mounting /var on /mnt/sysroot/var
 LV='/dev/vg/snap_var'
 FSTYPE=$(df -T ${LV/snap_/} | egrep "ext4|xfs" | awk '{print $2}')
 if [[ ${FSTYPE} = "xfs" ]]; then
-  mount -o nouuid ${LV} /mnt/var
+  mount -o nouuid ${LV} ${SYSROOT}/var
 elif [[ ${FSTYPE} = "ext4" ]]; then
-  mount ${LV} /mnt/var
+  mount ${LV} ${SYSROOT}/var
 fi
 
-# Mounting /boot on /mnt/boot
-mount -o bind /boot /mnt/boot
+# Mounting /boot on /mnt/sysroot/boot
+mount -o bind /boot ${SYSROOT}/boot
 ```
 
 #### Если типы файловых систем различны
@@ -115,10 +117,10 @@ mkfs.ext4 /dev/vg/snap_var
 
 Монтируем вручную отформатированные разделы к каталогу `/mnt`:
 ```bash
-mount /dev/vg/snap_root /mnt
-mkdir /mnt/{boot,var}
-mount /dev/sda1 /mnt/boot
-mount /dev/vg/snap_var /mnt/var
+mount /dev/vg/snap_root ${SYSROOT}
+mkdir ${SYSROOT}/{boot,var}
+mount /dev/sda1 ${SYSROOT}/boot
+mount /dev/vg/snap_var ${SYSROOT}/var
 ```
 
 ### Проверка монтирования
@@ -127,9 +129,9 @@ mount | grep '/mnt'
 ```
 Пример вывода:
 ```bash
-/dev/mapper/vg-snap_root on /mnt type ext4 (rw,relatime,seclabel)
-/dev/mapper/vg-snap_var on /mnt/var type ext4 (rw,relatime,seclabel)
-/dev/sda1 on /mnt/boot type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_root on /mnt/sysroot type ext4 (rw,relatime,seclabel)
+/dev/mapper/vg-snap_var on /mnt/sysroot/var type ext4 (rw,relatime,seclabel)
+/dev/sda1 on /mnt/sysroot/boot type ext4 (rw,relatime,seclabel)
 ```
 
 ### Удаление содержимого снэпшотов и `/boot`
@@ -137,13 +139,13 @@ mount | grep '/mnt'
 
 Иначе удаляем всё содержимое снэпшотов и каталога `/boot` с проверкой:
 ```bash
-rm -rf /mnt/*
-tree /mnt
+rm -ri ${SYSROOT}/*
+tree ${SYSROOT}
 ```
 
 Результат:
 ```bash
-/mnt
+/mnt/sysroot
 └── [4.0K]  boot
 └── [4.0K]  var
 
@@ -151,7 +153,7 @@ tree /mnt
 ```
 
 ### Восстановление бэкапа в пространство снэпшотов и `/boot`
-Переходим в корень и восстанавливаем архив `full_img211202_2022-03-11T10:54:32`, который заполнит файлами готовый для приёма каталог `/mnt`:
+Переходим в корень и восстанавливаем архив `full_img211202_2022-03-11T10:54:32`, который заполнит файлами готовый для приёма каталог `/mnt/sysroot`:
 ```bash
 cd /
 borg extract --list --progress --numeric-owner \
@@ -161,11 +163,11 @@ borg extract --list --progress --numeric-owner \
 ## Исправление загрузки
 ### chroot для исправления загрузки
 ```bash
-mount -t proc /proc /mnt/proc/
-mount -t sysfs /sys /mnt/sys/
-mount --bind /dev /mnt/dev/
-mount --bind /run /mnt/run
-chroot /mnt
+mount -t proc /proc ${SYSROOT}/proc/
+mount -t sysfs /sys ${SYSROOT}/sys/
+mount --bind /dev ${SYSROOT}/dev/
+mount --bind /run ${SYSROOT}/run
+chroot ${SYSROOT}
 ```
 
 ### Обновление GRUB
@@ -267,7 +269,7 @@ exit
 ## Заключительные операции
 ### Объединение снэпшотов
 ```bash
-umount -R /mnt
+umount -R ${SYSROOT}
 lvconvert --merge /dev/vg/snap_var
 lvconvert --merge /dev/vg/snap_root
 ```
