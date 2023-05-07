@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.99.1" />
+<meta name="generator" content="Hugo 0.111.3">
 <link rel="canonical" type="text/html" href="https://debuntu.ru/manuals/bigdata/apacheatlas/">
 <link rel="alternate" type="application/rss&#43;xml" href="https://debuntu.ru/manuals/bigdata/apacheatlas/index.xml">
 <meta name="robots" content="noindex, nofollow">
@@ -26,7 +26,6 @@
 <meta property="og:description" content="Debuntarium site" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://debuntu.ru/manuals/bigdata/apacheatlas/" /><meta property="og:site_name" content="Debuntarium" />
-
 <meta itemprop="name" content="Apache Atlas">
 <meta itemprop="description" content="Debuntarium site"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Apache Atlas"/>
@@ -135,7 +134,7 @@
   aria-label="Поиск по сайту…"
   autocomplete="off"
   
-  data-offline-search-index-json-src="/offline-search-index.0d774d3a20cfdbf4dd6fa87640c6622a.json"
+  data-offline-search-index-json-src="/offline-search-index.9cabf3eadf33d7bd38c7265b5d4cfc89.json"
   data-offline-search-base-href="/"
   data-offline-search-max-results="10"
 >
@@ -197,7 +196,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3: <a href="#pg-1ab3dc43c826200bbebdff1d68966887">Установка Apache Atlas 2.2.0</a></li>
+<li>3: <a href="#pg-382f4cfb37cc72ae80f5dbed1f483c6f">Установка Apache Atlas 2.2.0 в ArenaData Hadoop</a></li>
 
 
     
@@ -212,7 +211,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.1: <a href="#pg-99750b315d7c7362cdca608bfd977d01">01. Подготовительные работы для установки Atlas&#39;а</a></li>
+<li>3.1: <a href="#pg-d5c7aaf28ed9ecf6fd02346d3abf7b3c">00. Удаление Apache Atlas</a></li>
 
 
     
@@ -220,7 +219,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.2: <a href="#pg-0404f83bf5dab9f33e5fac150391ac46">02. Подготовка служб Hadoop-кластера к развёртыванию Atlas&#39;а</a></li>
+<li>3.2: <a href="#pg-8590015fe6c4177d1b72c394e0d601e3">01. Важные замечания относительно Atlas &#43; ADH </a></li>
 
 
     
@@ -228,7 +227,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.3: <a href="#pg-43beb02c03a540208142c74bdb508410">03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</a></li>
+<li>3.3: <a href="#pg-be18fc09e49a77f5895ce754faee21d4">02. Подготовительные работы в домене и на хосте </a></li>
 
 
     
@@ -236,7 +235,34 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.4: <a href="#pg-9dd83fd75ec0ae338ea1811e6252b15b">04. Распаковка и настройка Apache Atlas</a></li>
+<li>3.4: <a href="#pg-b245ad392155df1c74c6140a4247aad8">03. Подготовка служб ADH-кластера к развёртыванию Atlas&#39;а</a></li>
+
+
+    
+  
+
+    </ul>
+    
+  
+    
+    
+	
+<li>4: <a href="#pg-1ab3dc43c826200bbebdff1d68966887">Установка Apache Atlas 2.2.0</a></li>
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+<li>4.1: <a href="#pg-99750b315d7c7362cdca608bfd977d01">01. Подготовительные работы для установки Atlas&#39;а</a></li>
 
 
     
@@ -244,7 +270,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.5: <a href="#pg-d07e090aca41667b127cd7bac7c735ec">05. 🎣 Заброс Hook&#39;а в Apache Hive</a></li>
+<li>4.2: <a href="#pg-0404f83bf5dab9f33e5fac150391ac46">02. Подготовка служб Hadoop-кластера к развёртыванию Atlas&#39;а</a></li>
 
 
     
@@ -252,7 +278,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.6: <a href="#pg-691356ae23717ebcf2ad087e0be4c66c">06. 🎣 Заброс Hook&#39;а в Apache HBase</a></li>
+<li>4.3: <a href="#pg-43beb02c03a540208142c74bdb508410">03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</a></li>
 
 
     
@@ -260,7 +286,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.7: <a href="#pg-0b4311180095ea9e7239fe5736e28faf">07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</a></li>
+<li>4.4: <a href="#pg-9dd83fd75ec0ae338ea1811e6252b15b">04. Распаковка и настройка Apache Atlas</a></li>
 
 
     
@@ -268,7 +294,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.8: <a href="#pg-597e2248f59dd9ee2fee1d122bf3a769">08. Первый запуск Apache Atlas и его отладка при необходимости</a></li>
+<li>4.5: <a href="#pg-d07e090aca41667b127cd7bac7c735ec">05. 🎣 Заброс Hook&#39;а в Apache Hive</a></li>
 
 
     
@@ -276,7 +302,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.9: <a href="#pg-204eeda24ab7a7c6fe8b98a3e5ee7df2">10. Первоначальный импорт содержимого Hive</a></li>
+<li>4.6: <a href="#pg-691356ae23717ebcf2ad087e0be4c66c">06. 🎣 Заброс Hook&#39;а в Apache HBase</a></li>
 
 
     
@@ -284,7 +310,7 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.10: <a href="#pg-4564456f52df6cf4bef446df3cdf867e">11. Первоначальный импорт содержимого HBase</a></li>
+<li>4.7: <a href="#pg-0b4311180095ea9e7239fe5736e28faf">07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</a></li>
 
 
     
@@ -292,7 +318,31 @@ This is the multi-page printable view of this section.
     
     
 	
-<li>3.11: <a href="#pg-a9a0445d5e60c65e7a534b42013fbcb9">20. 🔬 Тестирование работоспособности Apache Atlas</a></li>
+<li>4.8: <a href="#pg-597e2248f59dd9ee2fee1d122bf3a769">08. Первый запуск Apache Atlas и его отладка при необходимости</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4.9: <a href="#pg-204eeda24ab7a7c6fe8b98a3e5ee7df2">10. Первоначальный импорт содержимого Hive</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4.10: <a href="#pg-4564456f52df6cf4bef446df3cdf867e">11. Первоначальный импорт содержимого HBase</a></li>
+
+
+    
+  
+    
+    
+	
+<li>4.11: <a href="#pg-a9a0445d5e60c65e7a534b42013fbcb9">20. 🔬 Тестирование работоспособности Apache Atlas</a></li>
 
 
     
@@ -567,23 +617,23 @@ Complete!
 </span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">snapshots</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">repository</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span></code></pre></div><p>В этом же файле находим и меняем версии продуктов на следующие:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">elasticsearch</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">8</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">20</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">elasticsearch</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">hadoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">hadoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">hbase</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">1</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">hbase</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">hive</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">1</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">1</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">hive</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">scala</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">binary</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">11</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">scala</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">binary</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">1</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">lucene</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">7</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">4</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">lucene</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">7</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">4</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">sqoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">1</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">4</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">7</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">sqoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">zookeeper</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">4</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">5</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">3</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">zookeeper</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">elasticsearch</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">6.8.20</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">elasticsearch</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">hadoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">3.0.0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#0000cf;font-weight:bold">.3.2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">hadoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">hbase</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">2.1.0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#0000cf;font-weight:bold">.3.2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">hbase</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">hive</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">2.1.1</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#0000cf;font-weight:bold">.3.2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">hive</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">scala</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">binary</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">2.11</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">scala</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">binary</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">2.2.1</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#0000cf;font-weight:bold">.3.2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">kafka</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">lucene</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">7.4.0</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">lucene</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">7.4.0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#0000cf;font-weight:bold">.3.2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">solr</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">sqoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">1.4.7</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#0000cf;font-weight:bold">.3.2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">sqoop</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">zookeeper</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">3.4.5</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">cdh6</span><span style="color:#0000cf;font-weight:bold">.3.2</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">zookeeper</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span></code></pre></div><p>В этом же файле меняем версию артефакта &lsquo;atlas-buildtools&rsquo; cо значения &lsquo;1.0&rsquo; на значение &lsquo;0.8.1&rsquo;, так как артефакт &lsquo;atlas-buildtools-1.0&rsquo; не может быть найден. Но можно попробовать версию  &lsquo;1.0.0-alpha&rsquo;:</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">artifactId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">maven</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">checkstyle</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">plugin</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">artifactId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">dependencies</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">dependency</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">groupId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">org</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">apache</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">atlas</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">groupId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">artifactId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">atlas</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">buildtools</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">artifactId</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000">1</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">.</span><span style="color:#c4a000">0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">alpha</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#0000cf;font-weight:bold">1.0.0</span><span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">alpha</span><span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">version</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">dependency</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">&lt;/</span><span style="color:#000">dependencies</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
 </span></span></code></pre></div><h3 id="23-изменения-в-других-файлах">2.3. Изменения в других файлах</h3>
@@ -1223,7 +1273,7 @@ mvn clean -DskipTests package -Pdist -X -T 4
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-1ab3dc43c826200bbebdff1d68966887">3 - Установка Apache Atlas 2.2.0</h1>
+	<h1 id="pg-382f4cfb37cc72ae80f5dbed1f483c6f">3 - Установка Apache Atlas 2.2.0 в ArenaData Hadoop</h1>
     
 	
 </div>
@@ -1248,7 +1298,406 @@ mvn clean -DskipTests package -Pdist -X -T 4
 
 <div class="td-content" style="">
     
-	<h1 id="pg-99750b315d7c7362cdca608bfd977d01">3.1 - 01. Подготовительные работы для установки Atlas&#39;а</h1>
+	<h1 id="pg-d5c7aaf28ed9ecf6fd02346d3abf7b3c">3.1 - 00. Удаление Apache Atlas</h1>
+    <div class="lead">Описание процесса удаления Apache Atlas 2.2.0 из ADH.</div>
+	<h2 id="1-удаление-данных-atlasа-из-кластера">1. Удаление данных Atlas&rsquo;а из кластера</h2>
+<h3 id="systemd">Systemd</h3>
+<ol>
+<li>Выключаем и останавливаем демон Atlas&rsquo;а. Удаляем systemd unit.
+<pre tabindex="0"><code>systemctl disable --now atlas
+rm -f /etc/systemd/systemd/atlas.service
+systemctl daemon-reload
+</code></pre></li>
+</ol>
+<h3 id="hbase">Hbase</h3>
+<ol>
+<li>На любой машине с ролью &lsquo;HBase Client&rsquo;, выполняем удаление двух таблиц в HBase.
+Список названий таблиц по умолчанию:
+– apache_atlas_entity_audit
+– apache_atlas_janus
+<pre tabindex="0"><code># kinit nifantev
+TABLE1=&#34;apache_atlas_entity_audit&#34;
+TABLE2=&#34;apache_atlas_janus&#34;
+
+echo &#34;disable &#39;${TABLE1}&#39;; disable &#39;${TABLE2}&#39;&#34; | hbase shell
+echo &#34;drop &#39;${TABLE1}&#39;; drop &#39;${TABLE2}&#39;&#34; | hbase shell
+</code></pre></li>
+</ol>
+<h3 id="solr">Solr</h3>
+<ol>
+<li>Удаляем из Solr три &ldquo;Коллекции&rdquo;, указывая в <code>curl</code> любой Solr-хост из кластера.
+Список названий &ldquo;Коллекций&rdquo; по умолчанию:</li>
+</ol>
+<ul>
+<li>fulltext_index</li>
+<li>edge_index</li>
+<li>vertex_index
+<pre tabindex="0"><code># kinit nifantev
+SOLRSERVER=&#34;dev-app111p.test2.lan&#34;
+COLLECTION1=&#34;fulltext_index&#34;
+COLLECTION2=&#34;edge_index&#34;
+COLLECTION3=&#34;vertex_index&#34;
+
+curl --negotiate -u : &#34;https://${SOLRSERVER}:8985/solr/admin/collections?action=DELETE&amp;name=${COLLECTION1}&#34;
+curl --negotiate -u : &#34;https://${SOLRSERVER}:8985/solr/admin/collections?action=DELETE&amp;name=${COLLECTION2}&#34;
+curl --negotiate -u : &#34;https://${SOLRSERVER}:8985/solr/admin/collections?action=DELETE&amp;name=${COLLECTION3}&#34;
+</code></pre></li>
+</ul>
+<ol start="2">
+<li>Удаляем из Solr&rsquo;а Atlas-шаблон &lsquo;atlasTemplate&rsquo;:</li>
+</ol>
+<pre tabindex="0"><code>solrctl config --delete atlasTemplate
+</code></pre><h3 id="kafka">Kafka</h3>
+<ol>
+<li>Из Apache Kafka удаляем три топика:
+<pre tabindex="0"><code>ZKSERVERS=&#34;dev-zk110p.test2.lan,dev-zk111p.test2.lan,dev-zk112p.test2.lan/kafka&#34;
+# Список имён топиков по умолчанию:
+TOPIC1=&#34;_HOATLASOK&#34;
+TOPIC2=&#34;ATLAS_ENTITIES&#34;
+TOPIC3=&#34;ATLAS_HOOK&#34;
+
+kafka-topics --zookeeper ${ZKSERVERS} --delete --topic ${TOPIC1}
+kafka-topics --zookeeper ${ZKSERVERS} --delete --topic ${TOPIC2}
+kafka-topics --zookeeper ${ZKSERVERS} --delete --topic ${TOPIC3}
+</code></pre></li>
+</ol>
+<h3 id="zookeeper">Zookeeper</h3>
+<ol>
+<li>Вероятно, что из znode <code>/Arenadata.Hadoop-10.solr.server</code> потребуется удалить некоторую информацию?</li>
+</ol>
+<h2 id="2-удаление-из-hadoop-кластера-параметров-для-работы-atlas-hooks">2. Удаление из Hadoop-кластера параметров для работы Atlas hooks</h2>
+<ol>
+<li>Из настроек Hive удаляем Atlas Hive Hook.</li>
+<li>Из настроек HBase удаляем Atlas HBase Hook.</li>
+</ol>
+<h2 id="3-зачистка-информации-из-freeipa">3. Зачистка информации из FreeIPA</h2>
+<h3 id="31-удаление-пользовательских-групп">3.1. Удаление пользовательских групп</h3>
+<p>Удаляем пользовательские группы:</p>
+<h3 id="32-удаление-сервисных-уз-atlas">3.2. Удаление сервисных УЗ atlas</h3>
+<p>Удаляем сервисные УЗ:</p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-8590015fe6c4177d1b72c394e0d601e3">3.2 - 01. Важные замечания относительно Atlas &#43; ADH </h1>
+    <div class="lead">Важные замечания относительно Atlas + ADH.</div>
+	<p>2023-01-17</p>
+<h2 id="hardware">Hardware</h2>
+<h3 id="для-atlasа-надо-много-памяти">Для Atlas&rsquo;а надо много памяти</h3>
+<p>4GB не хватает. В логах записи:</p>
+<pre tabindex="0"><code>There is insufficient memory for the Java Runtime Environment to continue.
+</code></pre><p>При 8GB не пробовал.</p>
+<p>При 16GB запуск успешен.</p>
+<h2 id="apache-atlas">Apache Atlas</h2>
+<h3 id="о-возможности-удаления-сущностей-из-atlasа">О возможности удаления сущностей из Atlas&rsquo;а</h3>
+<p>Наблюдаю в настройках Atlas&rsquo;а следующее:</p>
+<pre tabindex="0"><code># Delete handler
+#
+# This allows the default behavior of doing &#34;soft&#34; deletes to be changed.
+#
+# Allowed Values:
+# org.apache.atlas.repository.store.graph.v1.SoftDeleteHandlerV1 - all deletes are &#34;soft&#34; deletes
+# org.apache.atlas.repository.store.graph.v1.HardDeleteHandlerV1 - all deletes are &#34;hard&#34; deletes
+#
+#atlas.DeleteHandlerV1.impl=org.apache.atlas.repository.store.graph.v1.SoftDeleteHandlerV1
+</code></pre>
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-be18fc09e49a77f5895ce754faee21d4">3.3 - 02. Подготовительные работы в домене и на хосте </h1>
+    <div class="lead">Подготовительные работы в домене и на хосте.</div>
+	<h2 id="1-введение-выделенного-для-atlas-хоста-в-домен">1. Введение выделенного для Atlas хоста в домен</h2>
+<p>Выполняется с помощью  стандартных процедур. Например, 🚀Введение новой машины в домен.</p>
+<h2 id="2-добавление-хоста-к-hadoop-кластеру">2. Добавление хоста к Hadoop-кластеру</h2>
+<p>Выполняется с помощью  стандартных процедур. Например, 60. Добавление новых хостов в керберизированный кластер с TLS-шифрованием.</p>
+<h2 id="3-добавление-учётных-записей">3. Добавление учётных записей</h2>
+<p>3.1. Аккаунт &lsquo;atlas&rsquo; может существовать в IPA, поэтому использование этого аккаунта должно быть  запрещено через фильтры в файле <code>/etc/sssd/sssd.conf</code>.
+Находясь на Atlas-машине, добавляем фильтры в раздел &lsquo;[nss]&rsquo;. Пример показан здесь:</p>
+<pre tabindex="0"><code>[nss]
+filter_groups = root,accumulo,apache,atlas,flume,hadoop,hbase,hdfs,hive,httpfs,hue,impala,kafka,keytrustee,kudu,llama,kms,mapred,mysql,oozie,postgres,sentry,solr,spark,sqoop,sqoop2,yarn,zookeeper
+filter_users = root,accumulo,apache,atlas,flume,hbase,hdfs,hive,httpfs,hue,impala,kafka,keytrustee,kudu,llama,kms,mapred,mysql,oozie,postgres,sentry,solr,spark,sqoop,sqoop2,yarn,zookeeper
+reconnection_retries = 3
+homedir_substring = /home
+</code></pre><p>3.2. Добавление локальной УЗ &lsquo;atlas&rsquo; на Atlas-хост
+Находясь на Atlas-машине, добавляем локальную УЗ &lsquo;atlas&rsquo;:</p>
+<pre tabindex="0"><code>useradd -r -s /sbin/nologin -d /opt/atlas -M atlas
+usermod -aG hadoop atlas
+</code></pre><p>3.3. Добавление сервисных УЗ во FreeIPA
+Находясь на Atlas-машине, добавляем в IPA сервисные УЗ для Atlas-машины. (Необходимо иметь права на добавление сервиса во FreeIPA):</p>
+<pre tabindex="0"><code>kinit nifantevea
+ATLASSERVER=&#34;$(hostname)&#34;
+ 
+ipa service-add atlas/${ATLASSERVER}
+ipa service-add HTTP/${ATLASSERVER}
+</code></pre><p>3.4. Добавление в FreeIPA пользовательских групп для авторизации в Atlas
+Создаём по минимуму две группы, &lsquo;${IS_NAME}_${CLUSTER_NAME}<em>atlas_admins&rsquo; и &lsquo;${IS_NAME}</em>${CLUSTER_NAME}_atlas_users&rsquo;.</p>
+<p>В переменной CLUSTERNAME требуется указать правильное имя кластера!</p>
+<p>В переменной JIRA требуется указать правильный номер задачи!</p>
+<pre tabindex="0"><code>IS_NAME=&#34;tst&#34;
+CLUSTER_NAME=&#34;ADHT1&#34;
+JIRA=&#34;SDK-????&#34;
+ 
+CL_N_LOWER=$(echo $CLUSTER_NAME | tr [:upper:] [:lower:])
+CL_N_UPPER=$(echo $CLUSTER_NAME | tr [:lower:] [:upper:])
+ 
+ipa group-add --desc=&#34;Группа для роли ROLE_ADMIN в Atlas&#39;е в кластере ${CL_N_UPPER}. ${JIRA}.&#34; ${IS_NAME}_${CL_N_LOWER}_atlas_admins
+ipa group-add --desc=&#34;Группа для роли DATA_STEWARD в Atlas&#39;е в кластере ${CL_N_UPPER}. ${JIRA}.&#34; ${IS_NAME}_${CL_N_LOWER}_atlas_steward
+</code></pre><h2 id="4-добавление-необходимых-hadoop-ролей-на-машину-с-atlasом">4. Добавление необходимых Hadoop-ролей на машину с Atlas&rsquo;ом</h2>
+<p>На машину с Atlas&rsquo;ом, через ADCM WebUI, устанавливаем роли, которые требуются для следующего:</p>
+<ul>
+<li>HDFS Client — для получения и обновления информации о принадлежности какого-либо аккаунта к группам (UGI — User Group Information), используемым Hadoop&rsquo;ом. Полезно при отладке.</li>
+<li>HBase Client — для первоначального импорта содержимого HBase и здесь Atlas хранит свою базу данных Janus, поэтому требуется постоянный доступ к двум таблицам в сервисе Apache HBase.</li>
+<li>Hive Client — для первоначального импорта содержимого Hive.</li>
+</ul>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-b245ad392155df1c74c6140a4247aad8">3.4 - 03. Подготовка служб ADH-кластера к развёртыванию Atlas&#39;а</h1>
+    <div class="lead">Подготовительные работы в домене и на хосте.</div>
+	<h2 id="заметки">Заметки</h2>
+<ul>
+<li>Apache HBase используется Atlas&rsquo;ом для хранения своей Janus базы данных.</li>
+<li>Apache Solr используется для хранения журналов аудита и поиск в них.</li>
+<li>Apache Kafka используется как передатчик сообщений из Atlas-библиотек, то есть внедрённых в Hadoop-сервисы hook&rsquo;ов, в сам Atlas.</li>
+</ul>
+<h2 id="1-apache-hbase">1. Apache HBase</h2>
+<h3 id="11-создание-необходимых-таблиц-в-hbase">1.1. Создание необходимых таблиц в HBase</h3>
+<ol>
+<li>На Atlas-машине, или на любой другой машине с установленной ролью &lsquo;HBase Gateway&rsquo;, создаём необходимые таблицы:
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Названия таблиц по умолчанию:</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">TABLE1</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;apache_atlas_entity_audit&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">TABLE2</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;apache_atlas_janus&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;create &#39;</span><span style="color:#4e9a06">${</span><span style="color:#000">TABLE1</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39;, &#39;dt&#39;&#34;</span>  <span style="color:#000;font-weight:bold">|</span> hbase shell
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;create &#39;</span><span style="color:#4e9a06">${</span><span style="color:#000">TABLE2</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&#39;, &#39;s&#39;&#34;</span> <span style="color:#000;font-weight:bold">|</span> hbase shell
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="12-проверяем-наличие-созданных-таблиц">1.2. Проверяем наличие созданных таблиц</h3>
+<ol>
+<li>
+<p>На Atlas-машине, или на любой другой машине с установленной ролью &lsquo;HBase Gateway&rsquo;, выполняем:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;list&#34;</span> <span style="color:#000;font-weight:bold">|</span> hbase shell
+</span></span></code></pre></div><p>stdout:</p>
+<pre tabindex="0"><code>Took 0.0028 seconds
+list
+TABLE                        
+apache_atlas_entity_audit                             
+apache_atlas_janus
+2 row(s)
+Took 0.6872 seconds                 
+[&#34;apache_atlas_entity_audit&#34;, &#34;apache_atlas_janus&#34;]
+</code></pre></li>
+</ol>
+<h3 id="13-настройка-ranger-политики-для-доступа-уз--atlas-в-apache-hbase">1.3. Настройка Ranger-политики для доступа УЗ  &lsquo;atlas&rsquo; в Apache HBase</h3>
+<ol>
+<li>Пример:</li>
+</ol>
+<table>
+<tr><td>Policy Name</td><td>atlas</td></tr>
+<tr><td>HBase Table</td><td>apache_atlas_entity_audit</br>apache_atlas_janus</td></tr>
+<tr><td>HBase Column-family</td><td>*</td></tr>
+<tr><td>HBase Column</td><td>*</td></tr>
+<tr><td>Allow Conditions</td><td>atlas/udrvsts-adatls1t.adht1.corp/ADHT1.CORP: RWCA</td></tr>
+</table>
+<h2 id="2-apache-hive">2. Apache Hive</h2>
+<h3 id="21-настройка-ranger-политики-для-доступа-уз--atlas-в-apache-hive">2.1. Настройка Ranger-политики для доступа УЗ  &lsquo;atlas&rsquo; в Apache HIve</h3>
+<ol>
+<li>В существующую политику &lsquo;all - database, table, column&rsquo; добавляем условие с правами &lsquo;Select&rsquo; и &lsquo;Read&rsquo; для УЗ &lsquo;atlas&rsquo;.</li>
+</ol>
+<h2 id="3-apache-kafka">3. Apache Kafka</h2>
+<ol>
+<li>Apache Kafka используется Atlas&rsquo;ом для получения сообщений о произошедших событиях в сервисах Hadoop&rsquo;а. Сообщения отправляются с помощью специальных библиотек из состава Atlas&rsquo;а, внедрённых в определённые сервисы. На данный момент Atlas читает сообщения о таких событиях в Hbase и Hive, как создание и удаление таблиц, добавления столбцов, бла-бла-бла&hellip;</li>
+</ol>
+<h3 id="31-установка-apache-kafka">3.1. Установка Apache Kafka</h3>
+<ol>
+<li>Установка и настройка Kafka выполняется по инструкции 01. ArenaData Hadoop. Добавление Apache Kafka в керберизованный ADH. Инструкция.</li>
+</ol>
+<h3 id="32-добавление-в-kafka-необходимых-топиков">3.2. Добавление в Kafka необходимых топиков</h3>
+<ol>
+<li>
+<p>Для работы Apache Atlas требуется наличие трёх топиков в Apache Kafka. Создаём их на машине с установленной Kafka:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">BOOTSTRAP</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;localhost:9091&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Список имён топиков по умолчанию:</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">TOPIC1</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;_HOATLASOK&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">TOPIC2</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ATLAS_ENTITIES&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">TOPIC3</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;ATLAS_HOOK&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">PATH</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#000">$PATH</span>:/opt/kafka/bin/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kafka-topics.sh --bootstrap-server <span style="color:#4e9a06">${</span><span style="color:#000">BOOTSTRAP</span><span style="color:#4e9a06">}</span> --create --topic <span style="color:#4e9a06">${</span><span style="color:#000">TOPIC1</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>kafka-topics.sh --bootstrap-server <span style="color:#4e9a06">${</span><span style="color:#000">BOOTSTRAP</span><span style="color:#4e9a06">}</span> --create --topic <span style="color:#4e9a06">${</span><span style="color:#000">TOPIC2</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>kafka-topics.sh --bootstrap-server <span style="color:#4e9a06">${</span><span style="color:#000">BOOTSTRAP</span><span style="color:#4e9a06">}</span> --create --topic <span style="color:#4e9a06">${</span><span style="color:#000">TOPIC3</span><span style="color:#4e9a06">}</span>
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="33-проверка-наличия-топиков">3.3. Проверка наличия топиков</h3>
+<ol>
+<li>
+<p>Здесь же проверим наличие информации о топиках через <code>kafka-topics</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kafka-topics.sh --bootstrap-server <span style="color:#4e9a06">${</span><span style="color:#000">BOOTSTRAP</span><span style="color:#4e9a06">}</span> --list
+</span></span><span style="display:flex;"><span>..
+</span></span><span style="display:flex;"><span>ATLAS_ENTITIES
+</span></span><span style="display:flex;"><span>ATLAS_HOOK
+</span></span><span style="display:flex;"><span>_HOATLASOK
+</span></span></code></pre></div></li>
+</ol>
+<h3 id="34-настройка-ranger-политики-для-доступа-уз--atlas-в-apache-kafka">3.4. Настройка Ranger-политики для доступа УЗ  &lsquo;atlas&rsquo; в Apache Kafka</h3>
+<p>Вероятно, в Kafka используемой только для Atlas, нет нужды добавлять ranger-плагин.</p>
+<h2 id="4-apache-solr">4. Apache Solr</h2>
+<p>На тестовом кластере использовалась четыре узла Apache Solr. В общем случае, рекомендуется использовать не менее двух узлов.</p>
+<h3 id="41-установка-и-настройка-apache-solr">4.1. Установка и настройка Apache Solr</h3>
+<p>Обычным способом через ADCM WebUI.</p>
+<h3 id="42-добавление-нового-шаблона-в-solr">4.2. Добавление нового шаблона в Solr</h3>
+<p>Configuring Apache Solr as the indexing backend for the Graph Repository</p>
+<p>Сейчас я могу зайти на zk-машиину и из-под рядового аккаунта, не получая Kerberos-тикет, запустить <code>zookeeper-client</code> и выполнить команду, например, <code>ls /</code>.</p>
+<p>Из-под &lsquo;root&rsquo;-а не могу. Kerberos-тикет не помогает.</p>
+<p>На zookeeper-машине определяем zookeeper-ноду выделенную под работу Solr:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kinit nifantevea
+</span></span><span style="display:flex;"><span><span style="color:#000">ZKSERVER</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#204a87;font-weight:bold">$(</span>hostname<span style="color:#204a87;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ls /&#34;</span> <span style="color:#000;font-weight:bold">|</span> zookeeper-client -server <span style="color:#4e9a06">${</span><span style="color:#000">ZKSERVER</span><span style="color:#4e9a06">}</span>
+</span></span></code></pre></div><p>stdout:</p>
+<pre tabindex="0"><code>...
+[Arenadata.Hadoop-10.solr.server, arenadata, hadoop-ha, hbase, kafka, zookeeper]
+Проверяем в Zookeeper&#39;е текущий список конфигов:
+
+echo &#34;ls /Arenadata.Hadoop-10.solr.server/configs&#34; | zookeeper-client -server ${ZKSERVER}
+...
+[zk: udrvsts-adzk1t.adht1.corp(CONNECTED) 0] ls /Arenadata.Hadoop-10.solr.server/configs
+[_default]
+</code></pre><p>На машине с установленным Atlas подготавливаем файл <code>atlasSolrConfig.zip</code>. Напомню, что в этом файле содержимое каталога <code>atlas/conf/solr/</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kinit nifantevea
+</span></span><span style="display:flex;"><span><span style="color:#000">SOLRCONFIGDIR</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;/opt/atlas/conf/solr&#39;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#204a87">cd</span> <span style="color:#000">$SOLRCONFIGDIR</span>
+</span></span><span style="display:flex;"><span>zip -r ~/tmp/atlasSolrConfig.zip *
+</span></span></code></pre></div><p>Выясняем используемый Solr&rsquo;ом порт для API:</p>
+<p>Пока в ADH-кластере не включен TLS, используем http, вместо https.
+Добавляем atlas-конфиг в Apache Solr:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">FILENAME</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;/root/tmp/atlasSolrConfig.zip&#34;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#000">SOLRSERVER</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;http://udrvsts-adslr1t.adht1.corp:8983/solr&#34;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Отправляем конфиг в Solr через любой Solr-хост</span>
+</span></span><span style="display:flex;"><span>curl --negotiate -u : -X POST --header <span style="color:#4e9a06">&#34;Content-Type:application/octet-stream&#34;</span> --data-binary @<span style="color:#4e9a06">${</span><span style="color:#000">FILENAME</span><span style="color:#4e9a06">}</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOLRSERVER</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/admin/configs?action=UPLOAD&amp;name=atlasTemplate&#34;</span>
+</span></span></code></pre></div><p>На zookeeper-хосте проверяем факт, что конфиг появился в Zookeeper&rsquo;е</p>
+<p>Сначала выводим список кофигов:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#000">ZKSERVER</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;</span><span style="color:#204a87;font-weight:bold">$(</span>hostname<span style="color:#204a87;font-weight:bold">)</span><span style="color:#4e9a06">
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"> 
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06">echo &#34;</span>ls /Arenadata.Hadoop-10.solr.server/configs<span style="color:#4e9a06">&#34; | zookeeper-client -server </span><span style="color:#4e9a06">${</span><span style="color:#000">ZKSERVER</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">
+</span></span></span></code></pre></div><p>stdout:</p>
+<pre tabindex="0"><code>...
+[_default, atlasTemplate]
+</code></pre><p>Потом, убедившись в наличии конфига &lsquo;atlasTemplate&rsquo;, выводим его содержимое:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#204a87">echo</span> <span style="color:#4e9a06">&#34;ls /Arenadata.Hadoop-10.solr.server/configs/atlasTemplate&#34;</span> <span style="color:#000;font-weight:bold">|</span> <span style="color:#4e9a06">\
+</span></span></span><span style="display:flex;"><span><span style="color:#4e9a06"></span>  zookeeper-client -server <span style="color:#4e9a06">${</span><span style="color:#000">ZKSERVER</span><span style="color:#4e9a06">}</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">[</span>currency.xml, lang, protwords.txt, schema.xml, solrconfig.xml, stopwords.txt, synonyms.txt<span style="color:#ce5c00;font-weight:bold">]</span>
+</span></span></code></pre></div><p>После появления нового шаблона, создаём в Apache Solr три коллекции. Так как у нас четыре Solr-сервера, то выбираем &rsquo;numShards=2&rsquo; и &lsquo;replicationFactor=2&rsquo;:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"># Названия коллекций по умолчанию:</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">COLLECTION1</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;fulltext_index&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">COLLECTION2</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;edge_index&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">COLLECTION3</span><span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#34;vertex_index&#34;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>curl --negotiate -u : <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOLRSERVER</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/admin/collections?action=CREATE&amp;name=</span><span style="color:#4e9a06">${</span><span style="color:#000">COLLECTION1</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&amp;collection.configName=atlasTemplate&amp;numShards=2&amp;replicationFactor=2&#34;</span>
+</span></span><span style="display:flex;"><span>curl --negotiate -u : <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOLRSERVER</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/admin/collections?action=CREATE&amp;name=</span><span style="color:#4e9a06">${</span><span style="color:#000">COLLECTION2</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&amp;collection.configName=atlasTemplate&amp;numShards=2&amp;replicationFactor=2&#34;</span>
+</span></span><span style="display:flex;"><span>curl --negotiate -u : <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">SOLRSERVER</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">/admin/collections?action=CREATE&amp;name=</span><span style="color:#4e9a06">${</span><span style="color:#000">COLLECTION3</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">&amp;collection.configName=atlasTemplate&amp;numShards=2&amp;replicationFactor=2&#34;</span>
+</span></span><span style="display:flex;"><span>example stdout
+</span></span><span style="display:flex;"><span><span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;responseHeader&#34;</span>:<span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;status&#34;</span>:0,
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;QTime&#34;</span>:1875<span style="color:#ce5c00;font-weight:bold">}</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#4e9a06">&#34;success&#34;</span>:<span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#4e9a06">&#34;udrvsts-adslr1t.adht1.corp:8983_solr&#34;</span>:<span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;responseHeader&#34;</span>:<span style="color:#ce5c00;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;status&#34;</span>:0,
+</span></span><span style="display:flex;"><span>        <span style="color:#4e9a06">&#34;QTime&#34;</span>:1344<span style="color:#ce5c00;font-weight:bold">}</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#4e9a06">&#34;core&#34;</span>:<span style="color:#4e9a06">&#34;vertex_index_shard1_replica_n1&#34;</span><span style="color:#ce5c00;font-weight:bold">}}}</span>
+</span></span></code></pre></div><p>Через Web UI Solr&rsquo;а наблюдаем три ранее добавленные коллекции:</p>
+<h3 id="44-настройка-ranger-политики-для-доступа-уз--atlas-в-apache-solr">4.4. Настройка Ranger-политики для доступа УЗ  &lsquo;atlas&rsquo; в Apache Solr</h3>
+<p>Пример:</p>
+<p>Policy Name	atlas
+Solr Collection	fulltext_index
+edge_index
+vertex_index
+Allow Conditions	atlas/udrvsts-adatls1t.adht1.corp@ADHT1.CORP: Query, Update, Others</p>
+
+</div>
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-1ab3dc43c826200bbebdff1d68966887">4 - Установка Apache Atlas 2.2.0</h1>
+    
+	
+</div>
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+<div class="td-content" style="">
+    
+	<h1 id="pg-99750b315d7c7362cdca608bfd977d01">4.1 - 01. Подготовительные работы для установки Atlas&#39;а</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>Везде, где выполняется работа с керберизированными сервисами, помним о предварительном получении Kerberos-билета, если таковой не был получен ранее.</p>
 <p>Подавляющее число операций производим на Atlas-машине, иначе специально указывается иное.</p>
@@ -1304,7 +1753,7 @@ ipa group-add --desc=&#34;Группа для роли DATA_SCIENTIST в Atlas&#
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-0404f83bf5dab9f33e5fac150391ac46">3.2 - 02. Подготовка служб Hadoop-кластера к развёртыванию Atlas&#39;а</h1>
+	<h1 id="pg-0404f83bf5dab9f33e5fac150391ac46">4.2 - 02. Подготовка служб Hadoop-кластера к развёртыванию Atlas&#39;а</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-08-10 – 2021-11-03</p>
 <h2 id="1-apache-hbase">1. Apache HBase</h2>
@@ -1440,7 +1889,7 @@ HOST=*-&gt;CONSUMERGROUP=*-&gt;action=read
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-43beb02c03a540208142c74bdb508410">3.3 - 03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</h1>
+	<h1 id="pg-43beb02c03a540208142c74bdb508410">4.3 - 03. Выбор и подготовка поискового движка для использования Atlas&#39;ом</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-08-10 – 2021-11-03</p>
 <h2 id="1-выбор-поискового-движка-apache-solr-or-elasticsearch">1. Выбор поискового движка: Apache Solr or Elasticsearch</h2>
@@ -1670,7 +2119,7 @@ network.host: 10.1.137.11
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-9dd83fd75ec0ae338ea1811e6252b15b">3.4 - 04. Распаковка и настройка Apache Atlas</h1>
+	<h1 id="pg-9dd83fd75ec0ae338ea1811e6252b15b">4.4 - 04. Распаковка и настройка Apache Atlas</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-10-20 – 2021-11-02</p>
 <blockquote>
@@ -2318,7 +2767,7 @@ atlas.authentication.method.kerberos.token.validity = 3600
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-d07e090aca41667b127cd7bac7c735ec">3.5 - 05. 🎣 Заброс Hook&#39;а в Apache Hive</h1>
+	<h1 id="pg-d07e090aca41667b127cd7bac7c735ec">4.5 - 05. 🎣 Заброс Hook&#39;а в Apache Hive</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-08-30</p>
 <h2 id="1введение">1.Введение</h2>
@@ -2455,7 +2904,7 @@ unset OPTION
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-691356ae23717ebcf2ad087e0be4c66c">3.6 - 06. 🎣 Заброс Hook&#39;а в Apache HBase</h1>
+	<h1 id="pg-691356ae23717ebcf2ad087e0be4c66c">4.6 - 06. 🎣 Заброс Hook&#39;а в Apache HBase</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-08-30 / 2021-10-22</p>
 <h2 id="1введение">1.Введение</h2>
@@ -2591,7 +3040,7 @@ These arguments will be passed as part of the Java command line. Commonly, garba
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-0b4311180095ea9e7239fe5736e28faf">3.7 - 07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</h1>
+	<h1 id="pg-0b4311180095ea9e7239fe5736e28faf">4.7 - 07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>Почитать:</p>
 <ul>
@@ -2612,7 +3061,7 @@ These arguments will be passed as part of the Java command line. Commonly, garba
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-597e2248f59dd9ee2fee1d122bf3a769">3.8 - 08. Первый запуск Apache Atlas и его отладка при необходимости</h1>
+	<h1 id="pg-597e2248f59dd9ee2fee1d122bf3a769">4.8 - 08. Первый запуск Apache Atlas и его отладка при необходимости</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-11-02</p>
 <h2 id="1-первый-запуск">1. Первый запуск</h2>
@@ -2684,7 +3133,7 @@ $yarn rmadmin -refreshUserToGroupsMappings
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-204eeda24ab7a7c6fe8b98a3e5ee7df2">3.9 - 10. Первоначальный импорт содержимого Hive</h1>
+	<h1 id="pg-204eeda24ab7a7c6fe8b98a3e5ee7df2">4.9 - 10. Первоначальный импорт содержимого Hive</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-08-29</p>
 <p>Первоначальный импорт содержимого Hive в Atlas производится только один раз, сразу после настройки Atlas Hook&rsquo;а для Hive. Apache Atlas должен быть запущен и слушать &lsquo;atlas.rest.address=https://dev-app111p.test2.lan:21443&rsquo;. После одноразового импорта, дальнейшее соответствие информации между Atlas и Hive производится только на основании сообщений из Kafka.</p>
@@ -2722,7 +3171,7 @@ Hive Meta Data imported successfully!!!
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-4564456f52df6cf4bef446df3cdf867e">3.10 - 11. Первоначальный импорт содержимого HBase</h1>
+	<h1 id="pg-4564456f52df6cf4bef446df3cdf867e">4.10 - 11. Первоначальный импорт содержимого HBase</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-08-29</p>
 <p>Первоначальный импорт содержимого HBase в Atlas производится только один раз, сразу после настройки Atlas Hook&rsquo;а для HBase. Apache Atlas должен быть запущен и слушать &lsquo;atlas.rest.address=https://dev-app111p.test2.lan:21443&rsquo;. После одноразового импорта, дальнейшее соответствие информации между Atlas и HBase производится только на основании сообщений из Kafka.</p>
@@ -2772,7 +3221,7 @@ HBase Data Model imported successfully!!!
 
 <div class="td-content" style="page-break-before: always">
     
-	<h1 id="pg-a9a0445d5e60c65e7a534b42013fbcb9">3.11 - 20. 🔬 Тестирование работоспособности Apache Atlas</h1>
+	<h1 id="pg-a9a0445d5e60c65e7a534b42013fbcb9">4.11 - 20. 🔬 Тестирование работоспособности Apache Atlas</h1>
     <div class="lead">Описание процесса установки Apache Atlas 2.2.0 в Cloudera CDH 6.3.2.</div>
 	<p>2021-12-06</p>
 <p>После подключения Apache Atlas&rsquo;а к Hadoop&rsquo;у мы должны удостовериться в работоспособности приложения.</p>
@@ -2940,7 +3389,7 @@ Took 0.7221 seconds
         
       </div>
       <div class="col-12 col-sm-4 text-center py-2 order-sm-2">
-        <small class="text-white">&copy;&nbsp;2009&nbsp;&ndash;&nbsp;2022 Evgeny Nifantyev <br /><a href="https://t.me/debuntu_ru">Telegram</a><br> Все права защищены</small>
+        <small class="text-white">&copy;&nbsp;2009&nbsp;&ndash;&nbsp;2023 Evgeny Nifantyev <br /><a href="https://t.me/debuntu_ru">Telegram</a><br> Все права защищены</small>
         
 	
 		
@@ -2988,7 +3437,7 @@ Took 0.7221 seconds
 
 
 
-<script src="/js/main.min.afd4289b2a8ac4273d6e714d64732d5e7d0ec21f9e6d4db1527a84ed435f214c.js" integrity="sha256-r9QomyqKxCc9bnFNZHMtXn0Owh&#43;ebU2xUnqE7UNfIUw=" crossorigin="anonymous"></script>
+<script src="/js/main.min.c149027e94624298862675a219cf8ea148a4564b9621ce03472421c52acdbe51.js" integrity="sha256-wUkCfpRiQpiGJnWiGc&#43;OoUikVkuWIc4DRyQhxSrNvlE=" crossorigin="anonymous"></script>
 
 
 

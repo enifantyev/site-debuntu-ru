@@ -4,6 +4,34 @@
   
   
   <url>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/apache-atlas-uninstall/</loc>
+    <lastmod>2023-02-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/vazhnyye-zamechaniya-atlas-v-adh/</loc>
+    <lastmod>2023-01-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovitelnyye_raboty_v_domene_i_na_khoste/</loc>
+    <lastmod>2023-01-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovka-sluzhb-adh-klastera-k-razvortyvaniyu-atlasa/</loc>
+    <lastmod>2023-01-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
     <loc>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</loc>
     <lastmod>2022-12-03T00:00:00+00:00</lastmod>
   </url>
@@ -41,6 +69,13 @@
   <url>
     <loc>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov/</loc>
     <lastmod>2021-06-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/databases/postgresql/postgresql14-centos7-ustanovka/</loc>
+    <lastmod>2023-05-02T00:00:00+00:00</lastmod>
   </url>
   
   
@@ -1059,15 +1094,43 @@
   
   
   <url>
-    <loc>https://debuntu.ru/manuals/bigdata/</loc>
-    <lastmod>2022-12-03T00:00:00+00:00</lastmod>
+    <loc>https://debuntu.ru/manuals/databases/</loc>
+    <lastmod>2023-05-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/databases/postgresql/</loc>
+    <lastmod>2023-05-02T00:00:00+00:00</lastmod>
   </url>
   
   
   
   <url>
     <loc>https://debuntu.ru/manuals/</loc>
-    <lastmod>2022-12-03T00:00:00+00:00</lastmod>
+    <lastmod>2023-05-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/</loc>
+    <lastmod>2023-02-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/</loc>
+    <lastmod>2023-02-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  
+  
+  <url>
+    <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/</loc>
+    <lastmod>2023-02-26T00:00:00+00:00</lastmod>
   </url>
   
   
@@ -1110,13 +1173,6 @@
   <url>
     <loc>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</loc>
     <lastmod>2021-12-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  
-  
-  <url>
-    <loc>https://debuntu.ru/manuals/bigdata/apacheatlas/</loc>
-    <lastmod>2021-12-06T00:00:00+00:00</lastmod>
   </url>
   
   
@@ -1235,18 +1291,20 @@
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
   <url>
     <loc>https://debuntu.ru/</loc>
-    <lastmod>2022-12-03T00:00:00+00:00</lastmod>
+    <lastmod>2023-05-02T00:00:00+00:00</lastmod>
   </url>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
