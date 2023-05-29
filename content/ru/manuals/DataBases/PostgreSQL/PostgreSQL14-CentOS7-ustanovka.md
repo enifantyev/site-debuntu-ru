@@ -74,7 +74,7 @@ slug: postgresql14-centos7-ustanovka
     UNITNAME='postgresql-14.service'
     DBPATH='/srv/pgsql/14/data/'
 
-    mkdir /etc/systemd/system/${UNITNAME}.d
+    mkdir -p /etc/systemd/system/${UNITNAME}.d
     echo -e "[Service]\nEnvironment=PGDATA=${DBPATH}" > \
     /etc/systemd/system/${UNITNAME}.d/override.conf
     ```

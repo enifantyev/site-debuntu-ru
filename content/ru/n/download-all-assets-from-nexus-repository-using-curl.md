@@ -16,8 +16,8 @@ slug: download-all-assets-from-nexus-repository-using-curl
 ```
 #!/bin/bash -e
 
-NXRM="http://10.15.61.1:8081"
-USERPASS="nx-pubrepo-reader:iWnZ0Ho7JNV03df1zgEj6"
+NXRM="https://nexus.example.org:8081"
+USERPASS="nx-pub-reader:Paqvl8oldO1EOarTcx8FAjuXZ"
 REPO="cloudera-cm-6.3.1-hosted"
 FILEEXT="rpm"
 FILENAME="${REPO}.list"
