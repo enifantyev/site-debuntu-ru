@@ -682,7 +682,7 @@ Caused by: java.util.NoSuchElementException
 &lt;code&gt;http://nx-pubrepo-reader:rAhbjZh0z3LCCjUhgqNdA@nxrm.example.org:8081/repository/cloudera-cm-6.3.1-hosted/&lt;/code&gt;
 &lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_3_3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Ниже, для CDH, указываем репозиторий для пакетов CDH:&lt;br&gt;
-&lt;code&gt;http://nx-pubrepo-reader:iWnZ0Ho7JNV03df1zgEj6@nxrm.example.org:8081/repository/cloudera-cdh-6.3.2-hosted/&lt;/code&gt;
+&lt;code&gt;http://nx-pubrepo-reader:AhbjZh0z3LCCjUhgqNdA@nxrm.example.org:8081/repository/cloudera-cdh-6.3.2-hosted/&lt;/code&gt;
 &lt;img src=&#34;https://debuntu.ru/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_3_4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;enter-login-credentials&#34;&gt;Enter Login Credentials&lt;/h2&gt;
 &lt;p&gt;Указываем пользователя имеющего root-права на всех хостах будущего кластера. Вместо пароля  пользователя вводим его приватный ssh-ключ:

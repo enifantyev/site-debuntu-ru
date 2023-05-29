@@ -26,7 +26,7 @@
         &lt;p&gt;На скорую руку приготовил скрипт выкачивающий все файлы из какого-нибудь репо.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#!/bin/bash -e
 
-NXRM=&amp;#34;http://nexus.example.org:8081&amp;#34;
+NXRM=&amp;#34;https://nexus.example.org:8081&amp;#34;
 USERPASS=&amp;#34;nx-pub-reader:Paqvl8oldO1EOarTcx8FAjuXZ&amp;#34;
 REPO=&amp;#34;cloudera-cm-6.3.1-hosted&amp;#34;
 FILEEXT=&amp;#34;rpm&amp;#34;

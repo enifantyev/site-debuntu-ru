@@ -39,7 +39,7 @@ slug: ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_3_3.png)
 
 Ниже, для CDH, указываем репозиторий для пакетов CDH:<br>
-`http://nx-pubrepo-reader:iWnZ0Ho7JNV03df1zgEj6@nxrm.example.org:8081/repository/cloudera-cdh-6.3.2-hosted/`
+`http://nx-pubrepo-reader:AhbjZh0z3LCCjUhgqNdA@nxrm.example.org:8081/repository/cloudera-cdh-6.3.2-hosted/`
 ![](/img/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/image_3_4.png)
 
 ## Enter Login Credentials
