@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>10. K8s. Подготовка всех хостов к установке Kubernetes&#39;а on Debuntarium</title>
+    <link>https://debuntu.ru/manuals/kubernetes/obshchaya_instruktsiya_po_ustanovke_k8s_s_high_availability_i_stacked_etcd_v_izolirovannoy_srede_s_pomoshchyu_kubeadm/10._k8s._podgotovka_vsekh_khostov_k_ustanovke_kubernetes/</link>
+    <description>Recent content in 10. K8s. Подготовка всех хостов к установке Kubernetes&#39;а on Debuntarium</description>
+    <generator>Hugo</generator>
+    <language>ru-ru</language>
+    <lastBuildDate>Tue, 08 Aug 2023 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://debuntu.ru/manuals/kubernetes/obshchaya_instruktsiya_po_ustanovke_k8s_s_high_availability_i_stacked_etcd_v_izolirovannoy_srede_s_pomoshchyu_kubeadm/10._k8s._podgotovka_vsekh_khostov_k_ustanovke_kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>10. Отключение swap на всех нодах</title>
+      <link>https://debuntu.ru/manuals/kubernetes/obshchaya_instruktsiya_po_ustanovke_k8s_s_high_availability_i_stacked_etcd_v_izolirovannoy_srede_s_pomoshchyu_kubeadm/10._k8s._podgotovka_vsekh_khostov_k_ustanovke_kubernetes/otklyucheniye_swap_na_vsekh_nodakh/</link>
+      <pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://debuntu.ru/manuals/kubernetes/obshchaya_instruktsiya_po_ustanovke_k8s_s_high_availability_i_stacked_etcd_v_izolirovannoy_srede_s_pomoshchyu_kubeadm/10._k8s._podgotovka_vsekh_khostov_k_ustanovke_kubernetes/otklyucheniye_swap_na_vsekh_nodakh/</guid>
+      <description>2023-08-08&#xA;Использованные материалы https://kubernetes.io/docs/setup/production-environment/container-runtimes/ Обязательное отключение swap Проверяем включен ли &amp;lsquo;swap&amp;rsquo; и отключаем его:&#xA;swapon -a if [[ $(swapon -s) != &amp;#34;&amp;#34; ]]; then cp /etc/fstab /etc/fstab.$(date +%y%m%d-%H%M%S).bak swapoff -a sed -i &amp;#39;/swap/ s/^/#/&amp;#39; /etc/fstab fi Повторно пытаемся включить swap и проверяем состояние swap:&#xA;swapon -a swapon -s Если выхлоп в stdout пуст, то продолжаем выполнять инструкцию. Иначе разбираемся в причинах неудачи.</description>
+    </item>
+    <item>
+      <title>30. Установка containerd</title>
+      <link>https://debuntu.ru/manuals/kubernetes/obshchaya_instruktsiya_po_ustanovke_k8s_s_high_availability_i_stacked_etcd_v_izolirovannoy_srede_s_pomoshchyu_kubeadm/10._k8s._podgotovka_vsekh_khostov_k_ustanovke_kubernetes/ustanovka-containerd/</link>
+      <pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>https://debuntu.ru/manuals/kubernetes/obshchaya_instruktsiya_po_ustanovke_k8s_s_high_availability_i_stacked_etcd_v_izolirovannoy_srede_s_pomoshchyu_kubeadm/10._k8s._podgotovka_vsekh_khostov_k_ustanovke_kubernetes/ustanovka-containerd/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
