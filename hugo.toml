@@ -1,4 +1,4 @@
-baseURL = 'http://debuntu.ru/'
+baseURL = 'https://debuntu.ru/'
 publishDir = "docs"
 languageCode = 'ru-ru'
 title = 'Debuntarium'
