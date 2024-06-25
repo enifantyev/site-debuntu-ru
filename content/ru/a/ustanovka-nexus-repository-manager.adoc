@@ -1,0 +1,109 @@
+---
+title: "Установка Nexus Repository Manager"
+date: 2021-07-07
+weight: 10
+type: docs
+description:
+  Инструкция по установке Nexus Repository Manager.
+tags:
+  - Nexus
+  - Nexus Repository Manager
+---
+
+:toc:
+
+== Использованные материалы ==
+. https://help.sonatype.com/repomanager3/installation-and-upgrades
+. https://help.sonatype.com/repomanager3/installation-and-upgrades/run-as-a-service
+
+:sectnums:
+== Установка Java 8
+.  Установите Java восьмой версии следующей командой:
++
+[,console]
+----
+dnf install java-1.8.0-openjdk
+----
+
+. Проверьте "`используемую`" "версию" Java по умолчанию:
++
+[,console]
+----
+java -version
+----
++
+Пример ожидаемого вывода:
++
+[,console]
+----
+openjdk version "1.8.0_275"
+OpenJDK Runtime Environment (build 1.8.0_275-b01)
+OpenJDK 64-Bit Server VM (build 25.275-b01, mixed mode)
+----
+
+== Создание локальной УЗ
+. Создайте локальный непривилегированный аккаунт, под которым будет работать Nexus Repository Manager:
++
+[,console]
+----
+useradd --system --no-create-home \
+  --home-dir /opt/nexus \
+  --shell /sbin/nologin nexus
+----
+
+== Скачивание и распаковка
+. Найдите на странице https://help.sonatype.com/en/download.html предлагаемую к использованию версию Nexus'а для ОС Unix.
+. Скачайте два файла: файл-архив и файл с контрольной суммой. Проверьте контрольную сумму файла-архива с помощью файла с контрольной суммой. Пример: 
++ 
+[,console]
+----
+VER='3.66.0-02'
+
+curl -LO https://download.sonatype.com/nexus/3/nexus-${VER}-unix.tar.gz
+curl -LO https://download.sonatype.com/nexus/3/nexus-${VER}-unix.tar.gz.sha256
+echo "nexus-${VER}-unix.tar.gz" >> nexus-${VER}-unix.tar.gz.sha256
+tr '\n' ' ' < nexus-3.66.0-02-unix.tar.gz.sha256 | xargs | sha256sum -c
+----
++
+Пример успешного прохождения проверки:
++
+[,console]
+----
+nexus-3.66.0-02-unix.tar.gz: OK
+----
+
+. Распакуйте содержимое файла-архива в каталог `/opt`:
++
+[,console]
+----
+tar Cxvf /opt nexus-${VER}-unix.tar.gz
+ln -sr /opt/nexus-${VER} /opt/nexus
+chown -R nexus:nexus /opt/${VER}* /opt/sonatype-work
+----
+
+== Создание systemd-юнита
+. Выполните:
++
+[,shell]
+----
+cat << EOF > /etc/systemd/system/nexus.service
+[Unit]
+Description=nexus service
+After=network.target
+  
+[Service]
+Type=forking
+LimitNOFILE=65536
+ExecStart=/opt/nexus/bin/nexus start
+ExecStop=/opt/nexus/bin/nexus stop 
+User=nexus
+Restart=on-abort
+TimeoutSec=600
+  
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable --now nexus
+----
