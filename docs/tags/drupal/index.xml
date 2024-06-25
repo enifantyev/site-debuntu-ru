@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Drupal on Debuntarium</title>
-    <link>https://debuntu.ru/tags/drupal/</link>
+    <link>http://localhost:1313/tags/drupal/</link>
     <description>Recent content in Drupal on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 25 Mar 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/drupal/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/drupal/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Использование Composer для установки и управления зависимостями Drupal 8</title>
-      <link>https://debuntu.ru/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</link>
+      <link>http://localhost:1313/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</link>
       <pubDate>Mon, 25 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</guid>
+      <guid>http://localhost:1313/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</guid>
       <description>2019-03-25 Использованные источники:&#xA;Using Composer to Install Drupal and Manage Dependencies Introduction - Composer Composer может быть использован для загрузки Drupal, его модулей и тем оформления, а также всех появившихся зависимостей. Эти инструкции могут быть гибко подстроены под ваши методы управления экземпляром Drupal.&#xA;Установка Composer Вам нужно установить Composer на вашу локальную машину перед выполнением любых composer-команд. Пожалуйста, ознакомтесь с Getting Started on getcomposer.org для установки Composer. Если вам разрешено устанавливать Composer глобально, так и сделайте, так как нет никакой выгоды от множества установленных на компьютере копий Composer для каждого пользователя или проекта.</description>
     </item>
     <item>
       <title>Необходимые модули для Drupal 7.0</title>
-      <link>https://debuntu.ru/n/neobhodimye-moduli-dlya-drupal-7.0/</link>
+      <link>http://localhost:1313/n/neobhodimye-moduli-dlya-drupal-7.0/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/neobhodimye-moduli-dlya-drupal-7.0/</guid>
+      <guid>http://localhost:1313/n/neobhodimye-moduli-dlya-drupal-7.0/</guid>
       <description>2011-03-30 CKEditor — wysiwyg редактор для редактирования текста.&#xA;IMCE — управление загрузкой, удалением изображения в wysiwyg редакторе. Надо чуток донастроить.&#xA;Pathauto (для работы нужен Token) + Transliteration — Эта связка позволит автоматически назначать статье URL с удобочитаемым видом в англоязычной кодировке. То есть вместо https://www.example.com/node/45будет https://www.example.com/eta-statia-pro-elochku, что приятно поисковым движкам и людям. Для настройки надо зайти в Настройки - Адреса. Тут выбрать вкладку Настройки и включить:&#xA;&amp;ldquo;Transliterate prior to creating alias&amp;rdquo; для автоматического преобразования национальных символов в латинские; &amp;ldquo;Reduce strings to letters and numbers&amp;rdquo; - для приведения строк к виду, состоящему только из латинских букв и арабских цифр; &amp;ldquo;Create a new alias.</description>
     </item>
   </channel>

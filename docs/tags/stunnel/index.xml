@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Stunnel on Debuntarium</title>
-    <link>https://debuntu.ru/tags/stunnel/</link>
+    <link>http://localhost:1313/tags/stunnel/</link>
     <description>Recent content in Stunnel on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 26 Nov 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/stunnel/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/stunnel/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Компиляция свежего stunnel 5.60 из исходников на CentOS7</title>
-      <link>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
+      <link>http://localhost:1313/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
       <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
+      <guid>http://localhost:1313/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
       <description>2021-11-26&#xA;Подготовка с сборке Устанавливаем набор инструментов:&#xA;$ sudo yum groupinstall &amp;#34;Development Tools&amp;#34; Сборка PCKG=&amp;#34;stunnel-5.60&amp;#34; mkdir ~/src &amp;amp;&amp;amp; cd ~/src curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz.sha256 sha256sum -c ${PCKG}.tar.gz.sha256 tar xvf ${PCKG}.tar.gz cd ${PCKG} ./configure make Результат Скомпилированный stunnel можно найти здесь ~/src/stunnel-5.60/src/stunnel.&#xA;Переименуем файл для удобства дальнейшего использования по инструкции Обфускация ssh-трафика с помощью stunnel:&#xA;mv ~/src/stunnel-5.60/src/stunnel ~/src/stunnel-5.60/src/stunnel-5.60 </description>
     </item>
     <item>
       <title>Обфускация ssh-трафика с помощью stunnel</title>
-      <link>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <link>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
       <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <guid>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
       <description>2021-11-19&#xA;Настройка сервера Устанавливаем на сервер пакет stunnel:&#xA;sudo yum install stunnel Компилируем свежий stunnel по инструкции Компиляция свежего stunnel 5.60 из исходников на CentOS7.&#xA;Подменяем установленный stunnel 4.56, новым stunnel 5.60:&#xA;sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56 sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin cd /usr/bin ln -s stunnel-5.60 stunnel Добавляем системного пользователя, под которым будет запускаться stunnel:&#xA;sudo useradd -r -s /sbin/nologin -M stunnel &amp;lt;Здесь используем FreeIPA-сертификаты, сгенерированные на сервере. Потом допишу процесс получения и автообновления с помощью Certmonger.</description>
     </item>
   </channel>

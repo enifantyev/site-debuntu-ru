@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Kafka on Debuntarium</title>
-    <link>https://debuntu.ru/tags/apache-kafka/</link>
+    <link>http://localhost:1313/tags/apache-kafka/</link>
     <description>Recent content in Apache Kafka on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/apache-kafka/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/apache-kafka/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CMAK. 01. Сборка rpm-пакета для CentOS7</title>
-      <link>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
+      <link>http://localhost:1313/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
+      <guid>http://localhost:1313/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
       <description>2021-11-25&#xA;https://github.com/yahoo/CMAK&#xA;1. Подготовка к сборке Выбираем по умолчанию интерпретатор python2 и проверяем эту установку:&#xA;$ sudo update-alternatives --config python There are 2 programs which provide &amp;#39;python&amp;#39;. Selection Command ----------------------------------------------- + 1 /usr/bin/python2.7 * 2 /usr/bin/python3 Enter to keep the current selection[+], or type selection number: 1 $ python -V Python 2.7.5 В дополнение к Maven&amp;rsquo;у устанавливаем пакеты &amp;lsquo;java-11-openjdk&amp;rsquo; и &amp;lsquo;rpm-build&amp;rsquo;:&#xA;$ sudo yum -y install java-11-openjdk rpm-build Скачиваем и распаковываем исходники последней версии приложения (на данный момент CMAK 3.</description>
     </item>
     <item>
       <title>Kafdrop. 01. Сборка jar-пакета</title>
-      <link>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</link>
+      <link>http://localhost:1313/a/kafdrop-sborka-jar-paketa/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</guid>
+      <guid>http://localhost:1313/a/kafdrop-sborka-jar-paketa/</guid>
       <description>2021-11-25&#xA;1. Подготовка к сборке В дополнение к Maven&amp;rsquo;у устанавливаем Java11:&#xA;$ sudo yum -y install java-11-openjdk java-11-openjdk-devel Скачиваем последнюю версию приложения Kafdrop (на данный момент Kafdrop 3.27.0) и распаковываем:&#xA;FILE=&amp;#34;3.27.0.tar.gz&amp;#34; mkdir ~/src &amp;amp;&amp;amp; cd ~/src curl -LO https://github.com/obsidiandynamics/kafdrop/archive/refs/tags/${FILE} tar xvf ${FILE} # 2. Сборка jar-пакета Запускаем сборку пакета:&#xA;export JAVA_HOME=/usr/lib/jvm/jre-11-openjdk cd ~/src/kafdrop-3.27.0 mvn clean package # 3. Результат В каталоге ~/src/kafdrop-3.27.0/target наблюдаем пакет kafdrop-3.27.0.jar.</description>
     </item>
     <item>
       <title>Kafdrop. 02. Установка и настройка</title>
-      <link>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</link>
+      <link>http://localhost:1313/a/kafdrop-ustanovka-i-nastroika/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</guid>
+      <guid>http://localhost:1313/a/kafdrop-ustanovka-i-nastroika/</guid>
       <description>2021-11-25&#xA;1. Установка 1.1. Создание локального аккаунта Создаём локальный аккаунт &amp;lsquo;kafdrop&amp;rsquo;:&#xA;$ useradd -r -s /sbin/nologin -d /opt/kafdrop -M kafdrop $ kinit $ ipa service-add kafdrop/$(hostname) 1.2. Создание рабочего каталога Создаём каталог, где будет всё необходимое для работы Kafdrop:&#xA;mkdir /opt/kafdrop chown kafdrop.kafdrop /opt/kafdrop chmod 2770 /opt/kafdrop # 1.3. Загрузка ранее скомпилированного jar-файла Важно! Тем или иным образом копируем ранее собранный пакет kafdrop-3.27.0.jar в каталог /opt/kafdrop.&#xA;После чего делаем link с расчётом на дальнейшие обновления пакета:</description>
     </item>
     <item>
       <title>Запуск kafka-mirror-maker из systemd</title>
-      <link>https://debuntu.ru/n/zapusk-kafka-mirror-maker-iz-systemd/</link>
+      <link>http://localhost:1313/n/zapusk-kafka-mirror-maker-iz-systemd/</link>
       <pubDate>Sun, 06 Sep 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/zapusk-kafka-mirror-maker-iz-systemd/</guid>
+      <guid>http://localhost:1313/n/zapusk-kafka-mirror-maker-iz-systemd/</guid>
       <description>Каталог размещения: /opt/hadoop. Сюда скачиваем и распаковываем kafka_2.13-2.6.0.tgz и создаём ссылку kafka на каталог kafka_2.13-2.6.0, куда был раскапован архив:&#xA;mkdir /opt/hadoop cd /opt/hadoop tar xvf kafka_2.13-2.6.0.tgz ln -s kafka_2.13-2.6.0 kafka mkdir kafka/logs Создаём два файла для запуска и остановки kafka-mirror. kafka-mirror-maker-start.sh&#xA;#!/bin/bash echo &amp;#34;mirror maker restarted $(date)&amp;#34;&amp;gt;&amp;gt;/opt/hadoop/kafka/logs/mirrormaker.log cd /opt/hadoop/kafka/bin/ ./kafka-mirror-maker.sh \ --consumer.config ../config/consumer.properties \ --producer.config ../config/producer.properties \ --whitelist &amp;#39;adfox_created|adfox_deleted|adfox_updated|mymoscow_created|mymoscow_deleted|mymoscow_updated&amp;#39; \ --num.streams 3 \ --offset.commit.interval.ms 30000 \ --abort.on.send.failure false kafka-mirror-maker-stop.sh&#xA;#!/bin/sh SIGNAL=${SIGNAL:-TERM} PIDS=$(ps ax | grep -i &amp;#39;kafka.</description>
     </item>
     <item>
       <title>Сборка rpm-пакета nginx c модулями для kafka</title>
-      <link>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
+      <link>http://localhost:1313/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
+      <guid>http://localhost:1313/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
       <description>2020-05-26&#xA;Сборку производил в свежеустановленной виртуальной машине CentOS 7 (минимальный дистр), из-под обычного пользователя имеющего беспарольное sudo.&#xA;Сборка пакета librdkafka Сначала надо собрать свежий https://github.com/edenhill/librdkafka, так как в репо CentOS&amp;rsquo;а librdkafka имеет версию 0.11.5, тогда как на странице разработчиков — 1.5.0.&#xA;Сборка этого пакета заняла по времени чуть больше часа, но не из-за сложности. К счастью, разработчики всё продумали и собирать этот пакет проще простого.&#xA;Сборка пакета будет производиться в песочнице, с помощью mock.</description>
     </item>
   </channel>

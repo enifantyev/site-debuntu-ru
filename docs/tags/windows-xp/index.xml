@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Windows XP on Debuntarium</title>
-    <link>https://debuntu.ru/tags/windows-xp/</link>
+    <link>http://localhost:1313/tags/windows-xp/</link>
     <description>Recent content in Windows XP on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 28 May 2011 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/windows-xp/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/windows-xp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Настройка клиента OpenVPN на Windows XP</title>
-      <link>https://debuntu.ru/n/nastroika-klienta-openvpn-na-windows-xp/</link>
+      <link>http://localhost:1313/n/nastroika-klienta-openvpn-na-windows-xp/</link>
       <pubDate>Sat, 28 May 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/nastroika-klienta-openvpn-na-windows-xp/</guid>
+      <guid>http://localhost:1313/n/nastroika-klienta-openvpn-na-windows-xp/</guid>
       <description>2011-05-28&#xA;Подготовка к настройке OpenVPN клиента Скачал с openvpn.net/download.html windows клиент и установил его, соглашаясь со всеми запросами, используя учётную запись администратора. Копирую файл C:\Program Files\OpenVPN\sample-config\client.ovpn в папку C:\Program Files\OpenVPN\config\&#xA;В эту же папку копирую с сервера сгенерированные файлы:&#xA;ca.crt — сертификат центра сертификации client.key — приватный ключ клиента client.crt — сертификат клиента ta.key — TLS-ключ, если используется в настройках OpenVPN сервера Настройка OpenVPN клиента Запускаю Пуск — Все программы — OpenVPN — OpenVPN GUI</description>
     </item>
   </channel>

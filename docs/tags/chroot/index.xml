@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Chroot on Debuntarium</title>
-    <link>https://debuntu.ru/tags/chroot/</link>
+    <link>http://localhost:1313/tags/chroot/</link>
     <description>Recent content in Chroot on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 12 May 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/chroot/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/chroot/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Chroot rsync для безопасного сбора бэкапов с удалённых хостов</title>
-      <link>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
+      <link>http://localhost:1313/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
       <pubDate>Sun, 12 May 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
+      <guid>http://localhost:1313/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
       <description>2019-05-12&#xA;Один из способов использования Rsync для синхронизации файлов между машинами, это подключение rsync-клиента к rsync-серверу через ssh-сеанс.&#xA;Здесь я описал следующий сценарий выкачивания файлов из удалённого хоста site01.example.com на бэкап-хост:&#xA;На клиенте, которым выступает бэкап-хост, запускаем rsync-клиент: rsync -avP rbkp@site01.example.com:/backup/ /backup/ Клиент стучится на ssh-порт сервера site01.example.com от имени пользователя rbkp. На сервере служба sshd создаёт сеанс для rbkp в подготовленной песочнице. В контексте сеанса rbkp через /bin/sh начинает выполняться rsync-сервер: rsync --server --sender -vlogDtpre.</description>
     </item>
   </channel>

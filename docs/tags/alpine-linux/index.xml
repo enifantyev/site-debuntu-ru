@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Alpine Linux on Debuntarium</title>
-    <link>https://debuntu.ru/tags/alpine-linux/</link>
+    <link>http://localhost:1313/tags/alpine-linux/</link>
     <description>Recent content in Alpine Linux on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 14 Apr 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/alpine-linux/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/alpine-linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка Monitorix в Alpine Linux</title>
-      <link>https://debuntu.ru/n/ustanovka-monitorix-v-alpine-linux/</link>
+      <link>http://localhost:1313/n/ustanovka-monitorix-v-alpine-linux/</link>
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/ustanovka-monitorix-v-alpine-linux/</guid>
+      <guid>http://localhost:1313/n/ustanovka-monitorix-v-alpine-linux/</guid>
       <description>2020-04-14&#xA;Подготовка Скачиваем, и распаковываем куда-нибудь, актуальную версию monitorix:&#xA;$ wget https://www.monitorix.org/monitorix-3.12.0.tar.gz $ tar xvf monitorix-3.12.0.tar.gz Содержимое распакованного каталога раскидываем по папкам. Схема размещения приведена ниже:&#xA;Перед раскидыванием файлов мониторикса по соответствующим каталогам, зададим им правильного владельца:&#xA;# cd monitorix-3.12.0 &amp;amp;&amp;amp; chown root:root * -R Добавление в систему необходимых пакетов Установка perl-пакетов, необходимых для работы monitorix:&#xA;# apk add perl perl-cgi perl-libwww perl-mailtools perl-mime-lite perl-dbi perl-xml-simple perl-xml-libxml perl-http-server-simple perl-io-socket-ssl rrdtool perl-rrd Пакет perl-config-general отсутствует в репозиториях Alpine Linux, поэтому скачал General.</description>
     </item>
     <item>
       <title>Избавляемся от root&#39;а в Alpine Linux</title>
-      <link>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
+      <link>http://localhost:1313/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
+      <guid>http://localhost:1313/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
       <description>2019-12-23&#xA;Добавляем нового пользователя Устанавливаем sudo в систему и добавляем нового пользователя newuser. Назначаем его участником группы wheel. Пользователям из этой группы позволяется рулить системой через sudo:&#xA;apk update apk add sudo bash adduser -s /bin/bash newuser addgroup newuser wheel Раскомментируем строку в файле /etc/sudoers, которая позволит группе wheel использовать sudo. Одной командой с помощью замечательного sed:&#xA;sed -i -e &amp;#34;s/^#.%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/&amp;#34; /etc/sudoers Или вручную с помощью команды visudo раскомментируем строку:</description>
     </item>
     <item>
       <title>Установка Alpine Linux в подтом btrfs</title>
-      <link>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
+      <link>http://localhost:1313/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
       <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
+      <guid>http://localhost:1313/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
       <description>2019-12-22&#xA;Установка Alpine Linux Устанавливаем Alpine Linux 3.11 обычным порядком, но с указанием lvmsys для размещения системного раздела в lvm-томе.&#xA;После завершения процедуры setup-alpine, но до перезагрузки, будет удобно дать себе возможность войти в этот работающий экземпляр установки через ssh:&#xA;sed -i -e &amp;#34;s/^#PermitRootLogin.*$/PermitRootLogin yes/&amp;#34; /etc/ssh/sshd_config /etc/init.d/sshd restart Заходим в работающий экземпляр установки alpine linux через ssh под root&amp;rsquo;ом и продолжаем работать.&#xA;Работаем с экземпляром через ssh Устанавливаем необходимые пакеты, уменьшаем системный раздел и конвертируем его из ext4 в btrfs:</description>
     </item>
   </channel>

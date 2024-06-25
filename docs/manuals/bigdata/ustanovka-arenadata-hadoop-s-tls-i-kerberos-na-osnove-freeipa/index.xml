@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Установка ArenaData Hadoop с TLS и Kerberos на основе FreeIPA on Debuntarium</title>
-    <link>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/</link>
+    <link>http://localhost:1313/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/</link>
     <description>Recent content in Установка ArenaData Hadoop с TLS и Kerberos на основе FreeIPA on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 03 Dec 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>01. Важные замечания</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</link>
       <pubDate>Sat, 03 Dec 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</guid>
       <description>2022-12-01&#xA;Список замечаний Об централизованном использовании Ansible Ad-Hoc команд для подготовки хостов к установке ArenaData-кластера Для удобства работы с множеством машин будущего кластера, в данной инструкции описано создание отдельного каталога с Ansible-файлами на любой машине, откуда по SSH должны быть доступны все целевые хосты. Инструкция доступна здесь &amp;ldquo;Подготовка каталога с файлами для развёртывания ADH с помощью Ansible Ad-Hoc&amp;rdquo;.&#xA;О параллельном подключении lvm-тома vg/data к директориям /data и /srv На машинах кластера, lvm-том &amp;lsquo;vg/data&amp;rsquo; монтируется не только к каталогу /data, но и параллельно к /srv, так как по умолчанию, в ArenaData каталог /srv используется для размещения меняющихся данных кластера.</description>
     </item>
   </channel>

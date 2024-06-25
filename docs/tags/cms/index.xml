@@ -2,59 +2,59 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CMS on Debuntarium</title>
-    <link>https://debuntu.ru/tags/cms/</link>
+    <link>http://localhost:1313/tags/cms/</link>
     <description>Recent content in CMS on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 21 Oct 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/cms/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/cms/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка Plone CMS</title>
-      <link>https://debuntu.ru/a/ustanovka-plone-cms/</link>
+      <link>http://localhost:1313/a/ustanovka-plone-cms/</link>
       <pubDate>Mon, 21 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ustanovka-plone-cms/</guid>
+      <guid>http://localhost:1313/a/ustanovka-plone-cms/</guid>
       <description>2019-10-21&#xA;Пытаясь найти замену Drupal для своих сайтов я набрёл на Plone. После прочтения материалов о данной CMS с воодушевлением принялся за работу.&#xA;Для работы Drupal необходимо устанавливать много дополнительного ПО, вследствии чего вся друпаловская программная обвязка поглощает много оперативной памяти. При попытке перейти с седьмого на восьмой Drupal я столкнулся с нехваткой памяти для работы Composer. Доплатил за увеличение RAM до 1GB и вновь неудача. На vps на базе kvm можно было бы создать swap-файл, но на текущем openvz это делать запрещено.</description>
     </item>
     <item>
       <title>Резервное копирование Plone</title>
-      <link>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</link>
+      <link>http://localhost:1313/a/rezervnoe-kopirovanie-plone/</link>
       <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</guid>
+      <guid>http://localhost:1313/a/rezervnoe-kopirovanie-plone/</guid>
       <description>2019-05-15&#xA;Backing up your Plone deployment Стратегии резервного копирования действующих Plone установок.&#xA;Эта инструкция расскажет что копировать, как копировать и как безопасно восстановить.&#xA;Введение Ключевые правила резервного копирования работающей системы возможно следующие:&#xA;Бэкапируй всё Делай несколько версий бэкапа Тестируй бэкапы на предмет восстановления Эта инструкция допускает, что вы уже делаете это для всей вашей системы, и будет рассматривать только те вещи, которые касаются Plone. Когда мы говорим, что мы предполагаем, что вы уже делаете это для всей системы, мы имеем в виду, что механизмы резервного копирования вашей системы — rsync, bacula и т.</description>
     </item>
     <item>
       <title>Создание копии сайта Plone</title>
-      <link>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</link>
+      <link>http://localhost:1313/a/ozdanie-kopii-saita-plone/</link>
       <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</guid>
+      <guid>http://localhost:1313/a/ozdanie-kopii-saita-plone/</guid>
       <description>2019-05-10&#xA;Краткая инструкция о том, как создать копию Plone-инсталляции.&#xA;Введение Эта инструкция расскажет вам основы создания дубля Plone-сайта для тестирования или бэкапа.&#xA;Необходимые условия Возможность копирования файлов из/в удалённый сервер Возможность использования командной строки Содержимое Plone-сайта Что должно быть скопировано:&#xA;buildout.cfg - определяет конфигурацию вашего сайта src folder - содержит аддоны разработанные вами var/filestorage/Data.fs - ZODB база данных вашего сайта var/blobstorage folder - содержит объекты типа &amp;ldquo;файл&amp;rdquo; базы данных ZODB (BLOBы) Другие папки (eggs, downloads, parts и т.</description>
     </item>
     <item>
       <title>Добавление reCAPTCHA в Plone</title>
-      <link>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</link>
+      <link>http://localhost:1313/a/dobavlenie-recaptcha-v-plone/</link>
       <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</guid>
+      <guid>http://localhost:1313/a/dobavlenie-recaptcha-v-plone/</guid>
       <description>2019-05-09&#xA;Частичный перевод и компиляция информации из статей:&#xA;Adding CAPTCHA Support PloneFormGen Archetypes Dexterity PloneFormGen имеет встроенную поддержку Re-Captcha. Здесь рассказано как включить её.&#xA;PloneFormGen и поля Captcha PloneFormGen — аддон, добавляющий в Plone генератор форм с полями, виджетами и валидаторами из Archetypes. Используется при создании простых однородных вебформ для сохранения вводимых данных или форм для отправки электронной почты. Archetypes — это подсистема (фреймворк) для создания типов контента в Plone версий 2.</description>
     </item>
     <item>
       <title>Использование Composer для установки и управления зависимостями Drupal 8</title>
-      <link>https://debuntu.ru/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</link>
+      <link>http://localhost:1313/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</link>
       <pubDate>Mon, 25 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</guid>
+      <guid>http://localhost:1313/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</guid>
       <description>2019-03-25 Использованные источники:&#xA;Using Composer to Install Drupal and Manage Dependencies Introduction - Composer Composer может быть использован для загрузки Drupal, его модулей и тем оформления, а также всех появившихся зависимостей. Эти инструкции могут быть гибко подстроены под ваши методы управления экземпляром Drupal.&#xA;Установка Composer Вам нужно установить Composer на вашу локальную машину перед выполнением любых composer-команд. Пожалуйста, ознакомтесь с Getting Started on getcomposer.org для установки Composer. Если вам разрешено устанавливать Composer глобально, так и сделайте, так как нет никакой выгоды от множества установленных на компьютере копий Composer для каждого пользователя или проекта.</description>
     </item>
     <item>
       <title>Отправка почты из контактной формы MODx Evo через gmail</title>
-      <link>https://debuntu.ru/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</link>
+      <link>http://localhost:1313/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</link>
       <pubDate>Thu, 12 Dec 2013 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</guid>
+      <guid>http://localhost:1313/n/otpravka-pochty-iz-kontaktnoi-formy-modx-evo-cherez-gmail/</guid>
       <description> </description>
     </item>
     <item>
       <title>Необходимые модули для Drupal 7.0</title>
-      <link>https://debuntu.ru/n/neobhodimye-moduli-dlya-drupal-7.0/</link>
+      <link>http://localhost:1313/n/neobhodimye-moduli-dlya-drupal-7.0/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/neobhodimye-moduli-dlya-drupal-7.0/</guid>
+      <guid>http://localhost:1313/n/neobhodimye-moduli-dlya-drupal-7.0/</guid>
       <description>2011-03-30 CKEditor — wysiwyg редактор для редактирования текста.&#xA;IMCE — управление загрузкой, удалением изображения в wysiwyg редакторе. Надо чуток донастроить.&#xA;Pathauto (для работы нужен Token) + Transliteration — Эта связка позволит автоматически назначать статье URL с удобочитаемым видом в англоязычной кодировке. То есть вместо https://www.example.com/node/45будет https://www.example.com/eta-statia-pro-elochku, что приятно поисковым движкам и людям. Для настройки надо зайти в Настройки - Адреса. Тут выбрать вкладку Настройки и включить:&#xA;&amp;ldquo;Transliterate prior to creating alias&amp;rdquo; для автоматического преобразования национальных символов в латинские; &amp;ldquo;Reduce strings to letters and numbers&amp;rdquo; - для приведения строк к виду, состоящему только из латинских букв и арабских цифр; &amp;ldquo;Create a new alias.</description>
     </item>
   </channel>

@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ssh on Debuntarium</title>
-    <link>https://debuntu.ru/tags/ssh/</link>
+    <link>http://localhost:1313/tags/ssh/</link>
     <description>Recent content in Ssh on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 16 Mar 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Обфускация ssh-трафика с помощью stunnel</title>
-      <link>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <link>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
       <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <guid>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
       <description>2021-11-19&#xA;Настройка сервера Устанавливаем на сервер пакет stunnel:&#xA;sudo yum install stunnel Компилируем свежий stunnel по инструкции Компиляция свежего stunnel 5.60 из исходников на CentOS7.&#xA;Подменяем установленный stunnel 4.56, новым stunnel 5.60:&#xA;sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56 sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin cd /usr/bin ln -s stunnel-5.60 stunnel Добавляем системного пользователя, под которым будет запускаться stunnel:&#xA;sudo useradd -r -s /sbin/nologin -M stunnel &amp;lt;Здесь используем FreeIPA-сертификаты, сгенерированные на сервере. Потом допишу процесс получения и автообновления с помощью Certmonger.</description>
     </item>
     <item>
       <title>Jenkins Проблемы выполнения удалённых команд в сетях со stateful firewall и способы их решения</title>
-      <link>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
+      <link>http://localhost:1313/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
+      <guid>http://localhost:1313/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
       <description>2020-05-31&#xA;Описание проблемы Для запуска скрипта на удалённом узле могут использоваться два jenkins-плагина:&#xA;&amp;ldquo;Publish over SSH plugin&amp;rdquo;, который не имеет встроенного keepalive-механизма. &amp;ldquo;SSH plugin&amp;rdquo;, который имеет возможность посылки keepalive-пакетов, но требует настройки, так как по умолчанию это функция выключена. В процессе выполнения задач с использованием вышеуказанных плагинов, особенно если задача выполняется десятки минут или больше, то в дженкинсе наблюдалось прекращение вывода stdout в консоль, хотя скрипт, выполняемый на удалённом сервере, продолжал работу.</description>
     </item>
     <item>
       <title>Chroot rsync для безопасного сбора бэкапов с удалённых хостов</title>
-      <link>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
+      <link>http://localhost:1313/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
       <pubDate>Sun, 12 May 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
+      <guid>http://localhost:1313/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
       <description>2019-05-12&#xA;Один из способов использования Rsync для синхронизации файлов между машинами, это подключение rsync-клиента к rsync-серверу через ssh-сеанс.&#xA;Здесь я описал следующий сценарий выкачивания файлов из удалённого хоста site01.example.com на бэкап-хост:&#xA;На клиенте, которым выступает бэкап-хост, запускаем rsync-клиент: rsync -avP rbkp@site01.example.com:/backup/ /backup/ Клиент стучится на ssh-порт сервера site01.example.com от имени пользователя rbkp. На сервере служба sshd создаёт сеанс для rbkp в подготовленной песочнице. В контексте сеанса rbkp через /bin/sh начинает выполняться rsync-сервер: rsync --server --sender -vlogDtpre.</description>
     </item>
     <item>
       <title>Усиление защиты sshd</title>
-      <link>https://debuntu.ru/n/usilenie-zashchity-sshd/</link>
+      <link>http://localhost:1313/n/usilenie-zashchity-sshd/</link>
       <pubDate>Wed, 20 Jan 2016 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/usilenie-zashchity-sshd/</guid>
+      <guid>http://localhost:1313/n/usilenie-zashchity-sshd/</guid>
       <description>2016-01-20&#xA;https://stribika.github.io/2015/01/04/secure-secure-shell.html https://www.opennet.ru/tips/2877_ssh_crypt_setup_security_nsa.shtml&#xA;Добавить ssh-audit&#xA;При создании новых ключей использовать ED25519 или RSA с длиной ключа более 4096:&#xA;ssh-keygen -o -a 129 -t ed25519 -C e0_20160116_ed25519 -f ~/.ssh/id_ed25519 ssh-keygen -t rsa -b 4096 -o -a 132 -C e0_20160116_rsa -f ~/.ssh/id_rsa На сервере в sshd_config добавить:&#xA;KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256 Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-ripemd160-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,umac-128@openssh.com Там же оставить указание только на сильные серверные ключи:&#xA;Protocol 2 HostKey /etc/ssh/ssh_host_ed25519_key HostKey /etc/ssh/ssh_host_rsa_key И пересоздать два серверных ключа rsa и ed25519 и сделать заглушки для отказа в создании новых dsa и ecdsa:</description>
     </item>
     <item>
       <title>18. Создание шлюза в удалённой ИС для доступа хостов к бэкап-серверу</title>
-      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
+      <link>http://localhost:1313/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
       <pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
+      <guid>http://localhost:1313/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
       <description>2022-03-16&#xA;Топология Имеется четыре машины в трёх Информационных Системах:&#xA;Information System 1 (IS1): backup server Information System 2 (IS2): awx host Information System 3 (IS3): backup client 1 backup client 2 +----------------------+ | IS1 | +-&amp;gt;| &amp;#39;backup-server&amp;#39;:ssh |&amp;lt;-X | | | | | +----------------------+ | | | IS2 | | +-&amp;lt;| &amp;#39;awx-host&amp;#39;:ssh |&amp;lt;-X | | | | | +----------------------+ | | | IS3 | | +-&amp;gt;| &amp;#39;backup-client1&amp;#39;:ssh |&amp;lt;-X | | | | +-&amp;gt;| &amp;#39;backup-client2&amp;#39;:ssh |&amp;lt;-X | | +----------------------+ Так как ssh-доступ между &amp;lsquo;Backup Server&amp;rsquo; и &amp;lsquo;Backup Clients&amp;rsquo; отсутствует, тогда как с хоста &amp;lsquo;Awx Host&amp;rsquo; мы можем подключиться к любому хосту, то решением является создание с &amp;lsquo;Awx Host&amp;rsquo; временного туннеля-шлюза между одним из Бэкап-клиентов, например, &amp;lsquo;backup-client1&amp;rsquo;, и Бэкап-сервером.</description>
     </item>
   </channel>

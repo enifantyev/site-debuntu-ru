@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ArenaData Hadoop on Debuntarium</title>
-    <link>https://debuntu.ru/tags/arenadata-hadoop/</link>
+    <link>http://localhost:1313/tags/arenadata-hadoop/</link>
     <description>Recent content in ArenaData Hadoop on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 26 Feb 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/arenadata-hadoop/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/arenadata-hadoop/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>00. Удаление Apache Atlas</title>
-      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/apache-atlas-uninstall/</link>
+      <link>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/apache-atlas-uninstall/</link>
       <pubDate>Sun, 26 Feb 2023 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/apache-atlas-uninstall/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/apache-atlas-uninstall/</guid>
       <description>1. Удаление данных Atlas&amp;rsquo;а из кластера Systemd Выключаем и останавливаем демон Atlas&amp;rsquo;а. Удаляем systemd unit. systemctl disable --now atlas rm -f /etc/systemd/systemd/atlas.service systemctl daemon-reload Hbase На любой машине с ролью &amp;lsquo;HBase Client&amp;rsquo;, выполняем удаление двух таблиц в HBase. Список названий таблиц по умолчанию: – apache_atlas_entity_audit – apache_atlas_janus # kinit nifantev TABLE1=&amp;#34;apache_atlas_entity_audit&amp;#34; TABLE2=&amp;#34;apache_atlas_janus&amp;#34; echo &amp;#34;disable &amp;#39;${TABLE1}&amp;#39;; disable &amp;#39;${TABLE2}&amp;#39;&amp;#34; | hbase shell echo &amp;#34;drop &amp;#39;${TABLE1}&amp;#39;; drop &amp;#39;${TABLE2}&amp;#39;&amp;#34; | hbase shell Solr Удаляем из Solr три &amp;ldquo;Коллекции&amp;rdquo;, указывая в curl любой Solr-хост из кластера.</description>
     </item>
     <item>
       <title>01. Важные замечания относительно Atlas &#43; ADH </title>
-      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/vazhnyye-zamechaniya-atlas-v-adh/</link>
+      <link>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/vazhnyye-zamechaniya-atlas-v-adh/</link>
       <pubDate>Tue, 17 Jan 2023 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/vazhnyye-zamechaniya-atlas-v-adh/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/vazhnyye-zamechaniya-atlas-v-adh/</guid>
       <description>2023-01-17&#xA;Hardware Для Atlas&amp;rsquo;а надо много памяти 4GB не хватает. В логах записи:&#xA;There is insufficient memory for the Java Runtime Environment to continue. При 8GB не пробовал.&#xA;При 16GB запуск успешен.&#xA;Apache Atlas О возможности удаления сущностей из Atlas&amp;rsquo;а Наблюдаю в настройках Atlas&amp;rsquo;а следующее:&#xA;# Delete handler # # This allows the default behavior of doing &amp;#34;soft&amp;#34; deletes to be changed. # # Allowed Values: # org.apache.atlas.repository.store.graph.v1.SoftDeleteHandlerV1 - all deletes are &amp;#34;soft&amp;#34; deletes # org.</description>
     </item>
     <item>
       <title>02. Подготовительные работы в домене и на хосте </title>
-      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovitelnyye_raboty_v_domene_i_na_khoste/</link>
+      <link>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovitelnyye_raboty_v_domene_i_na_khoste/</link>
       <pubDate>Tue, 17 Jan 2023 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovitelnyye_raboty_v_domene_i_na_khoste/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovitelnyye_raboty_v_domene_i_na_khoste/</guid>
       <description>1. Введение выделенного для Atlas хоста в домен Выполняется с помощью стандартных процедур. Например, 🚀Введение новой машины в домен.&#xA;2. Добавление хоста к Hadoop-кластеру Выполняется с помощью стандартных процедур. Например, 60. Добавление новых хостов в керберизированный кластер с TLS-шифрованием.&#xA;3. Добавление учётных записей 3.1. Аккаунт &amp;lsquo;atlas&amp;rsquo; может существовать в IPA, поэтому использование этого аккаунта должно быть запрещено через фильтры в файле /etc/sssd/sssd.conf. Находясь на Atlas-машине, добавляем фильтры в раздел &amp;lsquo;[nss]&amp;rsquo;. Пример показан здесь:</description>
     </item>
     <item>
       <title>03. Подготовка служб ADH-кластера к развёртыванию Atlas&#39;а</title>
-      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovka-sluzhb-adh-klastera-k-razvortyvaniyu-atlasa/</link>
+      <link>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovka-sluzhb-adh-klastera-k-razvortyvaniyu-atlasa/</link>
       <pubDate>Tue, 17 Jan 2023 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovka-sluzhb-adh-klastera-k-razvortyvaniyu-atlasa/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0-v-arenadata-hadoop/podgotovka-sluzhb-adh-klastera-k-razvortyvaniyu-atlasa/</guid>
       <description>Заметки Apache HBase используется Atlas&amp;rsquo;ом для хранения своей Janus базы данных. Apache Solr используется для хранения журналов аудита и поиск в них. Apache Kafka используется как передатчик сообщений из Atlas-библиотек, то есть внедрённых в Hadoop-сервисы hook&amp;rsquo;ов, в сам Atlas. 1. Apache HBase 1.1. Создание необходимых таблиц в HBase На Atlas-машине, или на любой другой машине с установленной ролью &amp;lsquo;HBase Gateway&amp;rsquo;, создаём необходимые таблицы: # Названия таблиц по умолчанию: TABLE1=&amp;#34;apache_atlas_entity_audit&amp;#34; TABLE2=&amp;#34;apache_atlas_janus&amp;#34; echo &amp;#34;create &amp;#39;${TABLE1}&amp;#39;, &amp;#39;dt&amp;#39;&amp;#34; | hbase shell echo &amp;#34;create &amp;#39;${TABLE2}&amp;#39;, &amp;#39;s&amp;#39;&amp;#34; | hbase shell 1.</description>
     </item>
     <item>
       <title>01. Важные замечания</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</link>
       <pubDate>Sat, 03 Dec 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</guid>
       <description>2022-12-01&#xA;Список замечаний Об централизованном использовании Ansible Ad-Hoc команд для подготовки хостов к установке ArenaData-кластера Для удобства работы с множеством машин будущего кластера, в данной инструкции описано создание отдельного каталога с Ansible-файлами на любой машине, откуда по SSH должны быть доступны все целевые хосты. Инструкция доступна здесь &amp;ldquo;Подготовка каталога с файлами для развёртывания ADH с помощью Ansible Ad-Hoc&amp;rdquo;.&#xA;О параллельном подключении lvm-тома vg/data к директориям /data и /srv На машинах кластера, lvm-том &amp;lsquo;vg/data&amp;rsquo; монтируется не только к каталогу /data, но и параллельно к /srv, так как по умолчанию, в ArenaData каталог /srv используется для размещения меняющихся данных кластера.</description>
     </item>
   </channel>

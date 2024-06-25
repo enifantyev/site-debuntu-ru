@@ -2,52 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Hive on Debuntarium</title>
-    <link>https://debuntu.ru/tags/apache-hive/</link>
+    <link>http://localhost:1313/tags/apache-hive/</link>
     <description>Recent content in Apache Hive on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 30 Aug 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/apache-hive/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/apache-hive/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>05. 🎣 Заброс Hook&#39;а в Apache Hive</title>
-      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
+      <link>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</link>
       <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-apache-hive/</guid>
       <description>2021-08-30&#xA;1.Введение Механизм работы передачи информации об изменениях в Apache Hive в Apache Atlas очень прост. В Apache Hive добавляется Hook, то есть java-библиотека, которая будет отправлять сообщения в Apache Kafka при любых? изменениях в Apache Hive. Apache Atlas, после получения этих сообщений, приводит свой багаж знаний в соответствии с информацией из сообщений.&#xA;2. Создание Atlas-папки на хостах с ролью &amp;lsquo;HiveServer2&amp;rsquo; 2.1. На хостах с ролью &amp;lsquo;HiveServer2&amp;rsquo; создаём atlas-каталоги и скачиваем с Nexus&amp;rsquo;а необходимый файл:</description>
     </item>
     <item>
       <title>Блокирование доступа внешних программ к Hive metastore</title>
-      <link>https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
+      <link>http://localhost:1313/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</link>
       <pubDate>Mon, 19 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
+      <guid>http://localhost:1313/n/blokirovanie-dostupa-vneshnih-programm-k-hive-metastore/</guid>
       <description>2021-07-19&#xA;Before Enabling the Sentry Service&#xA;Могут быть указаны дополнительные пользовательские группы.</description>
     </item>
     <item>
       <title>Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</title>
-      <link>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
+      <link>http://localhost:1313/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
       <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
+      <guid>http://localhost:1313/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
       <description>2021-06-09&#xA;Использованные ссылки:&#xA;Using the Beeline CLI Hive SQL Syntax for Use with Sentry Запрашиваем kerberos-билет на машине с установленной ролью Hive, запускаем beeline и подключаемся к Hive:&#xA;$ kinit /run/cloudera-scm-agent/process/.../hive.keytab hive/prod-aux02p.example.org $ beeline beeline&amp;gt; !connect jdbc:hive2://prod-aux02p.example.org:10000/;principal=hive/prod-aux02p.example.org@EXAMPLE.ORG;ssl=true;sslTrustStore=/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts 0: jdbc:hive2://prod-aux02p.example.org:1000&amp;gt; _ Без указания ssl-настроек в строке подключения, в логах HiveServer2 будут видны ошибки:&#xA;TThreadPoolServer&#x9;[HiveServer2-Handler-Pool: Thread-47]: Error occurred during processing of message. java.lang.RuntimeException: org.apache.thrift.transport.TTransportException: javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection? Добавление роли для администрирования Hive (server1) и назначение этой роли на группу администраторов:</description>
     </item>
     <item>
       <title>Настройка LDAP-аутентификации Hive в керберизированном Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
+      <link>http://localhost:1313/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</link>
       <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
+      <guid>http://localhost:1313/n/nastroika-ldap-autentifikacii-v-kerberizirovannom-cloudera-hive/</guid>
       <description>Ссылки HiveServer2 Security Configuration&#xA;Настройка LDAP-аутентификации На странице Configurations для Hive, используем фильтр ldap, и:&#xA;Включаем LDAP Enable LDAP Authentication Hive (Service-Wide): ☑ Указываем адрес LDAP-сервера LDAP URL hive.server2.authentication.ldap.url: ldaps://ldap1.example.org ldaps://ldap2.example.org ldaps://ldap3.example.org Указываем контейнер поиска пользователей LDAP BaseDN hive.server2.authentication.ldap.baseDN: cn=users,cn=accounts,dc=example,dc=org </description>
     </item>
     <item>
       <title>Disabling Hive CLI</title>
-      <link>https://debuntu.ru/n/disabling-hive-cli/</link>
+      <link>http://localhost:1313/n/disabling-hive-cli/</link>
       <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/disabling-hive-cli/</guid>
+      <guid>http://localhost:1313/n/disabling-hive-cli/</guid>
       <description>Перед выполнением этой инструкции, необходимо ознакомиться с Блокирование доступа внешних программ к Hive metastore, где описано более централизованный способ блокирования доступа к Metastore Hive.&#xA;После активации Cloudera Sentry, необходимо предотвратить возможность использования консольной утилиты hive пользователями. Вместо hive, пользователи должны использовать утилиту beeline.&#xA;Каталог HIVE_HOME можно найти из-под root командой:&#xA;$ sudo hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME HIVE_HOME=/usr/lib/hive Таким образом, отключение Hive CLI производим следующими командами:&#xA;HIVE_HOME=$(hive -e &amp;#39;!env&amp;#39;|grep HIVE_HOME|awk -F&amp;#39;=&amp;#39; &amp;#39;{print $2}&amp;#39;) setfacl -m u:hive:rx $HIVE_HOME/bin/hive chmod 754 $HIVE_HOME/bin/hive Разъяснение: Hive не будет стартовать, если не оставить ему доступ к этому файлу.</description>
     </item>
     <item>
       <title>10. Первоначальный импорт содержимого Hive</title>
-      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</link>
+      <link>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</link>
       <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/pervonachalnyy-import-soderzhimogo-hive/</guid>
       <description>2021-08-29&#xA;Первоначальный импорт содержимого Hive в Atlas производится только один раз, сразу после настройки Atlas Hook&amp;rsquo;а для Hive. Apache Atlas должен быть запущен и слушать &amp;lsquo;atlas.rest.address=https://dev-app111p.test2.lan:21443&amp;rsquo;. После одноразового импорта, дальнейшее соответствие информации между Atlas и Hive производится только на основании сообщений из Kafka.&#xA;Повторное использование ручного импорта не приведёт Атласовскую информацию о содержимом Hive&amp;rsquo;е в их полное соответствие. Те таблицы, которые есть в Atlas&amp;rsquo;е, но отсутствуют в Hive&amp;rsquo;е, не будут удалены из Atals&amp;rsquo;а.</description>
     </item>
   </channel>

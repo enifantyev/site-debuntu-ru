@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Terminal on Debuntarium</title>
-    <link>https://debuntu.ru/tags/terminal/</link>
+    <link>http://localhost:1313/tags/terminal/</link>
     <description>Recent content in Terminal on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 23 Nov 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/terminal/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/terminal/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Чем консоль отличается от терминала</title>
-      <link>https://debuntu.ru/a/chem-konsol-otlichaetsya-ot-terminala/</link>
+      <link>http://localhost:1313/a/chem-konsol-otlichaetsya-ot-terminala/</link>
       <pubDate>Sat, 23 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/chem-konsol-otlichaetsya-ot-terminala/</guid>
+      <guid>http://localhost:1313/a/chem-konsol-otlichaetsya-ot-terminala/</guid>
       <description>2019-11-23&#xA;Консоль Читая этимологию слова &amp;ldquo;Console&amp;rdquo; выясняется, что английское слово console заимствовано из французского console, то есть кронштейн, и обозначает оно кронштейн, в смысле штука, закреплённая в стене, поддерживающая что-либо. Затем это слово стало применяться и к висящим на кронштейнах настенным доскам. После и к доскам, просто стоящим возле стены. И по крайней мере в 19 веке, кто-то назвал доски с клавишами, тумблерами и переключателями, стоящими возле стены в церкви — &amp;ldquo;organ console&amp;rdquo;, то есть &amp;ldquo;пульт органа&amp;rdquo;.</description>
     </item>
   </channel>

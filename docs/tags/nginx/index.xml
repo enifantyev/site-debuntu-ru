@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nginx on Debuntarium</title>
-    <link>https://debuntu.ru/tags/nginx/</link>
+    <link>http://localhost:1313/tags/nginx/</link>
     <description>Recent content in Nginx on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 26 May 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Сборка rpm-пакета nginx c модулями для kafka</title>
-      <link>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
+      <link>http://localhost:1313/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
+      <guid>http://localhost:1313/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
       <description>2020-05-26&#xA;Сборку производил в свежеустановленной виртуальной машине CentOS 7 (минимальный дистр), из-под обычного пользователя имеющего беспарольное sudo.&#xA;Сборка пакета librdkafka Сначала надо собрать свежий https://github.com/edenhill/librdkafka, так как в репо CentOS&amp;rsquo;а librdkafka имеет версию 0.11.5, тогда как на странице разработчиков — 1.5.0.&#xA;Сборка этого пакета заняла по времени чуть больше часа, но не из-за сложности. К счастью, разработчики всё продумали и собирать этот пакет проще простого.&#xA;Сборка пакета будет производиться в песочнице, с помощью mock.</description>
     </item>
   </channel>

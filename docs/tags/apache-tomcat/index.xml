@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Tomcat on Debuntarium</title>
-    <link>https://debuntu.ru/tags/apache-tomcat/</link>
+    <link>http://localhost:1313/tags/apache-tomcat/</link>
     <description>Recent content in Apache Tomcat on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 12 May 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/apache-tomcat/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/apache-tomcat/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</title>
-      <link>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
+      <link>http://localhost:1313/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
+      <guid>http://localhost:1313/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
       <description>2021-05-12&#xA;Симптомы Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы &amp;ldquo;Сертификаты&amp;rdquo;, после долгого ожидания в виде вывески &amp;ldquo;В процессе&amp;rdquo;: Далее появляется баннер с ошибкой:&#xA;IPA Error 4301: CertificateOperationError Certificate operation cannot be completed: Unable to communicate with CMS (500) Невозможно выполнение:&#xA;# ipa cert-show 1 ipa: ERROR: Certificate operation cannot be completed: Unable to communicate with CMS (500) Диагноз Строки из &amp;lsquo;journalctl -u pki-tomcatd@pki-tomcat&amp;rsquo; указывают причину такого поведения:</description>
     </item>
   </channel>

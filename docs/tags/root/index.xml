@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Root on Debuntarium</title>
-    <link>https://debuntu.ru/tags/root/</link>
+    <link>http://localhost:1313/tags/root/</link>
     <description>Recent content in Root on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/root/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/root/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Избавляемся от root&#39;а в Alpine Linux</title>
-      <link>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
+      <link>http://localhost:1313/n/izbavlyaemsya-ot-roota-v-alpine-linux/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
+      <guid>http://localhost:1313/n/izbavlyaemsya-ot-roota-v-alpine-linux/</guid>
       <description>2019-12-23&#xA;Добавляем нового пользователя Устанавливаем sudo в систему и добавляем нового пользователя newuser. Назначаем его участником группы wheel. Пользователям из этой группы позволяется рулить системой через sudo:&#xA;apk update apk add sudo bash adduser -s /bin/bash newuser addgroup newuser wheel Раскомментируем строку в файле /etc/sudoers, которая позволит группе wheel использовать sudo. Одной командой с помощью замечательного sed:&#xA;sed -i -e &amp;#34;s/^#.%wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/&amp;#34; /etc/sudoers Или вручную с помощью команды visudo раскомментируем строку:</description>
     </item>
   </channel>

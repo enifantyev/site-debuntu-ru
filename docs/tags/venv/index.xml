@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Venv on Debuntarium</title>
-    <link>https://debuntu.ru/tags/venv/</link>
+    <link>http://localhost:1313/tags/venv/</link>
     <description>Recent content in Venv on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 01 Jan 1970 03:00:02 +0300</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/venv/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/venv/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Управление пакетами в Python</title>
-      <link>https://debuntu.ru/refbooks/python/upravleniye-paketami-v-payton/</link>
+      <link>http://localhost:1313/refbooks/python/upravleniye-paketami-v-payton/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
-      <guid>https://debuntu.ru/refbooks/python/upravleniye-paketami-v-payton/</guid>
+      <guid>http://localhost:1313/refbooks/python/upravleniye-paketami-v-payton/</guid>
       <description>Способы установки python-пакетов С помощью системного менеджера пакетов APT или YUM sudo yum install python3-requests С помощью python-модуля pip Если на машине установлена только одна версия python, или установка производится в активированном виртуальном окружении, то можно установить пакет/ы следующим образом:&#xA;pip install wheel requests Узнать к какой версии Python принадлежит pip:&#xA;[eugene@wks1 ~]$ pip -V pip 20.3.4 from /usr/lib/python2.7/site-packages/pip (python 2.7) Исключающее ошибку в выборе версии Python, установка пакетов с использованием pip:</description>
     </item>
   </channel>

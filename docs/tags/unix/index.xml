@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Unix on Debuntarium</title>
-    <link>https://debuntu.ru/tags/unix/</link>
+    <link>http://localhost:1313/tags/unix/</link>
     <description>Recent content in Unix on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 04 Sep 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/unix/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/unix/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Traditional Unix permissions и Access Control Lists</title>
-      <link>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
+      <link>http://localhost:1313/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
       <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
+      <guid>http://localhost:1313/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
       <description>2019-09-04&#xA;&amp;ldquo;The term user is used in two different ways. We often speak of a logged-in person as a user, and, sometimes, use the term to refer to the process which the user is controlling from his terminal. Especially in the context of user control, however, we apply the term user to any member of the set of users (in the first sense) who could log in. In other words, we speak of a user as a registered identity.</description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Portsnap on Debuntarium</title>
-    <link>https://debuntu.ru/tags/portsnap/</link>
+    <link>http://localhost:1313/tags/portsnap/</link>
     <description>Recent content in Portsnap on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 13 Sep 2014 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/portsnap/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/portsnap/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>FreeBSD Установка, удаление программ</title>
-      <link>https://debuntu.ru/a/freebsd-ustanovka-udalenie-programm/</link>
+      <link>http://localhost:1313/a/freebsd-ustanovka-udalenie-programm/</link>
       <pubDate>Sat, 13 Sep 2014 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/freebsd-ustanovka-udalenie-programm/</guid>
+      <guid>http://localhost:1313/a/freebsd-ustanovka-udalenie-programm/</guid>
       <description> </description>
     </item>
   </channel>

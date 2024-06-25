@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Docker on Debuntarium</title>
-    <link>https://debuntu.ru/tags/docker/</link>
+    <link>http://localhost:1313/tags/docker/</link>
     <description>Recent content in Docker on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 05 Mar 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/docker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Организация беспарольного зеркала registry-1.docker.io</title>
-      <link>https://debuntu.ru/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</link>
+      <link>http://localhost:1313/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</link>
       <pubDate>Fri, 05 Mar 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</guid>
+      <guid>http://localhost:1313/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</guid>
       <description>2021-03-05&#xA;https://docs.docker.com/registry/deploying/&#xA;Машине, где установлен Nexus Repository Manager, для его работы предоставлен выход в инет. Использовать сам NXRM для организации зеркала docker.io не слишком удобно из-за обязательного применения &amp;lsquo;docker login&amp;rsquo; перед использованием такого репозитория, поэтому запускаем зеркало:&#xA;docker run -d -p 6000:5000 \ -e REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io \ --restart always \ --name registry registry:2 На целевой машине добавляем в /etc/docker/daemon.json запись:&#xA;{ &amp;#34;registry-mirrors&amp;#34;: [&amp;#34;http://nexus.example.org:6000&amp;#34;] } После перезапуска docker, стало возможным, без дополнительных &amp;lsquo;docker login&amp;rsquo;, сразу выполнять:</description>
     </item>
     <item>
       <title>Void Linux Установка Docker</title>
-      <link>https://debuntu.ru/n/void-linux-ustanovka-docker/</link>
+      <link>http://localhost:1313/n/void-linux-ustanovka-docker/</link>
       <pubDate>Sat, 22 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/void-linux-ustanovka-docker/</guid>
+      <guid>http://localhost:1313/n/void-linux-ustanovka-docker/</guid>
       <description>2020-02-22&#xA;Установка требуемых пакетов # xbps-install -Su docker Name Action Version New version Download size runc install - 1.0.0_12 4084KB containerd install - 1.3.2_1 30MB docker install - 19.03.6_2 37MB ln -s /etc/sv/containerd /var/service ln -s /etc/sv/docker /var/service После запуска служб:&#xA;создаётся известный каталог и в нём файл /etc/docker/key.json; в систему добавляется виртуальный сетевой интерфейс docker0; в netfilter добавляются правила, обеспечивающие будущие docker-контейнеры доступом к физической сети через NAT. в систему добавляется группа docker, обеспечивающая своим участникам запуск контейнеров, что может быть ими использовано для получения root-привилегий на хосте.</description>
     </item>
   </channel>

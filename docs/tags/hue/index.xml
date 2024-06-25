@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hue on Debuntarium</title>
-    <link>https://debuntu.ru/tags/hue/</link>
+    <link>http://localhost:1313/tags/hue/</link>
     <description>Recent content in Hue on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 02 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/hue/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/hue/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Проблема с пакетом psycopg2 при создании нового суперюзера для Cloudera Hue</title>
-      <link>https://debuntu.ru/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</link>
+      <link>http://localhost:1313/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</link>
       <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</guid>
+      <guid>http://localhost:1313/n/problema-s-paketom-psycopg2-pri-sozdanii-novogo-superyuzera-dlya-cloudera-hue/</guid>
       <description>2021-06-09&#xA;Манипуляции производятся в Cloudera CDH 6.3.2. На машине с установленной ролью Hue выполняю команду и получаю ошибку:&#xA;# /usr/lib/hue/build/env/bin/hue createsuperuser --cm-managed LD_LIBRARY_PATH can&amp;#39;t be found, if you are using ORACLE for your Hue database then it must be set, if not, you can ignore export LD_LIBRARY_PATH=/path/to/instantclient Traceback (most recent call last): File &amp;#34;/usr/lib/hue/build/env/bin/hue&amp;#34;, line 14, in &amp;lt;module&amp;gt; load_entry_point(&amp;#39;desktop&amp;#39;, &amp;#39;console_scripts&amp;#39;, &amp;#39;hue&amp;#39;)() File &amp;#34;/usr/lib/hue/desktop/core/src/desktop/manage_entry.py&amp;#34;, line 225, in entry raise e django.core.exceptions.ImproperlyConfigured: psycopg2_version 2.</description>
     </item>
     <item>
       <title>Cloudera Hue Log: Couldn&#39;t import snappy. Support for snappy compression disabled</title>
-      <link>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
+      <link>http://localhost:1313/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</link>
       <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
+      <guid>http://localhost:1313/n/cloudera-hue-log-couldnt-import-snappy-support-for-snappy-compression-disabled/</guid>
       <description>2021-06-05&#xA;Анамнез После перезапуска Hue в логе видны предупреждения &amp;ldquo;Couldn&amp;rsquo;t import snappy. Support for snappy compression disabled.&amp;rdquo;: Решение На всех машинах кластера выполнил из-под root:&#xA;pip2 install python-snappy Предупреждение исчезло.</description>
     </item>
     <item>
       <title>20. Hue. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</guid>
       <description>Использованные материалы Manually Configuring TLS/SSL Encryption for CDH Services Добавление сервиса Hue В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Перенастройка размещения log&amp;rsquo;ов В настройках Hue, используя категорию &amp;lsquo;Logs&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Changes. 4. Настройка TLS для Hue Hue как клиент TLS Hue действует как клиент TLS при взаимодействии с другими сервисами, такими как Hadoop, HBase, Oozie и Amazon S3. Это означает, что Hue должен аутентифицировать демонов HDFS, MapReduce, YARN, сервер HBase Thrift и т.</description>
     </item>
   </channel>

@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Proxmox on Debuntarium</title>
-    <link>https://debuntu.ru/manuals/proxmox/</link>
+    <link>http://localhost:1313/manuals/proxmox/</link>
     <description>Recent content in Proxmox on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
-    <atom:link href="https://debuntu.ru/manuals/proxmox/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/manuals/proxmox/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title></title>
-      <link>https://debuntu.ru/manuals/proxmox/proxmox-freeipa-ldap-authentication-setup/</link>
+      <link>http://localhost:1313/manuals/proxmox/proxmox-freeipa-ldap-authentication-setup/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/proxmox/proxmox-freeipa-ldap-authentication-setup/</guid>
+      <guid>http://localhost:1313/manuals/proxmox/proxmox-freeipa-ldap-authentication-setup/</guid>
       <description>2023-06-19&#xA;Добавление REALM для подключения к LDAP-каталогу В настройках Datacenter — Permissions — Realms добавляем новую область, где заполняем следующие поля.</description>
     </item>
   </channel>

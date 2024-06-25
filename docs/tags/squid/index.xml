@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Squid on Debuntarium</title>
-    <link>https://debuntu.ru/tags/squid/</link>
+    <link>http://localhost:1313/tags/squid/</link>
     <description>Recent content in Squid on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 12 Mar 2011 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/squid/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/squid/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Настройка прозрачного squid3 &#43; squidGuard</title>
-      <link>https://debuntu.ru/a/nastroyka-prozrachnogo-squid3-squidguard/</link>
+      <link>http://localhost:1313/a/nastroyka-prozrachnogo-squid3-squidguard/</link>
       <pubDate>Sat, 12 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/nastroyka-prozrachnogo-squid3-squidguard/</guid>
+      <guid>http://localhost:1313/a/nastroyka-prozrachnogo-squid3-squidguard/</guid>
       <description>2011-03-12&#xA;Установка Squid3 SquidGuard # aptitude install squid3 squidguard Файлы настройки squid3 лежат в /etc/squid3. Файл настройки squidGuard лежит в /etc/squid. Если бы мы ставили предыдущую версию squid, то настройки обоих приложений лежали в одной папке /etc/squid.&#xA;Настройка Squid3 Настройки squid3 лежат в файле /etc/squid3/squid.conf. Не надо пугаться обилию информации в этом файле, так как достаточно включить цветовыделение синтаксиса, чтобы увидеть, что работающих строк не больше пары или тройки десятков. Все остальные строки закоментированы и представляют собой описание, настройки по умолчанию и примеры опций squid3.</description>
     </item>
   </channel>

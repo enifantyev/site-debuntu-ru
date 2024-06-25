@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cloudera Inspect Network Performance on Debuntarium</title>
-    <link>https://debuntu.ru/tags/cloudera-inspect-network-performance/</link>
+    <link>http://localhost:1313/tags/cloudera-inspect-network-performance/</link>
     <description>Recent content in Cloudera Inspect Network Performance on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 08 Nov 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/cloudera-inspect-network-performance/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/cloudera-inspect-network-performance/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Неудачный запуск &#39;Inspect Network Performance&#39;: Failed running performance inspector on cluster</title>
-      <link>https://debuntu.ru/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</link>
+      <link>http://localhost:1313/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</link>
       <pubDate>Sun, 08 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</guid>
+      <guid>http://localhost:1313/n/neudachnyi-zapusk-inspect-network-performance-failed-running-performance-inspector-on-cluster/</guid>
       <description>Проблема В результате запуска на кластере проверки &amp;ldquo;Inspect Network Performance&amp;rdquo; мы можем наблюдать картину:&#xA;В логах /var/log/cloudera-scm-agent/cloudera-scm-agent.log:&#xA;Thread-17 supervisor WARNING Failed while getting process info. Retrying. (&amp;lt;Fault 10: &amp;#39;BAD_NAME: 3050-host-perf-inspector&amp;#39;&amp;gt;) В /var/run/cloudera-scm-agent/process/3050-host-perf-inspector/logs присутствует пустой файл stdout.log, а в файле stderr.log видна ошибка &amp;ldquo;SyntaxError: invalid syntax&amp;rdquo;:&#xA;[21/Oct/2020 14:56:56 +0000] 105531 MainThread redactor INFO Started launcher: /opt/cloudera/cm-agent/service/perf/host_perf_diag.py input.json logs/result.json [21/Oct/2020 14:56:56 +0000] 105531 MainThread redactor ERROR Redaction rules file doesn&amp;#39;t exist, not redacting logs.</description>
     </item>
   </channel>

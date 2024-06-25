@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>HDFS on Debuntarium</title>
-    <link>https://debuntu.ru/tags/hdfs/</link>
+    <link>http://localhost:1313/tags/hdfs/</link>
     <description>Recent content in HDFS on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 09 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/hdfs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/hdfs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Администрирование таблиц в Apache HBase</title>
-      <link>https://debuntu.ru/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</link>
+      <link>http://localhost:1313/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</link>
       <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</guid>
+      <guid>http://localhost:1313/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</guid>
       <description>2020-11-14&#xA;Работа с таблицами HBase Работу с таблицами будем производить через CLI-утилиту hbase. Есть два способа выполнения команд с hbase.&#xA;Первый способ заключается в запуске hbase shell и интерактивной подаче команд:&#xA;$ hbase shell hbase(main):001:0&amp;gt; list Второй способ позволяет использовать hbase в скриптах:&#xA;echo &amp;#34;list&amp;#34; | hbase shell Если кластер керберизированный, то перед работой с сервисами кластера получаем Kerberos-билет с помощью kinit или из соответствующего &amp;lsquo;keytab&amp;rsquo;:&#xA;kinit -kt hbase.keytab hbase/$(hostname) Если кластер некерберизированный и не хватает прав для выполнения операций, описанных в этой памятке, то &amp;hellip;</description>
     </item>
     <item>
       <title>Использование Apache Sqoop для импорта/экспорта данных между PostgreSQL и HDFS</title>
-      <link>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
+      <link>http://localhost:1313/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
+      <guid>http://localhost:1313/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
       <description>2020-11-01&#xA;Использованные материалы:&#xA;Sqoop User Guide (v1.4.6) An HDFS Tutorial for Data Analysts Stuck with Relational Databases Импорт из PostgreSQL в HDFS Подготовка к импорту PostgreSQL должен слушать на внешнем порту, чтобы к нему была возможность подключиться по сети. Если в PostgreSQL используется сетевой порт, отличный от стандартного (5432), то его необходимо указывать в подаваемых командах.&#xA;Выполнять &amp;lsquo;sqoop import&amp;rsquo; не обязательно с того хоста, у которого есть роль &amp;lsquo;Sqoop&amp;rsquo;. Он работает с любого хоста кластера, у которого есть соответствующий gateway в тот сервис, куда импортируются/экспортируются данные.</description>
     </item>
     <item>
       <title>14. HDFS. Настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</link>
       <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</guid>
       <description>2021-07-09 – 2021-10-15&#xA;1. Enable High Availability Enabling HDFS HA&#xA;В настройках сервиса HDFS, используя фильтр по слову «dfs.journalnode.edits.dir», изменяем следующий параметр: Нажимаем Save Changes. На странице службы HDFS, через кнопку Actions, запускаем wizard включения HA: Getting Started. Задаём уникальное имя для Nameservice: Assign Roles. JournalNodes должны работать на хостах с такими же hardware specification, как NameNodes. Cloudera рекомендует поместить две JournalNode на те же хосты с NameNodes, а третий JournalNode на хост с похожими ресурсами, таким как JobTracker.</description>
     </item>
   </channel>

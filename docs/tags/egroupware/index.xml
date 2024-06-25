@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>EGroupWare on Debuntarium</title>
-    <link>https://debuntu.ru/tags/egroupware/</link>
+    <link>http://localhost:1313/tags/egroupware/</link>
     <description>Recent content in EGroupWare on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 07 Mar 2011 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/egroupware/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/egroupware/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка egroupware 1.8 на debian 6.0</title>
-      <link>https://debuntu.ru/a/ustanovka-egroupware-1-8-na-debian-6.0/</link>
+      <link>http://localhost:1313/a/ustanovka-egroupware-1-8-na-debian-6.0/</link>
       <pubDate>Mon, 07 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ustanovka-egroupware-1-8-na-debian-6.0/</guid>
+      <guid>http://localhost:1313/a/ustanovka-egroupware-1-8-na-debian-6.0/</guid>
       <description> </description>
     </item>
   </channel>
