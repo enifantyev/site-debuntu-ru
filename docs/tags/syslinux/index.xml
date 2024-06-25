@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Syslinux on Debuntarium</title>
-    <link>http://localhost:1313/tags/syslinux/</link>
+    <link>https://debuntu.ru/tags/syslinux/</link>
     <description>Recent content in Syslinux on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 22 Dec 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/syslinux/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/syslinux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка Alpine Linux в подтом btrfs</title>
-      <link>http://localhost:1313/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
+      <link>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
       <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
       <description>2019-12-22&#xA;Установка Alpine Linux Устанавливаем Alpine Linux 3.11 обычным порядком, но с указанием lvmsys для размещения системного раздела в lvm-томе.&#xA;После завершения процедуры setup-alpine, но до перезагрузки, будет удобно дать себе возможность войти в этот работающий экземпляр установки через ssh:&#xA;sed -i -e &amp;#34;s/^#PermitRootLogin.*$/PermitRootLogin yes/&amp;#34; /etc/ssh/sshd_config /etc/init.d/sshd restart Заходим в работающий экземпляр установки alpine linux через ssh под root&amp;rsquo;ом и продолжаем работать.&#xA;Работаем с экземпляром через ssh Устанавливаем необходимые пакеты, уменьшаем системный раздел и конвертируем его из ext4 в btrfs:</description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Resolv.conf on Debuntarium</title>
-    <link>http://localhost:1313/tags/resolv.conf/</link>
+    <link>https://debuntu.ru/tags/resolv.conf/</link>
     <description>Recent content in Resolv.conf on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 14 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/resolv.conf/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/resolv.conf/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Тестирование псевдо HA и LB dns-настроек в /etc/resolv.conf</title>
-      <link>http://localhost:1313/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
+      <link>https://debuntu.ru/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
       <pubDate>Wed, 14 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
+      <guid>https://debuntu.ru/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
       <description>2021-07-14&#xA;Введение Псевдо High Availability и Load Balancing достигается поочерёдным опросом всех указанных в файле /etc/resolv.conf dns-серверов, даже в том случае, если какой-нибудь из dns-серверов находится в офлайне.&#xA;Сразу приведу пример такого HA и LB &amp;lsquo;resolv.conf&amp;rsquo;:&#xA;options rotate timeout:1 attempts:1 search test.lan nameserver 10.1.120.146 nameserver 10.1.120.147 nameserver 10.1.120.148 Замечу, что использование локальных кэширующих dns-прослоек, типа dnsmasq, умеющих обращаться сразу ко всем dns-серверами, может несколько увеличить HA и LB.&#xA;Подготовка к тестированию Создадим следующий python-файл и сделаем его исполняемым:</description>
     </item>
   </channel>

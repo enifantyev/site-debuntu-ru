@@ -2,269 +2,269 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Статьи on Debuntarium</title>
-    <link>http://localhost:1313/a/</link>
+    <link>https://debuntu.ru/a/</link>
     <description>Recent content in Статьи on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/a/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/a/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CMAK. 01. Сборка rpm-пакета для CentOS7</title>
-      <link>http://localhost:1313/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
+      <link>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
+      <guid>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
       <description>2021-11-25&#xA;https://github.com/yahoo/CMAK&#xA;1. Подготовка к сборке Выбираем по умолчанию интерпретатор python2 и проверяем эту установку:&#xA;$ sudo update-alternatives --config python There are 2 programs which provide &amp;#39;python&amp;#39;. Selection Command ----------------------------------------------- + 1 /usr/bin/python2.7 * 2 /usr/bin/python3 Enter to keep the current selection[+], or type selection number: 1 $ python -V Python 2.7.5 В дополнение к Maven&amp;rsquo;у устанавливаем пакеты &amp;lsquo;java-11-openjdk&amp;rsquo; и &amp;lsquo;rpm-build&amp;rsquo;:&#xA;$ sudo yum -y install java-11-openjdk rpm-build Скачиваем и распаковываем исходники последней версии приложения (на данный момент CMAK 3.</description>
     </item>
     <item>
       <title>Kafdrop. 01. Сборка jar-пакета</title>
-      <link>http://localhost:1313/a/kafdrop-sborka-jar-paketa/</link>
+      <link>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/kafdrop-sborka-jar-paketa/</guid>
+      <guid>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</guid>
       <description>2021-11-25&#xA;1. Подготовка к сборке В дополнение к Maven&amp;rsquo;у устанавливаем Java11:&#xA;$ sudo yum -y install java-11-openjdk java-11-openjdk-devel Скачиваем последнюю версию приложения Kafdrop (на данный момент Kafdrop 3.27.0) и распаковываем:&#xA;FILE=&amp;#34;3.27.0.tar.gz&amp;#34; mkdir ~/src &amp;amp;&amp;amp; cd ~/src curl -LO https://github.com/obsidiandynamics/kafdrop/archive/refs/tags/${FILE} tar xvf ${FILE} # 2. Сборка jar-пакета Запускаем сборку пакета:&#xA;export JAVA_HOME=/usr/lib/jvm/jre-11-openjdk cd ~/src/kafdrop-3.27.0 mvn clean package # 3. Результат В каталоге ~/src/kafdrop-3.27.0/target наблюдаем пакет kafdrop-3.27.0.jar.</description>
     </item>
     <item>
       <title>Kafdrop. 02. Установка и настройка</title>
-      <link>http://localhost:1313/a/kafdrop-ustanovka-i-nastroika/</link>
+      <link>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/kafdrop-ustanovka-i-nastroika/</guid>
+      <guid>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</guid>
       <description>2021-11-25&#xA;1. Установка 1.1. Создание локального аккаунта Создаём локальный аккаунт &amp;lsquo;kafdrop&amp;rsquo;:&#xA;$ useradd -r -s /sbin/nologin -d /opt/kafdrop -M kafdrop $ kinit $ ipa service-add kafdrop/$(hostname) 1.2. Создание рабочего каталога Создаём каталог, где будет всё необходимое для работы Kafdrop:&#xA;mkdir /opt/kafdrop chown kafdrop.kafdrop /opt/kafdrop chmod 2770 /opt/kafdrop # 1.3. Загрузка ранее скомпилированного jar-файла Важно! Тем или иным образом копируем ранее собранный пакет kafdrop-3.27.0.jar в каталог /opt/kafdrop.&#xA;После чего делаем link с расчётом на дальнейшие обновления пакета:</description>
     </item>
     <item>
       <title>Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA</title>
-      <link>http://localhost:1313/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
+      <link>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
       <description>2021-10-11&#xA;Условия Выполняем все команды на целевой машине. Предполагается, что машина введена во FreeIPA-домен. Установка и включение Cockpit sudo yum install cockpit sudo systemctl enable --now cockpit.service sudo systemctl enable --now cockpit.socket Изменение номера порта https://cockpit-project.org/guide/latest/listen.html&#xA;По умолчанию, cockpit слушает порт номер 9090. Перевесим его на 443-ий порт:&#xA;sudo mkdir -p /etc/systemd/system/cockpit.socket.d/ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/cockpit.socket.d/listen.conf [Socket] ListenStream= ListenStream=443 EOF sudo systemctl daemon-reload Скрипт для запуска после автоматической смены сертификата cat &amp;lt;&amp;lt; EOF | sudo tee /etc/cockpit/RunAfterUpdateCert.</description>
     </item>
     <item>
       <title>Установка JupyterHub на CentOS 7 (draft)</title>
-      <link>http://localhost:1313/a/ustanovka-jupyterhub-na-centos-7/</link>
+      <link>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-jupyterhub-na-centos-7/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</guid>
       <description>2021-07-07&#xA;Использованные материалы https://github.com/jupyterhub/jupyterhub-the-hard-way/blob/HEAD/docs/installation-guide-hard.md&#xA;1. Установка JupyterHub и JupyterLab 1.1. Подготовка виртуального окружения 1.1.1. Cоздаём виртуальное окружение в каталоге /opt/jupyterhub:&#xA;sudo python3 -m venv /opt/jupyterhub/ С этого момента мы должны использовать команду &amp;rsquo;/opt/jupyterhub/bin/python3 -m pip install&amp;rsquo; каждый раз, когда хотим установить дополнительные пакеты в это виртуальное окружение.&#xA;1.1.2. Выполняем в созданном виртуальном окружении следующие команды:&#xA;sudo /opt/jupyterhub/bin/python3 -m pip install --upgrade pip sudo /opt/jupyterhub/bin/python3 -m pip install wheel 1.2. Установка необходимых пакетов 1.</description>
     </item>
     <item>
       <title>Установка Nexus Repository Manager</title>
-      <link>http://localhost:1313/a/ustanovka-nexus-repository-manager/</link>
+      <link>https://debuntu.ru/a/ustanovka-nexus-repository-manager/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-nexus-repository-manager/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-nexus-repository-manager/</guid>
       <description>Использованные материалы https://help.sonatype.com/repomanager3/installation-and-upgrades&#xA;https://help.sonatype.com/repomanager3/installation-and-upgrades/run-as-a-service&#xA;1. Установка Java 8 Установите Java восьмой версии следующей командой:&#xA;dnf install java-1.8.0-openjdk Проверьте “используемую” &amp;#34;версию&amp;#34; Java по умолчанию:&#xA;java -version Пример ожидаемого вывода:&#xA;openjdk version &amp;#34;1.8.0_275&amp;#34; OpenJDK Runtime Environment (build 1.8.0_275-b01) OpenJDK 64-Bit Server VM (build 25.275-b01, mixed mode) 2. Создание локальной УЗ Создайте локальный непривилегированный аккаунт, под которым будет работать Nexus Repository Manager:&#xA;useradd --system --no-create-home \ --home-dir /opt/nexus \ --shell /sbin/nologin nexus 3.</description>
     </item>
     <item>
       <title>Mokey - пользовательский сервис сброса/смены паролей FreeIPA</title>
-      <link>http://localhost:1313/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
+      <link>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
       <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
+      <guid>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
       <description>2021-05-27&#xA;Введение Сервис Mokey предназачен для самообслуживания пользователей FreeIPA домена, с помощью которого предоставляется возможность смены пароля или сброса забытого пароля, с отправкой одноразовой ссылки на зарегистрированную в IPA почту пользователя. Замечу, что mokey, не работает с учётными записями, состоящими во встроенной IPA-группе &amp;lsquo;admins&amp;rsquo;, так как роль helpdesk не сможет изменить пароль таких УЗ. Вообще, рекомендуется использовать отдельную УЗ, участницу группы &amp;lsquo;admins&amp;rsquo;, для администрирования FreeIPA.&#xA;Установка mokey Установка mokey банальна и не вызывает интереса.</description>
     </item>
     <item>
       <title>Настройка аутентификации/авторизации в Apache Spark</title>
-      <link>http://localhost:1313/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</link>
+      <link>https://debuntu.ru/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</link>
       <pubDate>Fri, 30 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</guid>
+      <guid>https://debuntu.ru/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</guid>
       <description>Spark Property Value Description Spark Authenticationspark.authenticate ☑ Enable whether the Spark communication protocols do authentication using a shared secret. Spark History Если не настроено, то страница Spark History Web UI доступна анониму, где в логах аноним может увидеть использующиеся логины/пароли пользователей. За доступ к странице отвечают параметры:&#xA;Property Value Description Enable User Authenticationhistory_server_spnego_enabled ☑ Enables user authentication using SPNEGO (requires Kerberos), and enables access control to application history data. Admin Usersspark.</description>
     </item>
     <item>
       <title>Создание system account для подключения LDAP-клиента к FreeIPA</title>
-      <link>http://localhost:1313/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
+      <link>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
       <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
+      <guid>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
       <description>2020-11-26&#xA;Введение Для подключения некоторых сервисов к FreeIPA по протоколу LDAP, требуется указать учётные данные какого-либо пользователя. Для этих целей мы будем использовать специальный тип аккаунта &amp;lsquo;system account&amp;rsquo;.&#xA;Преимущества данного типа аккаунта в том, что у него отсутствуют все атрибуты пользователя, кроме логина и пароля. &amp;lsquo;System account&amp;rsquo; не имеет возможности:&#xA;получить kerberos-билет; выполнить вход на хост или сервис; возобладать каким-либо объектом; записать или изменить в LDAP какую-либо информацию. Также на &amp;lsquo;system account&amp;rsquo; не распространяются пользовательские политики.</description>
     </item>
     <item>
       <title>Использование Apache Sqoop для импорта/экспорта данных между PostgreSQL и HDFS</title>
-      <link>http://localhost:1313/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
+      <link>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
+      <guid>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
       <description>2020-11-01&#xA;Использованные материалы:&#xA;Sqoop User Guide (v1.4.6) An HDFS Tutorial for Data Analysts Stuck with Relational Databases Импорт из PostgreSQL в HDFS Подготовка к импорту PostgreSQL должен слушать на внешнем порту, чтобы к нему была возможность подключиться по сети. Если в PostgreSQL используется сетевой порт, отличный от стандартного (5432), то его необходимо указывать в подаваемых командах.&#xA;Выполнять &amp;lsquo;sqoop import&amp;rsquo; не обязательно с того хоста, у которого есть роль &amp;lsquo;Sqoop&amp;rsquo;. Он работает с любого хоста кластера, у которого есть соответствующий gateway в тот сервис, куда импортируются/экспортируются данные.</description>
     </item>
     <item>
       <title>Настройка LDAP-аутентификации в Nexus Repository Manager</title>
-      <link>http://localhost:1313/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
+      <link>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
       <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
+      <guid>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
       <description>Факты Исполняемое Java-ядро лежит в /data/Nexus/nexus. Изменяемая часть, включая репозитории, лежат в /data/Nexus/sonatype-work. Примерный размер каталога ~265GB. Для бэкапа достаточно сделать копию этого каталога. Автозапуск организован ручным созданием простой ссылкой /etc.init.d/nexus → /data/Nexus/nexus/bin/nexus. Настройка аккаунтов локальных пользователей и подключение по LDAP разнесены в меню. Нет необходимости делать бэкап Nexus&amp;rsquo;а, так как локальная база пользователей и получение пользователей из LDAP мирно сосуществуют рядом, не мешая друг другу. Пользователи подключающиеся через LDAP не заносятся в локальную базу, в отличии от GrayLog, например.</description>
     </item>
     <item>
       <title>Best Practices for Using LDAP Link with Vertica (перевод)</title>
-      <link>http://localhost:1313/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
+      <link>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
       <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
+      <guid>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
       <description>2020-07-03&#xA;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&#xA;Итак, вы настроили и включили LDAP Link и работаете с Vertica, что позволяет синхронизировать пользователей и группы LDAP с соответствующими пользователями и ролями Vertica. Но вы по прежнему должны управлять пользователями и ролями в Vertica, которые вы не создавали с помощью LDAP Link. На следующем рисунке показано, как может выглядеть ваша конфигурация.&#xA;Но есть несколько рекомендаций, которым вы должны следовать, чтобы убедиться, что вы случайно не потеряете ни пользователей, ни данные.</description>
     </item>
     <item>
       <title>Jenkins Проблемы выполнения удалённых команд в сетях со stateful firewall и способы их решения</title>
-      <link>http://localhost:1313/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
+      <link>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
+      <guid>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
       <description>2020-05-31&#xA;Описание проблемы Для запуска скрипта на удалённом узле могут использоваться два jenkins-плагина:&#xA;&amp;ldquo;Publish over SSH plugin&amp;rdquo;, который не имеет встроенного keepalive-механизма. &amp;ldquo;SSH plugin&amp;rdquo;, который имеет возможность посылки keepalive-пакетов, но требует настройки, так как по умолчанию это функция выключена. В процессе выполнения задач с использованием вышеуказанных плагинов, особенно если задача выполняется десятки минут или больше, то в дженкинсе наблюдалось прекращение вывода stdout в консоль, хотя скрипт, выполняемый на удалённом сервере, продолжал работу.</description>
     </item>
     <item>
       <title>Сборка rpm-пакета nginx c модулями для kafka</title>
-      <link>http://localhost:1313/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
+      <link>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</link>
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
+      <guid>https://debuntu.ru/a/sborka-rpm-paketa-nginx-c-modulyami-dlya-kafka/</guid>
       <description>2020-05-26&#xA;Сборку производил в свежеустановленной виртуальной машине CentOS 7 (минимальный дистр), из-под обычного пользователя имеющего беспарольное sudo.&#xA;Сборка пакета librdkafka Сначала надо собрать свежий https://github.com/edenhill/librdkafka, так как в репо CentOS&amp;rsquo;а librdkafka имеет версию 0.11.5, тогда как на странице разработчиков — 1.5.0.&#xA;Сборка этого пакета заняла по времени чуть больше часа, но не из-за сложности. К счастью, разработчики всё продумали и собирать этот пакет проще простого.&#xA;Сборка пакета будет производиться в песочнице, с помощью mock.</description>
     </item>
     <item>
       <title>Бэкап дампа базы Postgresql и его восстановление на новом сервере</title>
-      <link>http://localhost:1313/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
+      <link>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
+      <guid>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
       <description>2020-04-21&#xA;Создание дампа может занять продолжительное время, поэтому работы производим через screen, который позволит нам сохранить работающий сеанс на сервере, даже если мы отключимся случайно или по какой-то причине.&#xA;Работы на исходном сервере Сбор сведений перед созданием дампа На исходном сервере запоминаем версию postgresql:&#xA;# rpm -qa|grep sql postgresql11-server-11.4-1PGDG.rhel7.x86_64 postgresql11-11.4-1PGDG.rhel7.x86_64 postgresql11-libs-11.4-1PGDG.rhel7.x86_64 Смотрим who и активные сетевые подключения через ss -tul, чтобы удостовериться в своём одиноком присутствии на сервере.&#xA;Ознакомимся со свободным местом на сервере, где увидим, что есть свободные 340G:</description>
     </item>
     <item>
       <title>Void Linux Послеустановочные шаги</title>
-      <link>http://localhost:1313/a/void-linux-posleustanovochnye-shagi/</link>
+      <link>https://debuntu.ru/a/void-linux-posleustanovochnye-shagi/</link>
       <pubDate>Wed, 08 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/void-linux-posleustanovochnye-shagi/</guid>
+      <guid>https://debuntu.ru/a/void-linux-posleustanovochnye-shagi/</guid>
       <description>2020-04-08&#xA;Для своего нетбука Asus 1215n я выбрал дистрибутив Void Linux с libc-библиотекой и Mate для графической оболочки, так как для дистрибутива с musl-библиотекой отсутствует возможность установки проприетарных драйверов для видеокарты &amp;ldquo;Nvidia ION&amp;rdquo;.&#xA;Для стационарного компьютера, с &amp;ldquo;NVidia GeForce GT 630&amp;rdquo; на борту, мной был выбран Void Linux, также с libc-библиотекой + Cinnamon&#xA;Установка с флэшки быстра и незатейлива и здесь приведена не будет. Отмечу только, что для корневой ФС выбираю BtrFS.</description>
     </item>
     <item>
       <title>Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа</title>
-      <link>http://localhost:1313/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</link>
+      <link>https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</link>
       <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</guid>
+      <guid>https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</guid>
       <description>2020-03-19 Кое в чём я несколько плаваю, поэтому пытаюсь разобраться.&#xA;Что такое:&#xA;Закрытый Ключ Открытый Ключ Запрос На Сертификацию Сертификат Открытого Ключа Для понимания отношений между этими четырьмя сущностями, я составил краткий список:&#xA;Закрытый Ключ мы генерируем сами и для его безопасного хранения соблюдаем максимальную секретность. С помощью выбранного криптографического алгоритма, используя наш Закрытый Ключ, мы генерируем соответствующий ему Открытый Ключ, для хранения которого секретность не требуется. Используя наш Открытый Ключ, мы можем сформировать Запрос На Сертификацию, направив его в какую-либо Организацию, доступ к Информационной Системе которой нам требуется.</description>
     </item>
     <item>
       <title>Описание файловой системы OverlayFS</title>
-      <link>http://localhost:1313/a/opisanie-failovoi-sistemy-overlayfs/</link>
+      <link>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</link>
       <pubDate>Sat, 01 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/opisanie-failovoi-sistemy-overlayfs/</guid>
+      <guid>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</guid>
       <description>2020-02-01&#xA;Не закончен, так как не хватает знаний. По мере изучения, постараюсь дополнить.&#xA;Данная файловая системы используется, например, в Docker. Часто её можно наблюдать на роутерах или других подобных устройствах, где оперативная запись информации ведётся во временную наложенную ФС, доступную до момента выключения устройства.&#xA;С помощью OverlayFS я объединяю домашние фото и видео каталоги для удобного просмотра. Так как архивы исходных фотографий доступны только для чтения, наложением рабочей папки, для сохранения временных или промежуточных файлов обработки, я добиваюсь удобства в обработке фоток.</description>
     </item>
     <item>
       <title>Path MTU Discovery и прочее связанное с этим</title>
-      <link>http://localhost:1313/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</link>
+      <link>https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</guid>
+      <guid>https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</guid>
       <description>2020-01-30&#xA;Переписать, дополнить&#xA;Maximum Transmission Unit (MTU) MTU — эта аббревиатура составлена из слов Maximum Transmission Unit, что можно перевести как Максимальный Передающийся Блок. Блок состоит из заголовка и полезной нагрузки. Под MTU понимается максимально возможный размер передаваемой полезной нагрузки.&#xA;Содержимое сетевого пакета Ethernet-кадр (Ethernet frame) Размер ethernet-кадра в ethernet-сети варьируется в пределах 1514-1538? байт, что слагается из:&#xA;заголовок (header) кадра, размером 14–38 байт, содержащий, из важного для наблюдателя, следующие поля: MAC-адрес получателя в актуальном физическом сегменте сети MAC-адрес отправителя в этом же сегменте сети поле EtherType (IPv4: 0x0800, или ARP: 0x0806, или &amp;hellip;) полезная нагрузка (payload), размер которой может достигать 1500 байт, и в которой, для нашего примера, транспортируется IP-датаграмма с инкапсулированным в неё TCP-сегментом.</description>
     </item>
     <item>
       <title>Описание VFS Виртуальной Файловой Системы Linux</title>
-      <link>http://localhost:1313/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <link>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <guid>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
       <description>Мой неполный перевод Overview of the Linux Virtual File System. Некоторые моменты, по различным причинам, я пока не понимаю, поэтому кое-что привожу в оригинале, как повод для дальнейших размышлений. Другие же моменты, как мне кажется, я понимаю, поэтому дополнил их некоторой информацией.&#xA;2020-01-18&#xA;Введение Виртуальная Файловая Система (называемая также Коммутатором Виртуальной Файловой Системы) является программным слоем, который предоставляет программам, выполняющимся в пользовательском пространстве, интерфейс взаимодействия с файловой системой. VFS-коммутатор также реализует в ядре Linux уровень абстракции для унификации подключения к нему разнообразных файловых систем.</description>
     </item>
     <item>
       <title>Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
-      <link>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <link>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
       <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <guid>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
       <description>Старая статья. В тот момент я ещё не знал, что btrfs сам способен подменить LVM. Я отнёсся к ней, как к обычной файловой системе.&#xA;2019-12-26&#xA;Я произвёл несколько опытов по сжатию LVM тома с Btrfs на борту и сделал для себя следующие выводы.&#xA;Описание безопасного способа Самый безопасный способ заключается в следующем: с LVM2 использовать ext4 с возможностью уменьшения и увеличения тома. Или использовать надёжную xfs с возможностью только увеличения тома.</description>
     </item>
     <item>
       <title>Чем консоль отличается от терминала</title>
-      <link>http://localhost:1313/a/chem-konsol-otlichaetsya-ot-terminala/</link>
+      <link>https://debuntu.ru/a/chem-konsol-otlichaetsya-ot-terminala/</link>
       <pubDate>Sat, 23 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/chem-konsol-otlichaetsya-ot-terminala/</guid>
+      <guid>https://debuntu.ru/a/chem-konsol-otlichaetsya-ot-terminala/</guid>
       <description>2019-11-23&#xA;Консоль Читая этимологию слова &amp;ldquo;Console&amp;rdquo; выясняется, что английское слово console заимствовано из французского console, то есть кронштейн, и обозначает оно кронштейн, в смысле штука, закреплённая в стене, поддерживающая что-либо. Затем это слово стало применяться и к висящим на кронштейнах настенным доскам. После и к доскам, просто стоящим возле стены. И по крайней мере в 19 веке, кто-то назвал доски с клавишами, тумблерами и переключателями, стоящими возле стены в церкви — &amp;ldquo;organ console&amp;rdquo;, то есть &amp;ldquo;пульт органа&amp;rdquo;.</description>
     </item>
     <item>
       <title>Установка Plone CMS</title>
-      <link>http://localhost:1313/a/ustanovka-plone-cms/</link>
+      <link>https://debuntu.ru/a/ustanovka-plone-cms/</link>
       <pubDate>Mon, 21 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-plone-cms/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-plone-cms/</guid>
       <description>2019-10-21&#xA;Пытаясь найти замену Drupal для своих сайтов я набрёл на Plone. После прочтения материалов о данной CMS с воодушевлением принялся за работу.&#xA;Для работы Drupal необходимо устанавливать много дополнительного ПО, вследствии чего вся друпаловская программная обвязка поглощает много оперативной памяти. При попытке перейти с седьмого на восьмой Drupal я столкнулся с нехваткой памяти для работы Composer. Доплатил за увеличение RAM до 1GB и вновь неудача. На vps на базе kvm можно было бы создать swap-файл, но на текущем openvz это делать запрещено.</description>
     </item>
     <item>
       <title>Traditional Unix permissions и Access Control Lists</title>
-      <link>http://localhost:1313/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
+      <link>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
       <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
+      <guid>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
       <description>2019-09-04&#xA;&amp;ldquo;The term user is used in two different ways. We often speak of a logged-in person as a user, and, sometimes, use the term to refer to the process which the user is controlling from his terminal. Especially in the context of user control, however, we apply the term user to any member of the set of users (in the first sense) who could log in. In other words, we speak of a user as a registered identity.</description>
     </item>
     <item>
       <title>Резервное копирование Plone</title>
-      <link>http://localhost:1313/a/rezervnoe-kopirovanie-plone/</link>
+      <link>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</link>
       <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/rezervnoe-kopirovanie-plone/</guid>
+      <guid>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</guid>
       <description>2019-05-15&#xA;Backing up your Plone deployment Стратегии резервного копирования действующих Plone установок.&#xA;Эта инструкция расскажет что копировать, как копировать и как безопасно восстановить.&#xA;Введение Ключевые правила резервного копирования работающей системы возможно следующие:&#xA;Бэкапируй всё Делай несколько версий бэкапа Тестируй бэкапы на предмет восстановления Эта инструкция допускает, что вы уже делаете это для всей вашей системы, и будет рассматривать только те вещи, которые касаются Plone. Когда мы говорим, что мы предполагаем, что вы уже делаете это для всей системы, мы имеем в виду, что механизмы резервного копирования вашей системы — rsync, bacula и т.</description>
     </item>
     <item>
       <title>Chroot rsync для безопасного сбора бэкапов с удалённых хостов</title>
-      <link>http://localhost:1313/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
+      <link>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</link>
       <pubDate>Sun, 12 May 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
+      <guid>https://debuntu.ru/a/chroot-rsync-dlya-bezopasnogo-sbora-bekapov-s-udalyonnyh-hostov/</guid>
       <description>2019-05-12&#xA;Один из способов использования Rsync для синхронизации файлов между машинами, это подключение rsync-клиента к rsync-серверу через ssh-сеанс.&#xA;Здесь я описал следующий сценарий выкачивания файлов из удалённого хоста site01.example.com на бэкап-хост:&#xA;На клиенте, которым выступает бэкап-хост, запускаем rsync-клиент: rsync -avP rbkp@site01.example.com:/backup/ /backup/ Клиент стучится на ssh-порт сервера site01.example.com от имени пользователя rbkp. На сервере служба sshd создаёт сеанс для rbkp в подготовленной песочнице. В контексте сеанса rbkp через /bin/sh начинает выполняться rsync-сервер: rsync --server --sender -vlogDtpre.</description>
     </item>
     <item>
       <title>Создание копии сайта Plone</title>
-      <link>http://localhost:1313/a/ozdanie-kopii-saita-plone/</link>
+      <link>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</link>
       <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ozdanie-kopii-saita-plone/</guid>
+      <guid>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</guid>
       <description>2019-05-10&#xA;Краткая инструкция о том, как создать копию Plone-инсталляции.&#xA;Введение Эта инструкция расскажет вам основы создания дубля Plone-сайта для тестирования или бэкапа.&#xA;Необходимые условия Возможность копирования файлов из/в удалённый сервер Возможность использования командной строки Содержимое Plone-сайта Что должно быть скопировано:&#xA;buildout.cfg - определяет конфигурацию вашего сайта src folder - содержит аддоны разработанные вами var/filestorage/Data.fs - ZODB база данных вашего сайта var/blobstorage folder - содержит объекты типа &amp;ldquo;файл&amp;rdquo; базы данных ZODB (BLOBы) Другие папки (eggs, downloads, parts и т.</description>
     </item>
     <item>
       <title>Создание копии сайта Plone</title>
-      <link>http://localhost:1313/a/sozdanie-kopii-saita-plone/</link>
+      <link>https://debuntu.ru/a/sozdanie-kopii-saita-plone/</link>
       <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/sozdanie-kopii-saita-plone/</guid>
+      <guid>https://debuntu.ru/a/sozdanie-kopii-saita-plone/</guid>
       <description>2019-05-10&#xA;Краткая инструкция о том, как создать копию Plone-инсталляции.&#xA;Введение Эта инструкция расскажет вам основы создания дубля Plone-сайта для тестирования или бэкапа.&#xA;Необходимые условия Возможность копирования файлов из/в удалённый сервер Возможность использования командной строки Содержимое Plone-сайта Что должно быть скопировано:&#xA;buildout.cfg - определяет конфигурацию вашего сайта src folder - содержит аддоны разработанные вами var/filestorage/Data.fs - ZODB база данных вашего сайта var/blobstorage folder - содержит объекты типа &amp;ldquo;файл&amp;rdquo; базы данных ZODB (BLOBы) Другие папки (eggs, downloads, parts и т.</description>
     </item>
     <item>
       <title>Добавление reCAPTCHA в Plone</title>
-      <link>http://localhost:1313/a/dobavlenie-recaptcha-v-plone/</link>
+      <link>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</link>
       <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/dobavlenie-recaptcha-v-plone/</guid>
+      <guid>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</guid>
       <description>2019-05-09&#xA;Частичный перевод и компиляция информации из статей:&#xA;Adding CAPTCHA Support PloneFormGen Archetypes Dexterity PloneFormGen имеет встроенную поддержку Re-Captcha. Здесь рассказано как включить её.&#xA;PloneFormGen и поля Captcha PloneFormGen — аддон, добавляющий в Plone генератор форм с полями, виджетами и валидаторами из Archetypes. Используется при создании простых однородных вебформ для сохранения вводимых данных или форм для отправки электронной почты. Archetypes — это подсистема (фреймворк) для создания типов контента в Plone версий 2.</description>
     </item>
     <item>
       <title>Использование Composer для установки и управления зависимостями Drupal 8</title>
-      <link>http://localhost:1313/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</link>
+      <link>https://debuntu.ru/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</link>
       <pubDate>Mon, 25 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</guid>
+      <guid>https://debuntu.ru/a/ispolzovanie-composer-dlya-ustanovki-i-upravleniya-zavisimostyami-drupal-8/</guid>
       <description>2019-03-25 Использованные источники:&#xA;Using Composer to Install Drupal and Manage Dependencies Introduction - Composer Composer может быть использован для загрузки Drupal, его модулей и тем оформления, а также всех появившихся зависимостей. Эти инструкции могут быть гибко подстроены под ваши методы управления экземпляром Drupal.&#xA;Установка Composer Вам нужно установить Composer на вашу локальную машину перед выполнением любых composer-команд. Пожалуйста, ознакомтесь с Getting Started on getcomposer.org для установки Composer. Если вам разрешено устанавливать Composer глобально, так и сделайте, так как нет никакой выгоды от множества установленных на компьютере копий Composer для каждого пользователя или проекта.</description>
     </item>
     <item>
       <title>LVM2 — создание, перемещение и удаление логических томов</title>
-      <link>http://localhost:1313/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
+      <link>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
+      <guid>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
       <description>2018-09-03&#xA;Создание Группы Томов (Volume Group) Для имени Группы Томов (VG) на одиночном сервере я обычно выбираю значение &amp;ldquo;vg&amp;rdquo;. Потом, при желании, его легко можно переименовать в любой момент. В Группу Томов можно добавить любое блочное устройство.&#xA;После добавления устройства в VG:&#xA;# vgcreate /dev/vg /dev/sde /dev/sdd1 /dev/sdd2 /dev/md10 /dev/mapper/pv5 можно получить информацию о VG:&#xA;# vgdisplay /dev/vg переименовать VG:&#xA;# vgrename /dev/vg /dev/vg0 получить информацию о конкретном PV:&#xA;# pvdisplay /dev/md10 Создание Логического Тома (Logical Volume) Создать LV с именем /dev/vg/dock в любом свободном месте:</description>
     </item>
     <item>
       <title>FreeBSD Установка, удаление программ</title>
-      <link>http://localhost:1313/a/freebsd-ustanovka-udalenie-programm/</link>
+      <link>https://debuntu.ru/a/freebsd-ustanovka-udalenie-programm/</link>
       <pubDate>Sat, 13 Sep 2014 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/freebsd-ustanovka-udalenie-programm/</guid>
+      <guid>https://debuntu.ru/a/freebsd-ustanovka-udalenie-programm/</guid>
       <description> </description>
     </item>
     <item>
       <title>Установка и использование в FreeBSD 9.1 нового пакетного менеджера pkgng</title>
-      <link>http://localhost:1313/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</link>
+      <link>https://debuntu.ru/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</link>
       <pubDate>Wed, 24 Apr 2013 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</guid>
       <description> Repository definitions #repos:&#xA;default : http://example.org/pkgng/ repo1 : http://somewhere.org/pkgng/repo1/ repo2 : http://somewhere.org/pkgng/repo2/ </description>
     </item>
     <item>
       <title>Установка PostgreSQL 9.0 на Debian 6.0</title>
-      <link>http://localhost:1313/a/ustanovka-postgresql-90-na-debian-60/</link>
+      <link>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</link>
       <pubDate>Thu, 17 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-postgresql-90-na-debian-60/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</guid>
       <description> </description>
     </item>
     <item>
       <title>Настройка прозрачного squid3 &#43; squidGuard</title>
-      <link>http://localhost:1313/a/nastroyka-prozrachnogo-squid3-squidguard/</link>
+      <link>https://debuntu.ru/a/nastroyka-prozrachnogo-squid3-squidguard/</link>
       <pubDate>Sat, 12 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/nastroyka-prozrachnogo-squid3-squidguard/</guid>
+      <guid>https://debuntu.ru/a/nastroyka-prozrachnogo-squid3-squidguard/</guid>
       <description>2011-03-12&#xA;Установка Squid3 SquidGuard # aptitude install squid3 squidguard Файлы настройки squid3 лежат в /etc/squid3. Файл настройки squidGuard лежит в /etc/squid. Если бы мы ставили предыдущую версию squid, то настройки обоих приложений лежали в одной папке /etc/squid.&#xA;Настройка Squid3 Настройки squid3 лежат в файле /etc/squid3/squid.conf. Не надо пугаться обилию информации в этом файле, так как достаточно включить цветовыделение синтаксиса, чтобы увидеть, что работающих строк не больше пары или тройки десятков. Все остальные строки закоментированы и представляют собой описание, настройки по умолчанию и примеры опций squid3.</description>
     </item>
     <item>
       <title>Установка egroupware 1.8 на debian 6.0</title>
-      <link>http://localhost:1313/a/ustanovka-egroupware-1-8-na-debian-6.0/</link>
+      <link>https://debuntu.ru/a/ustanovka-egroupware-1-8-na-debian-6.0/</link>
       <pubDate>Mon, 07 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-egroupware-1-8-na-debian-6.0/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-egroupware-1-8-na-debian-6.0/</guid>
       <description> </description>
     </item>
     <item>
       <title>Установка Eclipse 3.6 (Helios) в Ubuntu</title>
-      <link>http://localhost:1313/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</link>
+      <link>https://debuntu.ru/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</link>
       <pubDate>Fri, 19 Feb 2010 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</guid>
       <description> </description>
     </item>
   </channel>

@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>FreeBSD on Debuntarium</title>
-    <link>http://localhost:1313/tags/freebsd/</link>
+    <link>https://debuntu.ru/tags/freebsd/</link>
     <description>Recent content in FreeBSD on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 13 Sep 2014 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/freebsd/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/freebsd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>FreeBSD Установка, удаление программ</title>
-      <link>http://localhost:1313/a/freebsd-ustanovka-udalenie-programm/</link>
+      <link>https://debuntu.ru/a/freebsd-ustanovka-udalenie-programm/</link>
       <pubDate>Sat, 13 Sep 2014 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/freebsd-ustanovka-udalenie-programm/</guid>
+      <guid>https://debuntu.ru/a/freebsd-ustanovka-udalenie-programm/</guid>
       <description> </description>
     </item>
     <item>
       <title>Установка и использование в FreeBSD 9.1 нового пакетного менеджера pkgng</title>
-      <link>http://localhost:1313/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</link>
+      <link>https://debuntu.ru/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</link>
       <pubDate>Wed, 24 Apr 2013 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-i-ispolzovanie-v-freebsd-9-1-novogo-paketnogo-menedzhera-pkgng/</guid>
       <description> Repository definitions #repos:&#xA;default : http://example.org/pkgng/ repo1 : http://somewhere.org/pkgng/repo1/ repo2 : http://somewhere.org/pkgng/repo2/ </description>
     </item>
   </channel>

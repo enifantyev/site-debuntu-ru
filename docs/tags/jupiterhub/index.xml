@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>JupiterHub on Debuntarium</title>
-    <link>http://localhost:1313/tags/jupiterhub/</link>
+    <link>https://debuntu.ru/tags/jupiterhub/</link>
     <description>Recent content in JupiterHub on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 07 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/jupiterhub/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/jupiterhub/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub</title>
-      <link>http://localhost:1313/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
+      <link>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
+      <guid>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
       <description>2021-07-07&#xA;После установки JupyterHub наблюдается недачный запуск systemd-юнита &amp;lsquo;jupyterhub.service&amp;rsquo;.&#xA;Здесь приведён фрагмент из syslog&amp;rsquo;а с ошибками после запуска jupyterhub.service:&#xA;jupyterhub: [I 2021-07-07 15:05:40.359 JupyterHub proxy:703] Starting proxy @ http://0.0.0.0:8000/ jupyterhub: /usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/lib/registry.js:25 jupyterhub: async getMetricAsPrometheusString(metric) { jupyterhub: ^^^^^^^^^^^^^^^^^^^^^^^^^^^ jupyterhub: SyntaxError: Unexpected identifier jupyterhub: at createScript (vm.js:56:10) jupyterhub: at Object.runInThisContext (vm.js:97:10) jupyterhub: at Module._compile (module.js:549:28) jupyterhub: at Object.Module._extensions..js (module.js:586:10) jupyterhub: at Module.load (module.js:494:32) jupyterhub: at tryModuleLoad (module.js:453:12) jupyterhub: at Function.Module._load (module.js:445:3) jupyterhub: at Module.</description>
     </item>
     <item>
       <title>Установка JupyterHub на CentOS 7 (draft)</title>
-      <link>http://localhost:1313/a/ustanovka-jupyterhub-na-centos-7/</link>
+      <link>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-jupyterhub-na-centos-7/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</guid>
       <description>2021-07-07&#xA;Использованные материалы https://github.com/jupyterhub/jupyterhub-the-hard-way/blob/HEAD/docs/installation-guide-hard.md&#xA;1. Установка JupyterHub и JupyterLab 1.1. Подготовка виртуального окружения 1.1.1. Cоздаём виртуальное окружение в каталоге /opt/jupyterhub:&#xA;sudo python3 -m venv /opt/jupyterhub/ С этого момента мы должны использовать команду &amp;rsquo;/opt/jupyterhub/bin/python3 -m pip install&amp;rsquo; каждый раз, когда хотим установить дополнительные пакеты в это виртуальное окружение.&#xA;1.1.2. Выполняем в созданном виртуальном окружении следующие команды:&#xA;sudo /opt/jupyterhub/bin/python3 -m pip install --upgrade pip sudo /opt/jupyterhub/bin/python3 -m pip install wheel 1.2. Установка необходимых пакетов 1.</description>
     </item>
   </channel>

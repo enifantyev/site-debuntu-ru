@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Beeline on Debuntarium</title>
-    <link>http://localhost:1313/tags/beeline/</link>
+    <link>https://debuntu.ru/tags/beeline/</link>
     <description>Recent content in Beeline on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 09 Jun 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/beeline/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/beeline/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Создание ролей в керберизированным Hive с включённым TLS в Cloudera CDH с помощью утилиты beeline</title>
-      <link>http://localhost:1313/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
+      <link>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</link>
       <pubDate>Wed, 09 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
+      <guid>https://debuntu.ru/n/sozdanie-rolei-v-kerberizirovannym-hive-s-vklyuchyonnym-tls-v-cloudera-cdh-s-pomoschyu-utility-beeline/</guid>
       <description>2021-06-09&#xA;Использованные ссылки:&#xA;Using the Beeline CLI Hive SQL Syntax for Use with Sentry Запрашиваем kerberos-билет на машине с установленной ролью Hive, запускаем beeline и подключаемся к Hive:&#xA;$ kinit /run/cloudera-scm-agent/process/.../hive.keytab hive/prod-aux02p.example.org $ beeline beeline&amp;gt; !connect jdbc:hive2://prod-aux02p.example.org:10000/;principal=hive/prod-aux02p.example.org@EXAMPLE.ORG;ssl=true;sslTrustStore=/usr/java/jdk1.8.0_181-cloudera/jre/lib/security/jssecacerts 0: jdbc:hive2://prod-aux02p.example.org:1000&amp;gt; _ Без указания ssl-настроек в строке подключения, в логах HiveServer2 будут видны ошибки:&#xA;TThreadPoolServer&#x9;[HiveServer2-Handler-Pool: Thread-47]: Error occurred during processing of message. java.lang.RuntimeException: org.apache.thrift.transport.TTransportException: javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection? Добавление роли для администрирования Hive (server1) и назначение этой роли на группу администраторов:</description>
     </item>
   </channel>

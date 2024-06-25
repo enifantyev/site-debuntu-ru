@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>PostgreSQL on Debuntarium</title>
-    <link>http://localhost:1313/manuals/databases/postgresql/</link>
+    <link>https://debuntu.ru/manuals/databases/postgresql/</link>
     <description>Recent content in PostgreSQL on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 02 May 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/manuals/databases/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/manuals/databases/postgresql/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>PostgreSQL14. CentOS7. Установка</title>
-      <link>http://localhost:1313/manuals/databases/postgresql/postgresql14-centos7-ustanovka/</link>
+      <link>https://debuntu.ru/manuals/databases/postgresql/postgresql14-centos7-ustanovka/</link>
       <pubDate>Tue, 02 May 2023 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/databases/postgresql/postgresql14-centos7-ustanovka/</guid>
+      <guid>https://debuntu.ru/manuals/databases/postgresql/postgresql14-centos7-ustanovka/</guid>
       <description>2023-05-02&#xA;1. Добавление yum-репозитория Добавляем файл-репо:&#xA;USERNAME=nx-pubrepo-reader PASSWORD=xxxxxxxxxxxxxxxxx cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/yum.repos.d/pgdg-14.repo [pgdg-common] username=$USERNAME password=$PASSWORD name=PostgreSQL common RPMs for RHEL/CentOS \$releasever - \$basearch baseurl=http://nexus.example.org:8081/repository/pub_postgresql_yum/common/redhat/rhel-\$releasever-\$basearch enabled=1 gpgcheck=0 gpgkey=http://nexus.example.org:8081/repository/pub_postgresql_yum/RPM-GPG-KEY-PGDG-AARCH64 [pgdg14] username=$USERNAME password=$PASSWORD name=PostgreSQL 14 for RHEL/CentOS \$releasever - \$basearch baseurl=http://nexus.example.org:8081/repository/pub_postgresql_yum/14/redhat/rhel-\$releasever-\$basearch enabled=1 gpgcheck=0 gpgkey=http://nexus.example.org:8081/repository/pub_postgresql_yum/RPM-GPG-KEY-PGDG-AARCH64 EOF Проверяем подключение к репо:&#xA;yum check-update 2. Установка PostgreSQL Устанавливаем PostgreSQL командой: yum install -y postgresql14-server 3. Инициализация базы данных Выполняем:&#xA;/usr/pgsql-14/bin/postgresql-14-setup initdb База данных будет создана в /var/lib/pgsql/14/data.</description>
     </item>
   </channel>

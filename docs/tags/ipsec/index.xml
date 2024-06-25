@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>IPsec on Debuntarium</title>
-    <link>http://localhost:1313/tags/ipsec/</link>
+    <link>https://debuntu.ru/tags/ipsec/</link>
     <description>Recent content in IPsec on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 22 Apr 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/ipsec/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/ipsec/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Простой Центр Сертификации для strongSwan IPsec</title>
-      <link>http://localhost:1313/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <link>https://debuntu.ru/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <guid>https://debuntu.ru/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
       <description>2019-04-22&#xA;Начиная с версии strongswan 5.1.1 использование префикса ipsec перед pki является опциональным.&#xA;Setting-up a Simple CA Using the strongSwan PKI Tool&#xA;Для работы PKI необходимо установить пакеты:&#xA;strongswan-starter strongswan-pki libcharon-extra-plugins # для поддержки ed25519 Используемые сокращения и термины:&#xA;CA, Certification Authority, Центр Сертификации. Здесь оформлен в виде директории, в которой лежат два файла: приватный ключ Центра Сертификации и самоподписанный сертификат Центра Сертификации. В этой же папке создаются пары (приватный ключ и соответствующий ему сертификат открытого ключа) файлов-ключей для удостоверения каждого члена IPsec-сети организации.</description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>OpenWRT on Debuntarium</title>
-    <link>http://localhost:1313/tags/openwrt/</link>
+    <link>https://debuntu.ru/tags/openwrt/</link>
     <description>Recent content in OpenWRT on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 29 Oct 2015 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/openwrt/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/openwrt/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenWRT Управление питанием порта USB</title>
-      <link>http://localhost:1313/n/openwrt-upravlenie-pitaniem-porta-usb/</link>
+      <link>https://debuntu.ru/n/openwrt-upravlenie-pitaniem-porta-usb/</link>
       <pubDate>Thu, 29 Oct 2015 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/openwrt-upravlenie-pitaniem-porta-usb/</guid>
+      <guid>https://debuntu.ru/n/openwrt-upravlenie-pitaniem-porta-usb/</guid>
       <description>2015-10-29&#xA;OpenWRT. The USB Port: An Overview&#xA;На TP-Link TL-WR842ND ver.2 проверил:&#xA;# ls /sys/class/gpio/ export gpio4 gpiochip0 unexport Видимо используется пин 4, поэтому применил для выключения:&#xA;# echo 0 &amp;gt; /sys/class/gpio/gpio4/value Для включения:&#xA;# echo 1 &amp;gt; /sys/class/gpio/gpio4/value Чтение состояния:&#xA;# echo /sys/class/gpio/gpio4/value Работает.</description>
     </item>
   </channel>

@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on Debuntarium</title>
-    <link>http://localhost:1313/tags/python/</link>
+    <link>https://debuntu.ru/tags/python/</link>
     <description>Recent content in Python on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 07 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub</title>
-      <link>http://localhost:1313/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
+      <link>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
+      <guid>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
       <description>2021-07-07&#xA;После установки JupyterHub наблюдается недачный запуск systemd-юнита &amp;lsquo;jupyterhub.service&amp;rsquo;.&#xA;Здесь приведён фрагмент из syslog&amp;rsquo;а с ошибками после запуска jupyterhub.service:&#xA;jupyterhub: [I 2021-07-07 15:05:40.359 JupyterHub proxy:703] Starting proxy @ http://0.0.0.0:8000/ jupyterhub: /usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/lib/registry.js:25 jupyterhub: async getMetricAsPrometheusString(metric) { jupyterhub: ^^^^^^^^^^^^^^^^^^^^^^^^^^^ jupyterhub: SyntaxError: Unexpected identifier jupyterhub: at createScript (vm.js:56:10) jupyterhub: at Object.runInThisContext (vm.js:97:10) jupyterhub: at Module._compile (module.js:549:28) jupyterhub: at Object.Module._extensions..js (module.js:586:10) jupyterhub: at Module.load (module.js:494:32) jupyterhub: at tryModuleLoad (module.js:453:12) jupyterhub: at Function.Module._load (module.js:445:3) jupyterhub: at Module.</description>
     </item>
     <item>
       <title>Управление пакетами в Python</title>
-      <link>http://localhost:1313/refbooks/python/upravleniye-paketami-v-payton/</link>
+      <link>https://debuntu.ru/refbooks/python/upravleniye-paketami-v-payton/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
-      <guid>http://localhost:1313/refbooks/python/upravleniye-paketami-v-payton/</guid>
+      <guid>https://debuntu.ru/refbooks/python/upravleniye-paketami-v-payton/</guid>
       <description>Способы установки python-пакетов С помощью системного менеджера пакетов APT или YUM sudo yum install python3-requests С помощью python-модуля pip Если на машине установлена только одна версия python, или установка производится в активированном виртуальном окружении, то можно установить пакет/ы следующим образом:&#xA;pip install wheel requests Узнать к какой версии Python принадлежит pip:&#xA;[eugene@wks1 ~]$ pip -V pip 20.3.4 from /usr/lib/python2.7/site-packages/pip (python 2.7) Исключающее ошибку в выборе версии Python, установка пакетов с использованием pip:</description>
     </item>
   </channel>

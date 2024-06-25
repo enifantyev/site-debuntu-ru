@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Hadoop on Debuntarium</title>
-    <link>http://localhost:1313/refbooks/apachehadoop/</link>
+    <link>https://debuntu.ru/refbooks/apachehadoop/</link>
     <description>Recent content in Apache Hadoop on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 14 Nov 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/refbooks/apachehadoop/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/refbooks/apachehadoop/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Администрирование таблиц в Apache HBase</title>
-      <link>http://localhost:1313/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</link>
+      <link>https://debuntu.ru/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</link>
       <pubDate>Sat, 14 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</guid>
+      <guid>https://debuntu.ru/refbooks/apachehadoop/administrirovanie-tablic-v-apache-hbase/</guid>
       <description>2020-11-14&#xA;Работа с таблицами HBase Работу с таблицами будем производить через CLI-утилиту hbase. Есть два способа выполнения команд с hbase.&#xA;Первый способ заключается в запуске hbase shell и интерактивной подаче команд:&#xA;$ hbase shell hbase(main):001:0&amp;gt; list Второй способ позволяет использовать hbase в скриптах:&#xA;echo &amp;#34;list&amp;#34; | hbase shell Если кластер керберизированный, то перед работой с сервисами кластера получаем Kerberos-билет с помощью kinit или из соответствующего &amp;lsquo;keytab&amp;rsquo;:&#xA;kinit -kt hbase.keytab hbase/$(hostname) Если кластер некерберизированный и не хватает прав для выполнения операций, описанных в этой памятке, то &amp;hellip;</description>
     </item>
   </channel>

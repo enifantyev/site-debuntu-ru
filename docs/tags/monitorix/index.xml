@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Monitorix on Debuntarium</title>
-    <link>http://localhost:1313/tags/monitorix/</link>
+    <link>https://debuntu.ru/tags/monitorix/</link>
     <description>Recent content in Monitorix on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 14 Apr 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/monitorix/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/monitorix/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка Monitorix в Alpine Linux</title>
-      <link>http://localhost:1313/n/ustanovka-monitorix-v-alpine-linux/</link>
+      <link>https://debuntu.ru/n/ustanovka-monitorix-v-alpine-linux/</link>
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ustanovka-monitorix-v-alpine-linux/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-monitorix-v-alpine-linux/</guid>
       <description>2020-04-14&#xA;Подготовка Скачиваем, и распаковываем куда-нибудь, актуальную версию monitorix:&#xA;$ wget https://www.monitorix.org/monitorix-3.12.0.tar.gz $ tar xvf monitorix-3.12.0.tar.gz Содержимое распакованного каталога раскидываем по папкам. Схема размещения приведена ниже:&#xA;Перед раскидыванием файлов мониторикса по соответствующим каталогам, зададим им правильного владельца:&#xA;# cd monitorix-3.12.0 &amp;amp;&amp;amp; chown root:root * -R Добавление в систему необходимых пакетов Установка perl-пакетов, необходимых для работы monitorix:&#xA;# apk add perl perl-cgi perl-libwww perl-mailtools perl-mime-lite perl-dbi perl-xml-simple perl-xml-libxml perl-http-server-simple perl-io-socket-ssl rrdtool perl-rrd Пакет perl-config-general отсутствует в репозиториях Alpine Linux, поэтому скачал General.</description>
     </item>
     <item>
       <title>Краткое описание Monitorix</title>
-      <link>http://localhost:1313/n/kratkoe-opisanie-monitorix/</link>
+      <link>https://debuntu.ru/n/kratkoe-opisanie-monitorix/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
-      <guid>http://localhost:1313/n/kratkoe-opisanie-monitorix/</guid>
+      <guid>https://debuntu.ru/n/kratkoe-opisanie-monitorix/</guid>
       <description>2020-02-22&#xA;Перевод пары страниц из Monitorix :: a free, open source, lightweight system monitoring tool&#xA;Monitorix Monitorix — это свободный, легковесный, и с открытыми исходниками, инструмент наблюдения за системой, спроектированный для слежки за стольким количеством служб и системных ресурсов, насколько это возможно. Он создан для использования в Linux/UNIX серверах, но из-за своей простоты и малого размера также хорош и для встраиваемых устройств.&#xA;Он состоит из двух программ: коллектора, называемого monitorix, являющегося Perl-демоном, который автоматически запускается, как любая другая служба системы; и CGI-скрипт monitorix.</description>
     </item>
     <item>
       <title>Выпуск Monitorix версии 3.12.0 (2020-02-21)</title>
-      <link>http://localhost:1313/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</link>
+      <link>https://debuntu.ru/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</guid>
+      <guid>https://debuntu.ru/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</guid>
       <description>2020-02-22&#xA;Перевод 3.12.0 version released&#xA;В этой версии представлены два новых модуля: phpfpm.pm и unbound.pm. Первый из них позволяет собирать PHPFPM-статистику и отслеживать неограниченное число сайтов. Второй модуль unbound.pm собирает множество данных о DNS-службе Unbound, запущенном на локальном сервере. Нет возможности собирать статистику о Unbound на удалённых серверах. Оба модуля поставляются с довольно полным комплектом графиков статистики.&#xA;Далее примеры этих двух новых графиков:&#xA;Кроме этих двух новых модулей, в эту версию включены некоторые новые интересные функции.</description>
     </item>
   </channel>

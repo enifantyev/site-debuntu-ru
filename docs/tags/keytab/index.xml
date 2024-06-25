@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Keytab on Debuntarium</title>
-    <link>http://localhost:1313/tags/keytab/</link>
+    <link>https://debuntu.ru/tags/keytab/</link>
     <description>Recent content in Keytab on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/keytab/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/keytab/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Получение keytab-файла для сервисного принципала</title>
-      <link>http://localhost:1313/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <link>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <guid>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
       <description>2021-04-01&#xA;Ссылки: https://www.freeipa.org/page/V4/Keytab_Retrieval_Management https://www.freeipa.org/page/V4/Keytab_Retrieval&#xA;Например, находясь на узле со службой, для которой нам необходимо получить keytab, сначала, если ещё не получили, то получаем тикет:&#xA;$ kinit $USER Назначаем себе право получения таблицу ключей:&#xA;$ ipa service-allow-retrieve-keytab hbase/$(hostname) --users=$USER Имя учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG Псевдоним учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG Managed by: prod-hbr01p.example.org Пользователи, которым разрешено получать таблицу ключей: eugene Получаем таблицу ключей и сохраняем её в файле:&#xA;$ ipa-getkeytab -r -p hbase/$(hostname) -k ~/keytabs/hbase_$(hostname -s).</description>
     </item>
     <item>
       <title>Создание keytab-файла для пользовательского принципала</title>
-      <link>http://localhost:1313/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
+      <link>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
       <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
+      <guid>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
       <description>2021-01-30&#xA;При получении keytab&amp;rsquo;а из FreeIPA, для пользователя потребуется сменить пароль.&#xA;В домашнем каталоге пользователя запускаем утилиту &amp;lsquo;ipa-getkeytab&amp;rsquo; для генерации keytab-файла для пользователя; на запрос пароля, дважды вводим НОВЫЙ пароль, который с этого момента станет актуальным для пользовательского УЗ; одновременно, все прочие keytab&amp;rsquo;ы, сгенерированные ранее, станут недействительными. $ ipa-getkeytab -p username -k username.keytab -P New Principal Password: Verify Principal Password: Keytab successfully retrieved and stored in: username.keytab Проверяем, что в созданном keytab-файле присутствует информация:</description>
     </item>
   </channel>

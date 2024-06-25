@@ -2,143 +2,143 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>FreeIPA on Debuntarium</title>
-    <link>http://localhost:1313/tags/freeipa/</link>
+    <link>https://debuntu.ru/tags/freeipa/</link>
     <description>Recent content in FreeIPA on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 27 Dec 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/freeipa/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/freeipa/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>00. Удаление реплики</title>
-      <link>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
       <pubDate>Mon, 27 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
       <description>2021-12-27&#xA;1. Ссылки на использованные материалы Chapter 20. Uninstalling an IdM replica&#xA;2. Перед удалением Необходимо убедиться, что роли, назначенные на удаляемый сервер, не являются последними в домене. Если удаляемая реплика имеет роль &amp;lsquo;CA master&amp;rsquo; или ей назначена роль генератора &amp;lsquo;CRL списков&amp;rsquo;, то необходимо перевести эти роли на другой сервер.&#xA;3. Неполное удаление для повторного добавления реплики 3.1. Операции на удаляемом сервере 3.1.1. На удаляемом сервере запускаем процедуру удаления IPA-сервера:</description>
     </item>
     <item>
       <title>Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA</title>
-      <link>http://localhost:1313/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
+      <link>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
       <description>2021-10-11&#xA;Условия Выполняем все команды на целевой машине. Предполагается, что машина введена во FreeIPA-домен. Установка и включение Cockpit sudo yum install cockpit sudo systemctl enable --now cockpit.service sudo systemctl enable --now cockpit.socket Изменение номера порта https://cockpit-project.org/guide/latest/listen.html&#xA;По умолчанию, cockpit слушает порт номер 9090. Перевесим его на 443-ий порт:&#xA;sudo mkdir -p /etc/systemd/system/cockpit.socket.d/ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/cockpit.socket.d/listen.conf [Socket] ListenStream= ListenStream=443 EOF sudo systemctl daemon-reload Скрипт для запуска после автоматической смены сертификата cat &amp;lt;&amp;lt; EOF | sudo tee /etc/cockpit/RunAfterUpdateCert.</description>
     </item>
     <item>
       <title>Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</title>
-      <link>http://localhost:1313/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
+      <link>https://debuntu.ru/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
       <pubDate>Wed, 04 Aug 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
       <description>2021-08-04 2022-01-27&#xA;1. Ссылки https://github.com/peterpakos/checkipaconsistency&#xA;2. Описание Утилита может запускаться на любой из IPA-реплик. Так как для работы утилиты требуется пароль для УЗ &amp;lsquo;cn=Directory Manager&amp;rsquo;, то использование утилиты потенциально опасно. Безопасней запускать утилиту удалённо с применением пароля для УЗ &amp;lsquo;cn=Directory Manager&amp;rsquo; хранящегося в приемлемом Vault&amp;rsquo;е. Утилита выводит таблицу с информацией по всем (если специально не настроено другое) репликам домена. Пример: $ sudo -i # cipa +--------------------+------------------+------------------+------------------+-------+ | FreeIPA servers: | dev-ipa01p | dev-ipa02p | dev-ipa03p | STATE | +--------------------+------------------+------------------+------------------+-------+ | Active Users | 1 | 1 | 1 | OK | | Stage Users | 0 | 0 | 0 | OK | | Preserved Users | 0 | 0 | 0 | OK | | Hosts | 21 | 21 | 21 | OK | | Services | 15 | 15 | 15 | OK | | User Groups | 4 | 4 | 4 | OK | | Host Groups | 1 | 1 | 1 | OK | | Netgroups | 0 | 0 | 0 | OK | | HBAC Rules | 1 | 1 | 1 | OK | | SUDO Rules | 0 | 0 | 0 | OK | | DNS Zones | 2 | 2 | 2 | OK | | Certificates | 26 | 26 | 26 | OK | | LDAP Conflicts | 0 | 0 | 0 | OK | | Ghost Replicas | 0 | 0 | 0 | OK | | Anonymous BIND | ROOTDSE | ON | ON | FAIL | | Microsoft ADTrust | False | False | False | OK | | Replication Status | dev-ipa02p 0 | dev-ipa01p 0 | dev-ipa02p 0 | OK | | | dev-ipa03p 0 | dev-ipa03p 0 | dev-ipa01p 0 | | +--------------------+------------------+------------------+------------------+-------+ В вышеуказанном примере видно, что на второй и третьей реплике разрешён анонимный доступ к LDAP-каталогу.</description>
     </item>
     <item>
       <title>Ручное удаление реплики FreeIPA из RedOS7.2</title>
-      <link>http://localhost:1313/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
+      <link>https://debuntu.ru/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
       <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
+      <guid>https://debuntu.ru/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
       <description>2021-07-13&#xA;После неудачных опытов приходится выковыривать останки FreeIPA.&#xA;yum autoremove bind bind-dyndb-ldap ipa-server* pip freeze | xargs pip uninstall -y Удаление большинства python-пакетов производим через поочерёдное yum autoremove, pip freeze &amp;gt; list.txt и pip uninstall -y -r list.txt. В файле list.txt, при необходимости, удаляем названия пакетов, неудаляемых через pip.&#xA;При необходимости можно выполнить полное удаление python3:&#xA;yum -y autoremove python3 rm -rf /usr/lib/python3.6 /usr/local/lib/python3.6 rm -rf /var/log/{dirsrv,httpd,ipa} rm -f /var/log/{ipa*.log} rm -rf /var/lib/{dirsrv,certmonger,gssproxy,ipa,ipa-client} rm -rf /var/lib/pki/pki-tomcat rm -rf /var/kerberos rm -rf /etc/{dirsrv,httpd,gssproxy,ipa} rm -rf /etc/pki/pki-tomcat rm -f /etc/sysconfig/{dirsrv*,ipa-*,pki-tomcat,tomcat} rm -rf /etc/sysconfig/pki/tomcat </description>
     </item>
     <item>
       <title>Mokey - пользовательский сервис сброса/смены паролей FreeIPA</title>
-      <link>http://localhost:1313/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
+      <link>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
       <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
+      <guid>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
       <description>2021-05-27&#xA;Введение Сервис Mokey предназачен для самообслуживания пользователей FreeIPA домена, с помощью которого предоставляется возможность смены пароля или сброса забытого пароля, с отправкой одноразовой ссылки на зарегистрированную в IPA почту пользователя. Замечу, что mokey, не работает с учётными записями, состоящими во встроенной IPA-группе &amp;lsquo;admins&amp;rsquo;, так как роль helpdesk не сможет изменить пароль таких УЗ. Вообще, рекомендуется использовать отдельную УЗ, участницу группы &amp;lsquo;admins&amp;rsquo;, для администрирования FreeIPA.&#xA;Установка mokey Установка mokey банальна и не вызывает интереса.</description>
     </item>
     <item>
       <title>IPA Error 4301 Certificate operation cannot be completed: Unable to communicate with CMS (500)</title>
-      <link>http://localhost:1313/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
+      <link>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</link>
       <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
+      <guid>https://debuntu.ru/n/ipa-error-4301-certificate-operation-cannot-be-completed-unable-to-communicate-with-cms-500/</guid>
       <description>2021-05-12&#xA;Симптомы Сразу после установки новой FreeIPA на сервер RedOS 7.2, при посещении страницы &amp;ldquo;Сертификаты&amp;rdquo;, после долгого ожидания в виде вывески &amp;ldquo;В процессе&amp;rdquo;: Далее появляется баннер с ошибкой:&#xA;IPA Error 4301: CertificateOperationError Certificate operation cannot be completed: Unable to communicate with CMS (500) Невозможно выполнение:&#xA;# ipa cert-show 1 ipa: ERROR: Certificate operation cannot be completed: Unable to communicate with CMS (500) Диагноз Строки из &amp;lsquo;journalctl -u pki-tomcatd@pki-tomcat&amp;rsquo; указывают причину такого поведения:</description>
     </item>
     <item>
       <title>Включение во FreeIPA отслеживания последней успешной аутентификации пользовательских аккаунтов</title>
-      <link>http://localhost:1313/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</link>
+      <link>https://debuntu.ru/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</link>
       <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</guid>
+      <guid>https://debuntu.ru/n/vklyuchenie-vo-freeipa-otslezhivaniya-poslednei-uspeshnoi-autentifikacii-polzovatelskih-akkauntov/</guid>
       <description>2021-05-07&#xA;Использованные источники:&#xA;Enabling Tracking of Last Successful Kerberos Authentication Отключение плагина через GUI IPA Server — Configuration — Password plugin features: ☑ KDC:Disable Last Success&#xA;Отключение плагина через CLI На каждом сервере FreeIPA смотрим текущие применяемые password-плагины:&#xA;# ipa config-show | grep &amp;#34;Password plugin features&amp;#34; Password plugin features: AllowNThash, KDC:Disable Last Success Отключаем плагин блокирующий трэкинг последней успешной аутентификации, оставляя прочие плагины включёнными:&#xA;# ipa config-mod --ipaconfigstring=&amp;#39;AllowNThash&amp;#39; Если нагрузка на сервер превысила его ресурсы, то вновь отключаем трэкинг последней успешной аутентификации:</description>
     </item>
     <item>
       <title>Отключение анонимного доступа к LDAP-каталогу FreeIPA</title>
-      <link>http://localhost:1313/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</link>
+      <link>https://debuntu.ru/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</link>
       <pubDate>Fri, 07 May 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</guid>
+      <guid>https://debuntu.ru/n/otklyuchenie-anonimnogo-dostupa-k-ldap-katalogu-freeipa/</guid>
       <description>2021-05-07&#xA;Использованные ссылки:&#xA;Disabling Anonymous Binds По умолчанию, FreeIPA позволяет просматривать LDAP-каталог анонимным пользователям:&#xA;[root@prod-ipa02 /]# ldapsearch -x -h localhost -p 389 -b uid=ipara,ou=People,o=ipaca description # extended LDIF # # LDAPv3 # base &amp;lt;uid=ipara,ou=People,o=ipaca&amp;gt; with scope subtree # filter: (objectclass=*) # requesting: description # # ipara, people, ipaca dn: uid=ipara,ou=people,o=ipaca description: 2;7;CN=Certificate Authority,O=EXAMPLE.ORG;CN=IPA RA,O=EXAMPLE.ORG # search result search: 2 result: 0 Success # numResponses: 2 # numEntries: 1 Мне неизвестна причина такого решения разработчиков.</description>
     </item>
     <item>
       <title>Отдельная hidden replicas для безопасного full backup FreeIPA</title>
-      <link>http://localhost:1313/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</link>
+      <link>https://debuntu.ru/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</guid>
+      <guid>https://debuntu.ru/n/otdelnaya-hidden-replicas-dlya-bezopasnogo-full-backup-freeipa/</guid>
       <description>2021-04-01&#xA;Hidden replicas&#xA;Hidden replica доступна с версии FreeIPA 4.9?&#xA;Создание скрытой реплики выполняется командой:&#xA;ipa-replica-install --hidden-replica После чего необходимо назначить ей все имеющиеся в домене роли, чтобы full backup имел в себе всю информацию.&#xA;При установке скрытой реплили, в DNS отсутствуют её srv-записи, а значит клиенты ничего не знают о её присутствии. Что позволяет выполнять full backup, когда реплика временно переводится в offline-режим, без перерыва в обслуживании клиентов.&#xA;При восстановлении из такого бэкапа восстановится обычная реплика, то есть не скрытая.</description>
     </item>
     <item>
       <title>Получение keytab-файла для сервисного принципала</title>
-      <link>http://localhost:1313/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
+      <link>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</link>
       <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
+      <guid>https://debuntu.ru/n/poluchenie-keytab-faila-dlya-servisnogo-principala/</guid>
       <description>2021-04-01&#xA;Ссылки: https://www.freeipa.org/page/V4/Keytab_Retrieval_Management https://www.freeipa.org/page/V4/Keytab_Retrieval&#xA;Например, находясь на узле со службой, для которой нам необходимо получить keytab, сначала, если ещё не получили, то получаем тикет:&#xA;$ kinit $USER Назначаем себе право получения таблицу ключей:&#xA;$ ipa service-allow-retrieve-keytab hbase/$(hostname) --users=$USER Имя учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG Псевдоним учётной записи: hbase/prod-hbr01p.example.org@EXAMPLE.ORG Managed by: prod-hbr01p.example.org Пользователи, которым разрешено получать таблицу ключей: eugene Получаем таблицу ключей и сохраняем её в файле:&#xA;$ ipa-getkeytab -r -p hbase/$(hostname) -k ~/keytabs/hbase_$(hostname -s).</description>
     </item>
     <item>
       <title>Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
-      <link>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
       <description>Использованные материалы Apache Airflow Documentation Quick Start Предыдущий опыт настройки Airflow прошлых версий. Заметки В шагах инструкции пока отсутствует. Важно опроовать. После скачивания свежего файла с зависимостями дл apache-airflow, необходимо изменить в этом файле строку &amp;lsquo;Flask-AppBuilder==3.1.1&amp;rsquo; на &amp;lsquo;Flask-AppBuilder==3.2.0&amp;rsquo;, чтобы заработал мэппинг между пользовательскими группами в IPA и ролями в Airflow. Для уже установленных экземпляров Airflow, можно изменить соответствующую строку в файле &amp;lsquo;/usr/local/lib/python3.6/site-packages/apache_airflow-2.0.1.dist-info/METADATA&amp;rsquo;. Если пользовательские DAG&amp;rsquo;и запускаются через &amp;lsquo;run_as_user&amp;rsquo;, то необходимо обеспечить чтение файла /etc/airflow/airflow.</description>
     </item>
     <item>
       <title>Создание keytab-файла для пользовательского принципала</title>
-      <link>http://localhost:1313/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
+      <link>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</link>
       <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
+      <guid>https://debuntu.ru/n/sozdanie-keytab-faila-dlya-polzovatelskogo-principala/</guid>
       <description>2021-01-30&#xA;При получении keytab&amp;rsquo;а из FreeIPA, для пользователя потребуется сменить пароль.&#xA;В домашнем каталоге пользователя запускаем утилиту &amp;lsquo;ipa-getkeytab&amp;rsquo; для генерации keytab-файла для пользователя; на запрос пароля, дважды вводим НОВЫЙ пароль, который с этого момента станет актуальным для пользовательского УЗ; одновременно, все прочие keytab&amp;rsquo;ы, сгенерированные ранее, станут недействительными. $ ipa-getkeytab -p username -k username.keytab -P New Principal Password: Verify Principal Password: Keytab successfully retrieved and stored in: username.keytab Проверяем, что в созданном keytab-файле присутствует информация:</description>
     </item>
     <item>
       <title>Срипт для добавления PTR-записей по списку из файла в обратную DNS-зону FreeIPA</title>
-      <link>http://localhost:1313/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
+      <link>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
       <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
+      <guid>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
       <description>2021-01-25&#xA;Образец файла со списком узлов в формате hosts:&#xA;# cat ip.hosts 10.1.195.1 is01-airf01p.example.org 10.1.195.3 is01-app01p.example.org 10.1.195.4 is01-app02p.example.org 10.1.112.52 is02-app208p.example.org 10.1.112.53 is02-app209p.example.org Скрипт для добавления PTR-записей в соответствующие обратные зоны:&#xA;add_dns_record.sh #!/bin/bash LIST=&amp;#34;ip.hosts&amp;#34; while read line; do echo &amp;#34;&amp;#34; echo $line # &amp;#34;10.1.195.1 is01-airf01p.example.org&amp;#34; arr1=($line) # конвертируем переменную в массив из двух элементов ip1=${arr1[0]} # &amp;#34;10.1.195.1&amp;#34; IFS=&amp;#34;.&amp;#34; # разделитель пробел меняем на точку для bash substring arr2=($ip1) # конвертируем ip-адрес в массив &amp;#34;10 15 195 1&amp;#34; IFS=&amp;#34; &amp;#34; # возвращаем разделить ZONE=&amp;#34;${arr2[2]}.</description>
     </item>
     <item>
       <title>Создание system account для подключения LDAP-клиента к FreeIPA</title>
-      <link>http://localhost:1313/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
+      <link>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
       <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
+      <guid>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
       <description>2020-11-26&#xA;Введение Для подключения некоторых сервисов к FreeIPA по протоколу LDAP, требуется указать учётные данные какого-либо пользователя. Для этих целей мы будем использовать специальный тип аккаунта &amp;lsquo;system account&amp;rsquo;.&#xA;Преимущества данного типа аккаунта в том, что у него отсутствуют все атрибуты пользователя, кроме логина и пароля. &amp;lsquo;System account&amp;rsquo; не имеет возможности:&#xA;получить kerberos-билет; выполнить вход на хост или сервис; возобладать каким-либо объектом; записать или изменить в LDAP какую-либо информацию. Также на &amp;lsquo;system account&amp;rsquo; не распространяются пользовательские политики.</description>
     </item>
     <item>
       <title>LDAP binding во FreeIPA</title>
-      <link>http://localhost:1313/n/ldap-binding-vo-freeipa/</link>
+      <link>https://debuntu.ru/n/ldap-binding-vo-freeipa/</link>
       <pubDate>Sun, 15 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ldap-binding-vo-freeipa/</guid>
+      <guid>https://debuntu.ru/n/ldap-binding-vo-freeipa/</guid>
       <description>2020-11-15&#xA;Во FreeIPA существует специальный тип учётных записей, называемый &amp;ldquo;system account&amp;rdquo;. Прямое предназначение &amp;lsquo;system account&amp;rsquo;, это организация безопасного подключения различных сервисов к LDAP, то есть LDAP binding.&#xA;Аккаунт этого типа создаётся в отдельном специальном LDAP-контейнере вручную или с помощью утилит, облегчающих эту задачу. &amp;lsquo;System account&amp;rsquo; не имеет права записи в LDAP и полностью ограничен в возможности входа куда-либо и владении чем-либо, но имеет право чтения некоторой информации из LDAP. Политики паролей не применяются к &amp;ldquo;системным аккаунтам&amp;rdquo; и назначенный им пароль не имеет срока действия.</description>
     </item>
     <item>
       <title>Настройка LDAP-аутентификации в Nexus Repository Manager</title>
-      <link>http://localhost:1313/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
+      <link>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
       <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
+      <guid>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
       <description>Факты Исполняемое Java-ядро лежит в /data/Nexus/nexus. Изменяемая часть, включая репозитории, лежат в /data/Nexus/sonatype-work. Примерный размер каталога ~265GB. Для бэкапа достаточно сделать копию этого каталога. Автозапуск организован ручным созданием простой ссылкой /etc.init.d/nexus → /data/Nexus/nexus/bin/nexus. Настройка аккаунтов локальных пользователей и подключение по LDAP разнесены в меню. Нет необходимости делать бэкап Nexus&amp;rsquo;а, так как локальная база пользователей и получение пользователей из LDAP мирно сосуществуют рядом, не мешая друг другу. Пользователи подключающиеся через LDAP не заносятся в локальную базу, в отличии от GrayLog, например.</description>
     </item>
     <item>
       <title>01. Подготовка хостов к установке реплик FreeIPA</title>
-      <link>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
       <description>2021-12-24&#xA;1. Изменение сетевых настроек и имени хоста: 1.1. Исправляем /etc/hosts:&#xA;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/hosts 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6 EOF 1.2. Обнуляем /etc/sysconfig/network:&#xA;echo &amp;#34;&amp;#34; | sudo tee /etc/sysconfig/network 1.3. Учитывая, что обращение за rpm-пакетами к Nexus Repository Manager производится по ip-адресу, то обнуляем /etc/resolv.conf:&#xA;echo &amp;#34;&amp;#34; | sudo tee /etc/resolv.conf 1.4. Задаём имя машины в нижнем регистре с указанием имени будущего домена:</description>
     </item>
     <item>
       <title>02. Установка первого FreeIPA-сервера</title>
-      <link>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</guid>
       <description>1. Установка первого FreeIPA-сервера на первом хосте 1.1. Описание опций установочного скрипта Установку будем производить в бездиалоговом режиме с заданием всех необходимых опций из командной строки.&#xA;Описание некоторых опций:&#xA;--ds-password — задаёт особо секретный пароль аккаунта &amp;lsquo;cn=Directory Manager&amp;rsquo;, на основе которого синхронизируются реплики IPA и зашифрован ключ Центра Сертификации. Так-как этой УЗ доступен весь LDAP-каталог, что позволяет наблюдать содержимое особо секретных веток, то необходимо ограничить известность этого пароля узким кругом лиц.</description>
     </item>
     <item>
       <title>03. Добавление реплик к первому серверу FreeIPA</title>
-      <link>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</guid>
       <description>1. Заметки по установке реплик В отличие от установки первого FreeIPA-сервере, где скрипт ipa-server-install сначала поднял контроллер домена с новым доменом, а потом ввёл машину в этот домен, то в случае добавления реплик, необходимо сначала ввести машины в домен, а только потом установить на машины ПО контроллеров домена.&#xA;2. Введение машин в домен На второй и третьей реплике выполняем одинаковые действия. Отличия могут возникнуть в том случае, если на машинах используется несколько ip-адресов.</description>
     </item>
   </channel>

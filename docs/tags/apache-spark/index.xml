@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Spark on Debuntarium</title>
-    <link>http://localhost:1313/tags/apache-spark/</link>
+    <link>https://debuntu.ru/tags/apache-spark/</link>
     <description>Recent content in Apache Spark on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 02 Nov 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/apache-spark/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/apache-spark/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Настройка аутентификации/авторизации в Apache Spark</title>
-      <link>http://localhost:1313/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</link>
+      <link>https://debuntu.ru/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</link>
       <pubDate>Fri, 30 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</guid>
+      <guid>https://debuntu.ru/a/nastroika-autentifikacii-avtorizacii-v-apache-spark/</guid>
       <description>Spark Property Value Description Spark Authenticationspark.authenticate ☑ Enable whether the Spark communication protocols do authentication using a shared secret. Spark History Если не настроено, то страница Spark History Web UI доступна анониму, где в логах аноним может увидеть использующиеся логины/пароли пользователей. За доступ к странице отвечают параметры:&#xA;Property Value Description Enable User Authenticationhistory_server_spnego_enabled ☑ Enables user authentication using SPNEGO (requires Kerberos), and enables access control to application history data. Admin Usersspark.</description>
     </item>
     <item>
       <title>07. 🎣 Заброс Hook&#39;а в Spark (в разработке)</title>
-      <link>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</link>
       <pubDate>Tue, 02 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/ustanovka-apache-atlas-2.2.0/zabros-hook-v-spark/</guid>
       <description>Почитать:&#xA;Как использовать соединитель Apache Atlas для сбора сведений о происхождении данных Spark </description>
     </item>
   </channel>

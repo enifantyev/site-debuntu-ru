@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CMAK on Debuntarium</title>
-    <link>http://localhost:1313/tags/cmak/</link>
+    <link>https://debuntu.ru/tags/cmak/</link>
     <description>Recent content in CMAK on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 25 Nov 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/cmak/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/cmak/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CMAK. 01. Сборка rpm-пакета для CentOS7</title>
-      <link>http://localhost:1313/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
+      <link>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
+      <guid>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
       <description>2021-11-25&#xA;https://github.com/yahoo/CMAK&#xA;1. Подготовка к сборке Выбираем по умолчанию интерпретатор python2 и проверяем эту установку:&#xA;$ sudo update-alternatives --config python There are 2 programs which provide &amp;#39;python&amp;#39;. Selection Command ----------------------------------------------- + 1 /usr/bin/python2.7 * 2 /usr/bin/python3 Enter to keep the current selection[+], or type selection number: 1 $ python -V Python 2.7.5 В дополнение к Maven&amp;rsquo;у устанавливаем пакеты &amp;lsquo;java-11-openjdk&amp;rsquo; и &amp;lsquo;rpm-build&amp;rsquo;:&#xA;$ sudo yum -y install java-11-openjdk rpm-build Скачиваем и распаковываем исходники последней версии приложения (на данный момент CMAK 3.</description>
     </item>
   </channel>

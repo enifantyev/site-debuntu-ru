@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Btrfs on Debuntarium</title>
-    <link>http://localhost:1313/tags/btrfs/</link>
+    <link>https://debuntu.ru/tags/btrfs/</link>
     <description>Recent content in Btrfs on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/btrfs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/btrfs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
-      <link>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <link>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
       <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <guid>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
       <description>Старая статья. В тот момент я ещё не знал, что btrfs сам способен подменить LVM. Я отнёсся к ней, как к обычной файловой системе.&#xA;2019-12-26&#xA;Я произвёл несколько опытов по сжатию LVM тома с Btrfs на борту и сделал для себя следующие выводы.&#xA;Описание безопасного способа Самый безопасный способ заключается в следующем: с LVM2 использовать ext4 с возможностью уменьшения и увеличения тома. Или использовать надёжную xfs с возможностью только увеличения тома.</description>
     </item>
     <item>
       <title>Установка Alpine Linux в подтом btrfs</title>
-      <link>http://localhost:1313/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
+      <link>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</link>
       <pubDate>Sun, 22 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-alpine-linux-v-podtom-btrfs/</guid>
       <description>2019-12-22&#xA;Установка Alpine Linux Устанавливаем Alpine Linux 3.11 обычным порядком, но с указанием lvmsys для размещения системного раздела в lvm-томе.&#xA;После завершения процедуры setup-alpine, но до перезагрузки, будет удобно дать себе возможность войти в этот работающий экземпляр установки через ssh:&#xA;sed -i -e &amp;#34;s/^#PermitRootLogin.*$/PermitRootLogin yes/&amp;#34; /etc/ssh/sshd_config /etc/init.d/sshd restart Заходим в работающий экземпляр установки alpine linux через ssh под root&amp;rsquo;ом и продолжаем работать.&#xA;Работаем с экземпляром через ssh Устанавливаем необходимые пакеты, уменьшаем системный раздел и конвертируем его из ext4 в btrfs:</description>
     </item>
     <item>
       <title>Unable delete old snapshots of timeshift on btrfs volume</title>
-      <link>http://localhost:1313/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</link>
+      <link>https://debuntu.ru/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</link>
       <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</guid>
+      <guid>https://debuntu.ru/n/unable-delete-old-snapshots-of-timeshift-on-btrfs-volume/</guid>
       <description>2019-03-10&#xA;Synopsis На корневом btrfs-томе включён timeshift для периодического снятия снимков файловой системы. Замечено, что на томе осталось мало свободного места. При попытке удаления старых timeshift-снимков некоторые снимки не были удалены с возникновением ошибки cannot delete &#39;*SnapshotName*&#39;&#39;: Directory not empty.&#xA;Solution Так-как интересующие нас timeshift-снимки является подтомом корневого btrfs-тома, то для удобства работы с ними создаём отдельную директорию: # mkdir /mnt/btrfs-root К этой директории подключаем корень интересующего нас раздела: # mount /dev/sdb3 /mnt/btrfs-root Просматриваем список подтомов корневого тома: # cd /mnt/btrfs-root # btrfs subvolume list /mnt/btrfs-root ID 257 gen 97699 top level 5 path @ ID 411 gen 97572 top level 5 path timeshift-btrfs/snapshots/2019-03-01_16-00-01/@ ID 412 gen 90577 top level 411 path timeshift-btrfs/snapshots/2019-03-01_16-00-01/@/@ Также можно посмотреть обычным способом: # ls -l /mnt/btrfs-root/snapshots 2019-03-01_16-00-01/ 2019-03-01_16-00-01/ Удаляем сначала вложенный том интересующего нас подтома: # btrfs subvolume delete timeshift-btrfs/snapshots/2019-03-01_16-00-01/@/@ Удаляем основной подтом: # btrfs subvolume delete timeshift-btrfs/snapshots/2019-03-01_16-00-01/@ </description>
     </item>
   </channel>

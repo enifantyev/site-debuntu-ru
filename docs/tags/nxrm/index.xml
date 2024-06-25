@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>NXRM on Debuntarium</title>
-    <link>http://localhost:1313/tags/nxrm/</link>
+    <link>https://debuntu.ru/tags/nxrm/</link>
     <description>Recent content in NXRM on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 18 Oct 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/nxrm/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/nxrm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Добавление в NXRM единого репозитория для всех версий PostgreSQL</title>
-      <link>http://localhost:1313/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
+      <link>https://debuntu.ru/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
       <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
+      <guid>https://debuntu.ru/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
       <description>2020-10-18&#xA;Добавляем отдельный блоб для хранения пакетов PostgreSQL.&#xA;Добавляем репозиторий Remote storage: https://download.postgresql.org/pub/repos/yum/&#xA;Содержимое файла pgdg-redhat-all.repo для деплоя на машины:&#xA;####################################################### # PGDG Red Hat Enterprise Linux / CentOS repositories # ####################################################### # PGDG Red Hat Enterprise Linux / CentOS stable common repository for all PostgreSQL versions [pgdg-common] name=PostgreSQL common RPMs for RHEL/CentOS $releasever - $basearch baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/common/redhat/rhel-$releasever-$basearch enabled=1 gpgcheck=0 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64 # PGDG Red Hat Enterprise Linux / CentOS stable repositories: [pgdg13] name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch baseurl=http://nxrm.</description>
     </item>
   </channel>

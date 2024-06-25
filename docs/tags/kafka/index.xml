@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kafka on Debuntarium</title>
-    <link>http://localhost:1313/tags/kafka/</link>
+    <link>https://debuntu.ru/tags/kafka/</link>
     <description>Recent content in Kafka on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 23 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/kafka/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>22. Kafka. Установка и настройка</title>
-      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 23 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</guid>
       <description>2021-07-23&#xA;Добавление сервиса Kafka В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Выбираем Kafka. Выбираем зависимости: Распределяем роли с некоторыми условиями: Из-за особенностей работы, которая приводит к высокой утилизации ресурсов системы, под Kafka Brokers лучше выделить отдельные хосты. Чрезвычайно не рекомендуется размещать Kafka на ZooKeeper-узлах. Изменяем настройки: Наблюдаем запуск ролей. Визард успешно закончен. 3. Перенастройка размещения log&amp;rsquo;ов В настройках Kafka, используя категорию &amp;lsquo;Logs&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Changes.</description>
     </item>
   </channel>

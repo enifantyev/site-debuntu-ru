@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Debian Lenny on Debuntarium</title>
-    <link>http://localhost:1313/tags/debian-lenny/</link>
+    <link>https://debuntu.ru/tags/debian-lenny/</link>
     <description>Recent content in Debian Lenny on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/debian-lenny/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/debian-lenny/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка VMWare Server на Debian Lenny</title>
-      <link>http://localhost:1313/n/ustanovka-vmware-server-na-debian-lenny/</link>
+      <link>https://debuntu.ru/n/ustanovka-vmware-server-na-debian-lenny/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ustanovka-vmware-server-na-debian-lenny/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-vmware-server-na-debian-lenny/</guid>
       <description>2011-03-30&#xA;Установка VMWare Server Установка VMWare Server проста, если в системе уже установлены необходимые пакеты:&#xA;# aptitude install linux-headers-`uname -r` # aptitude install kernel-package libncurses5-dev fakeroot wget bzip2 build-essential # aptitude install rpm Регистрируемся на сайте www.vmware.com и cкачиваем rpm дистрибутив vmware сервера. Не забываем записать serial number. Устанавливаем vmware сервер командой: rpm -i --nodeps vmware-server.rpm. Опция --nodeps нужна для отключения проверки зависимостей устанавливаемого пакета, иначе vmware сервер откажется устанавливаться, ругаясь на отсутствие чего-либо.</description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sudo on Debuntarium</title>
-    <link>http://localhost:1313/tags/sudo/</link>
+    <link>https://debuntu.ru/tags/sudo/</link>
     <description>Recent content in Sudo on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/sudo/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/sudo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62</title>
-      <link>http://localhost:1313/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</link>
+      <link>https://debuntu.ru/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</link>
       <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</guid>
+      <guid>https://debuntu.ru/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</guid>
       <description>2021-03-01&#xA;Анамнез Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62&amp;hellip; бла-бла&#xA;Диагноз Файл sudo.rpm, скачиваемый с sudo.ws, подписан цифровой подписью. Пакетный менеджер, устанавливаемый с RedOS7.2, не может обработать rpm-пакет подписанный gpg-подписью.&#xA;Лечение Решил перепаковать rpm-файл sudo. В этом случае подпись будет утеряна, после чего установка на RedOS7.2 становится возможной.&#xA;Перепаковка выполняется под root&amp;rsquo;ом:&#xA;# В CentOS 7 я установил: yum install rpmrebuild # Скачал свежий sudo: curl -LO https://github.</description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>HBase on Debuntarium</title>
-    <link>http://localhost:1313/tags/hbase/</link>
+    <link>https://debuntu.ru/tags/hbase/</link>
     <description>Recent content in HBase on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 02 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/hbase/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/hbase/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>16. HBase. Установка и настройка</title>
-      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/</guid>
       <description>Использованные материалы Manually Configuring TLS/SSL Encryption for CDH Services 1. Добавление сервиса HBase В консоли Cloudera Manager в меню выбираем «Add Service»: Выбираем HBase. Распределяем роли. Хосты с именем hbr под HBase Region Servers&amp;hellip; На следующем шаге оставляем настройки без изменений: Ждём добавления сервиса в кластер. После успешного завершения процесса заканчиваем мастер нажатием на &amp;lsquo;Finish&amp;rsquo;. Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console. 2. Перенастройка размещения log&amp;rsquo;ов В настройках HBase, используя фильтр &amp;lsquo;/var/&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Change.</description>
     </item>
   </channel>

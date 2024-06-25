@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kafka-Mirror-Maker on Debuntarium</title>
-    <link>http://localhost:1313/tags/kafka-mirror-maker/</link>
+    <link>https://debuntu.ru/tags/kafka-mirror-maker/</link>
     <description>Recent content in Kafka-Mirror-Maker on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 06 Sep 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/kafka-mirror-maker/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/kafka-mirror-maker/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Запуск kafka-mirror-maker из systemd</title>
-      <link>http://localhost:1313/n/zapusk-kafka-mirror-maker-iz-systemd/</link>
+      <link>https://debuntu.ru/n/zapusk-kafka-mirror-maker-iz-systemd/</link>
       <pubDate>Sun, 06 Sep 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/zapusk-kafka-mirror-maker-iz-systemd/</guid>
+      <guid>https://debuntu.ru/n/zapusk-kafka-mirror-maker-iz-systemd/</guid>
       <description>Каталог размещения: /opt/hadoop. Сюда скачиваем и распаковываем kafka_2.13-2.6.0.tgz и создаём ссылку kafka на каталог kafka_2.13-2.6.0, куда был раскапован архив:&#xA;mkdir /opt/hadoop cd /opt/hadoop tar xvf kafka_2.13-2.6.0.tgz ln -s kafka_2.13-2.6.0 kafka mkdir kafka/logs Создаём два файла для запуска и остановки kafka-mirror. kafka-mirror-maker-start.sh&#xA;#!/bin/bash echo &amp;#34;mirror maker restarted $(date)&amp;#34;&amp;gt;&amp;gt;/opt/hadoop/kafka/logs/mirrormaker.log cd /opt/hadoop/kafka/bin/ ./kafka-mirror-maker.sh \ --consumer.config ../config/consumer.properties \ --producer.config ../config/producer.properties \ --whitelist &amp;#39;adfox_created|adfox_deleted|adfox_updated|mymoscow_created|mymoscow_deleted|mymoscow_updated&amp;#39; \ --num.streams 3 \ --offset.commit.interval.ms 30000 \ --abort.on.send.failure false kafka-mirror-maker-stop.sh&#xA;#!/bin/sh SIGNAL=${SIGNAL:-TERM} PIDS=$(ps ax | grep -i &amp;#39;kafka.</description>
     </item>
   </channel>

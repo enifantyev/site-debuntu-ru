@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LDAP on Debuntarium</title>
-    <link>http://localhost:1313/tags/ldap/</link>
+    <link>https://debuntu.ru/tags/ldap/</link>
     <description>Recent content in LDAP on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 26 Nov 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/ldap/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/ldap/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Создание system account для подключения LDAP-клиента к FreeIPA</title>
-      <link>http://localhost:1313/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
+      <link>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</link>
       <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
+      <guid>https://debuntu.ru/a/sozdanie-system-account-dlya-podklyucheniya-ldap-klienta-k-freeipa/</guid>
       <description>2020-11-26&#xA;Введение Для подключения некоторых сервисов к FreeIPA по протоколу LDAP, требуется указать учётные данные какого-либо пользователя. Для этих целей мы будем использовать специальный тип аккаунта &amp;lsquo;system account&amp;rsquo;.&#xA;Преимущества данного типа аккаунта в том, что у него отсутствуют все атрибуты пользователя, кроме логина и пароля. &amp;lsquo;System account&amp;rsquo; не имеет возможности:&#xA;получить kerberos-билет; выполнить вход на хост или сервис; возобладать каким-либо объектом; записать или изменить в LDAP какую-либо информацию. Также на &amp;lsquo;system account&amp;rsquo; не распространяются пользовательские политики.</description>
     </item>
     <item>
       <title>LDAP binding во FreeIPA</title>
-      <link>http://localhost:1313/n/ldap-binding-vo-freeipa/</link>
+      <link>https://debuntu.ru/n/ldap-binding-vo-freeipa/</link>
       <pubDate>Sun, 15 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ldap-binding-vo-freeipa/</guid>
+      <guid>https://debuntu.ru/n/ldap-binding-vo-freeipa/</guid>
       <description>2020-11-15&#xA;Во FreeIPA существует специальный тип учётных записей, называемый &amp;ldquo;system account&amp;rdquo;. Прямое предназначение &amp;lsquo;system account&amp;rsquo;, это организация безопасного подключения различных сервисов к LDAP, то есть LDAP binding.&#xA;Аккаунт этого типа создаётся в отдельном специальном LDAP-контейнере вручную или с помощью утилит, облегчающих эту задачу. &amp;lsquo;System account&amp;rsquo; не имеет права записи в LDAP и полностью ограничен в возможности входа куда-либо и владении чем-либо, но имеет право чтения некоторой информации из LDAP. Политики паролей не применяются к &amp;ldquo;системным аккаунтам&amp;rdquo; и назначенный им пароль не имеет срока действия.</description>
     </item>
     <item>
       <title>Настройка LDAP-аутентификации в Nexus Repository Manager</title>
-      <link>http://localhost:1313/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
+      <link>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
       <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
+      <guid>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
       <description>Факты Исполняемое Java-ядро лежит в /data/Nexus/nexus. Изменяемая часть, включая репозитории, лежат в /data/Nexus/sonatype-work. Примерный размер каталога ~265GB. Для бэкапа достаточно сделать копию этого каталога. Автозапуск организован ручным созданием простой ссылкой /etc.init.d/nexus → /data/Nexus/nexus/bin/nexus. Настройка аккаунтов локальных пользователей и подключение по LDAP разнесены в меню. Нет необходимости делать бэкап Nexus&amp;rsquo;а, так как локальная база пользователей и получение пользователей из LDAP мирно сосуществуют рядом, не мешая друг другу. Пользователи подключающиеся через LDAP не заносятся в локальную базу, в отличии от GrayLog, например.</description>
     </item>
     <item>
       <title>Best Practices for Using LDAP Link with Vertica (перевод)</title>
-      <link>http://localhost:1313/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
+      <link>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
       <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
+      <guid>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
       <description>2020-07-03&#xA;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&#xA;Итак, вы настроили и включили LDAP Link и работаете с Vertica, что позволяет синхронизировать пользователей и группы LDAP с соответствующими пользователями и ролями Vertica. Но вы по прежнему должны управлять пользователями и ролями в Vertica, которые вы не создавали с помощью LDAP Link. На следующем рисунке показано, как может выглядеть ваша конфигурация.&#xA;Но есть несколько рекомендаций, которым вы должны следовать, чтобы убедиться, что вы случайно не потеряете ни пользователей, ни данные.</description>
     </item>
   </channel>

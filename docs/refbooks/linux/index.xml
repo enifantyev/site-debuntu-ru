@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux on Debuntarium</title>
-    <link>http://localhost:1313/refbooks/linux/</link>
+    <link>https://debuntu.ru/refbooks/linux/</link>
     <description>Recent content in Linux on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 07 Oct 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/refbooks/linux/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/refbooks/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GNU Screen. Краткая памятка</title>
-      <link>http://localhost:1313/refbooks/linux/gnu-screen-kratkaya-pamyatka/</link>
+      <link>https://debuntu.ru/refbooks/linux/gnu-screen-kratkaya-pamyatka/</link>
       <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/refbooks/linux/gnu-screen-kratkaya-pamyatka/</guid>
+      <guid>https://debuntu.ru/refbooks/linux/gnu-screen-kratkaya-pamyatka/</guid>
       <description>2021-10-07&#xA;Совет. Гугление дополнительной информации производить по ключевой фразе &amp;ldquo;gnu screen&amp;rdquo;.&#xA;Единственный сеанс GNU Screen Команда Описание screen -ls вывести список всех Screen-сеансов. screen запустить новый безымянный Screen-сеанс. screen -r возобновить отключённый Screen-сеанс. screen -d отключиться от текущего Screen-сеанса. screen -x подключиться к активному Screen-сеанс в режиме multiuser. Множество сеансов GNU Screen Команда Описание screen -ls вывести список всех Screen-сеансов. screen -S Atlas создать сеанс Screen с названием Atlas. screen -r A или screen -r At и т.</description>
     </item>
     <item>
       <title>Краткий список утилит и команд оболочки для работы с процессами</title>
-      <link>http://localhost:1313/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
+      <link>https://debuntu.ru/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
-      <guid>http://localhost:1313/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
+      <guid>https://debuntu.ru/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
       <description>2022-03-29&#xA;Обозреть работающие процессы ps ps — process status.&#xA;user@wks01:~$ ps aux Linux Minit:&#xA;user@wks01:~$ ps 1 PID TTY STAT TIME COMMAND 1 ? Ss 0:08 /sbin/init CentOS:&#xA;[root@srv01 ~]$ ps 1 PID TTY STAT TIME COMMAND 1 ? Ss 0:55 /usr/lib/systemd/systemd --switched-root --system --deserialize 22 ptree ptree — process tree. Выводит дерево процессов.&#xA;top, htop Информация обо всех процессах в режиме реального времени.&#xA;Получить информацию о процессе pidoff pidoff — find the process ID of a running program.</description>
     </item>
   </channel>

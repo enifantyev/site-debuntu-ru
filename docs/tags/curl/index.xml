@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Curl on Debuntarium</title>
-    <link>http://localhost:1313/tags/curl/</link>
+    <link>https://debuntu.ru/tags/curl/</link>
     <description>Recent content in Curl on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 25 May 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/curl/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/curl/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Download all assets from Nexus&#39;s repository using curl</title>
-      <link>http://localhost:1313/n/download-all-assets-from-nexus-repository-using-curl/</link>
+      <link>https://debuntu.ru/n/download-all-assets-from-nexus-repository-using-curl/</link>
       <pubDate>Wed, 25 May 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/download-all-assets-from-nexus-repository-using-curl/</guid>
+      <guid>https://debuntu.ru/n/download-all-assets-from-nexus-repository-using-curl/</guid>
       <description>На скорую руку приготовил скрипт выкачивающий все файлы из какого-нибудь репо.&#xA;#!/bin/bash -e NXRM=&amp;#34;https://nexus.example.org:8081&amp;#34; USERPASS=&amp;#34;nx-pub-reader:Paqvl8oldO1EOarTcx8FAjuXZ&amp;#34; REPO=&amp;#34;cloudera-cm-6.3.1-hosted&amp;#34; FILEEXT=&amp;#34;rpm&amp;#34; FILENAME=&amp;#34;${REPO}.list&amp;#34; TOKEN=&amp;#34;&amp;#34; get_token(){ TOKEN=&amp;#34;&amp;#34; TMPTOKEN=&amp;#34;&amp;#34; TMPTOKEN=$(tail ${FILENAME} | grep &amp;#34;continuationToken&amp;#34;) TOKEN=&amp;#34;$(echo $TMPTOKEN | awk &amp;#39;{print $3}&amp;#39; | awk -F\&amp;#34; &amp;#39;{print $2}&amp;#39;)&amp;#34; if [[ &amp;#34;$TOKEN&amp;#34; = &amp;#34;&amp;#34; ]]; then return; fi TOKENFULL=&amp;#34;continuationToken=${TOKEN}&amp;amp;&amp;#34; echo $TOKEN } &amp;gt; ${FILENAME} while : ; do curl -u${USERPASS} -X &amp;#39;GET&amp;#39; \ &amp;#34;${NXRM}/service/rest/v1/assets?${TOKENFULL}repository=${REPO}&amp;#34; \ -H &amp;#39;accept: application/json&amp;#39; &amp;gt;&amp;gt; ${FILENAME} get_token if [[ &amp;#34;$TOKEN&amp;#34; = &amp;#34;&amp;#34; ]]; then break; fi done grep -n &amp;#34;downloadUrl&amp;#34; ${REPO}.</description>
     </item>
   </channel>

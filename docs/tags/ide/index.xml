@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>IDE on Debuntarium</title>
-    <link>http://localhost:1313/tags/ide/</link>
+    <link>https://debuntu.ru/tags/ide/</link>
     <description>Recent content in IDE on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 15 Apr 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/ide/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/ide/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Исправление проблемы с переключением раскладки клавиатуры в Visual Studio Code</title>
-      <link>http://localhost:1313/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</link>
+      <link>https://debuntu.ru/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</link>
       <pubDate>Thu, 15 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</guid>
+      <guid>https://debuntu.ru/n/ispravlenie-problemy-s-pereklyucheniem-raskladki-v-visual-studio-code/</guid>
       <description>Причина кроется в обработке нажатия клавиши &amp;lsquo;Alt&amp;rsquo;, даже в составе комбинации, что приводит к вызову меню.&#xA;Решение найдено здесь: https://github.com/microsoft/vscode/issues/85405#issuecomment-656659452.&#xA;В настройках Visual Studio Code ищем опцию &amp;lsquo;window.titleBarStyle&amp;rsquo;, которая по умолчанию установлена в &amp;rsquo;native&amp;rsquo;. После смены значения на &amp;lsquo;custom&amp;rsquo;, нажатие клавиши &amp;lsquo;Alt&amp;rsquo; перестаёт вызывать меню.</description>
     </item>
     <item>
       <title>Установка Eclipse 3.6 (Helios) в Ubuntu</title>
-      <link>http://localhost:1313/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</link>
+      <link>https://debuntu.ru/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</link>
       <pubDate>Fri, 19 Feb 2010 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</guid>
       <description> </description>
     </item>
   </channel>

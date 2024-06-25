@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5 on Debuntarium</title>
-    <link>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</link>
+    <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/</link>
     <description>Recent content in Создание и конфигурирование нового домена IPA 4.9.6 на AlmaLinux 8.5 on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 27 Dec 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>00. Удаление реплики</title>
-      <link>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</link>
       <pubDate>Mon, 27 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/udaleniye-repliki/</guid>
       <description>2021-12-27&#xA;1. Ссылки на использованные материалы Chapter 20. Uninstalling an IdM replica&#xA;2. Перед удалением Необходимо убедиться, что роли, назначенные на удаляемый сервер, не являются последними в домене. Если удаляемая реплика имеет роль &amp;lsquo;CA master&amp;rsquo; или ей назначена роль генератора &amp;lsquo;CRL списков&amp;rsquo;, то необходимо перевести эти роли на другой сервер.&#xA;3. Неполное удаление для повторного добавления реплики 3.1. Операции на удаляемом сервере 3.1.1. На удаляемом сервере запускаем процедуру удаления IPA-сервера:</description>
     </item>
     <item>
       <title>01. Подготовка хостов к установке реплик FreeIPA</title>
-      <link>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/podgotovka-khostov-k-ustanovke-replikatsii-freeipa/</guid>
       <description>2021-12-24&#xA;1. Изменение сетевых настроек и имени хоста: 1.1. Исправляем /etc/hosts:&#xA;cat &amp;lt;&amp;lt; EOF | sudo tee /etc/hosts 127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4 ::1 localhost localhost.localdomain localhost6 localhost6.localdomain6 EOF 1.2. Обнуляем /etc/sysconfig/network:&#xA;echo &amp;#34;&amp;#34; | sudo tee /etc/sysconfig/network 1.3. Учитывая, что обращение за rpm-пакетами к Nexus Repository Manager производится по ip-адресу, то обнуляем /etc/resolv.conf:&#xA;echo &amp;#34;&amp;#34; | sudo tee /etc/resolv.conf 1.4. Задаём имя машины в нижнем регистре с указанием имени будущего домена:</description>
     </item>
     <item>
       <title>02. Установка первого FreeIPA-сервера</title>
-      <link>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/ustanovka-pervogo-freeipa-servera/</guid>
       <description>1. Установка первого FreeIPA-сервера на первом хосте 1.1. Описание опций установочного скрипта Установку будем производить в бездиалоговом режиме с заданием всех необходимых опций из командной строки.&#xA;Описание некоторых опций:&#xA;--ds-password — задаёт особо секретный пароль аккаунта &amp;lsquo;cn=Directory Manager&amp;rsquo;, на основе которого синхронизируются реплики IPA и зашифрован ключ Центра Сертификации. Так-как этой УЗ доступен весь LDAP-каталог, что позволяет наблюдать содержимое особо секретных веток, то необходимо ограничить известность этого пароля узким кругом лиц.</description>
     </item>
     <item>
       <title>03. Добавление реплик к первому серверу FreeIPA</title>
-      <link>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</link>
+      <link>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</link>
       <pubDate>Fri, 24 Dec 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</guid>
+      <guid>https://debuntu.ru/manuals/freeipa/sozdaniye-i-konfigurirovaniye-novogo-domena-ipa-4-9-6-na-almalinux-8-5/dobavleniye-replik-k-pervomu-serveru-freeipa/</guid>
       <description>1. Заметки по установке реплик В отличие от установки первого FreeIPA-сервере, где скрипт ipa-server-install сначала поднял контроллер домена с новым доменом, а потом ввёл машину в этот домен, то в случае добавления реплик, необходимо сначала ввести машины в домен, а только потом установить на машины ПО контроллеров домена.&#xA;2. Введение машин в домен На второй и третьей реплике выполняем одинаковые действия. Отличия могут возникнуть в том случае, если на машинах используется несколько ip-адресов.</description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Development on Debuntarium</title>
-    <link>http://localhost:1313/categories/development/</link>
+    <link>https://debuntu.ru/categories/development/</link>
     <description>Recent content in Development on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 07 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/development/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/categories/development/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ошибка configurable-http-proxy: SyntaxError: Unexpected identifier при попытке запуска JupyterHub</title>
-      <link>http://localhost:1313/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
+      <link>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
+      <guid>https://debuntu.ru/n/oshibka-configurable-http-proxy-syntaxerror-unexpected-identifier-pri-popytke-zapuska-jupyterhub/</guid>
       <description>2021-07-07&#xA;После установки JupyterHub наблюдается недачный запуск systemd-юнита &amp;lsquo;jupyterhub.service&amp;rsquo;.&#xA;Здесь приведён фрагмент из syslog&amp;rsquo;а с ошибками после запуска jupyterhub.service:&#xA;jupyterhub: [I 2021-07-07 15:05:40.359 JupyterHub proxy:703] Starting proxy @ http://0.0.0.0:8000/ jupyterhub: /usr/lib/node_modules/configurable-http-proxy/node_modules/prom-client/lib/registry.js:25 jupyterhub: async getMetricAsPrometheusString(metric) { jupyterhub: ^^^^^^^^^^^^^^^^^^^^^^^^^^^ jupyterhub: SyntaxError: Unexpected identifier jupyterhub: at createScript (vm.js:56:10) jupyterhub: at Object.runInThisContext (vm.js:97:10) jupyterhub: at Module._compile (module.js:549:28) jupyterhub: at Object.Module._extensions..js (module.js:586:10) jupyterhub: at Module.load (module.js:494:32) jupyterhub: at tryModuleLoad (module.js:453:12) jupyterhub: at Function.Module._load (module.js:445:3) jupyterhub: at Module.</description>
     </item>
   </channel>

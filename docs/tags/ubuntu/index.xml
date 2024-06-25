@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ubuntu on Debuntarium</title>
-    <link>http://localhost:1313/tags/ubuntu/</link>
+    <link>https://debuntu.ru/tags/ubuntu/</link>
     <description>Recent content in Ubuntu on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 11 Mar 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>10. Установка BorgBackup в CentOS и Ubuntu</title>
-      <link>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</guid>
       <description>2022-03-11&#xA;1. Установка BorgBackup в CentOS 1.1. Добавление EPEL На CentOS необходим репо EPEL.&#xA;$ sudo yum install epel-release 1.2. Установка BorgBackup в CentOS7 $ sudo yum install borg ... Dependencies Resolved ============================================================================= Package Arch Version Repository Size ============================================================================= Installing: borgbackup x86_64 1.1.17-2.el7 epel7 1.0 M Installing for dependencies: libb2 x86_64 0.98.1-2.el7 epel7 20 k libzstd x86_64 1.5.2-1.el7 epel7 282 k python36-llfuse x86_64 1.0-2.el7 epel7 351 k python36-msgpack x86_64 0.5.6-5.el7 epel7 98 k python36-packaging noarch 16.</description>
     </item>
     <item>
       <title>Развёртывание сети OpenVPN</title>
-      <link>http://localhost:1313/manuals/vpn/razvyortyvanie-seti-openvpn/</link>
+      <link>https://debuntu.ru/manuals/vpn/razvyortyvanie-seti-openvpn/</link>
       <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/vpn/razvyortyvanie-seti-openvpn/</guid>
+      <guid>https://debuntu.ru/manuals/vpn/razvyortyvanie-seti-openvpn/</guid>
       <description>2020-03-31&#xA;Статья в процессе написания!&#xA;Я перерабатываю свою статью от 2014 года в соответствии с новыми стандартами и релизами OpenVPN.&#xA;Если лень много читать и хочется сразу запустить простую OpenVPN-сеть, то переходите к статье OpenVPN — это просто.&#xA;Reference manual for OpenVPN 2.4&#xA;Рекомендую полезную книгу для понимания симметричного, ассиметричного шифрования и много другого по этой темы: Саймон Сингх. Книга шифров: Тайная история шифров и их расшифровки&#xA;Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа</description>
     </item>
     <item>
       <title>OpenVPN — это просто</title>
-      <link>http://localhost:1313/manuals/vpn/openvpn-eto-prosto/</link>
+      <link>https://debuntu.ru/manuals/vpn/openvpn-eto-prosto/</link>
       <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/vpn/openvpn-eto-prosto/</guid>
+      <guid>https://debuntu.ru/manuals/vpn/openvpn-eto-prosto/</guid>
       <description>2020-03-22&#xA;Читая сейчас Reference manual for OpenVPN 2.4, я постарался привести свои слегка устаревшие знания по настройке OpenVPN-сети к современным реалиям. В настоящей инструкции, вместо RSA-сертификатов используется криптография на эллиптических кривых. Для шифрования канала выбран протокол с добавочной информацией, позволяющей контролировать целостность пакетов. tls-auth+key-direction заменены на tls-crypt. CBC -&amp;gt; GCM. SHA1 -&amp;gt; SHA512, dh -&amp;gt; ecdh-curve.&#xA;Введение OpenVPN прекрасный продукт для подключения&amp;hellip; (потом допишу).&#xA;Для использования OpenVPN сети в минимальной конфигурации необходимо всего три вещи:</description>
     </item>
     <item>
       <title>Настраиваем OpenVPN сервер на подключение клиентов</title>
-      <link>http://localhost:1313/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
+      <link>https://debuntu.ru/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
       <pubDate>Mon, 04 Aug 2014 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
+      <guid>https://debuntu.ru/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
       <description>2019-12-23 Опубликована свежая статья с упрощённым изложением OpenVPN - это просто&#xA;2014-08-04 Статья в процессе переделки и дополнений по мере освоения.&#xA;Дописать:&#xA;Использовать на одном сервере tun0 для объединения серверов и tun1 для подключения клиентов. Соответственно для серверов: iptables forward прозрачный для tun0 и запреты только на INPUT для соответствующих подсетей. Для рядовых клиентов tun1 запреты уже при входе в сеть. Например, только 3389 порт. Для админа пока отдельный gw. TLS и DH индивидуальны для разных openvpn-серверов и подключающихся к ним клиентов.</description>
     </item>
   </channel>

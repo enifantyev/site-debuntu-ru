@@ -2,80 +2,80 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>BorgBackup on Debuntarium</title>
-    <link>http://localhost:1313/tags/borgbackup/</link>
+    <link>https://debuntu.ru/tags/borgbackup/</link>
     <description>Recent content in BorgBackup on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 04 Apr 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/borgbackup/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/borgbackup/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>10. Установка BorgBackup в CentOS и Ubuntu</title>
-      <link>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</guid>
       <description>2022-03-11&#xA;1. Установка BorgBackup в CentOS 1.1. Добавление EPEL На CentOS необходим репо EPEL.&#xA;$ sudo yum install epel-release 1.2. Установка BorgBackup в CentOS7 $ sudo yum install borg ... Dependencies Resolved ============================================================================= Package Arch Version Repository Size ============================================================================= Installing: borgbackup x86_64 1.1.17-2.el7 epel7 1.0 M Installing for dependencies: libb2 x86_64 0.98.1-2.el7 epel7 20 k libzstd x86_64 1.5.2-1.el7 epel7 282 k python36-llfuse x86_64 1.0-2.el7 epel7 351 k python36-msgpack x86_64 0.5.6-5.el7 epel7 98 k python36-packaging noarch 16.</description>
     </item>
     <item>
       <title>12. Установка BorgBackup в AltLinux 9/10</title>
-      <link>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9-10/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9-10/</link>
       <pubDate>Mon, 14 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9-10/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9-10/</guid>
       <description>2022-03-14&#xA;Установка BorgBackup в AltLinux 10 Установка borg 1.1.17 apt-get install borg Установка borg 1.2 $ sudo apt-get install python3-module-pkgconfig python3-module-setuptools \ python3-module-wheel python3-module-msgpack libssl-devel python3-dev \ libacl-devel libacl libssl-devel liblz4-devel libzstd-devel libxxhash-devel srdout:&#xA;Reading Package Lists... Done Building Dependency Tree... Done libacl is already the newest version. The following extra packages will be installed: libncurses-devel libtinfo-devel libxxhash rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs The following NEW packages will be installed: libacl-devel liblz4-devel libncurses-devel libssl-devel libtinfo-devel libxxhash libxxhash-devel libzstd-devel python3-dev python3-module-msgpack python3-module-pkgconfig python3-module-setuptools python3-module-wheel rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs 0 upgraded, 16 newly installed, 0 removed and 0 not upgraded.</description>
     </item>
     <item>
       <title>13. Установка BorgBackup в RedOS 7.2</title>
-      <link>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</guid>
       <description>2022-03-17&#xA;Установка пакетов, необходимых для сборки borgbackup yum -y install openssl-devel python3-devel libacl-devel libacl lz4-devel \ libzstd-devel libxxhash-devel gcc-c++ fuse-devel Обновляем pip python3 -m pip install -U pip Добавляем borgbackup в /roo/.local/bin Пакеты pkgconfig setuptools wheel msgpack python3 -m pip install --user pkgconfig setuptools setuptools-scm wheel msgpack stdout:&#xA;WARNING: Running pip install with root privileges is generally not a good idea. Try `__main__.py install --user` instead. Collecting pip Downloading https://files.pythonhosted.org/packages/a4/6d/6463d49a933f547439d6b5b98b46af8742cc03ae83543e4d7688c2420f8b/pip-21.3.1-py3-none-any.whl (1.</description>
     </item>
     <item>
       <title>14. Настройка BorgBackup-сервера</title>
-      <link>http://localhost:1313/manuals/borgbackup/nastroyka-borg-servera/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/nastroyka-borg-servera/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/nastroyka-borg-servera/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/nastroyka-borg-servera/</guid>
       <description>2022-03-11&#xA;1. Настройка Borg-сервера 1.1. Добавляем системного пользователя &amp;lsquo;_borg&amp;rsquo;, под которым клиенты будут подключаться по ssh к серверу и запускать приложение borg. Пароль для этой УЗ не запоминаем, так как он не потребуется в дальнейшем, но без наличия пароля будет невозможно подключиться к borg-аккаунту через ssh.&#xA;export BORGUSERNAME=&amp;#34;_borg&amp;#34; useradd -r -s /bin/sh \ -m -p $(tr -dc &amp;#39;A-Za-z0-9&amp;#39; &amp;lt;/dev/urandom | head -c 21; echo) ${BORGUSERNAME} 1.2. Создаём папку .ssh, где позже разместим файлы необходимые для подключения по ssh.</description>
     </item>
     <item>
       <title>16. Настройка первого borg-репо</title>
-      <link>http://localhost:1313/manuals/borgbackup/nastroyka-pervogo-borg-repo/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/nastroyka-pervogo-borg-repo/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/nastroyka-pervogo-borg-repo/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/nastroyka-pervogo-borg-repo/</guid>
       <description>2022-03-11&#xA;1. Настройка первого репо для бэкапов 1.1. Создаём первый каталог для хранения первого репо и пробрасываем линк к нему в домашний каталог. По этой короткой ссылке будет удобно указывать название репо для архивов, вместо длинного полного пути к бэкап-каталогу.&#xA;export BORGUSERNAME=&amp;#34;_borg&amp;#34; export REPONAME=&amp;#34;repo1&amp;#34; export REPODIR=&amp;#34;/data/borgbackup/${REPONAME}&amp;#34; sudo mkdir -p ${REPODIR} sudo chown ${BORGUSERNAME}.${BORGUSERNAME} ${REPODIR} sudo -u ${BORGUSERNAME} /bin/bash -c &amp;#34;ln -s ${REPODIR} ~/&amp;#34; 1.2. Создаём ssh-ключи для будущих клиентов этого репо.</description>
     </item>
     <item>
       <title>18. Создание шлюза в удалённой ИС для доступа хостов к бэкап-серверу</title>
-      <link>http://localhost:1313/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</link>
       <pubDate>Wed, 16 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-shlyuza-v-udalonnoy-is-dlya-dostupa-khostov-k-bekap-serveru/</guid>
       <description>2022-03-16&#xA;Топология Имеется четыре машины в трёх Информационных Системах:&#xA;Information System 1 (IS1): backup server Information System 2 (IS2): awx host Information System 3 (IS3): backup client 1 backup client 2 +----------------------+ | IS1 | +-&amp;gt;| &amp;#39;backup-server&amp;#39;:ssh |&amp;lt;-X | | | | | +----------------------+ | | | IS2 | | +-&amp;lt;| &amp;#39;awx-host&amp;#39;:ssh |&amp;lt;-X | | | | | +----------------------+ | | | IS3 | | +-&amp;gt;| &amp;#39;backup-client1&amp;#39;:ssh |&amp;lt;-X | | | | +-&amp;gt;| &amp;#39;backup-client2&amp;#39;:ssh |&amp;lt;-X | | +----------------------+ Так как ssh-доступ между &amp;lsquo;Backup Server&amp;rsquo; и &amp;lsquo;Backup Clients&amp;rsquo; отсутствует, тогда как с хоста &amp;lsquo;Awx Host&amp;rsquo; мы можем подключиться к любому хосту, то решением является создание с &amp;lsquo;Awx Host&amp;rsquo; временного туннеля-шлюза между одним из Бэкап-клиентов, например, &amp;lsquo;backup-client1&amp;rsquo;, и Бэкап-сервером.</description>
     </item>
     <item>
       <title>20. Создание бэкапа всей системы с помощью LVM и BorgBackup</title>
-      <link>http://localhost:1313/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</guid>
       <description>2022-03-11&#xA;Подготовительные мероприятия Для создания LVM-снэпшотов требуется некоторое незанятое место на тех VG, для LV которых будут создаваться снэпшоты. В том случае, если на машине остановлены все сервисы, могущие создавать большой объём записываемых данных, то для создания снэпшотов много места не потребуется и достаточно, например, временно отключить swap и удалить соответствующий LV для освобождения пары Гигабайт под создание снэпшотов.&#xA;Возможно, будет правильней добавить к машине дополнительный диск достаточного объёма на постоянной основе, который будет использоваться не только для создания бэкапов, но и восстановления всей системы.</description>
     </item>
     <item>
       <title>30. Восстановление всей системы из бэкапа с помощью LVM и BorgBackup</title>
-      <link>http://localhost:1313/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</guid>
       <description>2022-03-11 – 2022-03-18&#xA;Подготовительные мероприятия В минимальной комплектации необходимо восстановить системные разделы /, /boot, /var. В максимальной комплектации потребуется восстановить ранее забэкапированные /data и прочее.&#xA;В любом случае, для распаковки этих данных потребуется достаточное незанятое место на Volume Group&amp;rsquo;ах, несущих восстанавливаемые Logical Volume&amp;rsquo;ы. В простейшем случае для этого необходимо добавить к машине дополнительный диск вместимостью перекрывающим объём восстанавливаемых данных.&#xA;Добавление пространства в Volume Group Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется.</description>
     </item>
     <item>
       <title>31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup</title>
-      <link>http://localhost:1313/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</link>
       <pubDate>Mon, 04 Apr 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</guid>
       <description>2022-04-04&#xA;Подготовительные мероприятия В минимальной комплектации необходимо восстановить системные разделы /, /boot, /var. В максимальной комплектации потребуется восстановить ранее забэкапированные /data и прочее.&#xA;В любом случае, для распаковки этих данных потребуется достаточное незанятое место на Volume Group&amp;rsquo;ах, несущих восстанавливаемые Logical Volume&amp;rsquo;ы. В простейшем случае для этого необходимо добавить к машине дополнительный диск вместимостью перекрывающим объём восстанавливаемых данных.&#xA;Добавление пространства в Volume Group Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется.</description>
     </item>
     <item>
       <title>40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup</title>
-      <link>http://localhost:1313/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
+      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
+      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
       <description>https://help.72to.ru/projects/alt-linux/wiki/Откат_на_старую_версию_ядра&#xA;$ uname -r 5.10.82-std-def-alt1 apt-repo add http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ x86_64 classic apt-repo add http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ noarch classic $ sudo apt-cache show kernel-image-std-def Package kernel-image-std-def is a virtual package provided by: kernel-image-std-def#2:5.10.82-alt1:p10+290646.100.3.1@1638544255 2:5.10.82-alt1:p10+290646.100.3.1@1638544255 kernel-image-std-def#2:5.10.102-alt1:p10+295939.100.1.1@1645810219 2:5.10.102-alt1:p10+295939.100.1.1@1645810219 You should explicitly select one to show. E: Package kernel-image-std-def is a virtual package with multiple providers. update-kernel -t std-def -r 2:5.10.102-alt1:p10+295939.100.1.1@1645810219 reboot $ uname -r 5.10.102-std-def-alt1 remove-old-kernels </description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>EncFS on Debuntarium</title>
-    <link>http://localhost:1313/tags/encfs/</link>
+    <link>https://debuntu.ru/tags/encfs/</link>
     <description>Recent content in EncFS on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 13 Oct 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/encfs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/encfs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Сборка deb-пакета свежего EncFS</title>
-      <link>http://localhost:1313/n/sborka-deb-paketa-svezhego-encfs/</link>
+      <link>https://debuntu.ru/n/sborka-deb-paketa-svezhego-encfs/</link>
       <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/sborka-deb-paketa-svezhego-encfs/</guid>
+      <guid>https://debuntu.ru/n/sborka-deb-paketa-svezhego-encfs/</guid>
       <description>2019-10-13&#xA;# apt-get install checkinstall Скачал свежий EncFS 1.9.5&#xA;$ sudo screen # cd /usr/src # wget https://github.com/vgough/encfs/releases/download/v1.9.5/encfs-1.9.5.tar.gz # tar -xvf encfs-1.9.5.tar.gz # cd encfs-1.9.5 Установил галку &amp;ldquo;Source code repositories&amp;rdquo; в &amp;ldquo;Update manager&amp;rdquo;-&amp;ldquo;Software Sources&amp;rdquo; для включения deb-src и установил зависимости пакета encfs:&#xA;# apt-get update # apt-get build-dep encfs Reading package lists... Done Building dependency tree Reading state information... Done The following NEW packages will be installed: autoconf automake autopoint autotools-dev cmake cmake-data debhelper dh-autoreconf dh-strip-nondeterminism dwz libfile-stripnondeterminism-perl libfuse-dev libjsoncpp1 librhash0 libselinux1-dev libsepol1-dev libtinyxml2-6 libtinyxml2-dev libtool libuv1 po-debconf 0 upgraded, 21 newly installed, 0 to remove and 1 not upgraded.</description>
     </item>
   </channel>

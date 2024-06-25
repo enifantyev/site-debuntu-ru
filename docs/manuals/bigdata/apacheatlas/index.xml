@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Atlas on Debuntarium</title>
-    <link>http://localhost:1313/manuals/bigdata/apacheatlas/</link>
+    <link>https://debuntu.ru/manuals/bigdata/apacheatlas/</link>
     <description>Recent content in Apache Atlas on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 28 Sep 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/manuals/bigdata/apacheatlas/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/manuals/bigdata/apacheatlas/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Сборка Apache Atlas 2.2.0 для Cloudera CDH 6.3.2</title>
-      <link>http://localhost:1313/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</link>
       <pubDate>Tue, 28 Sep 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2.2.0-dlya-cloudera-cdh-6.3.2/</guid>
       <description>⚠ Важное сообщение. Сборка проходит успешно только после комментирования строк с константами MATERIALIZED_VIEW. В исходниках предыдущей версии Apache Atlas 2.1.0 такие константы не применялись. MATERIALIZED_VIEW относится к таблицам Hive 3.x версии, тогда как в CDH 6.3.2 используется Hive 2.1.1.&#xA;⚠ В этой сборке предусмотривается возможность работы Apache Atlas с Elasticsearch 6.8.20, в расчёте на дальнейшее внедрение Amundsen. В мануале по Amundsen указано, что поддерживается работа только с Elasticsearch 6.x.</description>
     </item>
     <item>
       <title>Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)</title>
-      <link>http://localhost:1313/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
       <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
       <description>2021-08-05&#xA;1. Подготовка хоста Сначала хост добавляем в Cloudera-кластер, чтобы при установке Cloudera CDH были корректно добавлены локальные аккаунты и группы. В процессе добавления в кластер, перед включением TLS-аутентификации для Cloudera Agent, добавляем хост в домен. На хост установлены шлюзы для YARN, HBase, Hive, Kafka, Solr. 2. Установка Maven Сначала устанавливаем maven 3.0.5-17.el7 из стандартных репо для CentOS7:&#xA;$ sudo yum install maven ... Dependencies Resolved ===================================================================================================================== Package Arch Version Repository Size ===================================================================================================================== Installing: maven noarch 3.</description>
     </item>
   </channel>

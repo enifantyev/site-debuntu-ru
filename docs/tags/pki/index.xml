@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>PKI on Debuntarium</title>
-    <link>http://localhost:1313/tags/pki/</link>
+    <link>https://debuntu.ru/tags/pki/</link>
     <description>Recent content in PKI on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 19 Mar 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/pki/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/pki/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа</title>
-      <link>http://localhost:1313/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</link>
+      <link>https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</link>
       <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</guid>
+      <guid>https://debuntu.ru/a/chto-takoe-zakrytyi-klyuch-otkrytyi-klyuch-zapros-na-sertifikaciyu-sertifikat-otkrytogo-klyucha/</guid>
       <description>2020-03-19 Кое в чём я несколько плаваю, поэтому пытаюсь разобраться.&#xA;Что такое:&#xA;Закрытый Ключ Открытый Ключ Запрос На Сертификацию Сертификат Открытого Ключа Для понимания отношений между этими четырьмя сущностями, я составил краткий список:&#xA;Закрытый Ключ мы генерируем сами и для его безопасного хранения соблюдаем максимальную секретность. С помощью выбранного криптографического алгоритма, используя наш Закрытый Ключ, мы генерируем соответствующий ему Открытый Ключ, для хранения которого секретность не требуется. Используя наш Открытый Ключ, мы можем сформировать Запрос На Сертификацию, направив его в какую-либо Организацию, доступ к Информационной Системе которой нам требуется.</description>
     </item>
     <item>
       <title>Перевод Easy-RSA 3 Quickstart README</title>
-      <link>http://localhost:1313/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</link>
+      <link>https://debuntu.ru/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <guid>https://debuntu.ru/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</guid>
       <description>2019-10-22&#xA;Предисловие от меня В статье задействован правильный способ использования PKI для OpenVPN, когда операция создания приватных ключей с последующим запросом на сертификацию и операция выпуска сертификата ключа на основе запроса, выполняются на разных системах.&#xA;Easy-RSA 3 Quickstart README Это инструкция как быстро начать использовать Easy-RSA версии 3. Детальный хэлп по использованию и описанию команд может быть найден по команде ./easyrsa -h. Дополнительная документация может быть найдена в директории doc/.</description>
     </item>
     <item>
       <title>Простой Центр Сертификации для strongSwan IPsec</title>
-      <link>http://localhost:1313/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <link>https://debuntu.ru/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <guid>https://debuntu.ru/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
       <description>2019-04-22&#xA;Начиная с версии strongswan 5.1.1 использование префикса ipsec перед pki является опциональным.&#xA;Setting-up a Simple CA Using the strongSwan PKI Tool&#xA;Для работы PKI необходимо установить пакеты:&#xA;strongswan-starter strongswan-pki libcharon-extra-plugins # для поддержки ed25519 Используемые сокращения и термины:&#xA;CA, Certification Authority, Центр Сертификации. Здесь оформлен в виде директории, в которой лежат два файла: приватный ключ Центра Сертификации и самоподписанный сертификат Центра Сертификации. В этой же папке создаются пары (приватный ключ и соответствующий ему сертификат открытого ключа) файлов-ключей для удостоверения каждого члена IPsec-сети организации.</description>
     </item>
   </channel>

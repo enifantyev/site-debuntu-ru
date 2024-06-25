@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>VFS on Debuntarium</title>
-    <link>http://localhost:1313/tags/vfs/</link>
+    <link>https://debuntu.ru/tags/vfs/</link>
     <description>Recent content in VFS on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 01 Feb 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/vfs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/vfs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Описание файловой системы OverlayFS</title>
-      <link>http://localhost:1313/a/opisanie-failovoi-sistemy-overlayfs/</link>
+      <link>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</link>
       <pubDate>Sat, 01 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/opisanie-failovoi-sistemy-overlayfs/</guid>
+      <guid>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</guid>
       <description>2020-02-01&#xA;Не закончен, так как не хватает знаний. По мере изучения, постараюсь дополнить.&#xA;Данная файловая системы используется, например, в Docker. Часто её можно наблюдать на роутерах или других подобных устройствах, где оперативная запись информации ведётся во временную наложенную ФС, доступную до момента выключения устройства.&#xA;С помощью OverlayFS я объединяю домашние фото и видео каталоги для удобного просмотра. Так как архивы исходных фотографий доступны только для чтения, наложением рабочей папки, для сохранения временных или промежуточных файлов обработки, я добиваюсь удобства в обработке фоток.</description>
     </item>
     <item>
       <title>Описание VFS Виртуальной Файловой Системы Linux</title>
-      <link>http://localhost:1313/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <link>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <guid>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
       <description>Мой неполный перевод Overview of the Linux Virtual File System. Некоторые моменты, по различным причинам, я пока не понимаю, поэтому кое-что привожу в оригинале, как повод для дальнейших размышлений. Другие же моменты, как мне кажется, я понимаю, поэтому дополнил их некоторой информацией.&#xA;2020-01-18&#xA;Введение Виртуальная Файловая Система (называемая также Коммутатором Виртуальной Файловой Системы) является программным слоем, который предоставляет программам, выполняющимся в пользовательском пространстве, интерфейс взаимодействия с файловой системой. VFS-коммутатор также реализует в ядре Linux уровень абстракции для унификации подключения к нему разнообразных файловых систем.</description>
     </item>
   </channel>

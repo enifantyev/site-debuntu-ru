@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Zookeeper on Debuntarium</title>
-    <link>http://localhost:1313/tags/apache-zookeeper/</link>
+    <link>https://debuntu.ru/tags/apache-zookeeper/</link>
     <description>Recent content in Apache Zookeeper on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 11 Aug 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/apache-zookeeper/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/apache-zookeeper/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Получение прав Superuser&#39;а в ZooKeeper&#39;е Cloudera CDH 6.3.2</title>
-      <link>http://localhost:1313/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</link>
       <pubDate>Wed, 11 Aug 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apachezookeeper/poluchenie-prav-superusera-v-zookeepere-cloudera-cdh-6-3.2/</guid>
       <description>2021-08-11&#xA;Введение При удалении ноды /solr через zookeeper-client выводилась ошибка:&#xA;[zk: localhost:2181(CONNECTED) 0] rmr /solr The command &amp;#39;rmr&amp;#39; has been deprecated. Please use &amp;#39;deleteall&amp;#39; instead. Authentication is not valid : /solr/security Решение этой проблемы нашёл здесь: https://community.cloudera.com/t5/Support-Questions/How-to-delete-an-acl-in-zookeeper/td-p/292421&#xA;Алгоритм получения прав superuser&amp;rsquo;а Переходим в домашний каталог Zookeeper&amp;rsquo;а и запускаем генерацию дайджеста пароля для только что придуманного логина, под которым возобладаем superuser-правами в Zookeeper&amp;rsquo;е, например &amp;lsquo;zoosu:TsKlydBdycdq&amp;rsquo;:&#xA;# cd /usr/lib/zookeeper &amp;amp;&amp;amp; \ /usr/java/jdk1.8.0_181-cloudera/bin/java -cp &amp;#34;.</description>
     </item>
   </channel>

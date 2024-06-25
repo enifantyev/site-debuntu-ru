@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>YARN on Debuntarium</title>
-    <link>http://localhost:1313/tags/yarn/</link>
+    <link>https://debuntu.ru/tags/yarn/</link>
     <description>Recent content in YARN on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 09 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/yarn/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/yarn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>15. YARN. Настройка</title>
-      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</link>
       <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</guid>
       <description>2021-07-09&#xA;1. Перенастройка размещения log&amp;rsquo;ов В настройках YARN, используя фильтр &amp;lsquo;/var/log&amp;rsquo;, изменяем только следующие параметры, добавляя имя каталога &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Changes. 2. Настройка ACL Managing YARN ACLs&#xA;Во FreeIPA добавляем группу &amp;rsquo;test1_yarn_admins&amp;rsquo;: ADM_USER=&amp;#39;eugene&amp;#39; \ ADM_PASS=&amp;#39;JL9d]qtw$p=2=M2K=~z?|EU,&amp;#39; \ CL_NAME=&amp;#34;TEST1&amp;#34; # UPPERCASE \ CL_NAME_L=${CL_NAME,,} # lowercase ansible mgm -i cluster.inv -m shell -a &amp;#34;echo &amp;#39;${ADM_PASS}&amp;#39; | kinit ${ADM_USER} &amp;amp;&amp;amp; \ ipa group-add --desc=&amp;#39;YARN admins for cluster ${CL_NAME}&amp;#39; ${CL_NAME_L}_yarn_admins&amp;#34; В настройках YARN, используя фильтр «acl», изменяем только следующие параметры: В настройках YARN, используя фильтр «Admin Users Applications List», изменяем только следующие параметры: 3.</description>
     </item>
   </channel>

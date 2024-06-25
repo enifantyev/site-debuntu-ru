@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Sqoop on Debuntarium</title>
-    <link>http://localhost:1313/tags/apache-sqoop/</link>
+    <link>https://debuntu.ru/tags/apache-sqoop/</link>
     <description>Recent content in Apache Sqoop on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 01 Nov 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/apache-sqoop/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/apache-sqoop/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Использование Apache Sqoop для импорта/экспорта данных между PostgreSQL и HDFS</title>
-      <link>http://localhost:1313/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
+      <link>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
+      <guid>https://debuntu.ru/a/ispolzovanie-apache-sqoop-dlya-importa-eksporta-dannyh-mezhdu-postgresql-i-hdfs/</guid>
       <description>2020-11-01&#xA;Использованные материалы:&#xA;Sqoop User Guide (v1.4.6) An HDFS Tutorial for Data Analysts Stuck with Relational Databases Импорт из PostgreSQL в HDFS Подготовка к импорту PostgreSQL должен слушать на внешнем порту, чтобы к нему была возможность подключиться по сети. Если в PostgreSQL используется сетевой порт, отличный от стандартного (5432), то его необходимо указывать в подаваемых командах.&#xA;Выполнять &amp;lsquo;sqoop import&amp;rsquo; не обязательно с того хоста, у которого есть роль &amp;lsquo;Sqoop&amp;rsquo;. Он работает с любого хоста кластера, у которого есть соответствующий gateway в тот сервис, куда импортируются/экспортируются данные.</description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LibreOffice on Debuntarium</title>
-    <link>http://localhost:1313/tags/libreoffice/</link>
+    <link>https://debuntu.ru/tags/libreoffice/</link>
     <description>Recent content in LibreOffice on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 27 Nov 2018 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/libreoffice/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/libreoffice/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AppArmor препятствует электронному подписыванию документов LibreOffice</title>
-      <link>http://localhost:1313/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</link>
+      <link>https://debuntu.ru/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</link>
       <pubDate>Tue, 27 Nov 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</guid>
+      <guid>https://debuntu.ru/n/apparmor-prepyatstvuet-elektronnomu-podpisyvaniyu-dokumentov-libreoffice/</guid>
       <description>2018-11-27&#xA;Description При попытке подписать документ, в списке доступных подписей не наблюдаю доступных ключей. В менеджере криптографических ключей seahorse, вызываемого из libreoffice, также пустые списки.&#xA;В syslog заносятся записи:&#xA;apparmor=&amp;#34;DENIED&amp;#34; operation=&amp;#34;open&amp;#34; profile=&amp;#34;libreoffice-soffice//gpg&amp;#34; name=&amp;#34;/home/user/.gnupg/trustdb.gpg&amp;#34; comm=&amp;#34;gpg&amp;#34; requested_mask=&amp;#34;w&amp;#34; denied_mask=&amp;#34;w&amp;#34; apparmor=&amp;#34;DENIED&amp;#34; operation=&amp;#34;connect&amp;#34; profile=&amp;#34;libreoffice-soffice//gpg&amp;#34; name=&amp;#34;/run/user/1000/gnupg/S.gpg-agent&amp;#34; comm=&amp;#34;gpg&amp;#34; requested_mask=&amp;#34;wr&amp;#34; denied_mask=&amp;#34;wr&amp;#34; Solution В файле /etc/apparmor.d/abstractions/gnupg добавил строку:&#xA;owner /run/user/*/gnupg/S.gpg-agent rw, В конце файла /etc/apparmor.d/usr.lib.libreoffice.soffice.bin, в секции &amp;ldquo;profile gpg&amp;rdquo;, добавил строку:&#xA;#include &amp;lt;abstractions/gnupg&amp;gt; </description>
     </item>
   </channel>

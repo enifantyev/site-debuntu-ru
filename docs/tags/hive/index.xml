@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hive on Debuntarium</title>
-    <link>http://localhost:1313/tags/hive/</link>
+    <link>https://debuntu.ru/tags/hive/</link>
     <description>Recent content in Hive on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 02 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/hive/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/hive/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>18. Hive. Установка и настройка</title>
-      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/</link>
+      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/</guid>
       <description>Использованные материалы Manually Configuring TLS/SSL Encryption for CDH Services Добавление сервиса Hive В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Выбираем Hive. Выбираем зависимости: Распределяем роли. Рекомендуется устанавливать роли Hive Gateway на узлы кластера с ролью Spark Gateway, иначе Hive-таблицы не будут доступны для Spark&amp;rsquo;а. Настройка базы данных. Так как сейчас используется встроенная база данных, то никаких дополнительных действий не производим, а нажимаем кнопку &amp;lsquo;Test Connection&amp;rsquo;. На шаге Review Changes ничего не меняем: Наблюдаем запуск ролей.</description>
     </item>
   </channel>

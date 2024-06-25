@@ -1,5 +1,5 @@
 baseURL = 'https://debuntu.ru/'
-publishDir = "public"
+publishDir = "docs"
 languageCode = 'ru-ru'
 title = 'Debuntarium'
 contentDir = "content/ru"

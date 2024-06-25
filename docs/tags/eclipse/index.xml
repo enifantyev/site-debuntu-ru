@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Eclipse on Debuntarium</title>
-    <link>http://localhost:1313/tags/eclipse/</link>
+    <link>https://debuntu.ru/tags/eclipse/</link>
     <description>Recent content in Eclipse on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 19 Feb 2010 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/eclipse/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/eclipse/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка Eclipse 3.6 (Helios) в Ubuntu</title>
-      <link>http://localhost:1313/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</link>
+      <link>https://debuntu.ru/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</link>
       <pubDate>Fri, 19 Feb 2010 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-eclipse-3-6-helios-v-ubuntu/</guid>
       <description> </description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>TrueCrypt on Debuntarium</title>
-    <link>http://localhost:1313/tags/truecrypt/</link>
+    <link>https://debuntu.ru/tags/truecrypt/</link>
     <description>Recent content in TrueCrypt on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/truecrypt/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/truecrypt/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка и использование Truecrypt</title>
-      <link>http://localhost:1313/n/ustanovka-i-ispolzovanie-truecrypt/</link>
+      <link>https://debuntu.ru/n/ustanovka-i-ispolzovanie-truecrypt/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/ustanovka-i-ispolzovanie-truecrypt/</guid>
+      <guid>https://debuntu.ru/n/ustanovka-i-ispolzovanie-truecrypt/</guid>
       <description> </description>
     </item>
   </channel>

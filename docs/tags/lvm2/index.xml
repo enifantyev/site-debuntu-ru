@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LVM2 on Debuntarium</title>
-    <link>http://localhost:1313/tags/lvm2/</link>
+    <link>https://debuntu.ru/tags/lvm2/</link>
     <description>Recent content in LVM2 on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 03 Sep 2018 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/lvm2/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/lvm2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LVM2 — создание, перемещение и удаление логических томов</title>
-      <link>http://localhost:1313/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
+      <link>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
+      <guid>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
       <description>2018-09-03&#xA;Создание Группы Томов (Volume Group) Для имени Группы Томов (VG) на одиночном сервере я обычно выбираю значение &amp;ldquo;vg&amp;rdquo;. Потом, при желании, его легко можно переименовать в любой момент. В Группу Томов можно добавить любое блочное устройство.&#xA;После добавления устройства в VG:&#xA;# vgcreate /dev/vg /dev/sde /dev/sdd1 /dev/sdd2 /dev/md10 /dev/mapper/pv5 можно получить информацию о VG:&#xA;# vgdisplay /dev/vg переименовать VG:&#xA;# vgrename /dev/vg /dev/vg0 получить информацию о конкретном PV:&#xA;# pvdisplay /dev/md10 Создание Логического Тома (Logical Volume) Создать LV с именем /dev/vg/dock в любом свободном месте:</description>
     </item>
   </channel>

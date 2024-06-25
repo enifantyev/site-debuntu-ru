@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Colorized Stdout on Debuntarium</title>
-    <link>http://localhost:1313/tags/colorized-stdout/</link>
+    <link>https://debuntu.ru/tags/colorized-stdout/</link>
     <description>Recent content in Colorized Stdout on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 19 Oct 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/colorized-stdout/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/colorized-stdout/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Как сохранить расцвеченный выхлоп stdout в файл</title>
-      <link>http://localhost:1313/n/kak-sohranit-rascvechennyi-stdout-v-fail/</link>
+      <link>https://debuntu.ru/n/kak-sohranit-rascvechennyi-stdout-v-fail/</link>
       <pubDate>Tue, 19 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/kak-sohranit-rascvechennyi-stdout-v-fail/</guid>
+      <guid>https://debuntu.ru/n/kak-sohranit-rascvechennyi-stdout-v-fail/</guid>
       <description>2021-10-19&#xA;Использованные ссылки:&#xA;https://superuser.com/questions/352697/preserve-colors-while-piping-to-tee Установка необходимого пакета, который содержим unbuffer:&#xA;apt install expect-dev # or yum install expect-devel Запускам, например, сборку maven-приложения через unbuffer и сохраняем расцвеченный вывод mvn в файл install_1.log:&#xA;unbuffer mvn clean -DskipTests package -Pdist -X -T 4 2&amp;gt;&amp;amp;1 | tee install_1.log Смотрим ранее сохраннёный лог-файл с ESC-кодами:&#xA;less -r install_1.log </description>
     </item>
   </channel>

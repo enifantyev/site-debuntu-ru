@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>DB on Debuntarium</title>
-    <link>http://localhost:1313/tags/db/</link>
+    <link>https://debuntu.ru/tags/db/</link>
     <description>Recent content in DB on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 03 Jul 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/db/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/db/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Best Practices for Using LDAP Link with Vertica (перевод)</title>
-      <link>http://localhost:1313/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
+      <link>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
       <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
+      <guid>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
       <description>2020-07-03&#xA;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&#xA;Итак, вы настроили и включили LDAP Link и работаете с Vertica, что позволяет синхронизировать пользователей и группы LDAP с соответствующими пользователями и ролями Vertica. Но вы по прежнему должны управлять пользователями и ролями в Vertica, которые вы не создавали с помощью LDAP Link. На следующем рисунке показано, как может выглядеть ваша конфигурация.&#xA;Но есть несколько рекомендаций, которым вы должны следовать, чтобы убедиться, что вы случайно не потеряете ни пользователей, ни данные.</description>
     </item>
     <item>
       <title>Бэкап дампа базы Postgresql и его восстановление на новом сервере</title>
-      <link>http://localhost:1313/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
+      <link>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
+      <guid>https://debuntu.ru/a/bekap-dampa-bazy-postgresql-i-ego-vosstanovlenie-na-novom-servere/</guid>
       <description>2020-04-21&#xA;Создание дампа может занять продолжительное время, поэтому работы производим через screen, который позволит нам сохранить работающий сеанс на сервере, даже если мы отключимся случайно или по какой-то причине.&#xA;Работы на исходном сервере Сбор сведений перед созданием дампа На исходном сервере запоминаем версию postgresql:&#xA;# rpm -qa|grep sql postgresql11-server-11.4-1PGDG.rhel7.x86_64 postgresql11-11.4-1PGDG.rhel7.x86_64 postgresql11-libs-11.4-1PGDG.rhel7.x86_64 Смотрим who и активные сетевые подключения через ss -tul, чтобы удостовериться в своём одиноком присутствии на сервере.&#xA;Ознакомимся со свободным местом на сервере, где увидим, что есть свободные 340G:</description>
     </item>
     <item>
       <title>Установка PostgreSQL 9.0 на Debian 6.0</title>
-      <link>http://localhost:1313/a/ustanovka-postgresql-90-na-debian-60/</link>
+      <link>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</link>
       <pubDate>Thu, 17 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/ustanovka-postgresql-90-na-debian-60/</guid>
+      <guid>https://debuntu.ru/a/ustanovka-postgresql-90-na-debian-60/</guid>
       <description> </description>
     </item>
   </channel>

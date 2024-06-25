@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mikrotik on Debuntarium</title>
-    <link>http://localhost:1313/tags/mikrotik/</link>
+    <link>https://debuntu.ru/tags/mikrotik/</link>
     <description>Recent content in Mikrotik on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 05 Oct 2018 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/mikrotik/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/mikrotik/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mikrotik: Wireless WDS Mesh With Mesh Interface</title>
-      <link>http://localhost:1313/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</link>
+      <link>https://debuntu.ru/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</link>
       <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</guid>
+      <guid>https://debuntu.ru/n/mikrotik-wireless-wds-mesh-with-mesh-interface/</guid>
       <description>2018-10-05&#xA;Предварительная настройка mikrotik routers Рабочая частота, имя сети, безопасность wireless-интерфейсов должны быть одинаковыми на всех точках.&#xA;На каждом mesh-узле произвести следующие одинаковые действия. Добавление mesh-интерфейса: interface mesh add name=mesh4 Добавление wireless-интерфейса с указанием автоматического добавления порта для wds-моста: interface wireless add wlan4 master-interface=wlan1 ssid=MESHNET mode=ap-bridge wds-mode=dynamic-mesh wds-default-bridge=mesh4 Добавление порта mesh для возможности подключения клиентов: interface mesh port add interface=wlan4 mesh=mesh4 На каждом mesh-узле указываем разные локальные ip-адреса. Указание адреса на mesh-интерфейсе первого узла: ip address add address=192.</description>
     </item>
   </channel>

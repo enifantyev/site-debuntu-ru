@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apache Airflow on Debuntarium</title>
-    <link>http://localhost:1313/tags/apache-airflow/</link>
+    <link>https://debuntu.ru/tags/apache-airflow/</link>
     <description>Recent content in Apache Airflow on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 23 Feb 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/apache-airflow/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/apache-airflow/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
-      <link>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
       <description>Использованные материалы Apache Airflow Documentation Quick Start Предыдущий опыт настройки Airflow прошлых версий. Заметки В шагах инструкции пока отсутствует. Важно опроовать. После скачивания свежего файла с зависимостями дл apache-airflow, необходимо изменить в этом файле строку &amp;lsquo;Flask-AppBuilder==3.1.1&amp;rsquo; на &amp;lsquo;Flask-AppBuilder==3.2.0&amp;rsquo;, чтобы заработал мэппинг между пользовательскими группами в IPA и ролями в Airflow. Для уже установленных экземпляров Airflow, можно изменить соответствующую строку в файле &amp;lsquo;/usr/local/lib/python3.6/site-packages/apache_airflow-2.0.1.dist-info/METADATA&amp;rsquo;. Если пользовательские DAG&amp;rsquo;и запускаются через &amp;lsquo;run_as_user&amp;rsquo;, то необходимо обеспечить чтение файла /etc/airflow/airflow.</description>
     </item>
     <item>
       <title>Установка Apache Airflow и настройка его для работы с Apache Hadoop (устарело)</title>
-      <link>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
+      <link>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
+      <guid>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
       <description>2020-10-23&#xA;Эта версия Airflow устарела. Установка актуальной, второй версии, описана здесь.&#xA;Использованные материалы Apache Airflow Documentation Заметки Если в DAG&amp;rsquo;е указать &amp;lsquo;run_as_user&amp;rsquo;: &amp;rsquo;eugene&amp;rsquo;, то Airflow запускает процесс от имени пользователя командой sudo -E -H, в результате которой процесс пользователя наследует переменные родительского процесса, а переменная HOME меняется на пользовательскую директорию в /home. Надо дать права на рабочую папку airflow для группы пользователей _airflow-dev, так как запускаемый дочерний run_as процесс от имени пользователя, должен иметь право на запись в рабочую папку Airflow.</description>
     </item>
   </channel>

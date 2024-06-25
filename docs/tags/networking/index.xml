@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Networking on Debuntarium</title>
-    <link>http://localhost:1313/tags/networking/</link>
+    <link>https://debuntu.ru/tags/networking/</link>
     <description>Recent content in Networking on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 30 Jan 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/networking/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/networking/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Path MTU Discovery и прочее связанное с этим</title>
-      <link>http://localhost:1313/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</link>
+      <link>https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</link>
       <pubDate>Thu, 30 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</guid>
+      <guid>https://debuntu.ru/a/path-mtu-discovery-i-prochee-svyazannoe-s-etim/</guid>
       <description>2020-01-30&#xA;Переписать, дополнить&#xA;Maximum Transmission Unit (MTU) MTU — эта аббревиатура составлена из слов Maximum Transmission Unit, что можно перевести как Максимальный Передающийся Блок. Блок состоит из заголовка и полезной нагрузки. Под MTU понимается максимально возможный размер передаваемой полезной нагрузки.&#xA;Содержимое сетевого пакета Ethernet-кадр (Ethernet frame) Размер ethernet-кадра в ethernet-сети варьируется в пределах 1514-1538? байт, что слагается из:&#xA;заголовок (header) кадра, размером 14–38 байт, содержащий, из важного для наблюдателя, следующие поля: MAC-адрес получателя в актуальном физическом сегменте сети MAC-адрес отправителя в этом же сегменте сети поле EtherType (IPv4: 0x0800, или ARP: 0x0806, или &amp;hellip;) полезная нагрузка (payload), размер которой может достигать 1500 байт, и в которой, для нашего примера, транспортируется IP-датаграмма с инкапсулированным в неё TCP-сегментом.</description>
     </item>
   </channel>

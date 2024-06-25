@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ansible Ad-Hoc on Debuntarium</title>
-    <link>http://localhost:1313/tags/ansible-ad-hoc/</link>
+    <link>https://debuntu.ru/tags/ansible-ad-hoc/</link>
     <description>Recent content in Ansible Ad-Hoc on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 12 Mar 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/ansible-ad-hoc/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://debuntu.ru/tags/ansible-ad-hoc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Выполнение ad-hoc absible команд</title>
-      <link>http://localhost:1313/n/vypolnenie-ad-hoc-absible-komand/</link>
+      <link>https://debuntu.ru/n/vypolnenie-ad-hoc-absible-komand/</link>
       <pubDate>Fri, 12 Mar 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/n/vypolnenie-ad-hoc-absible-komand/</guid>
+      <guid>https://debuntu.ru/n/vypolnenie-ad-hoc-absible-komand/</guid>
       <description>2021-03-12&#xA;Для предотвращения предупреждения о несоответствии ssh-ключей, можно установить переменную: export ANSIBLE_HOST_KEY_CHECKING=False или, если не работает, то: export ANSIBLE_SSH_ARGS=&amp;quot;-o UserKnownHostsFile=/dev/null&amp;quot; Для дебаггинга: export ANSIBLE_DEBUG=1 Простейший inventory-файл представляет собой текстовый файл со списком из ip-адресов и/или dns-имён хостов. Вместо указания инвентори-файла, можно указать ip-адрес. Далее примеры:&#xA;# Для предотвращения предупреждения о несоответствии ssh-ключей export ANSIBLE_HOST_KEY_CHECKING=False # важна запятая после указания одного ip-адреса или dns-имени ansible all -i 10.1.112.1, -m shell -a &amp;#39;hostname&amp;#39; # здесь доп запятая не нужна ansible all -i 10.</description>
     </item>
   </channel>
