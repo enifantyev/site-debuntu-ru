@@ -16,7 +16,7 @@ contentDir = "content/ru"
     disable = false
 
 [security]
-  enableInlineShortcodes = false
+  enableInlineShortcodes = true
 
   [security.exec]
     allow = ['^(dart-)?sass(-embedded)?$', '^go$', '^npx$', '^postcss$', '^asciidoctor$']
@@ -49,6 +49,12 @@ contentDir = "content/ru"
     tabWidth = 4
 
   [markup.asciidocExt]
+    backend = 'html5'
+    extensions = ["asciidoctor-html5s","asciidoctor-diagram","asciidoctor-tabs"]
+    workingFolderCurrent = true
+    trace = true
+    verbose = true
+
     [markup.asciidocExt.attributes]
       allow-uri-read = ""
       source-highlighter = "rouge"
