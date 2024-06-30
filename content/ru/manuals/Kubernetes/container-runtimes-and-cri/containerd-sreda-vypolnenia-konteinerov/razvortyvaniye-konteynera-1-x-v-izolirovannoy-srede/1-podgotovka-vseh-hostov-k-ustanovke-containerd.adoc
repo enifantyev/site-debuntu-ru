@@ -1,0 +1,28 @@
+---
+title: "1. Подготовка всех хостов к установке containerd"
+date: 2024-05-18
+weight: 10
+tags:
+  - containerd
+  - cri
+slug: podgotovka-vseh-hostov-k-ustanovke-containerd
+---
+:sectnums:
+=== Добавление загрузки модуля overlay в систему
+Модуль *overlay* добавляет в систему поддержку файловой системы OverlayFS. Эта файловая система используется для хранения слоёв образов, которые использует containerd.
+
+[NOTE]
+====
+Этот шаг можно пропустить, так как загрузка модуля overlay выполняется через systemd-юнит 'containerd.service', где присутствует строка 'ExecStartPre=-/sbin/modprobe overlay'.
+====
+
+1. Выполните:
++
+[,console]
+----
+cat << EOF > /etc/modules-load.d/containerd.conf
+overlay
+EOF
+
+modprobe overlay
+----

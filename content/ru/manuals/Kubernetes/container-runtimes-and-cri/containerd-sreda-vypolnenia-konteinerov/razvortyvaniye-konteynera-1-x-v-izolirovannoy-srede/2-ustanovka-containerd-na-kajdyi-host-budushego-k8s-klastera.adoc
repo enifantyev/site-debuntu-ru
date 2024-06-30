@@ -1,0 +1,71 @@
+---
+title: "2. Установка containerd на каждый хост будущего k8s-кластера"
+date: 2024-05-18
+weight: 10
+tags:
+  - containerd
+  - cri
+slug: ustanovka-containerd-na-kajdyi-host-budushego-k8s-klastera
+---
+:sectnums:
+
+=== Скачивание компонентов containerd из внутреннего raw-репозитория
+. Если внутренний репозиторий требует аутентификации, то задайте учётные данные для скачивания компонентов containerd:
++
+[,console]
+----
+set +o history
+USER_PASS='nifantevea:xxxxxxxxxxxxxxx'
+set -o history
+----
+
+. Скачайте компоненты, предварительно изменив номера версий на актуальные:
++
+[,console]
+----
+CONTAINERD_VER='1.7.16'
+CONTAINERD_SERVICE_VER='231012'
+RUNC_VER='1.1.12'
+INTERNAL_REPO='http://nexus.example.org:8081/repository/evolut_raw'
+REPO_FOLDER='kubernetes/containerd'
+ 
+mkdir -p /root/tmp
+cd /root/tmp
+ 
+curl -LO -u $USER_PASS ${INTERNAL_REPO}/${REPO_FOLDER}/containerd-${CONTAINERD_VER}-linux-amd64.tar.gz
+curl -LO -u $USER_PASS ${INTERNAL_REPO}/${REPO_FOLDER}/containerd.service.${CONTAINERD_SERVICE_VER}
+curl -LO -u $USER_PASS ${INTERNAL_REPO}/${REPO_FOLDER}/runc.amd64-${RUNC_VER}
+----
+
+=== Установка containerd
+. Распакуйте containerd в каталог `/usr/local`:
++
+[,console]
+----
+tar Cxvf /usr/local containerd-${CONTAINERD_VER}-linux-amd64.tar.gz
+ 
+bin/
+bin/containerd-shim-runc-v2
+bin/containerd-stress
+bin/containerd
+bin/containerd-shim-runc-v1
+bin/ctr
+bin/containerd-shim
+----
+
+=== Добавление в систему systemd-юнит containerd
+. Добавьте в Systemd ранее скачанный юнит:
++
+[,console]
+----
+cp containerd.service.${CONTAINERD_SERVICE_VER} /etc/systemd/system/containerd.service
+systemctl daemon-reload
+----
+
+=== Установка runc
+. Скопируйте ранее скачанный runc в каталог `/usr/local/sbin/`:
++
+[,console]
+----
+install -m 755 runc.amd64-${RUNC_VER} /usr/local/sbin/runc
+----

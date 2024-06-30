@@ -1,0 +1,17 @@
+---
+title: "5. Запуск демона containerd"
+date: 2024-05-18
+weight: 10
+tags:
+  - containerd
+  - cri
+slug: start-daemon-containerd
+---
+:sectnums:
+
+. Включите и запустите демон containerd:
++
+[,console]
+----
+systemctl enable --now containerd
+----

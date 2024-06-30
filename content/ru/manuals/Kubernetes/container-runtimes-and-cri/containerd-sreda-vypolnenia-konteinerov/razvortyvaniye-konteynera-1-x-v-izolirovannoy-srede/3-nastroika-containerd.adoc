@@ -1,0 +1,46 @@
+---
+title: "3. Настойка containerd"
+date: 2024-05-18
+weight: 10
+tags:
+  - containerd
+  - cri
+slug: nastroika-containerd
+---
+:sectnums:
+. Сгенерируйте конфиг по-умолчанию для containerd:
++
+[,console]
+----
+mkdir -p /etc/containerd
+containerd config default > /etc/containerd/config.toml
+----
+
+. Включите в конфиге использование 'Control Group':
++
+[,console]
+----
+sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+----
+
+. Переключите версию pause-образа:
++
+[,console]
+----
+sed -i "s|pause:3.8|pause:3.9|" /etc/containerd/config.toml
+----
++
+[NOTE]
+====
+Почему меняем образ pause:<3.9 на pause:3.9?
+Потому что видел в логах инициализации кластера фразу: 'detected that the sandbox image "registry.k8s.io/pause:3.8" of the container runtime is inconsistent with that used by kubeadm. It is recommended that using "registry.k8s.io/pause:3.9" as the CRI sandbox image.'
+
+Перепроверить!
+====
+ 
+. Если требуется, то приведите опцию 'bin_dir' в секции '[plugins."io.containerd.grpc.v1.cri".cni]' к актуальному значению. В опции указан каталог, где будет установлен пакет cni-plugins и куда будут распаковываться устанавливаемые плагины, например cilium:
++
+[,source]
+----
+bin_dir = "/opt/cni/bin"
+----
