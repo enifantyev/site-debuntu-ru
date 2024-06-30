@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Make on Debuntarium</title>
-    <link>https://debuntu.ru/tags/make/</link>
+    <link>http://localhost:1313/tags/make/</link>
     <description>Recent content in Make on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 01 Apr 2011 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/make/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/make/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Как собрать новое ядро linux</title>
-      <link>https://debuntu.ru/n/kak-sobrat-novoe-yadro-linux/</link>
+      <link>http://localhost:1313/n/kak-sobrat-novoe-yadro-linux/</link>
       <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/kak-sobrat-novoe-yadro-linux/</guid>
+      <guid>http://localhost:1313/n/kak-sobrat-novoe-yadro-linux/</guid>
       <description>2011-04-01&#xA;Взято с: http://ebash.in/howto/Kak-sobrat-svoe-yadro-v-Debian-Etch&#xA;В каждом дистрибутиве имеется своя специфика сборки ядра и это HowTo ориентировано именно на то, как это сделать в Debian Etch. Так же раскрывается вопрос, как наложить тот или иной патч на ядро, когда необходима поддержка определенной функциональности или нового оборудования в Вашей системе. HowTo предназначено в первую очередь на более подготовленных пользователей и нет никаких гарантий, что этот способ будет работать так, как надо и все описанные действия и ответственность ложатся на Вас.</description>
     </item>
   </channel>

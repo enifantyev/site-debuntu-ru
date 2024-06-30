@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>NextCloud on Debuntarium</title>
-    <link>https://debuntu.ru/tags/nextcloud/</link>
+    <link>http://localhost:1313/tags/nextcloud/</link>
     <description>Recent content in NextCloud on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 24 Mar 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/nextcloud/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/nextcloud/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Настройка OAuth2-авторизации Google-аккаунтов в NextCloud</title>
-      <link>https://debuntu.ru/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</link>
+      <link>http://localhost:1313/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</guid>
+      <guid>http://localhost:1313/n/nastroika-oauth2-avtorizacii-google-akkauntov-v-nextcloud/</guid>
       <description>2019-03-24&#xA;Включение OAuth2 в консоли разработчика console.developers.google.com Заходим https://console.developers.google.com под своей учётной записью. Создаём новый проект, например &amp;ldquo;Nextcloud Social Login&amp;rdquo;. &amp;ldquo;Местоположение&amp;rdquo;: &amp;ldquo;Без организации&amp;rdquo; – в этом случае параметр &amp;ldquo;Тип приложения&amp;rdquo; в &amp;ldquo;Окно запроса доступа OAuth&amp;rdquo; будет недоступен (см. пункт 7); &amp;ldquo;Название нашей организации&amp;rdquo; – если учётная запись принадлежит каком-либо домену; Дожидаемся создания нашего нового проекта и переключаемся в него. Заходим в раздел &amp;ldquo;API и сервисы&amp;rdquo; / &amp;ldquo;Учётные данные&amp;rdquo;. Здесь выбираем создание учётных данных &amp;ldquo;Идентификатор клиент OAuth&amp;rdquo;.</description>
     </item>
   </channel>

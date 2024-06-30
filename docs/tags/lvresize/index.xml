@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Lvresize on Debuntarium</title>
-    <link>https://debuntu.ru/tags/lvresize/</link>
+    <link>http://localhost:1313/tags/lvresize/</link>
     <description>Recent content in Lvresize on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 26 Dec 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/lvresize/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/lvresize/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
-      <link>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <link>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
       <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <guid>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
       <description>Старая статья. В тот момент я ещё не знал, что btrfs сам способен подменить LVM. Я отнёсся к ней, как к обычной файловой системе.&#xA;2019-12-26&#xA;Я произвёл несколько опытов по сжатию LVM тома с Btrfs на борту и сделал для себя следующие выводы.&#xA;Описание безопасного способа Самый безопасный способ заключается в следующем: с LVM2 использовать ext4 с возможностью уменьшения и увеличения тома. Или использовать надёжную xfs с возможностью только увеличения тома.</description>
     </item>
   </channel>

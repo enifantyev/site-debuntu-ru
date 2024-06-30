@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cryptsetup on Debuntarium</title>
-    <link>https://debuntu.ru/tags/cryptsetup/</link>
+    <link>http://localhost:1313/tags/cryptsetup/</link>
     <description>Recent content in Cryptsetup on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 10 Dec 2018 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/cryptsetup/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/cryptsetup/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>cryptsetup короткая памятка</title>
-      <link>https://debuntu.ru/n/cryptsetup-korotkaya-pamyatka/</link>
+      <link>http://localhost:1313/n/cryptsetup-korotkaya-pamyatka/</link>
       <pubDate>Mon, 10 Dec 2018 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/cryptsetup-korotkaya-pamyatka/</guid>
+      <guid>http://localhost:1313/n/cryptsetup-korotkaya-pamyatka/</guid>
       <description>2018-12-10&#xA;Создание крипто-тома с двумя ключами. В первом слоте используется ключевой файл, а в пятом парольная фраза:&#xA;# cryptsetup luksFormat /dev/md11 pv11.key # cryptsetup -d pv11.key luksOpen /dev/md11 pv11 # cryptsetup luksAddKey --key-slot 5 /dev/md11 Enter password: ххххххххххххххх После применения cryptsetup, для указанного тома (/dev/md11) UUID изменится на новый, а TYPE станет &amp;ldquo;crypto_LUKS&amp;rdquo;. Например, был том:&#xA;# blkid /dev/md11 /dev/md11: UUID=&amp;#34;394d0e20-fbbf-11e8-b8b2-272ad0095723&amp;#34; TYPE=&amp;#34;ext4&amp;#34; После применения cryptsetup:&#xA;# blkid /dev/md11 /dev/md11: UUID=&amp;#34;2c326492-fbbf-11e8-83e1-db657904e51b&amp;#34; TYPE=&amp;#34;crypto_LUKS&amp;#34; поэтому, при необходимости, необходимо поправить те скрипты, где используется том по ссылке /dev/disk/by-uuid/.</description>
     </item>
   </channel>

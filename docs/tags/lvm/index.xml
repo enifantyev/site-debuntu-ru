@@ -2,52 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LVM on Debuntarium</title>
-    <link>https://debuntu.ru/tags/lvm/</link>
+    <link>http://localhost:1313/tags/lvm/</link>
     <description>Recent content in LVM on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 04 Apr 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/lvm/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/lvm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
-      <link>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <link>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
       <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <guid>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
       <description>Старая статья. В тот момент я ещё не знал, что btrfs сам способен подменить LVM. Я отнёсся к ней, как к обычной файловой системе.&#xA;2019-12-26&#xA;Я произвёл несколько опытов по сжатию LVM тома с Btrfs на борту и сделал для себя следующие выводы.&#xA;Описание безопасного способа Самый безопасный способ заключается в следующем: с LVM2 использовать ext4 с возможностью уменьшения и увеличения тома. Или использовать надёжную xfs с возможностью только увеличения тома.</description>
     </item>
     <item>
       <title>LVM2 — создание, перемещение и удаление логических томов</title>
-      <link>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
+      <link>http://localhost:1313/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</link>
       <pubDate>Mon, 03 Sep 2018 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
+      <guid>http://localhost:1313/a/lvm2-sozdanie-peremeschenie-i-udalenie-logicheskih-tomov/</guid>
       <description>2018-09-03&#xA;Создание Группы Томов (Volume Group) Для имени Группы Томов (VG) на одиночном сервере я обычно выбираю значение &amp;ldquo;vg&amp;rdquo;. Потом, при желании, его легко можно переименовать в любой момент. В Группу Томов можно добавить любое блочное устройство.&#xA;После добавления устройства в VG:&#xA;# vgcreate /dev/vg /dev/sde /dev/sdd1 /dev/sdd2 /dev/md10 /dev/mapper/pv5 можно получить информацию о VG:&#xA;# vgdisplay /dev/vg переименовать VG:&#xA;# vgrename /dev/vg /dev/vg0 получить информацию о конкретном PV:&#xA;# pvdisplay /dev/md10 Создание Логического Тома (Logical Volume) Создать LV с именем /dev/vg/dock в любом свободном месте:</description>
     </item>
     <item>
       <title>20. Создание бэкапа всей системы с помощью LVM и BorgBackup</title>
-      <link>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
+      <link>http://localhost:1313/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</guid>
+      <guid>http://localhost:1313/manuals/borgbackup/sozdaniye-bekapa-vsey-sistemy-s-pomoshchyu-borgbackup/</guid>
       <description>2022-03-11&#xA;Подготовительные мероприятия Для создания LVM-снэпшотов требуется некоторое незанятое место на тех VG, для LV которых будут создаваться снэпшоты. В том случае, если на машине остановлены все сервисы, могущие создавать большой объём записываемых данных, то для создания снэпшотов много места не потребуется и достаточно, например, временно отключить swap и удалить соответствующий LV для освобождения пары Гигабайт под создание снэпшотов.&#xA;Возможно, будет правильней добавить к машине дополнительный диск достаточного объёма на постоянной основе, который будет использоваться не только для создания бэкапов, но и восстановления всей системы.</description>
     </item>
     <item>
       <title>30. Восстановление всей системы из бэкапа с помощью LVM и BorgBackup</title>
-      <link>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
+      <link>http://localhost:1313/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</guid>
+      <guid>http://localhost:1313/manuals/borgbackup/vosstanovleniye-vsey-sistemy-iz-bekapa-s-pomoshchyu-borgbackup/</guid>
       <description>2022-03-11 – 2022-03-18&#xA;Подготовительные мероприятия В минимальной комплектации необходимо восстановить системные разделы /, /boot, /var. В максимальной комплектации потребуется восстановить ранее забэкапированные /data и прочее.&#xA;В любом случае, для распаковки этих данных потребуется достаточное незанятое место на Volume Group&amp;rsquo;ах, несущих восстанавливаемые Logical Volume&amp;rsquo;ы. В простейшем случае для этого необходимо добавить к машине дополнительный диск вместимостью перекрывающим объём восстанавливаемых данных.&#xA;Добавление пространства в Volume Group Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется.</description>
     </item>
     <item>
       <title>31. Накатывание на хост чужого снимка с помощью LVM и BorgBackup</title>
-      <link>https://debuntu.ru/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</link>
+      <link>http://localhost:1313/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</link>
       <pubDate>Mon, 04 Apr 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</guid>
+      <guid>http://localhost:1313/manuals/borgbackup/nakatyvanie-na-host-chuzhogo-snimka-s-pomoshchyu-borgbackup/</guid>
       <description>2022-04-04&#xA;Подготовительные мероприятия В минимальной комплектации необходимо восстановить системные разделы /, /boot, /var. В максимальной комплектации потребуется восстановить ранее забэкапированные /data и прочее.&#xA;В любом случае, для распаковки этих данных потребуется достаточное незанятое место на Volume Group&amp;rsquo;ах, несущих восстанавливаемые Logical Volume&amp;rsquo;ы. В простейшем случае для этого необходимо добавить к машине дополнительный диск вместимостью перекрывающим объём восстанавливаемых данных.&#xA;Добавление пространства в Volume Group Если требуется восстанавливать только один VG, то разбивать дополнительный диск на разделы не требуется.</description>
     </item>
     <item>
       <title>40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup</title>
-      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
+      <link>http://localhost:1313/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
+      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
       <description>https://help.72to.ru/projects/alt-linux/wiki/Откат_на_старую_версию_ядра&#xA;$ uname -r 5.10.82-std-def-alt1 apt-repo add http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ x86_64 classic apt-repo add http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ noarch classic $ sudo apt-cache show kernel-image-std-def Package kernel-image-std-def is a virtual package provided by: kernel-image-std-def#2:5.10.82-alt1:p10+290646.100.3.1@1638544255 2:5.10.82-alt1:p10+290646.100.3.1@1638544255 kernel-image-std-def#2:5.10.102-alt1:p10+295939.100.1.1@1645810219 2:5.10.102-alt1:p10+295939.100.1.1@1645810219 You should explicitly select one to show. E: Package kernel-image-std-def is a virtual package with multiple providers. update-kernel -t std-def -r 2:5.10.102-alt1:p10+295939.100.1.1@1645810219 reboot $ uname -r 5.10.102-std-def-alt1 remove-old-kernels </description>
     </item>
   </channel>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>GNU Screen on Debuntarium</title>
-    <link>https://debuntu.ru/tags/gnu-screen/</link>
+    <link>http://localhost:1313/tags/gnu-screen/</link>
     <description>Recent content in GNU Screen on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 07 Oct 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/gnu-screen/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/gnu-screen/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GNU Screen. Краткая памятка</title>
-      <link>https://debuntu.ru/refbooks/linux/gnu-screen-kratkaya-pamyatka/</link>
+      <link>http://localhost:1313/refbooks/linux/gnu-screen-kratkaya-pamyatka/</link>
       <pubDate>Thu, 07 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/refbooks/linux/gnu-screen-kratkaya-pamyatka/</guid>
+      <guid>http://localhost:1313/refbooks/linux/gnu-screen-kratkaya-pamyatka/</guid>
       <description>2021-10-07&#xA;Совет. Гугление дополнительной информации производить по ключевой фразе &amp;ldquo;gnu screen&amp;rdquo;.&#xA;Единственный сеанс GNU Screen Команда Описание screen -ls вывести список всех Screen-сеансов. screen запустить новый безымянный Screen-сеанс. screen -r возобновить отключённый Screen-сеанс. screen -d отключиться от текущего Screen-сеанса. screen -x подключиться к активному Screen-сеанс в режиме multiuser. Множество сеансов GNU Screen Команда Описание screen -ls вывести список всех Screen-сеансов. screen -S Atlas создать сеанс Screen с названием Atlas. screen -r A или screen -r At и т.</description>
     </item>
   </channel>

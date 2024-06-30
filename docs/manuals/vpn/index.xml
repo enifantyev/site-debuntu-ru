@@ -2,52 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>VPN on Debuntarium</title>
-    <link>https://debuntu.ru/manuals/vpn/</link>
+    <link>http://localhost:1313/manuals/vpn/</link>
     <description>Recent content in VPN on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 19 Nov 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/manuals/vpn/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/manuals/vpn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Обфускация ssh-трафика с помощью stunnel</title>
-      <link>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <link>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
       <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <guid>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
       <description>2021-11-19&#xA;Настройка сервера Устанавливаем на сервер пакет stunnel:&#xA;sudo yum install stunnel Компилируем свежий stunnel по инструкции Компиляция свежего stunnel 5.60 из исходников на CentOS7.&#xA;Подменяем установленный stunnel 4.56, новым stunnel 5.60:&#xA;sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56 sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin cd /usr/bin ln -s stunnel-5.60 stunnel Добавляем системного пользователя, под которым будет запускаться stunnel:&#xA;sudo useradd -r -s /sbin/nologin -M stunnel &amp;lt;Здесь используем FreeIPA-сертификаты, сгенерированные на сервере. Потом допишу процесс получения и автообновления с помощью Certmonger.</description>
     </item>
     <item>
       <title>Развёртывание сети OpenVPN</title>
-      <link>https://debuntu.ru/manuals/vpn/razvyortyvanie-seti-openvpn/</link>
+      <link>http://localhost:1313/manuals/vpn/razvyortyvanie-seti-openvpn/</link>
       <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/razvyortyvanie-seti-openvpn/</guid>
+      <guid>http://localhost:1313/manuals/vpn/razvyortyvanie-seti-openvpn/</guid>
       <description>2020-03-31&#xA;Статья в процессе написания!&#xA;Я перерабатываю свою статью от 2014 года в соответствии с новыми стандартами и релизами OpenVPN.&#xA;Если лень много читать и хочется сразу запустить простую OpenVPN-сеть, то переходите к статье OpenVPN — это просто.&#xA;Reference manual for OpenVPN 2.4&#xA;Рекомендую полезную книгу для понимания симметричного, ассиметричного шифрования и много другого по этой темы: Саймон Сингх. Книга шифров: Тайная история шифров и их расшифровки&#xA;Что такое Закрытый Ключ, Открытый Ключ, Запрос На Сертификацию, Сертификат Открытого Ключа</description>
     </item>
     <item>
       <title>OpenVPN — это просто</title>
-      <link>https://debuntu.ru/manuals/vpn/openvpn-eto-prosto/</link>
+      <link>http://localhost:1313/manuals/vpn/openvpn-eto-prosto/</link>
       <pubDate>Sun, 22 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/openvpn-eto-prosto/</guid>
+      <guid>http://localhost:1313/manuals/vpn/openvpn-eto-prosto/</guid>
       <description>2020-03-22&#xA;Читая сейчас Reference manual for OpenVPN 2.4, я постарался привести свои слегка устаревшие знания по настройке OpenVPN-сети к современным реалиям. В настоящей инструкции, вместо RSA-сертификатов используется криптография на эллиптических кривых. Для шифрования канала выбран протокол с добавочной информацией, позволяющей контролировать целостность пакетов. tls-auth+key-direction заменены на tls-crypt. CBC -&amp;gt; GCM. SHA1 -&amp;gt; SHA512, dh -&amp;gt; ecdh-curve.&#xA;Введение OpenVPN прекрасный продукт для подключения&amp;hellip; (потом допишу).&#xA;Для использования OpenVPN сети в минимальной конфигурации необходимо всего три вещи:</description>
     </item>
     <item>
       <title>Перевод Easy-RSA 3 Quickstart README</title>
-      <link>https://debuntu.ru/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</link>
+      <link>http://localhost:1313/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <guid>http://localhost:1313/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</guid>
       <description>2019-10-22&#xA;Предисловие от меня В статье задействован правильный способ использования PKI для OpenVPN, когда операция создания приватных ключей с последующим запросом на сертификацию и операция выпуска сертификата ключа на основе запроса, выполняются на разных системах.&#xA;Easy-RSA 3 Quickstart README Это инструкция как быстро начать использовать Easy-RSA версии 3. Детальный хэлп по использованию и описанию команд может быть найден по команде ./easyrsa -h. Дополнительная документация может быть найдена в директории doc/.</description>
     </item>
     <item>
       <title>Простой Центр Сертификации для strongSwan IPsec</title>
-      <link>https://debuntu.ru/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <link>http://localhost:1313/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <guid>http://localhost:1313/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
       <description>2019-04-22&#xA;Начиная с версии strongswan 5.1.1 использование префикса ipsec перед pki является опциональным.&#xA;Setting-up a Simple CA Using the strongSwan PKI Tool&#xA;Для работы PKI необходимо установить пакеты:&#xA;strongswan-starter strongswan-pki libcharon-extra-plugins # для поддержки ed25519 Используемые сокращения и термины:&#xA;CA, Certification Authority, Центр Сертификации. Здесь оформлен в виде директории, в которой лежат два файла: приватный ключ Центра Сертификации и самоподписанный сертификат Центра Сертификации. В этой же папке создаются пары (приватный ключ и соответствующий ему сертификат открытого ключа) файлов-ключей для удостоверения каждого члена IPsec-сети организации.</description>
     </item>
     <item>
       <title>Настраиваем OpenVPN сервер на подключение клиентов</title>
-      <link>https://debuntu.ru/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
+      <link>http://localhost:1313/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</link>
       <pubDate>Mon, 04 Aug 2014 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
+      <guid>http://localhost:1313/manuals/vpn/nastraivaem-openvpn-server-na-podklyucheniya-klientov/</guid>
       <description>2019-12-23 Опубликована свежая статья с упрощённым изложением OpenVPN - это просто&#xA;2014-08-04 Статья в процессе переделки и дополнений по мере освоения.&#xA;Дописать:&#xA;Использовать на одном сервере tun0 для объединения серверов и tun1 для подключения клиентов. Соответственно для серверов: iptables forward прозрачный для tun0 и запреты только на INPUT для соответствующих подсетей. Для рядовых клиентов tun1 запреты уже при входе в сеть. Например, только 3389 порт. Для админа пока отдельный gw. TLS и DH индивидуальны для разных openvpn-серверов и подключающихся к ним клиентов.</description>
     </item>
   </channel>

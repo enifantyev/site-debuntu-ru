@@ -2,220 +2,220 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CentOS on Debuntarium</title>
-    <link>https://debuntu.ru/tags/centos/</link>
+    <link>http://localhost:1313/tags/centos/</link>
     <description>Recent content in CentOS on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 03 Dec 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/centos/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/centos/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>01. Важные замечания</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</link>
       <pubDate>Sat, 03 Dec 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-arenadata-hadoop-s-tls-i-kerberos-na-osnove-freeipa/vazhnyye-zamechaniya/</guid>
       <description>2022-12-01&#xA;Список замечаний Об централизованном использовании Ansible Ad-Hoc команд для подготовки хостов к установке ArenaData-кластера Для удобства работы с множеством машин будущего кластера, в данной инструкции описано создание отдельного каталога с Ansible-файлами на любой машине, откуда по SSH должны быть доступны все целевые хосты. Инструкция доступна здесь &amp;ldquo;Подготовка каталога с файлами для развёртывания ADH с помощью Ansible Ad-Hoc&amp;rdquo;.&#xA;О параллельном подключении lvm-тома vg/data к директориям /data и /srv На машинах кластера, lvm-том &amp;lsquo;vg/data&amp;rsquo; монтируется не только к каталогу /data, но и параллельно к /srv, так как по умолчанию, в ArenaData каталог /srv используется для размещения меняющихся данных кластера.</description>
     </item>
     <item>
       <title>01. Подготовка к установке кластера Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</link>
       <pubDate>Thu, 10 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/podgotovka-k-ustanovke-klastera-cloudera-cdh-6-3.2/</guid>
       <description>2021-06-10&#xA;1. Введение Номер последней версии Cloudera CDH, которая умеет работать без лицензии, это 6.3.2. Версия Cloudera Manager (CM), которая умеет работать с CDH 6.3.2, является 6.3.1. В конце 2020 года Cloudera закрыла свободный доступ к любым версиям CDH и CM в своём репозитории. К счастью, на корпоративном Nexus Repository Manager есть hosted-репозитории для Cloudera CM 6.3.1 и Cloudera CDH 6.3.2.&#xA;Перед выполнением этой инструкции, предполагается, что:&#xA;имеется настроенный FreeIPA-сервер с поднятым доменом; все узлы будущего Hadoop-кластера введены в домен; имеется одна командная машина, через bash-оболочку которой, мы имеем доступ на все узлы будущего кластера через ssh.</description>
     </item>
     <item>
       <title>02. Установка Cloudera Manager 6.3.1</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-cloudera-manager-6-3.1/</guid>
       <description>2021-06-16&#xA;1. Введение Номер последней версии Cloudera Manager, которая может работать без лицензии, это 6.3.1.&#xA;После преднастроек и проверок приступаем к установке Cloudera Manager на один из хостов будущего кластера. То есть сначала установим Cloudera Manager на машину управления, с помощью которого, позже, установим сервисы Zookeeper, HDFS, YARN, и далее по списку.&#xA;Все операции выполняем на командной машине с помощью ансибла из ранее подготовленного каталога hadoop, где созданы все необходимые файлы.</description>
     </item>
     <item>
       <title>03. Установка основных компонентов Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</guid>
       <description>2021-06-16&#xA;Может быть будет удобнее, если установить основные пакеты для Hadoop&amp;rsquo;а вручную, как описано на странице Ручная установка набора Cloudera-пакетов.&#xA;Welcome После входа на веб-страницу Cloudera Manager http://prod-mgm01p.example.org:7180/ соглашаемся с пользовательским соглашением и выбираем бесплатную лицензию Cloudera Express.&#xA;Cluster Basics Указываем имя кластера. Это имя не имеет никаких зависимостей в работе кластера и в любой момент может быть изменено. Cloudera Manager позволяет управлять несколькими кластерами, каждый из которых имеет своё имя.</description>
     </item>
     <item>
       <title>03. Установка основных компонентов Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/ustanovka-osnovnykh-komponentov-cloudera-cdh-6.3.2/</guid>
       <description>2021-06-16&#xA;Может быть будет удобнее, если установить основные пакеты для Hadoop&amp;rsquo;а вручную, как описано на странице Ручная установка набора Cloudera-пакетов.&#xA;Welcome После входа на веб-страницу Cloudera Manager http://prod-mgm01p.example.org:7180/ соглашаемся с пользовательским соглашением и выбираем бесплатную лицензию Cloudera Express.&#xA;Cluster Basics Указываем имя кластера. Это имя не имеет никаких зависимостей в работе кластера и в любой момент может быть изменено. Cloudera Manager позволяет управлять несколькими кластерами, каждый из которых имеет своё имя.</description>
     </item>
     <item>
       <title>04. После установки основных компонентов</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov/</link>
       <pubDate>Wed, 16 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/posle-ustanovki-osnovnykh-komponentov/</guid>
       <description>2021-06-16&#xA;Настройка каталогов для логгирования В центральном окне Cloudera Web UI выбираем раздел Log Directories, где изменяем все &amp;lsquo;/var/log&amp;rsquo; на &amp;lsquo;/data/log&amp;rsquo;: Также и для каждого Cloudera-сервиса заходим в конфигурацию и ищём параметры по признаку &amp;lsquo;/var&amp;rsquo;, которые и меняем на &amp;lsquo;/data/log&amp;rsquo;.&#xA;Применяем изменения для Cloudera Management и для кластера.&#xA;Выполняем предложения Cloudera Рассматриваем предложения Cloudera Management Console и исправляем ситуацию. Стараемся, по возможности, добиться полностью &amp;ldquo;зелёного&amp;rdquo; состояния кластера, но часто это невозможно из-за, например, недостатка ресурсов выделенных для инициализации кластера.</description>
     </item>
     <item>
       <title>10. Установка BorgBackup в CentOS и Ubuntu</title>
-      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</link>
+      <link>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</link>
       <pubDate>Fri, 11 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</guid>
+      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-centos-i-ubuntu/</guid>
       <description>2022-03-11&#xA;1. Установка BorgBackup в CentOS 1.1. Добавление EPEL На CentOS необходим репо EPEL.&#xA;$ sudo yum install epel-release 1.2. Установка BorgBackup в CentOS7 $ sudo yum install borg ... Dependencies Resolved ============================================================================= Package Arch Version Repository Size ============================================================================= Installing: borgbackup x86_64 1.1.17-2.el7 epel7 1.0 M Installing for dependencies: libb2 x86_64 0.98.1-2.el7 epel7 20 k libzstd x86_64 1.5.2-1.el7 epel7 282 k python36-llfuse x86_64 1.0-2.el7 epel7 351 k python36-msgpack x86_64 0.5.6-5.el7 epel7 98 k python36-packaging noarch 16.</description>
     </item>
     <item>
       <title>Компиляция свежего stunnel 5.60 из исходников на CentOS7</title>
-      <link>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
+      <link>http://localhost:1313/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</link>
       <pubDate>Fri, 26 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
+      <guid>http://localhost:1313/n/kompilyaciya-svezhego-stunnel-5-60-iz-ishodnikov-na-centos7/</guid>
       <description>2021-11-26&#xA;Подготовка с сборке Устанавливаем набор инструментов:&#xA;$ sudo yum groupinstall &amp;#34;Development Tools&amp;#34; Сборка PCKG=&amp;#34;stunnel-5.60&amp;#34; mkdir ~/src &amp;amp;&amp;amp; cd ~/src curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz curl -LO https://www.stunnel.org/downloads/${PCKG}.tar.gz.sha256 sha256sum -c ${PCKG}.tar.gz.sha256 tar xvf ${PCKG}.tar.gz cd ${PCKG} ./configure make Результат Скомпилированный stunnel можно найти здесь ~/src/stunnel-5.60/src/stunnel.&#xA;Переименуем файл для удобства дальнейшего использования по инструкции Обфускация ssh-трафика с помощью stunnel:&#xA;mv ~/src/stunnel-5.60/src/stunnel ~/src/stunnel-5.60/src/stunnel-5.60 </description>
     </item>
     <item>
       <title>CMAK. 01. Сборка rpm-пакета для CentOS7</title>
-      <link>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
+      <link>http://localhost:1313/a/cmak-sborka-rpm-paketa-dlya-centos7/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
+      <guid>http://localhost:1313/a/cmak-sborka-rpm-paketa-dlya-centos7/</guid>
       <description>2021-11-25&#xA;https://github.com/yahoo/CMAK&#xA;1. Подготовка к сборке Выбираем по умолчанию интерпретатор python2 и проверяем эту установку:&#xA;$ sudo update-alternatives --config python There are 2 programs which provide &amp;#39;python&amp;#39;. Selection Command ----------------------------------------------- + 1 /usr/bin/python2.7 * 2 /usr/bin/python3 Enter to keep the current selection[+], or type selection number: 1 $ python -V Python 2.7.5 В дополнение к Maven&amp;rsquo;у устанавливаем пакеты &amp;lsquo;java-11-openjdk&amp;rsquo; и &amp;lsquo;rpm-build&amp;rsquo;:&#xA;$ sudo yum -y install java-11-openjdk rpm-build Скачиваем и распаковываем исходники последней версии приложения (на данный момент CMAK 3.</description>
     </item>
     <item>
       <title>Kafdrop. 01. Сборка jar-пакета</title>
-      <link>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</link>
+      <link>http://localhost:1313/a/kafdrop-sborka-jar-paketa/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/kafdrop-sborka-jar-paketa/</guid>
+      <guid>http://localhost:1313/a/kafdrop-sborka-jar-paketa/</guid>
       <description>2021-11-25&#xA;1. Подготовка к сборке В дополнение к Maven&amp;rsquo;у устанавливаем Java11:&#xA;$ sudo yum -y install java-11-openjdk java-11-openjdk-devel Скачиваем последнюю версию приложения Kafdrop (на данный момент Kafdrop 3.27.0) и распаковываем:&#xA;FILE=&amp;#34;3.27.0.tar.gz&amp;#34; mkdir ~/src &amp;amp;&amp;amp; cd ~/src curl -LO https://github.com/obsidiandynamics/kafdrop/archive/refs/tags/${FILE} tar xvf ${FILE} # 2. Сборка jar-пакета Запускаем сборку пакета:&#xA;export JAVA_HOME=/usr/lib/jvm/jre-11-openjdk cd ~/src/kafdrop-3.27.0 mvn clean package # 3. Результат В каталоге ~/src/kafdrop-3.27.0/target наблюдаем пакет kafdrop-3.27.0.jar.</description>
     </item>
     <item>
       <title>Kafdrop. 02. Установка и настройка</title>
-      <link>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</link>
+      <link>http://localhost:1313/a/kafdrop-ustanovka-i-nastroika/</link>
       <pubDate>Thu, 25 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/kafdrop-ustanovka-i-nastroika/</guid>
+      <guid>http://localhost:1313/a/kafdrop-ustanovka-i-nastroika/</guid>
       <description>2021-11-25&#xA;1. Установка 1.1. Создание локального аккаунта Создаём локальный аккаунт &amp;lsquo;kafdrop&amp;rsquo;:&#xA;$ useradd -r -s /sbin/nologin -d /opt/kafdrop -M kafdrop $ kinit $ ipa service-add kafdrop/$(hostname) 1.2. Создание рабочего каталога Создаём каталог, где будет всё необходимое для работы Kafdrop:&#xA;mkdir /opt/kafdrop chown kafdrop.kafdrop /opt/kafdrop chmod 2770 /opt/kafdrop # 1.3. Загрузка ранее скомпилированного jar-файла Важно! Тем или иным образом копируем ранее собранный пакет kafdrop-3.27.0.jar в каталог /opt/kafdrop.&#xA;После чего делаем link с расчётом на дальнейшие обновления пакета:</description>
     </item>
     <item>
       <title>Обфускация ssh-трафика с помощью stunnel</title>
-      <link>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <link>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
       <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <guid>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
       <description>2021-11-19&#xA;Настройка сервера Устанавливаем на сервер пакет stunnel:&#xA;sudo yum install stunnel Компилируем свежий stunnel по инструкции Компиляция свежего stunnel 5.60 из исходников на CentOS7.&#xA;Подменяем установленный stunnel 4.56, новым stunnel 5.60:&#xA;sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56 sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin cd /usr/bin ln -s stunnel-5.60 stunnel Добавляем системного пользователя, под которым будет запускаться stunnel:&#xA;sudo useradd -r -s /sbin/nologin -M stunnel &amp;lt;Здесь используем FreeIPA-сертификаты, сгенерированные на сервере. Потом допишу процесс получения и автообновления с помощью Certmonger.</description>
     </item>
     <item>
       <title>Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA</title>
-      <link>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
+      <link>http://localhost:1313/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
+      <guid>http://localhost:1313/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
       <description>2021-10-11&#xA;Условия Выполняем все команды на целевой машине. Предполагается, что машина введена во FreeIPA-домен. Установка и включение Cockpit sudo yum install cockpit sudo systemctl enable --now cockpit.service sudo systemctl enable --now cockpit.socket Изменение номера порта https://cockpit-project.org/guide/latest/listen.html&#xA;По умолчанию, cockpit слушает порт номер 9090. Перевесим его на 443-ий порт:&#xA;sudo mkdir -p /etc/systemd/system/cockpit.socket.d/ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/cockpit.socket.d/listen.conf [Socket] ListenStream= ListenStream=443 EOF sudo systemctl daemon-reload Скрипт для запуска после автоматической смены сертификата cat &amp;lt;&amp;lt; EOF | sudo tee /etc/cockpit/RunAfterUpdateCert.</description>
     </item>
     <item>
       <title>Сборка Apache Atlas 2.1.0 для Cloudera CDH 6.3.2 (устарело)</title>
-      <link>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
+      <link>http://localhost:1313/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</link>
       <pubDate>Thu, 05 Aug 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/apacheatlas/sborka-apache-atlas-2-1-0-dlya-cloudera-cdh-6-3-2/</guid>
       <description>2021-08-05&#xA;1. Подготовка хоста Сначала хост добавляем в Cloudera-кластер, чтобы при установке Cloudera CDH были корректно добавлены локальные аккаунты и группы. В процессе добавления в кластер, перед включением TLS-аутентификации для Cloudera Agent, добавляем хост в домен. На хост установлены шлюзы для YARN, HBase, Hive, Kafka, Solr. 2. Установка Maven Сначала устанавливаем maven 3.0.5-17.el7 из стандартных репо для CentOS7:&#xA;$ sudo yum install maven ... Dependencies Resolved ===================================================================================================================== Package Arch Version Repository Size ===================================================================================================================== Installing: maven noarch 3.</description>
     </item>
     <item>
       <title>Установка JupyterHub на CentOS 7 (draft)</title>
-      <link>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</link>
+      <link>http://localhost:1313/a/ustanovka-jupyterhub-na-centos-7/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ustanovka-jupyterhub-na-centos-7/</guid>
+      <guid>http://localhost:1313/a/ustanovka-jupyterhub-na-centos-7/</guid>
       <description>2021-07-07&#xA;Использованные материалы https://github.com/jupyterhub/jupyterhub-the-hard-way/blob/HEAD/docs/installation-guide-hard.md&#xA;1. Установка JupyterHub и JupyterLab 1.1. Подготовка виртуального окружения 1.1.1. Cоздаём виртуальное окружение в каталоге /opt/jupyterhub:&#xA;sudo python3 -m venv /opt/jupyterhub/ С этого момента мы должны использовать команду &amp;rsquo;/opt/jupyterhub/bin/python3 -m pip install&amp;rsquo; каждый раз, когда хотим установить дополнительные пакеты в это виртуальное окружение.&#xA;1.1.2. Выполняем в созданном виртуальном окружении следующие команды:&#xA;sudo /opt/jupyterhub/bin/python3 -m pip install --upgrade pip sudo /opt/jupyterhub/bin/python3 -m pip install wheel 1.2. Установка необходимых пакетов 1.</description>
     </item>
     <item>
       <title>10. Настройка TLS для Cloudera Manager Server и его агентов</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</link>
       <pubDate>Thu, 17 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-cloudera-manager-server-i-yego-agentov/</guid>
       <description>Использованные материалы Manually Configuring TLS Encryption for Cloudera Manager Manually Configuring TLS Encryption on the Agent Listening Port Вступление Когда вы настраиваете аутентификацию и авторизацию в кластере, Cloudera Manager Server отправляет различную конфиденциальную информацию по сети на узлы кластера, например, таблицы ключей Kerberos и файлы конфигурации, содержащие пароли. Чтобы защитить эту передачу, необходимо настроить TLS-шифрование между Cloudera Manager Server и всеми узлами кластера.&#xA;Шифрование TLS также используется для защиты клиентских подключений к административному интерфейсу Cloudera Manager с помощью HTTPS.</description>
     </item>
     <item>
       <title>Установка Apache Airflow 2 &#43; FreeIPA &#43; Apache Hadoop &#43; сценарий удаления</title>
-      <link>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
+      <link>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-2-freeipa-apache-hadoop-scenarii-udaleniya/</guid>
       <description>Использованные материалы Apache Airflow Documentation Quick Start Предыдущий опыт настройки Airflow прошлых версий. Заметки В шагах инструкции пока отсутствует. Важно опроовать. После скачивания свежего файла с зависимостями дл apache-airflow, необходимо изменить в этом файле строку &amp;lsquo;Flask-AppBuilder==3.1.1&amp;rsquo; на &amp;lsquo;Flask-AppBuilder==3.2.0&amp;rsquo;, чтобы заработал мэппинг между пользовательскими группами в IPA и ролями в Airflow. Для уже установленных экземпляров Airflow, можно изменить соответствующую строку в файле &amp;lsquo;/usr/local/lib/python3.6/site-packages/apache_airflow-2.0.1.dist-info/METADATA&amp;rsquo;. Если пользовательские DAG&amp;rsquo;и запускаются через &amp;lsquo;run_as_user&amp;rsquo;, то необходимо обеспечить чтение файла /etc/airflow/airflow.</description>
     </item>
     <item>
       <title>Установка Apache Airflow и настройка его для работы с Apache Hadoop (устарело)</title>
-      <link>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
+      <link>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</link>
       <pubDate>Fri, 23 Oct 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/apacheairflow/ustanovka-apache-airflow-i-nastroika-ego-dlya-raboty-s-apache-hadoop/</guid>
       <description>2020-10-23&#xA;Эта версия Airflow устарела. Установка актуальной, второй версии, описана здесь.&#xA;Использованные материалы Apache Airflow Documentation Заметки Если в DAG&amp;rsquo;е указать &amp;lsquo;run_as_user&amp;rsquo;: &amp;rsquo;eugene&amp;rsquo;, то Airflow запускает процесс от имени пользователя командой sudo -E -H, в результате которой процесс пользователя наследует переменные родительского процесса, а переменная HOME меняется на пользовательскую директорию в /home. Надо дать права на рабочую папку airflow для группы пользователей _airflow-dev, так как запускаемый дочерний run_as процесс от имени пользователя, должен иметь право на запись в рабочую папку Airflow.</description>
     </item>
     <item>
       <title>11. Настройка TLS для HDFS и YARN</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/</link>
       <pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/nastroyka-tls-dlya-hdfs-i-yarn/</guid>
       <description>Использованные материалы Manually Configuring TLS/SSL Encryption for CDH Services&#xA;Вступление Помимо настройки кластера Cloudera Manager для использования TLS, различные службы CDH, работающие в кластере, также должны быть настроены для использования TLS. Процесс настройки TLS зависит от компонента, поэтому выполните следующие действия, если это необходимо для вашей системы. Однако, прежде чем пытаться настроить TLS, убедитесь, что ваш кластер соответствует предварительным требованиям.&#xA;В общем, все роли на любом узле в кластере могут использовать одни и те же сертификаты, при условии, что сертификаты имеют соответствующий формат (JKS, PEM) и что конфигурация правильно указывает на расположение.</description>
     </item>
     <item>
       <title>12. Включение Kerberos в Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</link>
       <pubDate>Thu, 14 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/vklyucheniye-kerberos-v-cloudera-cdh-6.3.2/</guid>
       <description>2021-06-17 – 2021-10-14&#xA;1. Использованные материалы How to Configure Clusters to Use Kerberos for Authentication Configuring Authentication in Cloudera Manager Enabling Kerberos Authentication for CDH Step 1: Install Cloudera Manager and CDH Step 2: Install JCE Policy Files for AES-256 Encryption Step 3: Create the Kerberos Principal for Cloudera Manager Server Step 4: Enabling Kerberos Using the Wizard Step 5: Create the HDFS Superuser Step 6: Get or Create a Kerberos Principal for Each User Account Step 7: Prepare the Cluster for Each User Step 8: Verify that Kerberos Security is Working Step 9: (Optional) Enable Authentication for HTTP Web Consoles for Hadoop Roles Sample Kerberos Configuration Files 2.</description>
     </item>
     <item>
       <title>13. Zookeeper. Настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</link>
       <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/zookeeper-nastroyka/</guid>
       <description>2021-07-09&#xA;Настройка TLS для ZooKeeper Напомню, что перед включением TLS-настроек для Zookeeper&amp;rsquo;а должен быть включён TLS для «Firehose Debug Server» в Cloudera Manager. Иначе Zookeeper будет работать, но статус ролей перестаёт отображаться корректно и высвечивается ошибка &amp;ldquo;Quorum Membership&amp;rdquo;. В настройках сервиса ZooKeeper, используя фильтр по слову &amp;lsquo;JMX&amp;rsquo;, изменяем следующие параметры: Нажимаем Save Changes. Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console. Ссылки по теме Получение прав Superuser&amp;rsquo;а в ZooKeeper&amp;rsquo;е Cloudera CDH 6.</description>
     </item>
     <item>
       <title>14. HDFS. Настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</link>
       <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hdfs-nastroyka/</guid>
       <description>2021-07-09 – 2021-10-15&#xA;1. Enable High Availability Enabling HDFS HA&#xA;В настройках сервиса HDFS, используя фильтр по слову «dfs.journalnode.edits.dir», изменяем следующий параметр: Нажимаем Save Changes. На странице службы HDFS, через кнопку Actions, запускаем wizard включения HA: Getting Started. Задаём уникальное имя для Nameservice: Assign Roles. JournalNodes должны работать на хостах с такими же hardware specification, как NameNodes. Cloudera рекомендует поместить две JournalNode на те же хосты с NameNodes, а третий JournalNode на хост с похожими ресурсами, таким как JobTracker.</description>
     </item>
     <item>
       <title>15. YARN. Настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</link>
       <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/yarn-nastroyka/</guid>
       <description>2021-07-09&#xA;1. Перенастройка размещения log&amp;rsquo;ов В настройках YARN, используя фильтр &amp;lsquo;/var/log&amp;rsquo;, изменяем только следующие параметры, добавляя имя каталога &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Changes. 2. Настройка ACL Managing YARN ACLs&#xA;Во FreeIPA добавляем группу &amp;rsquo;test1_yarn_admins&amp;rsquo;: ADM_USER=&amp;#39;eugene&amp;#39; \ ADM_PASS=&amp;#39;JL9d]qtw$p=2=M2K=~z?|EU,&amp;#39; \ CL_NAME=&amp;#34;TEST1&amp;#34; # UPPERCASE \ CL_NAME_L=${CL_NAME,,} # lowercase ansible mgm -i cluster.inv -m shell -a &amp;#34;echo &amp;#39;${ADM_PASS}&amp;#39; | kinit ${ADM_USER} &amp;amp;&amp;amp; \ ipa group-add --desc=&amp;#39;YARN admins for cluster ${CL_NAME}&amp;#39; ${CL_NAME_L}_yarn_admins&amp;#34; В настройках YARN, используя фильтр «acl», изменяем только следующие параметры: В настройках YARN, используя фильтр «Admin Users Applications List», изменяем только следующие параметры: 3.</description>
     </item>
     <item>
       <title>16. HBase. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hbase-ustanovka-i-nastroyka/</guid>
       <description>Использованные материалы Manually Configuring TLS/SSL Encryption for CDH Services 1. Добавление сервиса HBase В консоли Cloudera Manager в меню выбираем «Add Service»: Выбираем HBase. Распределяем роли. Хосты с именем hbr под HBase Region Servers&amp;hellip; На следующем шаге оставляем настройки без изменений: Ждём добавления сервиса в кластер. После успешного завершения процесса заканчиваем мастер нажатием на &amp;lsquo;Finish&amp;rsquo;. Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console. 2. Перенастройка размещения log&amp;rsquo;ов В настройках HBase, используя фильтр &amp;lsquo;/var/&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Change.</description>
     </item>
     <item>
       <title>17. Spark. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</guid>
       <description>Использованные материалы Manually Configuring TLS/SSL Encryption for CDH Services Spark Encryption 1. Добавление сервиса Spark В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Выбираем Spark. Select Dependencies. Assign Roles. Распределяем роли. History Server размещаем на одном из дополнительных aux узлов, а шлюзы на dn-узлах и других по необходимости: Сразу включаем TLS для роли. Наблюдаем добавление Spark&amp;rsquo;а. Заключительный шаг мастера: Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console. 2. Перенастройка размещения log&amp;rsquo;ов В настройках Spark, используя фильтр &amp;lsquo;/var/&amp;rsquo;, изменяем только следующие параметры, добавляя имя каталога &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Changes.</description>
     </item>
     <item>
       <title>18. Hive. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hive-ustanovka-i-nastroyka/</guid>
       <description>Использованные материалы Manually Configuring TLS/SSL Encryption for CDH Services Добавление сервиса Hive В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Выбираем Hive. Выбираем зависимости: Распределяем роли. Рекомендуется устанавливать роли Hive Gateway на узлы кластера с ролью Spark Gateway, иначе Hive-таблицы не будут доступны для Spark&amp;rsquo;а. Настройка базы данных. Так как сейчас используется встроенная база данных, то никаких дополнительных действий не производим, а нажимаем кнопку &amp;lsquo;Test Connection&amp;rsquo;. На шаге Review Changes ничего не меняем: Наблюдаем запуск ролей.</description>
     </item>
     <item>
       <title>19. Sentry. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/sentry-ustanovka-i-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/sentry-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 09 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/sentry-ustanovka-i-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/sentry-ustanovka-i-nastroyka/</guid>
       <description>Добавление сервиса Sentry В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Выбираем Sentry. Распределяем роли: Настройка базы данных. Так как сейчас используется встроенная база данных, то никаких дополнительных действий не производим, а нажимаем кнопку &amp;lsquo;Test Connection&amp;rsquo;. Наблюдаем запуск ролей. Визард успешно закончен. Перенастройка размещения log&amp;rsquo;ов В настройках Sentry, используя категорию &amp;lsquo;Logs&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Changes. Создание группы администраторов Sentry Добавление группы во FreeIPA. Так как установка кластера производится с машины, домен которой отличен от домена настраиваемых машин, то вновь используем ansible:</description>
     </item>
     <item>
       <title>20. Hue. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/hue-ustanovka-i-nastroyka/</guid>
       <description>Использованные материалы Manually Configuring TLS/SSL Encryption for CDH Services Добавление сервиса Hue В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Перенастройка размещения log&amp;rsquo;ов В настройках Hue, используя категорию &amp;lsquo;Logs&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Changes. 4. Настройка TLS для Hue Hue как клиент TLS Hue действует как клиент TLS при взаимодействии с другими сервисами, такими как Hadoop, HBase, Oozie и Amazon S3. Это означает, что Hue должен аутентифицировать демонов HDFS, MapReduce, YARN, сервер HBase Thrift и т.</description>
     </item>
     <item>
       <title>21. Solr. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/solr-ustanovka-i-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/solr-ustanovka-i-nastroyka/</link>
       <pubDate>Wed, 21 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/solr-ustanovka-i-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/solr-ustanovka-i-nastroyka/</guid>
       <description>1. Использованные материалы Configuring TLS/SSL for Solr Cloudera Search Authentication 2. Добавление сервиса Solr В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Выбираем Solr. Выбираем зависимости: Распределяем роли. Пути к каталогам оставляем без изменений: Наблюдаем запуск ролей. Визард успешно закончен. 3. Перенастройка размещения log&amp;rsquo;ов В настройках Solr, используя категорию &amp;lsquo;Logs&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: 2.Нажимаем Save Changes.&#xA;4. Настройка TLS Так как на данный момент в сертификатах хостов отсутствует SAN с ip-адресами узлов, то в дополнение к TLS-параметрам добавляем отключение проверки имён узлов.</description>
     </item>
     <item>
       <title>22. Kafka. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 23 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/kafka-ustanovka-i-nastroyka/</guid>
       <description>2021-07-23&#xA;Добавление сервиса Kafka В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Выбираем Kafka. Выбираем зависимости: Распределяем роли с некоторыми условиями: Из-за особенностей работы, которая приводит к высокой утилизации ресурсов системы, под Kafka Brokers лучше выделить отдельные хосты. Чрезвычайно не рекомендуется размещать Kafka на ZooKeeper-узлах. Изменяем настройки: Наблюдаем запуск ролей. Визард успешно закончен. 3. Перенастройка размещения log&amp;rsquo;ов В настройках Kafka, используя категорию &amp;lsquo;Logs&amp;rsquo;, изменяем следующие параметры, добавляя &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Changes.</description>
     </item>
   </channel>

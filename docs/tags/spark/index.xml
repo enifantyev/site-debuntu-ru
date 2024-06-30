@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Spark on Debuntarium</title>
-    <link>https://debuntu.ru/tags/spark/</link>
+    <link>http://localhost:1313/tags/spark/</link>
     <description>Recent content in Spark on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 02 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/spark/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/spark/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>17. Spark. Установка и настройка</title>
-      <link>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</link>
+      <link>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</link>
       <pubDate>Fri, 02 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</guid>
+      <guid>http://localhost:1313/manuals/bigdata/ustanovka-cloudera-cdh-6.3.2-s-tls-i-kerberos-na-osnove-freeipa/spark-ustanovka-i-nastroyka/</guid>
       <description>Использованные материалы Manually Configuring TLS/SSL Encryption for CDH Services Spark Encryption 1. Добавление сервиса Spark В консоли Cloudera Manager в меню выбираем &amp;lsquo;Add Service&amp;rsquo;: Выбираем Spark. Select Dependencies. Assign Roles. Распределяем роли. History Server размещаем на одном из дополнительных aux узлов, а шлюзы на dn-узлах и других по необходимости: Сразу включаем TLS для роли. Наблюдаем добавление Spark&amp;rsquo;а. Заключительный шаг мастера: Перезапускаем все зависимые сервисы по приглашению Cloudera Manager Console. 2. Перенастройка размещения log&amp;rsquo;ов В настройках Spark, используя фильтр &amp;lsquo;/var/&amp;rsquo;, изменяем только следующие параметры, добавляя имя каталога &amp;lsquo;/data&amp;rsquo; вместо &amp;lsquo;/var&amp;rsquo;: Нажимаем Save Changes.</description>
     </item>
   </channel>

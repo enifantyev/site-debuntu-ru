@@ -2,80 +2,80 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Translation on Debuntarium</title>
-    <link>https://debuntu.ru/tags/translation/</link>
+    <link>http://localhost:1313/tags/translation/</link>
     <description>Recent content in Translation on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 01 Feb 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/translation/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/translation/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Описание файловой системы OverlayFS</title>
-      <link>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</link>
+      <link>http://localhost:1313/a/opisanie-failovoi-sistemy-overlayfs/</link>
       <pubDate>Sat, 01 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</guid>
+      <guid>http://localhost:1313/a/opisanie-failovoi-sistemy-overlayfs/</guid>
       <description>2020-02-01&#xA;Не закончен, так как не хватает знаний. По мере изучения, постараюсь дополнить.&#xA;Данная файловая системы используется, например, в Docker. Часто её можно наблюдать на роутерах или других подобных устройствах, где оперативная запись информации ведётся во временную наложенную ФС, доступную до момента выключения устройства.&#xA;С помощью OverlayFS я объединяю домашние фото и видео каталоги для удобного просмотра. Так как архивы исходных фотографий доступны только для чтения, наложением рабочей папки, для сохранения временных или промежуточных файлов обработки, я добиваюсь удобства в обработке фоток.</description>
     </item>
     <item>
       <title>Описание VFS Виртуальной Файловой Системы Linux</title>
-      <link>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <link>http://localhost:1313/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <guid>http://localhost:1313/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
       <description>Мой неполный перевод Overview of the Linux Virtual File System. Некоторые моменты, по различным причинам, я пока не понимаю, поэтому кое-что привожу в оригинале, как повод для дальнейших размышлений. Другие же моменты, как мне кажется, я понимаю, поэтому дополнил их некоторой информацией.&#xA;2020-01-18&#xA;Введение Виртуальная Файловая Система (называемая также Коммутатором Виртуальной Файловой Системы) является программным слоем, который предоставляет программам, выполняющимся в пользовательском пространстве, интерфейс взаимодействия с файловой системой. VFS-коммутатор также реализует в ядре Linux уровень абстракции для унификации подключения к нему разнообразных файловых систем.</description>
     </item>
     <item>
       <title>apt vs apt-get/apt-cache vs aptitude</title>
-      <link>https://debuntu.ru/n/apt-vs-apt-get-apt-cache-vs-aptitude/</link>
+      <link>http://localhost:1313/n/apt-vs-apt-get-apt-cache-vs-aptitude/</link>
       <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/apt-vs-apt-get-apt-cache-vs-aptitude/</guid>
+      <guid>http://localhost:1313/n/apt-vs-apt-get-apt-cache-vs-aptitude/</guid>
       <description>Debian Reference&#xA;2.2.1. apt vs. apt-get / apt-cache vs. aptitude Хотя aptitude чрезвычайно удобный интерактивный инструмент, которым автор Debian Reference преимущественно пользуется, вам надо знать некоторые предупреждающие моменты:&#xA;Команда aptitude не рекомендуется для обновления работающего Debian stable релиза до нового выпущенного stable релиза. Рекомендуется для этого случая использовать apt full-upgrade или apt-get dist-upgrade. Смотри Bug #411280 Команда aptitude иногда предлагает удалить большое количество пакетов, что случается при апгрейде системы на работающих Debian testing или unstable системах.</description>
     </item>
     <item>
       <title>Перевод Easy-RSA 3 Quickstart README</title>
-      <link>https://debuntu.ru/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</link>
+      <link>http://localhost:1313/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</link>
       <pubDate>Tue, 22 Oct 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</guid>
+      <guid>http://localhost:1313/manuals/vpn/perevod-easy-rsa-3-quickstart-readme/</guid>
       <description>2019-10-22&#xA;Предисловие от меня В статье задействован правильный способ использования PKI для OpenVPN, когда операция создания приватных ключей с последующим запросом на сертификацию и операция выпуска сертификата ключа на основе запроса, выполняются на разных системах.&#xA;Easy-RSA 3 Quickstart README Это инструкция как быстро начать использовать Easy-RSA версии 3. Детальный хэлп по использованию и описанию команд может быть найден по команде ./easyrsa -h. Дополнительная документация может быть найдена в директории doc/.</description>
     </item>
     <item>
       <title>Резервное копирование Plone</title>
-      <link>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</link>
+      <link>http://localhost:1313/a/rezervnoe-kopirovanie-plone/</link>
       <pubDate>Wed, 15 May 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/rezervnoe-kopirovanie-plone/</guid>
+      <guid>http://localhost:1313/a/rezervnoe-kopirovanie-plone/</guid>
       <description>2019-05-15&#xA;Backing up your Plone deployment Стратегии резервного копирования действующих Plone установок.&#xA;Эта инструкция расскажет что копировать, как копировать и как безопасно восстановить.&#xA;Введение Ключевые правила резервного копирования работающей системы возможно следующие:&#xA;Бэкапируй всё Делай несколько версий бэкапа Тестируй бэкапы на предмет восстановления Эта инструкция допускает, что вы уже делаете это для всей вашей системы, и будет рассматривать только те вещи, которые касаются Plone. Когда мы говорим, что мы предполагаем, что вы уже делаете это для всей системы, мы имеем в виду, что механизмы резервного копирования вашей системы — rsync, bacula и т.</description>
     </item>
     <item>
       <title>Создание копии сайта Plone</title>
-      <link>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</link>
+      <link>http://localhost:1313/a/ozdanie-kopii-saita-plone/</link>
       <pubDate>Fri, 10 May 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ozdanie-kopii-saita-plone/</guid>
+      <guid>http://localhost:1313/a/ozdanie-kopii-saita-plone/</guid>
       <description>2019-05-10&#xA;Краткая инструкция о том, как создать копию Plone-инсталляции.&#xA;Введение Эта инструкция расскажет вам основы создания дубля Plone-сайта для тестирования или бэкапа.&#xA;Необходимые условия Возможность копирования файлов из/в удалённый сервер Возможность использования командной строки Содержимое Plone-сайта Что должно быть скопировано:&#xA;buildout.cfg - определяет конфигурацию вашего сайта src folder - содержит аддоны разработанные вами var/filestorage/Data.fs - ZODB база данных вашего сайта var/blobstorage folder - содержит объекты типа &amp;ldquo;файл&amp;rdquo; базы данных ZODB (BLOBы) Другие папки (eggs, downloads, parts и т.</description>
     </item>
     <item>
       <title>Добавление reCAPTCHA в Plone</title>
-      <link>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</link>
+      <link>http://localhost:1313/a/dobavlenie-recaptcha-v-plone/</link>
       <pubDate>Thu, 09 May 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/dobavlenie-recaptcha-v-plone/</guid>
+      <guid>http://localhost:1313/a/dobavlenie-recaptcha-v-plone/</guid>
       <description>2019-05-09&#xA;Частичный перевод и компиляция информации из статей:&#xA;Adding CAPTCHA Support PloneFormGen Archetypes Dexterity PloneFormGen имеет встроенную поддержку Re-Captcha. Здесь рассказано как включить её.&#xA;PloneFormGen и поля Captcha PloneFormGen — аддон, добавляющий в Plone генератор форм с полями, виджетами и валидаторами из Archetypes. Используется при создании простых однородных вебформ для сохранения вводимых данных или форм для отправки электронной почты. Archetypes — это подсистема (фреймворк) для создания типов контента в Plone версий 2.</description>
     </item>
     <item>
       <title>Простой Центр Сертификации для strongSwan IPsec</title>
-      <link>https://debuntu.ru/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
+      <link>http://localhost:1313/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</link>
       <pubDate>Mon, 22 Apr 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
+      <guid>http://localhost:1313/manuals/vpn/prostoi-centr-sertifikacii-dlya-strongswan-ipsec/</guid>
       <description>2019-04-22&#xA;Начиная с версии strongswan 5.1.1 использование префикса ipsec перед pki является опциональным.&#xA;Setting-up a Simple CA Using the strongSwan PKI Tool&#xA;Для работы PKI необходимо установить пакеты:&#xA;strongswan-starter strongswan-pki libcharon-extra-plugins # для поддержки ed25519 Используемые сокращения и термины:&#xA;CA, Certification Authority, Центр Сертификации. Здесь оформлен в виде директории, в которой лежат два файла: приватный ключ Центра Сертификации и самоподписанный сертификат Центра Сертификации. В этой же папке создаются пары (приватный ключ и соответствующий ему сертификат открытого ключа) файлов-ключей для удостоверения каждого члена IPsec-сети организации.</description>
     </item>
     <item>
       <title>Краткое описание Monitorix</title>
-      <link>https://debuntu.ru/n/kratkoe-opisanie-monitorix/</link>
+      <link>http://localhost:1313/n/kratkoe-opisanie-monitorix/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
-      <guid>https://debuntu.ru/n/kratkoe-opisanie-monitorix/</guid>
+      <guid>http://localhost:1313/n/kratkoe-opisanie-monitorix/</guid>
       <description>2020-02-22&#xA;Перевод пары страниц из Monitorix :: a free, open source, lightweight system monitoring tool&#xA;Monitorix Monitorix — это свободный, легковесный, и с открытыми исходниками, инструмент наблюдения за системой, спроектированный для слежки за стольким количеством служб и системных ресурсов, насколько это возможно. Он создан для использования в Linux/UNIX серверах, но из-за своей простоты и малого размера также хорош и для встраиваемых устройств.&#xA;Он состоит из двух программ: коллектора, называемого monitorix, являющегося Perl-демоном, который автоматически запускается, как любая другая служба системы; и CGI-скрипт monitorix.</description>
     </item>
     <item>
       <title>Выпуск Monitorix версии 3.12.0 (2020-02-21)</title>
-      <link>https://debuntu.ru/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</link>
+      <link>http://localhost:1313/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</guid>
+      <guid>http://localhost:1313/n/vypusk-monitorix-versii-3-12-0-2020-02-21/</guid>
       <description>2020-02-22&#xA;Перевод 3.12.0 version released&#xA;В этой версии представлены два новых модуля: phpfpm.pm и unbound.pm. Первый из них позволяет собирать PHPFPM-статистику и отслеживать неограниченное число сайтов. Второй модуль unbound.pm собирает множество данных о DNS-службе Unbound, запущенном на локальном сервере. Нет возможности собирать статистику о Unbound на удалённых серверах. Оба модуля поставляются с довольно полным комплектом графиков статистики.&#xA;Далее примеры этих двух новых графиков:&#xA;Кроме этих двух новых модулей, в эту версию включены некоторые новые интересные функции.</description>
     </item>
   </channel>

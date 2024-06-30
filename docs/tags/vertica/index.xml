@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Vertica on Debuntarium</title>
-    <link>https://debuntu.ru/tags/vertica/</link>
+    <link>http://localhost:1313/tags/vertica/</link>
     <description>Recent content in Vertica on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 03 Jul 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/vertica/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/vertica/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Best Practices for Using LDAP Link with Vertica (перевод)</title>
-      <link>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
+      <link>http://localhost:1313/a/best-practices-for-using-ldap-link-with-vertica-perevod/</link>
       <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
+      <guid>http://localhost:1313/a/best-practices-for-using-ldap-link-with-vertica-perevod/</guid>
       <description>2020-07-03&#xA;https://www.vertica.com/blog/best-practices-for-using-ldap-link-with-verticaba-p237852/&#xA;Итак, вы настроили и включили LDAP Link и работаете с Vertica, что позволяет синхронизировать пользователей и группы LDAP с соответствующими пользователями и ролями Vertica. Но вы по прежнему должны управлять пользователями и ролями в Vertica, которые вы не создавали с помощью LDAP Link. На следующем рисунке показано, как может выглядеть ваша конфигурация.&#xA;Но есть несколько рекомендаций, которым вы должны следовать, чтобы убедиться, что вы случайно не потеряете ни пользователей, ни данные.</description>
     </item>
   </channel>

@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>RedOS 7.2 on Debuntarium</title>
-    <link>https://debuntu.ru/tags/redos-7.2/</link>
+    <link>http://localhost:1313/tags/redos-7.2/</link>
     <description>Recent content in RedOS 7.2 on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 17 Mar 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/redos-7.2/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/redos-7.2/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ручное удаление реплики FreeIPA из RedOS7.2</title>
-      <link>https://debuntu.ru/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
+      <link>http://localhost:1313/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</link>
       <pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
+      <guid>http://localhost:1313/n/ruchnoe-udalenie-repliki-freeipa-iz-redos7.2/</guid>
       <description>2021-07-13&#xA;После неудачных опытов приходится выковыривать останки FreeIPA.&#xA;yum autoremove bind bind-dyndb-ldap ipa-server* pip freeze | xargs pip uninstall -y Удаление большинства python-пакетов производим через поочерёдное yum autoremove, pip freeze &amp;gt; list.txt и pip uninstall -y -r list.txt. В файле list.txt, при необходимости, удаляем названия пакетов, неудаляемых через pip.&#xA;При необходимости можно выполнить полное удаление python3:&#xA;yum -y autoremove python3 rm -rf /usr/lib/python3.6 /usr/local/lib/python3.6 rm -rf /var/log/{dirsrv,httpd,ipa} rm -f /var/log/{ipa*.log} rm -rf /var/lib/{dirsrv,certmonger,gssproxy,ipa,ipa-client} rm -rf /var/lib/pki/pki-tomcat rm -rf /var/kerberos rm -rf /etc/{dirsrv,httpd,gssproxy,ipa} rm -rf /etc/pki/pki-tomcat rm -f /etc/sysconfig/{dirsrv*,ipa-*,pki-tomcat,tomcat} rm -rf /etc/sysconfig/pki/tomcat </description>
     </item>
     <item>
       <title>Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62</title>
-      <link>https://debuntu.ru/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</link>
+      <link>http://localhost:1313/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</link>
       <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</guid>
+      <guid>http://localhost:1313/n/popytka-ustanovki-svezhego-sudo-s-saita-sudo-ws-na-redos7-2-vyzyvaet-oshibku-signature-region-62/</guid>
       <description>2021-03-01&#xA;Анамнез Попытка установки свежего sudo с сайта sudo.ws на RedOS7.2 вызывает ошибку signature region 62&amp;hellip; бла-бла&#xA;Диагноз Файл sudo.rpm, скачиваемый с sudo.ws, подписан цифровой подписью. Пакетный менеджер, устанавливаемый с RedOS7.2, не может обработать rpm-пакет подписанный gpg-подписью.&#xA;Лечение Решил перепаковать rpm-файл sudo. В этом случае подпись будет утеряна, после чего установка на RedOS7.2 становится возможной.&#xA;Перепаковка выполняется под root&amp;rsquo;ом:&#xA;# В CentOS 7 я установил: yum install rpmrebuild # Скачал свежий sudo: curl -LO https://github.</description>
     </item>
     <item>
       <title>13. Установка BorgBackup в RedOS 7.2</title>
-      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</link>
+      <link>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</guid>
+      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-redos-7.2/</guid>
       <description>2022-03-17&#xA;Установка пакетов, необходимых для сборки borgbackup yum -y install openssl-devel python3-devel libacl-devel libacl lz4-devel \ libzstd-devel libxxhash-devel gcc-c++ fuse-devel Обновляем pip python3 -m pip install -U pip Добавляем borgbackup в /roo/.local/bin Пакеты pkgconfig setuptools wheel msgpack python3 -m pip install --user pkgconfig setuptools setuptools-scm wheel msgpack stdout:&#xA;WARNING: Running pip install with root privileges is generally not a good idea. Try `__main__.py install --user` instead. Collecting pip Downloading https://files.pythonhosted.org/packages/a4/6d/6463d49a933f547439d6b5b98b46af8742cc03ae83543e4d7688c2420f8b/pip-21.3.1-py3-none-any.whl (1.</description>
     </item>
   </channel>

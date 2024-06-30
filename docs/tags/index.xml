@@ -2,1165 +2,1165 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Debuntarium</title>
-    <link>https://debuntu.ru/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 18 May 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Containerd</title>
-      <link>https://debuntu.ru/tags/containerd/</link>
+      <link>http://localhost:1313/tags/containerd/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/containerd/</guid>
+      <guid>http://localhost:1313/tags/containerd/</guid>
       <description></description>
     </item>
     <item>
       <title>Cri</title>
-      <link>https://debuntu.ru/tags/cri/</link>
+      <link>http://localhost:1313/tags/cri/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/cri/</guid>
+      <guid>http://localhost:1313/tags/cri/</guid>
       <description></description>
     </item>
     <item>
       <title>Swap</title>
-      <link>https://debuntu.ru/tags/swap/</link>
+      <link>http://localhost:1313/tags/swap/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/swap/</guid>
+      <guid>http://localhost:1313/tags/swap/</guid>
       <description></description>
     </item>
     <item>
       <title>CentOS7</title>
-      <link>https://debuntu.ru/tags/centos7/</link>
+      <link>http://localhost:1313/tags/centos7/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/centos7/</guid>
+      <guid>http://localhost:1313/tags/centos7/</guid>
       <description></description>
     </item>
     <item>
       <title>PostgreSQL</title>
-      <link>https://debuntu.ru/tags/postgresql/</link>
+      <link>http://localhost:1313/tags/postgresql/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/postgresql/</guid>
+      <guid>http://localhost:1313/tags/postgresql/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache Atlas</title>
-      <link>https://debuntu.ru/tags/apache-atlas/</link>
+      <link>http://localhost:1313/tags/apache-atlas/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-atlas/</guid>
+      <guid>http://localhost:1313/tags/apache-atlas/</guid>
       <description></description>
     </item>
     <item>
       <title>ArenaData Hadoop</title>
-      <link>https://debuntu.ru/tags/arenadata-hadoop/</link>
+      <link>http://localhost:1313/tags/arenadata-hadoop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/arenadata-hadoop/</guid>
+      <guid>http://localhost:1313/tags/arenadata-hadoop/</guid>
       <description></description>
     </item>
     <item>
       <title>BigData</title>
-      <link>https://debuntu.ru/tags/bigdata/</link>
+      <link>http://localhost:1313/tags/bigdata/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/bigdata/</guid>
+      <guid>http://localhost:1313/tags/bigdata/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache Hadoop</title>
-      <link>https://debuntu.ru/tags/apache-hadoop/</link>
+      <link>http://localhost:1313/tags/apache-hadoop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-hadoop/</guid>
+      <guid>http://localhost:1313/tags/apache-hadoop/</guid>
       <description></description>
     </item>
     <item>
       <title>CentOS</title>
-      <link>https://debuntu.ru/tags/centos/</link>
+      <link>http://localhost:1313/tags/centos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/centos/</guid>
+      <guid>http://localhost:1313/tags/centos/</guid>
       <description></description>
     </item>
     <item>
       <title>CentOS 7</title>
-      <link>https://debuntu.ru/tags/centos-7/</link>
+      <link>http://localhost:1313/tags/centos-7/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/centos-7/</guid>
+      <guid>http://localhost:1313/tags/centos-7/</guid>
       <description></description>
     </item>
     <item>
       <title>Bash</title>
-      <link>https://debuntu.ru/tags/bash/</link>
+      <link>http://localhost:1313/tags/bash/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/bash/</guid>
+      <guid>http://localhost:1313/tags/bash/</guid>
       <description></description>
     </item>
     <item>
       <title>Curl</title>
-      <link>https://debuntu.ru/tags/curl/</link>
+      <link>http://localhost:1313/tags/curl/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/curl/</guid>
+      <guid>http://localhost:1313/tags/curl/</guid>
       <description></description>
     </item>
     <item>
       <title>Nexus Repository Manager</title>
-      <link>https://debuntu.ru/tags/nexus-repository-manager/</link>
+      <link>http://localhost:1313/tags/nexus-repository-manager/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/nexus-repository-manager/</guid>
+      <guid>http://localhost:1313/tags/nexus-repository-manager/</guid>
       <description></description>
     </item>
     <item>
       <title>Backup SoftWare</title>
-      <link>https://debuntu.ru/tags/backup-software/</link>
+      <link>http://localhost:1313/tags/backup-software/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/backup-software/</guid>
+      <guid>http://localhost:1313/tags/backup-software/</guid>
       <description></description>
     </item>
     <item>
       <title>BorgBackup</title>
-      <link>https://debuntu.ru/tags/borgbackup/</link>
+      <link>http://localhost:1313/tags/borgbackup/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/borgbackup/</guid>
+      <guid>http://localhost:1313/tags/borgbackup/</guid>
       <description></description>
     </item>
     <item>
       <title>LVM</title>
-      <link>https://debuntu.ru/tags/lvm/</link>
+      <link>http://localhost:1313/tags/lvm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/lvm/</guid>
+      <guid>http://localhost:1313/tags/lvm/</guid>
       <description></description>
     </item>
     <item>
       <title>AltLinux</title>
-      <link>https://debuntu.ru/tags/altlinux/</link>
+      <link>http://localhost:1313/tags/altlinux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/altlinux/</guid>
+      <guid>http://localhost:1313/tags/altlinux/</guid>
       <description></description>
     </item>
     <item>
       <title>AltLinux 10</title>
-      <link>https://debuntu.ru/tags/altlinux-10/</link>
+      <link>http://localhost:1313/tags/altlinux-10/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/altlinux-10/</guid>
+      <guid>http://localhost:1313/tags/altlinux-10/</guid>
       <description></description>
     </item>
     <item>
       <title>Linux Kernel</title>
-      <link>https://debuntu.ru/tags/linux-kernel/</link>
+      <link>http://localhost:1313/tags/linux-kernel/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/linux-kernel/</guid>
+      <guid>http://localhost:1313/tags/linux-kernel/</guid>
       <description></description>
     </item>
     <item>
       <title>RedOS</title>
-      <link>https://debuntu.ru/tags/redos/</link>
+      <link>http://localhost:1313/tags/redos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/redos/</guid>
+      <guid>http://localhost:1313/tags/redos/</guid>
       <description></description>
     </item>
     <item>
       <title>RedOS 7.2</title>
-      <link>https://debuntu.ru/tags/redos-7.2/</link>
+      <link>http://localhost:1313/tags/redos-7.2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/redos-7.2/</guid>
+      <guid>http://localhost:1313/tags/redos-7.2/</guid>
       <description></description>
     </item>
     <item>
       <title>Ssh</title>
-      <link>https://debuntu.ru/tags/ssh/</link>
+      <link>http://localhost:1313/tags/ssh/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/ssh/</guid>
+      <guid>http://localhost:1313/tags/ssh/</guid>
       <description></description>
     </item>
     <item>
       <title>AltLinux 9</title>
-      <link>https://debuntu.ru/tags/altlinux-9/</link>
+      <link>http://localhost:1313/tags/altlinux-9/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/altlinux-9/</guid>
+      <guid>http://localhost:1313/tags/altlinux-9/</guid>
       <description></description>
     </item>
     <item>
       <title>Ubuntu</title>
-      <link>https://debuntu.ru/tags/ubuntu/</link>
+      <link>http://localhost:1313/tags/ubuntu/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/ubuntu/</guid>
+      <guid>http://localhost:1313/tags/ubuntu/</guid>
       <description></description>
     </item>
     <item>
       <title>AlmaLinux 8.5</title>
-      <link>https://debuntu.ru/tags/almalinux-8.5/</link>
+      <link>http://localhost:1313/tags/almalinux-8.5/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/almalinux-8.5/</guid>
+      <guid>http://localhost:1313/tags/almalinux-8.5/</guid>
       <description></description>
     </item>
     <item>
       <title>FreeIPA</title>
-      <link>https://debuntu.ru/tags/freeipa/</link>
+      <link>http://localhost:1313/tags/freeipa/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/freeipa/</guid>
+      <guid>http://localhost:1313/tags/freeipa/</guid>
       <description></description>
     </item>
     <item>
       <title>FreeIPA 4.9.6</title>
-      <link>https://debuntu.ru/tags/freeipa-4.9.6/</link>
+      <link>http://localhost:1313/tags/freeipa-4.9.6/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/freeipa-4.9.6/</guid>
+      <guid>http://localhost:1313/tags/freeipa-4.9.6/</guid>
       <description></description>
     </item>
     <item>
       <title>Cloudera CDH 6.3.2</title>
-      <link>https://debuntu.ru/tags/cloudera-cdh-6.3.2/</link>
+      <link>http://localhost:1313/tags/cloudera-cdh-6.3.2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/cloudera-cdh-6.3.2/</guid>
+      <guid>http://localhost:1313/tags/cloudera-cdh-6.3.2/</guid>
       <description></description>
     </item>
     <item>
       <title>Stunnel</title>
-      <link>https://debuntu.ru/tags/stunnel/</link>
+      <link>http://localhost:1313/tags/stunnel/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/stunnel/</guid>
+      <guid>http://localhost:1313/tags/stunnel/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache Kafka</title>
-      <link>https://debuntu.ru/tags/apache-kafka/</link>
+      <link>http://localhost:1313/tags/apache-kafka/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-kafka/</guid>
+      <guid>http://localhost:1313/tags/apache-kafka/</guid>
       <description></description>
     </item>
     <item>
       <title>CMAK</title>
-      <link>https://debuntu.ru/tags/cmak/</link>
+      <link>http://localhost:1313/tags/cmak/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/cmak/</guid>
+      <guid>http://localhost:1313/tags/cmak/</guid>
       <description></description>
     </item>
     <item>
       <title>Kafdrop</title>
-      <link>https://debuntu.ru/tags/kafdrop/</link>
+      <link>http://localhost:1313/tags/kafdrop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/kafdrop/</guid>
+      <guid>http://localhost:1313/tags/kafdrop/</guid>
       <description></description>
     </item>
     <item>
       <title>Obfuscation</title>
-      <link>https://debuntu.ru/tags/obfuscation/</link>
+      <link>http://localhost:1313/tags/obfuscation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/obfuscation/</guid>
+      <guid>http://localhost:1313/tags/obfuscation/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache Spark</title>
-      <link>https://debuntu.ru/tags/apache-spark/</link>
+      <link>http://localhost:1313/tags/apache-spark/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-spark/</guid>
+      <guid>http://localhost:1313/tags/apache-spark/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache HBase</title>
-      <link>https://debuntu.ru/tags/apache-hbase/</link>
+      <link>http://localhost:1313/tags/apache-hbase/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-hbase/</guid>
+      <guid>http://localhost:1313/tags/apache-hbase/</guid>
       <description></description>
     </item>
     <item>
       <title>Colorized Stdout</title>
-      <link>https://debuntu.ru/tags/colorized-stdout/</link>
+      <link>http://localhost:1313/tags/colorized-stdout/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/colorized-stdout/</guid>
+      <guid>http://localhost:1313/tags/colorized-stdout/</guid>
       <description></description>
     </item>
     <item>
       <title>Less</title>
-      <link>https://debuntu.ru/tags/less/</link>
+      <link>http://localhost:1313/tags/less/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/less/</guid>
+      <guid>http://localhost:1313/tags/less/</guid>
       <description></description>
     </item>
     <item>
       <title>Cockpit</title>
-      <link>https://debuntu.ru/tags/cockpit/</link>
+      <link>http://localhost:1313/tags/cockpit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/cockpit/</guid>
+      <guid>http://localhost:1313/tags/cockpit/</guid>
       <description></description>
     </item>
     <item>
       <title>GNU Screen</title>
-      <link>https://debuntu.ru/tags/gnu-screen/</link>
+      <link>http://localhost:1313/tags/gnu-screen/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/gnu-screen/</guid>
+      <guid>http://localhost:1313/tags/gnu-screen/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache Hive</title>
-      <link>https://debuntu.ru/tags/apache-hive/</link>
+      <link>http://localhost:1313/tags/apache-hive/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-hive/</guid>
+      <guid>http://localhost:1313/tags/apache-hive/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache Zookeeper</title>
-      <link>https://debuntu.ru/tags/apache-zookeeper/</link>
+      <link>http://localhost:1313/tags/apache-zookeeper/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-zookeeper/</guid>
+      <guid>http://localhost:1313/tags/apache-zookeeper/</guid>
       <description></description>
     </item>
     <item>
       <title>Cloudera Hadoop</title>
-      <link>https://debuntu.ru/tags/cloudera-hadoop/</link>
+      <link>http://localhost:1313/tags/cloudera-hadoop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/cloudera-hadoop/</guid>
+      <guid>http://localhost:1313/tags/cloudera-hadoop/</guid>
       <description></description>
     </item>
     <item>
       <title>Kafka</title>
-      <link>https://debuntu.ru/tags/kafka/</link>
+      <link>http://localhost:1313/tags/kafka/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/kafka/</guid>
+      <guid>http://localhost:1313/tags/kafka/</guid>
       <description></description>
     </item>
     <item>
       <title>Solr</title>
-      <link>https://debuntu.ru/tags/solr/</link>
+      <link>http://localhost:1313/tags/solr/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/solr/</guid>
+      <guid>http://localhost:1313/tags/solr/</guid>
       <description></description>
     </item>
     <item>
       <title>DNS</title>
-      <link>https://debuntu.ru/tags/dns/</link>
+      <link>http://localhost:1313/tags/dns/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/dns/</guid>
+      <guid>http://localhost:1313/tags/dns/</guid>
       <description></description>
     </item>
     <item>
       <title>Resolv.conf</title>
-      <link>https://debuntu.ru/tags/resolv.conf/</link>
+      <link>http://localhost:1313/tags/resolv.conf/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/resolv.conf/</guid>
+      <guid>http://localhost:1313/tags/resolv.conf/</guid>
       <description></description>
     </item>
     <item>
       <title>HDFS</title>
-      <link>https://debuntu.ru/tags/hdfs/</link>
+      <link>http://localhost:1313/tags/hdfs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/hdfs/</guid>
+      <guid>http://localhost:1313/tags/hdfs/</guid>
       <description></description>
     </item>
     <item>
       <title>Sentry</title>
-      <link>https://debuntu.ru/tags/sentry/</link>
+      <link>http://localhost:1313/tags/sentry/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/sentry/</guid>
+      <guid>http://localhost:1313/tags/sentry/</guid>
       <description></description>
     </item>
     <item>
       <title>YARN</title>
-      <link>https://debuntu.ru/tags/yarn/</link>
+      <link>http://localhost:1313/tags/yarn/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/yarn/</guid>
+      <guid>http://localhost:1313/tags/yarn/</guid>
       <description></description>
     </item>
     <item>
       <title>Zookeper</title>
-      <link>https://debuntu.ru/tags/zookeper/</link>
+      <link>http://localhost:1313/tags/zookeper/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/zookeper/</guid>
+      <guid>http://localhost:1313/tags/zookeper/</guid>
       <description></description>
     </item>
     <item>
       <title>JupiterHub</title>
-      <link>https://debuntu.ru/tags/jupiterhub/</link>
+      <link>http://localhost:1313/tags/jupiterhub/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/jupiterhub/</guid>
+      <guid>http://localhost:1313/tags/jupiterhub/</guid>
       <description></description>
     </item>
     <item>
       <title>Nexus</title>
-      <link>https://debuntu.ru/tags/nexus/</link>
+      <link>http://localhost:1313/tags/nexus/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/nexus/</guid>
+      <guid>http://localhost:1313/tags/nexus/</guid>
       <description></description>
     </item>
     <item>
       <title>Python</title>
-      <link>https://debuntu.ru/tags/python/</link>
+      <link>http://localhost:1313/tags/python/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/python/</guid>
+      <guid>http://localhost:1313/tags/python/</guid>
       <description></description>
     </item>
     <item>
       <title>HBase</title>
-      <link>https://debuntu.ru/tags/hbase/</link>
+      <link>http://localhost:1313/tags/hbase/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/hbase/</guid>
+      <guid>http://localhost:1313/tags/hbase/</guid>
       <description></description>
     </item>
     <item>
       <title>Hive</title>
-      <link>https://debuntu.ru/tags/hive/</link>
+      <link>http://localhost:1313/tags/hive/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/hive/</guid>
+      <guid>http://localhost:1313/tags/hive/</guid>
       <description></description>
     </item>
     <item>
       <title>Hue</title>
-      <link>https://debuntu.ru/tags/hue/</link>
+      <link>http://localhost:1313/tags/hue/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/hue/</guid>
+      <guid>http://localhost:1313/tags/hue/</guid>
       <description></description>
     </item>
     <item>
       <title>Spark</title>
-      <link>https://debuntu.ru/tags/spark/</link>
+      <link>http://localhost:1313/tags/spark/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/spark/</guid>
+      <guid>http://localhost:1313/tags/spark/</guid>
       <description></description>
     </item>
     <item>
       <title>Beeline</title>
-      <link>https://debuntu.ru/tags/beeline/</link>
+      <link>http://localhost:1313/tags/beeline/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/beeline/</guid>
+      <guid>http://localhost:1313/tags/beeline/</guid>
       <description></description>
     </item>
     <item>
       <title>Mokey</title>
-      <link>https://debuntu.ru/tags/mokey/</link>
+      <link>http://localhost:1313/tags/mokey/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/mokey/</guid>
+      <guid>http://localhost:1313/tags/mokey/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache Tomcat</title>
-      <link>https://debuntu.ru/tags/apache-tomcat/</link>
+      <link>http://localhost:1313/tags/apache-tomcat/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-tomcat/</guid>
+      <guid>http://localhost:1313/tags/apache-tomcat/</guid>
       <description></description>
     </item>
     <item>
       <title>IDE</title>
-      <link>https://debuntu.ru/tags/ide/</link>
+      <link>http://localhost:1313/tags/ide/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/ide/</guid>
+      <guid>http://localhost:1313/tags/ide/</guid>
       <description></description>
     </item>
     <item>
       <title>Visual Studio Code</title>
-      <link>https://debuntu.ru/tags/visual-studio-code/</link>
+      <link>http://localhost:1313/tags/visual-studio-code/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/visual-studio-code/</guid>
+      <guid>http://localhost:1313/tags/visual-studio-code/</guid>
       <description></description>
     </item>
     <item>
       <title>Kerberos</title>
-      <link>https://debuntu.ru/tags/kerberos/</link>
+      <link>http://localhost:1313/tags/kerberos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/kerberos/</guid>
+      <guid>http://localhost:1313/tags/kerberos/</guid>
       <description></description>
     </item>
     <item>
       <title>Keytab</title>
-      <link>https://debuntu.ru/tags/keytab/</link>
+      <link>http://localhost:1313/tags/keytab/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/keytab/</guid>
+      <guid>http://localhost:1313/tags/keytab/</guid>
       <description></description>
     </item>
     <item>
       <title>Ansible</title>
-      <link>https://debuntu.ru/tags/ansible/</link>
+      <link>http://localhost:1313/tags/ansible/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/ansible/</guid>
+      <guid>http://localhost:1313/tags/ansible/</guid>
       <description></description>
     </item>
     <item>
       <title>Ansible Ad-Hoc</title>
-      <link>https://debuntu.ru/tags/ansible-ad-hoc/</link>
+      <link>http://localhost:1313/tags/ansible-ad-hoc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/ansible-ad-hoc/</guid>
+      <guid>http://localhost:1313/tags/ansible-ad-hoc/</guid>
       <description></description>
     </item>
     <item>
       <title>Automation</title>
-      <link>https://debuntu.ru/tags/automation/</link>
+      <link>http://localhost:1313/tags/automation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/automation/</guid>
+      <guid>http://localhost:1313/tags/automation/</guid>
       <description></description>
     </item>
     <item>
       <title>Docker</title>
-      <link>https://debuntu.ru/tags/docker/</link>
+      <link>http://localhost:1313/tags/docker/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/docker/</guid>
+      <guid>http://localhost:1313/tags/docker/</guid>
       <description></description>
     </item>
     <item>
       <title>Sudo</title>
-      <link>https://debuntu.ru/tags/sudo/</link>
+      <link>http://localhost:1313/tags/sudo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/sudo/</guid>
+      <guid>http://localhost:1313/tags/sudo/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache Airflow</title>
-      <link>https://debuntu.ru/tags/apache-airflow/</link>
+      <link>http://localhost:1313/tags/apache-airflow/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-airflow/</guid>
+      <guid>http://localhost:1313/tags/apache-airflow/</guid>
       <description></description>
     </item>
     <item>
       <title>LDAP</title>
-      <link>https://debuntu.ru/tags/ldap/</link>
+      <link>http://localhost:1313/tags/ldap/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/ldap/</guid>
+      <guid>http://localhost:1313/tags/ldap/</guid>
       <description></description>
     </item>
     <item>
       <title>Cloudera Inspect Network Performance</title>
-      <link>https://debuntu.ru/tags/cloudera-inspect-network-performance/</link>
+      <link>http://localhost:1313/tags/cloudera-inspect-network-performance/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/cloudera-inspect-network-performance/</guid>
+      <guid>http://localhost:1313/tags/cloudera-inspect-network-performance/</guid>
       <description></description>
     </item>
     <item>
       <title>Apache Sqoop</title>
-      <link>https://debuntu.ru/tags/apache-sqoop/</link>
+      <link>http://localhost:1313/tags/apache-sqoop/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apache-sqoop/</guid>
+      <guid>http://localhost:1313/tags/apache-sqoop/</guid>
       <description></description>
     </item>
     <item>
       <title>NXRM</title>
-      <link>https://debuntu.ru/tags/nxrm/</link>
+      <link>http://localhost:1313/tags/nxrm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/nxrm/</guid>
+      <guid>http://localhost:1313/tags/nxrm/</guid>
       <description></description>
     </item>
     <item>
       <title>Kafka-Mirror-Maker</title>
-      <link>https://debuntu.ru/tags/kafka-mirror-maker/</link>
+      <link>http://localhost:1313/tags/kafka-mirror-maker/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/kafka-mirror-maker/</guid>
+      <guid>http://localhost:1313/tags/kafka-mirror-maker/</guid>
       <description></description>
     </item>
     <item>
       <title>DB</title>
-      <link>https://debuntu.ru/tags/db/</link>
+      <link>http://localhost:1313/tags/db/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/db/</guid>
+      <guid>http://localhost:1313/tags/db/</guid>
       <description></description>
     </item>
     <item>
       <title>Vertica</title>
-      <link>https://debuntu.ru/tags/vertica/</link>
+      <link>http://localhost:1313/tags/vertica/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/vertica/</guid>
+      <guid>http://localhost:1313/tags/vertica/</guid>
       <description></description>
     </item>
     <item>
       <title>CI/CD</title>
-      <link>https://debuntu.ru/tags/ci/cd/</link>
+      <link>http://localhost:1313/tags/ci/cd/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/ci/cd/</guid>
+      <guid>http://localhost:1313/tags/ci/cd/</guid>
       <description></description>
     </item>
     <item>
       <title>DevOps</title>
-      <link>https://debuntu.ru/tags/devops/</link>
+      <link>http://localhost:1313/tags/devops/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/devops/</guid>
+      <guid>http://localhost:1313/tags/devops/</guid>
       <description></description>
     </item>
     <item>
       <title>Jenkins</title>
-      <link>https://debuntu.ru/tags/jenkins/</link>
+      <link>http://localhost:1313/tags/jenkins/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/jenkins/</guid>
+      <guid>http://localhost:1313/tags/jenkins/</guid>
       <description></description>
     </item>
     <item>
       <title>Nginx</title>
-      <link>https://debuntu.ru/tags/nginx/</link>
+      <link>http://localhost:1313/tags/nginx/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/nginx/</guid>
+      <guid>http://localhost:1313/tags/nginx/</guid>
       <description></description>
     </item>
     <item>
       <title>Alpine Linux</title>
-      <link>https://debuntu.ru/tags/alpine-linux/</link>
+      <link>http://localhost:1313/tags/alpine-linux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/alpine-linux/</guid>
+      <guid>http://localhost:1313/tags/alpine-linux/</guid>
       <description></description>
     </item>
     <item>
       <title>Monitorix</title>
-      <link>https://debuntu.ru/tags/monitorix/</link>
+      <link>http://localhost:1313/tags/monitorix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/monitorix/</guid>
+      <guid>http://localhost:1313/tags/monitorix/</guid>
       <description></description>
     </item>
     <item>
       <title>Void Linux</title>
-      <link>https://debuntu.ru/tags/void-linux/</link>
+      <link>http://localhost:1313/tags/void-linux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/void-linux/</guid>
+      <guid>http://localhost:1313/tags/void-linux/</guid>
       <description></description>
     </item>
     <item>
       <title>OpenVPN</title>
-      <link>https://debuntu.ru/tags/openvpn/</link>
+      <link>http://localhost:1313/tags/openvpn/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/openvpn/</guid>
+      <guid>http://localhost:1313/tags/openvpn/</guid>
       <description></description>
     </item>
     <item>
       <title>VPN</title>
-      <link>https://debuntu.ru/tags/vpn/</link>
+      <link>http://localhost:1313/tags/vpn/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/vpn/</guid>
+      <guid>http://localhost:1313/tags/vpn/</guid>
       <description></description>
     </item>
     <item>
       <title>PKI</title>
-      <link>https://debuntu.ru/tags/pki/</link>
+      <link>http://localhost:1313/tags/pki/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/pki/</guid>
+      <guid>http://localhost:1313/tags/pki/</guid>
       <description></description>
     </item>
     <item>
       <title>KVM</title>
-      <link>https://debuntu.ru/tags/kvm/</link>
+      <link>http://localhost:1313/tags/kvm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/kvm/</guid>
+      <guid>http://localhost:1313/tags/kvm/</guid>
       <description></description>
     </item>
     <item>
       <title>QEMU</title>
-      <link>https://debuntu.ru/tags/qemu/</link>
+      <link>http://localhost:1313/tags/qemu/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/qemu/</guid>
+      <guid>http://localhost:1313/tags/qemu/</guid>
       <description></description>
     </item>
     <item>
       <title>QEMU/KVM</title>
-      <link>https://debuntu.ru/tags/qemu/kvm/</link>
+      <link>http://localhost:1313/tags/qemu/kvm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/qemu/kvm/</guid>
+      <guid>http://localhost:1313/tags/qemu/kvm/</guid>
       <description></description>
     </item>
     <item>
       <title>Virtualization</title>
-      <link>https://debuntu.ru/tags/virtualization/</link>
+      <link>http://localhost:1313/tags/virtualization/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/virtualization/</guid>
+      <guid>http://localhost:1313/tags/virtualization/</guid>
       <description></description>
     </item>
     <item>
       <title>FileSystem</title>
-      <link>https://debuntu.ru/tags/filesystem/</link>
+      <link>http://localhost:1313/tags/filesystem/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/filesystem/</guid>
+      <guid>http://localhost:1313/tags/filesystem/</guid>
       <description></description>
     </item>
     <item>
       <title>Translation</title>
-      <link>https://debuntu.ru/tags/translation/</link>
+      <link>http://localhost:1313/tags/translation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/translation/</guid>
+      <guid>http://localhost:1313/tags/translation/</guid>
       <description></description>
     </item>
     <item>
       <title>VFS</title>
-      <link>https://debuntu.ru/tags/vfs/</link>
+      <link>http://localhost:1313/tags/vfs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/vfs/</guid>
+      <guid>http://localhost:1313/tags/vfs/</guid>
       <description></description>
     </item>
     <item>
       <title>Networking</title>
-      <link>https://debuntu.ru/tags/networking/</link>
+      <link>http://localhost:1313/tags/networking/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/networking/</guid>
+      <guid>http://localhost:1313/tags/networking/</guid>
       <description></description>
     </item>
     <item>
       <title>Path MTU Discovery</title>
-      <link>https://debuntu.ru/tags/path-mtu-discovery/</link>
+      <link>http://localhost:1313/tags/path-mtu-discovery/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/path-mtu-discovery/</guid>
+      <guid>http://localhost:1313/tags/path-mtu-discovery/</guid>
       <description></description>
     </item>
     <item>
       <title>Btrfs</title>
-      <link>https://debuntu.ru/tags/btrfs/</link>
+      <link>http://localhost:1313/tags/btrfs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/btrfs/</guid>
+      <guid>http://localhost:1313/tags/btrfs/</guid>
       <description></description>
     </item>
     <item>
       <title>Lvresize</title>
-      <link>https://debuntu.ru/tags/lvresize/</link>
+      <link>http://localhost:1313/tags/lvresize/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/lvresize/</guid>
+      <guid>http://localhost:1313/tags/lvresize/</guid>
       <description></description>
     </item>
     <item>
       <title>Root</title>
-      <link>https://debuntu.ru/tags/root/</link>
+      <link>http://localhost:1313/tags/root/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/root/</guid>
+      <guid>http://localhost:1313/tags/root/</guid>
       <description></description>
     </item>
     <item>
       <title>Syslinux</title>
-      <link>https://debuntu.ru/tags/syslinux/</link>
+      <link>http://localhost:1313/tags/syslinux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/syslinux/</guid>
+      <guid>http://localhost:1313/tags/syslinux/</guid>
       <description></description>
     </item>
     <item>
       <title>APT</title>
-      <link>https://debuntu.ru/tags/apt/</link>
+      <link>http://localhost:1313/tags/apt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apt/</guid>
+      <guid>http://localhost:1313/tags/apt/</guid>
       <description></description>
     </item>
     <item>
       <title>Apt-Cache</title>
-      <link>https://debuntu.ru/tags/apt-cache/</link>
+      <link>http://localhost:1313/tags/apt-cache/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apt-cache/</guid>
+      <guid>http://localhost:1313/tags/apt-cache/</guid>
       <description></description>
     </item>
     <item>
       <title>Apt-Get</title>
-      <link>https://debuntu.ru/tags/apt-get/</link>
+      <link>http://localhost:1313/tags/apt-get/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apt-get/</guid>
+      <guid>http://localhost:1313/tags/apt-get/</guid>
       <description></description>
     </item>
     <item>
       <title>Aptitude</title>
-      <link>https://debuntu.ru/tags/aptitude/</link>
+      <link>http://localhost:1313/tags/aptitude/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/aptitude/</guid>
+      <guid>http://localhost:1313/tags/aptitude/</guid>
       <description></description>
     </item>
     <item>
       <title>Console</title>
-      <link>https://debuntu.ru/tags/console/</link>
+      <link>http://localhost:1313/tags/console/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/console/</guid>
+      <guid>http://localhost:1313/tags/console/</guid>
       <description></description>
     </item>
     <item>
       <title>History</title>
-      <link>https://debuntu.ru/tags/history/</link>
+      <link>http://localhost:1313/tags/history/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/history/</guid>
+      <guid>http://localhost:1313/tags/history/</guid>
       <description></description>
     </item>
     <item>
       <title>Terminal</title>
-      <link>https://debuntu.ru/tags/terminal/</link>
+      <link>http://localhost:1313/tags/terminal/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/terminal/</guid>
+      <guid>http://localhost:1313/tags/terminal/</guid>
       <description></description>
     </item>
     <item>
       <title>Easy-RSA</title>
-      <link>https://debuntu.ru/tags/easy-rsa/</link>
+      <link>http://localhost:1313/tags/easy-rsa/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/easy-rsa/</guid>
+      <guid>http://localhost:1313/tags/easy-rsa/</guid>
       <description></description>
     </item>
     <item>
       <title>CMS</title>
-      <link>https://debuntu.ru/tags/cms/</link>
+      <link>http://localhost:1313/tags/cms/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/cms/</guid>
+      <guid>http://localhost:1313/tags/cms/</guid>
       <description></description>
     </item>
     <item>
       <title>Plone</title>
-      <link>https://debuntu.ru/tags/plone/</link>
+      <link>http://localhost:1313/tags/plone/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/plone/</guid>
+      <guid>http://localhost:1313/tags/plone/</guid>
       <description></description>
     </item>
     <item>
       <title>EncFS</title>
-      <link>https://debuntu.ru/tags/encfs/</link>
+      <link>http://localhost:1313/tags/encfs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/encfs/</guid>
+      <guid>http://localhost:1313/tags/encfs/</guid>
       <description></description>
     </item>
     <item>
       <title>InfoSec</title>
-      <link>https://debuntu.ru/tags/infosec/</link>
+      <link>http://localhost:1313/tags/infosec/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/infosec/</guid>
+      <guid>http://localhost:1313/tags/infosec/</guid>
       <description></description>
     </item>
     <item>
       <title>ACL</title>
-      <link>https://debuntu.ru/tags/acl/</link>
+      <link>http://localhost:1313/tags/acl/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/acl/</guid>
+      <guid>http://localhost:1313/tags/acl/</guid>
       <description></description>
     </item>
     <item>
       <title>Multic</title>
-      <link>https://debuntu.ru/tags/multic/</link>
+      <link>http://localhost:1313/tags/multic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/multic/</guid>
+      <guid>http://localhost:1313/tags/multic/</guid>
       <description></description>
     </item>
     <item>
       <title>Traditional Unix Permission</title>
-      <link>https://debuntu.ru/tags/traditional-unix-permission/</link>
+      <link>http://localhost:1313/tags/traditional-unix-permission/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/traditional-unix-permission/</guid>
+      <guid>http://localhost:1313/tags/traditional-unix-permission/</guid>
       <description></description>
     </item>
     <item>
       <title>Unix</title>
-      <link>https://debuntu.ru/tags/unix/</link>
+      <link>http://localhost:1313/tags/unix/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/unix/</guid>
+      <guid>http://localhost:1313/tags/unix/</guid>
       <description></description>
     </item>
     <item>
       <title>Chroot</title>
-      <link>https://debuntu.ru/tags/chroot/</link>
+      <link>http://localhost:1313/tags/chroot/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/chroot/</guid>
+      <guid>http://localhost:1313/tags/chroot/</guid>
       <description></description>
     </item>
     <item>
       <title>Rsync</title>
-      <link>https://debuntu.ru/tags/rsync/</link>
+      <link>http://localhost:1313/tags/rsync/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/rsync/</guid>
+      <guid>http://localhost:1313/tags/rsync/</guid>
       <description></description>
     </item>
     <item>
       <title>IPsec</title>
-      <link>https://debuntu.ru/tags/ipsec/</link>
+      <link>http://localhost:1313/tags/ipsec/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/ipsec/</guid>
+      <guid>http://localhost:1313/tags/ipsec/</guid>
       <description></description>
     </item>
     <item>
       <title>StrongSwan</title>
-      <link>https://debuntu.ru/tags/strongswan/</link>
+      <link>http://localhost:1313/tags/strongswan/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/strongswan/</guid>
+      <guid>http://localhost:1313/tags/strongswan/</guid>
       <description></description>
     </item>
     <item>
       <title>Composer</title>
-      <link>https://debuntu.ru/tags/composer/</link>
+      <link>http://localhost:1313/tags/composer/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/composer/</guid>
+      <guid>http://localhost:1313/tags/composer/</guid>
       <description></description>
     </item>
     <item>
       <title>Drupal</title>
-      <link>https://debuntu.ru/tags/drupal/</link>
+      <link>http://localhost:1313/tags/drupal/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/drupal/</guid>
+      <guid>http://localhost:1313/tags/drupal/</guid>
       <description></description>
     </item>
     <item>
       <title>NextCloud</title>
-      <link>https://debuntu.ru/tags/nextcloud/</link>
+      <link>http://localhost:1313/tags/nextcloud/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/nextcloud/</guid>
+      <guid>http://localhost:1313/tags/nextcloud/</guid>
       <description></description>
     </item>
     <item>
       <title>OAuth2</title>
-      <link>https://debuntu.ru/tags/oauth2/</link>
+      <link>http://localhost:1313/tags/oauth2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/oauth2/</guid>
+      <guid>http://localhost:1313/tags/oauth2/</guid>
       <description></description>
     </item>
     <item>
       <title>Cryptsetup</title>
-      <link>https://debuntu.ru/tags/cryptsetup/</link>
+      <link>http://localhost:1313/tags/cryptsetup/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/cryptsetup/</guid>
+      <guid>http://localhost:1313/tags/cryptsetup/</guid>
       <description></description>
     </item>
     <item>
       <title>Dm-Setup</title>
-      <link>https://debuntu.ru/tags/dm-setup/</link>
+      <link>http://localhost:1313/tags/dm-setup/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/dm-setup/</guid>
+      <guid>http://localhost:1313/tags/dm-setup/</guid>
       <description></description>
     </item>
     <item>
       <title>LUKS</title>
-      <link>https://debuntu.ru/tags/luks/</link>
+      <link>http://localhost:1313/tags/luks/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/luks/</guid>
+      <guid>http://localhost:1313/tags/luks/</guid>
       <description></description>
     </item>
     <item>
       <title>AppArmor</title>
-      <link>https://debuntu.ru/tags/apparmor/</link>
+      <link>http://localhost:1313/tags/apparmor/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apparmor/</guid>
+      <guid>http://localhost:1313/tags/apparmor/</guid>
       <description></description>
     </item>
     <item>
       <title>LibreOffice</title>
-      <link>https://debuntu.ru/tags/libreoffice/</link>
+      <link>http://localhost:1313/tags/libreoffice/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/libreoffice/</guid>
+      <guid>http://localhost:1313/tags/libreoffice/</guid>
       <description></description>
     </item>
     <item>
       <title>Meshnet</title>
-      <link>https://debuntu.ru/tags/meshnet/</link>
+      <link>http://localhost:1313/tags/meshnet/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/meshnet/</guid>
+      <guid>http://localhost:1313/tags/meshnet/</guid>
       <description></description>
     </item>
     <item>
       <title>Mikrotik</title>
-      <link>https://debuntu.ru/tags/mikrotik/</link>
+      <link>http://localhost:1313/tags/mikrotik/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/mikrotik/</guid>
+      <guid>http://localhost:1313/tags/mikrotik/</guid>
       <description></description>
     </item>
     <item>
       <title>LVM2</title>
-      <link>https://debuntu.ru/tags/lvm2/</link>
+      <link>http://localhost:1313/tags/lvm2/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/lvm2/</guid>
+      <guid>http://localhost:1313/tags/lvm2/</guid>
       <description></description>
     </item>
     <item>
       <title>OpenSSH</title>
-      <link>https://debuntu.ru/tags/openssh/</link>
+      <link>http://localhost:1313/tags/openssh/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/openssh/</guid>
+      <guid>http://localhost:1313/tags/openssh/</guid>
       <description></description>
     </item>
     <item>
       <title>OpenWRT</title>
-      <link>https://debuntu.ru/tags/openwrt/</link>
+      <link>http://localhost:1313/tags/openwrt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/openwrt/</guid>
+      <guid>http://localhost:1313/tags/openwrt/</guid>
       <description></description>
     </item>
     <item>
       <title>FreeBSD</title>
-      <link>https://debuntu.ru/tags/freebsd/</link>
+      <link>http://localhost:1313/tags/freebsd/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/freebsd/</guid>
+      <guid>http://localhost:1313/tags/freebsd/</guid>
       <description></description>
     </item>
     <item>
       <title>Pkgng</title>
-      <link>https://debuntu.ru/tags/pkgng/</link>
+      <link>http://localhost:1313/tags/pkgng/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/pkgng/</guid>
+      <guid>http://localhost:1313/tags/pkgng/</guid>
       <description></description>
     </item>
     <item>
       <title>Portsnap</title>
-      <link>https://debuntu.ru/tags/portsnap/</link>
+      <link>http://localhost:1313/tags/portsnap/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/portsnap/</guid>
+      <guid>http://localhost:1313/tags/portsnap/</guid>
       <description></description>
     </item>
     <item>
       <title>MODx</title>
-      <link>https://debuntu.ru/tags/modx/</link>
+      <link>http://localhost:1313/tags/modx/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/modx/</guid>
+      <guid>http://localhost:1313/tags/modx/</guid>
       <description></description>
     </item>
     <item>
       <title>DD-WRT</title>
-      <link>https://debuntu.ru/tags/dd-wrt/</link>
+      <link>http://localhost:1313/tags/dd-wrt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/dd-wrt/</guid>
+      <guid>http://localhost:1313/tags/dd-wrt/</guid>
       <description></description>
     </item>
     <item>
       <title>Logitech</title>
-      <link>https://debuntu.ru/tags/logitech/</link>
+      <link>http://localhost:1313/tags/logitech/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/logitech/</guid>
+      <guid>http://localhost:1313/tags/logitech/</guid>
       <description></description>
     </item>
     <item>
       <title>Windows XP</title>
-      <link>https://debuntu.ru/tags/windows-xp/</link>
+      <link>http://localhost:1313/tags/windows-xp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/windows-xp/</guid>
+      <guid>http://localhost:1313/tags/windows-xp/</guid>
       <description></description>
     </item>
     <item>
       <title>L2TP</title>
-      <link>https://debuntu.ru/tags/l2tp/</link>
+      <link>http://localhost:1313/tags/l2tp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/l2tp/</guid>
+      <guid>http://localhost:1313/tags/l2tp/</guid>
       <description></description>
     </item>
     <item>
       <title>Make</title>
-      <link>https://debuntu.ru/tags/make/</link>
+      <link>http://localhost:1313/tags/make/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/make/</guid>
+      <guid>http://localhost:1313/tags/make/</guid>
       <description></description>
     </item>
     <item>
       <title>NAT</title>
-      <link>https://debuntu.ru/tags/nat/</link>
+      <link>http://localhost:1313/tags/nat/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/nat/</guid>
+      <guid>http://localhost:1313/tags/nat/</guid>
       <description></description>
     </item>
     <item>
       <title>Nokia E52</title>
-      <link>https://debuntu.ru/tags/nokia-e52/</link>
+      <link>http://localhost:1313/tags/nokia-e52/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/nokia-e52/</guid>
+      <guid>http://localhost:1313/tags/nokia-e52/</guid>
       <description></description>
     </item>
     <item>
       <title>RAID</title>
-      <link>https://debuntu.ru/tags/raid/</link>
+      <link>http://localhost:1313/tags/raid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/raid/</guid>
+      <guid>http://localhost:1313/tags/raid/</guid>
       <description></description>
     </item>
     <item>
       <title>VoIP</title>
-      <link>https://debuntu.ru/tags/voip/</link>
+      <link>http://localhost:1313/tags/voip/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/voip/</guid>
+      <guid>http://localhost:1313/tags/voip/</guid>
       <description></description>
     </item>
     <item>
       <title>APC</title>
-      <link>https://debuntu.ru/tags/apc/</link>
+      <link>http://localhost:1313/tags/apc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/apc/</guid>
+      <guid>http://localhost:1313/tags/apc/</guid>
       <description></description>
     </item>
     <item>
       <title>Approx</title>
-      <link>https://debuntu.ru/tags/approx/</link>
+      <link>http://localhost:1313/tags/approx/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/approx/</guid>
+      <guid>http://localhost:1313/tags/approx/</guid>
       <description></description>
     </item>
     <item>
       <title>Debian Lenny</title>
-      <link>https://debuntu.ru/tags/debian-lenny/</link>
+      <link>http://localhost:1313/tags/debian-lenny/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/debian-lenny/</guid>
+      <guid>http://localhost:1313/tags/debian-lenny/</guid>
       <description></description>
     </item>
     <item>
       <title>NUT</title>
-      <link>https://debuntu.ru/tags/nut/</link>
+      <link>http://localhost:1313/tags/nut/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/nut/</guid>
+      <guid>http://localhost:1313/tags/nut/</guid>
       <description></description>
     </item>
     <item>
       <title>TrueCrypt</title>
-      <link>https://debuntu.ru/tags/truecrypt/</link>
+      <link>http://localhost:1313/tags/truecrypt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/truecrypt/</guid>
+      <guid>http://localhost:1313/tags/truecrypt/</guid>
       <description></description>
     </item>
     <item>
       <title>VMWare Server</title>
-      <link>https://debuntu.ru/tags/vmware-server/</link>
+      <link>http://localhost:1313/tags/vmware-server/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/vmware-server/</guid>
+      <guid>http://localhost:1313/tags/vmware-server/</guid>
       <description></description>
     </item>
     <item>
       <title>XFS</title>
-      <link>https://debuntu.ru/tags/xfs/</link>
+      <link>http://localhost:1313/tags/xfs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/xfs/</guid>
+      <guid>http://localhost:1313/tags/xfs/</guid>
       <description></description>
     </item>
     <item>
       <title>Squid</title>
-      <link>https://debuntu.ru/tags/squid/</link>
+      <link>http://localhost:1313/tags/squid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/squid/</guid>
+      <guid>http://localhost:1313/tags/squid/</guid>
       <description></description>
     </item>
     <item>
       <title>SquidGuard</title>
-      <link>https://debuntu.ru/tags/squidguard/</link>
+      <link>http://localhost:1313/tags/squidguard/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/squidguard/</guid>
+      <guid>http://localhost:1313/tags/squidguard/</guid>
       <description></description>
     </item>
     <item>
       <title>EGroupWare</title>
-      <link>https://debuntu.ru/tags/egroupware/</link>
+      <link>http://localhost:1313/tags/egroupware/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/egroupware/</guid>
+      <guid>http://localhost:1313/tags/egroupware/</guid>
       <description></description>
     </item>
     <item>
       <title>Groupware</title>
-      <link>https://debuntu.ru/tags/groupware/</link>
+      <link>http://localhost:1313/tags/groupware/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/groupware/</guid>
+      <guid>http://localhost:1313/tags/groupware/</guid>
       <description></description>
     </item>
     <item>
       <title>Eclipse</title>
-      <link>https://debuntu.ru/tags/eclipse/</link>
+      <link>http://localhost:1313/tags/eclipse/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/eclipse/</guid>
+      <guid>http://localhost:1313/tags/eclipse/</guid>
       <description></description>
     </item>
     <item>
       <title>Linux Process</title>
-      <link>https://debuntu.ru/tags/linux-process/</link>
+      <link>http://localhost:1313/tags/linux-process/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/linux-process/</guid>
+      <guid>http://localhost:1313/tags/linux-process/</guid>
       <description></description>
     </item>
     <item>
       <title>Monitoring</title>
-      <link>https://debuntu.ru/tags/monitoring/</link>
+      <link>http://localhost:1313/tags/monitoring/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/monitoring/</guid>
+      <guid>http://localhost:1313/tags/monitoring/</guid>
       <description></description>
     </item>
     <item>
       <title>Pip</title>
-      <link>https://debuntu.ru/tags/pip/</link>
+      <link>http://localhost:1313/tags/pip/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/pip/</guid>
+      <guid>http://localhost:1313/tags/pip/</guid>
       <description></description>
     </item>
     <item>
       <title>Venv</title>
-      <link>https://debuntu.ru/tags/venv/</link>
+      <link>http://localhost:1313/tags/venv/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/venv/</guid>
+      <guid>http://localhost:1313/tags/venv/</guid>
       <description></description>
     </item>
     <item>
       <title>LXDE</title>
-      <link>https://debuntu.ru/tags/lxde/</link>
+      <link>http://localhost:1313/tags/lxde/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/tags/lxde/</guid>
+      <guid>http://localhost:1313/tags/lxde/</guid>
       <description></description>
     </item>
   </channel>

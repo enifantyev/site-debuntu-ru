@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mokey on Debuntarium</title>
-    <link>https://debuntu.ru/tags/mokey/</link>
+    <link>http://localhost:1313/tags/mokey/</link>
     <description>Recent content in Mokey on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 27 May 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/mokey/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/mokey/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mokey - пользовательский сервис сброса/смены паролей FreeIPA</title>
-      <link>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
+      <link>http://localhost:1313/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</link>
       <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
+      <guid>http://localhost:1313/a/mokey-polzovatelskii-servis-sbrosa-smeny-parolei-freeipa/</guid>
       <description>2021-05-27&#xA;Введение Сервис Mokey предназачен для самообслуживания пользователей FreeIPA домена, с помощью которого предоставляется возможность смены пароля или сброса забытого пароля, с отправкой одноразовой ссылки на зарегистрированную в IPA почту пользователя. Замечу, что mokey, не работает с учётными записями, состоящими во встроенной IPA-группе &amp;lsquo;admins&amp;rsquo;, так как роль helpdesk не сможет изменить пароль таких УЗ. Вообще, рекомендуется использовать отдельную УЗ, участницу группы &amp;lsquo;admins&amp;rsquo;, для администрирования FreeIPA.&#xA;Установка mokey Установка mokey банальна и не вызывает интереса.</description>
     </item>
   </channel>

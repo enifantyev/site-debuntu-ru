@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CI/CD on Debuntarium</title>
-    <link>https://debuntu.ru/tags/ci/cd/</link>
+    <link>http://localhost:1313/tags/ci/cd/</link>
     <description>Recent content in CI/CD on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sun, 31 May 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Jenkins Проблемы выполнения удалённых команд в сетях со stateful firewall и способы их решения</title>
-      <link>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
+      <link>http://localhost:1313/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</link>
       <pubDate>Sun, 31 May 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
+      <guid>http://localhost:1313/a/jenkins-problemy-vypolneniya-udalyonnyh-komand-v-setyah-s-stateful-firewall-i-sposoby-ih-resheniya/</guid>
       <description>2020-05-31&#xA;Описание проблемы Для запуска скрипта на удалённом узле могут использоваться два jenkins-плагина:&#xA;&amp;ldquo;Publish over SSH plugin&amp;rdquo;, который не имеет встроенного keepalive-механизма. &amp;ldquo;SSH plugin&amp;rdquo;, который имеет возможность посылки keepalive-пакетов, но требует настройки, так как по умолчанию это функция выключена. В процессе выполнения задач с использованием вышеуказанных плагинов, особенно если задача выполняется десятки минут или больше, то в дженкинсе наблюдалось прекращение вывода stdout в консоль, хотя скрипт, выполняемый на удалённом сервере, продолжал работу.</description>
     </item>
   </channel>

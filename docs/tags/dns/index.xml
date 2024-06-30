@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>DNS on Debuntarium</title>
-    <link>https://debuntu.ru/tags/dns/</link>
+    <link>http://localhost:1313/tags/dns/</link>
     <description>Recent content in DNS on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 14 Jul 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/dns/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/dns/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Тестирование псевдо HA и LB dns-настроек в /etc/resolv.conf</title>
-      <link>https://debuntu.ru/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
+      <link>http://localhost:1313/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</link>
       <pubDate>Wed, 14 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
+      <guid>http://localhost:1313/n/testirovanie-psevdo-ha-i-lb-dns-nastroek-v-etc-resolv.conf/</guid>
       <description>2021-07-14&#xA;Введение Псевдо High Availability и Load Balancing достигается поочерёдным опросом всех указанных в файле /etc/resolv.conf dns-серверов, даже в том случае, если какой-нибудь из dns-серверов находится в офлайне.&#xA;Сразу приведу пример такого HA и LB &amp;lsquo;resolv.conf&amp;rsquo;:&#xA;options rotate timeout:1 attempts:1 search test.lan nameserver 10.1.120.146 nameserver 10.1.120.147 nameserver 10.1.120.148 Замечу, что использование локальных кэширующих dns-прослоек, типа dnsmasq, умеющих обращаться сразу ко всем dns-серверами, может несколько увеличить HA и LB.&#xA;Подготовка к тестированию Создадим следующий python-файл и сделаем его исполняемым:</description>
     </item>
     <item>
       <title>Срипт для добавления PTR-записей по списку из файла в обратную DNS-зону FreeIPA</title>
-      <link>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
+      <link>http://localhost:1313/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</link>
       <pubDate>Mon, 25 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
+      <guid>http://localhost:1313/n/sript-dlya-dobavleniya-ptr-zapisei-po-spisku-iz-faila-v-obratnuyu-dns-zonu-freeipa/</guid>
       <description>2021-01-25&#xA;Образец файла со списком узлов в формате hosts:&#xA;# cat ip.hosts 10.1.195.1 is01-airf01p.example.org 10.1.195.3 is01-app01p.example.org 10.1.195.4 is01-app02p.example.org 10.1.112.52 is02-app208p.example.org 10.1.112.53 is02-app209p.example.org Скрипт для добавления PTR-записей в соответствующие обратные зоны:&#xA;add_dns_record.sh #!/bin/bash LIST=&amp;#34;ip.hosts&amp;#34; while read line; do echo &amp;#34;&amp;#34; echo $line # &amp;#34;10.1.195.1 is01-airf01p.example.org&amp;#34; arr1=($line) # конвертируем переменную в массив из двух элементов ip1=${arr1[0]} # &amp;#34;10.1.195.1&amp;#34; IFS=&amp;#34;.&amp;#34; # разделитель пробел меняем на точку для bash substring arr2=($ip1) # конвертируем ip-адрес в массив &amp;#34;10 15 195 1&amp;#34; IFS=&amp;#34; &amp;#34; # возвращаем разделить ZONE=&amp;#34;${arr2[2]}.</description>
     </item>
   </channel>

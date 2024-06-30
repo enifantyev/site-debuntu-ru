@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux Process on Debuntarium</title>
-    <link>https://debuntu.ru/tags/linux-process/</link>
+    <link>http://localhost:1313/tags/linux-process/</link>
     <description>Recent content in Linux Process on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Thu, 01 Jan 1970 03:00:02 +0300</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/linux-process/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/linux-process/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Краткий список утилит и команд оболочки для работы с процессами</title>
-      <link>https://debuntu.ru/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
+      <link>http://localhost:1313/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</link>
       <pubDate>Thu, 01 Jan 1970 03:00:02 +0300</pubDate>
-      <guid>https://debuntu.ru/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
+      <guid>http://localhost:1313/refbooks/linux/kratkiy-spisok-utilit-i-komand-dlya-raboty-s-protsessami/</guid>
       <description>2022-03-29&#xA;Обозреть работающие процессы ps ps — process status.&#xA;user@wks01:~$ ps aux Linux Minit:&#xA;user@wks01:~$ ps 1 PID TTY STAT TIME COMMAND 1 ? Ss 0:08 /sbin/init CentOS:&#xA;[root@srv01 ~]$ ps 1 PID TTY STAT TIME COMMAND 1 ? Ss 0:55 /usr/lib/systemd/systemd --switched-root --system --deserialize 22 ptree ptree — process tree. Выводит дерево процессов.&#xA;top, htop Информация обо всех процессах в режиме реального времени.&#xA;Получить информацию о процессе pidoff pidoff — find the process ID of a running program.</description>
     </item>
   </channel>

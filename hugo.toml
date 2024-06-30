@@ -23,7 +23,7 @@ contentDir = "content/ru"
 
 [params]
   copyright = "Evgeny Nifantyev"
-  custom_css = ["css/monokai.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"]
+  custom_css = ["css/asciidoctor.css","css/monokai.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"]
   [params.ui]
     showLightDarkModeMenu = true
     #prism_syntax_highlighting = true

@@ -7,9 +7,8 @@ tags:
   - cri
 slug: ustanovka-containerd-na-kajdyi-host-budushego-k8s-klastera
 ---
-:sectnums:
 
-=== Скачивание компонентов containerd из внутреннего raw-репозитория
+== Скачивание компонентов containerd из внутреннего raw-репозитория
 . Если внутренний репозиторий требует аутентификации, то задайте учётные данные для скачивания компонентов containerd:
 +
 [,console]
@@ -37,13 +36,17 @@ curl -LO -u $USER_PASS ${INTERNAL_REPO}/${REPO_FOLDER}/containerd.service.${CONT
 curl -LO -u $USER_PASS ${INTERNAL_REPO}/${REPO_FOLDER}/runc.amd64-${RUNC_VER}
 ----
 
-=== Установка containerd
+== Установка containerd
 . Распакуйте containerd в каталог `/usr/local`:
 +
 [,console]
 ----
 tar Cxvf /usr/local containerd-${CONTAINERD_VER}-linux-amd64.tar.gz
- 
+----
++
+stdout:
++
+----
 bin/
 bin/containerd-shim-runc-v2
 bin/containerd-stress
@@ -53,7 +56,7 @@ bin/ctr
 bin/containerd-shim
 ----
 
-=== Добавление в систему systemd-юнит containerd
+== Добавление в систему systemd-юнит containerd
 . Добавьте в Systemd ранее скачанный юнит:
 +
 [,console]
@@ -62,7 +65,7 @@ cp containerd.service.${CONTAINERD_SERVICE_VER} /etc/systemd/system/containerd.s
 systemctl daemon-reload
 ----
 
-=== Установка runc
+== Установка runc
 . Скопируйте ранее скачанный runc в каталог `/usr/local/sbin/`:
 +
 [,console]

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Approx on Debuntarium</title>
-    <link>https://debuntu.ru/tags/approx/</link>
+    <link>http://localhost:1313/tags/approx/</link>
     <description>Recent content in Approx on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/approx/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/approx/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Использование прокси-сервер Approx для локального кэширования APT-репозиториев</title>
-      <link>https://debuntu.ru/n/ispolzovanie-approx/</link>
+      <link>http://localhost:1313/n/ispolzovanie-approx/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/ispolzovanie-approx/</guid>
+      <guid>http://localhost:1313/n/ispolzovanie-approx/</guid>
       <description>2011-03-30 Approx &amp;ndash; это кэширующий прокси-сервер, установленный на одном компьютере и слушающий 9999 порт. На всех компьютерах настроены /etc/apt/sources.list на использование этого approx&amp;rsquo;а.&#xA;Вот фрагмент клиентского sources.list:&#xA;deb http://approx.local.net:9999/debian1 stable main А вот фрагмент настройки аппрокса /etc/approx/approx.conf:&#xA;debian1 http://ftp.debian.org/debian В результате, когда клиент обращается на http://approx.local.net:9999/debian1 stable main, то Approx сервер видит ключевое слово debian1 и подставляет вместо него http://ftp.debian.org/debian (получается http://ftp.debian.org/debian stable main) и скачивает необходимый пакет в свой кэш.</description>
     </item>
   </channel>

@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux Kernel on Debuntarium</title>
-    <link>https://debuntu.ru/tags/linux-kernel/</link>
+    <link>http://localhost:1313/tags/linux-kernel/</link>
     <description>Recent content in Linux Kernel on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 18 Mar 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/linux-kernel/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/linux-kernel/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Как собрать новое ядро linux</title>
-      <link>https://debuntu.ru/n/kak-sobrat-novoe-yadro-linux/</link>
+      <link>http://localhost:1313/n/kak-sobrat-novoe-yadro-linux/</link>
       <pubDate>Fri, 01 Apr 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/kak-sobrat-novoe-yadro-linux/</guid>
+      <guid>http://localhost:1313/n/kak-sobrat-novoe-yadro-linux/</guid>
       <description>2011-04-01&#xA;Взято с: http://ebash.in/howto/Kak-sobrat-svoe-yadro-v-Debian-Etch&#xA;В каждом дистрибутиве имеется своя специфика сборки ядра и это HowTo ориентировано именно на то, как это сделать в Debian Etch. Так же раскрывается вопрос, как наложить тот или иной патч на ядро, когда необходима поддержка определенной функциональности или нового оборудования в Вашей системе. HowTo предназначено в первую очередь на более подготовленных пользователей и нет никаких гарантий, что этот способ будет работать так, как надо и все описанные действия и ответственность ложатся на Вас.</description>
     </item>
     <item>
       <title>40. Установка нового ядра в AltLinux 10 для проверки правильности восстановления машины с помощью BorgBackup</title>
-      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
+      <link>http://localhost:1313/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</link>
       <pubDate>Fri, 18 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
+      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-novogo-yadra-v-altlinux-10-dlya-proverki-vosstanovleniya-mashiny-s-pomoshchyu-borgbackup/</guid>
       <description>https://help.72to.ru/projects/alt-linux/wiki/Откат_на_старую_версию_ядра&#xA;$ uname -r 5.10.82-std-def-alt1 apt-repo add http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ x86_64 classic apt-repo add http://ftp.altlinux.ru/pub/distributions/archive/p10/task/archive/_289/295939/ noarch classic $ sudo apt-cache show kernel-image-std-def Package kernel-image-std-def is a virtual package provided by: kernel-image-std-def#2:5.10.82-alt1:p10+290646.100.3.1@1638544255 2:5.10.82-alt1:p10+290646.100.3.1@1638544255 kernel-image-std-def#2:5.10.102-alt1:p10+295939.100.1.1@1645810219 2:5.10.102-alt1:p10+295939.100.1.1@1645810219 You should explicitly select one to show. E: Package kernel-image-std-def is a virtual package with multiple providers. update-kernel -t std-def -r 2:5.10.102-alt1:p10+295939.100.1.1@1645810219 reboot $ uname -r 5.10.102-std-def-alt1 remove-old-kernels </description>
     </item>
   </channel>

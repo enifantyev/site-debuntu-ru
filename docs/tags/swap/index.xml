@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Swap on Debuntarium</title>
-    <link>https://debuntu.ru/tags/swap/</link>
+    <link>http://localhost:1313/tags/swap/</link>
     <description>Recent content in Swap on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Tue, 08 Aug 2023 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/swap/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/swap/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>10. Отключение swap на всех нодах</title>
-      <link>https://debuntu.ru/manuals/kubernetes/obshchaya-instruktsiya-po-ustanovke-k8s-s-high-availability-i-stacked-etcd-v-izolirovannoy-srede-s-pomoshchyu-kubeadm/10-k8s-podgotovka-vsekh-khostov-k-ustanovke-kubernetes/otklyucheniye-swap-na-vsekh-nodakh/</link>
+      <link>http://localhost:1313/manuals/kubernetes/obshchaya-instruktsiya-po-ustanovke-k8s-s-high-availability-i-stacked-etcd-v-izolirovannoy-srede-s-pomoshchyu-kubeadm/10-k8s-podgotovka-vsekh-khostov-k-ustanovke-kubernetes/otklyucheniye-swap-na-vsekh-nodakh/</link>
       <pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/kubernetes/obshchaya-instruktsiya-po-ustanovke-k8s-s-high-availability-i-stacked-etcd-v-izolirovannoy-srede-s-pomoshchyu-kubeadm/10-k8s-podgotovka-vsekh-khostov-k-ustanovke-kubernetes/otklyucheniye-swap-na-vsekh-nodakh/</guid>
+      <guid>http://localhost:1313/manuals/kubernetes/obshchaya-instruktsiya-po-ustanovke-k8s-s-high-availability-i-stacked-etcd-v-izolirovannoy-srede-s-pomoshchyu-kubeadm/10-k8s-podgotovka-vsekh-khostov-k-ustanovke-kubernetes/otklyucheniye-swap-na-vsekh-nodakh/</guid>
       <description>2023-08-08&#xA;Использованные материалы https://kubernetes.io/docs/setup/production-environment/container-runtimes/ Обязательное отключение swap Проверяем включен ли &amp;lsquo;swap&amp;rsquo; и отключаем его:&#xA;swapon -a if [[ $(swapon -s) != &amp;#34;&amp;#34; ]]; then cp /etc/fstab /etc/fstab.$(date +%y%m%d-%H%M%S).bak swapoff -a sed -i &amp;#39;/swap/ s/^/#/&amp;#39; /etc/fstab fi Повторно пытаемся включить swap и проверяем состояние swap:&#xA;swapon -a swapon -s Если выхлоп в stdout пуст, то продолжаем выполнять инструкцию. Иначе разбираемся в причинах неудачи.</description>
     </item>
   </channel>

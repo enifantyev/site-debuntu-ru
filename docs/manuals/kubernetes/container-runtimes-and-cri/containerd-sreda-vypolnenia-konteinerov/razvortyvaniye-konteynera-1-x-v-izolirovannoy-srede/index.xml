@@ -2,46 +2,53 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Развёртывание containerd 1.x в изолированной среде on Debuntarium</title>
-    <link>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/</link>
+    <link>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/</link>
     <description>Recent content in Развёртывание containerd 1.x в изолированной среде on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 18 May 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>1. Подготовка всех хостов к установке containerd</title>
-      <link>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/podgotovka-vseh-hostov-k-ustanovke-containerd/</link>
+      <link>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/podgotovka-vseh-hostov-k-ustanovke-containerd/</link>
       <pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/podgotovka-vseh-hostov-k-ustanovke-containerd/</guid>
+      <guid>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/podgotovka-vseh-hostov-k-ustanovke-containerd/</guid>
       <description> 1. Добавление загрузки модуля overlay в систему Модуль overlay добавляет в систему поддержку файловой системы OverlayFS. Эта файловая система используется для хранения слоёв образов, которые использует containerd.&#xA;Этот шаг можно пропустить, так как загрузка модуля overlay выполняется через systemd-юнит &amp;#39;containerd.service&amp;#39;, где присутствует строка &amp;#39;ExecStartPre=-/sbin/modprobe overlay&amp;#39;.&#xA;Выполните:&#xA;cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/modules-load.d/containerd.conf overlay EOF modprobe overlay </description>
     </item>
     <item>
       <title>2. Установка containerd на каждый хост будущего k8s-кластера</title>
-      <link>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/ustanovka-containerd-na-kajdyi-host-budushego-k8s-klastera/</link>
+      <link>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/ustanovka-containerd-na-kajdyi-host-budushego-k8s-klastera/</link>
       <pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/ustanovka-containerd-na-kajdyi-host-budushego-k8s-klastera/</guid>
+      <guid>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/ustanovka-containerd-na-kajdyi-host-budushego-k8s-klastera/</guid>
       <description>1. Скачивание компонентов containerd из внутреннего raw-репозитория Если внутренний репозиторий требует аутентификации, то задайте учётные данные для скачивания компонентов containerd:&#xA;set +o history USER_PASS=&amp;#39;nifantevea:xxxxxxxxxxxxxxx&amp;#39; set -o history Скачайте компоненты, предварительно изменив номера версий на актуальные:&#xA;CONTAINERD_VER=&amp;#39;1.7.16&amp;#39; CONTAINERD_SERVICE_VER=&amp;#39;231012&amp;#39; RUNC_VER=&amp;#39;1.1.12&amp;#39; INTERNAL_REPO=&amp;#39;http://nexus.example.org:8081/repository/evolut_raw&amp;#39; REPO_FOLDER=&amp;#39;kubernetes/containerd&amp;#39; mkdir -p /root/tmp cd /root/tmp curl -LO -u $USER_PASS ${INTERNAL_REPO}/${REPO_FOLDER}/containerd-${CONTAINERD_VER}-linux-amd64.tar.gz curl -LO -u $USER_PASS ${INTERNAL_REPO}/${REPO_FOLDER}/containerd.service.${CONTAINERD_SERVICE_VER} curl -LO -u $USER_PASS ${INTERNAL_REPO}/${REPO_FOLDER}/runc.amd64-${RUNC_VER} 2. Установка containerd Распакуйте containerd в каталог /usr/local:&#xA;tar Cxvf /usr/local containerd-${CONTAINERD_VER}-linux-amd64.</description>
     </item>
     <item>
       <title>3. Настойка containerd</title>
-      <link>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/nastroika-containerd/</link>
+      <link>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/nastroika-containerd/</link>
       <pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/nastroika-containerd/</guid>
+      <guid>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/nastroika-containerd/</guid>
       <description>Сгенерируйте конфиг по-умолчанию для containerd:&#xA;mkdir -p /etc/containerd containerd config default &amp;gt; /etc/containerd/config.toml Включите в конфиге использование &amp;#39;Control Group&amp;#39;:&#xA;sed -i &amp;#39;s/SystemdCgroup = false/SystemdCgroup = true/&amp;#39; /etc/containerd/config.toml Переключите версию pause-образа:&#xA;sed -i &amp;#34;s|pause:3.8|pause:3.9|&amp;#34; /etc/containerd/config.toml Почему меняем образ pause:&amp;lt;3.9 на pause:3.9? Потому что видел в логах инициализации кластера фразу: &amp;#39;detected that the sandbox image &amp;#34;registry.k8s.io/pause:3.8&amp;#34; of the container runtime is inconsistent with that used by kubeadm. It is recommended that using &amp;#34;registry.</description>
     </item>
     <item>
       <title>4. Перенастройка containerd для работы с внутренним registry</title>
-      <link>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/configuring-containerd-to-work-with-internal-registry/</link>
+      <link>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/configuring-containerd-to-work-with-internal-registry/</link>
       <pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/configuring-containerd-to-work-with-internal-registry/</guid>
+      <guid>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/configuring-containerd-to-work-with-internal-registry/</guid>
       <description> 1. Использованные материалы https://github.com/containerd/containerd/blob/main/docs/cri/config.md#registry-configuration&#xA;https://github.com/containerd/containerd/blob/main/docs/hosts.md#setup-default-mirror-for-all-registries&#xA;2. Перенастройка Выполните:&#xA;#INTERNAL_REGISTRY=&amp;#39;http://192.168.31.250:5000&amp;#39; INTERNAL_REGISTRY=&amp;#39;https://dockerhub.example.org&amp;#39; mkdir -p /etc/containerd/certs.d/_default cat &amp;lt;&amp;lt; EOF &amp;gt; /etc/containerd/certs.d/_default/hosts.toml [host.&amp;#34;${INTERNAL_REGISTRY}&amp;#34;] capabilities = [&amp;#34;pull&amp;#34;, &amp;#34;resolve&amp;#34;] #skip_verify = true EOF # Поиск строки .registry и замена следующей строки на # config_path = \&amp;#34;/etc/containerd/certs.d\&amp;#34; sed -i &amp;#39;/\.registry\]/{ n; s|config_path = .*|config_path = \&amp;#34;/etc/containerd/certs.d\&amp;#34;|g }&amp;#39; /etc/containerd/config.toml </description>
     </item>
     <item>
       <title>5. Запуск демона containerd</title>
-      <link>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/start-daemon-containerd/</link>
+      <link>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/start-daemon-containerd/</link>
       <pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/start-daemon-containerd/</guid>
+      <guid>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/start-daemon-containerd/</guid>
       <description> Включите и запустите демон containerd:&#xA;systemctl enable --now containerd </description>
+    </item>
+    <item>
+      <title>6. Проверка containerd</title>
+      <link>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/test-containerd/</link>
+      <pubDate>Sat, 18 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/manuals/kubernetes/container-runtimes-and-cri/containerd-sreda-vypolnenia-konteinerov/razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede/test-containerd/</guid>
+      <description>Tab A&#xA;Tab B&#xA;Tab C&#xA;Contents of Tab A.&#xA;Contents of Tab B.&#xA;Contents of Tab C.&#xA;Contains more than one block.</description>
     </item>
   </channel>
 </rss>

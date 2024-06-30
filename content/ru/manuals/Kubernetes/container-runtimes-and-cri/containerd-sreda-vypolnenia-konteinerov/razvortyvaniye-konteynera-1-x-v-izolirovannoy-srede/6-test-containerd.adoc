@@ -6,9 +6,8 @@ tags:
   - containerd
   - cri
 slug: test-containerd
-draft: true
+draft: false
 ---
-
 
 [tabs]
 ====

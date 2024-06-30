@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>AltLinux 9 on Debuntarium</title>
-    <link>https://debuntu.ru/tags/altlinux-9/</link>
+    <link>http://localhost:1313/tags/altlinux-9/</link>
     <description>Recent content in AltLinux 9 on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 14 Mar 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/altlinux-9/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/altlinux-9/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>12. Установка BorgBackup в AltLinux 9/10</title>
-      <link>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9-10/</link>
+      <link>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9-10/</link>
       <pubDate>Mon, 14 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9-10/</guid>
+      <guid>http://localhost:1313/manuals/borgbackup/ustanovka-borgbackup-v-altlinux-9-10/</guid>
       <description>2022-03-14&#xA;Установка BorgBackup в AltLinux 10 Установка borg 1.1.17 apt-get install borg Установка borg 1.2 $ sudo apt-get install python3-module-pkgconfig python3-module-setuptools \ python3-module-wheel python3-module-msgpack libssl-devel python3-dev \ libacl-devel libacl libssl-devel liblz4-devel libzstd-devel libxxhash-devel srdout:&#xA;Reading Package Lists... Done Building Dependency Tree... Done libacl is already the newest version. The following extra packages will be installed: libncurses-devel libtinfo-devel libxxhash rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs The following NEW packages will be installed: libacl-devel liblz4-devel libncurses-devel libssl-devel libtinfo-devel libxxhash libxxhash-devel libzstd-devel python3-dev python3-module-msgpack python3-module-pkgconfig python3-module-setuptools python3-module-wheel rpm-build-python3 rpm-macros-python3 tests-for-installed-python3-pkgs 0 upgraded, 16 newly installed, 0 removed and 0 not upgraded.</description>
     </item>
   </channel>

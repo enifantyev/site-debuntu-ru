@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Obfuscation on Debuntarium</title>
-    <link>https://debuntu.ru/tags/obfuscation/</link>
+    <link>http://localhost:1313/tags/obfuscation/</link>
     <description>Recent content in Obfuscation on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Fri, 19 Nov 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/obfuscation/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/obfuscation/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Обфускация ssh-трафика с помощью stunnel</title>
-      <link>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
+      <link>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</link>
       <pubDate>Fri, 19 Nov 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
+      <guid>http://localhost:1313/manuals/vpn/obfuskaciya-ssh-trafika-s-pomoschyu-stunnel/</guid>
       <description>2021-11-19&#xA;Настройка сервера Устанавливаем на сервер пакет stunnel:&#xA;sudo yum install stunnel Компилируем свежий stunnel по инструкции Компиляция свежего stunnel 5.60 из исходников на CentOS7.&#xA;Подменяем установленный stunnel 4.56, новым stunnel 5.60:&#xA;sudo mv /usr/bin/stunnel /usr/bin/stunnel-4.56 sudo cp ~/src/stunnel-5.60/src/stunnel-5.60 /usr/bin cd /usr/bin ln -s stunnel-5.60 stunnel Добавляем системного пользователя, под которым будет запускаться stunnel:&#xA;sudo useradd -r -s /sbin/nologin -M stunnel &amp;lt;Здесь используем FreeIPA-сертификаты, сгенерированные на сервере. Потом допишу процесс получения и автообновления с помощью Certmonger.</description>
     </item>
   </channel>

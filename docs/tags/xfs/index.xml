@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>XFS on Debuntarium</title>
-    <link>https://debuntu.ru/tags/xfs/</link>
+    <link>http://localhost:1313/tags/xfs/</link>
     <description>Recent content in XFS on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 30 Mar 2011 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/xfs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/xfs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Дефрагментация XFS на удалённом сервере</title>
-      <link>https://debuntu.ru/n/defragmentaciya-xfs-na-udalyonnom-servere/</link>
+      <link>http://localhost:1313/n/defragmentaciya-xfs-na-udalyonnom-servere/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/defragmentaciya-xfs-na-udalyonnom-servere/</guid>
+      <guid>http://localhost:1313/n/defragmentaciya-xfs-na-udalyonnom-servere/</guid>
       <description>2011-03-30&#xA;Этап 1 Входим на целевой сервер через ssh. Запускаем screen, так как дефрагментация может занять продолжительное время.&#xA;Этап 2 Определяем степень фрагментации целевых разделов:&#xA;# xfs_db -r /dev/sda2 xfs_db&amp;gt; frag actual 35, ideal 34, fragmentation factor 2.86% xfs_db&amp;gt; quit # xfs_db -r /dev/mapper/lvm-home xfs_db&amp;gt; frag actual 113, ideal 111, fragmentation factor 1.77% xfs_db&amp;gt; quit В данном примере видна проверка обычного раздела /dev/sda2 и раздела lvm, работающего через device-mapper. Оба раздела не нуждаются в дефрагментации, что видно по выведенной информации.</description>
     </item>
     <item>
       <title>Использование XFS</title>
-      <link>https://debuntu.ru/n/ispolzovanie-xfs/</link>
+      <link>http://localhost:1313/n/ispolzovanie-xfs/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/ispolzovanie-xfs/</guid>
+      <guid>http://localhost:1313/n/ispolzovanie-xfs/</guid>
       <description>2011-03-30 Для использования xfs в debian необходимо установить пакеты xfsprogs и xfsdump.&#xA;Далее кратко:&#xA;mkfs.xfs &amp;ndash; для форматирования; xfs_db -r /dev/sda6 &amp;ndash; для сведений о текущей степени фрагментации (-r - read-only, для примонтированной фс); дефрагментация: # xfs_db -r /dev/sda6 xfs_db&amp;gt; frag actual 27414, ideal 514, fragmentation factor 98.13% xfs_bmap &amp;ndash; для просмотра фрагментации определённого файла; xfs_fsr &amp;ndash; для дефрагментации. На разделе должно быть столько свободного места, чтобы вместился самый большой файл.</description>
     </item>
   </channel>

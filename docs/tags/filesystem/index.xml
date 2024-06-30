@@ -2,52 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>FileSystem on Debuntarium</title>
-    <link>https://debuntu.ru/tags/filesystem/</link>
+    <link>http://localhost:1313/tags/filesystem/</link>
     <description>Recent content in FileSystem on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Sat, 01 Feb 2020 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/filesystem/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/filesystem/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Описание файловой системы OverlayFS</title>
-      <link>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</link>
+      <link>http://localhost:1313/a/opisanie-failovoi-sistemy-overlayfs/</link>
       <pubDate>Sat, 01 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/opisanie-failovoi-sistemy-overlayfs/</guid>
+      <guid>http://localhost:1313/a/opisanie-failovoi-sistemy-overlayfs/</guid>
       <description>2020-02-01&#xA;Не закончен, так как не хватает знаний. По мере изучения, постараюсь дополнить.&#xA;Данная файловая системы используется, например, в Docker. Часто её можно наблюдать на роутерах или других подобных устройствах, где оперативная запись информации ведётся во временную наложенную ФС, доступную до момента выключения устройства.&#xA;С помощью OverlayFS я объединяю домашние фото и видео каталоги для удобного просмотра. Так как архивы исходных фотографий доступны только для чтения, наложением рабочей папки, для сохранения временных или промежуточных файлов обработки, я добиваюсь удобства в обработке фоток.</description>
     </item>
     <item>
       <title>Описание VFS Виртуальной Файловой Системы Linux</title>
-      <link>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
+      <link>http://localhost:1313/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</link>
       <pubDate>Sat, 18 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
+      <guid>http://localhost:1313/a/opisanie-vfs-virtualnoi-failovoi-sistemy-linux/</guid>
       <description>Мой неполный перевод Overview of the Linux Virtual File System. Некоторые моменты, по различным причинам, я пока не понимаю, поэтому кое-что привожу в оригинале, как повод для дальнейших размышлений. Другие же моменты, как мне кажется, я понимаю, поэтому дополнил их некоторой информацией.&#xA;2020-01-18&#xA;Введение Виртуальная Файловая Система (называемая также Коммутатором Виртуальной Файловой Системы) является программным слоем, который предоставляет программам, выполняющимся в пользовательском пространстве, интерфейс взаимодействия с файловой системой. VFS-коммутатор также реализует в ядре Linux уровень абстракции для унификации подключения к нему разнообразных файловых систем.</description>
     </item>
     <item>
       <title>Безопасное уменьшение логического тома LVM с файловой системой Btrfs</title>
-      <link>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
+      <link>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</link>
       <pubDate>Thu, 26 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
+      <guid>http://localhost:1313/a/bezopasnoe-umenshenie-logicheskogo-toma-lvm-s-failovoi-sistemoi-btrfs/</guid>
       <description>Старая статья. В тот момент я ещё не знал, что btrfs сам способен подменить LVM. Я отнёсся к ней, как к обычной файловой системе.&#xA;2019-12-26&#xA;Я произвёл несколько опытов по сжатию LVM тома с Btrfs на борту и сделал для себя следующие выводы.&#xA;Описание безопасного способа Самый безопасный способ заключается в следующем: с LVM2 использовать ext4 с возможностью уменьшения и увеличения тома. Или использовать надёжную xfs с возможностью только увеличения тома.</description>
     </item>
     <item>
       <title>Traditional Unix permissions и Access Control Lists</title>
-      <link>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
+      <link>http://localhost:1313/a/tradicionnye-prava-dostupa-unix-i-acl/</link>
       <pubDate>Wed, 04 Sep 2019 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
+      <guid>http://localhost:1313/a/tradicionnye-prava-dostupa-unix-i-acl/</guid>
       <description>2019-09-04&#xA;&amp;ldquo;The term user is used in two different ways. We often speak of a logged-in person as a user, and, sometimes, use the term to refer to the process which the user is controlling from his terminal. Especially in the context of user control, however, we apply the term user to any member of the set of users (in the first sense) who could log in. In other words, we speak of a user as a registered identity.</description>
     </item>
     <item>
       <title>Дефрагментация XFS на удалённом сервере</title>
-      <link>https://debuntu.ru/n/defragmentaciya-xfs-na-udalyonnom-servere/</link>
+      <link>http://localhost:1313/n/defragmentaciya-xfs-na-udalyonnom-servere/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/defragmentaciya-xfs-na-udalyonnom-servere/</guid>
+      <guid>http://localhost:1313/n/defragmentaciya-xfs-na-udalyonnom-servere/</guid>
       <description>2011-03-30&#xA;Этап 1 Входим на целевой сервер через ssh. Запускаем screen, так как дефрагментация может занять продолжительное время.&#xA;Этап 2 Определяем степень фрагментации целевых разделов:&#xA;# xfs_db -r /dev/sda2 xfs_db&amp;gt; frag actual 35, ideal 34, fragmentation factor 2.86% xfs_db&amp;gt; quit # xfs_db -r /dev/mapper/lvm-home xfs_db&amp;gt; frag actual 113, ideal 111, fragmentation factor 1.77% xfs_db&amp;gt; quit В данном примере видна проверка обычного раздела /dev/sda2 и раздела lvm, работающего через device-mapper. Оба раздела не нуждаются в дефрагментации, что видно по выведенной информации.</description>
     </item>
     <item>
       <title>Использование XFS</title>
-      <link>https://debuntu.ru/n/ispolzovanie-xfs/</link>
+      <link>http://localhost:1313/n/ispolzovanie-xfs/</link>
       <pubDate>Wed, 30 Mar 2011 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/ispolzovanie-xfs/</guid>
+      <guid>http://localhost:1313/n/ispolzovanie-xfs/</guid>
       <description>2011-03-30 Для использования xfs в debian необходимо установить пакеты xfsprogs и xfsdump.&#xA;Далее кратко:&#xA;mkfs.xfs &amp;ndash; для форматирования; xfs_db -r /dev/sda6 &amp;ndash; для сведений о текущей степени фрагментации (-r - read-only, для примонтированной фс); дефрагментация: # xfs_db -r /dev/sda6 xfs_db&amp;gt; frag actual 27414, ideal 514, fragmentation factor 98.13% xfs_bmap &amp;ndash; для просмотра фрагментации определённого файла; xfs_fsr &amp;ndash; для дефрагментации. На разделе должно быть столько свободного места, чтобы вместился самый большой файл.</description>
     </item>
   </channel>

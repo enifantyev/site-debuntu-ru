@@ -2,52 +2,52 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nexus Repository Manager on Debuntarium</title>
-    <link>https://debuntu.ru/tags/nexus-repository-manager/</link>
+    <link>http://localhost:1313/tags/nexus-repository-manager/</link>
     <description>Recent content in Nexus Repository Manager on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 25 May 2022 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/nexus-repository-manager/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/nexus-repository-manager/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Download all assets from Nexus&#39;s repository using curl</title>
-      <link>https://debuntu.ru/n/download-all-assets-from-nexus-repository-using-curl/</link>
+      <link>http://localhost:1313/n/download-all-assets-from-nexus-repository-using-curl/</link>
       <pubDate>Wed, 25 May 2022 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/download-all-assets-from-nexus-repository-using-curl/</guid>
+      <guid>http://localhost:1313/n/download-all-assets-from-nexus-repository-using-curl/</guid>
       <description>На скорую руку приготовил скрипт выкачивающий все файлы из какого-нибудь репо.&#xA;#!/bin/bash -e NXRM=&amp;#34;https://nexus.example.org:8081&amp;#34; USERPASS=&amp;#34;nx-pub-reader:Paqvl8oldO1EOarTcx8FAjuXZ&amp;#34; REPO=&amp;#34;cloudera-cm-6.3.1-hosted&amp;#34; FILEEXT=&amp;#34;rpm&amp;#34; FILENAME=&amp;#34;${REPO}.list&amp;#34; TOKEN=&amp;#34;&amp;#34; get_token(){ TOKEN=&amp;#34;&amp;#34; TMPTOKEN=&amp;#34;&amp;#34; TMPTOKEN=$(tail ${FILENAME} | grep &amp;#34;continuationToken&amp;#34;) TOKEN=&amp;#34;$(echo $TMPTOKEN | awk &amp;#39;{print $3}&amp;#39; | awk -F\&amp;#34; &amp;#39;{print $2}&amp;#39;)&amp;#34; if [[ &amp;#34;$TOKEN&amp;#34; = &amp;#34;&amp;#34; ]]; then return; fi TOKENFULL=&amp;#34;continuationToken=${TOKEN}&amp;amp;&amp;#34; echo $TOKEN } &amp;gt; ${FILENAME} while : ; do curl -u${USERPASS} -X &amp;#39;GET&amp;#39; \ &amp;#34;${NXRM}/service/rest/v1/assets?${TOKENFULL}repository=${REPO}&amp;#34; \ -H &amp;#39;accept: application/json&amp;#39; &amp;gt;&amp;gt; ${FILENAME} get_token if [[ &amp;#34;$TOKEN&amp;#34; = &amp;#34;&amp;#34; ]]; then break; fi done grep -n &amp;#34;downloadUrl&amp;#34; ${REPO}.</description>
     </item>
     <item>
       <title>Установка Nexus Repository Manager</title>
-      <link>https://debuntu.ru/a/ustanovka-nexus-repository-manager/</link>
+      <link>http://localhost:1313/a/ustanovka-nexus-repository-manager/</link>
       <pubDate>Wed, 07 Jul 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ustanovka-nexus-repository-manager/</guid>
+      <guid>http://localhost:1313/a/ustanovka-nexus-repository-manager/</guid>
       <description>Использованные материалы https://help.sonatype.com/repomanager3/installation-and-upgrades&#xA;https://help.sonatype.com/repomanager3/installation-and-upgrades/run-as-a-service&#xA;1. Установка Java 8 Установите Java восьмой версии следующей командой:&#xA;dnf install java-1.8.0-openjdk Проверьте “используемую” &amp;#34;версию&amp;#34; Java по умолчанию:&#xA;java -version Пример ожидаемого вывода:&#xA;openjdk version &amp;#34;1.8.0_275&amp;#34; OpenJDK Runtime Environment (build 1.8.0_275-b01) OpenJDK 64-Bit Server VM (build 25.275-b01, mixed mode) 2. Создание локальной УЗ Создайте локальный непривилегированный аккаунт, под которым будет работать Nexus Repository Manager:&#xA;useradd --system --no-create-home \ --home-dir /opt/nexus \ --shell /sbin/nologin nexus 3.</description>
     </item>
     <item>
       <title>Организация беспарольного зеркала registry-1.docker.io</title>
-      <link>https://debuntu.ru/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</link>
+      <link>http://localhost:1313/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</link>
       <pubDate>Fri, 05 Mar 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</guid>
+      <guid>http://localhost:1313/n/organizaciya-besparolnogo-zerkala-registry-1-docker-io/</guid>
       <description>2021-03-05&#xA;https://docs.docker.com/registry/deploying/&#xA;Машине, где установлен Nexus Repository Manager, для его работы предоставлен выход в инет. Использовать сам NXRM для организации зеркала docker.io не слишком удобно из-за обязательного применения &amp;lsquo;docker login&amp;rsquo; перед использованием такого репозитория, поэтому запускаем зеркало:&#xA;docker run -d -p 6000:5000 \ -e REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io \ --restart always \ --name registry registry:2 На целевой машине добавляем в /etc/docker/daemon.json запись:&#xA;{ &amp;#34;registry-mirrors&amp;#34;: [&amp;#34;http://nexus.example.org:6000&amp;#34;] } После перезапуска docker, стало возможным, без дополнительных &amp;lsquo;docker login&amp;rsquo;, сразу выполнять:</description>
     </item>
     <item>
       <title>Добавление в NXRM единого репозитория для всех версий PostgreSQL</title>
-      <link>https://debuntu.ru/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
+      <link>http://localhost:1313/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</link>
       <pubDate>Sun, 18 Oct 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
+      <guid>http://localhost:1313/n/dobavlenie-v-nxrm-edinogo-repozitoriya-dlya-vseh-versii-postgresql/</guid>
       <description>2020-10-18&#xA;Добавляем отдельный блоб для хранения пакетов PostgreSQL.&#xA;Добавляем репозиторий Remote storage: https://download.postgresql.org/pub/repos/yum/&#xA;Содержимое файла pgdg-redhat-all.repo для деплоя на машины:&#xA;####################################################### # PGDG Red Hat Enterprise Linux / CentOS repositories # ####################################################### # PGDG Red Hat Enterprise Linux / CentOS stable common repository for all PostgreSQL versions [pgdg-common] name=PostgreSQL common RPMs for RHEL/CentOS $releasever - $basearch baseurl=http://nxrm.example.org:8081/repository/PostgreSQL/common/redhat/rhel-$releasever-$basearch enabled=1 gpgcheck=0 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-PGDG-AARCH64 # PGDG Red Hat Enterprise Linux / CentOS stable repositories: [pgdg13] name=PostgreSQL 13 for RHEL/CentOS $releasever - $basearch baseurl=http://nxrm.</description>
     </item>
     <item>
       <title>Настройка LDAP-аутентификации в Nexus Repository Manager</title>
-      <link>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
+      <link>http://localhost:1313/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</link>
       <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
+      <guid>http://localhost:1313/a/nastroika-ldap-autentifikacii-v-nexus-repository-manager/</guid>
       <description>Факты Исполняемое Java-ядро лежит в /data/Nexus/nexus. Изменяемая часть, включая репозитории, лежат в /data/Nexus/sonatype-work. Примерный размер каталога ~265GB. Для бэкапа достаточно сделать копию этого каталога. Автозапуск организован ручным созданием простой ссылкой /etc.init.d/nexus → /data/Nexus/nexus/bin/nexus. Настройка аккаунтов локальных пользователей и подключение по LDAP разнесены в меню. Нет необходимости делать бэкап Nexus&amp;rsquo;а, так как локальная база пользователей и получение пользователей из LDAP мирно сосуществуют рядом, не мешая друг другу. Пользователи подключающиеся через LDAP не заносятся в локальную базу, в отличии от GrayLog, например.</description>
     </item>
     <item>
       <title>Обновление Nexus Repository Manager</title>
-      <link>https://debuntu.ru/n/obnovlenie-nexus-repository-manager/</link>
+      <link>http://localhost:1313/n/obnovlenie-nexus-repository-manager/</link>
       <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/n/obnovlenie-nexus-repository-manager/</guid>
+      <guid>http://localhost:1313/n/obnovlenie-nexus-repository-manager/</guid>
       <description>2020-05-07&#xA;Upgrading Nexus Repository Manager 3&#xA;Краткое описание Nexus работает на java и почти не зависит от хоста.&#xA;Nexus состоит из двух каталогов:&#xA;The application directory nexus-3.16.1-02. The data directory sonatype-work. ├── nexus-3.16.1-02 ├── sonatype-work И не забываем о запуске вместе с ОС. На данный момент видно, что загрузка организована через ссылку /etc/init.d/nexus, которая указывает на /data/nexus-3.16.1-02/bin/nexus.&#xA;Подготовка к обновлению Скачиваем, проверяем хэш-сумму, и распаковываем новый nexus:&#xA;$ cd tmp $ wget https://download.</description>
     </item>
   </channel>

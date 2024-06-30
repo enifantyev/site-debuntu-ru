@@ -7,7 +7,8 @@ tags:
   - cri
 slug: nastroika-containerd
 ---
-:sectnums:
+
+== Создание файла конфигурации
 . Сгенерируйте конфиг по-умолчанию для containerd:
 +
 [,console]
@@ -16,6 +17,7 @@ mkdir -p /etc/containerd
 containerd config default > /etc/containerd/config.toml
 ----
 
+== Конфигурирование
 . Включите в конфиге использование 'Control Group':
 +
 [,console]

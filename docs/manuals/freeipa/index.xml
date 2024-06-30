@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>FreeIPA on Debuntarium</title>
-    <link>https://debuntu.ru/manuals/freeipa/</link>
+    <link>http://localhost:1313/manuals/freeipa/</link>
     <description>Recent content in FreeIPA on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Wed, 04 Aug 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/manuals/freeipa/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/manuals/freeipa/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Checkipaconsistency. Утилита для определения рассинхронизации реплик FreeIPA</title>
-      <link>https://debuntu.ru/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
+      <link>http://localhost:1313/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</link>
       <pubDate>Wed, 04 Aug 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
+      <guid>http://localhost:1313/manuals/freeipa/checkipaconsistency-utilita-dlya-opredeleniya-rassinhronizacii-replik-freeipa/</guid>
       <description>2021-08-04 2022-01-27&#xA;1. Ссылки https://github.com/peterpakos/checkipaconsistency&#xA;2. Описание Утилита может запускаться на любой из IPA-реплик. Так как для работы утилиты требуется пароль для УЗ &amp;lsquo;cn=Directory Manager&amp;rsquo;, то использование утилиты потенциально опасно. Безопасней запускать утилиту удалённо с применением пароля для УЗ &amp;lsquo;cn=Directory Manager&amp;rsquo; хранящегося в приемлемом Vault&amp;rsquo;е. Утилита выводит таблицу с информацией по всем (если специально не настроено другое) репликам домена. Пример: $ sudo -i # cipa +--------------------+------------------+------------------+------------------+-------+ | FreeIPA servers: | dev-ipa01p | dev-ipa02p | dev-ipa03p | STATE | +--------------------+------------------+------------------+------------------+-------+ | Active Users | 1 | 1 | 1 | OK | | Stage Users | 0 | 0 | 0 | OK | | Preserved Users | 0 | 0 | 0 | OK | | Hosts | 21 | 21 | 21 | OK | | Services | 15 | 15 | 15 | OK | | User Groups | 4 | 4 | 4 | OK | | Host Groups | 1 | 1 | 1 | OK | | Netgroups | 0 | 0 | 0 | OK | | HBAC Rules | 1 | 1 | 1 | OK | | SUDO Rules | 0 | 0 | 0 | OK | | DNS Zones | 2 | 2 | 2 | OK | | Certificates | 26 | 26 | 26 | OK | | LDAP Conflicts | 0 | 0 | 0 | OK | | Ghost Replicas | 0 | 0 | 0 | OK | | Anonymous BIND | ROOTDSE | ON | ON | FAIL | | Microsoft ADTrust | False | False | False | OK | | Replication Status | dev-ipa02p 0 | dev-ipa01p 0 | dev-ipa02p 0 | OK | | | dev-ipa03p 0 | dev-ipa03p 0 | dev-ipa01p 0 | | +--------------------+------------------+------------------+------------------+-------+ В вышеуказанном примере видно, что на второй и третьей реплике разрешён анонимный доступ к LDAP-каталогу.</description>
     </item>
   </channel>

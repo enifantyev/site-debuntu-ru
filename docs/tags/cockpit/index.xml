@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cockpit on Debuntarium</title>
-    <link>https://debuntu.ru/tags/cockpit/</link>
+    <link>http://localhost:1313/tags/cockpit/</link>
     <description>Recent content in Cockpit on Debuntarium</description>
     <generator>Hugo</generator>
     <language>ru-ru</language>
     <lastBuildDate>Mon, 11 Oct 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://debuntu.ru/tags/cockpit/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/cockpit/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Установка Cockpit с автообновляемым TLS-сертификатом из FreeIPA</title>
-      <link>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
+      <link>http://localhost:1313/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</link>
       <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
-      <guid>https://debuntu.ru/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
+      <guid>http://localhost:1313/a/ustanovka-cockpit-s-avtoobnovlyaemym-tls-sertifikatom-iz-freeipa/</guid>
       <description>2021-10-11&#xA;Условия Выполняем все команды на целевой машине. Предполагается, что машина введена во FreeIPA-домен. Установка и включение Cockpit sudo yum install cockpit sudo systemctl enable --now cockpit.service sudo systemctl enable --now cockpit.socket Изменение номера порта https://cockpit-project.org/guide/latest/listen.html&#xA;По умолчанию, cockpit слушает порт номер 9090. Перевесим его на 443-ий порт:&#xA;sudo mkdir -p /etc/systemd/system/cockpit.socket.d/ cat &amp;lt;&amp;lt; EOF | sudo tee /etc/systemd/system/cockpit.socket.d/listen.conf [Socket] ListenStream= ListenStream=443 EOF sudo systemctl daemon-reload Скрипт для запуска после автоматической смены сертификата cat &amp;lt;&amp;lt; EOF | sudo tee /etc/cockpit/RunAfterUpdateCert.</description>
     </item>
   </channel>

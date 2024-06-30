@@ -7,8 +7,8 @@ tags:
   - cri
 slug: start-daemon-containerd
 ---
-:sectnums:
 
+== Запуск containerd
 . Включите и запустите демон containerd:
 +
 [,console]
