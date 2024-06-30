@@ -6,7 +6,7 @@ description: >
   Отключение swap перед установкой Kubernetes
 tags:
   - swap
-slug: otklyucheniye_swap_na_vsekh_nodakh
+slug: otklyucheniye-swap-na-vsekh-nodakh
 ---
 
 2023-08-08
