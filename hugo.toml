@@ -3,6 +3,7 @@ publishDir = "docs"
 languageCode = 'ru-ru'
 title = 'Debuntarium'
 contentDir = "content/ru"
+enableRobotsTXT = false
 
 [module]
   proxy = "direct"
