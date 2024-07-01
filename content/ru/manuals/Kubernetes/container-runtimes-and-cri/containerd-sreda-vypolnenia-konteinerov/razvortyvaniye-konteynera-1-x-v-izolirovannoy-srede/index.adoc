@@ -1,0 +1,24 @@
+---
+title: "Развёртывание containerd 1.x в изолированной среде"
+date: 2024-05-18
+weight: 10
+tags:
+  - containerd
+  - cri
+slug: razvortyvaniye-konteynera-1-x-v-izolirovannoy-srede
+---
+:sectnums:
+
+:leveloffset: +1
+
+include::1-podgotovka-vseh-hostov-k-ustanovke-containerd.adoc[lines=10..-1]
+
+include::2-ustanovka-containerd-na-kajdyi-host-budushego-k8s-klastera.adoc[lines=10..-1]
+
+include::3-nastroika-containerd.adoc[lines=10..-1]
+
+include::4-onfiguring-containerd-to-work-with-internal-registry.adoc[lines=14..-1]
+
+include::5-start-daemon-containerd.adoc[lines=10..-1]
+
+include::6-test-containerd.adoc[lines=10..-1]

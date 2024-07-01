@@ -1,0 +1,34 @@
+---
+title: "4. Перенастройка containerd для работы с внутренним registry"
+date: 2024-05-18
+weight: 10
+tags:
+  - containerd
+  - cri
+slug: configuring-containerd-to-work-with-internal-registry
+---
+
+== Использованные материалы
+. https://github.com/containerd/containerd/blob/main/docs/cri/config.md#registry-configuration
+. https://github.com/containerd/containerd/blob/main/docs/hosts.md#setup-default-mirror-for-all-registries
+
+== Перенастройка для работы с внутренним registry
+. Выполните:
++
+[,console]
+----
+#INTERNAL_REGISTRY='http://192.168.31.250:5000'
+INTERNAL_REGISTRY='https://dockerhub.example.org'
+ 
+mkdir -p /etc/containerd/certs.d/_default
+ 
+cat << EOF > /etc/containerd/certs.d/_default/hosts.toml
+[host."${INTERNAL_REGISTRY}"]
+  capabilities = ["pull", "resolve"]
+  #skip_verify = true
+EOF
+ 
+# Поиск строки .registry и замена следующей строки на
+# config_path = \"/etc/containerd/certs.d\"
+sed -i '/\.registry\]/{ n; s|config_path = .*|config_path = \"/etc/containerd/certs.d\"|g }' /etc/containerd/config.toml
+----
